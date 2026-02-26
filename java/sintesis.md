@@ -1,9 +1,18 @@
-# Sintesis de temas de la materia (trabajo en progreso)
+---
+title: Síntesis de temas de Java
+description: Resumen de los temas principales de la materia Programación II.
+---
 
+# Síntesis de temas de la materia (trabajo en progreso)
+
+:::{note}
 Versión inicial por [@curambar](https://github.com/curambar/Programacion-2-2025)
+:::
 
+## Tipos de datos en Java
 
-# Tipos de datos en Java
+:::{table} Tipos de datos primitivos en Java
+:label: tbl-tipos-datos
 
 | Tipo    | Tamaño (bits) | Literales                                                                                                                             | Valor por defecto |
 | ------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
@@ -14,13 +23,20 @@ Versión inicial por [@curambar](https://github.com/curambar/Programacion-2-2025
 | float   | 32            | Punto flotante seguido de `F/f`                                                                                                       | 0.0F              |
 | double  | 64            | Punto flotante seguido de `D/d`                                                                                                       | 0.0D              |
 | boolean | 8             | `true` o `false`                                                                                                                      | `false`           |
-| char    | 16            | Caracter entre comillas simples `'a'`, también secuencias Unicode `'\u0041'`, octales `'\101'`, o caracteres especiales `'\n'`,`'\t'` | `'\u0000'`        |
+| char    | 16            | Carácter entre comillas simples `'a'`, también secuencias Unicode `'\u0041'`, octales `'\101'`, o caracteres especiales `'\n'`,`'\t'` | `'\u0000'`        |
+
+:::
+
 Se pueden usar guiones bajos en los literales numéricos:
-```java
+
+```{code} java
+:caption: Uso de guiones bajos en literales
 long enteroLargo = 123_456_789L;
 ```
 
-Tambien esta [`java.math.BigInteger`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigInteger.html) para números enteros de cualquier tamaño y [`java.math.BigDecimal`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html) para números decimales de precisión arbitraria.
+:::{seealso}
+También está [`java.math.BigInteger`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigInteger.html) para números enteros de cualquier tamaño y [`java.math.BigDecimal`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/math/BigDecimal.html) para números decimales de precisión arbitraria.
+:::
 
 
 # Métodos
