@@ -1,10 +1,13 @@
-Enunciado: Sistema de Gestión de Proyectos (MultiGestor)
-========================================================
+---
+title: "TPI - Sistema de Gestión de Proyectos (MultiGestor)"
+description: Proyecto integrador para desarrollar un sistema de gestión de proyectos.
+---
+
+# Sistema de Gestión de Proyectos (MultiGestor)
 
 El objetivo es desarrollar un **MultiGestor de Proyectos** que permita administrar múltiples carteras de proyectos, sus tareas asociadas y los recursos humanos asignados. El sistema debe seguir un enfoque de Programación Orientada a Objetos estricto y garantizar la persistencia de los datos.
 
-Requerimientos Funcionales
---------------------------
+## Requerimientos Funcionales
 
 Cada **Gestor** puede contener múltiples **Proyectos**. Un proyecto está compuesto por un conjunto de **Tareas**, y a cada tarea se le pueden asignar **Colaboradores**.
 
@@ -27,15 +30,12 @@ Cada **Gestor** puede contener múltiples **Proyectos**. Un proyecto está compu
 8.  **Listar Tareas por Prioridad**: Devolver una lista de tareas ordenadas por jerarquía de prioridad (ALTA > MEDIA > BAJA).
 
 9.  **Estadísticas de Proyecto**:
-
-    -   Cantidad total de tareas.
-
-    -   Porcentaje de tareas completadas.
+    - Cantidad total de tareas.
+    - Porcentaje de tareas completadas.
 
 10. **Limpiar Proyecto**: Eliminar todas las tareas y asignaciones de un proyecto.
 
-Requerimientos Técnicos
------------------------
+## Requerimientos Técnicos
 
 1.  **Persistencia**: El sistema debe persistir la información en archivos de disco (puede ser mediante Serialización, CSV o JSON manual). Se debe implementar un patrón que desacople la lógica de negocio del almacenamiento (e.g., Repository o DAO).
 
@@ -44,22 +44,17 @@ Requerimientos Técnicos
 3.  **Patrones de Diseño**: Se valorará el uso de patrones como *Strategy* para los diferentes criterios de ordenamiento, *Factory* para la creación de objetos complejos o *Observer* si fuera necesario.
 
 4.  **Orientación a Objetos Estricta**:
+    - Uso correcto de modificadores de acceso.
+    - Aplicación de interfaces para definir comportamientos.
+    - Evitar el acoplamiento fuerte entre clases.
 
-    -   Uso correcto de modificadores de acceso.
+:::{important}
+**Testing**: La validación del sistema se realizará exclusivamente mediante **Tests Unitarios (JUnit 5)**. Debe haber una cobertura que garantice el funcionamiento de la lógica de negocio y la persistencia. **No es necesario desarrollar un método main ni interfaz de usuario.**
+:::
 
-    -   Aplicación de interfaces para definir comportamientos.
+## Criterios de Evaluación
 
-    -   Evitar el acoplamiento fuerte entre clases.
-
-5.  **Testing**: La validación del sistema se realizará exclusivamente mediante **Tests Unitarios (JUnit 5)**. Debe haber una cobertura que garantice el funcionamiento de la lógica de negocio y la persistencia. **No es necesario desarrollar un método main ni interfaz de usuario.**
-
-Criterios de Evaluación
------------------------
-
--   **Modelado de Clases**: Relaciones de composición y agregación correctas.
-
--   **Manejo de Excepciones**: Gestión de errores robusta (e.g., búsqueda de elementos inexistentes, archivos corruptos).
-
--   **Clean Code**: Nombramiento semántico, métodos cortos y responsabilidad única.
-
--   **Persistencia**: Capacidad de recuperar el estado del sistema tras cerrar la ejecución.
+- **Modelado de Clases**: Relaciones de composición y agregación correctas.
+- **Manejo de Excepciones**: Gestión de errores robusta (e.g., búsqueda de elementos inexistentes, archivos corruptos).
+- **Clean Code**: Nombramiento semántico, métodos cortos y responsabilidad única.
+- **Persistencia**: Capacidad de recuperar el estado del sistema tras cerrar la ejecución.

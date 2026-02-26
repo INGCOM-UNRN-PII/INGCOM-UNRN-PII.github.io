@@ -1,10 +1,13 @@
-Enunciado: Sistema de Gestión de Reservas Aéreas (MultiFly)
-===========================================================
+---
+title: "TPI - Sistema de Reservas Aéreas (MultiFly)"
+description: Proyecto integrador para desarrollar un sistema de gestión de reservas aéreas.
+---
+
+# Sistema de Gestión de Reservas Aéreas (MultiFly)
 
 El objetivo es desarrollar un **MultiGestor de Reservas** que permita administrar múltiples Aerolíneas, sus vuelos programados y el manifiesto de pasajeros con su respectivo historial de fidelidad (millas). El sistema debe seguir un enfoque de Programación Orientada a Objetos estricto y garantizar la persistencia de los datos en disco.
 
-Requerimientos Funcionales
---------------------------
+## Requerimientos Funcionales
 
 Cada **Gestor** puede administrar múltiples **Aerolíneas**. Una aerolínea contiene un conjunto de **Vuelos**, y cada vuelo tiene asociado un **Manifiesto de Pasajeros** (quienes acumulan millas por cada viaje).
 
@@ -27,15 +30,12 @@ Cada **Gestor** puede administrar múltiples **Aerolíneas**. Una aerolínea con
 8.  **Listar Pasajeros por Millas**: Devolver el manifiesto de un vuelo ordenado descendentemente por la cantidad de millas de los pasajeros (prioridad de abordaje).
 
 9.  **Estadísticas de la Aerolínea**:
-
-    -   Recaudación total proyectada (suma de precios base de todos los pasajes vendidos).
-
-    -   Ocupación promedio de sus vuelos (porcentaje).
+    - Recaudación total proyectada (suma de precios base de todos los pasajes vendidos).
+    - Ocupación promedio de sus vuelos (porcentaje).
 
 10. **Resetear Aerolínea**: Eliminar todos los vuelos y registros de pasajeros de una aerolínea específica.
 
-Requerimientos Técnicos
------------------------
+## Requerimientos Técnicos
 
 1.  **Persistencia**: El sistema debe persistir la información en archivos de disco de forma que los datos sobrevivan al cierre de la aplicación. Se requiere el uso de un patrón que desacople la lógica de negocio (e.g., Repository o DAO).
 
@@ -44,22 +44,17 @@ Requerimientos Técnicos
 3.  **Patrones de Diseño**: Se valorará la implementación de patrones como *Strategy* para los criterios de ordenamiento o *Factory* para la instanciación de entidades.
 
 4.  **Orientación a Objetos Estricta**:
+    - Encapsulamiento riguroso y uso de modificadores de acceso.
+    - Definición de contratos mediante interfaces.
+    - Relaciones de composición claras (Aerolínea -> Vuelo -> Pasajero).
 
-    -   Encapsulamiento riguroso y uso de modificadores de acceso.
+:::{important}
+**Testing**: La validación se realizará exclusivamente mediante **Tests Unitarios (JUnit 5)**. Se debe cubrir la lógica de negocio, los algoritmos de ordenamiento y la correcta persistencia/recuperación desde archivos. **No desarrollar interfaz de usuario ni método main.**
+:::
 
-    -   Definición de contratos mediante interfaces.
+## Criterios de Evaluación
 
-    -   Relaciones de composición claras (Aerolínea -> Vuelo -> Pasajero).
-
-5.  **Testing**: La validación se realizará exclusivamente mediante **Tests Unitarios (JUnit 5)**. Se debe cubrir la lógica de negocio, los algoritmos de ordenamiento y la correcta persistencia/recuperación desde archivos. **No desarrollar interfaz de usuario ni método main.**
-
-Criterios de Evaluación
------------------------
-
--   **Modelado**: Correcta jerarquía de objetos y manejo de relaciones uno-a-muchos.
-
--   **Excepciones**: Gestión de errores (e.g., sobreventa de vuelos, archivos no encontrados, DNI duplicados).
-
--   **Clean Code**: Métodos breves, nombres semánticos en inglés o español (pero consistentes) y cumplimiento de principios SOLID.
-
--   **Persistencia**: Integridad de los datos al realizar operaciones de lectura/escritura en disco.
+- **Modelado**: Correcta jerarquía de objetos y manejo de relaciones uno-a-muchos.
+- **Excepciones**: Gestión de errores (e.g., sobreventa de vuelos, archivos no encontrados, DNI duplicados).
+- **Clean Code**: Métodos breves, nombres semánticos en inglés o español (pero consistentes) y cumplimiento de principios SOLID.
+- **Persistencia**: Integridad de los datos al realizar operaciones de lectura/escritura en disco.

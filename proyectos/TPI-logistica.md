@@ -1,10 +1,13 @@
-Enunciado: Sistema de Gestión de Logística
-==========================================
+---
+title: "TPI - Sistema de Gestión de Logística"
+description: Proyecto integrador para desarrollar un sistema de gestión logística con envíos.
+---
+
+# Sistema de Gestión de Logística
 
 El objetivo es desarrollar un **Gestor de Logística** que permita administrar múltiples centros de distribución, sus envíos asociados y el historial de estados de cada paquete. El sistema debe seguir un enfoque de Programación Orientada a Objetos estricto y garantizar la persistencia de los datos en disco.
 
-Requerimientos Funcionales
---------------------------
+## Requerimientos Funcionales
 
 Cada **Gestor** puede administrar múltiples **Centros de Distribución**. Un centro contiene un conjunto de **Envíos**, y cada envío tiene asociado un **Historial de Estados** (eventos de seguimiento, como el ingreso, el viaje a otro centro de distribución y la entrega).
 
@@ -27,15 +30,12 @@ Cada **Gestor** puede administrar múltiples **Centros de Distribución**. Un ce
 8.  **Listar Envíos por Prioridad**: Devolver una lista de envíos ordenados por jerarquía de prioridad (URGENTE > ESTÁNDAR > ECONÓMICO).
 
 9.  **Estadísticas del Centro**:
-
-    -   Peso total transportado en el centro.
-
-    -   Porcentaje de envíos con estado "Entregado".
+    - Peso total transportado en el centro.
+    - Porcentaje de envíos con estado "Entregado".
 
 10. **Vaciar Centro**: Eliminar todos los envíos y sus historiales de un centro de distribución.
 
-Requerimientos Técnicos
------------------------
+## Requerimientos Técnicos
 
 1.  **Persistencia**: El sistema debe guardar la información a disco.
 
@@ -44,10 +44,11 @@ Requerimientos Técnicos
 3.  **Patrones de Diseño**: Se valorará la utilización de patrones de diseño como parte de la estructura del proyecto.
 
 4.  **Orientación a Objetos Estricta**:
+    - Uso riguroso de encapsulamiento y modificadores de acceso.
+    - Definición de comportamientos mediante interfaces.
+    - Relaciones de composición claras entre Centro, Envío y Estado.
 
-    -   Uso riguroso de encapsulamiento y modificadores de acceso.
-    -   Definición de comportamientos mediante interfaces.
-    -   Relaciones de composición claras entre Centro, Envío y Estado.
-
-5.  **Testing**: La validación se realizará exclusivamente mediante **Tests Unitarios (JUnit 5)**. Debe haber cobertura sobre la lógica de ordenamiento, cálculos estadísticos y la integridad de la persistencia. **No desarrollar interfaz de usuario ni método main.**
+:::{important}
+**Testing**: La validación se realizará exclusivamente mediante **Tests Unitarios (JUnit 5)**. Debe haber cobertura sobre la lógica de ordenamiento, cálculos estadísticos y la integridad de la persistencia. **No desarrollar interfaz de usuario ni método main.**
+:::
 

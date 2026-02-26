@@ -1,9 +1,15 @@
+---
+title: "TP9 - Agenda"
+description: Trabajo práctico sobre gestión de contactos con orientación a objetos.
+---
+
 # TP9 - Agenda
 
 ## Forma de entrega
 
+:::{important}
 - No olviden completar la plantilla con sus datos y agregar la descripción de cada función.
-  Aunque `main` puede no tener este comentario, no está de más registrar que es lo que el
+  Aunque `main` puede no tener este comentario, no está de más registrar qué es lo que el
   `Scanner` recibe.
 - Siempre que sea posible, los mensajes de commit deben ser descriptivos.
 - Implementen un main que haga un uso de las funciones implementadas, pueden utilizar un `Scanner`.
@@ -11,34 +17,40 @@
 - No olviden la utilización de auto-formato, las herramientas de corrección le prestan atención
   a este tema.
 - Puede ser necesario completar, cambiar y ajustar la documentación de las funciones pedidas.
-- Es posible hacer cambios en la forma de las funciones a implementar, pero para esto, indiquenló explicitamente
+- Es posible hacer cambios en la forma de las funciones a implementar, pero para esto, indíquenlo explícitamente
   en el comentario de documentación.
 - No olviden crear Tests.
+:::
 
-Finalmente, pueden usar los
-atajos [SOS - 🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP9%20-%20)
+:::{tip}
+Pueden usar los atajos [SOS](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP9%20-%20)
 para crear preguntas sobre los enunciados individuales, si es posible, no fusionen las preguntas, así es más fácil que
-sus compañeros encuentren las respuestas, y pueden otorgarles mas puntos a quienes responden.
+sus compañeros encuentren las respuestas, y pueden otorgarles más puntos a quienes responden.
+:::
 
 ## Consideraciones generales
 
 Utilicen el paquete base `ar.unrn.agenda`.
 
-No está permitido el uso de métodos de tipo `getter`/`setter` para ningúna de las clases.
+:::{warning}
+No está permitido el uso de métodos de tipo `getter`/`setter` para ninguna de las clases.
 
 Recuerden no utilizar lo referido a programación funcional, la sintaxis no la vimos y consiste en usar cosas como
 `->` y `::`.
+:::
 
 No olviden crear un `main` que permita el uso de la `Agenda`.
 
 ### `Contacto`
 
-Representa un contacto inmutable e individual en la agenda, representado por los siguientes atributos,
+Representa un contacto inmutable e individual en la agenda, representado por los siguientes atributos:
 Nombre, Apellido, dirección de email, fecha de nacimiento y fecha de último contacto.
 
-(Para la fecha de nacimiento pueden usar `java.util.LocalDate`)
+:::{tip}
+Para la fecha de nacimiento pueden usar `java.util.LocalDate`.
+:::
 
-Comportamiento a implementar.
+Comportamiento a implementar:
 
 - Constructor parametrizado.
 - Igualdad y `hashCode`
@@ -77,7 +89,9 @@ Gestiona la colección de objetos `Contacto`, opcionalmente utilizando los `Arre
 
 ### Opcionales
 
+:::{note}
 En ambos, sin duplicar los `Contacto`.
+:::
 
 #### Implementar una clasificación de contactos
 
@@ -94,6 +108,8 @@ Implementar `agregar` / `quitar` / `contiene`
 
 #### Almacenamiento persistente
 
-Sin utilizar `getter`s/`setter`s o Persistencia de Java. 
+:::{warning}
+Sin utilizar `getter`s/`setter`s o Persistencia de Java.
+:::
 
-Guarden disco la `Agenda` de forma que la información pueda ser accedida luego de que el programa se cierra.
+Guarden a disco la `Agenda` de forma que la información pueda ser accedida luego de que el programa se cierra.

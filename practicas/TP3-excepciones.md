@@ -1,9 +1,15 @@
+---
+title: "TP3 - Arreglos y Excepciones"
+description: Trabajo práctico sobre manejo de arreglos y excepciones en Java.
+---
+
 # TP-3 - Arreglos y Excepciones
 
 ## Forma de entrega
 
+:::{important}
 - No olviden completar la plantilla con sus datos y agregar la descripción de cada función.
-  Aunque `main` puede no tener este comentario, no está de más registrar que es lo que el
+  Aunque `main` puede no tener este comentario, no está de más registrar qué es lo que el
   `Scanner` recibe.
 - Siempre que sea posible, los mensajes de commit deben ser descriptivos.
 - Implementen un `main` que haga un uso de las funciones implementadas, pueden utilizar un `Scanner`.
@@ -14,16 +20,20 @@
 - Es posible hacer cambios en la forma de las funciones a implementar, pero para esto, indíquenlo explícitamente
   en el comentario de documentación.
 - No olviden crear Tests.
+:::
 
-Finalmente, pueden usar los
-atajos [SOS - 🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20)
+:::{tip}
+Pueden usar los atajos [SOS](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20)
 para preguntar sobre los enunciados individuales.
+:::
 
-## [1] Ingreso mejorado [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Ingreso%20mejorado)
+(tp3-ejercicio1)=
+## Ejercicio 1 - Ingreso mejorado
 
 En `IngresoApp`, crear las siguientes funciones a partir de los siguientes prototipos.
 
-```java
+```{code} java
+:caption: Prototipos de obtieneEntero
 /**
  * Solicita al usuario un número entero, repitiendo la solicitud hasta un máximo de 'intentos' veces.
  *
@@ -51,37 +61,49 @@ public static int obtieneEntero(String mensaje, int intentos, int minimo, int ma
         throws NoMasIntentosException
 ```
 
-**Detalle muy importante. No es posible armar un test con lo que hemos visto para esta función porque su propósito es
-utilizar `Scanner` desde `System.in`.**
+:::{warning}
+**Detalle muy importante.** No es posible armar un test con lo que hemos visto para esta función porque su propósito es
+utilizar `Scanner` desde `System.in`.
+:::
 
-## [2] Arreglos I [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Arreglos%20I)
+[SOS Ingreso mejorado](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Ingreso%20mejorado)
+
+(tp3-ejercicio2)=
+## Ejercicio 2 - Arreglos I
 
 En la clase `ArregloApp`, se pide implementar un conjunto de funciones para trabajar con arreglos de números enteros.
-Pueden utilizar la funcionalidad presente en  [
-`java.util.Arrays`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Arrays.html) pero vean de
+
+:::{note}
+Pueden utilizar la funcionalidad presente en [`java.util.Arrays`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Arrays.html) pero vean de
 utilizarla lo menos posible de manera directa en su código.
+:::
 
 Utilicen `ArregloException` para indicar fallos que su código produzca, eviten las fallas 'naturales' como los accesos
-fuera de lugar, pero lanzen esta excepción en su lugar. (No es correcto atajar y lanzar, por razones que veremos más
+fuera de lugar, pero lancen esta excepción en su lugar. (No es correcto atajar y lanzar, por razones que veremos más
 adelante).
 
+:::{important}
 Esto requerirá que revisen la documentación para ver qué `Exception` son lanzadas y en qué situaciones, para ver cómo
 evitarlas.
+:::
 
 Vean de reducir la duplicación de código dentro de las funciones, para lo cual, pueden usar y crear sus propias
 funciones, además de las indicadas en las consignas y sin olvidar su documentación.
 
-### [2.1] Convertir a cadena [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20aCadena)
+[SOS Arreglos I](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Arreglos%20I)
+
+### 2.1 - Convertir a cadena
 
 Implementar una función que pueda convertir un arreglo de cualquier tamaño a `String`, mostrando su contenido y largo.
 
-```java
+```{code} java
+:caption: Prototipo aCadena
 public static String aCadena(int[] arreglo)
 ```
 
 Salida de ejemplo:
 
-```
+```java
 int[] arreglo = {2, 3, 4, 5, 6, 7};
 String cadena = aCadena(arreglo);
 System.out.println(cadena);
@@ -91,64 +113,87 @@ System.out.println(cadena);
 6: {2, 3, 4, 5, 6, 7}
 ```
 
-Comparen con [
-`Arrays.toString`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Arrays.html#toString(int%5B%5D))
+:::{seealso}
+Comparen con [`Arrays.toString`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Arrays.html#toString(int%5B%5D))
+:::
 
-### [2.2] Cargar [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Cargar)
+[SOS aCadena](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20aCadena)
 
+### 2.2 - Cargar
+
+:::{tip}
 Para cargar el arreglo, empleen las funciones del punto 1, pueden acceder a las mismas
 indicando su nombre completo `IngresoApp.obtieneEntero`.
+:::
 
-```java
+```{code} java
+:caption: Prototipo cargaManual
 public static int[] cargaManual(String mensaje, int cantidad)
 ```
 
-### [2.3] Carga aleatoria [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Carga%20aleatoria)
+[SOS Cargar](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Cargar)
+
+### 2.3 - Carga aleatoria
 
 Implementar una función que cargue un arreglo con números aleatorios.
-Utilizando [`java.util.Random`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Random.html)
+
+:::{note}
+Utilizando [`java.util.Random`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Random.html):
 
 ```java
 Random generator = new Random();
 int aleatorio = generator.nextInt(minimo, maximo + 1);
 ```
 
-Para darle uso, es necesario importarlo;
+Para darle uso, es necesario importarlo:
 
 ```java
 import java.util.Random;
 ```
+:::
 
-Y la función a implementar debe tener este prototipo.
+Y la función a implementar debe tener este prototipo:
 
-```java
+```{code} java
+:caption: Prototipo aleatorio
 public static int[] aleatorio(int minimo, int maximo, int cantidad)
 ```
 
 Esta función es interesante para probar el funcionamiento del resto.
 
-### [2.3] Ordenar [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Ordenar)
+[SOS Carga aleatoria](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Carga%20aleatoria)
+
+### 2.4 - Ordenar
 
 Implementar una función que cree una copia del arreglo, pero ordenado de manera ascendente
 empleando el algoritmo de ordenamiento que deseen.
 
-Funcionalidad de librería: [
-`Arrays.sort`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Arrays.html#sort(int%5B%5D)).
+:::{seealso}
+Funcionalidad de librería: [`Arrays.sort`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Arrays.html#sort(int%5B%5D))
+:::
 
-### [2.4] Sumar [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Sumar)
+[SOS Ordenar](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Ordenar)
+
+### 2.5 - Sumar
 
 Implementar una función que sume todos los valores del arreglo, el resultado debe ser un valor `long` para minimizar
 desbordamientos.
 
-### [2.5] Promediar [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Promediar)
+[SOS Sumar](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Sumar)
+
+### 2.6 - Promediar
 
 Implementar una función que promedie los valores del arreglo, dando el resultado como un valor decimal `double`.
 
-### [2.6] Máximo / mínimo [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20M%C3%A1ximo%20%2F%20m%C3%ADnimo)
+[SOS Promediar](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Promediar)
+
+### 2.7 - Máximo / mínimo
 
 Implementar dos funciones que obtengan el valor máximo y el mínimo.
 
-### [2.7] Valor medio [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Valor%20medio)
+[SOS Máximo/mínimo](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20M%C3%A1ximo%20%2F%20m%C3%ADnimo)
+
+### 2.8 - Valor medio
 
 Desarrollar una función que, dado un arreglo de números enteros, devuelva el elemento del arreglo que esté más cercano
 al valor medio entre el máximo y el mínimo del arreglo.
@@ -164,54 +209,57 @@ absoluta con el valor medio calculado sea la menor.
 **Manejo de empates**: Si hay varios elementos equidistantes al valor medio, la función puede devolver a cualquiera de
 ellas.
 
-Ejemplo 1, él medio está al medio:
+:::{table} Ejemplos de valor medio
+:label: tbl-valor-medio
 
-- Arreglo: `[1, 2, 3, 4, 5]`
-- Máximo: `5`
-- Mínimo: `1`
-- Valor medio: `(5 + 1) / 2 = 3`
-- Elemento más cercano: `3`
+| Ejemplo | Arreglo | Máximo | Mínimo | Valor medio | Elemento más cercano |
+| :--- | :--- | :---: | :---: | :---: | :---: |
+| 1 | `[1, 2, 3, 4, 5]` | 5 | 1 | 3 | 3 |
+| 2 | `[2, 4, 6, 8]` | 8 | 2 | 5 | 4 o 6 |
+| 3 | `[-3, 0, 5, 10]` | 10 | -3 | 3.5 | 5 |
 
-Ejemplo 2, empate:
+:::
 
-- Arreglo: `[2, 4, 6, 8]`
-- Máximo: `8`
-- Mínimo: `2`
-- Valor medio: `(8 + 2) / 2 = 5`
-- Elemento más cercano: `4` o `6` Como ambos estan a la misma 'distancia', elijan uno.
-
-Ejemplo 3:
-
-- Arreglo: `[-3, 0, 5, 10]`
-- Máximo: `10`
-- Mínimo: `-3`
-- Valor medio: `(10 - 3) / 2 = 3.5`
-- Elemento más cercano: `5`
-
+:::{seealso}
 Pueden usar [`Math.abs`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Math.html#abs(int)) para
 obtener el valor absoluto.
+:::
 
-### [2.8] Redimensión [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Redimensi%C3%B3n)
+[SOS Valor medio](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Valor%20medio)
+
+### 2.9 - Redimensión
 
 Implementar una función que, dado un arreglo, una nueva dimensión y un valor de relleno, devuelva uno nuevo con la nueva
 capacidad.
 
-### [2.9] Remover [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Remover)
+[SOS Redimensión](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Redimensi%C3%B3n)
+
+### 2.10 - Remover
 
 Implementar una función que remueva el elemento en una posición del arreglo, retornando un nuevo arreglo más chico.
 
-### [2.10] Encontrar [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Encontrar)
+[SOS Remover](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Remover)
+
+### 2.11 - Encontrar
 
 Implementar una función que devuelva la posición de la primera vez que aparece un número
 en un arreglo.
 
-Funcionalidad de librería: [
-`Arrays.binarySearch`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Arrays.html#binarySearch(int%5B%5D,int,int,int)).
+:::{seealso}
+Funcionalidad de librería: [`Arrays.binarySearch`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Arrays.html#binarySearch(int%5B%5D,int,int,int))
+:::
 
-## [3] División Lenta II [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Divisi%C3%B3n%20lenta)
+[SOS Encontrar](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Encontrar)
+
+(tp3-ejercicio3)=
+## Ejercicio 3 - División Lenta II
 
 Mejorar la división lenta del TP anterior para que las funciones implementadas ahora eleven un
 `DivisionPorCeroException` al intentar dividir por cero.
 
-Agregar tests con `fail("Mensaje")` como vimos en clase, evitando usar el `assertThrows` que de momento que IntelliJ les
+:::{tip}
+Agregar tests con `fail("Mensaje")` como vimos en clase, evitando usar el `assertThrows` que de momento IntelliJ les
 sugerirá utilizar.
+:::
+
+[SOS División lenta](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP3%20-%20Divisi%C3%B3n%20lenta)

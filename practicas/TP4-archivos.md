@@ -1,9 +1,15 @@
+---
+title: "TP4 - Archivos con arreglos"
+description: Trabajo práctico sobre lectura y escritura de archivos con arreglos en Java.
+---
+
 # TP4 - Archivos con arreglos
 
 ## Forma de entrega
 
+:::{important}
 - No olviden completar la plantilla con sus datos y agregar la descripción de cada función.
-  Aunque `main` puede no tener este comentario, no está de más registrar que es lo que el
+  Aunque `main` puede no tener este comentario, no está de más registrar qué es lo que el
   `Scanner` recibe.
 - Siempre que sea posible, los mensajes de commit deben ser descriptivos.
 - Implementen un main que haga un uso de las funciones implementadas, pueden utilizar un `Scanner`.
@@ -11,21 +17,25 @@
 - No olviden la utilización de auto-formato, las herramientas de corrección le prestan atención
   a este tema.
 - Puede ser necesario cambiar y ajustar la documentación de las funciones pedidas.
-- Es posible hacer cambios en la forma de las funciones a implementar, pero para esto, indiquenló explicitamente
+- Es posible hacer cambios en la forma de las funciones a implementar, pero para esto, indíquenlo explícitamente
   en el comentario de documentación.
 - No olviden crear Tests.
+:::
 
-Finalmente, pueden usar los atajos tienen los
-atajos [SOS - 🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20)
+:::{tip}
+Pueden usar los atajos [SOS](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20)
 para crear preguntas sobre los enunciados individuales, si es posible, no fusionen las preguntas, así es más fácil que
-sus compañeros encuentren las respuestas, y pueden otorgarles mas puntos a quienes responden.
+sus compañeros encuentren las respuestas, y pueden otorgarles más puntos a quienes responden.
+:::
 
 ## Organización de los archivos
 
+:::{note}
 Vamos a aplicar un pequeño cambio en la forma de estructurar la práctica, ahora el grueso de lo que desarrollen,
 estará en archivos que no contienen un `main`, por lo que su nombre cambia para reflejarlo.
+:::
 
-1. En la clase `ar.unrn.Archivos`, enviar todas las funciones que interactuen con archivos, aquí se alojará lo más
+1. En la clase `ar.unrn.Archivos`, enviar todas las funciones que interactúen con archivos, aquí se alojará lo más
    importante que deben de desarrollar.
 2. En la clase `ar.unrn.Arreglos`, traigan las funciones de `ArregloApp`.
 3. Y en la clase `ar.unrn.Ingreso`, las funciones para pedirle datos al usuario.
@@ -34,11 +44,14 @@ El objetivo de esta separación es mantener los respectivos `main` lo más simpl
 
 ## Funciones a desarrollar (en `Archivos`)
 
+:::{important}
 Resuelvan estas funciones usando New Style IO (lo que vimos en clases.)
+:::
 
-### Cargar arreglo desde archivo [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20Cargar%20arreglo%20desde%20archivo)
+### A - Cargar arreglo desde archivo
 
-```java
+```{code} java
+:caption: Prototipo cargar
 /**
  * Carga un arreglo de enteros desde un archivo.
  *
@@ -49,9 +62,12 @@ Resuelvan estas funciones usando New Style IO (lo que vimos en clases.)
 public static int[] cargar(Path archivo) throws IOException  
 ```
 
-### [B] Escribir arreglo desde archivo [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20Escribir%20arreglo%20desde%20archivo)
+[SOS Cargar arreglo](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20Cargar%20arreglo%20desde%20archivo)
 
-```java
+### B - Escribir arreglo desde archivo
+
+```{code} java
+:caption: Prototipo escribir
 /**
  * Guarda un arreglo de enteros en un archivo. Si el archivo ya existe, se sobrescribe.
  *
@@ -62,14 +78,14 @@ public static int[] cargar(Path archivo) throws IOException
 public static int[] escribir(int[] arreglo, Path archivo) throws IOException  
 ```
 
-### [C] **_{Opcional}_** Actualizar una posición del arreglo en archivo
+[SOS Escribir arreglo](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20Escribir%20arreglo%20desde%20archivo)
 
-[Botón 🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20%7BOpcional%7D%20Actualizar%20una%20posici%C3%B3n%20del%20arreglo%20en%20archivo)
-de este ejercicio.
+### C - *{Opcional}* Actualizar una posición del arreglo en archivo
 
 Esta función actualiza un valor específico dentro de un arreglo en archivo.
 
-```java
+```{code} java
+:caption: Prototipo actualizar
 /**
  * Actualiza un valor específico en una posición dada dentro de un arreglo almacenado en un archivo.
  *
@@ -81,6 +97,8 @@ Esta función actualiza un valor específico dentro de un arreglo en archivo.
  */
 public static void actualizar(int posicion, int valor, Path archivo) throws IOException;
 ```
+
+[SOS Actualizar posición](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20%7BOpcional%7D%20Actualizar%20una%20posici%C3%B3n%20del%20arreglo%20en%20archivo)
 
 Esta función se puede implementar de dos formas:
 
@@ -94,8 +112,10 @@ Esta función se puede implementar de dos formas:
 
 Leer el archivo número por número y reemplazarlo cuando nos encontremos en la posición indicada.
 
+:::{warning}
 Para evitar problemas y accidentes, usen solo rutas relativas a la ubicación del proyecto.
 Para ello, **todas las llamadas** que involucren rutas deben comenzar con `"."`.
+:::
 
 Las entradas y salidas de los programas a desarrollar deben ser simples, los tests son más importantes.
 
@@ -103,8 +123,9 @@ Las entradas y salidas de los programas a desarrollar deben ser simples, los tes
 
 La idea es trabajar con archivos de texto que contengan números enteros (`int` o `long`).
 
+:::{note}
 El formato que deben tener, aunque es libre, se sugiere por simplicidad, a que el archivo se estructure
-un número por línea e indicando al principio cuantos números contiene.
+un número por línea e indicando al principio cuántos números contiene.
 
 ```
 4
@@ -115,50 +136,65 @@ un número por línea e indicando al principio cuantos números contiene.
 ```
 
 Esto sería el arreglo `{1, 3, 5, 6}`
+:::
 
 ### Extensión del archivo
 
 Pueden utilizar `.txt`, pero también `.arreglo` que es más _bonito_.
 
-### Programas a desarrollar
+## Programas a desarrollar
 
+:::{note}
 A diferencia de los prácticos anteriores, en este, los `main` van en archivos separados de las funciones
 a implementar.
 
-Importante, mantengan tan separado como sea posible lo que sea referido al arreglo en sí, de la parte de archivos.
+Importante: mantengan tan separado como sea posible lo que sea referido al arreglo en sí, de la parte de archivos.
+:::
 
-#### [1] `MuestraApp`: Mostrar el arreglo [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20Mostrar%20el%20arreglo)
+### 1 - `MuestraApp`: Mostrar el arreglo
 
 Desarrollar un programa que muestre el arreglo contenido en un archivo, indicando:
 - Si el archivo tiene la estructura correcta y si es posible cargarlo.
-- Sí está ordenado y en qué dirección
+- Sí está ordenado y en qué dirección.
 
+:::{tip}
 Pueden usar `Files.probeContentType` para saber de qué tipo de archivo se trata y evitar aquellos que no
 sean de texto.
+:::
 
-**Salida de ejemplo**
+**Salida de ejemplo:**
 ```
 {1, 3, 5, 6} -> ascendente
 ```
 
-#### [2] `MezclaApp`: Randomizador [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20Randomizador)
+[SOS Mostrar arreglo](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20Mostrar%20el%20arreglo)
+
+### 2 - `MezclaApp`: Randomizador
 
 Desarrollar un programa que mezcle un arreglo contenido en un archivo.
 
-### Opcionales
+[SOS Randomizador](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20Randomizador)
 
-#### `LinealApp`: Generación lineal [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20Generaci%C3%B3n%20lineal)
+## Opcionales
+
+### `LinealApp`: Generación lineal
 
 Desarrollar un programa que permita crear un archivo con un determinado rango de números, indicando el nombre del
 archivo, el valor inicial, el incremento y la cantidad.
 
-#### `RandomApp`: Generación aleatoria [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20Generaci%C3%B3n%20aleatoria)
+[SOS Generación lineal](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20Generaci%C3%B3n%20lineal)
+
+### `RandomApp`: Generación aleatoria
 
 Desarrollar un programa que permita crear un archivo con una cantidad arbitraria de números, incluyendo opción
 para fijar el rango de valores mínimo y máximo.
 
-#### `OrdenaApp`: Ordenamiento de archivo [🆘](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20Ordenamiento%20de%20archivo)
+[SOS Generación aleatoria](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20Generaci%C3%B3n%20aleatoria)
+
+### `OrdenaApp`: Ordenamiento de archivo
 
 El programa debe pedir el nombre de un archivo 'origen', la dirección en la que se ordenará y guardar su contenido
 en uno que sea llamado de la misma forma pero agregando `_ordenado`.
+
+[SOS Ordenamiento](https://github.com/orgs/INGCOM-UNRN-PII/discussions/new?category=preguntas-y-respuestas&title=TP4%20-%20Ordenamiento%20de%20archivo)
 

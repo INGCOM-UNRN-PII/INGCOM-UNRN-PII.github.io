@@ -1,10 +1,13 @@
-Enunciado: Sistema de Gestión Hospitalaria (MultiSalud)
-=======================================================
+---
+title: "TPI - Sistema de Gestión Hospitalaria (MultiSalud)"
+description: Proyecto integrador para desarrollar un sistema de gestión hospitalaria.
+---
+
+# Sistema de Gestión Hospitalaria (MultiSalud)
 
 El objetivo es desarrollar un **MultiGestor de Salud** que permita administrar múltiples Centros Médicos, sus agendas de turnos y el historial clínico de los pacientes. El sistema debe seguir un enfoque de Programación Orientada a Objetos estricto y garantizar la persistencia de los datos en disco.
 
-Requerimientos Funcionales
---------------------------
+## Requerimientos Funcionales
 
 Cada **Gestor** puede administrar múltiples **Centros Médicos**. Un centro contiene un conjunto de **Turnos**, y cada turno tiene asociado un **Médico** y un **Paciente** (quien posee un historial de consultas).
 
@@ -27,15 +30,12 @@ Cada **Gestor** puede administrar múltiples **Centros Médicos**. Un centro con
 8.  **Listar Pacientes por Prioridad**: Devolver la lista de pacientes de un día específico, ordenados por la jerarquía de prioridad del turno (URGENCIA > CONSULTA > CONTROL).
 
 9.  **Estadísticas del Centro**:
-
-    -   Cantidad de turnos atendidos vs. programados.
-
-    -   Edad promedio de los pacientes atendidos en el centro.
+    - Cantidad de turnos atendidos vs. programados.
+    - Edad promedio de los pacientes atendidos en el centro.
 
 10. **Limpiar Centro**: Eliminar todos los turnos y registros de pacientes de un centro médico específico.
 
-Requerimientos Técnicos
------------------------
+## Requerimientos Técnicos
 
 1.  **Persistencia**: El sistema debe persistir la información en archivos de disco de forma que los datos sobrevivan al cierre de la aplicación. Se requiere el uso de un patrón que desacople la lógica de negocio (e.g., Repository o DAO).
 
@@ -44,22 +44,17 @@ Requerimientos Técnicos
 3.  **Patrones de Diseño**: Se valorará la implementación de patrones como *Strategy* para los criterios de ordenamiento o *Singleton*/*Factory* donde sea pertinente.
 
 4.  **Orientación a Objetos Estricta**:
+    - Encapsulamiento riguroso y uso de modificadores de acceso.
+    - Definición de contratos mediante interfaces.
+    - Relaciones de composición claras (Centro -> Turno -> Paciente/Médico).
 
-    -   Encapsulamiento riguroso y uso de modificadores de acceso.
+:::{important}
+**Testing**: La validación se realizará exclusivamente mediante **Tests Unitarios (JUnit 5)**. Se debe cubrir la lógica de negocio, los algoritmos de ordenamiento y la correcta persistencia/recuperación desde archivos. **No desarrollar interfaz de usuario ni método main.**
+:::
 
-    -   Definición de contratos mediante interfaces.
+## Criterios de Evaluación
 
-    -   Relaciones de composición claras (Centro -> Turno -> Paciente/Médico).
-
-5.  **Testing**: La validación se realizará exclusivamente mediante **Tests Unitarios (JUnit 5)**. Se debe cubrir la lógica de negocio, los algoritmos de ordenamiento y la correcta persistencia/recuperación desde archivos. **No desarrollar interfaz de usuario ni método main.**
-
-Criterios de Evaluación
------------------------
-
--   **Modelado**: Correcta jerarquía de objetos y manejo de relaciones de asociación y composición.
-
--   **Excepciones**: Gestión de errores (e.g., superposición de horarios, archivos corruptos, paciente ya registrado).
-
--   **Clean Code**: Métodos breves, nombres semánticos y cumplimiento de principios SOLID (especialmente Responsabilidad Única e Inversión de Dependencias).
-
--   **Persistencia**: Garantizar que el estado del sistema se recupera íntegramente desde los archivos al iniciar los tests.
+- **Modelado**: Correcta jerarquía de objetos y manejo de relaciones de asociación y composición.
+- **Excepciones**: Gestión de errores (e.g., superposición de horarios, archivos corruptos, paciente ya registrado).
+- **Clean Code**: Métodos breves, nombres semánticos y cumplimiento de principios SOLID (especialmente Responsabilidad Única e Inversión de Dependencias).
+- **Persistencia**: Garantizar que el estado del sistema se recupera íntegramente desde los archivos al iniciar los tests.

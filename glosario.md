@@ -1,3 +1,11 @@
+---
+title: Glosario
+description: Glosario de terminología técnica utilizada en la cátedra de Programación II.
+---
+
 # Glosario de terminología
 
-**IDE**: Del inglés, Integrated Development Environment. Entorno Integrado de Desarrollo. Un conjunto de herramientas empaquetadas para asisitir al desarrollo de software.
+```{glossary}
+IDE
+  Del inglés, *Integrated Development Environment*. Entorno Integrado de Desarrollo. Un conjunto de herramientas empaquetadas para asistir al desarrollo de software.
+```

@@ -1,16 +1,27 @@
+---
+title: "Rúbrica TPI 2025"
+description: Rúbrica de evaluación del Trabajo Integrador Final.
+---
+
 # Rúbrica Trabajo Integrador Final
 
-Este es el repositorio para la entrega del Trabajo Integrador Final, y este archivo, es una copia de la consigna general mas la rúbrica.
+:::{note}
+Este es el repositorio para la entrega del Trabajo Integrador Final, y este archivo, es una copia de la consigna general más la rúbrica.
+:::
 
 ## Entrega
 
-La entrega del repositorio para revisión es en el mismo formulario que el usado para los Trabajos Prácticos y debe ser 24 horas antes de la defensa del mismo; **sin excepciones**.
+:::{important}
+La entrega del repositorio para revisión es en el mismo formulario que el usado para los Trabajos Prácticos y debe ser **24 horas antes** de la defensa del mismo; **sin excepciones**.
+:::
 
 ## Consigna
 
 Este proyecto final tiene como objetivo principal evaluar la comprensión y aplicación de los principios fundamentales de la Programación Orientada a Objetos (POO). Se espera que demuestren su habilidad para diseñar, implementar y probar soluciones robustas, haciendo uso de patrones de diseño adecuados y estructuras de datos eficientes para resolver problemas complejos.
 
+:::{note}
 Las consignas planteadas están para guiarlos, y no para ser completadas tal cual fueron planteadas.
+:::
 
 ## Rúbrica de evaluación
 
