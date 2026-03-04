@@ -28,52 +28,53 @@ project:
     - file: README.md
     - file: glosario.md
     - file: reglas.md
+    - file: acuerdo_ia.md
     - title: Guias
       children:
         - file: guias/guia_plantUML.md
         - file: guias/instalacion_intellij.md
         - file: guias/instalacion_jdk.md
-    - title: Java
-      children:
-        - file: java/apuntes/01_tipos_de_datos.md
-        - file: java/apuntes/02_metodos.md
-        - file: java/apuntes/03_entrada_salida.md
-        - file: java/apuntes/04_sintaxis_control.md
-        - file: java/apuntes/05_arreglos.md
-        - file: java/apuntes/06_excepciones.md
-        - file: java/apuntes/07_funciones_efectos.md
-        - file: java/apuntes/08_strings_stringbuilder.md
-        - file: java/apuntes/09_archivos.md
-        - file: java/apuntes/10_testing.md
-        - file: java/apuntes/11_poo.md
-
-    - title: Patrones
-      children:
-        - file: patrones/TP10-patrones-guia.md
-        - title: Creacionales
-          children:
-            - file: patrones/creacionales/singleton.md
-    - title: Practicas
-      children:
-        - file: practicas/TP1-primeros_pasos.md
-        - file: practicas/TP2-java_d_c.md
-        - file: practicas/TP3-excepciones.md
-        - file: practicas/TP4-archivos.md
-        - file: practicas/TP6-objetos_hora.md
-        - file: practicas/TP6-objetos.md
-        - file: practicas/TP8-calculadora.md
-        - file: practicas/TP9-arreglos.md
-        - file: practicas/TP10-patrones-guia.md
-        - file: practicas/TP10-patrones.md
-    - title: Proyectos
-      children:
-        - file: proyectos/TPI-2025.md
-        - file: proyectos/TPI-2025-rubrica.md
-        - file: proyectos/TPI-Agenda.md
-        - file: proyectos/TPI-clinica.md
-        - file: proyectos/TPI-logistica.md
-        - file: proyectos/TPI-proyectos.md
-        - file: proyectos/TPI-vuelos.md
+#    - title: Java
+#      children:
+#        - file: java/apuntes/01_tipos_de_datos.md
+#        - file: java/apuntes/02_metodos.md
+#        - file: java/apuntes/03_entrada_salida.md
+#        - file: java/apuntes/04_sintaxis_control.md
+#        - file: java/apuntes/05_arreglos.md
+#        - file: java/apuntes/06_excepciones.md
+#        - file: java/apuntes/07_funciones_efectos.md
+#        - file: java/apuntes/08_strings_stringbuilder.md
+#        - file: java/apuntes/09_archivos.md
+#        - file: java/apuntes/10_testing.md
+#        - file: java/apuntes/11_poo.md
+#
+#    - title: Patrones
+#      children:
+#        - file: patrones/TP10-patrones-guia.md
+#        - title: Creacionales
+#          children:
+#            - file: patrones/creacionales/singleton.md
+#    - title: Practicas
+#      children:
+#        - file: practicas/TP1-primeros_pasos.md
+#        - file: practicas/TP2-java_d_c.md
+#        - file: practicas/TP3-excepciones.md
+#        - file: practicas/TP4-archivos.md
+#        - file: practicas/TP6-objetos_hora.md
+#        - file: practicas/TP6-objetos.md
+#        - file: practicas/TP8-calculadora.md
+#        - file: practicas/TP9-arreglos.md
+#        - file: practicas/TP10-patrones-guia.md
+#        - file: practicas/TP10-patrones.md
+#    - title: Proyectos
+#      children:
+#        - file: proyectos/TPI-2025.md
+#        - file: proyectos/TPI-2025-rubrica.md
+#        - file: proyectos/TPI-Agenda.md
+#        - file: proyectos/TPI-clinica.md
+#        - file: proyectos/TPI-logistica.md
+#        - file: proyectos/TPI-proyectos.md
+#        - file: proyectos/TPI-vuelos.md
     
 site:
   template: book-theme
