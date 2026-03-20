@@ -31,18 +31,18 @@ project:
       - file: catedra/acuerdo_ia.md
     - title: Apunte
       children:
-        - file: apunte/1A_origenes.md
-        - file: apunte/1B_lenguaje.md
-        - file: java/01_tipos_de_datos.md
-        - file: java/02_metodos.md
-        - file: java/04_sintaxis_control.md
-        - file: java/03_entrada_salida.md
-        - file: apunte/1_gradle.md
-        - file: apunte/2_junit.md
-        - file: java/05_arreglos.md
-        - file: java/06_excepciones.md
-        - file: java/10_testing.md
-        - file: java/09_archivos.md
+        - file: apunte/01_origenes.md
+        - file: apunte/02_lenguaje.md
+        - file: apunte/03_tipos_de_datos.md
+        - file: apunte/04_metodos.md
+        - file: apunte/05_sintaxis_control.md
+        - file: apunte/06_entrada_salida.md
+        - file: apunte/07_gradle.md
+        - file: apunte/08_junit.md
+        - file: apunte/09_arreglos.md
+        - file: apunte/10_excepciones.md
+        - file: apunte/11_testing.md
+        - file: apunte/12_archivos.md
     - title: Guias
       children:
         - file: guias/instalacion_intellij.md

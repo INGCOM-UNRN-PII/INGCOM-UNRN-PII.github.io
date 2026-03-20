@@ -495,7 +495,7 @@ public class Conversor {
 
 ---
 
-**Anterior:** {ref}`Orígenes e Historia de Java <apunte/1A_origenes.md>`
+**Anterior:** {ref}`Orígenes e Historia de Java <apunte/01_origenes.md>`
 
 **Siguiente:** Continuá explorando los fundamentos de Java con los tipos de
 datos primitivos y operadores.

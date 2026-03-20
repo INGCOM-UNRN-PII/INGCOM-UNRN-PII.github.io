@@ -67,7 +67,7 @@ La innovación fundamental de Java no fue solo el lenguaje, sino la creación de
 1. **Compilación a Bytecode:** El compilador `javac` transforma el código fuente (`.java`) en **bytecode** (`.class`). El bytecode no es código máquina para ningún hardware real, sino para una máquina teórica basada en **pilas** (stack-based architecture).
 2. **Interpretación y JIT:** La JVM instalada en el sistema operativo interpreta este bytecode. Para maximizar el rendimiento, incluye un compilador **Just-In-Time (JIT)** que traduce las partes del código que se ejecutan frecuentemente a código máquina nativo en tiempo de ejecución.
 
-```{figure} 1A/jvm_arquitectura.svg
+```{figure} 01/jvm_arquitectura.svg
 :label: fig-jvm-arquitectura
 :align: center
 :width: 85%
@@ -94,7 +94,7 @@ La JVM no es un componente monolítico; está organizada en subsistemas especial
 
 Uno de los aspectos más innovadores de Java fue su **modelo de seguridad en capas**, diseñado originalmente para proteger a los usuarios de código potencialmente malicioso descargado de internet (como los Applets).
 
-```{figure} 1A/sandbox_modelo.svg
+```{figure} 01/sandbox_modelo.svg
 :label: fig-sandbox-modelo
 :align: center
 :width: 80%
@@ -254,7 +254,7 @@ Oracle y la comunidad continúan evolucionando la plataforma mediante proyectos 
 - Soporte políglota: ejecutar Java, JavaScript, Python, Ruby y R en la misma VM.
 - Rendimiento superior mediante optimizaciones avanzadas del compilador.
 
-```{figure} 1A/graalvm_polyglot.svg
+```{figure} 01/graalvm_polyglot.svg
 :label: fig-graalvm-polyglot
 :align: center
 :width: 85%
