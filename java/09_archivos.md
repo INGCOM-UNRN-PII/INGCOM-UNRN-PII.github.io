@@ -1,533 +1,1050 @@
 ---
 title: "Manejo de Archivos en Java"
-description: Guía completa sobre lectura y escritura de archivos con java.nio.
+description: Estudio técnico sobre flujos de datos, NIO.2, manejo de excepciones y persistencia en sistemas de archivos.
 ---
 
 # Manejo de Archivos en Java
 
-Java proporciona múltiples formas de trabajar con archivos. Este apunte se centra en la API moderna `java.nio.file` (New I/O), disponible desde Java 7, que ofrece un manejo más robusto y flexible que la antigua API `java.io`.
+El manejo de Entrada/Salida (I/O) en Java ha evolucionado desde un modelo basado en flujos de datos (_streams_) en `java.io` hacia una API más moderna y eficiente denominada NIO.2 (`java.nio.file`). Para un ingeniero, entender esta transición es clave para diseñar sistemas que interactúen correctamente con el almacenamiento persistente.
 
-## Conceptos Básicos
+:::{note} Comparativa con C
+En C, el manejo de archivos se hace con punteros `FILE*` y funciones como `fopen()`, `fread()`, `fclose()`. Java proporciona una abstracción más segura con gestión automática de recursos y excepciones tipadas que indican exactamente qué salió mal.
+:::
 
-### La Clase Path
+## Arquitectura de I/O en Java
 
-`Path` es una **interfaz** que representa la ubicación de un archivo o directorio en el sistema de archivos:
+### Bytes vs. Caracteres
+
+Java separa estrictamente el manejo de datos binarios del texto:
+
+| Tipo de Datos | Clases Base | Uso |
+|:---|:---|:---|
+| **Bytes** | `InputStream`, `OutputStream` | Datos binarios (imágenes, audio, ejecutables) |
+| **Caracteres** | `Reader`, `Writer` | Texto (con codificación UTF-8, etc.) |
+
+```{code} java
+:caption: Diferencia conceptual
+
+// Para archivos binarios (bytes)
+InputStream entrada = new FileInputStream("imagen.png");
+
+// Para archivos de texto (caracteres)
+Reader lector = new FileReader("documento.txt");
+```
+
+### El Patrón Decorator
+
+La API clásica de Java utiliza el patrón **Decorator** para añadir funcionalidades a los flujos de datos. Esto permite "envolver" flujos básicos con funcionalidades adicionales.
+
+```{code} java
+:caption: Composición de flujos (Decorator)
+
+// FileReader: flujo de bajo nivel (accede al archivo)
+// BufferedReader: agrega buffering (mejora rendimiento)
+BufferedReader reader = new BufferedReader(new FileReader("datos.txt"));
+```
+
+## NIO.2: La API Moderna
+
+Introducida en Java 7, NIO.2 (`java.nio.file`) proporciona una API más potente y segura para trabajar con archivos.
+
+### La Clase `Path`
+
+`Path` representa una ruta en el sistema de archivos. Es una abstracción que funciona en cualquier sistema operativo.
 
 ```{code} java
 :caption: Creación de objetos Path
 
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
-// Desde un string
-Path archivo = Paths.get("archivo.txt");
-Path rutaAbsoluta = Paths.get("C:/datos/archivo.txt");  // Windows
-Path rutaUnix = Paths.get("/home/usuario/archivo.txt"); // Unix/Linux
+// Crear Path desde String
+Path archivo = Path.of("datos.txt");
+Path rutaAbsoluta = Path.of("/home/usuario/documentos/datos.txt");
+Path rutaWindows = Path.of("C:\\Users\\usuario\\datos.txt");
 
-// Combinando partes
-Path combinado = Paths.get("directorio", "subdirectorio", "archivo.txt");
+// Path con múltiples componentes
+Path ruta = Path.of("home", "usuario", "documentos", "datos.txt");
 
-// Desde Java 11: método estático en Path
-Path moderno = Path.of("archivo.txt");
+// Obtener información del Path
+String nombre = archivo.getFileName().toString();    // "datos.txt"
+Path padre = rutaAbsoluta.getParent();               // "/home/usuario/documentos"
+Path raiz = rutaAbsoluta.getRoot();                  // "/"
 ```
 
-### Rutas Relativas vs Absolutas
+### La Clase `Files`
+
+`Files` proporciona métodos estáticos para operaciones comunes con archivos.
 
 ```{code} java
-:caption: Tipos de rutas
-
-// Ruta relativa: se resuelve desde el directorio de trabajo actual
-Path relativa = Paths.get("datos/archivo.txt");
-
-// Ruta absoluta: ubicación completa en el sistema de archivos
-Path absoluta = Paths.get("/home/usuario/datos/archivo.txt");
-
-// Verificar tipo
-boolean esAbsoluta = archivo.isAbsolute();
-
-// Convertir relativa a absoluta
-Path absolutaDesdeRelativa = relativa.toAbsolutePath();
-```
-
-:::{note}
-**Directorio de trabajo**: En IntelliJ IDEA, es típicamente la raíz del proyecto. Desde consola, es el directorio desde donde se ejecuta el programa.
-:::
-
-### Métodos Útiles de Path
-
-```{code} java
-:caption: Métodos de Path
-
-Path ruta = Paths.get("/home/usuario/documentos/informe.pdf");
-
-// Obtener partes
-Path nombre = ruta.getFileName();     // "informe.pdf"
-Path padre = ruta.getParent();        // "/home/usuario/documentos"
-Path raiz = ruta.getRoot();           // "/"
-
-// Número de elementos
-int elementos = ruta.getNameCount();  // 4
-
-// Obtener elemento por índice
-Path elem = ruta.getName(2);          // "documentos"
-
-// Normalizar rutas con . y ..
-Path conPuntos = Paths.get("/home/usuario/../usuario/./docs");
-Path normalizada = conPuntos.normalize();  // "/home/usuario/docs"
-
-// Resolver rutas (combinar)
-Path base = Paths.get("/home/usuario");
-Path completa = base.resolve("archivo.txt");  // "/home/usuario/archivo.txt"
-```
-
-## La Clase Files
-
-`Files` es una clase utilitaria con métodos estáticos para operaciones con archivos y directorios:
-
-### Verificación de Existencia
-
-```{code} java
-:caption: Verificación de archivos
+:caption: Operaciones básicas con Files
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-Path archivo = Paths.get("datos.txt");
+Path archivo = Path.of("datos.txt");
 
+// Verificar existencia
 boolean existe = Files.exists(archivo);
-boolean noExiste = Files.notExists(archivo);
 boolean esArchivo = Files.isRegularFile(archivo);
 boolean esDirectorio = Files.isDirectory(archivo);
-boolean legible = Files.isReadable(archivo);
-boolean escribible = Files.isWritable(archivo);
+
+// Verificar permisos
+boolean lectura = Files.isReadable(archivo);
+boolean escritura = Files.isWritable(archivo);
+
+// Obtener tamaño
+long tamanio = Files.size(archivo);  // en bytes
 ```
 
-### Creación de Archivos y Directorios
+## Lectura de Archivos de Texto
+
+### Método Simple: `Files.readAllLines()`
+
+Para archivos pequeños, podés leer todas las líneas de una vez:
 
 ```{code} java
-:caption: Crear archivos y directorios
-
-// Crear archivo vacío
-Path nuevoArchivo = Files.createFile(Paths.get("nuevo.txt"));
-
-// Crear directorio
-Path nuevoDir = Files.createDirectory(Paths.get("nuevoDirectorio"));
-
-// Crear directorios anidados (incluyendo padres)
-Path anidados = Files.createDirectories(Paths.get("a/b/c/d"));
-
-// Crear archivo temporal
-Path temporal = Files.createTempFile("prefijo-", ".tmp");
-```
-
-### Copiar, Mover y Eliminar
-
-```{code} java
-:caption: Operaciones con archivos
-
-import java.nio.file.StandardCopyOption;
-
-Path origen = Paths.get("original.txt");
-Path destino = Paths.get("copia.txt");
-
-// Copiar
-Files.copy(origen, destino);
-
-// Copiar reemplazando si existe
-Files.copy(origen, destino, StandardCopyOption.REPLACE_EXISTING);
-
-// Mover (renombrar)
-Files.move(origen, destino);
-
-// Eliminar
-Files.delete(destino);  // Lanza excepción si no existe
-
-// Eliminar si existe
-Files.deleteIfExists(destino);  // Retorna boolean
-```
-
-### Información de Archivos
-
-```{code} java
-:caption: Obtener información de archivos
-
-Path archivo = Paths.get("documento.txt");
-
-// Tamaño en bytes
-long tamanio = Files.size(archivo);
-
-// Tiempo de última modificación
-FileTime tiempo = Files.getLastModifiedTime(archivo);
-```
-
-## Lectura de Archivos
-
-### Leer Todo el Contenido
-
-```{code} java
-:caption: Lectura completa de archivos
+:caption: Leer todas las líneas
 
 import java.nio.file.Files;
-import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
 import java.util.List;
+import java.io.IOException;
 
-Path archivo = Paths.get("datos.txt");
-
-// Leer como String (Java 11+)
-String contenido = Files.readString(archivo);
-
-// Leer todas las líneas como lista
-List<String> lineas = Files.readAllLines(archivo);
-
-// Con codificación específica
-List<String> lineasUtf8 = Files.readAllLines(archivo, StandardCharsets.UTF_8);
-
-// Leer bytes
-byte[] bytes = Files.readAllBytes(archivo);
+public static void leerArchivoCompleto(String rutaArchivo) {
+    Path archivo = Path.of(rutaArchivo);
+    
+    try {
+        List<String> lineas = Files.readAllLines(archivo);
+        
+        for (String linea : lineas) {
+            System.out.println(linea);
+        }
+    } catch (IOException e) {
+        System.out.println("Error al leer archivo: " + e.getMessage());
+    }
+}
 ```
 
-:::{warning}
-Los métodos que leen todo el archivo son convenientes pero **cargan todo en memoria**. Para archivos grandes, usá lectura línea por línea.
+:::{warning} Cuidado con Archivos Grandes
+`readAllLines()` carga **todo** el archivo en memoria. Para archivos muy grandes, esto puede causar `OutOfMemoryError`. Usá lectura línea por línea para archivos grandes.
 :::
 
-### Lectura con BufferedReader
+### Lectura Línea por Línea con BufferedReader
 
-Para archivos grandes o procesamiento línea por línea:
+Para archivos grandes, leé línea por línea:
 
 ```{code} java
-:caption: Lectura con BufferedReader
+:caption: Lectura línea por línea
 
 import java.io.BufferedReader;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.io.IOException;
 
-Path archivo = Paths.get("grande.txt");
-
-try (BufferedReader reader = Files.newBufferedReader(archivo)) {
-    String linea;
-    while ((linea = reader.readLine()) != null) {
-        System.out.println(linea);
+public static void leerLineaPorLinea(String rutaArchivo) {
+    Path archivo = Path.of(rutaArchivo);
+    
+    try (BufferedReader reader = Files.newBufferedReader(archivo)) {
+        String linea;
+        int numeroLinea = 1;
+        
+        while ((linea = reader.readLine()) != null) {
+            System.out.println(numeroLinea + ": " + linea);
+            numeroLinea = numeroLinea + 1;
+        }
+    } catch (IOException e) {
+        System.out.println("Error al leer: " + e.getMessage());
     }
-} catch (IOException e) {
-    System.err.println("Error de lectura: " + e.getMessage());
 }
 ```
 
-### Lectura con Scanner
+### Lectura de Todo el Contenido como String
 
 ```{code} java
-:caption: Lectura con Scanner
-
-import java.util.Scanner;
-import java.io.File;
-
-try (Scanner scanner = new Scanner(new File("datos.txt"))) {
-    while (scanner.hasNextLine()) {
-        String linea = scanner.nextLine();
-        System.out.println(linea);
-    }
-} catch (FileNotFoundException e) {
-    System.err.println("Archivo no encontrado");
-}
-```
-
-:::{warning}
-**Programación Funcional No Permitida**
-
-En este curso **no se permite** el uso de Streams de Java 8+ (`Files.lines()`, `stream()`, `filter()`, `map()`, etc.) ni expresiones lambda. Se debe usar lectura imperativa con `BufferedReader` y lazos tradicionales.
-:::
-
-## Escritura de Archivos
-
-### Escribir Todo el Contenido
-
-```{code} java
-:caption: Escritura completa de archivos
+:caption: Leer todo como String
 
 import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
-import java.util.List;
+import java.nio.file.Path;
+import java.io.IOException;
 
-Path archivo = Paths.get("salida.txt");
-
-// Escribir String (Java 11+)
-Files.writeString(archivo, "Contenido del archivo");
-
-// Escribir lista de líneas
-List<String> lineas = List.of("Línea 1", "Línea 2", "Línea 3");
-Files.write(archivo, lineas);
-
-// Agregar al final (append)
-Files.writeString(archivo, "\nMás contenido", StandardOpenOption.APPEND);
-
-// Escribir bytes
-byte[] datos = "Bytes".getBytes();
-Files.write(archivo, datos);
+public static String leerComoString(String rutaArchivo) throws IOException {
+    Path archivo = Path.of(rutaArchivo);
+    return Files.readString(archivo);  // Java 11+
+}
 ```
 
-### Opciones de Apertura
+## Escritura de Archivos de Texto
+
+### Método Simple: `Files.write()`
 
 ```{code} java
-:caption: StandardOpenOption
+:caption: Escribir líneas a un archivo
 
-import java.nio.file.StandardOpenOption;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.List;
+import java.util.Arrays;
+import java.io.IOException;
 
-Path archivo = Paths.get("datos.txt");
-
-// Crear si no existe, truncar si existe
-Files.writeString(archivo, "texto", 
-    StandardOpenOption.CREATE,
-    StandardOpenOption.TRUNCATE_EXISTING);
-
-// Crear si no existe, agregar al final
-Files.writeString(archivo, "más texto",
-    StandardOpenOption.CREATE,
-    StandardOpenOption.APPEND);
-
-// Solo crear (error si ya existe)
-Files.writeString(archivo, "nuevo",
-    StandardOpenOption.CREATE_NEW);
+public static void escribirLineas(String rutaArchivo) {
+    Path archivo = Path.of(rutaArchivo);
+    List<String> lineas = Arrays.asList(
+        "Primera línea",
+        "Segunda línea",
+        "Tercera línea"
+    );
+    
+    try {
+        Files.write(archivo, lineas);
+        System.out.println("Archivo escrito correctamente");
+    } catch (IOException e) {
+        System.out.println("Error al escribir: " + e.getMessage());
+    }
+}
 ```
 
 ### Escritura con BufferedWriter
 
-Para escritura controlada línea por línea:
+Para mayor control o archivos grandes:
 
 ```{code} java
 :caption: Escritura con BufferedWriter
 
 import java.io.BufferedWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.io.IOException;
 
-Path archivo = Paths.get("salida.txt");
-
-try (BufferedWriter writer = Files.newBufferedWriter(archivo)) {
-    writer.write("Primera línea");
-    writer.newLine();
-    writer.write("Segunda línea");
-    writer.newLine();
-} catch (IOException e) {
-    System.err.println("Error de escritura: " + e.getMessage());
+public static void escribirConBuffer(String rutaArchivo, String[] datos) {
+    Path archivo = Path.of(rutaArchivo);
+    
+    try (BufferedWriter writer = Files.newBufferedWriter(archivo)) {
+        for (String linea : datos) {
+            writer.write(linea);
+            writer.newLine();  // Agrega salto de línea del sistema
+        }
+    } catch (IOException e) {
+        System.out.println("Error al escribir: " + e.getMessage());
+    }
 }
 ```
 
-### Escritura con Formatter
-
-Para salida formateada similar a `printf`:
+### Agregar al Final (Append)
 
 ```{code} java
-:caption: Escritura con Formatter
+:caption: Agregar contenido a archivo existente
 
-import java.util.Formatter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+import java.io.IOException;
+import java.util.Collections;
 
-Path archivo = Paths.get("reporte.txt");
-
-try (Formatter formatter = new Formatter(archivo.toFile())) {
-    formatter.format("Usuario: %s%n", "Juan");
-    formatter.format("Puntuación: %d%n", 95);
-    formatter.format("Promedio: %.2f%n", 87.5);
-} catch (FileNotFoundException e) {
-    System.err.println("No se pudo crear el archivo");
+public static void agregarLinea(String rutaArchivo, String nuevaLinea) {
+    Path archivo = Path.of(rutaArchivo);
+    
+    try {
+        Files.write(archivo, 
+                   Collections.singletonList(nuevaLinea),
+                   StandardOpenOption.APPEND,
+                   StandardOpenOption.CREATE);  // Crea si no existe
+    } catch (IOException e) {
+        System.out.println("Error: " + e.getMessage());
+    }
 }
 ```
 
-## Listado de Directorios
+## Operaciones con Archivos y Directorios
 
-### DirectoryStream
+### Crear, Copiar, Mover y Eliminar
 
 ```{code} java
-:caption: Listar contenido de directorio
+:caption: Operaciones de archivo
 
-import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
+import java.io.IOException;
 
-Path directorio = Paths.get(".");
+// Crear directorio
+Path nuevoDir = Path.of("nuevo_directorio");
+Files.createDirectory(nuevoDir);
 
-try (DirectoryStream<Path> stream = Files.newDirectoryStream(directorio)) {
-    for (Path entrada : stream) {
-        System.out.println(entrada.getFileName());
-    }
-}
+// Crear directorios anidados
+Path directorios = Path.of("a/b/c/d");
+Files.createDirectories(directorios);
 
-// Con filtro por extensión
-try (DirectoryStream<Path> stream = 
-        Files.newDirectoryStream(directorio, "*.txt")) {
-    for (Path archivo : stream) {
-        System.out.println(archivo.getFileName());
-    }
-}
+// Crear archivo vacío
+Path nuevoArchivo = Path.of("nuevo.txt");
+Files.createFile(nuevoArchivo);
+
+// Copiar archivo
+Path origen = Path.of("original.txt");
+Path destino = Path.of("copia.txt");
+Files.copy(origen, destino, StandardCopyOption.REPLACE_EXISTING);
+
+// Mover/Renombrar archivo
+Path viejo = Path.of("viejo.txt");
+Path nuevo = Path.of("nuevo_nombre.txt");
+Files.move(viejo, nuevo, StandardCopyOption.REPLACE_EXISTING);
+
+// Eliminar archivo
+Path aEliminar = Path.of("temporal.txt");
+Files.delete(aEliminar);             // Lanza excepción si no existe
+Files.deleteIfExists(aEliminar);     // No lanza excepción si no existe
 ```
 
-### Filtros Personalizados
+## Manejo de Excepciones en I/O
+
+Las operaciones de I/O pueden fallar por múltiples razones. Java proporciona una jerarquía de excepciones que permite manejar cada caso específicamente.
+
+### Jerarquía de Excepciones de I/O
+
+```
+IOException (excepción base)
+├── FileNotFoundException        // Archivo no encontrado
+├── NoSuchFileException         // Archivo no existe (NIO.2)
+├── AccessDeniedException       // Sin permisos
+├── FileAlreadyExistsException  // El archivo ya existe
+├── DirectoryNotEmptyException  // Directorio no vacío
+├── NotDirectoryException       // Se esperaba directorio
+├── EOFException                // Fin de archivo inesperado
+└── ... otras
+```
+
+### Captura Jerarquizada de Excepciones
+
+Podés capturar excepciones específicas antes que las generales:
 
 ```{code} java
-:caption: Filtro personalizado de DirectoryStream
+:caption: Captura jerarquizada de excepciones
 
-DirectoryStream.Filter<Path> filtroGrandes = new DirectoryStream.Filter<>() {
-    @Override
-    public boolean accept(Path entry) throws IOException {
-        return Files.size(entry) > 1024 * 1024;  // > 1 MB
-    }
-};
+import java.nio.file.*;
+import java.io.IOException;
 
-try (DirectoryStream<Path> stream = 
-        Files.newDirectoryStream(directorio, filtroGrandes)) {
-    for (Path archivo : stream) {
-        System.out.printf("%s: %d bytes%n", 
-            archivo.getFileName(), 
-            Files.size(archivo));
+public static void leerArchivoSeguro(String ruta) {
+    Path archivo = Path.of(ruta);
+    
+    try {
+        List<String> lineas = Files.readAllLines(archivo);
+        for (String linea : lineas) {
+            System.out.println(linea);
+        }
+        
+    } catch (NoSuchFileException e) {
+        // Más específica: el archivo no existe
+        System.out.println("Error: El archivo no existe: " + e.getFile());
+        
+    } catch (AccessDeniedException e) {
+        // Específica: sin permisos de lectura
+        System.out.println("Error: Sin permisos para leer: " + e.getFile());
+        
+    } catch (IOException e) {
+        // General: cualquier otro error de I/O
+        System.out.println("Error de I/O: " + e.getMessage());
     }
 }
 ```
 
-### Recorrido Recursivo
-
-```{code} java
-:caption: Recorrer directorios recursivamente
-
-import java.nio.file.FileVisitResult;
-import java.nio.file.SimpleFileVisitor;
-import java.nio.file.attribute.BasicFileAttributes;
-
-Path inicio = Paths.get(".");
-
-Files.walkFileTree(inicio, new SimpleFileVisitor<Path>() {
-    @Override
-    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) {
-        System.out.println(file);
-        return FileVisitResult.CONTINUE;
-    }
-});
-```
-
-## Manejo de Excepciones de I/O
-
-### Excepciones Comunes
-
-:::{table} Excepciones de entrada/salida
-:label: tbl-excepciones-io
-
-| Excepción | Descripción |
-| :-------- | :---------- |
-| `IOException` | Error general de I/O |
-| `FileNotFoundException` | Archivo no encontrado |
-| `NoSuchFileException` | Archivo/directorio no existe (NIO) |
-| `FileAlreadyExistsException` | Archivo ya existe |
-| `DirectoryNotEmptyException` | Directorio no está vacío |
-| `AccessDeniedException` | Sin permisos de acceso |
-
+:::{important} Orden de los catch
+Siempre colocá las excepciones más específicas **antes** que las más generales. Si ponés `IOException` primero, las específicas nunca se alcanzarán y el compilador dará error.
 :::
 
-### Try-with-resources
+### Excepciones Múltiples con Pipe
 
-Siempre usá try-with-resources para cerrar recursos automáticamente:
+Si querés manejar varias excepciones de la misma manera:
 
 ```{code} java
-:caption: Try-with-resources para archivos
+:caption: Captura múltiple
 
-// Cierra automáticamente incluso si hay excepción
-try (BufferedReader reader = Files.newBufferedReader(archivo);
-     BufferedWriter writer = Files.newBufferedWriter(salida)) {
-    
-    String linea;
-    while ((linea = reader.readLine()) != null) {
-        writer.write(linea.toUpperCase());
-        writer.newLine();
-    }
-    
+try {
+    // operaciones de archivo
+} catch (NoSuchFileException | AccessDeniedException e) {
+    System.out.println("Problema de acceso al archivo: " + e.getMessage());
 } catch (IOException e) {
-    System.err.println("Error: " + e.getMessage());
+    System.out.println("Error de I/O general: " + e.getMessage());
 }
 ```
 
-## Ejercicios
+## Gestión de Recursos: try-finally vs try-with-resources
 
-```{exercise}
-:label: ej-archivos-1
+Los recursos de I/O (archivos, conexiones, streams) **deben cerrarse** cuando ya no se usan. Si no se cierran, se produce una "fuga de recursos" que puede agotar los descriptores de archivo del sistema.
 
-Escribí un método `int contarLineas(Path archivo)` que cuente la cantidad de líneas no vacías en un archivo de texto.
+### El Problema: Cerrar Recursos Correctamente
+
+```{code} java
+:caption: ❌ Incorrecto: sin cerrar el recurso
+
+BufferedReader reader = new BufferedReader(new FileReader("datos.txt"));
+String linea = reader.readLine();
+// Si hay excepción aquí, el archivo queda abierto
+System.out.println(linea);
+// reader.close() nunca se ejecuta si hay error
 ```
 
-```{solution} ej-archivos-1
-```java
-public int contarLineas(Path archivo) throws IOException {
-    int contador = 0;
+### Solución Clásica: try-finally
+
+El bloque `finally` garantiza que el código de cierre se ejecute siempre:
+
+```{code} java
+:caption: try-finally para cerrar recursos
+
+import java.io.*;
+
+public static void leerConFinally(String ruta) {
+    BufferedReader reader = null;
     
+    try {
+        reader = new BufferedReader(new FileReader(ruta));
+        String linea;
+        while ((linea = reader.readLine()) != null) {
+            System.out.println(linea);
+        }
+    } catch (IOException e) {
+        System.out.println("Error: " + e.getMessage());
+    } finally {
+        // Se ejecuta SIEMPRE, haya o no excepción
+        if (reader != null) {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                System.out.println("Error al cerrar: " + e.getMessage());
+            }
+        }
+    }
+}
+```
+
+**Problemas del try-finally:**
+- Código verboso y propenso a errores
+- El close() puede lanzar excepción, requiriendo otro try-catch
+- Fácil olvidar el cierre o hacerlo incorrectamente
+
+### Solución Moderna: try-with-resources (Java 7+)
+
+El bloque `try-with-resources` cierra automáticamente los recursos al salir:
+
+```{code} java
+:caption: try-with-resources (recomendado)
+
+import java.io.*;
+import java.nio.file.*;
+
+public static void leerConTryResources(String ruta) {
+    Path archivo = Path.of(ruta);
+    
+    // El recurso se declara dentro de los paréntesis del try
     try (BufferedReader reader = Files.newBufferedReader(archivo)) {
         String linea;
         while ((linea = reader.readLine()) != null) {
-            if (!linea.isBlank()) {
-                contador++;
-            }
+            System.out.println(linea);
         }
+    } catch (IOException e) {
+        System.out.println("Error: " + e.getMessage());
+    }
+    // reader.close() se llama automáticamente al salir del try
+}
+```
+
+### Múltiples Recursos en try-with-resources
+
+Podés declarar varios recursos separados por punto y coma:
+
+```{code} java
+:caption: Múltiples recursos
+
+import java.io.*;
+import java.nio.file.*;
+
+public static void copiarArchivo(String origen, String destino) {
+    Path archivoOrigen = Path.of(origen);
+    Path archivoDestino = Path.of(destino);
+    
+    try (BufferedReader reader = Files.newBufferedReader(archivoOrigen);
+         BufferedWriter writer = Files.newBufferedWriter(archivoDestino)) {
+        
+        String linea;
+        while ((linea = reader.readLine()) != null) {
+            writer.write(linea);
+            writer.newLine();
+        }
+        
+    } catch (IOException e) {
+        System.out.println("Error: " + e.getMessage());
+    }
+    // Ambos se cierran automáticamente (en orden inverso)
+}
+```
+
+:::{important} Orden de Cierre
+Los recursos se cierran en **orden inverso** al que fueron declarados. En el ejemplo anterior, primero se cierra `writer`, luego `reader`.
+:::
+
+### Requisito: La Interfaz AutoCloseable
+
+Para que un recurso funcione con try-with-resources, debe implementar la interfaz `AutoCloseable`. Todas las clases de I/O de Java lo implementan.
+
+```{code} java
+:caption: Cualquier AutoCloseable funciona
+
+// Scanner implementa AutoCloseable
+try (Scanner scanner = new Scanner(System.in)) {
+    System.out.print("Ingrese un número: ");
+    int numero = scanner.nextInt();
+    System.out.println("El doble es: " + (numero * 2));
+}
+// scanner.close() se llama automáticamente
+```
+
+## Codificación de Caracteres (Charset)
+
+Los archivos de texto almacenan bytes, no caracteres. La **codificación** define cómo se traducen bytes a caracteres.
+
+### Especificar Codificación
+
+```{code} java
+:caption: Especificar codificación UTF-8
+
+import java.nio.file.*;
+import java.nio.charset.StandardCharsets;
+import java.io.IOException;
+
+// Lectura con codificación específica
+List<String> lineas = Files.readAllLines(
+    Path.of("datos.txt"), 
+    StandardCharsets.UTF_8
+);
+
+// Escritura con codificación específica
+Files.write(
+    Path.of("salida.txt"),
+    lineas,
+    StandardCharsets.UTF_8
+);
+
+// BufferedReader con codificación
+try (BufferedReader reader = Files.newBufferedReader(
+        Path.of("datos.txt"), 
+        StandardCharsets.UTF_8)) {
+    // ...
+}
+```
+
+### Codificaciones Comunes
+
+| Codificación | Descripción | Uso |
+|:---|:---|:---|
+| `UTF_8` | Unicode variable (1-4 bytes) | Estándar moderno, recomendado |
+| `ISO_8859_1` | Latin-1 (1 byte) | Archivos antiguos en español |
+| `US_ASCII` | ASCII (7 bits) | Solo caracteres ingleses básicos |
+| `UTF_16` | Unicode fijo (2 bytes) | Menos común |
+
+:::{tip} Usá UTF-8
+Siempre usá UTF-8 a menos que tengas una razón específica para otra codificación. Es el estándar moderno y soporta todos los caracteres de todos los idiomas.
+:::
+
+## Eficiencia: Buffering
+
+Las operaciones de I/O son lentas porque requieren acceso al disco. El **buffering** reduce este costo leyendo/escribiendo bloques grandes en lugar de bytes individuales.
+
+```{code} java
+:caption: Impacto del buffering
+
+// ❌ Sin buffer: una llamada al sistema por cada byte
+InputStream sinBuffer = new FileInputStream("datos.bin");
+
+// ✅ Con buffer: lee bloques de ~8KB, sirve desde memoria
+InputStream conBuffer = new BufferedInputStream(
+    new FileInputStream("datos.bin")
+);
+
+// NIO.2: Files.newBufferedReader ya incluye buffering
+BufferedReader reader = Files.newBufferedReader(Path.of("datos.txt"));
+```
+
+## Ejemplo Completo: Procesar Archivo CSV
+
+```{code} java
+:caption: Leer y procesar archivo CSV
+
+import java.nio.file.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class ProcesadorCSV {
+    
+    public static List<String[]> leerCSV(String rutaArchivo) {
+        List<String[]> datos = new ArrayList<>();
+        Path archivo = Path.of(rutaArchivo);
+        
+        try (BufferedReader reader = Files.newBufferedReader(archivo)) {
+            String linea;
+            
+            // Saltar encabezado
+            reader.readLine();
+            
+            while ((linea = reader.readLine()) != null) {
+                String[] campos = linea.split(",");
+                datos.add(campos);
+            }
+            
+        } catch (NoSuchFileException e) {
+            System.out.println("Error: Archivo no encontrado: " + rutaArchivo);
+        } catch (IOException e) {
+            System.out.println("Error al leer CSV: " + e.getMessage());
+        }
+        
+        return datos;
+    }
+    
+    public static void escribirCSV(String rutaArchivo, 
+                                   String[] encabezados, 
+                                   List<String[]> datos) {
+        Path archivo = Path.of(rutaArchivo);
+        
+        try (BufferedWriter writer = Files.newBufferedWriter(archivo)) {
+            // Escribir encabezados
+            writer.write(String.join(",", encabezados));
+            writer.newLine();
+            
+            // Escribir datos
+            for (String[] fila : datos) {
+                writer.write(String.join(",", fila));
+                writer.newLine();
+            }
+            
+            System.out.println("CSV escrito: " + datos.size() + " filas");
+            
+        } catch (IOException e) {
+            System.out.println("Error al escribir CSV: " + e.getMessage());
+        }
+    }
+}
+```
+
+## Resumen: Mejores Prácticas
+
+1. **Usá NIO.2** (`java.nio.file`) en lugar de la API antigua (`java.io.File`).
+2. **Siempre usá try-with-resources** para garantizar el cierre de recursos.
+3. **Capturá excepciones específicas** antes que las generales.
+4. **Especificá la codificación** (UTF-8) explícitamente.
+5. **Usá BufferedReader/Writer** para mejor rendimiento.
+6. **Verificá existencia** del archivo antes de operar si es necesario.
+7. **No cargues archivos enormes** en memoria completa.
+
+## Ejercicios de Aplicación
+
+```exercise
+:label: ej-contar-lineas
+Escribí un método `contarLineas(String ruta)` que cuente y retorne la cantidad de líneas de un archivo de texto, manejando correctamente las excepciones y cerrando el recurso.
+```
+
+````solution
+:for: ej-contar-lineas
+```java
+import java.nio.file.*;
+import java.io.*;
+
+public static int contarLineas(String ruta) {
+    Path archivo = Path.of(ruta);
+    int contador = 0;
+    
+    try (BufferedReader reader = Files.newBufferedReader(archivo)) {
+        while (reader.readLine() != null) {
+            contador = contador + 1;
+        }
+    } catch (NoSuchFileException e) {
+        System.out.println("Error: El archivo no existe: " + ruta);
+        return -1;
+    } catch (IOException e) {
+        System.out.println("Error al leer: " + e.getMessage());
+        return -1;
     }
     
     return contador;
 }
 ```
+````
+
+```exercise
+:label: ej-io-buffer
+Dada una tarea que consiste en leer un archivo de 1GB carácter por carácter, compará el impacto en el rendimiento de usar `FileReader` directamente vs. envolverlo en un `BufferedReader`.
 ```
 
-```{exercise}
-:label: ej-archivos-2
-
-Implementá un método que lea un archivo CSV simple (valores separados por coma) y retorne una lista de arreglos de Strings, donde cada arreglo representa una fila.
+```solution
+:for: ej-io-buffer
+El uso de `FileReader` directamente causaría millones de llamadas al sistema (una por cada carácter), lo que degradaría el rendimiento debido al *overhead* del sistema operativo. `BufferedReader` leería bloques (típicamente de 8KB) en una sola operación, sirviendo los siguientes caracteres desde la RAM, lo que resultaría en un tiempo de ejecución órdenes de magnitud menor.
 ```
 
-```{solution} ej-archivos-2
+```exercise
+:label: ej-copiar-filtrado
+Escribí un método que copie un archivo de texto a otro, pero solo las líneas que contengan una palabra específica.
+```
+
+````solution
+:for: ej-copiar-filtrado
 ```java
-public List<String[]> leerCSV(Path archivo) throws IOException {
-    List<String[]> datos = new ArrayList<>();
+import java.nio.file.*;
+import java.io.*;
+
+public static void copiarLineasConPalabra(String origen, 
+                                          String destino, 
+                                          String palabra) {
+    Path archivoOrigen = Path.of(origen);
+    Path archivoDestino = Path.of(destino);
     
-    try (BufferedReader reader = Files.newBufferedReader(archivo)) {
+    try (BufferedReader reader = Files.newBufferedReader(archivoOrigen);
+         BufferedWriter writer = Files.newBufferedWriter(archivoDestino)) {
+        
         String linea;
+        int copiadas = 0;
+        
         while ((linea = reader.readLine()) != null) {
-            if (!linea.isBlank()) {
-                String[] campos = linea.split(",");
-                // Trim de cada campo
-                for (int i = 0; i < campos.length; i++) {
-                    campos[i] = campos[i].trim();
-                }
-                datos.add(campos);
+            if (linea.contains(palabra)) {
+                writer.write(linea);
+                writer.newLine();
+                copiadas = copiadas + 1;
             }
+        }
+        
+        System.out.println("Se copiaron " + copiadas + " líneas");
+        
+    } catch (NoSuchFileException e) {
+        System.out.println("Archivo no encontrado: " + e.getFile());
+    } catch (IOException e) {
+        System.out.println("Error: " + e.getMessage());
+    }
+}
+```
+````
+
+```exercise
+:label: ej-try-resources
+¿Por qué el siguiente código es problemático? Corregilo usando try-with-resources.
+
+```java
+BufferedReader reader = new BufferedReader(new FileReader("datos.txt"));
+String primera = reader.readLine();
+String segunda = reader.readLine();
+reader.close();
+System.out.println(primera + " - " + segunda);
+```
+```
+
+````solution
+:for: ej-try-resources
+**Problemas:**
+1. Si `readLine()` lanza una excepción, `close()` nunca se ejecuta (fuga de recursos)
+2. Si `close()` falla, no hay manejo del error
+
+**Corrección:**
+```java
+try (BufferedReader reader = new BufferedReader(new FileReader("datos.txt"))) {
+    String primera = reader.readLine();
+    String segunda = reader.readLine();
+    System.out.println(primera + " - " + segunda);
+} catch (IOException e) {
+    System.out.println("Error al leer: " + e.getMessage());
+}
+// El reader se cierra automáticamente, incluso si hay excepción
+```
+````
+
+## Testing de Archivos con JUnit
+
+Cuando se prueban métodos que trabajan con archivos, es fundamental asegurar que cada test tenga un entorno limpio e independiente. Las anotaciones `@BeforeEach` y `@AfterEach` de JUnit permiten crear y eliminar archivos temporales antes y después de cada test.
+
+### Ciclo de Vida de un Test
+
+```
+@BeforeEach → Se ejecuta ANTES de cada método @Test
+    ↓
+@Test        → Se ejecuta el test
+    ↓
+@AfterEach  → Se ejecuta DESPUÉS de cada método @Test (incluso si falla)
+```
+
+### Ejemplo Básico: Crear y Limpiar Archivos
+
+```{code} java
+:caption: Test con gestión de archivos temporales
+
+import org.junit.jupiter.api.*;
+import java.nio.file.*;
+import java.io.IOException;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class LectorArchivosTest {
+    
+    private Path archivoTemporal;
+    
+    @BeforeEach
+    void setUp() throws IOException {
+        // Crear archivo temporal antes de cada test
+        archivoTemporal = Files.createTempFile("test_", ".txt");
+    }
+    
+    @AfterEach
+    void tearDown() throws IOException {
+        // Eliminar archivo temporal después de cada test
+        Files.deleteIfExists(archivoTemporal);
+    }
+    
+    @Test
+    void leerArchivo_conContenido_retornaLineas() throws IOException {
+        // Arrange: preparar el archivo con contenido
+        List<String> contenido = List.of("línea 1", "línea 2", "línea 3");
+        Files.write(archivoTemporal, contenido);
+        
+        // Act: leer el archivo
+        List<String> resultado = Files.readAllLines(archivoTemporal);
+        
+        // Assert: verificar el contenido
+        assertEquals(3, resultado.size());
+        assertEquals("línea 1", resultado.get(0));
+    }
+    
+    @Test
+    void leerArchivo_vacio_retornaListaVacia() throws IOException {
+        // El archivo ya existe vacío por @BeforeEach
+        
+        List<String> resultado = Files.readAllLines(archivoTemporal);
+        
+        assertTrue(resultado.isEmpty());
+    }
+}
+```
+
+### Testing con Directorio Temporal
+
+Para tests que requieren múltiples archivos, se puede crear un directorio temporal:
+
+```{code} java
+:caption: Test con directorio temporal
+
+import org.junit.jupiter.api.*;
+import java.nio.file.*;
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class ProcesadorDirectorioTest {
+    
+    private Path directorioTemporal;
+    
+    @BeforeEach
+    void setUp() throws IOException {
+        directorioTemporal = Files.createTempDirectory("test_dir_");
+    }
+    
+    @AfterEach
+    void tearDown() throws IOException {
+        // Eliminar todos los archivos del directorio
+        if (Files.exists(directorioTemporal)) {
+            Files.walk(directorioTemporal)
+                 .sorted((a, b) -> b.compareTo(a))  // Orden inverso: archivos antes que directorios
+                 .forEach(path -> {
+                     try {
+                         Files.delete(path);
+                     } catch (IOException e) {
+                         // Ignorar errores de eliminación en cleanup
+                     }
+                 });
         }
     }
     
-    return datos;
+    @Test
+    void contarArchivos_conTresArchivos_retornaTres() throws IOException {
+        // Crear archivos de prueba
+        Files.createFile(directorioTemporal.resolve("archivo1.txt"));
+        Files.createFile(directorioTemporal.resolve("archivo2.txt"));
+        Files.createFile(directorioTemporal.resolve("archivo3.txt"));
+        
+        long cantidad = Files.list(directorioTemporal).count();
+        
+        assertEquals(3, cantidad);
+    }
 }
 ```
-```
 
-```{exercise}
-:label: ej-archivos-3
+### Uso de `@TempDir` de JUnit 5
 
-Creá un método que copie un directorio completo (incluyendo subdirectorios y archivos) a otra ubicación.
-```
+JUnit 5 proporciona la anotación `@TempDir` que simplifica la gestión de archivos temporales:
 
-```{solution} ej-archivos-3
-```java
-public void copiarDirectorio(Path origen, Path destino) throws IOException {
-    Files.walkFileTree(origen, new SimpleFileVisitor<Path>() {
+```{code} java
+:caption: Test con @TempDir (JUnit 5)
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
+import java.nio.file.*;
+import java.io.IOException;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class ArchivoCSVTest {
+    
+    @TempDir
+    Path directorioTemporal;  // JUnit crea y elimina automáticamente
+    
+    @Test
+    void escribirCSV_creaArchivoConContenido() throws IOException {
+        Path archivo = directorioTemporal.resolve("datos.csv");
         
-        @Override
-        public FileVisitResult preVisitDirectory(Path dir, 
-                BasicFileAttributes attrs) throws IOException {
-            Path dirDestino = destino.resolve(origen.relativize(dir));
-            Files.createDirectories(dirDestino);
-            return FileVisitResult.CONTINUE;
-        }
+        List<String> lineas = List.of("nombre,edad", "Juan,25", "María,30");
+        Files.write(archivo, lineas);
         
-        @Override
-        public FileVisitResult visitFile(Path file, 
-                BasicFileAttributes attrs) throws IOException {
-            Path archivoDestino = destino.resolve(origen.relativize(file));
-            Files.copy(file, archivoDestino, 
-                      StandardCopyOption.REPLACE_EXISTING);
-            return FileVisitResult.CONTINUE;
-        }
-    });
+        assertTrue(Files.exists(archivo));
+        assertEquals(3, Files.readAllLines(archivo).size());
+    }
+    
+    @Test
+    void leerCSV_archivoConDatos_parseaCorrectamente() throws IOException {
+        // Preparar archivo CSV
+        Path archivo = directorioTemporal.resolve("entrada.csv");
+        Files.writeString(archivo, "producto,precio\nmanzana,100\npera,150");
+        
+        // Leer y verificar
+        List<String> lineas = Files.readAllLines(archivo);
+        
+        assertEquals(3, lineas.size());
+        assertTrue(lineas.get(1).contains("manzana"));
+    }
 }
 ```
+
+:::{tip} Preferí `@TempDir`
+La anotación `@TempDir` es más limpia y segura que manejar archivos temporales manualmente. JUnit garantiza la limpieza incluso si el test falla con una excepción inesperada.
+:::
+
+### Testing de Excepciones de I/O
+
+```{code} java
+:caption: Test de excepciones
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
+import java.nio.file.*;
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class ManejadorArchivosTest {
+    
+    @TempDir
+    Path directorioTemporal;
+    
+    @Test
+    void leerArchivo_noExiste_lanzaNoSuchFileException() {
+        Path archivoInexistente = directorioTemporal.resolve("no_existe.txt");
+        
+        assertThrows(NoSuchFileException.class, () -> {
+            Files.readAllLines(archivoInexistente);
+        });
+    }
+    
+    @Test
+    void crearArchivo_yaExiste_lanzaFileAlreadyExistsException() throws IOException {
+        Path archivo = directorioTemporal.resolve("existente.txt");
+        Files.createFile(archivo);  // Crear primero
+        
+        assertThrows(FileAlreadyExistsException.class, () -> {
+            Files.createFile(archivo);  // Intentar crear de nuevo
+        });
+    }
+}
 ```
 
-:::{seealso}
-- [Documentación de Path](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Path.html)
-- [Documentación de Files](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/nio/file/Files.html)
-- [Tutorial oficial de I/O](https://docs.oracle.com/javase/tutorial/essential/io/)
+### Patrón Completo: Test de un Procesador de Archivos
+
+```{code} java
+:caption: Ejemplo completo de testing
+
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.io.TempDir;
+import java.nio.file.*;
+import java.io.IOException;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class ContadorPalabrasTest {
+    
+    @TempDir
+    Path dirTemp;
+    
+    private Path archivoEntrada;
+    private Path archivoSalida;
+    
+    @BeforeEach
+    void setUp() throws IOException {
+        archivoEntrada = dirTemp.resolve("entrada.txt");
+        archivoSalida = dirTemp.resolve("salida.txt");
+    }
+    
+    @Test
+    void contarPalabras_textoSimple_cuentaCorrectamente() throws IOException {
+        // Arrange
+        Files.writeString(archivoEntrada, "hola mundo\nadios mundo");
+        
+        // Act
+        int cantidad = contarPalabras(archivoEntrada);
+        
+        // Assert
+        assertEquals(4, cantidad);
+    }
+    
+    @Test
+    void contarPalabras_archivoVacio_retornaCero() throws IOException {
+        Files.createFile(archivoEntrada);
+        
+        int cantidad = contarPalabras(archivoEntrada);
+        
+        assertEquals(0, cantidad);
+    }
+    
+    @Test
+    void procesarArchivo_guardaResultado() throws IOException {
+        Files.writeString(archivoEntrada, "uno dos tres");
+        
+        procesarYGuardar(archivoEntrada, archivoSalida);
+        
+        assertTrue(Files.exists(archivoSalida));
+        String contenido = Files.readString(archivoSalida);
+        assertTrue(contenido.contains("3"));
+    }
+    
+    // Métodos auxiliares para el test
+    private int contarPalabras(Path archivo) throws IOException {
+        return Files.readAllLines(archivo).stream()
+                    .flatMap(linea -> List.of(linea.split("\\s+")).stream())
+                    .filter(palabra -> !palabra.isEmpty())
+                    .mapToInt(palabra -> 1)
+                    .sum();
+    }
+    
+    private void procesarYGuardar(Path entrada, Path salida) throws IOException {
+        int cantidad = contarPalabras(entrada);
+        Files.writeString(salida, "Palabras: " + cantidad);
+    }
+}
+```
+
+:::{important} Independencia de Tests
+Cada test debe ser independiente. Nunca asumas que un test anterior dejó el sistema en cierto estado. Usá `@BeforeEach` para establecer las precondiciones de cada test.
+:::
+
+## Referencias Bibliográficas
+
+- **Schildt, H.** (2022). _Java: A Beginner's Guide_ (9na ed.). McGraw Hill. (Capítulo 10: Using I/O).
+- **Liang, Y. D.** (2017). _Introduction to Java Programming and Data Structures_ (11va ed.). Pearson.
+- **Bloch, J.** (2018). _Effective Java_ (3ra ed.). Addison-Wesley Professional. (Item 9: Prefer try-with-resources to try-finally).
+- **Oracle Corporation.** (2023). _Java I/O, NIO, and NIO.2_. [Official Documentation](https://docs.oracle.com/javase/tutorial/essential/io/).
+
+:::seealso
+- {ref}`regla-0x3001` - Manejo de excepciones en operaciones de I/O.
+- {ref}`regla-0x000D` - Documentación de métodos que lanzan IOException.
 :::

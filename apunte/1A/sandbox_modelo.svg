@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../../resources/svg.css" type="text/css"?>
+<svg width="600" height="420" viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arrowhead-primary" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#eb2141"/>
+    </marker>
+    <marker id="arrowhead-secondary" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#192437"/>
+    </marker>
+  </defs>
+  
+  <rect width="600" height="420" class="background"/>
+
+  <!-- Título -->
+  <text x="300" y="30" class="title">Modelo de Seguridad de Java</text>
+  <text x="300" y="50" class="subtitle">Arquitectura en Capas del Sandbox</text>
+
+  <!-- Código No Confiable (entrada) -->
+  <rect x="40" y="80" width="120" height="50" class="warning-box"/>
+  <text x="100" y="100" class="label-bold" text-anchor="middle">Código</text>
+  <text x="100" y="115" class="label-small" text-anchor="middle">(descargado)</text>
+
+  <!-- Flecha hacia verificador -->
+  <path d="M 160 105 L 200 105" class="arrow-primary"/>
+
+  <!-- Capa 1: Verificador de Bytecode -->
+  <rect x="210" y="70" width="340" height="70" class="info-box" rx="5"/>
+  <text x="230" y="90" class="label-bold">1. Verificador de Bytecode</text>
+  <text x="230" y="108" class="label-small">• Verifica estructura del archivo .class</text>
+  <text x="230" y="124" class="label-small">• Detecta código malformado o ilegal</text>
+
+  <!-- Flecha hacia ClassLoader -->
+  <path d="M 380 140 L 380 160" class="arrow-secondary"/>
+
+  <!-- Capa 2: Class Loader -->
+  <rect x="210" y="165" width="340" height="70" class="info-box" rx="5"/>
+  <text x="230" y="185" class="label-bold">2. Class Loader Jerárquico</text>
+  <text x="230" y="203" class="label-small">• Separa código confiable del no confiable</text>
+  <text x="230" y="219" class="label-small">• Aísla namespaces entre aplicaciones</text>
+
+  <!-- Flecha hacia Security Manager -->
+  <path d="M 380 235 L 380 255" class="arrow-secondary"/>
+
+  <!-- Capa 3: Security Manager -->
+  <rect x="210" y="260" width="340" height="70" class="highlight-box" rx="5"/>
+  <text x="230" y="280" class="label-bold">3. Security Manager</text>
+  <text x="230" y="298" class="label-small">• Controla acceso a archivos, red, sistema</text>
+  <text x="230" y="314" class="label-small">• Políticas configurables por administrador</text>
+
+  <!-- Flecha hacia Sistema -->
+  <path d="M 380 330 L 380 355" class="arrow-secondary"/>
+
+  <!-- Sistema Operativo -->
+  <rect x="210" y="360" width="340" height="45" class="code-block" rx="5"/>
+  <text x="380" y="387" class="label-bold" text-anchor="middle">Sistema Operativo (Protegido)</text>
+
+  <!-- Iconos de recursos protegidos -->
+  <text x="40" y="180" class="label-small">Recursos</text>
+  <text x="40" y="195" class="label-small">Protegidos:</text>
+  
+  <rect x="40" y="210" width="90" height="25" class="code-block" rx="3"/>
+  <text x="85" y="227" class="code" text-anchor="middle">Archivos</text>
+  
+  <rect x="40" y="245" width="90" height="25" class="code-block" rx="3"/>
+  <text x="85" y="262" class="code" text-anchor="middle">Red</text>
+  
+  <rect x="40" y="280" width="90" height="25" class="code-block" rx="3"/>
+  <text x="85" y="297" class="code" text-anchor="middle">Procesos</text>
+  
+  <rect x="40" y="315" width="90" height="25" class="code-block" rx="3"/>
+  <text x="85" y="332" class="code" text-anchor="middle">Memoria</text>
+
+  <!-- Flechas de bloqueo -->
+  <path d="M 135 222 L 200 290" class="arrow-primary" fill="none" stroke-dasharray="4,2"/>
+  <path d="M 135 257 L 200 290" class="arrow-primary" fill="none" stroke-dasharray="4,2"/>
+  <path d="M 135 292 L 200 295" class="arrow-primary" fill="none" stroke-dasharray="4,2"/>
+  <path d="M 135 327 L 200 305" class="arrow-primary" fill="none" stroke-dasharray="4,2"/>
+</svg>

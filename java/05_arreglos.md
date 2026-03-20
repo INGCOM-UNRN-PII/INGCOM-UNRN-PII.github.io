@@ -1,238 +1,304 @@
 ---
 title: "Arreglos en Java"
-description: Guía completa sobre declaración, manipulación y operaciones con arreglos.
+description: Estudio técnico sobre estructuras de datos homogéneas, declaración, acceso, recorrido y pasaje a métodos.
 ---
 
 # Arreglos en Java
 
-Los **arreglos** (arrays) son estructuras de datos fundamentales que permiten almacenar múltiples valores del mismo tipo en posiciones de memoria contiguas. Son de tamaño fijo una vez creados.
+En Java, los **arreglos** (_arrays_) son contenedores de tamaño fijo que almacenan elementos del mismo tipo. Si venís de C, la sintaxis te resultará familiar, aunque hay diferencias importantes en cómo Java gestiona la memoria y verifica los límites.
 
-## Características de los Arreglos
+:::{note} Similitud con C
+La idea fundamental es la misma: un arreglo es una secuencia contigua de elementos del mismo tipo, accesibles por índice. La diferencia clave es que en Java el arreglo "conoce" su propio tamaño y verifica automáticamente que no accedas fuera de sus límites.
+:::
 
-- **Tipo homogéneo**: todos los elementos deben ser del mismo tipo
-- **Tamaño fijo**: se define al crear el arreglo y no puede cambiar
-- **Acceso por índice**: los elementos se acceden mediante índices (0 a length-1)
-- **Referencia**: las variables de arreglo almacenan referencias, no los datos en sí
-- **Mutables**: el contenido puede modificarse después de la creación
+## Declaración de Arreglos
 
-## Declaración e Inicialización
-
-### Declaración
+En Java hay dos sintaxis válidas para declarar arreglos (la primera es preferida):
 
 ```{code} java
-:caption: Formas de declarar arreglos
+:caption: Sintaxis de declaración
 
-// Estilo preferido en Java
-int[] numeros;
-String[] nombres;
-double[] valores;
-
-// Estilo alternativo (estilo C)
-int numeros2[];  // Válido pero menos común
+tipo[] nombreArreglo;    // ✅ Sintaxis preferida en Java
+tipo nombreArreglo[];    // Sintaxis estilo C (válida pero no recomendada)
 ```
-
-### Inicialización
 
 ```{code} java
-:caption: Formas de inicializar arreglos
+:caption: Ejemplos de declaración
 
-// Con tamaño específico (elementos con valores por defecto)
-int[] numeros = new int[5];  // [0, 0, 0, 0, 0]
-String[] nombres = new String[3];  // [null, null, null]
-boolean[] flags = new boolean[4];  // [false, false, false, false]
-
-// Con valores explícitos
-int[] primos = {2, 3, 5, 7, 11};
-String[] dias = {"Lun", "Mar", "Mié", "Jue", "Vie"};
-
-// Forma completa (necesaria cuando no es declaración directa)
-int[] pares = new int[]{2, 4, 6, 8, 10};
+int[] numeros;           // Arreglo de enteros
+double[] temperaturas;   // Arreglo de doubles
+char[] letras;           // Arreglo de caracteres
+boolean[] banderas;      // Arreglo de booleanos
+String[] nombres;        // Arreglo de Strings
 ```
 
-:::{table} Valores por defecto según tipo
-:label: tbl-valores-defecto
+:::{important} Declarar No Es Crear
+Una declaración como `int[] numeros;` solo crea una **referencia** (similar a un puntero en C), pero no reserva memoria para los elementos. El arreglo todavía no existe; la referencia apunta a `null`.
+:::
 
-| Tipo | Valor por defecto |
-| :--- | :---------------- |
+## Creación de Arreglos
+
+Para crear el arreglo y reservar memoria, se usa la palabra clave `new`:
+
+```{code} java
+:caption: Creación con new
+
+int[] numeros = new int[5];        // Arreglo de 5 enteros
+double[] precios = new double[10]; // Arreglo de 10 doubles
+char[] vocales = new char[5];      // Arreglo de 5 caracteres
+```
+
+### Valores por Defecto
+
+Al crear un arreglo con `new`, todos los elementos se inicializan automáticamente:
+
+| Tipo de Elemento | Valor por Defecto |
+|:---|:---:|
 | `int`, `short`, `byte`, `long` | `0` |
 | `float`, `double` | `0.0` |
-| `char` | `'\u0000'` |
+| `char` | `'\u0000'` (carácter nulo) |
 | `boolean` | `false` |
-| Referencias (objetos) | `null` |
+| Referencias (String, etc.) | `null` |
 
+```{code} java
+:caption: Valores por defecto
+
+int[] numeros = new int[3];
+// numeros[0] = 0, numeros[1] = 0, numeros[2] = 0
+
+boolean[] flags = new boolean[2];
+// flags[0] = false, flags[1] = false
+```
+
+### Creación con Inicialización
+
+Podés crear e inicializar un arreglo en una sola línea:
+
+```{code} java
+:caption: Inicialización directa
+
+int[] primos = {2, 3, 5, 7, 11};           // 5 elementos
+double[] notas = {8.5, 9.0, 7.5, 10.0};    // 4 elementos
+char[] vocales = {'a', 'e', 'i', 'o', 'u'}; // 5 elementos
+String[] dias = {"Lunes", "Martes", "Miércoles"};
+```
+
+:::{note} Tamaño Implícito
+Cuando usás inicialización con llaves, Java determina automáticamente el tamaño del arreglo según la cantidad de elementos.
 :::
+
+### Separación de Declaración e Inicialización
+
+```{code} java
+:caption: Declaración e inicialización separadas
+
+int[] numeros;
+numeros = new int[5];              // OK
+
+int[] datos;
+datos = new int[]{1, 2, 3, 4, 5};  // Nota: new int[] es necesario aquí
+```
 
 ## Acceso a Elementos
 
-### Lectura y Escritura
+Los elementos se acceden usando índices entre corchetes. **Los índices comienzan en 0**.
 
 ```{code} java
-:caption: Acceso a elementos del arreglo
+:caption: Acceso por índice
 
 int[] numeros = {10, 20, 30, 40, 50};
 
-// Lectura
 int primero = numeros[0];   // 10
 int tercero = numeros[2];   // 30
-int ultimo = numeros[numeros.length - 1];  // 50
+int ultimo = numeros[4];    // 50
 
-// Escritura
-numeros[0] = 100;   // Ahora: [100, 20, 30, 40, 50]
-numeros[2] = 300;   // Ahora: [100, 20, 300, 40, 50]
+numeros[1] = 25;            // Modifica: ahora es {10, 25, 30, 40, 50}
 ```
 
-### Propiedad length
+### El Atributo `length`
+
+Todo arreglo tiene un atributo `length` que indica su tamaño. Es de solo lectura y no puede modificarse.
 
 ```{code} java
 :caption: Uso de length
 
 int[] datos = {1, 2, 3, 4, 5};
-int tamanio = datos.length;  // 5 (sin paréntesis, es un atributo)
+int tamanio = datos.length;        // 5
 
-// Recorrer con for tradicional
-for (int i = 0; i < datos.length; i++) {
-    System.out.println("Elemento " + i + ": " + datos[i]);
-}
+int ultimoIndice = datos.length - 1;  // 4
+int ultimoElemento = datos[datos.length - 1];  // 5
 ```
 
-:::{warning}
-**ArrayIndexOutOfBoundsException**: acceder a un índice fuera del rango `[0, length-1]` lanza esta excepción en tiempo de ejecución:
+:::{important} Comparativa con C
+En C, debés pasar el tamaño del arreglo como parámetro adicional a las funciones. En Java, el arreglo "sabe" su tamaño gracias a `length`:
+
+```c
+// En C:
+void procesar(int arr[], int size) { ... }
+```
 
 ```java
-int[] arr = new int[5];
-int x = arr[5];   // ERROR: índices válidos son 0-4
-int y = arr[-1];  // ERROR: índices negativos no son válidos
+// En Java:
+public static void procesar(int[] arr) {
+    int size = arr.length;  // No necesita parámetro extra
+}
 ```
+:::
+
+### Verificación de Límites
+
+Java verifica automáticamente que el índice esté dentro del rango válido `[0, length-1]`. Si el índice es inválido, se lanza `ArrayIndexOutOfBoundsException`.
+
+```{code} java
+:caption: Error de índice fuera de rango
+
+int[] numeros = new int[5];  // Índices válidos: 0, 1, 2, 3, 4
+
+numeros[5] = 10;   // ❌ ArrayIndexOutOfBoundsException
+numeros[-1] = 10;  // ❌ ArrayIndexOutOfBoundsException
+```
+
+:::{warning} Diferencia con C
+En C, acceder fuera de los límites del arreglo es comportamiento indefinido (puede funcionar, corromper memoria, o causar un crash). En Java, **siempre** se detecta y se lanza una excepción, eliminando una fuente común de bugs y vulnerabilidades de seguridad.
 :::
 
 ## Recorrido de Arreglos
 
-### For Tradicional
-
-Útil cuando necesitás el índice o modificar elementos:
+### Recorrido con `for` Clásico
 
 ```{code} java
-:caption: Recorrido con for tradicional
+:caption: Recorrido con for
 
-int[] numeros = {1, 2, 3, 4, 5};
+int[] numeros = {10, 20, 30, 40, 50};
 
-// Lectura
-for (int i = 0; i < numeros.length; i++) {
-    System.out.println(numeros[i]);
+// Recorrido de lectura
+for (int i = 0; i < numeros.length; i = i + 1) {
+    System.out.println("Elemento " + i + ": " + numeros[i]);
 }
 
-// Modificación
-for (int i = 0; i < numeros.length; i++) {
+// Recorrido de modificación
+for (int i = 0; i < numeros.length; i = i + 1) {
     numeros[i] = numeros[i] * 2;  // Duplica cada elemento
 }
 ```
 
-### For-Each
+### Recorrido con `for-each`
 
-Más simple para recorrido de solo lectura:
+El lazo `for-each` (también llamado "enhanced for") permite recorrer elementos sin usar índices:
 
 ```{code} java
 :caption: Recorrido con for-each
 
-int[] numeros = {1, 2, 3, 4, 5};
+int[] numeros = {10, 20, 30, 40, 50};
 
 for (int numero : numeros) {
     System.out.println(numero);
 }
-
-// Calcular suma
-int suma = 0;
-for (int numero : numeros) {
-    suma += numero;
-}
 ```
 
-:::{note}
-El for-each no permite modificar el arreglo original. La variable del lazo es una **copia** del valor:
+La sintaxis es: `for (tipo elemento : arreglo)`.
+
+:::{warning} Limitación del for-each
+El `for-each` solo permite **leer** elementos. No podés modificar el arreglo ni conocer el índice actual:
 
 ```java
-for (int numero : numeros) {
-    numero = numero * 2;  // ¡No modifica el arreglo!
+int[] numeros = {1, 2, 3};
+
+// ❌ Esto NO modifica el arreglo original
+for (int n : numeros) {
+    n = n * 2;  // Solo modifica la variable local 'n'
 }
+// numeros sigue siendo {1, 2, 3}
+
+// ✅ Para modificar, usar for clásico
+for (int i = 0; i < numeros.length; i = i + 1) {
+    numeros[i] = numeros[i] * 2;
+}
+// Ahora numeros es {2, 4, 6}
 ```
 :::
 
-## Arreglos Multidimensionales
+### Recorrido con Bandera (Patrón de Búsqueda)
 
-### Matrices (2D)
-
-```{code} java
-:caption: Declaración e inicialización de matrices
-
-// Declaración con tamaño
-int[][] matriz = new int[3][4];  // 3 filas, 4 columnas
-
-// Inicialización con valores
-int[][] tabla = {
-    {1, 2, 3},
-    {4, 5, 6},
-    {7, 8, 9}
-};
-
-// Acceso a elementos
-int elemento = tabla[1][2];  // Fila 1, Columna 2 = 6
-tabla[0][0] = 100;           // Modifica primera celda
-```
-
-### Matrices Irregulares (Jagged Arrays)
-
-Las filas pueden tener diferentes longitudes:
+Para buscar elementos usando el patrón recomendado en el curso (sin `break`):
 
 ```{code} java
-:caption: Matrices irregulares
+:caption: Búsqueda con bandera
 
-int[][] irregular = new int[3][];
-irregular[0] = new int[2];   // Fila 0: 2 columnas
-irregular[1] = new int[4];   // Fila 1: 4 columnas
-irregular[2] = new int[3];   // Fila 2: 3 columnas
+int[] numeros = {10, 25, 30, 45, 50};
+int buscado = 30;
 
-// También con inicialización directa
-int[][] triangular = {
-    {1},
-    {1, 2},
-    {1, 2, 3},
-    {1, 2, 3, 4}
-};
-```
+boolean encontrado = false;
+int posicion = -1;
+int i = 0;
 
-### Recorrido de Matrices
-
-```{code} java
-:caption: Recorrido de matriz 2D
-
-int[][] matriz = {
-    {1, 2, 3},
-    {4, 5, 6},
-    {7, 8, 9}
-};
-
-// For tradicional
-for (int fila = 0; fila < matriz.length; fila++) {
-    for (int col = 0; col < matriz[fila].length; col++) {
-        System.out.print(matriz[fila][col] + " ");
+while (i < numeros.length && !encontrado) {
+    if (numeros[i] == buscado) {
+        encontrado = true;
+        posicion = i;
     }
-    System.out.println();
+    i = i + 1;
 }
 
-// For-each anidado
-for (int[] fila : matriz) {
-    for (int elemento : fila) {
-        System.out.print(elemento + " ");
-    }
-    System.out.println();
+if (encontrado) {
+    System.out.println("Encontrado en posición: " + posicion);
+} else {
+    System.out.println("No encontrado");
 }
 ```
 
-## Clase Arrays
+## Arreglos como Referencias
 
-La clase `java.util.Arrays` proporciona métodos utilitarios para trabajar con arreglos:
+En Java, las variables de arreglo son **referencias** (similares a punteros en C). Esto tiene implicaciones importantes.
+
+### Asignación de Referencias
+
+Cuando asignás un arreglo a otra variable, **no se copian los datos**. Ambas variables apuntan al mismo arreglo en memoria.
+
+```{code} java
+:caption: Asignación de referencias
+
+int[] original = {1, 2, 3};
+int[] copia = original;    // copia apunta al MISMO arreglo
+
+copia[0] = 100;            // Modifica el arreglo compartido
+
+System.out.println(original[0]);  // Imprime: 100
+System.out.println(copia[0]);     // Imprime: 100
+// Ambos "ven" el mismo cambio porque son el mismo arreglo
+```
+
+### Comparación de Arreglos
+
+El operador `==` compara **referencias**, no contenido:
+
+```{code} java
+:caption: Comparación de arreglos
+
+int[] a = {1, 2, 3};
+int[] b = {1, 2, 3};
+int[] c = a;
+
+System.out.println(a == b);  // false (diferentes arreglos en memoria)
+System.out.println(a == c);  // true (misma referencia)
+```
+
+Para comparar contenido, usá `Arrays.equals()`:
+
+```{code} java
+:caption: Comparación de contenido con Arrays.equals
+
+import java.util.Arrays;
+
+int[] a = {1, 2, 3};
+int[] b = {1, 2, 3};
+
+System.out.println(Arrays.equals(a, b));  // true (mismo contenido)
+```
 
 ### Copia de Arreglos
+
+Para crear una copia independiente:
 
 ```{code} java
 :caption: Copia de arreglos
@@ -241,324 +307,406 @@ import java.util.Arrays;
 
 int[] original = {1, 2, 3, 4, 5};
 
-// Copia completa
-int[] copia = Arrays.copyOf(original, original.length);
+// Opción 1: Arrays.copyOf
+int[] copia1 = Arrays.copyOf(original, original.length);
 
-// Copia con nuevo tamaño (agranda o achica)
-int[] ampliado = Arrays.copyOf(original, 10);  // [1,2,3,4,5,0,0,0,0,0]
-int[] reducido = Arrays.copyOf(original, 3);   // [1,2,3]
+// Opción 2: Copia manual
+int[] copia2 = new int[original.length];
+for (int i = 0; i < original.length; i = i + 1) {
+    copia2[i] = original[i];
+}
 
-// Copia de rango
-int[] rango = Arrays.copyOfRange(original, 1, 4);  // [2,3,4]
+// Ahora las copias son independientes
+copia1[0] = 100;
+System.out.println(original[0]);  // 1 (no afectado)
+System.out.println(copia1[0]);    // 100
 ```
 
-### Ordenamiento
+## Arreglos y Métodos
+
+### Pasaje de Arreglos a Métodos
+
+Cuando pasás un arreglo a un método, se pasa la **referencia** (no una copia). Esto significa que el método puede modificar el contenido del arreglo original.
 
 ```{code} java
-:caption: Ordenamiento de arreglos
+:caption: Pasaje de arreglo a método
 
-int[] numeros = {5, 2, 8, 1, 9, 3};
-
-// Ordena in-place (modifica el arreglo original)
-Arrays.sort(numeros);  // [1, 2, 3, 5, 8, 9]
-
-// Ordenar strings
-String[] palabras = {"banana", "manzana", "cereza"};
-Arrays.sort(palabras);  // ["banana", "cereza", "manzana"]
-
-// Ordenar rango específico
-int[] datos = {5, 2, 8, 1, 9, 3};
-Arrays.sort(datos, 1, 4);  // [5, 1, 2, 8, 9, 3] (ordena índices 1-3)
-```
-
-### Búsqueda Binaria
-
-```{code} java
-:caption: Búsqueda binaria (requiere arreglo ordenado)
-
-int[] ordenados = {1, 3, 5, 7, 9, 11, 13};
-
-int indice = Arrays.binarySearch(ordenados, 7);   // 3
-int noEncontrado = Arrays.binarySearch(ordenados, 4);  // Negativo
-```
-
-:::{warning}
-`binarySearch` solo funciona correctamente en arreglos **ordenados**. Si el arreglo no está ordenado, el resultado es indefinido.
-:::
-
-### Comparación
-
-```{code} java
-:caption: Comparación de arreglos
-
-int[] a = {1, 2, 3};
-int[] b = {1, 2, 3};
-int[] c = {1, 2, 4};
-
-boolean iguales1 = Arrays.equals(a, b);  // true
-boolean iguales2 = Arrays.equals(a, c);  // false
-
-// Para arreglos 2D usar deepEquals
-int[][] m1 = {{1, 2}, {3, 4}};
-int[][] m2 = {{1, 2}, {3, 4}};
-boolean igualesDeep = Arrays.deepEquals(m1, m2);  // true
-```
-
-### Llenado y Conversión
-
-```{code} java
-:caption: Llenado y conversión a String
-
-int[] numeros = new int[5];
-Arrays.fill(numeros, 42);  // [42, 42, 42, 42, 42]
-
-// Convertir a String para impresión
-String representacion = Arrays.toString(numeros);
-System.out.println(representacion);  // [42, 42, 42, 42, 42]
-
-// Para matrices usar deepToString
-int[][] matriz = {{1, 2}, {3, 4}};
-System.out.println(Arrays.deepToString(matriz));  // [[1, 2], [3, 4]]
-```
-
-## Paso de Arreglos a Métodos
-
-Los arreglos se pasan **por referencia** (más precisamente, se pasa una copia de la referencia):
-
-```{code} java
-:caption: Arreglos como parámetros
-
-public static void duplicar(int[] arreglo) {
-    for (int i = 0; i < arreglo.length; i++) {
-        arreglo[i] = arreglo[i] * 2;  // Modifica el original
+public static void duplicarElementos(int[] arr) {
+    for (int i = 0; i < arr.length; i = i + 1) {
+        arr[i] = arr[i] * 2;
     }
 }
 
 public static void main(String[] args) {
     int[] numeros = {1, 2, 3, 4, 5};
-    duplicar(numeros);
-    System.out.println(Arrays.toString(numeros));  // [2, 4, 6, 8, 10]
-}
-```
-
-### Evitar Modificaciones
-
-Si no querés modificar el arreglo original, trabajá con una copia:
-
-```{code} java
-:caption: Trabajo con copia del arreglo
-
-public static int[] duplicarSinModificar(int[] arreglo) {
-    int[] copia = Arrays.copyOf(arreglo, arreglo.length);
-    for (int i = 0; i < copia.length; i++) {
-        copia[i] = copia[i] * 2;
+    
+    duplicarElementos(numeros);
+    
+    // numeros ahora es {2, 4, 6, 8, 10}
+    for (int n : numeros) {
+        System.out.print(n + " ");  // Imprime: 2 4 6 8 10
     }
-    return copia;  // Retorna la copia modificada
 }
 ```
 
-## Retorno de Arreglos
+:::{important} Efecto Secundario en Métodos
+Cuando un método recibe un arreglo y modifica sus elementos, esos cambios son visibles fuera del método. Esto se llama **efecto secundario** (_side effect_). Es importante documentar si un método modifica el arreglo que recibe.
+:::
 
-Los métodos pueden retornar arreglos:
+### Retorno de Arreglos
+
+Un método puede crear y retornar un arreglo:
 
 ```{code} java
-:caption: Métodos que retornan arreglos
+:caption: Método que retorna un arreglo
 
-public static int[] generarRango(int inicio, int fin) {
-    int[] resultado = new int[fin - inicio + 1];
-    for (int i = 0; i < resultado.length; i++) {
+public static int[] crearSecuencia(int inicio, int cantidad) {
+    int[] resultado = new int[cantidad];
+    for (int i = 0; i < cantidad; i = i + 1) {
         resultado[i] = inicio + i;
     }
     return resultado;
 }
 
-// Uso
-int[] rango = generarRango(5, 10);  // [5, 6, 7, 8, 9, 10]
-```
-
-## Patrones Comunes
-
-### Encontrar Máximo/Mínimo
-
-```{code} java
-:caption: Búsqueda de máximo
-
-public static int encontrarMaximo(int[] arreglo) {
-    if (arreglo.length == 0) {
-        throw new IllegalArgumentException("Arreglo vacío");
-    }
-    
-    int maximo = arreglo[0];
-    for (int i = 1; i < arreglo.length; i++) {
-        if (arreglo[i] > maximo) {
-            maximo = arreglo[i];
-        }
-    }
-    return maximo;
+public static void main(String[] args) {
+    int[] secuencia = crearSecuencia(10, 5);
+    // secuencia es {10, 11, 12, 13, 14}
 }
 ```
 
-### Filtrado
+Como los arreglos se crean en el Heap, no hay comportamiento indefinido, lo que se retorna es la referencia al arreglo creado.
+
+### Patrón: Método que Calcula sin Modificar
+
+Para evitar efectos secundarios, podés crear métodos que retornen un nuevo arreglo:
 
 ```{code} java
-:caption: Filtrar elementos
+:caption: Método sin efecto secundario
 
-public static int[] filtrarPositivos(int[] arreglo) {
-    // Contar positivos
-    int cuenta = 0;
-    for (int num : arreglo) {
-        if (num > 0) cuenta++;
+public static int[] duplicar(int[] original) {
+    int[] resultado = new int[original.length];
+    for (int i = 0; i < original.length; i = i + 1) {
+        resultado[i] = original[i] * 2;
     }
+    return resultado;  // Retorna nuevo arreglo
+}
+
+public static void main(String[] args) {
+    int[] numeros = {1, 2, 3};
+    int[] duplicados = duplicar(numeros);
     
-    // Crear arreglo resultado
-    int[] positivos = new int[cuenta];
-    int indice = 0;
-    for (int num : arreglo) {
-        if (num > 0) {
-            positivos[indice++] = num;
+    // numeros sigue siendo {1, 2, 3}
+    // duplicados es {2, 4, 6}
+}
+```
+
+## Arreglos Multidimensionales
+
+Java permite crear arreglos de arreglos, comúnmente usados como matrices.
+
+### Declaración y Creación de Matrices
+
+```{code} java
+:caption: Matriz bidimensional
+
+int[][] matriz = new int[3][4];  // 3 filas, 4 columnas
+
+// Acceso: matriz[fila][columna]
+matriz[0][0] = 1;   // Primera fila, primera columna
+matriz[2][3] = 12;  // Tercera fila, cuarta columna
+```
+
+### Inicialización de Matrices
+
+```{code} java
+:caption: Inicialización directa de matriz
+
+int[][] matriz = {
+    {1, 2, 3, 4},     // Fila 0
+    {5, 6, 7, 8},     // Fila 1
+    {9, 10, 11, 12}   // Fila 2
+};
+
+// matriz[1][2] es 7
+```
+
+### Recorrido de Matrices
+
+```{code} java
+:caption: Recorrido de matriz con for anidado
+
+int[][] matriz = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+
+int filas = matriz.length;         // 3
+int columnas = matriz[0].length;   // 3
+
+for (int fila = 0; fila < filas; fila = fila + 1) {
+    for (int col = 0; col < columnas; col = col + 1) {
+        System.out.print(matriz[fila][col] + "\t");
+    }
+    System.out.println();  // Nueva línea después de cada fila
+}
+```
+
+### Matrices Irregulares (Jagged Arrays)
+
+Cada fila puede tener diferente cantidad de columnas:
+
+```{code} java
+:caption: Matriz irregular
+
+int[][] triangulo = new int[3][];
+triangulo[0] = new int[1];  // Primera fila: 1 elemento
+triangulo[1] = new int[2];  // Segunda fila: 2 elementos
+triangulo[2] = new int[3];  // Tercera fila: 3 elementos
+
+// O con inicialización directa
+int[][] pascal = {
+    {1},
+    {1, 1},
+    {1, 2, 1},
+    {1, 3, 3, 1}
+};
+```
+
+## Operaciones Comunes con Arreglos
+
+### Encontrar Máximo y Mínimo
+
+```{code} java
+:caption: Buscar máximo en un arreglo
+
+public static int maximo(int[] arr) {
+    int max = arr[0];
+    for (int i = 1; i < arr.length; i = i + 1) {
+        if (arr[i] > max) {
+            max = arr[i];
         }
     }
-    return positivos;
+    return max;
+}
+```
+
+### Sumar Elementos
+
+```{code} java
+:caption: Sumar todos los elementos
+
+public static int sumar(int[] arr) {
+    int suma = 0;
+    for (int i = 0; i < arr.length; i = i + 1) {
+        suma = suma + arr[i];
+    }
+    return suma;
+}
+```
+
+### Calcular Promedio
+
+```{code} java
+:caption: Calcular promedio
+
+public static double promedio(int[] arr) {
+    int suma = sumar(arr);
+    return (double) suma / arr.length;
+}
+```
+
+### Contar Elementos
+
+```{code} java
+:caption: Contar elementos que cumplen condición
+
+public static int contarPares(int[] arr) {
+    int contador = 0;
+    for (int i = 0; i < arr.length; i = i + 1) {
+        if (arr[i] % 2 == 0) {
+            contador = contador + 1;
+        }
+    }
+    return contador;
 }
 ```
 
 ### Invertir Arreglo
 
 ```{code} java
-:caption: Invertir arreglo in-place
+:caption: Invertir arreglo en su lugar
 
-public static void invertir(int[] arreglo) {
+public static void invertir(int[] arr) {
     int izq = 0;
-    int der = arreglo.length - 1;
+    int der = arr.length - 1;
     
     while (izq < der) {
-        // Intercambiar
-        int temp = arreglo[izq];
-        arreglo[izq] = arreglo[der];
-        arreglo[der] = temp;
+        // Intercambiar elementos
+        int temp = arr[izq];
+        arr[izq] = arr[der];
+        arr[der] = temp;
         
-        izq++;
-        der--;
+        izq = izq + 1;
+        der = der - 1;
     }
 }
 ```
 
-## Ejercicios
+## Clase `Arrays` (Utilidades)
 
-```{exercise}
-:label: ej-arrays-1
+Java provee la clase `java.util.Arrays` con métodos útiles:
 
-Implementá un método `int[] eliminarDuplicados(int[] arreglo)` que retorne un nuevo arreglo sin elementos duplicados, manteniendo el orden original.
+```{code} java
+:caption: Métodos de la clase Arrays
+
+import java.util.Arrays;
+
+int[] numeros = {5, 2, 8, 1, 9};
+
+// Ordenar
+Arrays.sort(numeros);  // numeros queda {1, 2, 5, 8, 9}
+
+// Convertir a String (para imprimir)
+System.out.println(Arrays.toString(numeros));  // [1, 2, 5, 8, 9]
+
+// Llenar con un valor
+int[] ceros = new int[5];
+Arrays.fill(ceros, 0);  // {0, 0, 0, 0, 0}
+
+// Buscar (requiere arreglo ordenado)
+int pos = Arrays.binarySearch(numeros, 5);  // Retorna índice de 5
+
+// Comparar contenido
+int[] a = {1, 2, 3};
+int[] b = {1, 2, 3};
+boolean iguales = Arrays.equals(a, b);  // true
+
+// Copiar
+int[] copia = Arrays.copyOf(numeros, numeros.length);
+int[] parcial = Arrays.copyOfRange(numeros, 1, 4);  // Copia índices 1, 2, 3
 ```
 
-```{solution} ej-arrays-1
+## Ejercicios de Aplicación
+
+````{exercise}
+:label: ej-arreglo-modificacion
+¿Qué imprime el siguiente código? Explicá por qué.
+
 ```java
-public static int[] eliminarDuplicados(int[] arreglo) {
-    // Primero contar únicos
-    int unicos = 0;
-    for (int i = 0; i < arreglo.length; i++) {
-        boolean esDuplicado = false;
-        for (int j = 0; j < i; j++) {
-            if (arreglo[i] == arreglo[j]) {
-                esDuplicado = true;
-                break;
-            }
-        }
-        if (!esDuplicado) {
-            unicos++;
-        }
-    }
-    
-    // Crear arreglo resultado
-    int[] resultado = new int[unicos];
-    int indice = 0;
-    for (int i = 0; i < arreglo.length; i++) {
-        boolean esDuplicado = false;
-        for (int j = 0; j < i; j++) {
-            if (arreglo[i] == arreglo[j]) {
-                esDuplicado = true;
-                break;
-            }
-        }
-        if (!esDuplicado) {
-            resultado[indice++] = arreglo[i];
-        }
-    }
-    return resultado;
-}
-```
-```
-
-```{exercise}
-:label: ej-arrays-2
-
-Escribí un método `void rotarIzquierda(int[] arreglo, int posiciones)` que rote los elementos del arreglo hacia la izquierda la cantidad de posiciones indicada.
-
-Ejemplo: `[1,2,3,4,5]` rotado 2 posiciones → `[3,4,5,1,2]`
-```
-
-```{solution} ej-arrays-2
-```java
-public static void rotarIzquierda(int[] arreglo, int posiciones) {
-    int n = arreglo.length;
-    if (n == 0) return;
-    
-    posiciones = posiciones % n;  // Normalizar
-    if (posiciones < 0) posiciones += n;
-    
-    // Algoritmo de inversión triple
-    invertirRango(arreglo, 0, posiciones - 1);
-    invertirRango(arreglo, posiciones, n - 1);
-    invertirRango(arreglo, 0, n - 1);
+public static void modificar(int[] arr) {
+    arr[0] = 999;
+    arr = new int[]{100, 200, 300};
 }
 
-private static void invertirRango(int[] arr, int inicio, int fin) {
-    while (inicio < fin) {
-        int temp = arr[inicio];
-        arr[inicio] = arr[fin];
-        arr[fin] = temp;
-        inicio++;
-        fin--;
-    }
+public static void main(String[] args) {
+    int[] datos = {1, 2, 3};
+    modificar(datos);
+    System.out.println(Arrays.toString(datos));
 }
 ```
+````
+
+```{solution} ej-arreglo-modificacion
+Imprime `[999, 2, 3]`.
+
+Explicación:
+1. `arr[0] = 999` modifica el arreglo original porque `arr` apunta al mismo arreglo que `datos`.
+2. `arr = new int[]{100, 200, 300}` solo cambia la referencia local `arr` para que apunte a un nuevo arreglo. Esto **no afecta** a la referencia `datos` en `main`.
+3. Al terminar el método, el nuevo arreglo `{100, 200, 300}` se pierde (no hay referencia a él).
+
+Este es el mismo comportamiento que vimos con el pasaje de referencias: podés modificar el contenido del arreglo, pero reasignar la referencia local no afecta la referencia original.
 ```
 
 ```{exercise}
-:label: ej-arrays-3
-
-Implementá un método `int[][] multiplicarMatrices(int[][] a, int[][] b)` que multiplique dos matrices y retorne el resultado.
+:label: ej-matriz-suma-filas
+Escribí un método que reciba una matriz de enteros y retorne un arreglo con la suma de cada fila.
 ```
 
-```{solution} ej-arrays-3
+````{solution} ej-matriz-suma-filas
+
 ```java
-public static int[][] multiplicarMatrices(int[][] a, int[][] b) {
-    int filasA = a.length;
-    int colsA = a[0].length;
-    int colsB = b[0].length;
+public static int[] sumarFilas(int[][] matriz) {
+    int[] sumas = new int[matriz.length];
     
-    if (colsA != b.length) {
-        throw new IllegalArgumentException(
-            "Dimensiones incompatibles para multiplicación"
-        );
-    }
-    
-    int[][] resultado = new int[filasA][colsB];
-    
-    for (int i = 0; i < filasA; i++) {
-        for (int j = 0; j < colsB; j++) {
-            for (int k = 0; k < colsA; k++) {
-                resultado[i][j] += a[i][k] * b[k][j];
-            }
+    for (int fila = 0; fila < matriz.length; fila = fila + 1) {
+        int suma = 0;
+        for (int col = 0; col < matriz[fila].length; col = col + 1) {
+            suma = suma + matriz[fila][col];
         }
+        sumas[fila] = suma;
     }
     
-    return resultado;
+    return sumas;
+}
+
+// Ejemplo de uso:
+int[][] m = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+int[] resultado = sumarFilas(m);  // {6, 15, 24}
+```
+````
+
+````exercise`
+:label: ej-matriz-irregular
+Dada una matriz `int[][] m`, escribí un método que determine si la matriz es "rectangular" (todas las filas tienen la misma longitud) o "irregular".
+```
+
+````{solution} ej-matriz-irregular
+
+```java
+public static boolean esRectangular(int[][] m) {
+    if (m == null || m.length == 0) {
+        return true;
+    }
+    
+    int columnasEsperadas = m[0].length;
+    boolean esRect = true;
+    int i = 1;
+    
+    while (i < m.length && esRect) {
+        if (m[i] == null || m[i].length != columnasEsperadas) {
+            esRect = false;
+        }
+        i = i + 1;
+    }
+    
+    return esRect;
 }
 ```
+````
+
+```{exercise}
+:label: ej-rotar-arreglo
+Escribí un método que rote los elementos de un arreglo una posición hacia la derecha. El último elemento pasa a ser el primero.
 ```
 
-:::{seealso}
-- [Documentación de Arrays](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Arrays.html)
-- [Tutorial de arreglos de Oracle](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/arrays.html)
-:::
+````{solution} ej-rotar-arreglo
+
+```java
+public static void rotarDerecha(int[] arr) {
+    if (arr.length <= 1) {
+        return;  // Nada que rotar
+    }
+    
+    // Guardar el último elemento
+    int ultimo = arr[arr.length - 1];
+    
+    // Desplazar todos hacia la derecha
+    for (int i = arr.length - 1; i > 0; i = i - 1) {
+        arr[i] = arr[i - 1];
+    }
+    
+    // Colocar el último al principio
+    arr[0] = ultimo;
+}
+
+// Ejemplo: {1, 2, 3, 4, 5} → {5, 1, 2, 3, 4}
+```
+````
+
+## Referencias Bibliográficas
+
+- **Schildt, H.** (2022). *Java: A Beginner's Guide* (9na ed.). McGraw Hill. (Capítulo 5: Arrays).
+- **Liang, Y. D.** (2017). *Introduction to Java Programming and Data Structures* (11va ed.). Pearson.
+- **Oracle Corporation.** (2023). *The Java Language Specification*. [Arrays](https://docs.oracle.com/javase/specs/jls/se21/html/jls-10.html).
+

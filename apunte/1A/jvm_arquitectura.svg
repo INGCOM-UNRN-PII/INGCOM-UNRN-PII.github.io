@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../../resources/svg.css" type="text/css"?>
+<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Marcadores de flechas -->
+    <marker id="arrowhead-primary" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#eb2141"/>
+    </marker>
+    <marker id="arrowhead-secondary" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#192437"/>
+    </marker>
+  </defs>
+  
+  <rect width="600" height="400" class="background"/>
+
+  <!-- Título -->
+  <text x="300" y="30" class="title">Arquitectura y Flujo de Java</text>
+  <text x="300" y="50" class="subtitle">Independencia de Plataforma (WORA)</text>
+  
+  <!-- Fase de Compilación -->
+  <rect x="50" y="80" width="120" height="60" class="code-block"/>
+  <text x="110" y="105" class="label-bold" text-anchor="middle">Código Fuente</text>
+  <text x="110" y="125" class="code" text-anchor="middle">Programa.java</text>
+  
+  <path d="M 170 110 L 220 110" class="arrow-primary"/>
+  <text x="195" y="100" class="label-small" text-anchor="middle">Compilador</text>
+  <text x="195" y="130" class="label-small" text-anchor="middle">(javac)</text>
+
+  <rect x="230" y="80" width="120" height="60" class="highlight-box"/>
+  <text x="290" y="105" class="label-bold" text-anchor="middle">Bytecode</text>
+  <text x="290" y="125" class="code" text-anchor="middle">Programa.class</text>
+
+  <!-- Fase de Ejecución -->
+  <path d="M 350 110 L 400 110 L 400 180" class="arrow-secondary" fill="none"/>
+  <text x="430" y="145" class="label-small">Distribución</text>
+
+  <!-- JVMs por Plataforma -->
+  <!-- Windows -->
+  <rect x="50" y="200" width="140" height="80" class="info-box"/>
+  <text x="120" y="225" class="label-bold" text-anchor="middle">JVM (Windows)</text>
+  <path d="M 120 235 L 120 260" class="arrow-secondary"/>
+  <text x="120" y="275" class="label-small" text-anchor="middle">Código Máquina x86</text>
+
+  <!-- Linux -->
+  <rect x="230" y="200" width="140" height="80" class="info-box"/>
+  <text x="300" y="225" class="label-bold" text-anchor="middle">JVM (Linux)</text>
+  <path d="M 300 235 L 300 260" class="arrow-secondary"/>
+  <text x="300" y="275" class="label-small" text-anchor="middle">Código Máquina ELF</text>
+
+  <!-- macOS -->
+  <rect x="410" y="200" width="140" height="80" class="info-box"/>
+  <text x="480" y="225" class="label-bold" text-anchor="middle">JVM (macOS)</text>
+  <path d="M 480 235 L 480 260" class="arrow-secondary"/>
+  <text x="480" y="275" class="label-small" text-anchor="middle">Código Máquina Mach-O</text>
+
+  <path d="M 290 140 L 120 200" class="arrow-secondary" fill="none"/>
+  <path d="M 290 140 L 300 200" class="arrow-secondary" fill="none"/>
+  <path d="M 290 140 L 480 200" class="arrow-secondary" fill="none"/>
+
+  <!-- Nota de pie -->
+  <rect x="50" y="320" width="500" height="50" class="code-block"/>
+  <text x="60" y="340" class="code">"Write Once, Run Anywhere"</text>
+  <text x="60" y="360" class="label-small">El bytecode es universal; la JVM es la que se adapta al hardware.</text>
+</svg>

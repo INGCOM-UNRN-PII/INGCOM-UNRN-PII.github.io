@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../resources/svg.css" type="text/css"?><svg
+   width="500"
+   height="400"
+   viewBox="0 0 500 400"
+   version="1.1"
+   id="svg15"
+   sodipodi:docname="tdd_ciclo.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview15"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="1"
+     inkscape:showpageshadow="true"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="false"
+     inkscape:deskcolor="#d3d3d3"
+     showguides="false"
+     inkscape:zoom="1.2374369"
+     inkscape:cx="252.53814"
+     inkscape:cy="259.40717"
+     inkscape:window-width="1872"
+     inkscape:window-height="1043"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg15"
+     showborder="true"
+     labelstyle="default" />
+  <defs
+     id="defs1">
+    <marker
+       id="arrowhead"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0 0, 10 3, 0 6"
+         fill="#333"
+         id="polygon1" />
+    </marker>
+  </defs>
+  <!-- Title -->
+  <text
+     x="249.64452"
+     y="31.297415"
+     class="title"
+     text-anchor="middle"
+     id="text1"
+     style="font-size:15.4552px;stroke-width:1.28793;-inkscape-font-specification:'sans-serif, @wght=700';font-family:sans-serif;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-variation-settings:'wght' 700;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-anchor:middle">Ciclo TDD: Red-Green-Refactor</text>
+  <!-- Red Circle (Top) -->
+  <!-- Green Circle (Bottom Left) -->
+  <!-- Refactor Circle (Bottom Right) -->
+  <!-- Arrows -->
+  <!-- Red to Green -->
+  <!-- Green to Refactor -->
+  <!-- Refactor to Red -->
+  <g
+     id="g16"
+     transform="translate(0.99069288,3.0175317)">
+    <circle
+       cx="249"
+       cy="99"
+       r="49.019608"
+       fill="#e74c3c"
+       stroke="#333333"
+       stroke-width="2"
+       id="circle1" />
+    <text
+       x="248.81401"
+       y="95"
+       class="label-white"
+       text-anchor="middle"
+       font-weight="bold"
+       id="text2">RED</text>
+    <text
+       x="249.42601"
+       y="110"
+       class="label-white"
+       text-anchor="middle"
+       font-size="12px"
+       id="text3">Test falla</text>
+    <circle
+       cx="148.99901"
+       cy="278.99902"
+       r="49.018661"
+       fill="#27ae60"
+       stroke="#333333"
+       stroke-width="1.96268"
+       id="circle3" />
+    <text
+       x="149.19101"
+       y="275"
+       class="label-white"
+       text-anchor="middle"
+       font-weight="bold"
+       id="text4">GREEN</text>
+    <text
+       x="149.42502"
+       y="290"
+       class="label-white"
+       text-anchor="middle"
+       font-size="12px"
+       id="text5">Test pasa</text>
+    <circle
+       cx="349"
+       cy="279"
+       r="49.019608"
+       fill="#3498db"
+       stroke="#333333"
+       stroke-width="2"
+       id="circle5" />
+    <text
+       x="348.48401"
+       y="275"
+       class="label-white"
+       text-anchor="middle"
+       font-weight="bold"
+       id="text6">REFACTOR</text>
+    <text
+       x="348.76349"
+       y="290"
+       class="label-white"
+       text-anchor="middle"
+       font-size="11px"
+       id="text7">Mejorar código</text>
+    <path
+       d="M 218.22384,138.60409 150,230"
+       fill="none"
+       stroke="#333333"
+       stroke-width="3"
+       marker-end="url(#arrowhead)"
+       id="path7"
+       sodipodi:nodetypes="cc" />
+    <text
+       x="106.72146"
+       y="155.14285"
+       class="annotation"
+       font-size="12px"
+       id="text8">Escribir</text>
+    <text
+       x="106.72146"
+       y="170.14285"
+       class="annotation"
+       font-size="12px"
+       id="text9">código mínimo</text>
+    <path
+       d="M 200,280 H 300"
+       fill="none"
+       stroke="#333333"
+       stroke-width="3"
+       marker-end="url(#arrowhead)"
+       id="path9"
+       sodipodi:nodetypes="cc" />
+    <text
+       x="250"
+       y="264"
+       class="annotation"
+       text-anchor="middle"
+       font-size="12px"
+       id="text10">Mejorar diseño</text>
+    <path
+       d="M 350,230 282.90548,137.6461"
+       fill="none"
+       stroke="#333333"
+       stroke-width="3"
+       marker-end="url(#arrowhead)"
+       id="path10"
+       sodipodi:nodetypes="cc" />
+    <text
+       x="323.14285"
+       y="175"
+       class="annotation"
+       font-size="12px"
+       id="text11">Siguiente</text>
+    <text
+       x="323.57486"
+       y="190"
+       class="annotation"
+       font-size="12px"
+       id="text12">feature</text>
+  </g>
+  <!-- Steps description -->
+  <g
+     transform="translate(26.015019,361.42857)"
+     id="g15">
+    <text
+       x="0"
+       y="0"
+       class="annotation"
+       font-size="11px"
+       id="text13">1. RED: Escribir test que falle</text>
+    <text
+       x="165"
+       y="0"
+       class="annotation"
+       font-size="11px"
+       id="text14">2. GREEN: Hacer que pase</text>
+    <text
+       x="335"
+       y="0"
+       class="annotation"
+       font-size="11px"
+       id="text15">3. REFACTOR: Mejorar</text>
+  </g>
+</svg>
