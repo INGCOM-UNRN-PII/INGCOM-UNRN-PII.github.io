@@ -71,6 +71,14 @@ int EDAD_USUARIO;    // SCREAMING_CASE (reservado para constantes)
 
 Java define exactamente **8 tipos primitivos**. A diferencia de C, donde el tamaño de `int` o `long` puede variar según el compilador y la arquitectura, Java garantiza tamaños fijos en todas las plataformas.
 
+```{figure} 03/tipos_primitivos.svg
+:label: fig-tipos-primitivos
+:align: center
+:width: 95%
+
+Los 8 tipos primitivos de Java con sus tamaños y rangos garantizados.
+```
+
 :::{table} Especificación técnica de tipos primitivos
 :label: tbl-tipos-primitivos-unrn
 
@@ -219,6 +227,14 @@ Los tipos `float` y `double` siguen el estándar IEEE 754, igual que en C. Un n�
 - **Mantisa** ($m$): 23 bits (float) o 52 bits (double)
 
 $$x = (-1)^s \times 1.m \times 2^{e-sesgo}$$
+
+```{figure} 03/ieee754_representacion.svg
+:label: fig-ieee754
+:align: center
+:width: 85%
+
+Representación IEEE 754 de un número `double` de 64 bits.
+```
 
 :::{warning} Errores de Precisión
 Muchos números decimales no tienen representación binaria exacta. Esto es idéntico al comportamiento en C:
@@ -478,10 +494,12 @@ int der = a >> 1;  // 0b0101 = 5 (divide por 2)
 
 Java promueve automáticamente tipos más pequeños a más grandes:
 
-```
-byte → short → int → long → float → double
-          ↑
-        char
+```{figure} 03/conversion_tipos.svg
+:label: fig-conversion-tipos
+:align: center
+:width: 80%
+
+Diagrama de promoción automática y casting explícito entre tipos primitivos.
 ```
 
 ```{code} java

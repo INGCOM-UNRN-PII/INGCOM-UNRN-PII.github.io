@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../resources/svg.css" type="text/css"?>
+<svg width="750" height="450" viewBox="0 0 750 450" xmlns="http://www.w3.org/2000/svg">
+  <title>Arreglo en Memoria: Stack y Heap</title>
+  
+  <!-- Título -->
+  <text x="375" y="30" class="title">Anatomía de un Arreglo en Java</text>
+  
+  <!-- Código -->
+  <rect x="50" y="60" width="400" height="40" class="code-block"/>
+  <text x="70" y="85" class="code-keyword">int</text>
+  <text x="95" y="85" class="code">[] numeros = </text>
+  <text x="205" y="85" class="code-keyword">new int</text>
+  <text x="260" y="85" class="code">[]{10, 20, 30, 40, 50};</text>
+  
+  <!-- STACK -->
+  <g id="stack">
+    <text x="150" y="140" class="subtitle">STACK (Pila)</text>
+    
+    <rect x="50" y="160" width="200" height="80" class="stack-node"/>
+    <text x="70" y="180" class="label-bold">Variable: numeros</text>
+    <text x="70" y="200" class="code">tipo: int[]</text>
+    <text x="70" y="220" class="code">valor: 0x1A2B3C4D</text>
+    <rect x="70" y="225" width="160" height="1" class="divider"/>
+    <text x="70" y="238" class="label-small">↑ Referencia (dirección)</text>
+  </g>
+  
+  <!-- Flecha al Heap -->
+  <defs>
+    <marker id="arrow-heap" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#1565c0"/>
+    </marker>
+  </defs>
+  <path d="M 250 200 L 400 200 L 400 280" fill="none" stroke="#1565c0" stroke-width="3" marker-end="url(#arrow-heap)"/>
+  <text x="290" y="195" class="list-label">apunta a</text>
+  
+  <!-- HEAP -->
+  <g id="heap">
+    <text x="500" y="140" class="subtitle">HEAP (Montículo)</text>
+    
+    <!-- Metadata del arreglo -->
+    <rect x="350" y="160" width="350" height="40" class="node-header"/>
+    <text x="370" y="183" class="label-small">Dirección: 0x1A2B3C4D | Tipo: int[] | length: 5</text>
+    
+    <!-- Elementos del arreglo -->
+    <rect x="350" y="200" width="70" height="50" class="memory-cell-filled"/>
+    <rect x="420" y="200" width="70" height="50" class="memory-cell-filled"/>
+    <rect x="490" y="200" width="70" height="50" class="memory-cell-filled"/>
+    <rect x="560" y="200" width="70" height="50" class="memory-cell-filled"/>
+    <rect x="630" y="200" width="70" height="50" class="memory-cell-filled"/>
+    
+    <!-- Valores -->
+    <text x="385" y="230" class="code">10</text>
+    <text x="455" y="230" class="code">20</text>
+    <text x="525" y="230" class="code">30</text>
+    <text x="595" y="230" class="code">40</text>
+    <text x="665" y="230" class="code">50</text>
+    
+    <!-- Índices -->
+    <text x="375" y="270" class="index">[0]</text>
+    <text x="445" y="270" class="index">[1]</text>
+    <text x="515" y="270" class="index">[2]</text>
+    <text x="585" y="270" class="index">[3]</text>
+    <text x="655" y="270" class="index">[4]</text>
+  </g>
+  
+  <!-- Acceso a elementos -->
+  <rect x="50" y="300" width="650" height="130" class="info-box"/>
+  <text x="70" y="325" class="label-bold">Acceso a elementos:</text>
+  
+  <text x="70" y="350" class="code">numeros[0]</text>
+  <text x="180" y="350" class="code-comment">// Accede a la primera celda (10)</text>
+  
+  <text x="70" y="370" class="code">numeros.length</text>
+  <text x="180" y="370" class="code-comment">// Retorna 5 (tamaño del arreglo)</text>
+  
+  <text x="70" y="390" class="code">numeros[5]</text>
+  <text x="180" y="390" class="code-comment">// ❌ ArrayIndexOutOfBoundsException</text>
+  
+  <rect x="70" y="400" width="600" height="20" class="highlight-box"/>
+  <text x="80" y="413" class="label-small">⚠️ Java verifica límites automáticamente (a diferencia de C)</text>
+</svg>

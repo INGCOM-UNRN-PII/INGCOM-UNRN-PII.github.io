@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../resources/svg.css" type="text/css"?>
+<svg width="700" height="300" viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+  <title>Representación IEEE 754 de Punto Flotante</title>
+  
+  <!-- Título -->
+  <text x="350" y="30" class="title">Representación IEEE 754 - double (64 bits)</text>
+  
+  <!-- Bits del double -->
+  <g id="double-bits">
+    <!-- Signo (1 bit) -->
+    <rect x="50" y="60" width="50" height="40" class="stack-data"/>
+    <text x="75" y="85" class="code">S</text>
+    <text x="75" y="115" class="label-small">Signo</text>
+    <text x="75" y="130" class="index">1 bit</text>
+    
+    <!-- Exponente (11 bits) -->
+    <rect x="110" y="60" width="200" height="40" class="queue-data"/>
+    <text x="210" y="85" class="code">Exponente</text>
+    <text x="210" y="115" class="label-small">Potencia de 2</text>
+    <text x="210" y="130" class="index">11 bits</text>
+    
+    <!-- Mantisa (52 bits) -->
+    <rect x="320" y="60" width="330" height="40" class="list-data"/>
+    <text x="485" y="85" class="code">Mantisa (Fracción)</text>
+    <text x="485" y="115" class="label-small">Dígitos significativos</text>
+    <text x="485" y="130" class="index">52 bits</text>
+  </g>
+  
+  <!-- Fórmula -->
+  <text x="350" y="170" class="subtitle">Fórmula de cálculo:</text>
+  <text x="350" y="195" class="code">x = (-1)ˢ × 1.mantisa × 2^(exponente - 1023)</text>
+  
+  <!-- Ejemplo -->
+  <g id="ejemplo">
+    <text x="50" y="235" class="label-bold">Ejemplo: 9.5</text>
+    <text x="50" y="255" class="code">S = 0 (positivo)</text>
+    <text x="50" y="270" class="code">Exponente = 1026 (3 + sesgo 1023)</text>
+    <text x="50" y="285" class="code">Mantisa = 0.1875 (binario: 0.0011...)</text>
+    
+    <text x="400" y="255" class="code">9.5 = 1.1875 × 2³</text>
+    <text x="400" y="270" class="code-comment">// 1.1875 en binario = 1.0011</text>
+  </g>
+</svg>

@@ -148,6 +148,14 @@ try {
 
 El bloque `finally` se ejecuta **siempre**, haya o no excepción. Es útil para liberar recursos.
 
+```{figure} 10/flujo_try_catch_finally.svg
+:label: fig-flujo-try-catch-finally
+:align: center
+:width: 85%
+
+Flujo de ejecución del bloque try-catch-finally en diferentes escenarios.
+```
+
 ```{code} java
 :caption: Uso del bloque finally
 
@@ -209,25 +217,12 @@ public static void demostrar(int opcion) {
 
 En Java, todo lo que puede ser lanzado (`throw`) o capturado (`catch`) forma parte de una jerarquía:
 
-```
-Throwable
-├── Error (problemas graves de la JVM)
-│   ├── OutOfMemoryError
-│   ├── StackOverflowError
-│   └── VirtualMachineError
-│
-└── Exception (condiciones recuperables)
-    ├── RuntimeException (unchecked)
-    │   ├── NullPointerException
-    │   ├── ArrayIndexOutOfBoundsException
-    │   ├── ArithmeticException
-    │   ├── IllegalArgumentException
-    │   └── NumberFormatException
-    │
-    └── Otras (checked)
-        ├── IOException
-        ├── FileNotFoundException
-        └── SQLException
+```{figure} 10/jerarquia_excepciones.svg
+:label: fig-jerarquia-excepciones
+:align: center
+:width: 85%
+
+Jerarquía completa de Throwable: Error vs Exception, Checked vs Unchecked.
 ```
 
 ### Excepciones Checked vs Unchecked
@@ -326,6 +321,28 @@ Validá las precondiciones lo antes posible en el método. Es mejor fallar rápi
 ## Declarar Excepciones: throws
 
 Para excepciones **checked**, debés declararlas en la firma del método con `throws`:
+
+````{mermaid}
+:align: center
+
+flowchart TD
+    Start([metodoA llama metodoB]) --> Check{metodoB puede<br/>lanzar IOException?}
+    Check -->|Sí, checked| Decision{¿Cómo manejar?}
+    
+    Decision -->|Opción 1| Catch[Capturar con try-catch]
+    Decision -->|Opción 2| Throws[Declarar throws en metodoA]
+    
+    Catch --> Handle[Manejo local del error]
+    Throws --> Propagate[Propaga al llamador]
+    
+    Handle --> End([Fin])
+    Propagate --> End
+    
+    style Check fill:#ffe0e0,stroke:#eb2141
+    style Decision fill:#fff3e0,stroke:#f57c00
+    style Catch fill:#c8e6c9,stroke:#2e7d32
+    style Throws fill:#bbdefb,stroke:#1565c0
+````
 
 ```{code} java
 :caption: Declarar excepciones con throws

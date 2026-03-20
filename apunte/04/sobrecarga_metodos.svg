@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../resources/svg.css" type="text/css"?>
+<svg width="750" height="450" viewBox="0 0 750 450" xmlns="http://www.w3.org/2000/svg">
+  <title>Sobrecarga de Métodos (Overloading)</title>
+  
+  <!-- Título -->
+  <text x="375" y="30" class="title">Sobrecarga de Métodos (Method Overloading)</text>
+  
+  <!-- Concepto de firma -->
+  <rect x="50" y="60" width="650" height="80" class="info-box"/>
+  <text x="70" y="85" class="label-bold">Firma del método = Nombre + Tipos de parámetros (en orden)</text>
+  <text x="70" y="105" class="label-small">El tipo de retorno NO forma parte de la firma</text>
+  <text x="70" y="125" class="label-small">Los modificadores de acceso NO forman parte de la firma</text>
+  
+  <!-- Ejemplos válidos -->
+  <g id="validos">
+    <text x="150" y="170" class="subtitle">✓ Sobrecargas Válidas (diferentes firmas)</text>
+    
+    <rect x="50" y="190" width="650" height="160" class="code-block"/>
+    
+    <!-- Método 1 -->
+    <rect x="70" y="210" width="290" height="30" class="queue-data"/>
+    <text x="80" y="230" class="code">int sumar(int a, int b)</text>
+    <text x="380" y="230" class="label-small">2 parámetros int</text>
+    
+    <!-- Método 2 -->
+    <rect x="70" y="250" width="290" height="30" class="list-data"/>
+    <text x="80" y="270" class="code">int sumar(int a, int b, int c)</text>
+    <text x="380" y="270" class="label-small">3 parámetros int</text>
+    
+    <!-- Método 3 -->
+    <rect x="70" y="290" width="290" height="30" class="deque-data"/>
+    <text x="80" y="310" class="code">double sumar(double a, double b)</text>
+    <text x="380" y="310" class="label-small">2 parámetros double</text>
+    
+    <!-- Método 4 -->
+    <rect x="70" y="330" width="290" height="30" class="stack-data"/>
+    <text x="80" y="350" class="code">String sumar(String a, String b)</text>
+    <text x="380" y="350" class="label-small">2 parámetros String</text>
+    
+    <!-- Flechas de diferenciación -->
+    <defs>
+      <marker id="arrow-ok" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+        <polygon points="0 0, 10 3, 0 6" fill="#2e7d32"/>
+      </marker>
+    </defs>
+    
+    <text x="570" y="275" class="label-bold">Diferentes</text>
+    <text x="570" y="290" class="label-bold">firmas</text>
+    <text x="570" y="305" class="code">→</text>
+    <text x="570" y="320" class="label-bold">El compilador</text>
+    <text x="570" y="335" class="label-bold">puede elegir</text>
+  </g>
+  
+  <!-- Ejemplos inválidos -->
+  <g id="invalidos">
+    <text x="150" y="390" class="subtitle">❌ Sobrecarga Inválida (misma firma)</text>
+    
+    <rect x="50" y="400" width="650" height="40" class="highlight-box"/>
+    
+    <text x="70" y="423" class="code">int calcular(int x)</text>
+    <text x="260" y="423" class="code-comment">vs</text>
+    <text x="300" y="423" class="code">double calcular(int x)</text>
+    <text x="520" y="423" class="label-small">❌ Error: solo difieren en retorno</text>
+  </g>
+</svg>

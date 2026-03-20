@@ -15,6 +15,14 @@ En C, trabajás directamente con punteros y memoria. En Java, los punteros exist
 
 La Máquina Virtual de Java (JVM) divide la memoria en varias regiones. Para nuestros propósitos, las más importantes son:
 
+```{figure} 13/stack_heap_modelo.svg
+:label: fig-stack-heap-modelo
+:align: center
+:width: 95%
+
+Modelo de memoria de la JVM: Stack (variables locales y referencias) vs Heap (objetos y arreglos).
+```
+
 ### Stack (Pila)
 
 El **Stack** es una región de memoria que sigue el modelo LIFO (_Last In, First Out_). Cada hilo de ejecución tiene su propio stack privado.
@@ -179,6 +187,31 @@ System.out.println(Arrays.equals(a, b)); // true (compara contenido)
 ## Pasaje de Argumentos a Métodos
 
 En Java, **todo se pasa por valor**. Pero debés entender qué significa "valor" en cada caso:
+
+````{mermaid}
+:align: center
+
+flowchart LR
+    subgraph Primitivo["Tipo Primitivo"]
+        P1[int x = 10] --> P2[metodo recibe<br/>COPIA del valor]
+        P2 --> P3[Cambios NO afectan<br/>variable original]
+    end
+    
+    subgraph Referencia["Tipo Referencia"]
+        R1[int[] arr = ...] --> R2[metodo recibe<br/>COPIA de la dirección]
+        R2 --> R3[Cambios en contenido<br/>SÍ afectan original]
+        R2 --> R4[Reasignar referencia<br/>NO afecta original]
+    end
+    
+    style P1 fill:#c8e6c9,stroke:#2e7d32
+    style P2 fill:#fff3e0,stroke:#f57c00
+    style P3 fill:#ffe0e0,stroke:#eb2141
+    
+    style R1 fill:#bbdefb,stroke:#1565c0
+    style R2 fill:#fff3e0,stroke:#f57c00
+    style R3 fill:#c8e6c9,stroke:#2e7d32
+    style R4 fill:#ffe0e0,stroke:#eb2141
+````
 
 ### Pasaje de Primitivos
 
@@ -355,6 +388,14 @@ La clase `String` en Java es **inmutable por diseño**. Esto significa que una v
 ### String Pool
 
 Para optimizar memoria, Java mantiene un **String Pool**: una caché de strings en el heap.
+
+```{figure} 13/string_pool.svg
+:label: fig-string-pool
+:align: center
+:width: 90%
+
+String Pool e inmutabilidad: cómo Java optimiza el uso de Strings en memoria.
+```
 
 ```{code} java
 :caption: String Pool

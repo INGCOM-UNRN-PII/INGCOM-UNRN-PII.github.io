@@ -251,9 +251,25 @@ if (encontrado) {
 
 En Java, las variables de arreglo son **referencias** (similares a punteros en C). Esto tiene implicaciones importantes.
 
+```{figure} 09/arreglo_memoria.svg
+:label: fig-arreglo-memoria
+:align: center
+:width: 90%
+
+Representación de un arreglo en memoria: referencia en el Stack, datos en el Heap.
+```
+
 ### Asignación de Referencias
 
 Cuando asignás un arreglo a otra variable, **no se copian los datos**. Ambas variables apuntan al mismo arreglo en memoria.
+
+```{figure} 09/referencias_copia.svg
+:label: fig-referencias-copia
+:align: center
+:width: 85%
+
+Diferencia entre asignación de referencias y copia real de arreglos.
+```
 
 ```{code} java
 :caption: Asignación de referencias
@@ -403,6 +419,14 @@ public static void main(String[] args) {
 ## Arreglos Multidimensionales
 
 Java permite crear arreglos de arreglos, comúnmente usados como matrices.
+
+```{figure} 09/matriz_memoria.svg
+:label: fig-matriz-memoria
+:align: center
+:width: 85%
+
+Representación de una matriz en memoria: arreglo de referencias a arreglos individuales.
+```
 
 ### Declaración y Creación de Matrices
 

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../resources/svg.css" type="text/css"?>
+<svg width="700" height="450" viewBox="0 0 700 450" xmlns="http://www.w3.org/2000/svg">
+  <title>Flujo de Ejecución try-catch-finally</title>
+  
+  <!-- Título -->
+  <text x="350" y="30" class="title">Flujo de Ejecución: try-catch-finally</text>
+  
+  <!-- CASO 1: Sin excepción -->
+  <g id="caso-sin-excepcion">
+    <text x="150" y="70" class="subtitle">Sin Excepción</text>
+    
+    <rect x="30" y="90" width="240" height="280" class="code-block"/>
+    
+    <!-- Try -->
+    <rect x="50" y="110" width="200" height="60" class="queue-data"/>
+    <text x="70" y="130" class="label-bold">1. try</text>
+    <text x="70" y="145" class="code">Se ejecuta completo</text>
+    <text x="70" y="160" class="code-comment">✓ Todo OK</text>
+    
+    <!-- Catch -->
+    <rect x="50" y="180" width="200" height="60" class="node-null"/>
+    <text x="70" y="200" class="label-bold">2. catch</text>
+    <text x="70" y="215" class="code-comment">NO se ejecuta</text>
+    <text x="70" y="230" class="label-small">(no hubo excepción)</text>
+    
+    <!-- Finally -->
+    <rect x="50" y="250" width="200" height="60" class="list-data"/>
+    <text x="70" y="270" class="label-bold">3. finally</text>
+    <text x="70" y="285" class="code">Siempre se ejecuta</text>
+    <text x="70" y="300" class="code-comment">✓ Limpieza</text>
+    
+    <!-- Flujo -->
+    <text x="150" y="335" class="label-bold">Flujo: 1 → 3</text>
+    <text x="150" y="355" class="label-small">Resultado: ✓ Exitoso</text>
+  </g>
+  
+  <!-- CASO 2: Con excepción capturada -->
+  <g id="caso-con-excepcion">
+    <text x="430" y="70" class="subtitle">Con Excepción Capturada</text>
+    
+    <rect x="310" y="90" width="240" height="280" class="code-block"/>
+    
+    <!-- Try -->
+    <rect x="330" y="110" width="200" height="60" class="queue-data"/>
+    <text x="350" y="130" class="label-bold">1. try</text>
+    <text x="350" y="145" class="code">Se ejecuta parcial</text>
+    <text x="350" y="160" class="code-comment">❌ Excepción lanzada</text>
+    
+    <!-- Catch -->
+    <rect x="330" y="180" width="200" height="60" class="stack-data"/>
+    <text x="350" y="200" class="label-bold">2. catch</text>
+    <text x="350" y="215" class="code">Se ejecuta</text>
+    <text x="350" y="230" class="code-comment">✓ Maneja el error</text>
+    
+    <!-- Finally -->
+    <rect x="330" y="250" width="200" height="60" class="list-data"/>
+    <text x="350" y="270" class="label-bold">3. finally</text>
+    <text x="350" y="285" class="code">Siempre se ejecuta</text>
+    <text x="350" y="300" class="code-comment">✓ Limpieza</text>
+    
+    <!-- Flujo -->
+    <text x="430" y="335" class="label-bold">Flujo: 1 (parcial) → 2 → 3</text>
+    <text x="430" y="355" class="label-small">Resultado: ✓ Error manejado</text>
+  </g>
+  
+  <!-- Ejemplo de código -->
+  <rect x="50" y="390" width="600" height="50" class="highlight-box"/>
+  <text x="70" y="410" class="label-bold">Regla de oro:</text>
+  <text x="70" y="427" class="label">El bloque finally SIEMPRE se ejecuta, incluso si hay return en try o catch</text>
+</svg>

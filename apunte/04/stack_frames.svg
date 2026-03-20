@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../resources/svg.css" type="text/css"?>
+<svg width="600" height="500" viewBox="0 0 600 500" xmlns="http://www.w3.org/2000/svg">
+  <title>Stack Frames en la Pila de Llamadas</title>
+  
+  <!-- Título -->
+  <text x="300" y="30" class="title">Stack de Llamadas (Call Stack)</text>
+  
+  <!-- Pila visual -->
+  <g id="stack">
+    <!-- Frame: main -->
+    <rect x="150" y="400" width="300" height="70" class="stack-node"/>
+    <text x="180" y="425" class="label-bold">main()</text>
+    <text x="180" y="445" class="code">int resultado</text>
+    <text x="180" y="460" class="code-comment">// llamó a metodoA(5)</text>
+    
+    <!-- Frame: metodoA -->
+    <rect x="150" y="310" width="300" height="70" class="stack-node"/>
+    <text x="180" y="335" class="label-bold">metodoA(int x)</text>
+    <text x="180" y="355" class="code">x = 5</text>
+    <text x="180" y="370" class="code-comment">// llamó a metodoB(6)</text>
+    
+    <!-- Frame: metodoB (activo) -->
+    <rect x="150" y="220" width="300" height="70" class="node-highlight"/>
+    <text x="180" y="245" class="label-bold">metodoB(int n) ← ACTIVO</text>
+    <text x="180" y="265" class="code">n = 6</text>
+    <text x="180" y="280" class="code">return = 16</text>
+    
+    <!-- Flechas de retorno -->
+    <defs>
+      <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+        <polygon points="0 0, 10 3, 0 6" fill="#eb2141"/>
+      </marker>
+    </defs>
+    
+    <line x1="470" y1="255" x2="520" y2="255" class="arrow-primary"/>
+    <text x="530" y="260" class="label-small">retorna 16</text>
+  </g>
+  
+  <!-- Código correspondiente -->
+  <rect x="50" y="60" width="500" height="140" class="code-block"/>
+  <text x="70" y="85" class="code-keyword">public static void</text>
+  <text x="170" y="85" class="code"> main(String[] args) {</text>
+  <text x="90" y="105" class="code">    int resultado = metodoA(5);</text>
+  <text x="70" y="120" class="code">}</text>
+  
+  <text x="70" y="140" class="code-keyword">public static int</text>
+  <text x="170" y="140" class="code"> metodoA(int x) {</text>
+  <text x="90" y="160" class="code">    int y = metodoB(x + 1);</text>
+  <text x="90" y="175" class="code">    return y * 2;</text>
+  <text x="70" y="190" class="code">}</text>
+</svg>

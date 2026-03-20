@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../resources/svg.css" type="text/css"?>
+<svg width="700" height="550" viewBox="0 0 700 550" xmlns="http://www.w3.org/2000/svg">
+  <title>Jerarquía de Excepciones en Java</title>
+  
+  <!-- Título -->
+  <text x="350" y="30" class="title">Jerarquía de Throwable en Java</text>
+  
+  <!-- Throwable (raíz) -->
+  <rect x="280" y="60" width="140" height="50" class="node-highlight"/>
+  <text x="350" y="85" class="label-bold">Throwable</text>
+  <text x="350" y="100" class="label-small">(raíz)</text>
+  
+  <!-- Líneas de división -->
+  <line x1="350" y1="110" x2="200" y2="140" stroke="#192437" stroke-width="2"/>
+  <line x1="350" y1="110" x2="500" y2="140" stroke="#192437" stroke-width="2"/>
+  
+  <!-- ERROR (izquierda) -->
+  <g id="error-branch">
+    <rect x="50" y="140" width="300" height="50" class="stack-node"/>
+    <text x="200" y="165" class="label-bold">Error</text>
+    <text x="200" y="180" class="label-small">(Problemas graves de la JVM)</text>
+    
+    <!-- Ejemplos de Error -->
+    <rect x="70" y="210" width="240" height="35" class="stack-data"/>
+    <text x="90" y="232" class="code">OutOfMemoryError</text>
+    
+    <rect x="70" y="250" width="240" height="35" class="stack-data"/>
+    <text x="90" y="272" class="code">StackOverflowError</text>
+    
+    <rect x="70" y="290" width="240" height="35" class="stack-data"/>
+    <text x="90" y="312" class="code">VirtualMachineError</text>
+    
+    <text x="190" y="345" class="label-small">⚠️ NO se deben capturar</text>
+  </g>
+  
+  <!-- EXCEPTION (derecha) -->
+  <g id="exception-branch">
+    <rect x="390" y="140" width="260" height="50" class="queue-node"/>
+    <text x="520" y="165" class="label-bold">Exception</text>
+    <text x="520" y="180" class="label-small">(Condiciones recuperables)</text>
+    
+    <!-- División: Checked vs Unchecked -->
+    <line x1="520" y1="190" x2="420" y2="220" stroke="#2e7d32" stroke-width="2"/>
+    <line x1="520" y1="190" x2="600" y2="220" stroke="#eb2141" stroke-width="2"/>
+    
+    <!-- CHECKED (izquierda) -->
+    <rect x="370" y="220" width="180" height="40" class="queue-data"/>
+    <text x="460" y="245" class="label-bold">Checked</text>
+    <text x="460" y="258" class="label-small">(obligatorio manejar)</text>
+    
+    <rect x="380" y="270" width="160" height="30" class="queue-pointer"/>
+    <text x="395" y="290" class="code">IOException</text>
+    
+    <rect x="380" y="305" width="160" height="30" class="queue-pointer"/>
+    <text x="395" y="325" class="code">FileNotFoundException</text>
+    
+    <rect x="380" y="340" width="160" height="30" class="queue-pointer"/>
+    <text x="395" y="360" class="code">SQLException</text>
+    
+    <!-- UNCHECKED (derecha) -->
+    <rect x="570" y="220" width="120" height="40" class="stack-node"/>
+    <text x="630" y="245" class="label-bold">Runtime</text>
+    <text x="630" y="258" class="label-small">Exception</text>
+    
+    <rect x="420" y="390" width="250" height="30" class="stack-data"/>
+    <text x="435" y="410" class="code">NullPointerException</text>
+    
+    <rect x="420" y="425" width="250" height="30" class="stack-data"/>
+    <text x="435" y="445" class="code">ArrayIndexOutOfBoundsException</text>
+    
+    <rect x="420" y="460" width="250" height="30" class="stack-data"/>
+    <text x="435" y="480" class="code">ArithmeticException</text>
+    
+    <rect x="420" y="495" width="250" height="30" class="stack-data"/>
+    <text x="435" y="515" class="code">IllegalArgumentException</text>
+    
+    <!-- Flecha del RuntimeException a sus hijos -->
+    <defs>
+      <marker id="arrow-hierarchy" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+        <polygon points="0 0, 10 3, 0 6" fill="#eb2141"/>
+      </marker>
+    </defs>
+    <line x1="630" y1="260" x2="545" y2="390" stroke="#eb2141" stroke-width="2" marker-end="url(#arrow-hierarchy)"/>
+    
+    <text x="545" y="380" class="label-small">Unchecked (errores de programación)</text>
+  </g>
+  
+  <!-- Leyenda -->
+  <rect x="50" y="380" width="300" height="80" class="info-box"/>
+  <text x="70" y="405" class="label-bold">Checked exceptions:</text>
+  <text x="70" y="420" class="label-small">• Deben ser capturadas o declaradas</text>
+  <text x="70" y="435" class="label-small">• Condiciones externas previsibles</text>
+  <text x="70" y="450" class="label-small">• El compilador las verifica</text>
+</svg>

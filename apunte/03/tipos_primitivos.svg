@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../resources/svg.css" type="text/css"?>
+<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <title>Jerarquía de Tipos Primitivos en Java</title>
+  
+  <!-- Título -->
+  <text x="400" y="30" class="title">Tipos Primitivos en Java (8 tipos)</text>
+  
+  <!-- Tipos Enteros -->
+  <g id="enteros">
+    <text x="100" y="70" class="subtitle">Tipos Enteros</text>
+    
+    <!-- byte -->
+    <rect x="20" y="90" width="160" height="60" class="node-data"/>
+    <text x="100" y="110" class="label-bold">byte</text>
+    <text x="100" y="125" class="label-small">8 bits</text>
+    <text x="100" y="140" class="code">-128 a 127</text>
+    
+    <!-- short -->
+    <rect x="20" y="160" width="160" height="60" class="node-data"/>
+    <text x="100" y="180" class="label-bold">short</text>
+    <text x="100" y="195" class="label-small">16 bits</text>
+    <text x="100" y="210" class="code">-32,768 a 32,767</text>
+    
+    <!-- int -->
+    <rect x="20" y="230" width="160" height="60" class="node-highlight"/>
+    <text x="100" y="250" class="label-bold">int</text>
+    <text x="100" y="265" class="label-small">32 bits (por defecto)</text>
+    <text x="100" y="280" class="code">-2³¹ a 2³¹-1</text>
+    
+    <!-- long -->
+    <rect x="20" y="300" width="160" height="60" class="node-data"/>
+    <text x="100" y="320" class="label-bold">long</text>
+    <text x="100" y="335" class="label-small">64 bits</text>
+    <text x="100" y="350" class="code">-2⁶³ a 2⁶³-1</text>
+  </g>
+  
+  <!-- Tipos de Punto Flotante -->
+  <g id="flotantes">
+    <text x="350" y="70" class="subtitle">Punto Flotante</text>
+    
+    <!-- float -->
+    <rect x="250" y="90" width="200" height="60" class="node-data"/>
+    <text x="350" y="110" class="label-bold">float</text>
+    <text x="350" y="125" class="label-small">32 bits (IEEE 754)</text>
+    <text x="350" y="140" class="code">±3.4 × 10³⁸</text>
+    
+    <!-- double -->
+    <rect x="250" y="160" width="200" height="60" class="node-highlight"/>
+    <text x="350" y="180" class="label-bold">double</text>
+    <text x="350" y="195" class="label-small">64 bits (por defecto)</text>
+    <text x="350" y="210" class="code">±1.7 × 10³⁰⁸</text>
+  </g>
+  
+  <!-- Tipo Booleano -->
+  <g id="booleano">
+    <text x="600" y="70" class="subtitle">Lógico</text>
+    
+    <rect x="520" y="90" width="160" height="60" class="node-data"/>
+    <text x="600" y="110" class="label-bold">boolean</text>
+    <text x="600" y="125" class="label-small">1 bit lógico</text>
+    <text x="600" y="140" class="code">true / false</text>
+  </g>
+  
+  <!-- Tipo Carácter -->
+  <g id="caracter">
+    <text x="600" y="180" class="subtitle">Carácter</text>
+    
+    <rect x="520" y="200" width="160" height="60" class="node-data"/>
+    <text x="600" y="220" class="label-bold">char</text>
+    <text x="600" y="235" class="label-small">16 bits (Unicode UTF-16)</text>
+    <text x="600" y="250" class="code">0 a 65,535</text>
+  </g>
+  
+  <!-- Notas comparativas con C -->
+  <rect x="20" y="380" width="760" height="1" class="divider"/>
+  
+  <text x="30" y="395" class="label-small">⚠️ Diferencias con C: tamaños garantizados, boolean nativo, char de 16 bits (Unicode)</text>
+</svg>

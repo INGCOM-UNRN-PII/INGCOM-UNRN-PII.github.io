@@ -107,6 +107,37 @@ if (edad >= 18) {
 
 Cuando se necesitan evaluar múltiples condiciones mutuamente excluyentes, se encadenan sentencias `else if`.
 
+````{mermaid}
+:align: center
+
+flowchart TD
+    Start([Inicio]) --> Cond1{nota >= 90?}
+    Cond1 -->|Sí| Act1["clasificacion = 'Sobresaliente'"]
+    Cond1 -->|No| Cond2{nota >= 80?}
+    Cond2 -->|Sí| Act2["clasificacion = 'Muy bueno'"]
+    Cond2 -->|No| Cond3{nota >= 70?}
+    Cond3 -->|Sí| Act3["clasificacion = 'Bueno'"]
+    Cond3 -->|No| Cond4{nota >= 60?}
+    Cond4 -->|Sí| Act4["clasificacion = 'Regular'"]
+    Cond4 -->|No| Act5["clasificacion = 'Insuficiente'"]
+    
+    Act1 --> End([Fin])
+    Act2 --> End
+    Act3 --> End
+    Act4 --> End
+    Act5 --> End
+    
+    style Cond1 fill:#ffe0e0,stroke:#eb2141
+    style Cond2 fill:#ffe0e0,stroke:#eb2141
+    style Cond3 fill:#ffe0e0,stroke:#eb2141
+    style Cond4 fill:#ffe0e0,stroke:#eb2141
+    style Act1 fill:#c8e6c9,stroke:#2e7d32
+    style Act2 fill:#c8e6c9,stroke:#2e7d32
+    style Act3 fill:#c8e6c9,stroke:#2e7d32
+    style Act4 fill:#c8e6c9,stroke:#2e7d32
+    style Act5 fill:#c8e6c9,stroke:#2e7d32
+````
+
 ```{code} java
 :caption: Estructura if-else if-else
 
@@ -278,9 +309,34 @@ int resultado = switch (estado) {
 
 En Java, utilizamos el término **lazos** para referirnos a los bucles. Cada tipo de lazo tiene una semántica específica según el punto de evaluación de la condición.
 
+```{figure} 05/comparacion_lazos.svg
+:label: fig-comparacion-lazos
+:align: center
+:width: 95%
+
+Comparación del flujo de ejecución entre for, while y do-while.
+```
+
 ### El Lazo `for`
 
 El lazo `for` es ideal cuando se conoce de antemano la cantidad de iteraciones. Consta de tres partes separadas por punto y coma: inicialización, condición y actualización.
+
+````{mermaid}
+:align: center
+
+flowchart TD
+    Start([Inicio]) --> Init[Inicialización: i = 0]
+    Init --> Cond{Condición: i < 5?}
+    Cond -->|true| Body[Cuerpo del lazo]
+    Body --> Update[Actualización: i = i + 1]
+    Update --> Cond
+    Cond -->|false| End([Fin])
+    
+    style Init fill:#c8e6c9,stroke:#2e7d32
+    style Cond fill:#ffe0e0,stroke:#eb2141
+    style Body fill:#bbdefb,stroke:#1565c0
+    style Update fill:#e1bee7,stroke:#6a1b9a
+````
 
 ```{code} java
 :caption: Estructura del lazo for
@@ -323,6 +379,23 @@ Declarar la variable de control dentro del `for` limita su **alcance** (_scope_)
 
 El lazo `while` evalúa la condición **antes** de ejecutar el cuerpo. Si la condición es falsa desde el inicio, el cuerpo nunca se ejecuta.
 
+````{mermaid}
+:align: center
+
+flowchart TD
+    Start([Inicio]) --> Cond{Condición}
+    Cond -->|true| Body[Cuerpo del lazo]
+    Body --> Cond
+    Cond -->|false| End([Fin])
+    
+    style Cond fill:#ffe0e0,stroke:#eb2141
+    style Body fill:#bbdefb,stroke:#1565c0
+    
+    Note1[/"Puede ejecutarse 0 veces"/]
+    style Note1 fill:#fff3e0,stroke:#f57c00
+    End --> Note1
+````
+
 ```{code} java
 :caption: Estructura del lazo while
 
@@ -349,6 +422,14 @@ System.out.println("Suma final: " + suma);
 En este curso, para implementar búsquedas que pueden terminar anticipadamente, usamos una variable booleana (bandera) en lugar de `break`. Consultá la {ref}`regla-0x5002`.
 :::
 
+```{figure} 05/patron_bandera.svg
+:label: fig-patron-bandera
+:align: center
+:width: 85%
+
+Patrón recomendado: búsqueda con bandera booleana en lugar de break.
+```
+
 ```{code} java
 :caption: Búsqueda con bandera (patrón recomendado)
 
@@ -373,6 +454,23 @@ if (encontrado) {
 ### El Lazo `do-while`
 
 El lazo `do-while` evalúa la condición **después** de ejecutar el cuerpo. Esto garantiza que el cuerpo se ejecuta **al menos una vez**.
+
+````{mermaid}
+:align: center
+
+flowchart TD
+    Start([Inicio]) --> Body[Cuerpo del lazo]
+    Body --> Cond{Condición}
+    Cond -->|true| Body
+    Cond -->|false| End([Fin])
+    
+    style Cond fill:#ffe0e0,stroke:#eb2141
+    style Body fill:#bbdefb,stroke:#1565c0
+    
+    Note1[/"Se ejecuta al menos 1 vez"/]
+    style Note1 fill:#c8e6c9,stroke:#2e7d32
+    End --> Note1
+````
 
 ```{code} java
 :caption: Estructura del lazo do-while

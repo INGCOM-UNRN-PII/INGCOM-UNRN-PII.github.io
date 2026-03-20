@@ -233,6 +233,14 @@ La **firma** (_signature_) de un método es su identificador único para el comp
 
 El tipo de retorno, los modificadores de acceso y las excepciones declaradas **no forman parte de la firma**.
 
+```{figure} 04/sobrecarga_metodos.svg
+:label: fig-sobrecarga-metodos
+:align: center
+:width: 90%
+
+Sobrecarga de métodos: ejemplos válidos e inválidos basados en la firma.
+```
+
 ### Ejemplos de Sobrecarga
 
 ```{code} java
@@ -307,6 +315,14 @@ Si definís `metodo(int a, long b)` y `metodo(long a, int b)`, la llamada `metod
 ## Mecanismo de Pasaje de Parámetros
 
 Un error común al venir de C es pensar que Java pasa objetos "por referencia". **Java siempre pasa por valor**.
+
+```{figure} 04/pasaje_parametros.svg
+:label: fig-pasaje-parametros
+:align: center
+:width: 90%
+
+Diferencia entre pasaje de primitivos (copia de valor) y referencias (copia de dirección).
+```
 
 ### Pasaje de Tipos Primitivos
 
@@ -432,6 +448,14 @@ Cada vez que se invoca un método, la JVM crea un **Stack Frame** (marco de pila
 - **Datos de Retorno**: La dirección de memoria donde debe continuar la ejecución tras finalizar el método.
 
 Cuando el método termina (vía `return` o excepción), su _frame_ es destruido y el control regresa al marco anterior.
+
+```{figure} 04/stack_frames.svg
+:label: fig-stack-frames
+:align: center
+:width: 80%
+
+Stack de llamadas mostrando los frames de métodos anidados.
+```
 
 ### Ejemplo de Flujo de Ejecución
 
