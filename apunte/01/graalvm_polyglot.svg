@@ -1,80 +1,396 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet href="../../resources/svg.css" type="text/css"?>
-<svg width="600" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <marker id="arrowhead-primary" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-      <polygon points="0 0, 10 3, 0 6" fill="#eb2141"/>
+<svg
+   width="600"
+   height="400"
+   viewBox="0 0 600 400"
+   version="1.1"
+   id="svg28"
+   sodipodi:docname="graalvm_polyglot.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview28"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.5783333"
+     inkscape:cx="87.117212"
+     inkscape:cy="219.85216"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg28" />
+  <defs
+     id="defs2">
+    <style
+       type="text/css"
+       id="style1"><![CDATA[.SVG { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #192437; text-anchor: middle; }
+.subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 500; fill: #2d3a50; text-anchor: middle; }
+.label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 400; fill: #404040; }
+.label-bold { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #192437; }
+.label-small { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-weight: 400; fill: #525252; }
+.index { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-weight: 400; fill: #737373; }
+.code { font-family: 'Consolas', 'Courier New', monospace; font-size: 11px; font-weight: 400; fill: #404040; }
+.code-comment { font-family: 'Consolas', 'Courier New', monospace; font-size: 10px; font-weight: 400; fill: #737373; font-style: italic; }
+.code-keyword { font-family: 'Consolas', 'Courier New', monospace; font-size: 11px; font-weight: 700; fill: #eb2141; }
+.node { fill: #ffffff; stroke: #404040; stroke-width: 2; }
+.node-header { fill: #f5f5f5; stroke: #404040; stroke-width: 1; }
+.node-data { fill: #e8ebf0; stroke: #a3a3a3; stroke-width: 1.5; }
+.node-pointer { fill: #ffccbc; stroke: #a3a3a3; stroke-width: 1.5; }
+.node-null { fill: #e5e5e5; stroke: #737373; stroke-width: 1.5; stroke-dasharray: 3,3; }
+.node-highlight { fill: #fff3e0; stroke: #eb2141; stroke-width: 2.5; }
+.stack-node { fill: #ffffff; stroke: #eb2141; stroke-width: 2; }
+.stack-data { fill: #ffe0e0; stroke: #a3a3a3; stroke-width: 1.5; }
+.stack-pointer { fill: #ffc9c9; stroke: #a3a3a3; stroke-width: 1.5; }
+.stack-arrow { fill: none; stroke: #eb2141; stroke-width: 2; }
+.stack-label { fill: #eb2141; font-weight: 700; }
+.queue-node { fill: #ffffff; stroke: #2e7d32; stroke-width: 2; }
+.queue-data { fill: #c8e6c9; stroke: #a3a3a3; stroke-width: 1.5; }
+.queue-pointer { fill: #a5d6a7; stroke: #a3a3a3; stroke-width: 1.5; }
+.queue-arrow { fill: none; stroke: #2e7d32; stroke-width: 2; }
+.queue-label { fill: #2e7d32; font-weight: 700; }
+.deque-node { fill: #ffffff; stroke: #6a1b9a; stroke-width: 2; }
+.deque-data { fill: #e1bee7; stroke: #a3a3a3; stroke-width: 1.5; }
+.deque-pointer { fill: #ce93d8; stroke: #a3a3a3; stroke-width: 1.5; }
+.deque-arrow { fill: none; stroke: #6a1b9a; stroke-width: 2; }
+.deque-label { fill: #6a1b9a; font-weight: 700; }
+.list-node { fill: #ffffff; stroke: #1565c0; stroke-width: 2; }
+.list-data { fill: #bbdefb; stroke: #a3a3a3; stroke-width: 1.5; }
+.list-pointer { fill: #90caf9; stroke: #a3a3a3; stroke-width: 1.5; }
+.list-arrow { fill: none; stroke: #1565c0; stroke-width: 2; }
+.list-label { fill: #1565c0; font-weight: 700; }
+.tree-node { fill: #ffffff; stroke: #558b2f; stroke-width: 2; }
+.tree-data { fill: #dcedc8; stroke: #a3a3a3; stroke-width: 1.5; }
+.tree-arrow { fill: none; stroke: #558b2f; stroke-width: 2; }
+.tree-label { fill: #558b2f; font-weight: 700; }
+.graph-node { fill: #ffffff; stroke: #e65100; stroke-width: 2; }
+.graph-data { fill: #ffe0b2; stroke: #a3a3a3; stroke-width: 1.5; }
+.graph-arrow { fill: none; stroke: #e65100; stroke-width: 2; }
+.graph-label { fill: #e65100; font-weight: 700; }
+.hash-node { fill: #ffffff; stroke: #283593; stroke-width: 2; }
+.hash-data { fill: #c5cae9; stroke: #a3a3a3; stroke-width: 1.5; }
+.hash-arrow { fill: none; stroke: #283593; stroke-width: 2; }
+.arrow { fill: none; stroke: #404040; stroke-width: 2; }
+.arrow-primary { fill: none; stroke: #eb2141; stroke-width: 2; }
+.arrow-secondary { fill: none; stroke: #192437; stroke-width: 2; }
+.arrow-dashed { fill: none; stroke: #737373; stroke-width: 2; stroke-dasharray: 5,5; }
+.code-block { fill: #f5f5f5; stroke: #d4d4d4; stroke-width: 1; rx: 3; }
+.highlight-box { fill: #fce8ec; stroke: #eb2141; stroke-width: 1; rx: 3; }
+.info-box { fill: #e8ebf0; stroke: #2d3a50; stroke-width: 1; rx: 3; }
+.memory-cell { fill: #ffffff; stroke: #525252; stroke-width: 1.5; }
+.memory-cell-filled { fill: #e8ebf0; stroke: #525252; stroke-width: 1.5; }
+.divider { stroke: #d4d4d4; stroke-width: 1; }
+.divider-bold { stroke: #525252; stroke-width: 2; }
+.valid { stroke: #2e7d32; stroke-width: 2.5; }
+.invalid { stroke: #eb2141; stroke-width: 2.5; }
+.warning { stroke: #f57c00; stroke-width: 2.5; }
+.text-center { text-anchor: middle; }
+.text-start { text-anchor: start; }
+.text-end { text-anchor: end; }
+]]></style>
+    <marker
+       id="arrowhead-primary"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0 0, 10 3, 0 6"
+         fill="#eb2141"
+         id="polygon1" />
     </marker>
-    <marker id="arrowhead-secondary" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
-      <polygon points="0 0, 10 3, 0 6" fill="#192437"/>
+    <marker
+       id="arrowhead-secondary"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0 0, 10 3, 0 6"
+         fill="#192437"
+         id="polygon2" />
     </marker>
   </defs>
-  
-  <rect width="600" height="400" class="background"/>
-
+  <rect
+     width="600"
+     height="400"
+     class="background"
+     id="rect2"
+     style="fill:none" />
   <!-- Título -->
-  <text x="300" y="30" class="title">GraalVM: Ejecución Políglota</text>
-  <text x="300" y="50" class="subtitle">Múltiples lenguajes, una máquina virtual</text>
-
+  <text
+     x="300"
+     y="30"
+     class="title"
+     id="text2">GraalVM: Ejecución Políglota</text>
+  <text
+     x="300"
+     y="50"
+     class="subtitle"
+     id="text3">Múltiples lenguajes, una máquina virtual</text>
   <!-- Lenguajes de entrada (arriba) -->
-  <rect x="30" y="80" width="80" height="50" class="code-block" rx="5"/>
-  <text x="70" y="100" class="label-bold" text-anchor="middle">Java</text>
-  <text x="70" y="118" class="code" text-anchor="middle">.java</text>
-
-  <rect x="130" y="80" width="80" height="50" class="code-block" rx="5"/>
-  <text x="170" y="100" class="label-bold" text-anchor="middle">Kotlin</text>
-  <text x="170" y="118" class="code" text-anchor="middle">.kt</text>
-
-  <rect x="230" y="80" width="80" height="50" class="code-block" rx="5"/>
-  <text x="270" y="100" class="label-bold" text-anchor="middle">Scala</text>
-  <text x="270" y="118" class="code" text-anchor="middle">.scala</text>
-
-  <rect x="330" y="80" width="80" height="50" class="info-box" rx="5"/>
-  <text x="370" y="100" class="label-bold" text-anchor="middle">JavaScript</text>
-  <text x="370" y="118" class="code" text-anchor="middle">.js</text>
-
-  <rect x="430" y="80" width="80" height="50" class="info-box" rx="5"/>
-  <text x="470" y="100" class="label-bold" text-anchor="middle">Python</text>
-  <text x="470" y="118" class="code" text-anchor="middle">.py</text>
-
-  <rect x="530" y="80" width="50" height="50" class="info-box" rx="5"/>
-  <text x="555" y="108" class="label-bold" text-anchor="middle">...</text>
-
+  <rect
+     x="30"
+     y="80"
+     width="80"
+     height="50"
+     class="code-block"
+     rx="5"
+     id="rect3" />
+  <text
+     x="70"
+     y="100"
+     class="label-bold"
+     text-anchor="middle"
+     id="text4">Java</text>
+  <text
+     x="70"
+     y="118"
+     class="code"
+     text-anchor="middle"
+     id="text5">.java</text>
+  <rect
+     x="130"
+     y="80"
+     width="80"
+     height="50"
+     class="code-block"
+     rx="5"
+     id="rect5" />
+  <text
+     x="170"
+     y="100"
+     class="label-bold"
+     text-anchor="middle"
+     id="text6">Kotlin</text>
+  <text
+     x="170"
+     y="118"
+     class="code"
+     text-anchor="middle"
+     id="text7">.kt</text>
+  <rect
+     x="230"
+     y="80"
+     width="80"
+     height="50"
+     class="code-block"
+     rx="5"
+     id="rect7" />
+  <text
+     x="270"
+     y="100"
+     class="label-bold"
+     text-anchor="middle"
+     id="text8">Scala</text>
+  <text
+     x="270"
+     y="118"
+     class="code"
+     text-anchor="middle"
+     id="text9">.scala</text>
+  <rect
+     x="330"
+     y="80"
+     width="80"
+     height="50"
+     class="info-box"
+     rx="5"
+     id="rect9" />
+  <text
+     x="370"
+     y="100"
+     class="label-bold"
+     text-anchor="middle"
+     id="text10">JavaScript</text>
+  <text
+     x="370"
+     y="118"
+     class="code"
+     text-anchor="middle"
+     id="text11">.js</text>
+  <rect
+     x="430"
+     y="80"
+     width="80"
+     height="50"
+     class="info-box"
+     rx="5"
+     id="rect11" />
+  <text
+     x="470"
+     y="100"
+     class="label-bold"
+     text-anchor="middle"
+     id="text12">Python</text>
+  <text
+     x="470"
+     y="118"
+     class="code"
+     text-anchor="middle"
+     id="text13">.py</text>
+  <rect
+     x="530"
+     y="80"
+     width="50"
+     height="50"
+     class="info-box"
+     rx="5"
+     id="rect13" />
+  <text
+     x="555"
+     y="108"
+     class="label-bold"
+     text-anchor="middle"
+     id="text14">...</text>
   <!-- Flechas hacia Truffle -->
-  <path d="M 70 130 L 70 155 L 300 155 L 300 170" class="arrow-secondary" fill="none"/>
-  <path d="M 170 130 L 170 155" class="arrow-secondary" fill="none"/>
-  <path d="M 270 130 L 270 155" class="arrow-secondary" fill="none"/>
-  <path d="M 370 130 L 370 155 L 300 155" class="arrow-secondary" fill="none"/>
-  <path d="M 470 130 L 470 155 L 300 155" class="arrow-secondary" fill="none"/>
-  <path d="M 555 130 L 555 155 L 300 155" class="arrow-secondary" fill="none"/>
-
+  <path
+     d="M 70 130 L 70 155 L 300 155 L 300 170"
+     class="arrow-secondary"
+     fill="none"
+     id="path14" />
+  <path
+     d="M 170 130 L 170 155"
+     class="arrow-secondary"
+     fill="none"
+     id="path15" />
+  <path
+     d="M 270 130 L 270 155"
+     class="arrow-secondary"
+     fill="none"
+     id="path16" />
+  <path
+     d="M 370 130 L 370 155 L 300 155"
+     class="arrow-secondary"
+     fill="none"
+     id="path17" />
+  <path
+     d="M 470 130 L 470 155 L 300 155"
+     class="arrow-secondary"
+     fill="none"
+     id="path18" />
+  <path
+     d="M 555 130 L 555 155 L 300 155"
+     class="arrow-secondary"
+     fill="none"
+     id="path19" />
   <!-- Truffle Framework -->
-  <rect x="100" y="175" width="400" height="50" class="highlight-box" rx="5"/>
-  <text x="300" y="195" class="label-bold" text-anchor="middle">Truffle Framework</text>
-  <text x="300" y="213" class="label-small" text-anchor="middle">Intérpretes de lenguaje auto-optimizables</text>
-
+  <rect
+     x="100"
+     y="175"
+     width="400"
+     height="50"
+     class="highlight-box"
+     rx="5"
+     id="rect19" />
+  <text
+     x="300"
+     y="195"
+     class="label-bold"
+     text-anchor="middle"
+     id="text19">Truffle Framework</text>
+  <text
+     x="300"
+     y="213"
+     class="label-small"
+     text-anchor="middle"
+     id="text20">Intérpretes de lenguaje auto-optimizables</text>
   <!-- Flecha hacia Graal -->
-  <path d="M 300 225 L 300 245" class="arrow-primary"/>
-
+  <path
+     d="M 300 225 L 300 245"
+     class="arrow-primary"
+     id="path20" />
   <!-- Graal Compiler -->
-  <rect x="100" y="250" width="400" height="50" class="highlight-box" rx="5"/>
-  <text x="300" y="270" class="label-bold" text-anchor="middle">Graal Compiler (JIT)</text>
-  <text x="300" y="288" class="label-small" text-anchor="middle">Compilación Just-In-Time avanzada</text>
-
+  <rect
+     x="100"
+     y="250"
+     width="400"
+     height="50"
+     class="highlight-box"
+     rx="5"
+     id="rect20" />
+  <text
+     x="300"
+     y="270"
+     class="label-bold"
+     text-anchor="middle"
+     id="text21">Graal Compiler (JIT)</text>
+  <text
+     x="300"
+     y="288"
+     class="label-small"
+     text-anchor="middle"
+     id="text22">Compilación Just-In-Time avanzada</text>
   <!-- Flecha hacia salidas -->
-  <path d="M 200 300 L 200 330" class="arrow-secondary"/>
-  <path d="M 400 300 L 400 330" class="arrow-secondary"/>
-
+  <path
+     d="M 200 300 L 200 330"
+     class="arrow-secondary"
+     id="path22" />
+  <path
+     d="M 400 300 L 400 330"
+     class="arrow-secondary"
+     id="path23" />
   <!-- Salidas -->
-  <rect x="80" y="335" width="150" height="50" class="info-box" rx="5"/>
-  <text x="155" y="355" class="label-bold" text-anchor="middle">Ejecución JIT</text>
-  <text x="155" y="373" class="label-small" text-anchor="middle">Máximo rendimiento</text>
-
-  <rect x="370" y="335" width="150" height="50" class="code-block" rx="5"/>
-  <text x="445" y="355" class="label-bold" text-anchor="middle">Native Image</text>
-  <text x="445" y="373" class="label-small" text-anchor="middle">Ejecutable AOT</text>
-
+  <rect
+     x="80"
+     y="335"
+     width="150"
+     height="50"
+     class="info-box"
+     rx="5"
+     id="rect23" />
+  <text
+     x="155"
+     y="355"
+     class="label-bold"
+     text-anchor="middle"
+     id="text23">Ejecución JIT</text>
+  <text
+     x="155"
+     y="373"
+     class="label-small"
+     text-anchor="middle"
+     id="text24">Máximo rendimiento</text>
+  <rect
+     x="370"
+     y="335"
+     width="150"
+     height="50"
+     class="code-block"
+     rx="5"
+     id="rect24" />
+  <text
+     x="445"
+     y="355"
+     class="label-bold"
+     text-anchor="middle"
+     id="text25">Native Image</text>
+  <text
+     x="445"
+     y="373"
+     class="label-small"
+     text-anchor="middle"
+     id="text26">Ejecutable AOT</text>
   <!-- Nota lateral -->
-  <text x="30" y="360" class="label-small">Modos de</text>
-  <text x="30" y="375" class="label-small">ejecución:</text>
+  <text
+     x="30"
+     y="360"
+     class="label-small"
+     id="text27">Modos de</text>
+  <text
+     x="30"
+     y="375"
+     class="label-small"
+     id="text28">ejecución:</text>
 </svg>

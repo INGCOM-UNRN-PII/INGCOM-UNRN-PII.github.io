@@ -1,6 +1,73 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet href="../resources/svg.css" type="text/css"?>
 <svg width="700" height="550" viewBox="0 0 700 550" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style type="text/css"><![CDATA[
+/* SVG Embedded Styles - UNRN */
+.title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #192437; text-anchor: middle; }
+.subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 500; fill: #2d3a50; text-anchor: middle; }
+.label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 400; fill: #404040; }
+.label-bold { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #192437; }
+.label-small { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-weight: 400; fill: #525252; }
+.index { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-weight: 400; fill: #737373; }
+.code { font-family: 'Consolas', 'Courier New', monospace; font-size: 11px; font-weight: 400; fill: #404040; }
+.code-comment { font-family: 'Consolas', 'Courier New', monospace; font-size: 10px; font-weight: 400; fill: #737373; font-style: italic; }
+.code-keyword { font-family: 'Consolas', 'Courier New', monospace; font-size: 11px; font-weight: 700; fill: #eb2141; }
+.node { fill: #ffffff; stroke: #404040; stroke-width: 2; }
+.node-header { fill: #f5f5f5; stroke: #404040; stroke-width: 1; }
+.node-data { fill: #e8ebf0; stroke: #a3a3a3; stroke-width: 1.5; }
+.node-pointer { fill: #ffccbc; stroke: #a3a3a3; stroke-width: 1.5; }
+.node-null { fill: #e5e5e5; stroke: #737373; stroke-width: 1.5; stroke-dasharray: 3,3; }
+.node-highlight { fill: #fff3e0; stroke: #eb2141; stroke-width: 2.5; }
+.stack-node { fill: #ffffff; stroke: #eb2141; stroke-width: 2; }
+.stack-data { fill: #ffe0e0; stroke: #a3a3a3; stroke-width: 1.5; }
+.stack-pointer { fill: #ffc9c9; stroke: #a3a3a3; stroke-width: 1.5; }
+.stack-arrow { fill: none; stroke: #eb2141; stroke-width: 2; }
+.stack-label { fill: #eb2141; font-weight: 700; }
+.queue-node { fill: #ffffff; stroke: #2e7d32; stroke-width: 2; }
+.queue-data { fill: #c8e6c9; stroke: #a3a3a3; stroke-width: 1.5; }
+.queue-pointer { fill: #a5d6a7; stroke: #a3a3a3; stroke-width: 1.5; }
+.queue-arrow { fill: none; stroke: #2e7d32; stroke-width: 2; }
+.queue-label { fill: #2e7d32; font-weight: 700; }
+.deque-node { fill: #ffffff; stroke: #6a1b9a; stroke-width: 2; }
+.deque-data { fill: #e1bee7; stroke: #a3a3a3; stroke-width: 1.5; }
+.deque-pointer { fill: #ce93d8; stroke: #a3a3a3; stroke-width: 1.5; }
+.deque-arrow { fill: none; stroke: #6a1b9a; stroke-width: 2; }
+.deque-label { fill: #6a1b9a; font-weight: 700; }
+.list-node { fill: #ffffff; stroke: #1565c0; stroke-width: 2; }
+.list-data { fill: #bbdefb; stroke: #a3a3a3; stroke-width: 1.5; }
+.list-pointer { fill: #90caf9; stroke: #a3a3a3; stroke-width: 1.5; }
+.list-arrow { fill: none; stroke: #1565c0; stroke-width: 2; }
+.list-label { fill: #1565c0; font-weight: 700; }
+.tree-node { fill: #ffffff; stroke: #558b2f; stroke-width: 2; }
+.tree-data { fill: #dcedc8; stroke: #a3a3a3; stroke-width: 1.5; }
+.tree-arrow { fill: none; stroke: #558b2f; stroke-width: 2; }
+.tree-label { fill: #558b2f; font-weight: 700; }
+.graph-node { fill: #ffffff; stroke: #e65100; stroke-width: 2; }
+.graph-data { fill: #ffe0b2; stroke: #a3a3a3; stroke-width: 1.5; }
+.graph-arrow { fill: none; stroke: #e65100; stroke-width: 2; }
+.graph-label { fill: #e65100; font-weight: 700; }
+.hash-node { fill: #ffffff; stroke: #283593; stroke-width: 2; }
+.hash-data { fill: #c5cae9; stroke: #a3a3a3; stroke-width: 1.5; }
+.hash-arrow { fill: none; stroke: #283593; stroke-width: 2; }
+.arrow { fill: none; stroke: #404040; stroke-width: 2; }
+.arrow-primary { fill: none; stroke: #eb2141; stroke-width: 2; }
+.arrow-secondary { fill: none; stroke: #192437; stroke-width: 2; }
+.arrow-dashed { fill: none; stroke: #737373; stroke-width: 2; stroke-dasharray: 5,5; }
+.code-block { fill: #f5f5f5; stroke: #d4d4d4; stroke-width: 1; rx: 3; }
+.highlight-box { fill: #fce8ec; stroke: #eb2141; stroke-width: 1; rx: 3; }
+.info-box { fill: #e8ebf0; stroke: #2d3a50; stroke-width: 1; rx: 3; }
+.memory-cell { fill: #ffffff; stroke: #525252; stroke-width: 1.5; }
+.memory-cell-filled { fill: #e8ebf0; stroke: #525252; stroke-width: 1.5; }
+.divider { stroke: #d4d4d4; stroke-width: 1; }
+.divider-bold { stroke: #525252; stroke-width: 2; }
+.valid { stroke: #2e7d32; stroke-width: 2.5; }
+.invalid { stroke: #eb2141; stroke-width: 2.5; }
+.warning { stroke: #f57c00; stroke-width: 2.5; }
+.text-center { text-anchor: middle; }
+.text-start { text-anchor: start; }
+.text-end { text-anchor: end; }
+    ]]></style>
+  </defs>
   <title>Jerarquía de Excepciones en Java</title>
   
   <!-- Título -->
@@ -8,18 +75,18 @@
   
   <!-- Throwable (raíz) -->
   <rect x="280" y="60" width="140" height="50" class="node-highlight"/>
-  <text x="350" y="85" class="label-bold">Throwable</text>
-  <text x="350" y="100" class="label-small">(raíz)</text>
+  <text x="350" y="85" class="label-bold text-center">Throwable</text>
+  <text x="350" y="100" class="label-small text-center">(raíz)</text>
   
   <!-- Líneas de división -->
-  <line x1="350" y1="110" x2="200" y2="140" stroke="#192437" stroke-width="2"/>
-  <line x1="350" y1="110" x2="500" y2="140" stroke="#192437" stroke-width="2"/>
+  <line x1="350" y1="110" x2="200" y2="140" class="arrow-secondary"/>
+  <line x1="350" y1="110" x2="500" y2="140" class="arrow-secondary"/>
   
   <!-- ERROR (izquierda) -->
   <g id="error-branch">
     <rect x="50" y="140" width="300" height="50" class="stack-node"/>
-    <text x="200" y="165" class="label-bold">Error</text>
-    <text x="200" y="180" class="label-small">(Problemas graves de la JVM)</text>
+    <text x="200" y="165" class="label-bold text-center">Error</text>
+    <text x="200" y="180" class="label-small text-center">(Problemas graves de la JVM)</text>
     
     <!-- Ejemplos de Error -->
     <rect x="70" y="210" width="240" height="35" class="stack-data"/>
@@ -31,23 +98,23 @@
     <rect x="70" y="290" width="240" height="35" class="stack-data"/>
     <text x="90" y="312" class="code">VirtualMachineError</text>
     
-    <text x="190" y="345" class="label-small">⚠️ NO se deben capturar</text>
+    <text x="190" y="345" class="label-small text-center">⚠️ NO se deben capturar</text>
   </g>
   
   <!-- EXCEPTION (derecha) -->
   <g id="exception-branch">
     <rect x="390" y="140" width="260" height="50" class="queue-node"/>
-    <text x="520" y="165" class="label-bold">Exception</text>
-    <text x="520" y="180" class="label-small">(Condiciones recuperables)</text>
+    <text x="520" y="165" class="label-bold text-center">Exception</text>
+    <text x="520" y="180" class="label-small text-center">(Condiciones recuperables)</text>
     
     <!-- División: Checked vs Unchecked -->
-    <line x1="520" y1="190" x2="420" y2="220" stroke="#2e7d32" stroke-width="2"/>
-    <line x1="520" y1="190" x2="600" y2="220" stroke="#eb2141" stroke-width="2"/>
+    <line x1="520" y1="190" x2="420" y2="220" class="queue-arrow"/>
+    <line x1="520" y1="190" x2="600" y2="220" class="stack-arrow"/>
     
     <!-- CHECKED (izquierda) -->
     <rect x="370" y="220" width="180" height="40" class="queue-data"/>
-    <text x="460" y="245" class="label-bold">Checked</text>
-    <text x="460" y="258" class="label-small">(obligatorio manejar)</text>
+    <text x="460" y="245" class="label-bold text-center">Checked</text>
+    <text x="460" y="258" class="label-small text-center">(obligatorio manejar)</text>
     
     <rect x="380" y="270" width="160" height="30" class="queue-pointer"/>
     <text x="395" y="290" class="code">IOException</text>
@@ -60,8 +127,8 @@
     
     <!-- UNCHECKED (derecha) -->
     <rect x="570" y="220" width="120" height="40" class="stack-node"/>
-    <text x="630" y="245" class="label-bold">Runtime</text>
-    <text x="630" y="258" class="label-small">Exception</text>
+    <text x="630" y="245" class="label-bold text-center">Runtime</text>
+    <text x="630" y="258" class="label-small text-center">Exception</text>
     
     <rect x="420" y="390" width="250" height="30" class="stack-data"/>
     <text x="435" y="410" class="code">NullPointerException</text>
@@ -81,9 +148,9 @@
         <polygon points="0 0, 10 3, 0 6" fill="#eb2141"/>
       </marker>
     </defs>
-    <line x1="630" y1="260" x2="545" y2="390" stroke="#eb2141" stroke-width="2" marker-end="url(#arrow-hierarchy)"/>
+    <line x1="630" y1="260" x2="545" y2="390" class="stack-arrow" marker-end="url(#arrow-hierarchy)"/>
     
-    <text x="545" y="380" class="label-small">Unchecked (errores de programación)</text>
+    <text x="545" y="380" class="label-small text-center">Unchecked (errores de programación)</text>
   </g>
   
   <!-- Leyenda -->

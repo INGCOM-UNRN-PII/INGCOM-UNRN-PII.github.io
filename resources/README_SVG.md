@@ -1,8 +1,13 @@
+---
+title: "CSS Compartido para Diagramas SVG"
+description: Guía de uso del archivo svg.css para diagramas técnicos UNRN.
+---
+
 # CSS Compartido para Diagramas SVG
 
 Este documento explica cómo usar el archivo `svg.css` para crear diagramas técnicos consistentes con la identidad visual de la UNRN.
 
-## 📋 Tabla de Contenidos
+## Tabla de Contenidos
 
 - [Instalación](#instalación)
 - [Uso Básico](#uso-básico)
@@ -11,27 +16,20 @@ Este documento explica cómo usar el archivo `svg.css` para crear diagramas téc
 - [Ejemplos](#ejemplos)
 - [Tipografías](#tipografías)
 
-## 🚀 Instalación
+## Instalación
 
 El archivo `svg.css` ya está ubicado en `resources/svg.css`. No requiere instalación adicional.
 
-## 📖 Uso Básico
+### Embeber el CSS en tu SVG 
 
-### Incluir el CSS en tu SVG
+Embed the css within the svg file as the static files routes are different in development and production.
 
-Agregá esta línea después de la declaración XML:
 
-```xml
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet href="../resources/svg.css" type="text/css"?>
-<svg width="600" height="450" viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
-  <!-- Tu contenido aquí -->
-</svg>
-```
-
-**Nota:** Ajustá la ruta `../resources/svg.css` según la ubicación de tu SVG:
+:::{note}
+Ajustá la ruta `../resources/svg.css` según la ubicación de tu SVG:
 - Desde `apunte/13/diagrama.svg` → `../../resources/svg.css`
 - Desde `apunte/diagrama.svg` → `../resources/svg.css`
+:::
 
 ### Definir Marcadores de Flechas
 
@@ -47,12 +45,20 @@ Agregá esta línea después de la declaración XML:
 
 ### Colores Institucionales UNRN
 
+:::{table} Colores Institucionales
+:label: tbl-colores-unrn
+
 | Color | Variable CSS | Hex | Uso |
 |-------|-------------|-----|-----|
 | Rojo UNRN | `--unrn-red` | `#eb2141` | Principal, acentos |
 | Azul Oscuro UNRN | `--unrn-dark-blue` | `#192437` | Secundario, texto |
 
+:::
+
 ### Colores por Tipo de Estructura
+
+:::{table} Colores por Estructura de Datos
+:label: tbl-colores-estructuras
 
 | Estructura | Colores Primarios | Variables CSS |
 |------------|------------------|---------------|
@@ -63,6 +69,8 @@ Agregá esta línea después de la declaración XML:
 | **Árboles** | Verde Natural | `--tree-primary`, `--tree-data` |
 | **Grafos** | Naranjas | `--graph-primary`, `--graph-data` |
 | **Hash/Mapas** | Índigos | `--hash-primary`, `--hash-data` |
+
+:::
 
 ##  Clases Disponibles
 
@@ -258,19 +266,21 @@ El CSS incluye tres familias tipográficas:
 
 ## Mejores Prácticas
 
+:::{tip}
 1. **Consistencia:** Usá siempre las clases CSS en lugar de estilos inline
 2. **Colores semánticos:** Elegí el esquema de color apropiado para cada estructura
 3. **Tipografía:** Respetá la jerarquía tipográfica (title → subtitle → label)
 4. **Dimensiones:** Mantené proporciones consistentes (viewBox recomendado: 600-800px ancho)
 5. **Accesibilidad:** Incluí títulos descriptivos y etiquetas claras
+:::
 
-## 📝 Notas Adicionales
+## Notas Adicionales
 
 - Las variables CSS (`:root`) permiten personalización sin modificar todo el archivo
 - Los marcadores de flechas deben definirse en `<defs>` de cada SVG
 - Para más ejemplos, consultá `svg_example.svg`
 
-## 🤝 Contribuciones
+## Contribuciones
 
 Para proponer nuevas clases o modificaciones a la paleta de colores:
 1. Abrí un issue en el repositorio
