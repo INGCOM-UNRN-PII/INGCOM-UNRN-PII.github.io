@@ -669,14 +669,25 @@ No todas las versiones son iguales:
 
 Las versiones LTS actuales son:
 
-- **Java 8** (2014): Todavía muy usada en sistemas legacy
-- **Java 11** (2018): Primera LTS del nuevo ciclo
-- **Java 17** (2021): LTS actual recomendada
-- **Java 21** (2023): LTS más reciente
+- **Java 8** (2014): Todavía muy usada en sistemas (finalizó en enero 2019)
+- **Java 11** (2018): Primera LTS del nuevo ciclo (finalizó en septiembre 2023)
+- **Java 17** (2021): LTS fuera de soporte (finalizó el 24 de septiembre 2024)
+- **Java 21** (2023): LTS actual recomendada (finaliza en septiembre 2026)
+- **Java 25** (2023): LTS más reciente (finaliza en septiembre 2030)
 
-:::{important} Para proyectos nuevos en 2024+, se recomienda usar **Java 21** (LTS). Las
+Más allá del soporte principal (Premier Support), las versiones LTS cuentan con opciones de
+Soporte Extendido comercial. Proveedores como Oracle, Azul Systems o Red Hat ofrecen contratos
+de nivel de servicio (SLA) que garantizan actualizaciones de seguridad y parches críticos
+por 5 a 8 años adicionales. Para sistemas legacy de misión crítica, ciertas empresas
+especializadas extienden este ciclo de mantenimiento hasta por 20 años mediante esquemas
+de soporte continuo (Sustaining Support).
+
+:::{important}
+
+Para proyectos nuevos en 2024+, se recomienda usar **Java 21** (LTS). Las
 versiones intermedias (18, 19, 20, 22, 23) son versiones de "feature preview" con soporte
 limitado de 6 meses, útiles para probar nuevas características pero no para producción.
+
 :::
 
 ### Línea Temporal de las Versiones Principales
