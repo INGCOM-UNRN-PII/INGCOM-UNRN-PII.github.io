@@ -684,25 +684,29 @@ limitado de 6 meses, útiles para probar nuevas características pero no para pr
 La siguiente tabla resume las versiones más importantes de Java y sus características
 destacadas:
 
-:::{table} Evolución de Java por versiones 
+:::{table} Evolución de Java por versiones
 :label: tbl-versiones-java
 
 | Versión    | Año  | Características Destacadas                                                                |
 | :--------- | :--: | :---------------------------------------------------------------------------------------- |
 | JDK 1.0    | 1996 | Lanzamiento inicial. AWT (interfaz gráfica básica), Applets                               |
 | JDK 1.1    | 1997 | Clases internas (_inner classes_), JDBC (conexión a bases de datos), JavaBeans            |
-| J2SE 1.2   | 1998 | Collections Framework (listas, mapas, conjuntos), Swing (GUI mejorada), compilador JIT    |
-| J2SE 1.4   | 2002 | Assertions, NIO (entrada/salida no bloqueante), logging integrado, expresiones regulares  |
-| J2SE 5.0   | 2004 | **Genéricos**, enums, autoboxing, for-each (`for (x : lista)`), varargs, anotaciones      |
-| Java SE 6  | 2006 | Mejoras de rendimiento, Scripting API (ejecutar JavaScript desde Java)                    |
-| Java SE 7  | 2011 | Try-with-resources, operador diamante (`<>`), strings en switch, NIO.2                    |
-| Java SE 8  | 2014 | **Lambdas**, Streams API, Optional, nueva API de Date/Time, métodos default en interfaces |
-| Java SE 9  | 2017 | Sistema de módulos (Jigsaw), JShell (REPL interactivo), métodos privados en interfaces    |
-| Java SE 11 | 2018 | **LTS**, var para variables locales, HTTP Client moderno, eliminación de Java EE          |
-| Java SE 17 | 2021 | **LTS**, Records, Sealed Classes, Pattern Matching para instanceof                        |
-| Java SE 21 | 2023 | **LTS**, Virtual Threads, Sequenced Collections, Pattern Matching en switch               |
+| [J2SE 1.2](https://www.oracle.com/java/technologies/javase/release-notes-sdk.html)   | 1998 | Collections Framework (listas, mapas, conjuntos), Swing (GUI mejorada), compilador JIT    |
+| [J2SE 1.4](https://www.oracle.com/java/technologies/javase/releasenotes-v142.html)   | 2002 | Assertions, NIO (entrada/salida no bloqueante), logging integrado, expresiones regulares  |
+| [J2SE 5.0](https://www.oracle.com/java/technologies/javase/releasenotes-v150.html)  | 2004 | **Genéricos**, `enums`, autoboxing, for-each (`for (x : lista)`), `varargs`, anotaciones      |
+| [JDK 6](https://www.oracle.com/java/technologies/javase/6-relnotes.html) | 2006 | Mejoras de rendimiento, Scripting API (ejecutar JavaScript desde Java)                    |
+| [JDK 7](https://www.oracle.com/java/technologies/javase/7u-relnotes.html) | 2011 | Try-with-resources, operador diamante (`<>`), strings en switch, NIO.2                    |
+| [JDK 8](https://www.oracle.com/java/technologies/javase/8u-relnotes.html) | 2014 | **Lambdas**, Streams API, Optional, nueva API de Date/Time, métodos default en interfaces |
+| [JDK 9](https://www.oracle.com/java/technologies/javase/9-all-relnotes.html) | 2017 | Sistema de módulos (Jigsaw), JShell (REPL interactivo), métodos privados en interfaces    |
+| [JDK 11](https://www.oracle.com/java/technologies/javase/11all-relnotes.html) | 2018 | Primer release **LTS**, `var` para variables locales, HTTP Client moderno, eliminación de Java EE          |
+| [JDK 17](https://www.oracle.com/java/technologies/javase/17all-relnotes.html) | 2021 | Records, Sealed Classes, Pattern Matching para `instanceof`                        |
+| [JDK 21](https://www.oracle.com/java/technologies/javase/21all-relnotes.html) | 2023 | Virtual Threads, Sequenced Collections, Pattern Matching en `switch`               |
+| [JDK 25](https://www.oracle.com/java/technologies/javase/25all-relnotes.html) | 2025 | Importación de módulos, constructores flexibles, tipos primitivos en pattern matching, archivos fuente compactos, Compact Object Headers|
 
 :::
+
+Vean [JDK Releases](https://www.java.com/releases/) para más información y detalles de los
+otros lanzamientos y evolución detallada de la plataforma.
 
 #### ¿Qué significan estos términos?
 
