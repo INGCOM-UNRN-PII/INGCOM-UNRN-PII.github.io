@@ -7,172 +7,397 @@ description:
 
 # Características del Lenguaje Java
 
-Java se destaca por un conjunto de características que lo convierten en uno de
-los lenguajes más populares y versátiles para el desarrollo de software. En este
-apunte, analizaremos en profundidad sus características fundamentales: su
-naturaleza de **propósito general** y su **sistema de tipos estático y fuerte**.
+Este capítulo analiza las características fundamentales de Java como lenguaje de programación. Entender estas características te ayudará a comprender por qué el código se escribe de cierta manera y qué ventajas ofrece Java frente a otros lenguajes.
+
+Java se destaca por:
+- Ser un **lenguaje de propósito general** (sirve para casi cualquier tipo de programa)
+- Tener un **sistema de tipos estático y fuerte** (el compilador verifica los tipos antes de ejecutar)
+- Estar **orientado a objetos por diseño** (aunque esto se estudiará más adelante)
 
 :::{note} ¿Y la Orientación a Objetos?
 
 Esta parte del apunte se enfoca en las características básicas del lenguaje con
-la idea de reutilizar todo lo que sabemos de C. Los conceptos de programación 
-orientada a objetos se estudiarán en profundidad más adelante en el curso, una
-vez consolidados los fundamentos del lenguaje.
+la idea de reutilizar todo lo que ya sabés de C. Los conceptos de programación 
+orientada a objetos (clases, objetos, herencia, polimorfismo) se estudiarán en profundidad más adelante en el curso, una vez consolidados los fundamentos del lenguaje.
 
+Por ahora, usaremos Java de forma similar a como usabas C: escribiendo funciones (que en Java se llaman "métodos") dentro de una estructura obligatoria llamada "clase".
 :::
 
 ## Lenguaje de Propósito General
 
 Java es un **lenguaje de propósito general**, lo que significa que no está
-diseñado para un dominio específico de aplicación, sino que puede utilizarse
-para desarrollar una amplia variedad de sistemas de software.
+diseñado para resolver un único tipo de problema específico, sino que puede utilizarse
+para desarrollar prácticamente cualquier tipo de software.
 
-### ¿Qué Significa Propósito General?
+### ¿Qué significa "propósito general"?
 
-A diferencia de lenguajes especializados como:
+Para entender esto, primero hay que conocer la diferencia con los **lenguajes de dominio específico** (DSL - Domain Specific Languages). Estos son lenguajes diseñados para resolver un problema muy particular:
 
-- **SQL:** Diseñado específicamente para consultas y manipulación de bases de
-  datos.
-- **HTML/CSS:** Enfocados en la estructura y presentación de páginas web.
-- **MATLAB:** Especializado en computación numérica y análisis de datos
-  científicos.
+- **SQL (Structured Query Language):** Diseñado específicamente para consultar y manipular bases de datos. Podés escribir `SELECT * FROM usuarios WHERE edad > 18`, pero no podés crear una interfaz gráfica ni un servidor web con SQL.
 
-Java puede utilizarse para construir prácticamente cualquier tipo de aplicación:
+- **HTML (HyperText Markup Language):** Define la estructura de páginas web. Podés marcar títulos, párrafos e imágenes, pero no podés hacer cálculos matemáticos ni procesar archivos.
+
+- **CSS (Cascading Style Sheets):** Controla la presentación visual de páginas web (colores, fuentes, layouts). Solo sirve para eso, no para lógica de negocio.
+
+- **MATLAB:** Especializado en computación numérica, matrices y visualización de datos científicos. Excelente para ingeniería, pero no para hacer una aplicación de chat.
+
+- **Expresiones Regulares (Regex):** Un mini-lenguaje para describir patrones de texto. Útilísimo para validar emails o buscar en texto, pero no es un lenguaje de programación completo.
+
+En contraste, un **lenguaje de propósito general** como Java (o C, Python, C++, Go) puede usarse para crear:
+
+### Aplicaciones donde Java es utilizado
 
 :::{list-table} Aplicaciones de Java por dominio
 :header-rows: 1
 :label: tbl-dominios-java
 
 - - Dominio
-  - Ejemplos
-  - Frameworks/Herramientas
+  - Ejemplos concretos
+  - Tecnologías/Frameworks comunes
 - - Aplicaciones empresariales
-  - Sistemas bancarios, ERP, CRM
+  - Sistemas bancarios (procesamiento de transacciones), sistemas ERP (gestión empresarial), sistemas CRM (gestión de clientes)
   - Spring, Jakarta EE, Hibernate
-- - Aplicaciones web
-  - Portales, servicios RESTful, APIs
+- - Aplicaciones web (backend)
+  - Servidores que procesan peticiones HTTP, APIs RESTful, microservicios
   - Spring Boot, Micronaut, Quarkus
 - - Aplicaciones móviles
-  - Android (nativo)
-  - Android SDK, Kotlin (JVM)
+  - Aplicaciones Android nativas
+  - Android SDK, Kotlin/JVM
 - - Aplicaciones de escritorio
-  - IDEs, herramientas de productividad
+  - IDEs como IntelliJ IDEA y Eclipse, herramientas de productividad
   - JavaFX, Swing
 - - Sistemas embebidos
-  - Dispositivos IoT, tarjetas inteligentes
+  - Dispositivos IoT, tarjetas inteligentes (como las SIM de celulares), Blu-ray players
   - Java ME, Embedded Java
-- - Big Data y procesamiento distribuido
-  - Análisis de datos masivos
-  - Hadoop, Apache Spark, Apache Kafka
-- - Juegos - Minecraft, libGDX - LWJGL, jMonkeyEngine
-    :::
-
-:::{important} Ponele Java a todo
-
-La versatilidad de Java no significa que sea la mejor opción para
-todos los dominios. Por ejemplo, Python puede ser más apropiado para scripts
-rápidos o aprendizaje automático, mientras que C++ es preferido para sistemas
-que requieren máximo rendimiento y control del hardware.
+- - Big Data
+  - Procesamiento de datos masivos, análisis en tiempo real, pipelines de datos
+  - Hadoop, Apache Spark, Apache Kafka, Apache Flink
+- - Juegos
+  - Minecraft (escrito completamente en Java), juegos indie
+  - LWJGL (gráficos OpenGL), jMonkeyEngine, libGDX
 :::
 
-### Ventajas de un Lenguaje de Propósito General
+### ¿Significa que Java es la mejor opción para todo?
 
-1. **Reutilización de conocimientos:** Aprender Java permite trabajar en
-   diversos proyectos sin cambiar de lenguaje.
-2. **Ecosistema unificado:** Una sola plataforma para múltiples necesidades.
-3. **Comunidad amplia:** Recursos, bibliotecas y soporte para cualquier dominio.
+**No.** Ser de propósito general significa que Java *puede* usarse para casi cualquier cosa, pero no que sea la *mejor* opción para todo. Cada lenguaje tiene fortalezas:
+
+:::{important} Elegí la herramienta correcta para el trabajo
+
+- **Python** es mejor para: scripts rápidos, prototipado, ciencia de datos, machine learning (tiene bibliotecas como NumPy, Pandas, TensorFlow que no tienen equivalente directo en Java).
+
+- **C/C++** son mejores para: sistemas operativos, drivers, motores de videojuegos AAA, software donde cada microsegundo importa.
+
+- **Go** es más simple para: microservicios pequeños y rápidos, herramientas de línea de comandos.
+
+- **Rust** es preferible para: software de sistemas donde la seguridad de memoria es crítica (navegadores, sistemas embebidos críticos).
+
+Java brilla en: aplicaciones empresariales de gran escala, sistemas que necesitan mantenerse por décadas, equipos grandes donde la consistencia y las herramientas importan.
+:::
+
+### Ventajas de aprender un lenguaje de propósito general
+
+1. **Reutilización de conocimientos:** Una vez que dominás Java, podés trabajar en aplicaciones web, Android, sistemas distribuidos, o Big Data sin aprender un lenguaje completamente nuevo.
+
+2. **Ecosistema unificado:** Usás las mismas herramientas (IDEs, sistemas de build, bibliotecas base) sin importar el tipo de proyecto.
+
+3. **Comunidad amplia:** Hay millones de desarrolladores Java en el mundo. Cualquier problema que tengas, probablemente alguien ya lo resolvió y documentó.
 
 ## Tipado Estático y Fuerte
 
-Java implementa un sistema de **tipado estático y fuerte**, una característica
-fundamental que influye en cómo se escribe, se verifica y se ejecuta el código.
+Java implementa un sistema de **tipado estático y fuerte**. Esta característica
+fundamental influye profundamente en cómo se escribe, se verifica y se ejecuta el código.
 
-### Tipado Estático
+### ¿Qué es un "tipo" en programación?
 
-En un lenguaje con **tipado estático**, el tipo de cada variable debe declararse
-explícitamente en tiempo de compilación y no puede cambiar durante la ejecución
-del programa.
+Antes de hablar de tipado estático o fuerte, recordemos qué es un tipo. Un **tipo de dato** define:
+
+1. **Qué valores puede almacenar una variable:** Un `int` almacena números enteros, un `String` almacena texto, un `boolean` almacena verdadero o falso.
+
+2. **Cuánta memoria ocupa:** Un `int` en Java siempre ocupa 4 bytes (32 bits), un `double` siempre ocupa 8 bytes (64 bits).
+
+3. **Qué operaciones son válidas:** Podés sumar dos `int`, pero no podés sumar un `int` con un `String` directamente (aunque sí concatenarlos).
+
+En C ya trabajaste con tipos: `int`, `float`, `double`, `char`, punteros, structs. Java tiene un sistema de tipos similar pero más estricto.
+
+### Tipado Estático: los tipos se verifican ANTES de ejecutar
+
+En un lenguaje con **tipado estático**, el tipo de cada variable:
+
+1. **Se declara explícitamente** (con algunas excepciones modernas)
+2. **Se conoce en tiempo de compilación** (antes de ejecutar el programa)
+3. **No puede cambiar** durante la ejecución del programa
+
+Esto significa que el **compilador** verifica que todas las operaciones de tipos sean correctas **antes** de crear el ejecutable. Si hay un error de tipos, el programa ni siquiera compila.
 
 #### Ejemplo: Declaración de Variables
 
-```java
-int edad = 25;           // Variable de tipo entero
-String nombre = "Ana";   // Variable de tipo cadena
-double precio = 19.99;   // Variable de tipo decimal
+No se preocupen por los detalles del siguiente código, en la siguiente página del apunte
+veremos detalles más profundos de este tema, por ahora, aprovechemos las similitudes con C.
 
-// ERROR: No se puede cambiar el tipo
-edad = "treinta";  // ❌ Error de compilación
+```java
+int edad = 25;           // 'edad' es de tipo int, para siempre
+String nombre = "Ana";   // 'nombre' es de tipo String, para siempre
+double precio = 19.99;   // 'precio' es de tipo double, para siempre
+boolean activo = true;   // 'activo' es de tipo boolean, para siempre
+
+// Esto funciona: asignar un nuevo valor del MISMO tipo
+edad = 30;               // ✅ OK: 30 también es int
+nombre = "María";        // ✅ OK: "María" también es String
+
+// Esto NO compila: intentar cambiar el tipo de valor
+edad = "treinta";        // ❌ Error de compilación: String no es int
+nombre = 42;             // ❌ Error de compilación: int no es String
 ```
+
+El error de compilación sería algo como:
+```
+error: incompatible types: String cannot be converted to int
+        edad = "treinta";
+               ^
+```
+
+#### ¿Qué significa "tiempo de compilación" vs "tiempo de ejecución"?
+
+Esta distinción es fundamental:
+
+- **Tiempo de compilación (compile time):** Es cuando el compilador `javac` lee tu código fuente (`.java`) y lo convierte a bytecode (`.class`). En esta etapa, el compilador verifica la sintaxis y los tipos. Si hay errores, no se genera el bytecode y no podés ejecutar nada.
+
+- **Tiempo de ejecución (runtime):** Es cuando la JVM ejecuta el bytecode compilado. El programa ya pasó la verificación del compilador y está "corriendo". Los errores aquí son excepciones que ocurren mientras el programa funciona.
+
+El tipado estático detecta errores de tipos en **tiempo de compilación**, lo que significa que te enterás del error **antes** de ejecutar el programa, antes de que llegue a producción, antes de que un usuario lo vea.
 
 #### Comparación con Tipado Dinámico
 
-En lenguajes con **tipado dinámico** como Python o JavaScript, las variables no
-tienen tipos fijos:
+En lenguajes con **tipado dinámico** como Python, las variables no tienen tipos fijos. El tipo se determina en tiempo de ejecución, según el valor asignado en cada momento:
 
 **Python (tipado dinámico):**
 
 ```python
-edad = 25           # int
-edad = "treinta"    # ✅ Ahora es str (sin error)
+edad = 25           # edad contiene un int
+print(type(edad))   # <class 'int'>
+
+edad = "treinta"    # ✅ Ahora edad contiene un str (¡sin error!)
+print(type(edad))   # <class 'str'>
+
+edad = [1, 2, 3]    # ✅ Ahora edad contiene una lista
+print(type(edad))   # <class 'list'>
 ```
+
+Este código Python ejecuta sin problemas. Pero esto puede causar errores inesperados:
+
+```python
+def calcular_doble(x):
+    return x * 2
+
+print(calcular_doble(5))      # 10 (OK, número)
+print(calcular_doble("hola")) # "holahola" (¿¡¿Qué?!? String repetido)
+```
+
+¿Es esto un bug o una feature? Depende de tu intención, pero el punto es que Python no te avisa que algo raro está pasando.
 
 **Java (tipado estático):**
 
 ```java
 int edad = 25;
-edad = "treinta";   // ❌ Error de compilación
+edad = "treinta";   // ❌ Error de compilación: esto no se llega a ejecutar
 ```
 
-### Tipado Fuerte
+El compilador de Java te fuerza a pensar en los tipos desde el principio. Esto puede parecer restrictivo, pero en proyectos grandes con múltiples desarrolladores, previene categorías enteras de bugs.
+
+### Tipado Fuerte: conversiones explícitas obligatorias
 
 Java también implementa **tipado fuerte**, lo que significa que no permite
-conversiones implícitas (automáticas) entre tipos incompatibles. Las
-conversiones deben ser **explícitas** mediante **casting**.
+conversiones automáticas entre tipos cuando podría haber pérdida de información o ambigüedad. Si querés convertir entre tipos, debés hacerlo **explícitamente** mediante **casting**.
 
-#### Ejemplo: Casting Explícito
+#### ¿Qué es el casting?
+
+El **casting** (conversión de tipos) es decirle explícitamente al compilador: "Sé que estos tipos son diferentes, pero quiero hacer esta conversión de todas formas". La sintaxis es poner el tipo destino entre paréntesis antes del valor:
 
 ```java
 double precio = 19.99;
-int precioEntero = (int) precio;  // Casting explícito: 19
+int precioEntero = (int) precio;  // Casting explícito: convierte a int
 
-// Sin casting, genera error de compilación
+System.out.println(precioEntero);  // Imprime: 19
+```
+
+El `(int)` es el casting. Estás diciendo "convertí este `double` a `int`". El compilador acepta porque vos lo pediste explícitamente, pero te advierte implícitamente que hay pérdida de información (se pierde el `.99`).
+
+#### ¿Por qué Java no hace esto automáticamente?
+
+Sin el casting, este código no compila:
+
+```java
+double precio = 19.99;
 int precioEntero = precio;  // ❌ Error: incompatible types
 ```
 
-#### Conversiones automáticas (Widening)
+El mensaje de error sería:
+```
+error: incompatible types: possible lossy conversion from double to int
+        int precioEntero = precio;
+                           ^
+```
 
-Java permite conversiones automáticas solo cuando no hay pérdida de información
-(**widening**):
+Java te dice "possible lossy conversion" (posible conversión con pérdida). Te está protegiendo de perder información sin darte cuenta. 
+
+Imaginá este escenario en un sistema bancario:
+```java
+double saldoCuenta = 1000.99;
+int saldoReporte = saldoCuenta;  // Si esto se permitiera...
+// ¡El cliente perdió $0.99 sin que nadie lo notara!
+```
+
+El tipado fuerte te obliga a ser explícito: si vas a perder precisión, que sea una decisión consciente.
+
+#### Conversiones automáticas seguras (Widening)
+
+Java *sí* permite conversiones automáticas cuando **no hay pérdida de información**.
+Esto se llama **widening** (ensanchamiento) porque vas de un tipo más "angosto" a uno más "amplio":
 
 ```java
 int x = 10;
 double y = x;  // ✅ Conversión automática de int a double
 System.out.println(y);  // 10.0
+
+byte pequeño = 100;
+int mediano = pequeño;  // ✅ Conversión automática de byte a int
+long grande = mediano;  // ✅ Conversión automática de int a long
 ```
 
-Pero no en sentido contrario (**narrowing**):
+Estas conversiones son seguras porque:
+- Un `double` (64 bits de punto flotante) puede representar cualquier valor `int` (32 bits entero)
+- Un `int` puede representar cualquier valor `byte`
+- Un `long` puede representar cualquier valor `int`
+
+La jerarquía de widening para tipos numéricos es:
+```
+byte → short → int → long → float → double
+```
+
+Cualquier conversión de izquierda a derecha es automática y segura.
+
+#### Conversiones que requieren casting (Narrowing)
+
+Las conversiones en sentido contrario (**narrowing**, angostamiento) pueden perder información, por eso requieren casting explícito:
 
 ```java
 double precio = 19.99;
-int precioEntero = precio;  // ❌ Error: requiere casting explícito
+int precioEntero = (int) precio;      // ✅ Con casting: 19 (se pierde 0.99)
+
+long numeroGrande = 3_000_000_000L;
+int numeroMediano = (int) numeroGrande;  // ✅ Con casting, pero... ¡PELIGRO!
+System.out.println(numeroMediano);        // -1294967296 (¡overflow!)
 ```
 
-:::{tip}
-
-El tipado fuerte previene errores sutiles en tiempo de ejecución al
-forzar al programador a ser explícito sobre las conversiones de tipo.
-
+:::{warning}
+El casting no valida que el valor "quepa" en el tipo destino. En el ejemplo, `3_000_000_000` no cabe en un `int` (máximo ~2.147 millones), entonces se produce un **overflow** y el resultado es basura. Java te deja hacer el casting pero no te protege del resultado incorrecto.
 :::
+
+#### Conversiones entre tipos incompatibles
+
+Algunos tipos no se pueden convertir directamente ni con casting:
+
+```java
+String texto = "100";
+int numero = (int) texto;  // ❌ Error: no se puede castear String a int
+```
+
+Para convertir un `String` a número, necesitás usar métodos específicos:
+
+```java
+String texto = "100";
+int numero = Integer.parseInt(texto);  // ✅ Método de conversión
+System.out.println(numero + 50);       // 150
+
+String decimal = "19.99";
+double precio = Double.parseDouble(decimal);  // ✅ Para decimales
+System.out.println(precio);                    // 19.99
+```
+
+Estos métodos pueden fallar si el texto no es un número válido:
+
+```java
+String invalido = "hola";
+int numero = Integer.parseInt(invalido);  // ❌ Lanza NumberFormatException
+```
+
+El programa compila, pero falla en tiempo de ejecución cuando se encuentra con un texto que no puede convertir. Más adelante aprenderás a manejar estas excepciones.
+
+:::{tip}
+El tipado fuerte te obliga a pensar explícitamente en las conversiones de datos. Esto puede parecer tedioso al principio, pero previene bugs sutiles que serían muy difíciles de encontrar en producción.
+:::
+
+### Comparación: Java vs Python (ambos tipado fuerte, pero diferente momento)
+
+Python, al igual que Java, tiene **tipado fuerte**: no permite conversiones implícitas entre tipos incompatibles. La diferencia clave es **cuándo** se detectan los errores de tipos.
+
+**Python (tipado dinámico y fuerte):**
+```python
+print("5" + str(3))   # "53" - hay que convertir explícitamente
+print("5" + 3)        # ❌ TypeError: can only concatenate str (not "int") to str
+print("5" - 3)        # ❌ TypeError: unsupported operand type(s)
+print("5" * 3)        # "555" - repetición de string (operación válida en Python)
+print(int("5") * 3)   # 15 - conversión explícita a entero
+```
+
+Python también rechaza mezclar tipos incompatibles, pero **el error ocurre en tiempo de ejecución**, cuando esa línea se ejecuta. Si el código con error está en una rama que no se ejecuta, el programa no falla.
+
+**Java (tipado estático y fuerte):**
+```java
+System.out.println("5" + 3);   // "53" (concatenación, única excepción permitida)
+// System.out.println("5" - 3);  // ❌ Error de compilación
+// System.out.println("5" * 3);  // ❌ Error de compilación
+```
+
+Java detecta estos errores **en tiempo de compilación**, antes de ejecutar el programa. Incluso si el código nunca se ejecutaría (por ejemplo, dentro de un `if (false)`), el compilador lo rechaza.
+
+**Diferencia práctica:**
+
+```python
+# En Python, esto "funciona" hasta que se ejecuta la rama del else
+def procesar(valor, es_texto):
+    if es_texto:
+        return valor.upper()
+    else:
+        return valor + "!"  # Error si valor es un número, pero solo al ejecutar
+```
+
+```java
+// En Java, esto no compila directamente
+public static String procesar(Object valor, boolean esTexto) {
+    if (esTexto) {
+        return ((String) valor).toUpperCase();
+    } else {
+        return valor + "!";  // Compila porque + con String siempre concatena
+    }
+}
+```
+
+Java te obliga a ser explícito sobre los tipos desde el principio, mientras que Python te da más flexibilidad a costa de detectar algunos errores más tarde.
 
 ### Ventajas del tipado estático y fuerte
 
-1. **Detección temprana de errores:** Muchos errores se detectan en tiempo de
-   compilación, antes de ejecutar el programa.
-2. **Mejor rendimiento:** El compilador puede optimizar el código conociendo los
-   tipos de antemano.
-3. **Autocompletado y refactorización:** Los IDEs pueden ofrecer sugerencias
-   precisas.
-4. **Documentación implícita:** Los tipos actúan como documentación del código.
+Ahora que entendés la diferencia, veamos por qué Java eligió este enfoque:
+
+1. **Detección temprana de errores:** Muchos bugs se detectan en tiempo de
+   compilación, antes de ejecutar el programa. No necesitás ejecutar todos los casos posibles para encontrar un error de tipos —el compilador lo encuentra por vos.
+
+2. **Mejor rendimiento:** El compilador conoce los tipos de antemano, entonces puede generar código más eficiente. No necesita verificar tipos en cada operación durante la ejecución.
+
+3. **Herramientas inteligentes:** Los IDEs (como IntelliJ o Eclipse) pueden ofrecerte:
+   - **Autocompletado preciso:** Saben qué métodos y propiedades tiene cada variable
+   - **Refactorización segura:** Pueden renombrar variables o métodos en todo el proyecto sin romper nada
+   - **Detección de errores en tiempo real:** Ves los errores mientras escribís, no al ejecutar
+
+4. **Documentación implícita:** Los tipos actúan como documentación. Cuando ves:
+   ```java
+   public double calcularImpuesto(double monto, double tasa)
+   ```
+   Sabés inmediatamente que la función recibe dos números decimales y devuelve otro decimal. No necesitás leer la documentación o el código interno.
+
+5. **Contratos claros:** Los tipos establecen "contratos" entre diferentes partes del código. Si una función espera un `String`, no podés pasarle un `int` por error.
+
+### Tabla comparativa de sistemas de tipos
 
 :::{list-table} Comparación de sistemas de tipos
 :header-rows: 1
@@ -181,61 +406,143 @@ forzar al programador a ser explícito sobre las conversiones de tipo.
 - - Característica
   - Java
   - Python
-  - JavaScript
+  - C
 - - Tipado
   - Estático y fuerte
   - Dinámico y fuerte
-  - Dinámico y débil
+  - Estático y débil
 - - Declaración de tipos
   - Obligatoria
-  - Opcional (type hints)
-  - No requerida
+  - Opcional (type hints desde Python 3.5)
+  - Obligatoria
 - - Conversiones implícitas
-  - Limitadas
-  - Limitadas
-  - Frecuentes
-- - Detección de errores - Compilación - Ejecución - Ejecución
-    :::
+  - Solo widening (sin pérdida)
+  - Limitadas (no entre tipos muy diferentes)
+  - Muchas (especialmente con punteros)
+- - Detección de errores de tipos
+  - Compilación
+  - Ejecución
+  - Compilación (parcial)
+- - Verificación de límites de arreglos
+  - Sí (lanza excepción)
+  - Sí (lanza excepción)
+  - No (comportamiento indefinido)
+:::
+
+:::{note}
+Observá que C también es de tipado estático, pero es de tipado **débil**: permite muchas conversiones implícitas (especialmente con punteros) y no verifica límites de arreglos. Por eso C es más propenso a bugs de memoria que Java.
+:::
 
 ### Ejemplo Completo: Tipado en Acción
+
+Este ejemplo muestra varios aspectos del sistema de tipos de Java:
 
 ```java
 public class EjemploTipado {
     public static void main(String[] args) {
-        // Declaraciones con tipos explícitos
+        // 1. Declaraciones con tipos explícitos
         int cantidad = 5;
         double precioUnitario = 12.50;
 
-        // Operación entre tipos compatibles
-        double total = cantidad * precioUnitario;  // int * double = double
-        System.out.println("Total: " + total);      // Total: 62.5
+        // 2. Operación entre tipos compatibles (widening automático)
+        // int * double → el int se convierte automáticamente a double
+        double total = cantidad * precioUnitario;
+        System.out.println("Total: " + total);  // Total: 62.5
 
-        // Casting explícito necesario para narrowing
-        int totalEntero = (int) total;
+        // 3. Casting explícito necesario para narrowing
+        int totalEntero = (int) total;  // Perdemos el .5
         System.out.println("Total entero: " + totalEntero);  // Total entero: 62
 
-        // Error sin casting
+        // 4. Sin casting, esto no compila:
         // int resultado = total;  // ❌ Error de compilación
 
-        // Conversión entre tipos incompatibles
-        String texto = "100";
-        int numero = Integer.parseInt(texto);  // Conversión explícita
-        System.out.println("Número: " + numero);
+        // 5. Conversión de String a número (no es casting, es parsing)
+        String textoNumero = "100";
+        int numero = Integer.parseInt(textoNumero);
+        System.out.println("Número parseado: " + numero);  // 100
+
+        // 6. Concatenación de String con otros tipos (permitido con +)
+        String mensaje = "La cantidad es: " + cantidad;  // int → String implícito
+        System.out.println(mensaje);  // La cantidad es: 5
+
+        // 7. Pero otras operaciones con String no compilan:
+        // String resultado = "5" - 3;  // ❌ Error de compilación
+        // String resultado = "5" * 3;  // ❌ Error de compilación
     }
 }
 ```
 
-## La Naturaleza Orientada a Objetos de Java
+#### Desglose línea por línea
+
+**Línea 4-5: Declaraciones tipadas**
+Cada variable tiene su tipo declarado explícitamente. `cantidad` solo puede contener enteros, `precioUnitario` solo puede contener decimales.
+
+**Línea 9: Widening automático**
+Cuando multiplicás `int * double`, Java convierte automáticamente el `int` a `double` antes de multiplicar. El resultado es `double`. Esto es seguro porque no se pierde información.
+
+**Línea 13: Narrowing con casting**
+Para guardar un `double` en un `int`, necesitás casting explícito. Java trunca (no redondea): `62.5` se convierte en `62`.
+
+**Línea 18: Parsing de String**
+Para convertir texto a número, usamos métodos como `Integer.parseInt()`. Esto es diferente al casting: es una función que analiza el texto carácter por carácter.
+
+**Línea 22: Concatenación permitida**
+El operador `+` con String es especial: Java convierte automáticamente el otro operando a String y concatena. Es la única "magia" de conversión que Java permite con String.
+
+## La Estructura Obligatoria: Clases en Java
 
 Aunque Java es fundamentalmente un lenguaje **orientado a objetos**, en las
 primeras etapas del aprendizaje trabajaremos principalmente con los aspectos
 procedurales del lenguaje: tipos de datos, operadores, estructuras de control y
-métodos estáticos.
+funciones (que en Java se llaman "métodos").
 
-### Una Observación Importante
+### ¿Por qué todo debe estar en una clase?
 
-Todo programa Java debe organizarse dentro de **clases**. Incluso el programa
-más simple requiere esta estructura:
+Esta es una diferencia importante con C. En C, podés escribir funciones "sueltas":
+
+**En C:**
+```c
+#include <stdio.h>
+
+// Función suelta, no pertenece a ninguna estructura
+int sumar(int a, int b) {
+    return a + b;
+}
+
+int main() {
+    printf("%d\n", sumar(3, 5));
+    return 0;
+}
+```
+
+**En Java, esto no es posible.** Todo código debe estar dentro de una clase:
+
+```java
+public class Calculadora {      // ← Todo dentro de una clase
+    
+    public static int sumar(int a, int b) {
+        return a + b;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(sumar(3, 5));
+    }
+}
+```
+
+¿Por qué Java toma esta decisión? Porque fue diseñado desde cero como un lenguaje orientado a objetos. La filosofía es: "todo es un objeto" (o pertenece a una clase que puede crear objetos). Incluso cuando no necesitás objetos, la estructura de clase está presente.
+
+### La clase como "contenedor obligatorio"
+
+Por ahora, pensá en la clase como un **contenedor obligatorio** para tu código. Es como un archivo en C, pero con reglas adicionales:
+
+1. **El nombre del archivo debe coincidir con el nombre de la clase pública.** Si tu clase se llama `Calculadora`, el archivo debe llamarse `Calculadora.java`.
+
+2. **Cada archivo `.java` típicamente contiene una clase pública.** Puede contener más clases, pero solo una puede ser `public`.
+
+3. **El método `main` es el punto de entrada**, igual que en C, pero debe estar dentro de una clase.
+
+### El programa Java más simple
 
 ```java
 public class HolaMundo {
@@ -245,28 +552,63 @@ public class HolaMundo {
 }
 ```
 
-Por ahora, podés pensar en esta estructura como un "contenedor obligatorio" para
-tu código. Los conceptos completos de clases, objetos, encapsulamiento, herencia
-y polimorfismo se estudiarán en profundidad más adelante, una vez que domines
-los fundamentos del lenguaje.
+Descomponiendo cada parte:
 
-:::{tip} Inicialmente, todos tus métodos serán `static`, lo que significa que no
-necesitarás crear objetos para usarlos. Esto te permite concentrarte en aprender
-la sintaxis básica, los tipos de datos y las estructuras de control sin la
-complejidad adicional de la programación orientada a objetos. :::
+- **`public`**: Modificador de acceso. Significa que esta clase/método es accesible desde cualquier otro código. (Más adelante verás otros como `private` y `protected`.)
 
-### Métodos Estáticos: Tu Punto de Partida
+- **`class HolaMundo`**: Declara una clase llamada `HolaMundo`. El archivo debe llamarse `HolaMundo.java`.
+
+- **`static`**: Indica que el método pertenece a la **clase**, no a un objeto instanciado. Esto es crucial para `main` y para nuestro uso inicial.
+
+- **`void`**: El método no devuelve ningún valor (igual que en C).
+
+- **`main`**: Nombre especial que la JVM busca como punto de entrada.
+
+- **`String[] args`**: Parámetro que recibe argumentos de línea de comandos (igual que `char* argv[]` en C).
+
+- **`System.out.println(...)`**: Forma de imprimir en Java. `System.out` es el equivalente a `stdout` en C.
+
+:::{tip}
+Por ahora, memorizá esta estructura como una "receta" necesaria. Todos tus programas empezarán así. Con el tiempo, cada parte tendrá sentido completo cuando estudies orientación a objetos.
+:::
+
+### Métodos Estáticos: Funciones sin necesidad de objetos
 
 En las primeras semanas del curso, escribirás métodos dentro de clases, pero
-todos serán **estáticos** (con la palabra clave `static`):
+todos serán **estáticos** (con la palabra clave `static`).
+
+#### ¿Qué significa `static`?
+
+La palabra `static` significa que el método (o variable) pertenece a la **clase misma**, no a los objetos que podrían crearse a partir de ella.
+
+Para entenderlo con una analogía:
+- Una **clase** es como un molde para hacer galletas
+- Un **objeto** es una galleta hecha con ese molde
+- Un **método estático** es algo que podés hacer con el molde directamente, sin necesidad de hacer galletas primero
+
+Esto se verá en profundidad cuando estudies OOP. Por ahora, lo importante es:
+
+- **Con `static`:** Podés llamar al método directamente usando el nombre de la clase: `Calculadora.sumar(3, 5)`
+- **Sin `static`:** Necesitarías crear un objeto primero (lo verás más adelante)
+
+#### Ejemplo: Biblioteca de funciones matemáticas
 
 ```java
-public class Calculadora {
+public class Matematica {
+    
+    // Método estático: se puede llamar sin crear un objeto
     public static int sumar(int a, int b) {
         return a + b;
     }
 
+    public static int restar(int a, int b) {
+        return a - b;
+    }
+
     public static double promediar(double[] numeros) {
+        if (numeros.length == 0) {
+            return 0.0;  // Evitar división por cero
+        }
         double suma = 0;
         for (double num : numeros) {
             suma += num;
@@ -274,42 +616,202 @@ public class Calculadora {
         return suma / numeros.length;
     }
 
-    public static void main(String[] args) {
-        int resultado = sumar(5, 3);
-        System.out.println("5 + 3 = " + resultado);
+    public static int factorial(int n) {
+        if (n < 0) {
+            return -1;  // Indicar error (factorial no definido para negativos)
+        }
+        int resultado = 1;
+        for (int i = 2; i <= n; i++) {
+            resultado *= i;
+        }
+        return resultado;
+    }
 
-        double[] valores = {10.0, 20.0, 30.0};
+    public static void main(String[] args) {
+        // Llamadas a métodos estáticos desde la misma clase
+        // (no hace falta escribir "Matematica.")
+        int suma = sumar(5, 3);
+        System.out.println("5 + 3 = " + suma);
+
+        int resta = restar(10, 4);
+        System.out.println("10 - 4 = " + resta);
+
+        double[] valores = {10.0, 20.0, 30.0, 40.0};
         double promedio = promediar(valores);
         System.out.println("Promedio: " + promedio);
+
+        System.out.println("5! = " + factorial(5));
     }
 }
 ```
 
+**Salida:**
+```
+5 + 3 = 8
+10 - 4 = 6
+Promedio: 25.0
+5! = 120
+```
+
+#### Llamar métodos estáticos desde otra clase
+
+Si querés usar estos métodos desde otro archivo, usás el nombre de la clase:
+
+```java
+// Archivo: OtroPrograma.java
+public class OtroPrograma {
+    public static void main(String[] args) {
+        // Llamada con nombre de clase completo
+        int resultado = Matematica.sumar(100, 200);
+        System.out.println("Resultado: " + resultado);
+        
+        // También podemos usar factorial
+        System.out.println("10! = " + Matematica.factorial(10));
+    }
+}
+```
+
+Este es exactamente el mismo patrón que usás con métodos de Java como `Math.sqrt()`, `Math.abs()`, `Integer.parseInt()`, etc. Son métodos estáticos de clases de la biblioteca estándar.
+
+### ¿Por qué empezar con métodos estáticos?
+
 Este enfoque te permite:
 
-- Concentrarte en la lógica algorítmica
-- Dominar tipos de datos y estructuras de control
-- Practicar el diseño de métodos sin la complejidad de objetos
+1. **Concentrarte en la lógica algorítmica:** Pensás en cómo resolver problemas con funciones, entrada y salida, sin la complejidad adicional de objetos.
 
-:::{important} Más adelante en el curso, aprenderás cuándo y por qué usar
-objetos en lugar de métodos estáticos. Por ahora, este enfoque simplifica el
-aprendizaje de los fundamentos. :::
+2. **Reutilizar conocimientos de C:** La estructura `funcion(parámetros) → resultado` es idéntica conceptualmente. Solo cambia un poco la sintaxis.
+
+3. **Dominar tipos de datos y estructuras de control:** Practicás con `if`, `for`, `while`, arreglos, etc., antes de agregar la capa de objetos.
+
+4. **Prepararte para OOP gradualmente:** Cuando llegue el momento de crear objetos, ya dominarás la sintaxis y podrás concentrarte en los conceptos nuevos.
+
+:::{important}
+Más adelante en el curso, aprenderás cuándo y por qué usar objetos en lugar de métodos estáticos. Hay situaciones donde los métodos estáticos son apropiados (funciones utilitarias, factories) y situaciones donde crear objetos es mejor (modelar entidades con estado y comportamiento). Por ahora, todos tus métodos serán estáticos.
+:::
+
+## Diferencias Clave entre Java y C
+
+Dado que venís de programar en C, es útil tener un resumen de las diferencias principales que encontrarás al empezar con Java:
+
+:::{list-table} Comparación Java vs C
+:header-rows: 1
+:label: tbl-java-vs-c
+
+- - Aspecto
+  - C
+  - Java
+- - Gestión de memoria
+  - Manual (`malloc`, `free`)
+  - Automática (Garbage Collector)
+- - Punteros
+  - Acceso directo a memoria
+  - No existen (solo referencias a objetos)
+- - Estructura del código
+  - Funciones sueltas
+  - Todo dentro de clases
+- - Arreglos
+  - No verifican límites (buffer overflow posible)
+  - Verifican límites (lanza excepción)
+- - Strings
+  - Arrays de `char` terminados en `\0`
+  - Tipo `String` con métodos integrados
+- - Booleanos
+  - No existe (se usa `int`: 0=false, ≠0=true)
+  - Tipo `boolean` (`true`/`false`)
+- - Compilación
+  - A código máquina nativo
+  - A bytecode (ejecuta en JVM)
+- - Portabilidad
+  - Recompilar para cada plataforma
+  - El mismo bytecode en cualquier JVM
+- - Archivos header
+  - `.h` para declaraciones
+  - No existen (todo en `.java`)
+- - Preprocesador
+  - `#define`, `#include`, `#ifdef`
+  - No existe
+:::
+
+### Ejemplo lado a lado
+
+**El mismo programa en C y Java:**
+
+```c
+// programa.c
+#include <stdio.h>
+
+int calcular_suma(int arr[], int n) {
+    int suma = 0;
+    for (int i = 0; i < n; i++) {
+        suma += arr[i];
+    }
+    return suma;
+}
+
+int main() {
+    int numeros[] = {1, 2, 3, 4, 5};
+    int n = sizeof(numeros) / sizeof(numeros[0]);
+    int resultado = calcular_suma(numeros, n);
+    printf("La suma es: %d\n", resultado);
+    return 0;
+}
+```
+
+```java
+// Programa.java
+public class Programa {
+    
+    public static int calcularSuma(int[] arr) {
+        int suma = 0;
+        for (int i = 0; i < arr.length; i++) {  // .length en vez de pasar n
+            suma += arr[i];
+        }
+        return suma;
+    }
+
+    public static void main(String[] args) {
+        int[] numeros = {1, 2, 3, 4, 5};
+        int resultado = calcularSuma(numeros);  // No necesita pasar el tamaño
+        System.out.println("La suma es: " + resultado);
+    }
+}
+```
+
+**Diferencias a notar:**
+
+1. **No hay `#include`:** Java usa `import` para traer clases de otros paquetes, pero las clases básicas están disponibles automáticamente.
+
+2. **Todo dentro de clase:** El código está envuelto en `public class Programa { ... }`.
+
+3. **Métodos son `static`:** Equivalente a funciones libres de C para nuestro uso inicial.
+
+4. **`int[]` en vez de `int arr[]`:** Java prefiere poner los corchetes junto al tipo, no junto al nombre de la variable.
+
+5. **`arr.length` en vez de pasar tamaño:** Los arreglos en Java conocen su propio tamaño. No hay que calcularlo ni pasarlo como parámetro.
+
+6. **`System.out.println` en vez de `printf`:** Diferente API para salida estándar. Java también tiene `System.out.printf()` si preferís format strings.
+
+7. **Concatenación con `+`:** En vez de usar `%d` y format strings, Java permite concatenar directamente strings con números.
 
 ## Resumen
 
 Java se caracteriza por ser:
 
-1. **Lenguaje de propósito general:** Versátil y aplicable a múltiples dominios.
-2. **Tipado estático y fuerte:** Los tipos se verifican en tiempo de compilación
-   y las conversiones deben ser explícitas.
-3. **Orientado a objetos por diseño:** Aunque todo el código debe organizarse en
-   clases, inicialmente trabajaremos con métodos estáticos para concentrarnos en
-   los fundamentos algorítmicos.
+1. **Lenguaje de propósito general:** Puede usarse para casi cualquier tipo de software (empresarial, web, móvil, embebido, Big Data, juegos), aunque no siempre es la mejor opción para cada dominio específico.
 
-Estas características hacen de Java un lenguaje robusto, seguro y adecuado para
-proyectos de gran escala. La estrategia pedagógica "Late Objects" permite
-dominar primero los fundamentos del lenguaje antes de abordar los conceptos más
-avanzados de la programación orientada a objetos.
+2. **Tipado estático:** Los tipos de las variables se declaran explícitamente y se verifican en **tiempo de compilación**. El compilador detecta errores de tipos antes de que el programa ejecute.
+
+3. **Tipado fuerte:** Las conversiones entre tipos incompatibles deben ser **explícitas** (casting). Java no "adivina" qué conversión querés hacer —te obliga a ser explícito sobre posibles pérdidas de información.
+
+4. **Orientado a objetos por diseño:** Todo código debe estar dentro de clases. Inicialmente usamos métodos `static` para trabajar de forma similar a C, pero la estructura de clase siempre está presente.
+
+5. **Diferencias principales con C:**
+   - No hay punteros ni gestión manual de memoria
+   - Los arreglos conocen su tamaño y verifican límites
+   - Todo está dentro de clases
+   - Tipo `boolean` nativo y `String` como tipo de primera clase
+
+La estrategia pedagógica **"Late Objects"** que usamos en este curso permite dominar primero los fundamentos del lenguaje (tipos, operadores, estructuras de control, métodos) antes de abordar los conceptos de programación orientada a objetos. Esto aprovecha tu conocimiento previo de C mientras te prepara gradualmente para las características más avanzadas de Java.
 
 ## Referencias Bibliográficas
 
@@ -434,7 +936,7 @@ Java es un lenguaje de propósito general, pero ¿significa eso que es la mejor 
 
 **Cuándo otros lenguajes pueden ser mejores:**
 - **Python:** Scripts rápidos, ciencia de datos, machine learning (bibliotecas como NumPy, TensorFlow).
-- **JavaScript/TypeScript:** Aplicaciones web frontend (React, Angular, Vue).
+- **Python** es preferido para: scripts rápidos, ciencia de datos, machine learning (bibliotecas como NumPy, TensorFlow, PyTorch).
 - **C/C++:** Sistemas embebidos, drivers, software que requiere máximo rendimiento (motores gráficos, sistemas operativos).
 - **Go:** Microservicios ligeros con alta concurrencia.
 - **Rust:** Sistemas donde la seguridad de memoria es crítica.
@@ -467,31 +969,187 @@ public class Conversor {
 
 **Análisis del programa:**
 
-1. **`public class Conversor`**: Define una clase llamada `Conversor` que actúa como contenedor del código.
+1. **`public class Conversor`**: Define una clase llamada `Conversor` que actúa como contenedor del código. El archivo debe llamarse `Conversor.java`.
 
 2. **`public static double celsiusAFahrenheit(double celsius)`**:
-   - Método **estático** (no requiere crear un objeto).
-   - Recibe un `double` (temperatura en Celsius).
-   - Devuelve un `double` (temperatura en Fahrenheit).
-   - Aplica la fórmula de conversión: `F = (C × 9/5) + 32`.
+   - `public`: Accesible desde cualquier parte del código.
+   - `static`: Pertenece a la clase, no necesita un objeto para ser llamado.
+   - `double`: Tipo de retorno, el método devuelve un número decimal.
+   - `celsiusAFahrenheit`: Nombre del método (convención camelCase en Java).
+   - `(double celsius)`: Parámetro de tipo `double`.
+   - La fórmula `(celsius * 9.0 / 5.0) + 32.0` convierte Celsius a Fahrenheit.
 
 3. **`public static void main(String[] args)`**:
-   - Punto de entrada del programa.
-   - Define una temperatura de 25°C.
-   - Llama al método `celsiusAFahrenheit` de forma directa (sin crear objetos).
-   - Imprime el resultado.
+   - Punto de entrada del programa (la JVM busca este método para comenzar).
+   - `void`: No devuelve ningún valor.
+   - `String[] args`: Arreglo de strings con argumentos de línea de comandos.
+
+4. **`System.out.println(...)`**: Imprime una línea en la salida estándar. El operador `+` concatena los valores en un solo String.
 
 **Salida esperada:**
 ```
-
 25.0°C = 77.0°F
-
 ```
 
-**Conceptos clave:**
-- Uso de métodos estáticos para evitar objetos en programas simples.
-- Tipado fuerte: todos los valores tienen tipos explícitos (`double`).
-- Organización en clases, aunque el código sea procedural.
+**Conceptos clave demostrados:**
+- Estructura obligatoria de clase
+- Métodos estáticos (sin necesidad de objetos)
+- Tipado explícito (`double`)
+- Concatenación de String con `+`
+```
+
+```{exercise}
+:label: ej-widening-narrowing
+
+Indicá cuáles de las siguientes líneas compilan y cuáles no. Para las que no compilan, explicá por qué y cómo solucionarlo:
+
+```java
+int a = 100;
+long b = a;
+double c = b;
+int d = c;
+byte e = a;
+float f = 3.14;
+```
+```
+
+```{solution} ej-widening-narrowing
+:class: dropdown
+
+**Análisis línea por línea:**
+
+1. `int a = 100;` — ✅ **Compila.** Declaración simple de entero.
+
+2. `long b = a;` — ✅ **Compila.** Widening automático: `int` (32 bits) → `long` (64 bits). No hay pérdida de información.
+
+3. `double c = b;` — ✅ **Compila.** Widening automático: `long` (64 bits entero) → `double` (64 bits punto flotante). Seguro para la mayoría de valores.
+
+4. `int d = c;` — ❌ **No compila.** Narrowing: `double` → `int` podría perder información (la parte decimal).
+   **Solución:** `int d = (int) c;`
+
+5. `byte e = a;` — ❌ **No compila.** Narrowing: `int` (32 bits) → `byte` (8 bits). El valor 100 cabe en un byte, pero el compilador no lo sabe en general.
+   **Solución:** `byte e = (byte) a;`
+
+6. `float f = 3.14;` — ❌ **No compila.** Los literales decimales como `3.14` son `double` por defecto. Asignar `double` a `float` es narrowing.
+   **Solución 1:** `float f = 3.14f;` (sufijo `f` indica literal float)
+   **Solución 2:** `float f = (float) 3.14;`
+
+**Regla general:** Las conversiones de "mayor a menor" (long→int, double→float, int→byte) requieren casting explícito porque pueden perder información.
+```
+
+```{exercise}
+:label: ej-comparacion-c-java
+
+Convertí el siguiente programa de C a Java, manteniendo la misma lógica pero adaptando la sintaxis:
+
+```c
+#include <stdio.h>
+
+int maximo(int a, int b) {
+    if (a > b) {
+        return a;
+    } else {
+        return b;
+    }
+}
+
+int main() {
+    int x = 10, y = 25;
+    int resultado = maximo(x, y);
+    printf("El máximo entre %d y %d es %d\n", x, y, resultado);
+    return 0;
+}
+```
+```
+
+```{solution} ej-comparacion-c-java
+:class: dropdown
+
+```java
+public class Comparador {
+    
+    public static int maximo(int a, int b) {
+        if (a > b) {
+            return a;
+        } else {
+            return b;
+        }
+    }
+
+    public static void main(String[] args) {
+        int x = 10, y = 25;
+        int resultado = maximo(x, y);
+        
+        // Opción 1: Concatenación con +
+        System.out.println("El máximo entre " + x + " y " + y + " es " + resultado);
+        
+        // Opción 2: printf (más similar a C)
+        System.out.printf("El máximo entre %d y %d es %d%n", x, y, resultado);
+    }
+}
+```
+
+**Cambios realizados:**
+1. Todo el código está dentro de `public class Comparador`
+2. Se agregó `static` a los métodos
+3. Se eliminó `#include` (Java no usa preprocesador)
+4. `printf` se convierte en `System.out.printf` o se usa concatenación
+5. En `printf` de Java, usamos `%n` en vez de `\n` para portabilidad
+6. No hace falta `return 0;` en `main` de Java (es `void`)
+```
+
+```{exercise}
+:label: ej-tipado-estatico-dinamico
+
+Explicá qué imprimiría cada línea en Python y qué pasaría si intentaras lo mismo en Java:
+
+```python
+print("5" + str(3))
+print("5" + 3)
+print("5" * 3)
+print(int("5") + 3)
+```
+```
+
+```{solution} ej-tipado-estatico-dinamico
+:class: dropdown
+
+**En Python (tipado dinámico y fuerte):**
+
+1. `print("5" + str(3))` → `"53"`
+   - Convertimos explícitamente `3` a string con `str()`
+   - Luego concatenamos dos strings
+
+2. `print("5" + 3)` → ❌ `TypeError: can only concatenate str (not "int") to str`
+   - Python **no** convierte implícitamente int a str
+   - Es tipado **fuerte**: rechaza mezclar tipos incompatibles
+
+3. `print("5" * 3)` → `"555"`
+   - En Python, `str * int` es **repetición de string**
+   - Esta es una operación válida definida para strings
+
+4. `print(int("5") + 3)` → `8`
+   - Convertimos explícitamente `"5"` a entero con `int()`
+   - Sumamos dos enteros
+
+**En Java (tipado estático y fuerte):**
+
+1. `System.out.println("5" + 3);` → `"53"` ✅
+   - Java permite concatenación de String con otros tipos usando `+`
+   - Es la **única excepción** a las reglas estrictas de tipos
+
+2. En Java no necesitás `str()`, el `+` con String ya convierte
+   - `System.out.println("5" + 3);` funciona directamente
+
+3. `System.out.println("5" * 3);` → ❌ **Error de compilación**
+   - Java **no** tiene operador de repetición de string
+   - Para repetir: `"5".repeat(3)` (desde Java 11) → `"555"`
+
+4. `System.out.println(Integer.parseInt("5") + 3);` → `8` ✅
+   - Usamos `Integer.parseInt()` en vez de `int()`
+   - La sintaxis cambia, pero el concepto es igual
+
+**Diferencia clave:** Tanto Python como Java son de tipado **fuerte** y rechazan mezclar tipos incompatibles. La diferencia es que Java detecta los errores en **compilación** (antes de ejecutar), mientras que Python los detecta en **ejecución** (cuando llega a esa línea).
 ```
 
 ---
