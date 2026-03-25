@@ -109,7 +109,7 @@ fundamental influye profundamente en cómo se escribe, se verifica y se ejecuta 
 
 ### ¿Qué es un "tipo" en programación?
 
-Antes de hablar de tipado estático o fuerte, recordemos qué es un tipo. Un **tipo de dato** define:
+Un **tipo de dato** define tres cosas importantes:
 
 1. **Qué valores puede almacenar una variable:** Un `int` almacena números enteros, un `String` almacena texto, un `boolean` almacena verdadero o falso.
 
@@ -127,7 +127,7 @@ En un lenguaje con **tipado estático**, el tipo de cada variable:
 2. **Se conoce en tiempo de compilación** (antes de ejecutar el programa)
 3. **No puede cambiar** durante la ejecución del programa
 
-Esto significa que el **compilador** verifica que todas las operaciones de tipos sean correctas **antes** de crear el ejecutable. Si hay un error de tipos, el programa ni siquiera compila.
+El **compilador** verifica que todas las operaciones de tipos sean correctas **antes** de crear el ejecutable. Si hay un error de tipos, el programa ni siquiera compila.
 
 #### Ejemplo: Declaración de Variables
 
@@ -137,23 +137,12 @@ veremos detalles más profundos de este tema, por ahora, aprovechemos las simili
 ```java
 int edad = 25;           // 'edad' es de tipo int, para siempre
 String nombre = "Ana";   // 'nombre' es de tipo String, para siempre
-double precio = 19.99;   // 'precio' es de tipo double, para siempre
-boolean activo = true;   // 'activo' es de tipo boolean, para siempre
 
 // Esto funciona: asignar un nuevo valor del MISMO tipo
 edad = 30;               // ✅ OK: 30 también es int
-nombre = "María";        // ✅ OK: "María" también es String
 
 // Esto NO compila: intentar cambiar el tipo de valor
 edad = "treinta";        // ❌ Error de compilación: String no es int
-nombre = 42;             // ❌ Error de compilación: int no es String
-```
-
-El error de compilación sería algo como:
-```
-error: incompatible types: String cannot be converted to int
-        edad = "treinta";
-               ^
 ```
 
 #### ¿Qué significa "tiempo de compilación" vs "tiempo de ejecución"?
@@ -216,10 +205,8 @@ El **casting** (conversión de tipos) es decirle explícitamente al compilador: 
 ```java
 double precio = 19.99;
 int precioEntero = (int) precio;  // Casting explícito: convierte a int
-
-System.out.println(precioEntero);  // Imprime: 19
+System.out.println(precioEntero);  // Imprime: 19 (se pierde el .99)
 ```
-
 El `(int)` es el casting. Estás diciendo "convertí este `double` a `int`". El compilador acepta porque vos lo pediste explícitamente, pero te advierte implícitamente que hay pérdida de información (se pierde el `.99`).
 
 #### ¿Por qué Java no hace esto automáticamente?
@@ -228,152 +215,24 @@ Sin el casting, este código no compila:
 
 ```java
 double precio = 19.99;
-int precioEntero = precio;  // ❌ Error: incompatible types
+int precioEntero = precio;  // ❌ Error: possible lossy conversion from double to int
 ```
 
-El mensaje de error sería:
-```
-error: incompatible types: possible lossy conversion from double to int
-        int precioEntero = precio;
-                           ^
-```
-
-Java te dice "possible lossy conversion" (posible conversión con pérdida). Te está protegiendo de perder información sin darte cuenta. 
-
-Imaginá este escenario en un sistema bancario:
-```java
-double saldoCuenta = 1000.99;
-int saldoReporte = saldoCuenta;  // Si esto se permitiera...
-// ¡El cliente perdió $0.99 sin que nadie lo notara!
-```
-
-El tipado fuerte te obliga a ser explícito: si vas a perder precisión, que sea una decisión consciente.
-
-#### Conversiones automáticas seguras (Widening)
-
-Java *sí* permite conversiones automáticas cuando **no hay pérdida de información**.
-Esto se llama **widening** (ensanchamiento) porque vas de un tipo más "angosto" a uno más "amplio":
-
-```java
-int x = 10;
-double y = x;  // ✅ Conversión automática de int a double
-System.out.println(y);  // 10.0
-
-byte pequeño = 100;
-int mediano = pequeño;  // ✅ Conversión automática de byte a int
-long grande = mediano;  // ✅ Conversión automática de int a long
-```
-
-Estas conversiones son seguras porque:
-- Un `double` (64 bits de punto flotante) puede representar cualquier valor `int` (32 bits entero)
-- Un `int` puede representar cualquier valor `byte`
-- Un `long` puede representar cualquier valor `int`
-
-La jerarquía de widening para tipos numéricos es:
-```
-byte → short → int → long → float → double
-```
-
-Cualquier conversión de izquierda a derecha es automática y segura.
-
-#### Conversiones que requieren casting (Narrowing)
-
-Las conversiones en sentido contrario (**narrowing**, angostamiento) pueden perder información, por eso requieren casting explícito:
-
-```java
-double precio = 19.99;
-int precioEntero = (int) precio;      // ✅ Con casting: 19 (se pierde 0.99)
-
-long numeroGrande = 3_000_000_000L;
-int numeroMediano = (int) numeroGrande;  // ✅ Con casting, pero... ¡PELIGRO!
-System.out.println(numeroMediano);        // -1294967296 (¡overflow!)
-```
-
-:::{warning}
-El casting no valida que el valor "quepa" en el tipo destino. En el ejemplo, `3_000_000_000` no cabe en un `int` (máximo ~2.147 millones), entonces se produce un **overflow** y el resultado es basura. Java te deja hacer el casting pero no te protege del resultado incorrecto.
+:::{note} Más detalles sobre tipos
+Los tipos primitivos, sus rangos, las reglas de conversión (widening y narrowing), y todos los detalles técnicos sobre el sistema de tipos se estudian en profundidad en el capítulo {ref}`Tipos de Datos en Java <apunte/03_tipos_de_datos.md>`.
 :::
 
-#### Conversiones entre tipos incompatibles
+### Comparación con Tipado Dinámico (Python)
 
-Algunos tipos no se pueden convertir directamente ni con casting:
-
-```java
-String texto = "100";
-int numero = (int) texto;  // ❌ Error: no se puede castear String a int
-```
-
-Para convertir un `String` a número, necesitás usar métodos específicos:
-
-```java
-String texto = "100";
-int numero = Integer.parseInt(texto);  // ✅ Método de conversión
-System.out.println(numero + 50);       // 150
-
-String decimal = "19.99";
-double precio = Double.parseDouble(decimal);  // ✅ Para decimales
-System.out.println(precio);                    // 19.99
-```
-
-Estos métodos pueden fallar si el texto no es un número válido:
-
-```java
-String invalido = "hola";
-int numero = Integer.parseInt(invalido);  // ❌ Lanza NumberFormatException
-```
-
-El programa compila, pero falla en tiempo de ejecución cuando se encuentra con un texto que no puede convertir. Más adelante aprenderás a manejar estas excepciones.
-
-:::{tip}
-El tipado fuerte te obliga a pensar explícitamente en las conversiones de datos. Esto puede parecer tedioso al principio, pero previene bugs sutiles que serían muy difíciles de encontrar en producción.
-:::
-
-### Comparación: Java vs Python (ambos tipado fuerte, pero diferente momento)
-
-Python, al igual que Java, tiene **tipado fuerte**: no permite conversiones implícitas entre tipos incompatibles. La diferencia clave es **cuándo** se detectan los errores de tipos.
-
-**Python (tipado dinámico y fuerte):**
-```python
-print("5" + str(3))   # "53" - hay que convertir explícitamente
-print("5" + 3)        # ❌ TypeError: can only concatenate str (not "int") to str
-print("5" - 3)        # ❌ TypeError: unsupported operand type(s)
-print("5" * 3)        # "555" - repetición de string (operación válida en Python)
-print(int("5") * 3)   # 15 - conversión explícita a entero
-```
-
-Python también rechaza mezclar tipos incompatibles, pero **el error ocurre en tiempo de ejecución**, cuando esa línea se ejecuta. Si el código con error está en una rama que no se ejecuta, el programa no falla.
-
-**Java (tipado estático y fuerte):**
-```java
-System.out.println("5" + 3);   // "53" (concatenación, única excepción permitida)
-// System.out.println("5" - 3);  // ❌ Error de compilación
-// System.out.println("5" * 3);  // ❌ Error de compilación
-```
-
-Java detecta estos errores **en tiempo de compilación**, antes de ejecutar el programa. Incluso si el código nunca se ejecutaría (por ejemplo, dentro de un `if (false)`), el compilador lo rechaza.
-
-**Diferencia práctica:**
+En lenguajes con **tipado dinámico** como Python, las variables no tienen tipos fijos:
 
 ```python
-# En Python, esto "funciona" hasta que se ejecuta la rama del else
-def procesar(valor, es_texto):
-    if es_texto:
-        return valor.upper()
-    else:
-        return valor + "!"  # Error si valor es un número, pero solo al ejecutar
+edad = 25           # edad contiene un int
+edad = "treinta"    # ✅ Ahora edad contiene un str (¡sin error!)
+edad = [1, 2, 3]    # ✅ Ahora edad contiene una lista
 ```
 
-```java
-// En Java, esto no compila directamente
-public static String procesar(Object valor, boolean esTexto) {
-    if (esTexto) {
-        return ((String) valor).toUpperCase();
-    } else {
-        return valor + "!";  // Compila porque + con String siempre concatena
-    }
-}
-```
-
-Java te obliga a ser explícito sobre los tipos desde el principio, mientras que Python te da más flexibilidad a costa de detectar algunos errores más tarde.
+Este código Python ejecuta sin problemas, pero puede causar errores inesperados en tiempo de ejecución. Java detecta estos problemas en tiempo de compilación, antes de que el programa se ejecute.
 
 ### Ventajas del tipado estático y fuerte
 
@@ -417,77 +276,17 @@ Ahora que entendés la diferencia, veamos por qué Java eligió este enfoque:
   - Obligatoria
 - - Conversiones implícitas
   - Solo widening (sin pérdida)
-  - Limitadas (no entre tipos muy diferentes)
+  - Limitadas
   - Muchas (especialmente con punteros)
 - - Detección de errores de tipos
   - Compilación
   - Ejecución
   - Compilación (parcial)
-- - Verificación de límites de arreglos
-  - Sí (lanza excepción)
-  - Sí (lanza excepción)
-  - No (comportamiento indefinido)
 :::
 
 :::{note}
-Observá que C también es de tipado estático, pero es de tipado **débil**: permite muchas conversiones implícitas (especialmente con punteros) y no verifica límites de arreglos. Por eso C es más propenso a bugs de memoria que Java.
+C también es de tipado estático, pero es de tipado **débil**: permite muchas conversiones implícitas (especialmente con punteros) y no verifica límites de arreglos. Por eso C es más propenso a bugs de memoria que Java.
 :::
-
-### Ejemplo Completo: Tipado en Acción
-
-Este ejemplo muestra varios aspectos del sistema de tipos de Java:
-
-```java
-public class EjemploTipado {
-    public static void main(String[] args) {
-        // 1. Declaraciones con tipos explícitos
-        int cantidad = 5;
-        double precioUnitario = 12.50;
-
-        // 2. Operación entre tipos compatibles (widening automático)
-        // int * double → el int se convierte automáticamente a double
-        double total = cantidad * precioUnitario;
-        System.out.println("Total: " + total);  // Total: 62.5
-
-        // 3. Casting explícito necesario para narrowing
-        int totalEntero = (int) total;  // Perdemos el .5
-        System.out.println("Total entero: " + totalEntero);  // Total entero: 62
-
-        // 4. Sin casting, esto no compila:
-        // int resultado = total;  // ❌ Error de compilación
-
-        // 5. Conversión de String a número (no es casting, es parsing)
-        String textoNumero = "100";
-        int numero = Integer.parseInt(textoNumero);
-        System.out.println("Número parseado: " + numero);  // 100
-
-        // 6. Concatenación de String con otros tipos (permitido con +)
-        String mensaje = "La cantidad es: " + cantidad;  // int → String implícito
-        System.out.println(mensaje);  // La cantidad es: 5
-
-        // 7. Pero otras operaciones con String no compilan:
-        // String resultado = "5" - 3;  // ❌ Error de compilación
-        // String resultado = "5" * 3;  // ❌ Error de compilación
-    }
-}
-```
-
-#### Desglose línea por línea
-
-**Línea 4-5: Declaraciones tipadas**
-Cada variable tiene su tipo declarado explícitamente. `cantidad` solo puede contener enteros, `precioUnitario` solo puede contener decimales.
-
-**Línea 9: Widening automático**
-Cuando multiplicás `int * double`, Java convierte automáticamente el `int` a `double` antes de multiplicar. El resultado es `double`. Esto es seguro porque no se pierde información.
-
-**Línea 13: Narrowing con casting**
-Para guardar un `double` en un `int`, necesitás casting explícito. Java trunca (no redondea): `62.5` se convierte en `62`.
-
-**Línea 18: Parsing de String**
-Para convertir texto a número, usamos métodos como `Integer.parseInt()`. Esto es diferente al casting: es una función que analiza el texto carácter por carácter.
-
-**Línea 22: Concatenación permitida**
-El operador `+` con String es especial: Java convierte automáticamente el otro operando a String y concatena. Es la única "magia" de conversión que Java permite con String.
 
 ## La Estructura Obligatoria: Clases en Java
 

@@ -6,23 +6,9 @@ representación de datos y operadores en Java desde la perspectiva de un program
 
 # Tipos de Datos en Java
 
-En Java, el sistema de tipos es **estático** y **fuertemente tipado**. Esto significa dos cosas importantes:
+En el capítulo anterior vimos que Java tiene un sistema de tipos **estático** y **fuertemente tipado**: los tipos se declaran explícitamente, se verifican en tiempo de compilación, y las conversiones con pérdida de información requieren casting explícito.
 
-1. **Estático:** El tipo de cada variable se conoce y verifica en **tiempo de compilación** (antes de ejecutar el programa). Una vez que declarás una variable como `int`, no puede cambiar a `String` después.
-
-2. **Fuertemente tipado:** Java no realiza conversiones "mágicas" entre tipos incompatibles. Si intentás asignar un `String` a un `int`, el compilador lo rechaza inmediatamente.
-
-Esta rigurosidad, heredada de lenguajes como C, garantiza que el compilador detecte errores de tipo **antes** de la ejecución. Esto es una ventaja: es mejor que el compilador te avise de un error a las 3pm mientras programás, que descubrirlo a las 3am cuando el programa falla en producción.
-
-:::{note} ¿Qué significa "tiempo de compilación"?
-En Java, el proceso tiene dos fases:
-
-1. **Compilación:** El compilador (`javac`) lee tu código fuente (`.java`) y lo traduce a *bytecode* (`.class`). Durante esta fase se verifican los tipos.
-
-2. **Ejecución:** La JVM ejecuta el bytecode. Los errores de tipos ya fueron descartados.
-
-En lenguajes interpretados como Python, todo pasa en "tiempo de ejecución" —los errores de tipos aparecen cuando esa línea se ejecuta.
-:::
+Este capítulo profundiza en los **tipos de datos concretos** que ofrece Java: los 8 tipos primitivos, sus rangos, cómo se representan en memoria, y todas las reglas de conversión entre ellos.
 
 :::{tip} Similitud con C
 Si venís de programar en C, vas a encontrar que la sintaxis de declaración de variables y el uso de tipos primitivos es **casi idéntica**. La diferencia principal es que Java **garantiza** el tamaño de cada tipo en todas las plataformas, mientras que en C el tamaño de `int` o `long` puede variar según el compilador y la arquitectura (16, 32 o 64 bits).
@@ -1462,6 +1448,138 @@ byte d = (byte)(a + b);  // d = -56 (overflow intencional)
 | `double` → `int` | **Explícita** | `int i = (int) d;` | Sí (trunca) |
 | `long` → `int` | **Explícita** | `int i = (int) l;` | Posible (overflow) |
 | `int` → `byte` | **Explícita** | `byte b = (byte) i;` | Posible (overflow) |
+
+### Conversiones entre String y Tipos Primitivos
+
+El casting **no funciona** entre `String` y tipos primitivos porque son categorías completamente diferentes. Para estas conversiones, Java provee métodos específicos.
+
+#### De String a tipos primitivos (parsing)
+
+Para convertir texto a número, usás los métodos `parse` de las clases envolventes (wrapper classes):
+
+```{code} java
+:caption: Parsing de String a tipos numéricos
+
+String textoEntero = "100";
+int numero = Integer.parseInt(textoEntero);     // 100
+System.out.println(numero + 50);                // 150
+
+String textoDecimal = "19.99";
+double precio = Double.parseDouble(textoDecimal);  // 19.99
+
+String textoLargo = "9876543210";
+long grande = Long.parseLong(textoLargo);       // 9876543210L
+
+String textoByte = "42";
+byte pequeño = Byte.parseByte(textoByte);       // 42
+
+// Para boolean
+String textoBoolean = "true";
+boolean activo = Boolean.parseBoolean(textoBoolean);  // true
+// Nota: cualquier valor distinto de "true" (ignorando mayúsculas) da false
+```
+
+:::{warning} NumberFormatException
+Si el texto no representa un número válido, estos métodos lanzan una excepción en tiempo de ejecución:
+
+```java
+String invalido = "hola";
+int numero = Integer.parseInt(invalido);  // ❌ Lanza NumberFormatException
+
+String conEspacios = " 42 ";
+int n = Integer.parseInt(conEspacios);    // ❌ También falla (tiene espacios)
+
+String vacio = "";
+int v = Integer.parseInt(vacio);          // ❌ También falla
+```
+
+El programa compila sin problemas, pero falla cuando se ejecuta esa línea. Más adelante aprenderás a manejar estas excepciones con `try-catch`.
+:::
+
+#### De tipos primitivos a String
+
+Para convertir en la dirección opuesta, tenés varias opciones:
+
+```{code} java
+:caption: Conversión de primitivos a String
+
+int numero = 42;
+double precio = 19.99;
+boolean activo = true;
+
+// Opción 1: String.valueOf() — la más explícita
+String s1 = String.valueOf(numero);   // "42"
+String s2 = String.valueOf(precio);   // "19.99"
+String s3 = String.valueOf(activo);   // "true"
+
+// Opción 2: concatenación con String vacío — común pero menos clara
+String s4 = "" + numero;              // "42"
+String s5 = "" + precio;              // "19.99"
+
+// Opción 3: métodos toString() de las clases wrapper
+String s6 = Integer.toString(numero);      // "42"
+String s7 = Double.toString(precio);       // "19.99"
+
+// Opción 4: con formato específico
+String s8 = String.format("%d", numero);   // "42"
+String s9 = String.format("%.2f", precio); // "19.99" (2 decimales)
+```
+
+:::{tip}
+La opción `String.valueOf()` es la más legible y explícita. La concatenación `"" + numero` es común pero puede confundir a lectores novatos. Elegí un estilo y mantenelo consistente en tu código.
+:::
+
+### Comparación con Python
+
+Python, al igual que Java, requiere conversiones explícitas entre tipos incompatibles (tipado fuerte). La diferencia clave es **cuándo** se detectan los errores:
+
+**Python (tipado dinámico y fuerte):**
+
+```python
+print("5" + str(3))   # "53" - hay que convertir explícitamente
+print("5" + 3)        # ❌ TypeError: can only concatenate str (not "int") to str
+print("5" - 3)        # ❌ TypeError: unsupported operand type(s)
+print("5" * 3)        # "555" - repetición de string (válido en Python)
+print(int("5") * 3)   # 15 - conversión explícita a entero
+```
+
+Python rechaza mezclar tipos incompatibles, pero **el error ocurre en tiempo de ejecución**. Si el código problemático está en una rama que no se ejecuta, el programa no falla.
+
+**Java (tipado estático y fuerte):**
+
+```java
+System.out.println("5" + 3);   // "53" (concatenación, única excepción permitida)
+// System.out.println("5" - 3);  // ❌ Error de compilación
+// System.out.println("5" * 3);  // ❌ Error de compilación
+```
+
+Java detecta estos errores **en tiempo de compilación**, antes de ejecutar. Incluso si el código estuviera dentro de un `if (false)` que nunca se ejecutaría, el compilador lo rechaza.
+
+**Ejemplo práctico de la diferencia:**
+
+```python
+# En Python: funciona hasta que se ejecuta la rama problemática
+def calcular(x, es_texto):
+    if es_texto:
+        return x.upper()
+    else:
+        return x + "!"  # Si x es int, falla aquí (solo al ejecutar)
+```
+
+```java
+// En Java: el compilador detecta problemas de tipos aunque no se ejecuten
+public static String calcular(Object x, boolean esTexto) {
+    if (esTexto) {
+        return ((String) x).toUpperCase();
+    } else {
+        return x + "!";  // Compila: + con cualquier Object concatena a String
+    }
+}
+```
+
+:::{note}
+Java te obliga a ser explícito sobre los tipos desde el principio. Esto puede parecer restrictivo, pero en proyectos grandes previene categorías enteras de bugs que en Python solo descubrirías al ejecutar ese código específico.
+:::
 
 ## Ejercicios de Aplicación
 
