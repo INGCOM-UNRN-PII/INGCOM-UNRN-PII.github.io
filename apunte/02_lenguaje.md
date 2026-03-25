@@ -12,11 +12,12 @@ los lenguajes más populares y versátiles para el desarrollo de software. En es
 apunte, analizaremos en profundidad sus características fundamentales: su
 naturaleza de **propósito general** y su **sistema de tipos estático y fuerte**.
 
-:::{note} ¿Y la Orientacion a Objetos?
+:::{note} ¿Y la Orientación a Objetos?
 
-Este apunte se enfoca en las características básicas del lenguaje. Los
-conceptos de programación orientada a objetos se estudiarán en profundidad más
-adelante en el curso, una vez consolidados los fundamentos del lenguaje.
+Esta parte del apunte se enfoca en las características básicas del lenguaje con
+la idea de reutilizar todo lo que sabemos de C. Los conceptos de programación 
+orientada a objetos se estudiarán en profundidad más adelante en el curso, una
+vez consolidados los fundamentos del lenguaje.
 
 :::
 
