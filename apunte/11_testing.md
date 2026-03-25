@@ -1,15 +1,36 @@
 ---
-title: "Testing con JUnit"
-description: Estudio técnico sobre pruebas unitarias, desarrollo guiado por pruebas (TDD) y aseguramiento de la calidad de software.
+title: "Fundamentos del Testing de Software"
+description: Conceptos teóricos sobre pruebas de software, desarrollo guiado por pruebas (TDD), estrategias de diseño de casos de prueba y principios de calidad.
+label: testing
 ---
 
-# Testing con JUnit
+# Fundamentos del Testing de Software
 
-En la ingeniería de software, el testing no es una fase posterior al desarrollo, sino una actividad integral del mismo. Las **pruebas unitarias** permiten validar el comportamiento de los componentes más pequeños de un sistema (clases y métodos) de forma aislada, asegurando que cada "engranaje" funcione antes de ensamblar la maquinaria completa.
+En la ingeniería de software, el testing no es una fase posterior al desarrollo, sino una actividad integral del mismo. Las **pruebas de software** permiten validar que el código se comporta según lo esperado, detectar errores tempranamente y documentar el comportamiento del sistema.
 
-## Fundamentos Teóricos del Testing
+:::{note}
+Este apunte cubre los **fundamentos teóricos** del testing. Para la implementación práctica con JUnit 5, anotaciones, assertions y ejemplos de código, consultá {ref}`junit`.
+:::
 
-### ¿Por Qué Testeamos?
+## Del Testing Manual al Automatizado
+
+### El Problema con el Testing Manual
+
+Si venís de programar en C, probablemente verificabas que tu código funcionara de manera manual: ejecutabas el programa, ingresabas datos y revisabas la salida con `printf()`. Este enfoque, conocido como **testing manual**, funciona para programas pequeños pero tiene limitaciones serias:
+
+**Problemas del testing manual:**
+
+1. **Es tedioso**: Cada vez que modificás algo, tenés que volver a ejecutar y verificar manualmente.
+2. **Es propenso a errores**: Podés olvidar probar algún caso, o verificar mal la salida.
+3. **No escala**: Con miles de líneas de código, es imposible probar todo a mano.
+4. **No es repetible**: Otros desarrolladores no saben exactamente qué casos verificar.
+5. **No hay registro**: Si un test falla, no queda documentado automáticamente.
+
+### La Solución: Testing Automatizado
+
+El **testing automatizado** resuelve estos problemas: escribís código que verifica que tu otro código funciona correctamente. Una vez escrito, el test se puede ejecutar miles de veces con un solo comando. La verificación la hace el framework (por ejemplo, JUnit en Java), no vos mirando la pantalla.
+
+## ¿Por Qué Testeamos?
 
 El testing de software responde a una realidad ineludible: **los programadores cometen errores**. Según estudios de ingeniería de software, un desarrollador introduce entre 15 y 50 defectos por cada 1000 líneas de código. El costo de corregir un bug crece exponencialmente según la fase en que se detecta:
 
@@ -25,481 +46,427 @@ El testing de software responde a una realidad ineludible: **los programadores c
 | En producción | 50-100x |
 :::
 
-### La Pirámide de Testing
+Este crecimiento exponencial se debe a que un bug detectado tarde requiere más esfuerzo para ser localizado, reproducido y corregido, además del posible daño a usuarios o reputación.
 
-Mike Cohn propuso la **pirámide de testing** como modelo para distribuir los esfuerzos de prueba:
+### Beneficios del Testing Automatizado
 
+El testing automatizado aporta múltiples beneficios:
+
+1. **Detección temprana de errores**: Los bugs encontrados durante el desarrollo cuestan minutos; el mismo error en producción puede costar horas, días, o la reputación del producto.
+
+2. **Documentación viva**: Los tests documentan cómo se espera que funcione el código. A diferencia de los comentarios, los tests no pueden quedar desactualizados: si el comportamiento cambia y los tests no se actualizan, fallan.
+
+3. **Refactoring seguro**: El **refactoring** es modificar la estructura interna del código sin cambiar su comportamiento externo. Sin tests, esto da miedo porque no sabés si rompiste algo. Con tests, simplemente los ejecutás después de cada cambio.
+
+4. **Prevención de regresiones**: Una **regresión** es cuando algo que funcionaba deja de funcionar (típicamente porque un cambio rompió algo inesperado). Los tests detectan regresiones automáticamente.
+
+5. **Diseño mejorado**: Pensar en cómo testear el código mientras lo escribís te obliga a diseñar funciones más modulares, con responsabilidades claras y dependencias explícitas.
+
+## La Pirámide de Testing
+
+Mike Cohn propuso la **pirámide de testing** como modelo para distribuir los esfuerzos de prueba. La forma de pirámide no es casualidad: representa la proporción ideal de cada tipo de test.
+
+```{figure} 11/piramide_testing.svg
+:label: fig-piramide-testing
+:align: center
+:width: 70%
+
+Pirámide de testing: muchas pruebas unitarias en la base, pocas E2E en la cima.
 ```
-          /\
-         /  \      E2E (End-to-End)
-        /----\     Pocas, lentas, frágiles
-       /      \
-      /--------\   Integración
-     /          \  Moderadas, verifican colaboración
-    /------------\ 
-   /              \ Unitarias
-  /----------------\ Muchas, rápidas, aisladas
-```
 
-- **Unitarias (base):** Prueban una unidad aislada (método, clase). Son rápidas, determinísticas y la mayoría de los tests deberían estar aquí.
-- **Integración (medio):** Verifican que múltiples componentes colaboren correctamente.
-- **End-to-End (cima):** Simulan el uso real del sistema completo. Son lentas y frágiles.
+### Tests Unitarios (Base)
+
+Prueban una **unidad aislada** (una función, un método). Son:
+- **Rápidos**: Se ejecutan en milisegundos
+- **Determinísticos**: Siempre dan el mismo resultado
+- **Aislados**: No dependen de bases de datos, archivos o red
+- **Abundantes**: La mayoría de tus tests deberían estar aquí (70-80%)
+
+En C, sería como escribir un `main()` que solo prueba una función específica.
+
+### Tests de Integración (Medio)
+
+Verifican que **múltiples componentes colaboren** correctamente. Por ejemplo, que tu código se conecte bien a una base de datos. Son más lentos porque pueden involucrar operaciones de I/O.
+
+### Tests End-to-End (Cima)
+
+Simulan el **uso real del sistema completo** desde la perspectiva del usuario. Son lentos, frágiles (se rompen fácilmente por cambios menores) y costosos de mantener. Por eso deberías tener pocos (10% aproximadamente).
 
 :::{tip}
-Una distribución saludable es aproximadamente 70% unitarias, 20% integración, 10% E2E. Invertir esta pirámide genera suites lentas y difíciles de mantener.
+Una distribución saludable es aproximadamente 70% unitarias, 20% integración, 10% E2E. En este curso nos concentramos exclusivamente en **tests unitarios**.
 :::
 
-### Verificación vs Validación
+## Verificación vs Validación
 
-Es crucial distinguir estos conceptos:
+Es crucial distinguir estos conceptos que a menudo se confunden:
 
-- **Verificación:** "¿Estamos construyendo el producto correctamente?" — El código hace lo que el programador pretendía.
-- **Validación:** "¿Estamos construyendo el producto correcto?" — El software satisface las necesidades del usuario.
+- **Verificación:** "¿Estamos construyendo el producto correctamente?" — El código hace lo que el programador pretendía que hiciera. Las pruebas unitarias verifican que la implementación coincide con la especificación técnica.
 
-Las pruebas unitarias se enfocan primariamente en **verificación**. La validación requiere pruebas de aceptación y retroalimentación del usuario.
+- **Validación:** "¿Estamos construyendo el producto correcto?" — El software satisface las necesidades reales del usuario. Esto requiere pruebas de aceptación y retroalimentación del usuario final.
 
-### Taxonomía de Defectos
+Por ejemplo, podés tener una función `calcularImpuesto()` perfectamente implementada (verificada) pero que use una fórmula fiscal incorrecta (no validada). Las pruebas unitarias se enfocan primariamente en **verificación**.
+
+## Taxonomía de Defectos
 
 Comprender los tipos de errores ayuda a diseñar tests más efectivos:
 
-- **Errores de especificación:** El código hace exactamente lo programado, pero la lógica es incorrecta.
-- **Errores de implementación:** Bugs en la traducción del algoritmo a código (off-by-one, null pointers).
-- **Errores de integración:** Incompatibilidades entre componentes que funcionan bien aislados.
+- **Errores de especificación:** El código hace exactamente lo programado, pero la lógica es incorrecta. Por ejemplo, usar `>=` en lugar de `>` porque se malinterpretó el requerimiento.
+
+- **Errores de implementación:** Bugs en la traducción del algoritmo a código:
+  - **Off-by-one:** Errores de "uno más" o "uno menos", típicos en lazos y condiciones de borde.
+  - **Null references:** En Java, equivalente al problema de punteros nulos en C.
+  - **Overflow:** Desbordamiento de variables numéricas.
+
+- **Errores de integración:** Incompatibilidades entre componentes que funcionan bien aislados pero fallan al combinarse.
+
 - **Errores de regresión:** Funcionalidad que dejó de funcionar tras un cambio.
 
 ## Principios F.I.R.S.T.
 
-Para que una suite de pruebas sea efectiva, debe cumplir con los principios F.I.R.S.T.:
+Para que una suite de pruebas sea efectiva, debe cumplir con los principios F.I.R.S.T. Este acrónimo resume las características que hacen que los tests sean útiles:
 
-1.  **Fast (Rápida)**: Los tests deben ejecutarse en milisegundos para que el desarrollador pueda correrlos constantemente.
-2.  **Independent (Independiente)**: Ningún test debe depender del resultado o del estado dejado por otro. El orden de ejecución no debe importar.
-3.  **Repeatable (Repetible)**: Deben dar el mismo resultado en cualquier entorno (máquina local, servidor de CI) y en cualquier momento.
-4.  **Self-validating (Autovalidable)**: El test debe tener un resultado binario (pasa o falla). No debe requerir interpretación manual de logs.
-5.  **Timely (Oportuno)**: Los tests deben escribirse idealmente antes o durante el desarrollo del código productivo.
+### Fast (Rápida)
 
-### Aplicación Práctica de F.I.R.S.T.
+Los tests deben ejecutarse en milisegundos. Una suite de cientos de tests unitarios debería correr en segundos. Si son lentos, los desarrolladores evitan ejecutarlos y pierden su utilidad.
 
-```{code} java
-:caption: Test que viola el principio de Independencia
+### Independent (Independiente)
 
+Ningún test debe depender del resultado o del estado dejado por otro. El orden de ejecución no debe importar. Deberías poder ejecutar cualquier test de forma aislada y obtener el mismo resultado.
+
+```java
+// ❌ MAL: Tests interdependientes
 class MalTest {
     static int contadorGlobal = 0;  // Estado compartido entre tests
     
-    @Test
-    void test1() {
+    @Test void test1() {
         contadorGlobal++;
         assertEquals(1, contadorGlobal);  // Depende de ejecutarse primero
     }
     
-    @Test
-    void test2() {
+    @Test void test2() {
         assertEquals(1, contadorGlobal);  // Falla si test1 no corrió antes
     }
 }
-```
 
-```{code} java
-:caption: Test que respeta F.I.R.S.T.
-
+// ✅ BIEN: Cada test es independiente
 class BuenTest {
-    private Contador contador;  // Instancia fresca por test
-    
-    @BeforeEach
-    void setUp() {
-        contador = new Contador();  // Aislamiento garantizado
-    }
-    
-    @Test
-    void incrementar_desdeZero_retornaUno() {
-        contador.incrementar();
-        assertEquals(1, contador.getValor());
-    }
-    
-    @Test
-    void getValor_sinIncrementos_retornaZero() {
-        assertEquals(0, contador.getValor());  // Independiente del orden
+    @Test void incrementar_desdeZero_retornaUno() {
+        int contador = 0;  // Cada test tiene su propio estado
+        contador++;
+        assertEquals(1, contador);
     }
 }
 ```
+
+### Repeatable (Repetible)
+
+Deben dar el mismo resultado en cualquier entorno (tu máquina, la de tu compañero, el servidor de CI) y en cualquier momento. Tests que "a veces pasan y a veces fallan" (llamados *flaky tests*) son peores que no tener tests.
+
+### Self-validating (Autovalidable)
+
+El test debe tener un resultado binario: **pasa** o **falla**. No debe requerir que un humano revise logs o archivos de salida para determinar si funcionó.
+
+### Timely (Oportuno)
+
+Los tests deben escribirse junto con el código productivo, no "cuando haya tiempo" (que suele ser nunca).
 
 ## Desarrollo Guiado por Pruebas (TDD)
 
-El **Test-Driven Development** (TDD) es una técnica de diseño de software que invierte el proceso tradicional. Se basa en un ciclo corto y repetitivo:
+El **Test-Driven Development** (TDD) es una técnica de diseño de software que invierte el proceso tradicional: en lugar de escribir código y después testearlo, escribís el test primero y después el código que lo hace pasar.
 
-1.  **RED**: Escribir un test que falle para una funcionalidad que aún no existe.
-2.  **GREEN**: Escribir el código mínimo necesario para que el test pase.
-3.  **REFACTOR**: Mejorar el código (limpieza, patrones, eficiencia) asegurando que el test siga pasando.
+### El Ciclo RED-GREEN-REFACTOR
 
-:::{important} TDD y Diseño
-El TDD no es solo para encontrar bugs; es una herramienta de diseño. Escribir el test primero te obliga a pensar en la **interfaz** y el **uso** de tu clase antes que en su implementación, lo que suele derivar en un código más desacoplado y cohesivo.
+TDD se basa en un ciclo corto y repetitivo de tres pasos:
+
+```{figure} 11/tdd_ciclo.svg
+:label: fig-tdd-ciclo
+:align: center
+:width: 60%
+
+El ciclo TDD: Red → Green → Refactor.
+```
+
+1. **RED (Rojo)**: Escribir un test que falle para una funcionalidad que aún no existe. **Esto es esperado y correcto** — si el test pasara sin código, el test estaría mal escrito.
+
+2. **GREEN (Verde)**: Escribir el código **mínimo necesario** para que el test pase. No te preocupes por elegancia o eficiencia; solo hacé que pase.
+
+3. **REFACTOR**: Mejorar el código **asegurando que el test siga pasando**. Los tests verdes te dan confianza para modificar el código sin miedo.
+
+Después repetís el ciclo con el siguiente test.
+
+:::{important}
+TDD no es solo para encontrar bugs; es una **herramienta de diseño**. Escribir el test primero te obliga a pensar en cómo se va a usar tu función antes de implementarla.
 :::
 
-### Fundamentos Teóricos del TDD
+### ¿Por qué escribir tests primero?
 
-Kent Beck, creador de TDD, lo describe como una técnica para "manejar el miedo durante la programación". Las premisas fundamentales son:
+La idea clave de TDD es que **los tests definen el comportamiento deseado**. Antes de escribir código, te forzás a pensar:
 
-1. **Código no testeado es código roto:** Si no hay un test que verifique un comportamiento, no hay garantía de que funcione.
-2. **Diseño emergente:** La estructura del código emerge de los requerimientos expresados como tests, no de diseños anticipados.
-3. **Feedback inmediato:** El ciclo RED-GREEN-REFACTOR provee retroalimentación constante sobre el estado del sistema.
+1. ¿Qué debería hacer este método?
+2. ¿Qué entrada recibe?
+3. ¿Qué salida produce?
+4. ¿Cómo debería manejar errores?
 
-### Las Tres Leyes del TDD
+En lugar de escribir código y después preguntarte "¿cómo lo testeo?", definís primero el comportamiento esperado y después escribís el código que lo cumple.
 
-Robert C. Martin formalizó las reglas de TDD:
+**Analogía**: Es como escribir el enunciado de un problema antes de resolverlo. Si no tenés claro qué querés lograr, es difícil saber si lo lograste.
 
-1. **No escribirás código de producción** sin antes escribir un test que falle.
-2. **No escribirás más de un test unitario** que sea suficiente para fallar (incluyendo errores de compilación).
-3. **No escribirás más código de producción** del estrictamente necesario para pasar el test actual.
+### Beneficios de TDD
 
-### Ejemplo Completo: TDD de una Calculadora
+1. **Diseño mejorado**: Al escribir tests primero, pensás en la API desde la perspectiva del usuario (quien llama al método). Esto produce interfaces más limpias y usables.
 
-Veamos el ciclo TDD completo para implementar un método `dividir`:
+2. **Código testeable por naturaleza**: El código escrito para pasar tests tiende a ser más modular, con dependencias claras y responsabilidades separadas.
 
-**Iteración 1: RED**
+3. **Cobertura de tests garantizada**: Todo código que escribís tiene al menos un test, porque el test vino primero.
 
-```{code} java
-:caption: Primer test (falla - el método no existe)
+4. **Documentación ejecutable**: Los tests muestran exactamente cómo usar el código y qué comportamiento esperar.
 
+5. **Refactoring seguro**: Podés mejorar el código con confianza porque los tests verifican que no rompiste nada.
+
+6. **Progreso medible**: Cada test verde es progreso tangible. Sabés cuánto avanzaste y cuánto falta.
+
+### Ejemplo Completo: Función Factorial
+
+Desarrollemos una función `factorial` usando TDD paso a paso para ilustrar el ciclo completo.
+
+#### Iteración 1: El caso más simple (factorial de 0)
+
+**Red - Escribir test que falle:**
+
+```java
 @Test
-void dividir_seisEntreDos_retornaTres() {
-    Calculadora calc = new Calculadora();
-    assertEquals(3.0, calc.dividir(6, 2), 0.001);
+void testFactorial_ConCero_RetornaUno() {
+    assertEquals(1, Matematica.factorial(0));  // Error: clase no existe
 }
-// Error de compilación: dividir() no existe
 ```
 
-**Iteración 1: GREEN**
+Ni siquiera compila. ¡Bien! El test "falla" porque no hay código.
 
-```{code} java
-:caption: Implementación mínima
+**Green - Escribir código mínimo:**
 
-public class Calculadora {
-    public double dividir(double dividendo, double divisor) {
-        return dividendo / divisor;  // Mínimo para pasar
+```java
+public class Matematica {
+    public static long factorial(int n) {
+        return 1;  // Implementación trivial que pasa el test
     }
 }
-// Test pasa ✓
 ```
 
-**Iteración 2: RED (caso de borde)**
+Ejecutás el test: ✅ pasa. ¿Pero esto es trampa? ¡Siempre retorna 1!
 
-```{code} java
-:caption: Test para división por cero
+No es trampa: el único test que tenemos es `factorial(0)`, y `0! = 1`. La implementación es correcta para los tests que existen. Si queremos que funcione para otros valores, necesitamos más tests.
 
+#### Iteración 2: Factorial de un número positivo
+
+**Red - Nuevo test:**
+
+```java
 @Test
-void dividir_porZero_lanzaExcepcion() {
-    Calculadora calc = new Calculadora();
-    assertThrows(ArithmeticException.class, 
-        () -> calc.dividir(5, 0));
+void testFactorial_ConCinco_Retorna120() {
+    assertEquals(120, Matematica.factorial(5));  // 5! = 120
 }
-// Test falla: retorna Infinity en lugar de lanzar excepción
 ```
 
-**Iteración 2: GREEN**
+Ejecutás: ❌ falla (esperado 120, obtenido 1).
 
-```{code} java
-:caption: Manejo de división por cero
+**Green - Ampliar implementación:**
 
-public double dividir(double dividendo, double divisor) {
-    if (divisor == 0) {
-        throw new ArithmeticException("División por cero");
-    }
-    return dividendo / divisor;
-}
-// Test pasa ✓
-```
-
-**Iteración 2: REFACTOR**
-
-```{code} java
-:caption: Extracción de validación
-
-public double dividir(double dividendo, double divisor) {
-    validarDivisor(divisor);
-    return dividendo / divisor;
-}
-
-private void validarDivisor(double divisor) {
-    if (divisor == 0) {
-        throw new ArithmeticException("División por cero");
+```java
+public class Matematica {
+    public static long factorial(int n) {
+        if (n == 0) return 1;
+        long resultado = 1;
+        for (int i = 1; i <= n; i++) {
+            resultado = resultado * i;
+        }
+        return resultado;
     }
 }
-// Todos los tests siguen pasando ✓
 ```
+
+Ejecutás ambos tests: ✅ ✅ pasan.
+
+#### Iteración 3: Manejar entrada inválida
+
+**Red - Test para caso de error:**
+
+```java
+@Test
+void testFactorial_ConNumeroNegativo_LanzaExcepcion() {
+    try {
+        Matematica.factorial(-1);
+        fail("Se esperaba IllegalArgumentException");
+    } catch (IllegalArgumentException e) {
+        assertTrue(e.getMessage().contains("negativo"));
+    }
+}
+```
+
+Ejecutás: ❌ falla (no se lanza excepción).
+
+**Green - Agregar validación:**
+
+```java
+public class Matematica {
+    public static long factorial(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException("El número no puede ser negativo");
+        }
+        if (n == 0) return 1;
+        long resultado = 1;
+        for (int i = 1; i <= n; i++) {
+            resultado = resultado * i;
+        }
+        return resultado;
+    }
+}
+```
+
+Ejecutás los tres tests: ✅ ✅ ✅ todos pasan.
+
+#### Iteración 4: Refactorizar
+
+Con todos los tests verdes, podemos mejorar el código con confianza:
+
+```java
+public class Matematica {
+    /**
+     * Calcula el factorial de un número entero no negativo.
+     *
+     * @param n número del cual calcular el factorial (debe ser >= 0)
+     * @return factorial de n
+     * @throws IllegalArgumentException si n es negativo
+     */
+    public static long factorial(int n) {
+        validarNoNegativo(n);
+        return calcularFactorial(n);
+    }
+    
+    private static void validarNoNegativo(int n) {
+        if (n < 0) {
+            throw new IllegalArgumentException(
+                "El número no puede ser negativo: " + n);
+        }
+    }
+    
+    private static long calcularFactorial(int n) {
+        long resultado = 1;
+        for (int i = 2; i <= n; i++) {
+            resultado = resultado * i;
+        }
+        return resultado;
+    }
+}
+```
+
+Ejecutás todos los tests después del refactor: ✅ ✅ ✅ siguen pasando. El refactor fue seguro.
+
+### Las Tres Reglas del TDD
+
+Robert C. Martin (Uncle Bob) formalizó las reglas estrictas del TDD:
+
+1. **No escribir código de producción** excepto para pasar un test que falla.
+2. **No escribir más de un test unitario** que sea suficiente para fallar (y no compilar es fallar).
+3. **No escribir más código de producción** del necesario para pasar el test actual.
+
+Estas reglas mantienen el ciclo corto y enfocado. Cada iteración agrega una pequeña pieza de funcionalidad verificada.
 
 ### Patrones de TDD
 
-Beck identificó patrones recurrentes en TDD:
+Beck identificó patrones recurrentes que te ayudan a avanzar:
 
 :::{table} Patrones de TDD
 :label: tbl-patrones-tdd
 
-| Patrón | Descripción | Uso |
+| Patrón | Descripción | Cuándo usarlo |
 | :--- | :--- | :--- |
-| **Fake It** | Retornar un valor hardcodeado para pasar el test | Inicio rápido del ciclo |
-| **Obvious Implementation** | Si la implementación es trivial, escribirla directamente | Casos simples |
-| **Triangulation** | Agregar tests hasta que la generalización sea obvia | Cuando no está claro cómo generalizar |
-| **One to Many** | Empezar con un elemento, luego generalizar a colecciones | Algoritmos sobre listas |
+| **Fake It** | Retornar un valor hardcodeado | Cuando no sabés cómo generalizar |
+| **Obvious Implementation** | Escribir la implementación directamente | Casos simples donde la solución es obvia |
+| **Triangulation** | Agregar más tests hasta que la generalización sea obvia | Cuando no está claro cómo generalizar |
+:::
+
+### TDD vs Test-After
+
+| Aspecto | TDD (Test-First) | Test-After |
+| :--- | :--- | :--- |
+| **Cuándo se escriben tests** | Antes del código | Después del código |
+| **Cobertura de tests** | Naturalmente alta | Puede ser parcial |
+| **Influencia en diseño** | Los tests guían el diseño | Tests se adaptan al diseño |
+| **Seguridad al refactorizar** | Alta | Menor |
+| **Curva de aprendizaje** | Más empinada | Más suave |
+| **Tiempo inicial** | Mayor | Menor |
+| **Tiempo total** | A menudo menor (menos bugs) | A menudo mayor (más debugging) |
+
+**¿Cuándo usar cada uno?**
+
+- **TDD**: Para código nuevo importante, cuando querés diseño limpio, en equipos que lo practican
+- **Test-After**: Para prototipos rápidos, código legacy que no tenía tests, cuando estás explorando una solución
+
+:::{tip}
+TDD es especialmente útil cuando:
+
+- **Estás aprendiendo una nueva API o librería**: Los tests te ayudan a explorar cómo funciona.
+- **El problema es complejo**: Dividirlo en tests pequeños hace el problema manejable.
+- **El código es crítico**: Código que maneja dinero, seguridad, o vidas necesita máxima confiabilidad.
+- **Trabajás en equipo**: Los tests documentan el comportamiento esperado para otros desarrolladores.
+- **Vas a refactorizar código existente**: Primero escribís tests que capturan el comportamiento actual, después refactorizás con seguridad.
 :::
 
 ### Beneficios y Críticas del TDD
 
 **Beneficios demostrados:**
-- Código más modular (para ser testeable, debe ser desacoplado)
-- Documentación ejecutable (los tests muestran cómo usar el código)
-- Confianza para refactorizar (red de seguridad de tests)
-- Menos bugs en producción (detección temprana)
+
+- Código más modular y testeable
+- Documentación ejecutable
+- Confianza para refactorizar
+- Menos bugs en producción
+- Progreso medible
 
 **Críticas válidas:**
+
 - Curva de aprendizaje significativa
 - Puede ralentizar el desarrollo inicial
 - No reemplaza otros tipos de testing
-- Requiere disciplina para mantener los tests actualizados
+- Requiere disciplina constante
 
-## JUnit 5: Arquitectura y Fundamentos
+:::{important}
+En esta cátedra, practicaremos ambas aproximaciones. Lo fundamental es que **el código tenga tests**, independientemente de cuándo se escribieron.
+:::
 
-JUnit es el framework de testing más utilizado en el ecosistema Java. La versión 5 (también llamada JUnit Jupiter) representa una reescritura completa con arquitectura modular.
-
-### Arquitectura de JUnit 5
-
-JUnit 5 se compone de tres módulos:
-
-- **JUnit Platform:** Fundación para lanzar frameworks de testing. Define la API `TestEngine`.
-- **JUnit Jupiter:** El nuevo modelo de programación y extensión para escribir tests.
-- **JUnit Vintage:** Compatibilidad con tests escritos en JUnit 3 y 4.
-
-### Anatomía de un Test JUnit
-
-```{code} java
-:caption: Estructura completa de una clase de test
-
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
-
-@DisplayName("Tests de la clase Calculadora")
-class CalculadoraTest {
-
-    private Calculadora calc;
-
-    @BeforeAll
-    static void setUpClass() {
-        // Ejecuta UNA vez antes de todos los tests
-        // Útil para recursos costosos (conexiones, archivos)
-    }
-
-    @BeforeEach
-    void setUp() {
-        // Ejecuta ANTES de cada test
-        calc = new Calculadora();
-    }
-
-    @Test
-    @DisplayName("Suma de positivos retorna resultado correcto")
-    void sumar_positivoConPositivo_retornaSuma() {
-        // Arrange (preparar)
-        int a = 5, b = 3;
-        
-        // Act (actuar)
-        int resultado = calc.sumar(a, b);
-        
-        // Assert (verificar)
-        assertEquals(8, resultado);
-    }
-
-    @AfterEach
-    void tearDown() {
-        // Ejecuta DESPUÉS de cada test
-        // Limpieza de estado
-    }
-
-    @AfterAll
-    static void tearDownClass() {
-        // Ejecuta UNA vez después de todos los tests
-    }
-}
-```
-
-### El Ciclo de Vida en Detalle
-
-JUnit 5 maneja el ciclo de vida de las pruebas para asegurar la limpieza del estado entre ejecuciones:
-
-- **`@BeforeEach` / `@AfterEach`**: Ideales para inicializar objetos o limpiar archivos temporales antes y después de cada método de prueba.
-- **`@BeforeAll` / `@AfterAll`**: Para operaciones costosas (ej. levantar una base de datos de prueba) que se realizan una sola vez para toda la clase.
-
-Por defecto, JUnit crea una **nueva instancia** de la clase de test para cada método `@Test`. Esto garantiza aislamiento pero significa que los campos de instancia se reinician.
-
-```{code} java
-:caption: Demostración del ciclo de vida
-
-class CicloDeVidaTest {
-    
-    static int contadorInstancias = 0;
-    int contadorLocal = 0;
-    
-    CicloDeVidaTest() {
-        contadorInstancias++;
-        System.out.println("Nueva instancia: " + contadorInstancias);
-    }
-    
-    @Test
-    void test1() {
-        contadorLocal++;
-        System.out.println("test1 - local: " + contadorLocal);  // Siempre 1
-    }
-    
-    @Test
-    void test2() {
-        contadorLocal++;
-        System.out.println("test2 - local: " + contadorLocal);  // Siempre 1
-    }
-}
-// Salida: 2 instancias creadas, contadorLocal siempre es 1
-```
-
-### Anotaciones Avanzadas de JUnit 5
-
-```{code} java
-:caption: Anotaciones para control de ejecución
-
-@Disabled("Bug #123 - pendiente de fix")
-@Test
-void testDeshabilitado() { }
-
-@RepeatedTest(5)
-void testRepetido(RepetitionInfo info) {
-    System.out.println("Repetición " + info.getCurrentRepetition());
-}
-
-@ParameterizedTest
-@ValueSource(ints = {1, 2, 3, 5, 8, 13})
-void esFibonacci_numerosValidos_retornaTrue(int numero) {
-    assertTrue(Fibonacci.es(numero));
-}
-
-@ParameterizedTest
-@CsvSource({
-    "1, 1, 2",
-    "2, 3, 5",
-    "10, 20, 30"
-})
-void sumar_variosValores_retornaSumaCorrecta(int a, int b, int esperado) {
-    assertEquals(esperado, calc.sumar(a, b));
-}
-
-@Nested
-@DisplayName("Tests de operaciones aritméticas")
-class OperacionesAritmeticasTest {
-    @Test
-    void suma() { /* ... */ }
-    
-    @Test
-    void resta() { /* ... */ }
-}
-```
-
-## Estrategias de Prueba: Diseño de Casos de Test
+## Estrategias de Diseño de Casos de Prueba
 
 ### Técnicas de Caja Negra
 
-Las pruebas de caja negra se diseñan sin conocer la implementación interna, basándose solo en la especificación:
+Las pruebas de caja negra se diseñan **sin conocer la implementación interna**, basándose solo en la especificación.
 
 #### Partición de Equivalencia
 
-Dividir el dominio de entrada en clases que se comportan de manera equivalente. Solo es necesario probar un representante de cada clase.
+Dividir el dominio de entrada en **clases que se comportan de manera equivalente**. Solo es necesario probar un representante de cada clase.
 
-```{code} java
-:caption: Particiones para validar edad
+**Ejemplo conceptual:**
 
-// Dominio: edad para obtener licencia de conducir
-// Clases de equivalencia:
-//   - Inválidas: edad < 0
-//   - Menores: 0 <= edad < 18
-//   - Válidas: 18 <= edad <= 100
-//   - Inválidas: edad > 100
+Para validar edad para licencia de conducir, las clases de equivalencia son:
+- Inválidas: edad < 0
+- Menores: 0 ≤ edad < 18
+- Válidas: 18 ≤ edad ≤ 100
+- Inválidas: edad > 100
 
-@Test
-void validarEdad_negativa_lanzaExcepcion() {
-    assertThrows(IllegalArgumentException.class, 
-        () -> Licencia.validarEdad(-5));
-}
-
-@Test
-void validarEdad_menor_retornaFalse() {
-    assertFalse(Licencia.validarEdad(15));
-}
-
-@Test
-void validarEdad_adulto_retornaTrue() {
-    assertTrue(Licencia.validarEdad(25));
-}
-```
+Se necesita un test representativo de cada clase.
 
 #### Análisis de Valores Límite
 
-Probar en las fronteras de las particiones, donde la mayoría de los bugs ocurren:
-
-```{code} java
-:caption: Tests de valores límite
-
-// Límite: 18 años
-@Test void validar_17_retornaFalse() { assertFalse(Licencia.validarEdad(17)); }
-@Test void validar_18_retornaTrue()  { assertTrue(Licencia.validarEdad(18)); }
-@Test void validar_19_retornaTrue()  { assertTrue(Licencia.validarEdad(19)); }
-
-// Límite: 0
-@Test void validar_menosUno_lanzaExcepcion() { 
-    assertThrows(IllegalArgumentException.class, () -> Licencia.validarEdad(-1)); 
-}
-@Test void validar_cero_retornaFalse() { assertFalse(Licencia.validarEdad(0)); }
-```
+Probar en las **fronteras** de las particiones, donde la mayoría de los bugs ocurren. Para el límite de 18 años, probar:
+- 17 (justo antes del límite)
+- 18 (exactamente en el límite)
+- 19 (justo después del límite)
 
 ### Técnicas de Caja Blanca
 
-Con acceso al código fuente, podemos diseñar tests que ejerciten caminos específicos:
-
-#### Cobertura de Sentencias
-
-Cada línea de código debe ejecutarse al menos una vez.
+Con acceso al código fuente, podemos diseñar tests que ejerciten caminos específicos.
 
 #### Cobertura de Ramas
 
-Cada decisión (`if`, `switch`, `?:`) debe evaluarse tanto a verdadero como falso.
-
-```{code} java
-:caption: Código con múltiples ramas
-
-public String clasificar(int valor) {
-    if (valor < 0) {
-        return "negativo";      // Rama 1
-    } else if (valor == 0) {
-        return "cero";          // Rama 2
-    } else {
-        return "positivo";      // Rama 3
-    }
-}
-
-// Tests para 100% cobertura de ramas:
-@Test void clasificar_negativo() { assertEquals("negativo", clasificar(-1)); }
-@Test void clasificar_cero()     { assertEquals("cero", clasificar(0)); }
-@Test void clasificar_positivo() { assertEquals("positivo", clasificar(1)); }
-```
-
-#### Cobertura de Condiciones
-
-En condiciones compuestas, cada subcondición debe ser verdadera y falsa:
-
-```{code} java
-:caption: Cobertura de condición compuesta
-
-public boolean esValido(int x, int y) {
-    return x > 0 && y > 0;  // Dos subcondiciones
-}
-
-// Tests para cobertura de condiciones:
-@Test void ambosPositivos()    { assertTrue(esValido(1, 1)); }   // T && T
-@Test void xNegativo()         { assertFalse(esValido(-1, 1)); } // F && T
-@Test void yNegativo()         { assertFalse(esValido(1, -1)); } // T && F
-@Test void ambosNegativos()    { assertFalse(esValido(-1, -1)); }// F && F
-```
+Cada decisión (`if`, `switch`) debe evaluarse tanto a verdadero como falso. Para un método con tres ramas de decisión, se necesitan al menos tres tests que ejecuten cada rama.
 
 ### Casos Especiales a Considerar
 
@@ -508,435 +475,138 @@ public boolean esValido(int x, int y) {
 
 | Tipo de entrada | Casos a probar |
 | :--- | :--- |
-| Strings | `null`, vacío `""`, espacios, muy largo, caracteres especiales |
-| Números | 0, 1, -1, MAX_VALUE, MIN_VALUE, NaN, Infinity |
-| Colecciones | `null`, vacía, un elemento, muchos elementos, duplicados |
-| Fechas | Bisiestos, fin de mes, cambio de año, zonas horarias |
-| Archivos | No existe, vacío, sin permisos, en uso |
+| Strings | `null`, vacío `""`, espacios, muy largo |
+| Números | 0, 1, -1, MAX_VALUE, MIN_VALUE |
+| Colecciones | `null`, vacía, un elemento, muchos elementos |
+| Fechas | Bisiestos, fin de mes, cambio de año |
 :::
 
-## Aserciones en JUnit 5
+## Cobertura de Código
 
-Las aserciones son el mecanismo para verificar que el código bajo prueba produce los resultados esperados.
-
-### Aserciones Básicas
-
-```{code} java
-:caption: Aserciones fundamentales
-
-// Igualdad
-assertEquals(esperado, actual);
-assertEquals(3.14, resultado, 0.001);  // Con delta para doubles
-assertNotEquals(valorNoEsperado, actual);
-
-// Booleanos
-assertTrue(condicion);
-assertFalse(condicion);
-
-// Nulidad
-assertNull(objeto);
-assertNotNull(objeto);
-
-// Identidad (misma referencia)
-assertSame(objetoEsperado, objetoActual);
-assertNotSame(objeto1, objeto2);
-
-// Arrays
-assertArrayEquals(arrayEsperado, arrayActual);
-```
-
-### Aserciones Avanzadas
-
-Además de `assertEquals`, JUnit 5 ofrece herramientas para escenarios complejos:
-
-```{code} java
-:caption: Aserciones avanzadas
-
-// Verificar que un proceso termina en tiempo razonable
-assertTimeout(Duration.ofMillis(100), () -> {
-    algoritmoPesado.ejecutar();
-});
-
-// Aserciones agrupadas (no se detiene al primer fallo)
-assertAll("Atributos de usuario",
-    () -> assertEquals("admin", u.getRole()),
-    () -> assertTrue(u.isActive())
-);
-```
-
-### Testing de Excepciones
-
-Una de las aserciones más importantes es verificar que el código lanza excepciones apropiadas:
-
-```{code} java
-:caption: Patrones para testear excepciones
-
-// Forma básica: solo verifica el tipo
-@Test
-void dividirPorCero_lanzaArithmeticException() {
-    assertThrows(ArithmeticException.class, 
-        () -> calculadora.dividir(10, 0));
-}
-
-// Forma avanzada: capturar y verificar mensaje
-@Test
-void indiceInvalido_lanzaExcepcionConMensaje() {
-    IndexOutOfBoundsException ex = assertThrows(
-        IndexOutOfBoundsException.class,
-        () -> lista.get(-1)
-    );
-    assertTrue(ex.getMessage().contains("Index"));
-}
-
-// Verificar que NO lanza excepción
-@Test
-void operacionValida_noLanzaExcepcion() {
-    assertDoesNotThrow(() -> calculadora.dividir(10, 2));
-}
-```
-
-### Mensajes de Fallo
-
-Siempre es recomendable incluir mensajes descriptivos:
-
-```{code} java
-:caption: Aserciones con mensajes informativos
-
-@Test
-void verificarDescuento_clientePremium() {
-    Cliente cliente = new Cliente(TipoCliente.PREMIUM);
-    double descuento = cliente.calcularDescuento(100);
-    
-    assertEquals(20.0, descuento, 
-        () -> "Cliente premium debería tener 20% de descuento, " +
-              "pero obtuvo: " + descuento);
-}
-```
-
-:::{tip}
-El mensaje se pasa como `Supplier<String>` (lambda) para que solo se construya si el test falla, evitando overhead en tests que pasan.
-:::
-
-## Cobertura de Código (_Code Coverage_)
-
-La cobertura es una métrica que indica qué porcentaje del código ha sido ejecutado por los tests.
+La **cobertura** es una métrica que indica qué porcentaje del código ha sido ejecutado por los tests.
 
 ### Tipos de Cobertura
 
 - **Cobertura de Líneas:** ¿Se ejecutó esta línea?
-- **Cobertura de Ramas (Branches):** En un `if`, ¿se probaron tanto el camino verdadero como el falso?
+- **Cobertura de Ramas:** ¿Se probaron todos los caminos de un `if`?
 - **Cobertura de Métodos:** ¿Se invocó este método al menos una vez?
-- **Cobertura de Condiciones:** ¿Cada subcondición booleana fue verdadera y falsa?
-- **Cobertura de Caminos:** ¿Se ejercitaron todas las combinaciones posibles de ramas? (computacionalmente explosivo)
 
-### Herramientas de Cobertura
+### Herramientas
 
-En el ecosistema Java, las herramientas más utilizadas son:
+En Java, la herramienta más utilizada es **JaCoCo** (Java Code Coverage), que se integra con Gradle y genera reportes HTML detallados.
 
-- **JaCoCo:** Estándar de facto, integración con Gradle/Maven, reportes HTML
-- **Cobertura:** Alternativa histórica
-- **IntelliJ IDEA:** Cobertura integrada en el IDE
-
-```{code} groovy
-:caption: Configuración de JaCoCo en Gradle
-
-plugins {
-    id 'jacoco'
-}
-
-jacocoTestReport {
-    reports {
-        xml.required = true
-        html.required = true
-    }
-}
-
-test {
-    finalizedBy jacocoTestReport
-}
-
-// Opcional: forzar mínimo de cobertura
-jacocoTestCoverageVerification {
-    violationRules {
-        rule {
-            limit {
-                minimum = 0.80  // 80% mínimo
-            }
-        }
-    }
-}
-```
-
-:::{warning} El mito de la cobertura
-Una cobertura del 100% no garantiza la ausencia de bugs. La cobertura indica qué código **no ha sido probado**, pero no garantiza que las pruebas existentes sean de calidad o cubran todos los casos de borde lógicos.
+:::{warning}
+Una cobertura del 100% **no garantiza** la ausencia de bugs. La cobertura indica qué código no ha sido probado, pero no garantiza que las pruebas existentes sean de calidad.
 :::
 
-### Interpretando los Reportes
+### Meta Razonable
 
-Un reporte de JaCoCo típico muestra:
-
-- **Verde:** Línea completamente cubierta
-- **Amarillo:** Cobertura parcial (algunas ramas no ejecutadas)
-- **Rojo:** Línea no ejecutada
-
-:::{important}
-Enfocate en aumentar la cobertura de **código crítico** (lógica de negocio, manejo de errores) antes que perseguir números absolutos. Un getter trivial sin cobertura es menos preocupante que un algoritmo de cálculo sin tests.
-:::
-
-## Organización y Nombrado de Tests
-
-### Convenciones de Nombrado
-
-Un buen nombre de test comunica:
-- Qué se está probando
-- Bajo qué condiciones
-- Qué resultado se espera
-
-```{code} java
-:caption: Patrones de nombrado
-
-// Patrón: metodo_condicion_resultadoEsperado
-@Test void dividir_porCero_lanzaExcepcion() { }
-@Test void isEmpty_listaVacia_retornaTrue() { }
-@Test void depositar_montoNegativo_lanzaIllegalArgument() { }
-
-// Patrón: should_resultado_when_condicion (BDD style)
-@Test void should_throwException_when_dividingByZero() { }
-@Test void should_returnTrue_when_listIsEmpty() { }
-```
-
-### Patrón AAA (Arrange-Act-Assert)
-
-Estructura cada test en tres secciones claramente separadas:
-
-```{code} java
-:caption: Patrón Arrange-Act-Assert
-
-@Test
-void calcularTotal_conDescuento_aplicaDescuentoCorrectamente() {
-    // Arrange (preparar el escenario)
-    Carrito carrito = new Carrito();
-    carrito.agregarProducto(new Producto("Laptop", 1000));
-    Descuento descuento = new DescuentoPorcentual(10);
-    
-    // Act (ejecutar la acción bajo prueba)
-    double total = carrito.calcularTotal(descuento);
-    
-    // Assert (verificar resultados)
-    assertEquals(900.0, total, 0.01);
-}
-```
-
-### Organización de Archivos
-
-```
-src/
-├── main/java/
-│   └── com/ejemplo/
-│       ├── Calculadora.java
-│       └── Usuario.java
-└── test/java/
-    └── com/ejemplo/
-        ├── CalculadoraTest.java    // Misma estructura
-        └── UsuarioTest.java
-```
+- **70-80%**: Objetivo razonable para proyectos típicos
+- **90-100%**: Para código crítico (seguridad, finanzas)
+- **< 60%**: Señal de testing insuficiente
 
 ## Antipatrones de Testing
 
-Evitá estos errores comunes:
-
 ### Tests Frágiles
 
-Tests que fallan por cambios no relacionados con lo que prueban:
+Tests que fallan por cambios no relacionados con lo que prueban. Por ejemplo, un test que depende del orden de elementos en una colección cuando el orden no es parte del contrato.
 
-```{code} java
-:caption: Test frágil (depende del orden de elementos)
-
-// MAL: Falla si el orden de usuarios cambia
-@Test
-void buscarUsuarios_retornaListaCorrecta() {
-    List<Usuario> usuarios = servicio.buscarTodos();
-    assertEquals("Ana", usuarios.get(0).getNombre());  // Frágil
-}
-
-// BIEN: Verifica contenido, no orden
-@Test
-void buscarUsuarios_contieneUsuarioEsperado() {
-    List<Usuario> usuarios = servicio.buscarTodos();
-    assertTrue(usuarios.stream()
-        .anyMatch(u -> u.getNombre().equals("Ana")));
-}
-```
+**Solución:** Verificar propiedades esenciales (contenido, tamaño) en lugar de detalles de implementación (orden específico).
 
 ### Tests que Prueban la Implementación
 
-```{code} java
-:caption: Test acoplado a la implementación
+Tests acoplados a cómo se hace algo en lugar de qué se hace. Esto hace que refactorings seguros rompan tests.
 
-// MAL: Si cambio cómo calculo internamente, el test falla
-@Test
-void calcular_usaFormulaCuadratica() {
-    // Verifica que se llamaron ciertos métodos internos
-}
-
-// BIEN: Verifica comportamiento observable
-@Test
-void calcular_valorPositivo_retornaResultadoCorrecto() {
-    assertEquals(4.0, calculadora.raizCuadrada(16), 0.001);
-}
-```
+**Solución:** Verificar comportamiento observable desde la perspectiva del usuario del código.
 
 ### Tests sin Aserciones
 
-```{code} java
-:caption: Test vacío (falso positivo)
+Tests que ejecutan código pero no verifican nada. Siempre pasan, incluso si el código falla.
 
-// MAL: Siempre pasa, no verifica nada
-@Test
-void procesarDatos() {
-    servicio.procesar(datos);
-    // ¿Y qué? No hay assert
-}
+**Solución:** Todo test debe tener al menos una verificación explícita del resultado esperado.
 
-// BIEN: Verifica el efecto
-@Test
-void procesarDatos_actualizaEstado() {
-    servicio.procesar(datos);
-    assertEquals(Estado.PROCESADO, datos.getEstado());
-}
+## Ejercicios Conceptuales
+
+```{exercise}
+:label: ej-tdd-validador
+
+Aplicando TDD, describí los pasos (ciclos RED-GREEN-REFACTOR) para implementar un método estático `esNumeroPar(int n)` que retorna `true` si el número es par y `false` si es impar.
 ```
 
-## Ejercicios de Aplicación
-
-```exercise
-:label: ej-tdd-stack
-Aplicando TDD, describí los pasos para implementar un método `pop()` en una clase `Pila`.
-```
-
-```solution
-:for: ej-tdd-stack
-1. **Red**: Escribo un test que cree una pila, inserte un elemento y verifique que `pop()` devuelva ese elemento. El test no compila o falla porque `pop()` no existe o retorna null.
-2. **Green**: Implemento `pop()` de la forma más simple posible (ej. retornando el valor del tope y decrementando el índice). El test pasa.
-3. **Red**: Escribo un test que verifique que llamar a `pop()` en una pila vacía lanza `EmptyStackException`. El test falla.
-4. **Green**: Agrego el chequeo `if (isEmpty()) throw ...` en `pop()`. El test pasa.
-5. **Refactor**: Reviso si puedo extraer lógica común a `isEmpty()` o mejorar la gestión del arreglo.
-```
-
-```exercise
-:label: ej-valores-limite
-Dado un método `esAdulto(int edad)` que retorna `true` si `edad >= 18` y `false` en caso contrario (asumiendo edades válidas de 0 a 120), listá todos los valores límite que deberían testearse.
-```
-
-```solution
-:for: ej-valores-limite
+```{solution} ej-tdd-validador
 :class: dropdown
 
-Los valores límite a probar son:
+1. **Red**: Escribo un test que verifique `esNumeroPar(2)` retorna `true`. El test falla porque el método no existe.
+2. **Green**: Implemento el método con `return true;` (implementación mínima que pasa el test actual).
+3. **Red**: Escribo un test que verifique `esNumeroPar(3)` retorna `false`. El test falla (esperado `false`, obtenido `true`).
+4. **Green**: Generalizo la implementación: `return n % 2 == 0;`. Ambos tests pasan.
+5. **Refactor**: El código ya es simple y claro. Podría agregar JavaDoc.
+6. **Red**: Escribo un test para número negativo par: `esNumeroPar(-4)` retorna `true`. Ya pasa (la lógica funciona para negativos).
+7. **Red**: Escribo un test para cero: `esNumeroPar(0)` retorna `true`. Ya pasa.
 
-**Límite inferior del dominio (0):**
-- `edad = -1` → debería lanzar excepción o retornar false
-- `edad = 0` → retorna false
+**Observación**: Los últimos dos tests pasan sin cambiar el código, confirmando que la implementación es correcta para todos los casos.
+```
 
-**Límite de mayoría de edad (18):**
-- `edad = 17` → retorna false
-- `edad = 18` → retorna true
-- `edad = 19` → retorna true
+```{exercise}
+:label: ej-valores-limite
 
-**Límite superior del dominio (120):**
-- `edad = 119` → retorna true
-- `edad = 120` → retorna true
-- `edad = 121` → debería lanzar excepción o retornar false
+Dado un método `esAdulto(int edad)` que retorna `true` si `edad >= 18` (asumiendo edades válidas de 0 a 120), listá todos los valores límite que deberían testearse.
+```
+
+```{solution} ej-valores-limite
+:class: dropdown
+
+**Límite inferior (0):** -1 (inválido), 0 (válido mínimo)
+
+**Límite de mayoría de edad (18):** 17 (false), 18 (true), 19 (true)
+
+**Límite superior (120):** 119 (true), 120 (true máximo), 121 (inválido)
 
 Total: 8 casos de prueba para cobertura completa de valores límite.
 ```
 
-```exercise
-:label: ej-tdd-email
-Usando TDD, describí el proceso para implementar un método `esEmailValido(String email)` que valide direcciones de correo electrónico. Incluí al menos 3 iteraciones del ciclo RED-GREEN-REFACTOR.
+```{exercise}
+:label: ej-particiones
+
+Para un método `calcularDescuento(double monto)` con las siguientes reglas:
+- Menos de $100: 0% descuento
+- $100 a $499: 5% descuento
+- $500 a $999: 10% descuento
+- $1000 o más: 15% descuento
+
+Identificá las particiones de equivalencia y proponé un conjunto mínimo de tests.
 ```
 
-```solution
-:for: ej-tdd-email
+```{solution} ej-particiones
 :class: dropdown
 
-**Iteración 1: Caso básico**
-- RED: `@Test void email_valido_retornaTrue()` → `assertTrue(esEmailValido("user@domain.com"))` falla
-- GREEN: `return email.contains("@");` → pasa
-- REFACTOR: Ninguno necesario aún
+**Particiones identificadas:**
+- P1: monto < 0 (inválida)
+- P2: 0 ≤ monto < 100 (0%)
+- P3: 100 ≤ monto < 500 (5%)
+- P4: 500 ≤ monto < 1000 (10%)
+- P5: monto ≥ 1000 (15%)
 
-**Iteración 2: Email sin arroba**
-- RED: `@Test void email_sinArroba_retornaFalse()` → `assertFalse(esEmailValido("invalido"))` ya pasa por la implementación anterior
-- Agregar: `@Test void email_sinDominio_retornaFalse()` → `assertFalse(esEmailValido("user@"))` falla
-- GREEN: `return email.contains("@") && email.indexOf("@") < email.length() - 1;`
-- REFACTOR: Extraer validación a método privado
-
-**Iteración 3: Email nulo**
-- RED: `@Test void email_null_retornaFalse()` → `assertFalse(esEmailValido(null))` lanza NullPointerException
-- GREEN: Agregar `if (email == null) return false;` al inicio
-- REFACTOR: Considerar usar `Optional` o validación más robusta
-
-**Iteración 4: Email con múltiples arrobas**
-- RED: `assertFalse(esEmailValido("a@b@c.com"))` → falla (retorna true)
-- GREEN: Verificar que solo hay un "@": `email.indexOf("@") == email.lastIndexOf("@")`
-- REFACTOR: Consolidar validaciones en un método más legible
-```
-
-```exercise
-:label: ej-particion-equivalencia
-Para un método `calcularTarifa(int edad, boolean esEstudiante)` que calcula tarifas de transporte, identificá las clases de equivalencia y diseñá un conjunto mínimo de tests.
-```
-
-```solution
-:for: ej-particion-equivalencia
-:class: dropdown
-
-**Clases de equivalencia identificadas:**
-
-Por edad:
-1. Inválida: `edad < 0`
-2. Niños (gratis): `0 <= edad < 6`
-3. Menores (50%): `6 <= edad < 18`
-4. Adultos (100%): `18 <= edad < 65`
-5. Jubilados (gratis): `edad >= 65`
-
-Por condición de estudiante:
-1. Es estudiante (25% descuento adicional)
-2. No es estudiante
-
-**Tests mínimos (un representante por clase):**
-
-```java
-@Test void tarifa_edadNegativa_lanzaExcepcion() { }
-@Test void tarifa_ninoCuatroAnios_retornaCero() { }
-@Test void tarifa_menorDoceAnios_retornaMitad() { }
-@Test void tarifa_menorDoceEstudiante_retornaMitadMenos25() { }
-@Test void tarifa_adultoTreinta_retornaCompleta() { }
-@Test void tarifa_adultoEstudiante_retornaCompletaMenos25() { }
-@Test void tarifa_jubilado_retornaCero() { }
-```
-
-Total: 7 tests cubren todas las combinaciones relevantes.
+**Tests mínimos (representantes + límites):**
+1. monto = -5 (P1, inválido)
+2. monto = 50 (P2, representante)
+3. monto = 99.99 (límite P2/P3)
+4. monto = 100 (límite P2/P3)
+5. monto = 250 (P3, representante)
+6. monto = 500 (límite P3/P4)
+7. monto = 750 (P4, representante)
+8. monto = 1000 (límite P4/P5)
+9. monto = 1500 (P5, representante)
 ```
 
 ## Referencias Bibliográficas
 
-Para profundizar en testing y TDD:
-
-- **Beck, K.** (2003). _Test Driven Development: By Example_. Addison-Wesley. (Libro fundacional sobre TDD).
+- **Beck, K.** (2003). _Test Driven Development: By Example_. Addison-Wesley.
 - **Martin, R. C.** (2009). _Clean Code_. Prentice Hall. (Capítulo 9: Unit Tests).
-- **Liang, Y. D.** (2017). _Introduction to Java Programming and Data Structures_ (11va ed.). Pearson.
 - **Meszaros, G.** (2007). _xUnit Test Patterns: Refactoring Test Code_. Addison-Wesley.
-- **Freeman, S. & Pryce, N.** (2009). _Growing Object-Oriented Software, Guided by Tests_. Addison-Wesley. (TDD avanzado con mocks).
-- **Koskela, L.** (2013). _Effective Unit Testing: A Guide for Java Developers_. Manning.
+- **Cohn, M.** (2009). _Succeeding with Agile_. Addison-Wesley. (Pirámide de testing).
 
-### Recursos Online
-
-- [JUnit 5 User Guide](https://junit.org/junit5/docs/current/user-guide/) — Documentación oficial
-- [JaCoCo Documentation](https://www.jacoco.org/jacoco/trunk/doc/) — Cobertura de código
-- [Baeldung Testing Tutorials](https://www.baeldung.com/junit-5) — Tutoriales prácticos
-
-:::seealso
-
-- {ref}`regla-0x4001` - Estándares de testing de la cátedra.
-- {ref}`regla-0x3001` - Testeo de excepciones.
-  :::
+:::{seealso}
+- {ref}`junit` — Implementación práctica de testing con JUnit 5
+- {ref}`regla-0x4000` — Estándares de testing de la cátedra
+:::

@@ -1,78 +1,66 @@
 ---
-title: Testing con JUnit
-description: Guía completa sobre testing unitario con JUnit 5, incluyendo conceptos fundamentales, sintaxis, y buenas prácticas.
+title: Testing con JUnit 5
+description: Guía práctica sobre implementación de tests unitarios con JUnit 5, configuración, sintaxis, anotaciones y buenas prácticas.
+label: junit
 ---
 
-# Testing con JUnit
+# Testing con JUnit 5
 
-## Introducción al Testing
-
-El **testing** (pruebas de software) es una disciplina fundamental en el desarrollo de software moderno. Consiste en verificar que el código se comporta según lo esperado, detectar errores tempranamente y documentar el comportamiento del sistema.
-
-### ¿Por qué testear?
-
-El testing aporta múltiples beneficios al proceso de desarrollo:
-
-1. **Detección temprana de errores**: Los bugs encontrados en etapas tempranas son más baratos de corregir
-2. **Documentación viva**: Los tests documentan cómo se espera que funcione el código
-3. **Refactoring seguro**: Permite modificar el código con confianza
-4. **Diseño mejorado**: Escribir tests primero mejora el diseño del código
-5. **Regresiones prevenidas**: Los tests evitan que errores corregidos vuelvan a aparecer
-
-:::{important}
-En esta cátedra, el testing no es opcional: es una parte integral del desarrollo. Todo código de producción debe estar acompañado de sus tests correspondientes.
+:::{note} Observación I
+Este apunte se enfoca en la **implementación práctica** con JUnit 5. Para los fundamentos teóricos del testing (TDD, pirámide, estrategias, FIRST), consultá {ref}`testing`.
 :::
 
-### Tipos de testing
+:::{note} Observación II
+Este apunte trata _todo_ lo referido testing de Java con jUnit, por lo que van a ver un montón de cosas que están, técnicamente, fuera de lugar en el cronograma de la materia.
+La idea es que este sea una referencia del tema, por lo que tendrán que volver eventualmente y saltear aquello que no les suene.
+:::
 
-Existen varios niveles de testing en el desarrollo de software:
+## Del Testing Manual en C al Automatizado en Java
 
-```{figure} 2/piramide_testing.svg
-:label: fig-piramide-testing
-:align: center
-:width: 80%
+Si venís de programar en C, probablemente verificabas que tu código funcionara ejecutándolo manualmente e inspeccionando la salida con `printf`:
 
-Pirámide de testing. La base ancha representa tests unitarios (rápidos y numerosos), el medio tests de integración, y la cima tests end-to-end (lentos y escasos).
+```c
+int main() {
+    printf("factorial(0) = %d (esperado: 1)\n", factorial(0));
+    printf("factorial(5) = %d (esperado: 120)\n", factorial(5));
+    return 0;
+}
 ```
 
-#### Tests Unitarios
+**JUnit automatiza esta verificación**:
 
-Los **tests unitarios** verifican el comportamiento de unidades individuales de código (generalmente métodos o clases) de forma aislada. Son:
+```java
+@Test
+void factorial_conCero_retornaUno() {
+    assertEquals(1, Matematica.factorial(0));  // JUnit verifica automáticamente
+}
+```
 
-- **Rápidos**: Se ejecutan en milisegundos
-- **Aislados**: No dependen de bases de datos, archivos o red
-- **Determinísticos**: Siempre producen el mismo resultado
-- **Abundantes**: Son la mayoría de los tests en un proyecto
-
-#### Tests de Integración
-
-Los **tests de integración** verifican que múltiples componentes funcionen correctamente juntos. Pueden involucrar bases de datos, servicios externos o el sistema de archivos.
-
-#### Tests End-to-End (E2E)
-
-Los **tests E2E** verifican el sistema completo desde la perspectiva del usuario final. Son los más lentos y complejos.
-
-:::{note}
-En este apunte nos concentraremos exclusivamente en **tests unitarios** usando JUnit 5.
-:::
+Si el resultado no es 1, JUnit falla y te muestra exactamente qué salió mal. Además, podés ejecutar cientos de tests con un solo comando.
 
 ## JUnit: Framework de Testing para Java
 
-**JUnit** es el framework de testing más popular para Java. La versión actual es JUnit 5 (también llamada JUnit Jupiter), que representa una reescritura completa con arquitectura modular.
+Un **framework de testing** es una librería que proporciona herramientas para escribir y ejecutar tests de forma organizada. En C no hay un framework estándar (existen librerías como CUnit, Unity, etc., pero no son parte del lenguaje). En Java, **JUnit** es el estándar de facto.
+
+JUnit te da:
+- **Anotaciones** para marcar métodos como tests (`@Test`)
+- **Métodos de verificación** (assertions) para comparar resultados esperados con reales
+- **Un ejecutor** que encuentra y ejecuta todos los tests, reportando cuáles pasan y cuáles fallan
+- **Hooks** para setup y cleanup antes/después de cada test
 
 ### Historia breve
 
-- **JUnit 3** (2000): Primera versión ampliamente adoptada
-- **JUnit 4** (2006): Introdujo anotaciones (`@Test`, `@Before`, etc.)
-- **JUnit 5** (2017): Arquitectura modular, nuevas features, Java 8+
+- **JUnit 3** (2000): Primera versión ampliamente adoptada. Los tests se identificaban por herencia de clases y nombres de métodos.
+- **JUnit 4** (2006): Introdujo anotaciones (`@Test`, `@Before`, etc.), simplificando enormemente la escritura de tests.
+- **JUnit 5** (2017): Reescritura completa con arquitectura modular, nuevas features, y soporte para Java 8+.
 
 :::{tip}
-Utilizaremos **JUnit 5** en toda la cátedra. Si encontrás ejemplos de JUnit 4 en internet, tené en cuenta que la sintaxis puede diferir.
+Utilizaremos **JUnit 5** en toda la cátedra. Si encontrás ejemplos de JUnit 4 en internet (muy comunes en Stack Overflow), tené en cuenta que algunas anotaciones cambiaron: `@Before` → `@BeforeEach`, `@BeforeClass` → `@BeforeAll`, etc.
 :::
 
 ### Configuración del proyecto
 
-Para usar JUnit 5 en un proyecto Gradle, agregá la siguiente dependencia al `build.gradle` (esto ya está listo en la configuración de las practicas.)
+Para usar JUnit 5 en un proyecto Gradle, agregá la siguiente dependencia al `build.gradle`. _En las prácticas de la cátedra esto ya está configurado._
 
 ```gradle
 dependencies {
@@ -84,50 +72,81 @@ test {
 }
 ```
 
-La configuración `testImplementation` indica que esta dependencia solo se usa para testing, no en producción. El bloque `test { useJUnitPlatform() }` es necesario para que Gradle ejecute tests de JUnit 5.
+**Explicación línea por línea:**
+
+- `testImplementation`: Esta dependencia solo se usa para testing, no se incluye en el código de producción. Es como decir "necesito esta librería solo para mis tests".
+
+- `'org.junit.jupiter:junit-jupiter:5.10.0'`: Coordenadas Maven de JUnit 5. El formato es `grupo:artefacto:versión`.
+
+- `useJUnitPlatform()`: Le dice a Gradle que use el motor de JUnit 5 para ejecutar tests. Sin esta línea, Gradle no encontraría los tests.
 
 ### Estructura de un proyecto con tests
 
-Gradle utiliza la estructura estándar de Maven para separar código de producción y tests:
+Gradle utiliza la estructura estándar de Maven para separar código de producción y tests. Es una convención importante:
 
 ```
 mi-proyecto/
-├── build.gradle
-├── settings.gradle
+├── build.gradle              ← Configuración de Gradle
+├── settings.gradle           ← Nombre del proyecto
 └── src/
     ├── main/
-    │   └── java/
+    │   └── java/             ← Código de producción
     │       └── ar/
     │           └── unrn/
     │               └── poo/
     │                   └── Calculadora.java
     └── test/
-        └── java/
+        └── java/             ← Código de tests
             └── ar/
                 └── unrn/
                     └── poo/
                         └── CalculadoraTest.java
 ```
 
+**Puntos clave:**
+
+- El código de producción va en `src/main/java`
+- Los tests van en `src/test/java`
+- La estructura de paquetes **debe ser idéntica** entre producción y test
+
 :::{important}
-El código de test debe estar en `src/test/java` con la **misma estructura de paquetes** que el código de producción. Esto permite que los tests accedan a miembros con visibilidad de paquete.
+El código de test debe estar en `src/test/java` con la **misma estructura de paquetes** que el código de producción. Esto no es solo convención: permite que los tests accedan a miembros con visibilidad de paquete (sin modificador `public`, `private`, ni `protected`).
+
+```java
+// En src/main/java/ar/unrn/poo/Calculadora.java
+package ar.unrn.poo;
+
+class Calculadora {  // Sin public → visibilidad de paquete
+    static int sumar(int a, int b) { return a + b; }
+}
+
+// En src/test/java/ar/unrn/poo/CalculadoraTest.java
+package ar.unrn.poo;  // Mismo paquete → puede acceder a Calculadora
+
+class CalculadoraTest {
+    @Test
+    void testSumar() {
+        assertEquals(5, Calculadora.sumar(2, 3));  // Funciona!
+    }
+}
+```
 :::
 
 ## Primer Test con JUnit
 
-Veamos un ejemplo simple para entender la estructura básica de un test con JUnit.
+Veamos un ejemplo completo para entender la estructura básica de un test. Es como el "Hello World" del testing.
 
 ### Código de producción
 
-Supongamos que tenemos una clase `Calculadora` con métodos estáticos:
+Supongamos que tenemos una clase `Calculadora` con métodos estáticos. Usamos métodos estáticos por ahora porque aún no vimos programación orientada a objetos en profundidad:
 
 ```java
 package ar.unrn.poo;
 
 /**
  * Calculadora simple con operaciones básicas.
- */
-public class Calculadora {
+  */
+public class CalculadoraApp {
 
     /**
      * Suma dos números enteros.
@@ -157,15 +176,37 @@ public class Calculadora {
 }
 ```
 
+En C, esto sería equivalente a:
+
+```c
+// calculadora.h
+int sumar(int a, int b);
+double dividir(double dividendo, double divisor);
+
+// calculadora.c
+int sumar(int a, int b) {
+    return a + b;
+}
+
+double dividir(double dividendo, double divisor) {
+    if (divisor == 0) {
+        // En C no hay excepciones, habría que manejar el error de otra forma
+        fprintf(stderr, "Error: división por cero\n");
+        exit(1);
+    }
+    return dividendo / divisor;
+}
+```
+
 ### Clase de test
 
-Ahora creamos la clase de test correspondiente. Aquí aplica la {ref}`regla-0x4000`: el test debe tener el mismo nombre que la clase con `Test` al final.
+Ahora creamos la clase de test correspondiente. Aquí aplica la {ref}`regla-0x4000`: el test debe tener el mismo nombre que la clase bajo prueba con `Test` al final.
 
 ```java
 package ar.unrn.poo;
 
-import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;           // Anotación para marcar tests
+import static org.junit.jupiter.api.Assertions.*;  // Métodos de verificación
 
 /**
  * Tests para la clase Calculadora.
@@ -187,28 +228,41 @@ public class CalculadoraTest {
 }
 ```
 
+Analicemos cada parte:
+
 ### Anatomía de un test
 
-Analicemos los componentes del test anterior:
+Analicemos los componentes del test anterior en detalle:
 
-#### 1. Anotación `@Test`
+#### 1. Imports necesarios
+
+```java
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+```
+
+- `org.junit.jupiter.api.Test`: La anotación `@Test` que marca métodos como tests.
+- `static org.junit.jupiter.api.Assertions.*`: Importa **estáticamente** todos los métodos de verificación. El `static` permite escribir `assertEquals(...)` en lugar de `Assertions.assertEquals(...)`. El `*` importa todos los métodos (`assertEquals`, `assertTrue`, `assertNull`, etc.).
+
+#### 2. Anotación `@Test`
 
 ```java
 @Test
 void testSumar_ConDosNumerosPositivos_RetornaSuma() {
 ```
 
-La anotación `@Test` marca un método como método de test. JUnit lo ejecutará automáticamente.
+La anotación `@Test` le dice a JUnit: "este método es un test, ejecutalo cuando corras los tests". Sin esta anotación, el método sería un método normal que JUnit ignoraría.
 
 **Características de los métodos de test:**
 
-- Deben ser `void` (no retornan valor)
-- Pueden tener cualquier nivel de visibilidad (recomendado: package-private o `public`)
+- Deben ser `void` (no retornan valor, solo verifican condiciones)
+- Pueden tener cualquier nivel de visibilidad, pero se recomienda package-private (sin modificador) o `public`
 - El nombre debe ser descriptivo (ver {ref}`regla-0x4003`)
+- **No deben tener parámetros** (excepto en tests parametrizados, que veremos después)
 
-#### 2. Estructura AAA (Arrange-Act-Assert)
+#### 3. Estructura AAA (Arrange-Act-Assert)
 
-Aquí aplica la {ref}`regla-0x4001`: todo test debe seguir la estructura AAA.
+Aquí aplica la {ref}`regla-0x4001`: todo test debe seguir la estructura AAA. Esta es una convención universal en testing que hace los tests claros y consistentes.
 
 ```java
 // Arrange: Preparar
@@ -222,29 +276,33 @@ int resultado = Calculadora.sumar(operando1, operando2);
 assertEquals(8, resultado, "5 + 3 debe ser 8");
 ```
 
-**Arrange (Preparar):**
+**Arrange (Preparar):** Todo lo necesario antes de ejecutar el código bajo prueba.
+- Crear datos de entrada
+- Configurar valores necesarios
+- Preparar el escenario de prueba
 
-- Preparar datos de entrada
-- Configurar valores necesarios para la prueba
+En C sería como declarar e inicializar las variables antes de llamar a la función.
 
-**Act (Ejecutar):**
-
+**Act (Ejecutar):** La acción que querés testear.
 - Invocar el método bajo prueba
-- Aquí aplica la {ref}`regla-0x4002`: una sola llamada por test
+- Aquí aplica la {ref}`regla-0x4002`: una sola llamada por test (con algunas excepciones que veremos)
 
-**Assert (Verificar):**
+**Assert (Verificar):** Comprobar que el resultado es el esperado.
+- Usar métodos de `Assertions` para verificar condiciones
+- Si alguna verificación falla, el test falla
 
-- Comprobar que el resultado es el esperado
-- Usar métodos de `Assertions`
+#### 4. Assertions (Verificaciones)
 
-#### 3. Assertions (Verificaciones)
-
-Los **assertions** son métodos que verifican condiciones. Si la condición es falsa, el test falla.
+Los **assertions** son métodos que verifican condiciones. Si la condición es verdadera, el assertion "pasa" silenciosamente. Si es falsa, lanza una excepción que JUnit captura y reporta como test fallido.
 
 ```java
 assertEquals(8, resultado, "5 + 3 debe ser 8");
 //           ^esperado  ^actual  ^mensaje opcional
 ```
+
+**Orden de parámetros:** El primer parámetro es el valor **esperado**, el segundo es el valor **actual** (el resultado del código bajo prueba). Esto es importante para los mensajes de error: JUnit dirá "expected 8 but was 10" si lo escribís correctamente.
+
+El mensaje opcional se muestra solo si el test falla, ayudando a entender qué salió mal.
 
 JUnit provee múltiples métodos de assertion que veremos en detalle más adelante.
 
@@ -252,35 +310,42 @@ JUnit provee múltiples métodos de assertion que veremos en detalle más adelan
 
 #### Desde el IDE
 
-La mayoría de los IDEs modernos (IntelliJ IDEA, Eclipse, VS Code) permiten ejecutar tests con un clic:
+La mayoría de los IDEs modernos (IntelliJ IDEA, Eclipse, VS Code con extensiones) permiten ejecutar tests con un clic:
 
-- **Ejecutar todos los tests de una clase**: Click derecho → "Run Tests"
-- **Ejecutar un test individual**: Click en el ícono verde junto al método
+- **Ejecutar todos los tests de una clase**: Click derecho sobre la clase → "Run Tests" o "Run 'CalculadoraTest'"
+- **Ejecutar un test individual**: Click en el ícono verde (▶) junto al método, o click derecho sobre el método → "Run"
+- **Ejecutar todos los tests del proyecto**: En el menú Run, o con atajos de teclado (varían según IDE)
 
-#### Desde Gradle
+El IDE mostrará una vista con los resultados: tests verdes (✅) pasaron, rojos (❌) fallaron.
+
+#### Desde Gradle (línea de comandos)
+
+Es importante saber ejecutar tests desde la terminal, especialmente para integración continua (CI) o cuando el IDE tiene problemas.
 
 ```bash
 # Ejecutar todos los tests del proyecto
 gradle test
-# o usando el wrapper (recomendado)
+
+# Usando el wrapper (recomendado, garantiza misma versión de Gradle para todos)
 ./gradlew test
 
 # Ejecutar tests de una clase específica
-gradle test --tests CalculadoraTest
 ./gradlew test --tests CalculadoraTest
 
 # Ejecutar un método de test específico
-gradle test --tests CalculadoraTest.testSumar_ConDosNumerosPositivos_RetornaSuma
 ./gradlew test --tests CalculadoraTest.testSumar_ConDosNumerosPositivos_RetornaSuma
+
+# Ejecutar tests que coincidan con un patrón
+./gradlew test --tests "*Calculadora*"  # Todos los tests cuyo nombre contenga "Calculadora"
 ```
 
 :::{tip}
-El Gradle Wrapper (`./gradlew`) es la forma recomendada de ejecutar tareas. Garantiza que todos usen la misma versión de Gradle sin necesidad de instalarlo globalmente.
+El **Gradle Wrapper** (`./gradlew` en Unix/Mac, `gradlew.bat` en Windows) es la forma recomendada de ejecutar Gradle. Es un script que descarga automáticamente la versión correcta de Gradle para el proyecto, garantizando que todos los desarrolladores usen exactamente la misma versión.
 :::
 
 ### Interpretación de resultados
 
-Cuando ejecutás los tests, JUnit muestra un reporte:
+Cuando ejecutás los tests, JUnit muestra un reporte con el estado de cada test:
 
 ```
 Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
@@ -290,30 +355,78 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 0
 [INFO] ------------------------------------------------------------------------
 ```
 
-- **Tests run**: Total de tests ejecutados
-- **Failures**: Tests que fallaron (assertion falló)
-- **Errors**: Tests que lanzaron excepciones inesperadas
-- **Skipped**: Tests marcados como ignorados
+**Significado de cada campo:**
+
+- **Tests run**: Total de tests que se ejecutaron
+- **Failures**: Tests que fallaron porque un assertion fue falso (el código hizo algo diferente a lo esperado)
+- **Errors**: Tests que fallaron por una excepción inesperada (algo se rompió antes de llegar al assertion)
+- **Skipped**: Tests que se omitieron (marcados con `@Disabled` o que no cumplieron alguna condición)
+
+**La diferencia entre Failure y Error:**
+
+```java
+@Test
+void testEjemploFailure() {
+    int resultado = Calculadora.sumar(2, 3);
+    assertEquals(10, resultado);  // FAILURE: esperaba 10, obtuvo 5
+}
+
+@Test
+void testEjemploError() {
+    int[] numeros = null;
+    int resultado = numeros[0];  // ERROR: NullPointerException antes del assert
+}
+```
 
 :::{tip}
-Un test **pasa** (✅) si todas las assertions son verdaderas y no se lanzan excepciones inesperadas. Un test **falla** (❌) si alguna assertion es falsa o se lanza una excepción inesperada.
+Un test **pasa** (✅) si todas las assertions son verdaderas y no se lanzan excepciones inesperadas.
+
+Un test **falla** (❌) por una de estas razones:
+1. Alguna assertion es falsa (Failure)
+2. Se lanza una excepción que no era esperada (Error)
+3. Se esperaba una excepción que no se lanzó (Failure)
 :::
 
 ## Assertions: Verificaciones en JUnit
 
-JUnit 5 provee una rica colección de métodos de assertion en la clase `org.junit.jupiter.api.Assertions`. Veamos los más importantes.
+JUnit 5 provee una rica colección de métodos de assertion en la clase `org.junit.jupiter.api.Assertions`. Son las herramientas para verificar que el código hace lo esperado.
+
+En C, la verificación típicamente era manual con `if` y `printf`:
+
+```c
+void test_sumar() {
+    int resultado = sumar(2, 3);
+    if (resultado != 5) {
+        printf("ERROR: esperaba 5, obtuve %d\n", resultado);
+    }
+}
+```
+
+En JUnit, los assertions hacen esto de forma más elegante y con mejor información de error:
+
+```java
+@Test
+void testSumar() {
+    int resultado = Calculadora.sumar(2, 3);
+    assertEquals(5, resultado);  // Si falla, JUnit reporta: "expected 5 but was X"
+}
+```
 
 ### Assertions básicos
 
 #### `assertEquals` y `assertNotEquals`
 
-Verifican igualdad de valores:
+Verifican igualdad de valores. Son los assertions más usados.
 
 ```java
 @Test
 void testEquals() {
+    // Arrange
+    int a = 2;
+    int b = 3;
+
     // Act
-    int resultado = Calculadora.sumar(2, 3);
+    int resultado = Calculadora.sumar(a, b);
 
     // Assert
     assertEquals(5, resultado);                    // Pasa si resultado == 5
@@ -321,7 +434,7 @@ void testEquals() {
 }
 ```
 
-Para números de punto flotante, especificá un delta de tolerancia:
+**Para números de punto flotante**, debés especificar un **delta de tolerancia**. Esto es igual que en C: los `float` y `double` tienen errores de precisión inherentes a la representación en punto flotante.
 
 ```java
 @Test
@@ -329,40 +442,64 @@ void testDividir_ConDosNumeros_RetornaCociente() {
     // Act
     double resultado = Calculadora.dividir(10.0, 3.0);
 
-    // Assert
+    // Assert: 10/3 = 3.333... pero con precisión limitada
     assertEquals(3.333, resultado, 0.001);  // Tolerancia de ±0.001
 }
 ```
 
 :::{important}
-Siempre usá un delta al comparar `double` o `float`, debido a imprecisiones de punto flotante:
+**Siempre usá un delta al comparar `double` o `float`**, debido a imprecisiones de punto flotante. Este problema existe en todos los lenguajes, incluyendo C:
 
 ```java
 // ❌ Incorrecto - puede fallar por imprecisión
 assertEquals(0.3, 0.1 + 0.2);
+// 0.1 + 0.2 en punto flotante es 0.30000000000000004, no 0.3
 
 // ✅ Correcto - usa delta
 assertEquals(0.3, 0.1 + 0.2, 0.000001);
 ```
 
+En C tendrías el mismo problema:
+```c
+double resultado = 0.1 + 0.2;
+if (resultado == 0.3) { ... }  // ¡Puede ser falso!
+if (fabs(resultado - 0.3) < 0.000001) { ... }  // Correcto
+```
 :::
 
 #### `assertTrue` y `assertFalse`
 
-Verifican condiciones booleanas:
+Verifican condiciones booleanas. Son útiles cuando tenés un método que retorna `boolean` o querés verificar una condición compleja.
 
 ```java
 @Test
 void testValidador() {
-    // Act & Assert
+    // Act & Assert combinados para simplificar
     assertTrue(ValidadorEmail.esValido("usuario@ejemplo.com"));
     assertFalse(ValidadorEmail.esValido("sin-arroba"));
 }
 ```
 
+También podés usar `assertTrue` para condiciones más complejas, aunque a veces `assertEquals` da mejores mensajes de error:
+
+```java
+@Test
+void testNumeroEnRango() {
+    int numero = Generador.generarNumero();
+    
+    // Opción 1: assertTrue (mensaje de error menos informativo)
+    assertTrue(numero >= 0 && numero <= 100, 
+               "Número debe estar entre 0 y 100");
+    
+    // Opción 2: múltiples assertions (más explícito)
+    assertTrue(numero >= 0, "Número no debe ser negativo");
+    assertTrue(numero <= 100, "Número no debe exceder 100");
+}
+```
+
 #### `assertNull` y `assertNotNull`
 
-Verifican si un valor es `null`:
+Verifican si un valor es `null`. En Java (a diferencia de C), `null` es un valor especial que indica "ausencia de referencia".
 
 ```java
 @Test
@@ -381,14 +518,23 @@ void testBuscar_ConClaveExistente_RetornaValor() {
 
     // Assert
     assertNotNull(resultado);
+    // Opcionalmente, también verificar el contenido
+    assertEquals("valor esperado", resultado);
 }
+```
+
+En C, el equivalente sería verificar si un puntero es `NULL`:
+
+```c
+char* resultado = buscar_por_clave("inexistente");
+if (resultado == NULL) { ... }  // Similar a assertNull
 ```
 
 ### Assertions para colecciones y arrays
 
 #### `assertArrayEquals`
 
-Verifica que dos arrays tienen los mismos elementos en el mismo orden:
+Verifica que dos arrays tienen los mismos elementos en el mismo orden. Esto es especialmente útil porque en Java (y en C), comparar arrays directamente con `==` compara referencias, no contenido.
 
 ```java
 @Test
@@ -405,9 +551,24 @@ void testOrdenar_ConArregloDesordenado_RetornaArregloOrdenado() {
 }
 ```
 
+**¿Por qué no usar `assertEquals` para arrays?**
+
+```java
+int[] a = {1, 2, 3};
+int[] b = {1, 2, 3};
+
+// ❌ Esto falla aunque tengan el mismo contenido
+assertEquals(a, b);  // Compara referencias, son objetos diferentes
+
+// ✅ Esto funciona correctamente
+assertArrayEquals(a, b);  // Compara elemento por elemento
+```
+
+Esto es similar al problema en C donde `array1 == array2` compara direcciones de memoria, no contenido.
+
 #### Assertions de colecciones (con métodos helper)
 
-JUnit 5 no tiene assertions específicas para colecciones en `Assertions`, pero podés combinar assertions:
+JUnit 5 no tiene assertions específicas para colecciones (`List`, `Set`, etc.) en `Assertions`, pero podés combinar assertions básicos:
 
 ```java
 @Test
@@ -418,20 +579,43 @@ void testFiltrar_ConListaDeNumeros_RetornaListaFiltrada() {
     // Act
     int[] pares = Filtrador.filtrarPares(numeros);
 
-    // Assert
-    assertNotNull(pares);
-    assertEquals(3, pares.length);
-    assertEquals(2, pares[0]);
+    // Assert: Verificar múltiples aspectos
+    assertNotNull(pares);                          // No es null
+    assertEquals(3, pares.length);                 // Tiene 3 elementos
+    assertEquals(2, pares[0]);                     // Primer par es 2
+    assertArrayEquals(new int[]{2, 4, 6}, pares);  // Contenido completo
 }
 ```
 
 ### Verificación de excepciones
 
-Una funcionalidad crucial es verificar que el código lanza excepciones en situaciones incorrectas.
+Una funcionalidad crucial es verificar que el código lanza excepciones en situaciones de error. Las excepciones son parte del **contrato** de un método: si la documentación dice "lanza `ArithmeticException` si el divisor es cero", debemos testear que eso realmente sucede.
 
-#### `assertThrows`
+En C no hay excepciones nativas, así que el manejo de errores suele ser por valores de retorno:
 
-Verifica que un bloque de código lanza una excepción específica:
+```c
+// En C, típicamente retornás un código de error o valor especial
+int dividir(int a, int b, int* resultado) {
+    if (b == 0) return -1;  // Código de error
+    *resultado = a / b;
+    return 0;  // Éxito
+}
+```
+
+En Java, usamos excepciones:
+
+```java
+public static double dividir(double a, double b) {
+    if (b == 0) {
+        throw new ArithmeticException("No se puede dividir por cero");
+    }
+    return a / b;
+}
+```
+
+#### Verificar que se lanza excepción con try-catch
+
+La forma clásica (y que funciona en cualquier versión de Java) es usar `try-catch` con `fail()`:
 
 ```java
 @Test
@@ -439,14 +623,23 @@ void testDividir_ConDivisorCero_LanzaArithmeticException() {
     // Act & Assert
     try {
         Calculadora.dividir(10, 0);
-        fail("Se esperaba ArithmeticException");
+        fail("Se esperaba ArithmeticException");  // Si llegamos aquí, el test falla
     } catch (ArithmeticException e) {
         // Test pasa - se lanzó la excepción esperada
     }
 }
 ```
 
-Podés capturar la excepción para verificar su mensaje:
+**Explicación paso a paso:**
+
+1. Llamamos al método que debería lanzar la excepción
+2. Si **no** lanza excepción, llegamos a `fail()`, que hace fallar el test
+3. Si **sí** lanza `ArithmeticException`, el `catch` la atrapa y el test pasa
+4. Si lanza **otra** excepción (ej: `NullPointerException`), el catch no la atrapa y el test falla como "Error"
+
+#### Verificar mensaje de excepción
+
+Podés capturar la excepción y verificar su mensaje:
 
 ```java
 @Test
@@ -462,20 +655,20 @@ void testDividir_ConDivisorCero_LanzaExcepcionConMensajeCorrecto() {
 ```
 
 :::{important}
-Verificar excepciones es tan importante como verificar resultados correctos. Las excepciones son parte del contrato de un método.
+Verificar excepciones es tan importante como verificar resultados correctos. Las excepciones son parte del contrato de un método y documentan cómo el código maneja situaciones de error.
 :::
 
 #### Verificar que NO se lanza excepción
 
-Cuando querés verificar que un método NO lanza excepciones, simplemente llamalo:
+Cuando querés verificar que un método NO lanza excepciones para entradas válidas, simplemente llamalo. Si lanza una excepción, JUnit la captura y el test falla como "Error":
 
 ```java
 @Test
 void testDividir_ConDivisorNoNulo_NoLanzaExcepcion() {
-    // Act
+    // Act: Si esto lanza una excepción, el test falla automáticamente
     double resultado = Calculadora.dividir(10, 2);
 
-    // Assert
+    // Assert: Verificar el resultado correcto
     assertEquals(5.0, resultado, 0.01);
 }
 ```
@@ -507,6 +700,8 @@ void testParsearFecha_ConFormatoCorrecto_RetornaComponentes() {
 :::{note}
 Si una assertion falla, las siguientes no se ejecutan. Por esto es importante que cada test verifique un concepto específico según la {ref}`regla-0x4002`.
 :::
+
+Utilicen esta estrategia solo para verificar diferentes aspectos de un único resultado.
 
 ### Mensajes de falla descriptivos
 
@@ -2130,225 +2325,132 @@ void testParsearFecha_RetornaComponentesCorrectos() {
 }
 ```
 
-## Test-Driven Development (TDD)
+## Test-Driven Development con JUnit
 
-**Test-Driven Development** es una metodología de desarrollo donde los tests se escriben **antes** que el código de producción.
-
-### El ciclo Red-Green-Refactor
-
-TDD sigue un ciclo iterativo de tres pasos:
-
-```{figure} 2/tdd_ciclo.svg
-:label: fig-tdd-ciclo
-:align: center
-:width: 70%
-
-Ciclo TDD: Red (test falla) → Green (test pasa) → Refactor (mejora código).
-```
-
-**1. Red (Rojo) - Escribir test que falle:**
-
-```java
-@Test
-void testSumar_ConDosNumeros_RetornaSuma() {
-    assertEquals(5, Calculadora.sumar(2, 3));  // Método no existe aún
-}
-```
-
-Ejecutás el test y **falla** (rojo ❌) porque el código no existe.
-
-**2. Green (Verde) - Escribir código mínimo que pase:**
-
-```java
-public class Calculadora {
-    public static int sumar(int a, int b) {
-        return a + b;  // Implementación mínima
-    }
-}
-```
-
-Ejecutás el test y **pasa** (verde ✅).
-
-**3. Refactor - Mejorar código manteniendo tests verdes:**
-
-```java
-public class Calculadora {
-    /**
-     * Suma dos números enteros.
-     *
-     * @param sumando1 primer número
-     * @param sumando2 segundo número
-     * @return suma de los dos números
-     */
-    public static int sumar(int sumando1, int sumando2) {
-        return sumando1 + sumando2;
-    }
-}
-```
-
-Mejorás el código (nombres, documentación, estructura) y los tests siguen pasando.
-
-### Beneficios de TDD
-
-1. **Diseño mejorado**: Escribir tests primero fuerza a pensar en la API antes de implementar
-2. **Código testeable**: El código naturalmente es más modular y testeable
-3. **Cobertura alta**: Todo el código tiene tests porque se escribieron primero
-4. **Documentación**: Los tests documentan el comportamiento esperado
-5. **Confianza**: Sabés que cada línea funciona porque hay un test que la verifica
-
-### Ejemplo completo de TDD
-
-Desarrollemos funciones matemáticas usando TDD.
-
-**Iteración 1: Factorial de 0**
-
-```java
-// Test (Red)
-@Test
-void testFactorial_ConCero_RetornaUno() {
-    assertEquals(1, Matematica.factorial(0));  // Método no existe
-}
-
-// Implementación mínima (Green)
-public class Matematica {
-    public static long factorial(int n) {
-        return 1;  // Implementación trivial que pasa el test
-    }
-}
-```
-
-**Iteración 2: Factorial de número positivo**
-
-```java
-// Test (Red)
-@Test
-void testFactorial_ConCinco_Retorna120() {
-    assertEquals(120, Matematica.factorial(5));
-}
-
-// Implementación (Green)
-public class Matematica {
-    public static long factorial(int n) {
-        if (n == 0) return 1;
-        long resultado = 1;
-        for (int i = 1; i <= n; i++) {
-            resultado = resultado * i;
-        }
-        return resultado;
-    }
-}
-```
-
-**Iteración 3: Validar entrada negativa**
-
-```java
-// Test (Red)
-@Test
-void testFactorial_ConNumeroNegativo_LanzaExcepcion() {
-    try {
-        Matematica.factorial(-1);
-        fail("Se esperaba IllegalArgumentException");
-    } catch (IllegalArgumentException e) {
-        assertTrue(e.getMessage().contains("negativo"));
-    }
-}
-
-// Implementación (Green)
-public class Matematica {
-    public static long factorial(int n) {
-        if (n < 0) {
-            throw new IllegalArgumentException("El número no puede ser negativo");
-        }
-        if (n == 0) return 1;
-        long resultado = 1;
-        for (int i = 1; i <= n; i++) {
-            resultado = resultado * i;
-        }
-        return resultado;
-    }
-}
-```
-
-**Iteración 4: Refactorizar (mantener tests verdes)**
-
-```java
-public class Matematica {
-    /**
-     * Calcula el factorial de un número.
-     *
-     * @param n número del cual calcular el factorial (debe ser >= 0)
-     * @return factorial de n
-     * @throws IllegalArgumentException si n es negativo
-     */
-    public static long factorial(int n) {
-        validarNoNegativo(n);
-        return calcularFactorial(n);
-    }
-    
-    private static void validarNoNegativo(int n) {
-        if (n < 0) {
-            throw new IllegalArgumentException("El número no puede ser negativo: " + n);
-        }
-    }
-    
-    private static long calcularFactorial(int n) {
-        long resultado = 1;
-        for (int i = 2; i <= n; i++) {
-            resultado = resultado * i;
-        }
-        return resultado;
-    }
-}
-
-// Refactor: Ahora todos los tests siguen pasando
-```
-
-:::{tip}
-TDD es especialmente útil cuando:
-
-- Estás aprendiendo una nueva API o librería
-- El problema es complejo y necesitás dividirlo en pasos pequeños
-- Trabajás en código crítico que debe ser robusto
-- Querés diseñar la API pública antes de implementarla
-  :::
-
-### TDD vs Test-After
-
-| Aspecto                   | TDD (Test-First)  | Test-After                    |
-| ------------------------- | ----------------- | ----------------------------- |
-| **Cuándo escribir tests** | Antes del código  | Después del código            |
-| **Cobertura**             | Naturalmente alta | Puede ser parcial             |
-| **Diseño**                | Influye en diseño | Se adapta al diseño existente |
-| **Refactoring**           | Más seguro        | Menos confiable               |
-| **Curva de aprendizaje**  | Más empinada      | Más suave                     |
+El **Test-Driven Development** (TDD) es una metodología donde los tests se escriben antes que el código de producción. 
 
 :::{important}
-En esta cátedra, practicaremos ambas aproximaciones. Lo fundamental es que **el código tenga tests**, independientemente de cuándo se escribieron.
+Para los fundamentos teóricos del TDD, el ciclo Red-Green-Refactor completo, las tres reglas, patrones (Fake It, Triangulation), comparación TDD vs Test-After y el ejemplo completo paso a paso de factorial, consultá {ref}`testing`.
 :::
 
-## Estrategias de Testing
+En esta sección nos enfocamos en aspectos prácticos específicos de JUnit para aplicar TDD.
 
-### Análisis de valores límite (Boundary Value Analysis)
+### Aplicando TDD con JUnit en la Práctica
 
-Los errores ocurren frecuentemente en los **límites** o **bordes** de los rangos válidos. Esta técnica se enfoca en testear:
+Cuando aplicás TDD con JUnit, seguís este flujo:
+
+1. **Escribir el test primero** usando `@Test`
+2. **Ver que falla** (compilación o assertion)
+3. **Implementar el mínimo código** para pasar
+4. **Refactorizar** con confianza
+
+**Ejemplo práctico de un ciclo:**
+
+```java
+// 1. RED: Test que falla
+@Test
+void testCalcularDescuento_ConMonto100_Retorna5Porciento() {
+    double descuento = Calculadora.calcularDescuento(100);
+    assertEquals(5.0, descuento, 0.01);
+}
+// Falla: método no existe
+
+// 2. GREEN: Implementación mínima
+public static double calcularDescuento(double monto) {
+    return 5.0;  // Hardcoded para pasar el test
+}
+// Test pasa ✅
+
+// 3. RED: Agregar otro test
+@Test
+void testCalcularDescuento_ConMonto500_Retorna10Porciento() {
+    double descuento = Calculadora.calcularDescuento(500);
+    assertEquals(10.0, descuento, 0.01);
+}
+// Falla: esperado 10.0, obtenido 5.0
+
+// 4. GREEN: Generalizar
+public static double calcularDescuento(double monto) {
+    if (monto < 500) return 5.0;
+    return 10.0;
+}
+// Ambos tests pasan ✅✅
+
+// 5. REFACTOR: Mejorar sin romper tests
+public static double calcularDescuento(double monto) {
+    return monto < 500 ? 5.0 : 10.0;
+}
+// Tests siguen pasando ✅✅
+```
+
+### Tips para TDD con JUnit
+
+**Nombres descriptivos en TDD**
+
+Los nombres de tests son especialmente importantes en TDD porque documentan el comportamiento antes de que exista el código:
+
+```java
+// ✅ Describe el comportamiento esperado
+@Test void testSumar_ConDosPositivos_RetornaSuma() { }
+```
+
+**Baby steps (pasos pequeños)**
+
+Cada ciclo debe ser mínimo:
+
+```java
+// ✅ Tests pequeños y enfocados
+@Test void testValidar_ConEmailValido_RetornaTrue() { }
+@Test void testValidar_SinArroba_RetornaFalse() { }
+```
+
+**Usar `@BeforeEach` para evitar duplicación**
+
+```java
+private Calculadora calculadora;
+
+@BeforeEach
+void setUp() {
+    calculadora = new Calculadora();
+}
+
+@Test
+void testSumar() {
+    assertEquals(5, calculadora.sumar(2, 3));
+}
+```
+
+-------------------------------------
+
+## Estrategias de Testing con JUnit
+
+Para diseñar buenos tests, necesitamos estrategias sistemáticas. Para la teoría sobre particiones de equivalencia, valores límite y análisis de casos de prueba, consultá {ref}`testing`. Aquí vemos la implementación con JUnit.
+
+### Análisis de Valores Límite (Boundary Value Analysis)
+
+Los errores de programación ocurren frecuentemente en los **límites** o **bordes** de los rangos válidos. Pensá en los típicos errores off-by-one: `i < n` vs `i <= n`, `>= 0` vs `> 0`, etc.
+
+Esta técnica se enfoca en testear:
 
 - El valor mínimo válido
-- Justo por debajo del mínimo
+- Justo **debajo** del mínimo (valor inválido)
 - El valor máximo válido
-- Justo por encima del máximo
-- Valores típicos en el medio
+- Justo **encima** del máximo (valor inválido)
+- Valores típicos en el medio (para verificar el caso general)
 
 **Ejemplo: Validador de edad**
+
+Supongamos un método que valida si una edad es válida para votar (18-120 años):
 
 ```java
 public class Validador {
     /**
-     * Valida que la edad esté entre 18 y 120 años.
+     * Valida que la edad esté entre 18 y 120 años (inclusive).
      *
      * @param edad edad a validar
-     * @return true si es válida, false en caso contrario
+     * @return true si es válida para votar, false si no
      */
-    public static boolean esEdadValida(int edad) {
+    public static boolean esEdadParaVotar(int edad) {
         return edad >= 18 && edad <= 120;
     }
 }
@@ -2359,94 +2461,116 @@ public class Validador {
 ```java
 public class ValidadorTest {
 
-    // Límite inferior
+    // === Límite inferior ===
+    
     @Test
-    void testEsEdadValida_Con17_RetornaFalse() {
-        assertFalse(Validador.esEdadValida(17), "17 está por debajo del mínimo");
+    void testEsEdadParaVotar_Con17_RetornaFalse() {
+        // 17 está justo debajo del mínimo (18)
+        assertFalse(Validador.esEdadParaVotar(17), "17 está por debajo del mínimo");
     }
 
     @Test
-    void testEsEdadValida_Con18_RetornaTrue() {
-        assertTrue(Validador.esEdadValida(18), "18 es el mínimo válido");
+    void testEsEdadParaVotar_Con18_RetornaTrue() {
+        // 18 es exactamente el mínimo válido
+        assertTrue(Validador.esEdadParaVotar(18), "18 es el mínimo válido");
     }
 
     @Test
-    void testEsEdadValida_Con19_RetornaTrue() {
-        assertTrue(Validador.esEdadValida(19), "19 está dentro del rango");
+    void testEsEdadParaVotar_Con19_RetornaTrue() {
+        // 19 está justo arriba del mínimo, dentro del rango
+        assertTrue(Validador.esEdadParaVotar(19), "19 está dentro del rango");
     }
 
-    // Límite superior
+    // === Límite superior ===
+    
     @Test
-    void testEsEdadValida_Con119_RetornaTrue() {
-        assertTrue(Validador.esEdadValida(119), "119 está dentro del rango");
-    }
-
-    @Test
-    void testEsEdadValida_Con120_RetornaTrue() {
-        assertTrue(Validador.esEdadValida(120), "120 es el máximo válido");
-    }
-
-    @Test
-    void testEsEdadValida_Con121_RetornaFalse() {
-        assertFalse(Validador.esEdadValida(121), "121 excede el máximo");
-    }
-
-    // Valor típico
-    @Test
-    void testEsEdadValida_Con50_RetornaTrue() {
-        assertTrue(Validador.esEdadValida(50), "50 es un valor típico válido");
-    }
-
-    // Valores extremos adicionales
-    @Test
-    void testEsEdadValida_ConValorNegativo_RetornaFalse() {
-        assertFalse(Validador.esEdadValida(-5));
+    void testEsEdadParaVotar_Con119_RetornaTrue() {
+        // 119 está justo debajo del máximo, dentro del rango
+        assertTrue(Validador.esEdadParaVotar(119), "119 está dentro del rango");
     }
 
     @Test
-    void testEsEdadValida_Con0_RetornaFalse() {
-        assertFalse(Validador.esEdadValida(0));
+    void testEsEdadParaVotar_Con120_RetornaTrue() {
+        // 120 es exactamente el máximo válido
+        assertTrue(Validador.esEdadParaVotar(120), "120 es el máximo válido");
+    }
+
+    @Test
+    void testEsEdadParaVotar_Con121_RetornaFalse() {
+        // 121 está justo arriba del máximo
+        assertFalse(Validador.esEdadParaVotar(121), "121 excede el máximo");
+    }
+
+    // === Valor típico (caso nominal) ===
+    
+    @Test
+    void testEsEdadParaVotar_Con50_RetornaTrue() {
+        // 50 es un valor típico en medio del rango
+        assertTrue(Validador.esEdadParaVotar(50), "50 es un valor típico válido");
+    }
+
+    // === Valores extremos adicionales ===
+    
+    @Test
+    void testEsEdadParaVotar_ConValorNegativo_RetornaFalse() {
+        assertFalse(Validador.esEdadParaVotar(-5), "Edades negativas son inválidas");
+    }
+
+    @Test
+    void testEsEdadParaVotar_ConCero_RetornaFalse() {
+        assertFalse(Validador.esEdadParaVotar(0), "Cero es inválido");
     }
 }
 ```
 
-**Con tests parametrizados:**
+**Con tests parametrizados (más compacto):**
 
 ```java
 @ParameterizedTest(name = "Edad {0} debe ser {1}")
 @CsvSource({
-    "-5,  false",  // Negativo
+    "-5,  false",  // Muy debajo del mínimo
     "0,   false",  // Cero
-    "17,  false",  // Justo debajo del mínimo
-    "18,  true",   // Mínimo válido
-    "19,  true",   // Justo arriba del mínimo
+    "17,  false",  // Justo debajo del mínimo (LÍMITE)
+    "18,  true",   // Mínimo válido (LÍMITE)
+    "19,  true",   // Justo arriba del mínimo (LÍMITE)
     "50,  true",   // Valor típico
-    "119, true",   // Justo debajo del máximo
-    "120, true",   // Máximo válido
-    "121, false",  // Justo arriba del máximo
-    "200, false"   // Muy por encima
+    "119, true",   // Justo debajo del máximo (LÍMITE)
+    "120, true",   // Máximo válido (LÍMITE)
+    "121, false",  // Justo arriba del máximo (LÍMITE)
+    "200, false"   // Muy arriba del máximo
 })
-void testEsEdadValida_ValoresLimite(int edad, boolean esperado) {
-    assertEquals(esperado, Validador.esEdadValida(edad));
+void testEsEdadParaVotar_ValoresLimite(int edad, boolean esperado) {
+    assertEquals(esperado, Validador.esEdadParaVotar(edad),
+                 "Edad " + edad + " debería ser " + (esperado ? "válida" : "inválida"));
 }
 ```
 
-### Particiones de equivalencia
+Notá que los valores marcados como "(LÍMITE)" son los críticos. Si hay un bug off-by-one, uno de estos tests lo detectará.
 
-Dividí el dominio de entrada en **clases de equivalencia** donde todos los valores deberían comportarse igual. Testeá un valor representativo de cada clase.
+### Particiones de Equivalencia
+
+Esta técnica complementa el análisis de límites. La idea es dividir el dominio de entrada en **clases de equivalencia**: grupos de valores que deberían comportarse igual.
+
+**Principio**: Si el código funciona para un valor de una clase, probablemente funciona para todos los valores de esa clase. Entonces, testeamos un representante de cada clase.
 
 **Ejemplo: Calculadora de descuentos**
 
 ```java
 public class Calculadora {
     /**
-     * Calcula descuento según el monto de compra:
-     * - Menos de 100: sin descuento (0%)
-     * - 100-499: descuento pequeño (5%)
-     * - 500-999: descuento medio (10%)
-     * - 1000 o más: descuento grande (15%)
+     * Calcula el porcentaje de descuento según el monto de compra:
+     * - Menos de $100: sin descuento (0%)
+     * - $100 a $499: descuento pequeño (5%)
+     * - $500 a $999: descuento medio (10%)
+     * - $1000 o más: descuento grande (15%)
+     *
+     * @param monto monto de la compra (debe ser >= 0)
+     * @return porcentaje de descuento como decimal (0.0, 0.05, 0.10, o 0.15)
      */
     public static double calcularDescuento(double monto) {
+        if (monto < 0) {
+            throw new IllegalArgumentException("El monto no puede ser negativo");
+        }
         if (monto < 100) return 0.0;
         if (monto < 500) return 0.05;
         if (monto < 1000) return 0.10;
@@ -2455,99 +2579,158 @@ public class Calculadora {
 }
 ```
 
-**Particiones:**
+**Identificación de particiones:**
 
-1. **P1**: monto < 100 → descuento 0%
-2. **P2**: 100 ≤ monto < 500 → descuento 5%
-3. **P3**: 500 ≤ monto < 1000 → descuento 10%
-4. **P4**: monto ≥ 1000 → descuento 15%
+El dominio de entrada (montos válidos) se divide naturalmente en 4 clases:
 
-**Tests:**
+| Partición | Rango | Descuento | Ejemplo representativo |
+| :--- | :--- | :--- | :--- |
+| P1 | 0 ≤ monto < 100 | 0% | 50 |
+| P2 | 100 ≤ monto < 500 | 5% | 250 |
+| P3 | 500 ≤ monto < 1000 | 10% | 750 |
+| P4 | monto ≥ 1000 | 15% | 1500 |
+
+Además hay una partición inválida: montos negativos.
+
+**Tests que cubren todas las particiones:**
 
 ```java
-@ParameterizedTest(name = "Monto {0} debe tener descuento {1}")
+@ParameterizedTest(name = "Monto ${0} → descuento {1}")
 @CsvSource({
-    "50,    0.0",    // P1: representante partición 1
-    "250,   0.05",   // P2: representante partición 2
-    "750,   0.10",   // P3: representante partición 3
-    "1500,  0.15",   // P4: representante partición 4
-    // Límites
-    "99.99, 0.0",    // Límite P1/P2
-    "100,   0.05",   // Límite P1/P2
-    "499,   0.05",   // Límite P2/P3
-    "500,   0.10",   // Límite P2/P3
-    "999,   0.10",   // Límite P3/P4
-    "1000,  0.15"    // Límite P3/P4
+    // Representantes de cada partición
+    "50,    0.0",    // P1: un valor típico de la partición 1
+    "250,   0.05",   // P2: un valor típico de la partición 2
+    "750,   0.10",   // P3: un valor típico de la partición 3
+    "1500,  0.15",   // P4: un valor típico de la partición 4
+    
+    // Límites entre particiones (combinando ambas técnicas)
+    "99.99, 0.0",    // Límite P1/P2 (lado P1)
+    "100,   0.05",   // Límite P1/P2 (lado P2)
+    "499,   0.05",   // Límite P2/P3 (lado P2)
+    "500,   0.10",   // Límite P2/P3 (lado P3)
+    "999,   0.10",   // Límite P3/P4 (lado P3)
+    "1000,  0.15"    // Límite P3/P4 (lado P4)
 })
 void testCalcularDescuento_ConDiferentesMontos(double monto, double descuentoEsperado) {
-    assertEquals(descuentoEsperado, Calculadora.calcularDescuento(monto), 0.001);
+    assertEquals(descuentoEsperado, Calculadora.calcularDescuento(monto), 0.001,
+                 "Monto $" + monto + " debería tener " + (descuentoEsperado * 100) + "% de descuento");
 }
 ```
 
-### Casos de prueba especiales
+**Combinando particiones y límites:**
 
-#### Valores nulos
+La estrategia más efectiva es combinar ambas técnicas:
+1. Identificar las particiones del dominio
+2. Para cada partición, testear un valor representativo del medio
+3. Testear los valores en los límites entre particiones
 
-Siempre considerá el caso `null`:
+### Casos de Prueba Especiales
+
+Además de límites y particiones, hay ciertos casos que siempre deberías considerar:
+
+#### Valores nulos (`null`)
+
+En Java, a diferencia de C, hay una distinción clara entre "no hay valor" (`null`) y "valor vacío" (ej: string vacío `""`). Siempre testeá cómo tu código maneja `null`:
 
 ```java
 @Test
 void testProcesar_ConEntradaNull_LanzaIllegalArgumentException() {
     try {
         Procesador.procesar(null);
-        fail("Se esperaba IllegalArgumentException");
+        fail("Se esperaba IllegalArgumentException para entrada null");
     } catch (IllegalArgumentException e) {
-        assertTrue(e.getMessage().contains("null"));
+        assertTrue(e.getMessage().contains("null") || 
+                   e.getMessage().contains("nulo"),
+                   "El mensaje debería mencionar el problema");
     }
 }
 ```
 
-#### Arreglos vacíos
+#### Arreglos y colecciones vacías
+
+Un arreglo vacío no es `null`, pero tiene características especiales (no hay elementos, `length == 0`):
 
 ```java
 @Test
 void testCalcularPromedio_ConArregloVacio_LanzaIllegalArgumentException() {
-    int[] valoresVacios = {};
+    int[] valoresVacios = {};  // Arreglo vacío, no null
 
     try {
         Estadisticas.calcularPromedio(valoresVacios);
-        fail("Se esperaba IllegalArgumentException");
+        fail("Se esperaba IllegalArgumentException para arreglo vacío");
     } catch (IllegalArgumentException e) {
-        // Test pasa
+        // Calcular promedio de cero elementos no tiene sentido matemático
     }
+}
+
+@Test
+void testSumar_ConArregloVacio_RetornaCero() {
+    int[] valoresVacios = {};
+    
+    // Sumar cero elementos tiene sentido: el resultado es 0
+    assertEquals(0, Arreglos.sumar(valoresVacios));
 }
 ```
 
-#### Strings vacíos y con espacios
+#### Strings vacíos y con solo espacios
+
+Un string puede estar vacío (`""`), contener solo espacios (`"   "`), o contener espacios "invisibles" (tabs, newlines):
 
 ```java
 @ParameterizedTest
 @ValueSource(strings = {"", "   ", "\t", "\n", "  \t\n  "})
 void testValidarNombre_ConStringBlanco_RetornaFalse(String nombreBlanco) {
-    assertFalse(Validador.esNombreValido(nombreBlanco));
+    assertFalse(Validador.esNombreValido(nombreBlanco),
+                "Nombres en blanco no son válidos: '" + nombreBlanco + "'");
 }
 ```
 
 #### Duplicados en arreglos
 
+Si tu código procesa colecciones, considerá qué pasa con elementos duplicados:
+
 ```java
 @Test
 void testContarUnicos_ConDuplicados_RetornaCantidadSinRepetidos() {
-    int[] conDuplicados = {1, 2, 2, 3, 3, 3};
+    int[] conDuplicados = {1, 2, 2, 3, 3, 3, 4};
     
     int unicos = Arreglos.contarUnicos(conDuplicados);
     
-    assertEquals(3, unicos, "Debe contar solo valores únicos: 1, 2, 3");
+    assertEquals(4, unicos, "Debe contar solo valores únicos: 1, 2, 3, 4");
 }
 ```
 
-## Test Smells: Olores en Tests
+#### Un solo elemento
 
-Los **test smells** son señales de que los tests tienen problemas de diseño o mantenibilidad.
+El caso de un solo elemento a veces tiene comportamiento especial:
+
+```java
+@Test
+void testOrdenar_ConUnElemento_RetornaMismoArreglo() {
+    int[] unElemento = {42};
+    
+    int[] resultado = Ordenador.ordenar(unElemento);
+    
+    assertArrayEquals(new int[]{42}, resultado);
+}
+
+@Test
+void testBuscarMaximo_ConUnElemento_RetornaEseElemento() {
+    int[] unElemento = {42};
+    
+    int maximo = Arreglos.buscarMaximo(unElemento);
+    
+    assertEquals(42, maximo);
+}
+```
+
+## Test Smells con JUnit
+
+Los **test smells** son señales de que los tests tienen problemas. Aquí vemos ejemplos concretos con JUnit.
 
 ### Test interdependiente
 
-**Olor:** Tests que deben ejecutarse en orden específico.
+**Problema:** Tests que deben ejecutarse en orden específico.
 
 ```java
 // ❌ Tests interdependientes (usando estado estático mutable)
@@ -2583,7 +2766,7 @@ public class CalculadoraTest {
 
 ### Test obscuro
 
-**Olor:** No es claro qué se está testeando o por qué.
+**Problema:** No es claro qué se está testeando o por qué.
 
 ```java
 // ❌ Test obscuro
@@ -2610,7 +2793,7 @@ void testCalcularAniosHastaJubilacion_ConEdadActual35_Retorna30() {
 
 ### Test con lógica compleja
 
-**Olor:** Tests con condicionales, lazos, o cálculos complejos.
+**Problema:** Tests con condicionales, lazos, o cálculos complejos.
 
 ```java
 // ❌ Test con lógica
@@ -2698,7 +2881,7 @@ void testSumar_ConDosYTres_RetornaCinco() {
 
 ### Test silencioso
 
-**Olor:** Test que no falla cuando debería.
+**Problema:** Test que no falla cuando debería.
 
 ```java
 // ❌ Test silencioso - no verifica nada
@@ -2718,7 +2901,11 @@ void testProcesar_ConDatosValidos_RetornaResultado() {
 }
 ```
 
-## Debugging de Tests Fallidos
+:::{seealso}
+Para más detalles sobre test smells y buenas prácticas generales, consultá {ref}`testing`.
+:::
+
+## Debugging de Tests Fallidos con JUnit
 
 Cuando un test falla, seguí estos pasos sistemáticos:
 
@@ -2896,25 +3083,25 @@ public static double aplicarDescuento(double precio, double porcentaje) {
 
 ## Resumen
 
-En este apunte hemos explorado:
+Este apunte cubrió la implementación práctica de testing con JUnit 5:
 
-1. **Fundamentos del testing**: Por qué testear y tipos de tests
+1. **Configuración**: Gradle, estructura de proyecto, dependencias
 2. **JUnit 5**: Framework moderno para testing en Java
-3. **Estructura AAA**: Arrange-Act-Assert ({ref}`regla-0x4001`)
-4. **Assertions**: Verificaciones de JUnit (`assertEquals`, `assertTrue`, etc.)
-5. **Ciclo de vida**: `@BeforeEach`, `@AfterEach`, `@BeforeAll`, `@AfterAll`
-6. **Convenciones de nombrado**: ({ref}`regla-0x4003`)
-7. **Reglas de testing**: Independencia ({ref}`regla-0x4005`), una llamada ({ref}`regla-0x4002`), sin lógica ({ref}`regla-0x4004`)
-8. **Tests parametrizados**: `@ParameterizedTest` para múltiples casos
-9. **Excepciones**: Verificación con try-catch de comportamiento excepcional
-10. **TDD**: Test-Driven Development y el ciclo Red-Green-Refactor
-11. **Estrategias de testing**: Valores límite, particiones de equivalencia, casos especiales
-12. **Test smells**: Identificar y evitar olores en tests
-13. **Debugging**: Diagnosticar y resolver tests fallidos
-14. **Buenas prácticas**: FIRST, claridad, mantenibilidad
+3. **Anatomía de un test**: @Test, imports, estructura AAA
+4. **Assertions**: assertEquals, assertTrue, assertNull, assertArrayEquals, etc.
+5. **Excepciones**: Verificación con try-catch
+6. **Ciclo de vida**: @BeforeEach, @AfterEach, @BeforeAll, @AfterAll
+7. **Convenciones**: Reglas {ref}`regla-0x4000` a {ref}`regla-0x4005`
+8. **Tests parametrizados**: @ParameterizedTest, @ValueSource, @CsvSource
+9. **TDD en práctica**: Ejemplo completo con factorial
+10. **Estrategias con JUnit**: Implementación de valores límite y particiones
+11. **Test smells**: Ejemplos concretos con JUnit
+12. **Debugging**: Técnicas para diagnosticar tests fallidos
+13. **Cobertura**: JaCoCo y métricas
 
-:::{important}
-**Testing no es opcional**: Es una habilidad fundamental del desarrollo profesional. Código sin tests es código legacy desde el día cero.
+:::{seealso}
+- {ref}`testing` — Fundamentos teóricos (pirámide, FIRST, TDD conceptual)
+- {ref}`regla-0x4000` — Reglas de estilo para testing
 :::
 
 ## Ejercicios
