@@ -1031,7 +1031,7 @@ Para cerrar, estas son las reglas fundamentales que debés recordar:
 
 ## Ejercicios de Aplicación
 
-```exercise
+````{exercise}
 :label: ej-memoria-que-imprime
 ¿Qué imprime el siguiente código? Explicá por qué.
 
@@ -1041,16 +1041,16 @@ int[] b = a;
 b[0] = 100;
 System.out.println(a[0] + " " + b[0]);
 ```
-```
+````
 
-```solution
-:for: ej-memoria-que-imprime
+```{solution} ej-memoria-que-imprime
+:class: dropdown
 Imprime `100 100`.
 
 Al hacer `int[] b = a`, no se copia el arreglo, solo se copia la **referencia**. Tanto `a` como `b` apuntan al mismo arreglo en el Heap. Cuando modificamos `b[0]`, estamos modificando el único arreglo que existe, por lo que `a[0]` también muestra el cambio.
 ```
 
-```exercise
+````{exercise}
 :label: ej-string-inmutable
 ¿Qué imprime el siguiente código?
 
@@ -1059,10 +1059,10 @@ String s = "hola";
 s.toUpperCase();
 System.out.println(s);
 ```
-```
+````
 
-```solution
-:for: ej-string-inmutable
+````{solution} ej-string-inmutable
+:class: dropdown
 Imprime `hola` (en minúsculas).
 
 Los Strings son inmutables. El método `toUpperCase()` **retorna un nuevo String** con el contenido en mayúsculas, pero no modifica el String original. El resultado retornado se pierde porque no lo asignamos a ninguna variable.
@@ -1073,15 +1073,15 @@ String s = "hola";
 s = s.toUpperCase();  // Reasignar a s
 System.out.println(s);  // Imprime: HOLA
 ```
-```
+````
 
-```exercise
+```{exercise}
 :label: ej-metodo-efectos
 Escribí un método `invertir(int[] arr)` que invierta el arreglo **sin crear uno nuevo** (efecto secundario). Luego escribí otro método `invertirNuevo(int[] arr)` que retorne un nuevo arreglo invertido **sin modificar el original** (función pura).
 ```
 
-````solution
-:for: ej-metodo-efectos
+````{solution} ej-metodo-efectos
+:class: dropdown
 ```java
 // Método con efecto secundario: modifica el arreglo recibido
 public static void invertir(int[] arr) {
@@ -1111,13 +1111,14 @@ public static int[] invertirNuevo(int[] original) {
 ```
 ````
 
-```exercise
+```{exercise}
 :label: ej-stringbuilder-uso
-Escribí un método que reciba un arreglo de Strings y retorne un único String con todos los elementos separados por comas, usando StringBuilder.
+Escribí un método que reciba un arreglo de Strings y retorne un único `String` con todos los elementos separados por comas, usando `StringBuilder`.
 ```
 
-````solution
-:for: ej-stringbuilder-uso
+````{solution} ej-stringbuilder-uso
+:class: dropdown
+
 ```java
 public static String unirConComas(String[] elementos) {
     if (elementos == null || elementos.length == 0) {
@@ -1145,7 +1146,7 @@ String resultado = unirConComas(frutas);
 ```
 ````
 
-```exercise
+````{exercise}
 :label: ej-null-check
 ¿Qué problema tiene el siguiente código y cómo lo corregirías?
 
@@ -1160,10 +1161,10 @@ public static int contarMayusculas(String texto) {
     return contador;
 }
 ```
-```
+````
 
-````solution
-:for: ej-null-check
+````{solution} ej-null-check
+:class: dropdown
 El problema es que si `texto` es `null`, se lanzará `NullPointerException` al llamar a `texto.length()`.
 
 Corrección:

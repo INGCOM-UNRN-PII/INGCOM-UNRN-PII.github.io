@@ -43,6 +43,7 @@ project:
         - file: apunte/10_excepciones.md
         - file: apunte/11_testing.md
         - file: apunte/12_archivos.md
+        - file: apunte/13_memoria.md
     - title: Guias
       children:
         - file: guias/instalacion_intellij.md
