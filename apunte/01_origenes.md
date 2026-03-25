@@ -25,6 +25,8 @@ vendría de las estaciones de trabajo tradicionales, sino de la **electrónica d
 televisores inteligentes, microondas programables, controles remotos avanzados y otros
 dispositivos del hogar que comenzaban a incluir pequeños procesadores.
 
+Wikipedia: [Sun Microsystems](https://es.wikipedia.org/wiki/Sun_Microsystems)
+
 ### El Green Team y el proyecto secreto
 
 En 1991, James Gosling (un ingeniero canadiense reconocido por crear el editor de texto
@@ -53,7 +55,7 @@ los smartphones actuales— creado más de una década antes del iPhone.
 El equipo que dio vida a Java estaba compuesto por ingenieros excepcionales, cada uno con
 contribuciones específicas:
 
-:::{table} Miembros clave del Green Team 
+:::{table} Miembros clave del Green Team
 :label: tbl-green-team
 
 | Ingeniero            | Rol Principal           | Contribución Notable                                       |
@@ -102,7 +104,7 @@ C/C++, el programador es responsable de:
 
 Si el programador olvida liberar la memoria, el programa consume cada vez más RAM hasta
 agotar los recursos del sistema (esto se llama **memory leak** o fuga de memoria). Si
-libera la memoria pero luego intenta usarla, el programa falla de forma impredecible
+libera la memoria, pero luego intenta usarla, el programa falla de forma impredecible
 (**dangling pointer** o puntero colgante).
 
 #### ¿Qué son los punteros?
@@ -115,7 +117,7 @@ datos reales. En C/C++, los punteros permiten:
 - Realizar "aritmética de punteros" (sumar/restar a una dirección para moverse por la
   memoria)
 
-Esta flexibilidad es poderosa pero peligrosa: un error de un byte en la dirección puede
+Esta flexibilidad es poderosa, pero peligrosa: un error de un byte en la dirección puede
 hacer que el programa lea o escriba en el lugar equivocado, corrompiendo datos o causando
 que el programa se cierre abruptamente.
 
