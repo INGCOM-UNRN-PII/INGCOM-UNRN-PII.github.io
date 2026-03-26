@@ -42,7 +42,8 @@ project:
         - file: apunte/11_testing.md
         - file: apunte/12_archivos.md
         - file: apunte/13_memoria.md
-    - title: Guias
+        - file: apunte/indice.md
+    - file: guias/indice.md
       children:
         - file: guias/instalacion_intellij.md
         - file: guias/instalacion_jdk.md
@@ -101,9 +102,9 @@ site:
     logo: ./images/unrn-p2_big.svg
     style: ./resources/footer.css
     favicon: favicon.ico
+    analytics_google: G-9RP507HWPW
   parts:
     footer: footer.md
-  # options:
+#  options:
   #   favicon: favicon.ico
   #   logo: site_logo.png
-  #   analytics_google: G-????
