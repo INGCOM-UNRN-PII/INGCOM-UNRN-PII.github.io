@@ -3,6 +3,7 @@ title: "Sintaxis de Java: Control de Flujo"
 description: Estudio técnico sobre operadores, lógica booleana y estructuras de control (lazos) en Java.
 ---
 
+(sintaxis-de-java-control-de-flujo)=
 # Sintaxis de Java: Control de Flujo
 
 La sintaxis de Java para el control de flujo hereda la claridad de C, pero introduce salvaguardas críticas para la robustez del software. En esta materia, nos enfocamos en el uso preciso de estas estructuras para construir algoritmos eficientes y seguros.
@@ -13,6 +14,7 @@ El **control de flujo** se refiere a las instrucciones que determinan el orden e
 - **Iteración**: Repetir bloques de código múltiples veces (`for`, `while`, `do-while`)
 - **Transferencia**: Alterar el flujo dentro de estructuras (`break`, `continue`, `return`)
 
+(logica-booleana-y-cortocircuito)=
 ## Lógica Booleana y Cortocircuito
 
 Una de las diferencias fundamentales con C es que en Java el tipo `boolean` no es un entero. Por lo tanto, estructuras como `if (1)` son errores de compilación.
@@ -31,6 +33,7 @@ int x = 5;
 if (x != 0) { }      // Correcto: expresión booleana explícita
 ```
 
+(operadores-relacionales)=
 ### Operadores Relacionales
 
 Los operadores relacionales comparan dos valores y devuelven un resultado `boolean` (`true` o `false`). Son idénticos a los de C:
@@ -55,6 +58,7 @@ System.out.println(a.equals(b));  // true (mismo contenido)
 ```
 :::
 
+(operadores-logicos)=
 ### Operadores Lógicos
 
 Los operadores lógicos combinan expresiones booleanas para formar condiciones más complejas:
@@ -104,6 +108,7 @@ Para facilitar el uso y lectura de código que utilice este tipo de variables, u
 | `false` | `true` | `false` | `true` | `true` |
 | `false` | `false` | `false` | `false` | `true` |
 
+(evaluacion-en-cortocircuito-short-circuit-evaluation)=
 ### Evaluación en Cortocircuito (_Short-circuit Evaluation_)
 
 Los operadores `&&` (AND) y `||` (OR) realizan una evaluación **perezosa** o en cortocircuito. Esto significa que Java deja de evaluar la expresión tan pronto como puede determinar el resultado final:
@@ -184,12 +189,14 @@ boolean resultado2 = (false & (++x > 0));   // x ahora es 1 (se evaluó ++x)
 Usá siempre `&&` y `||` (con cortocircuito) a menos que tengas una razón específica para evaluar ambos operandos.
 :::
 
+(estructuras-condicionales)=
 ## Estructuras Condicionales
 
 Las estructuras condicionales permiten que un programa tome **decisiones** durante su ejecución. En lugar de seguir un camino lineal, el programa puede elegir entre diferentes bloques de código según el valor de una condición.
 
 En términos de flujo de programa, las estructuras condicionales crean **bifurcaciones**: puntos donde el camino de ejecución se divide en dos o más alternativas.
 
+(la-sentencia-if)=
 ### La Sentencia `if`
 
 La sentencia `if` es la estructura condicional más básica. Ejecuta un bloque de código **solo si** una condición es verdadera.
@@ -249,6 +256,7 @@ if (x > 0) {
 ```
 :::
 
+(la-sentencia-if-else)=
 ### La Sentencia `if-else`
 
 Permite ejecutar un bloque alternativo cuando la condición es falsa. Esto crea una **bifurcación completa**: el programa siempre ejecutará exactamente uno de los dos bloques.
@@ -304,6 +312,7 @@ if (saldo >= monto) {
 ```
 :::
 
+(la-sentencia-if-else-if-else)=
 ### La Sentencia `if-else if-else`
 
 Cuando se necesitan evaluar múltiples condiciones mutuamente excluyentes, se encadenan sentencias `else if`. Esta estructura crea una **cadena de decisiones** donde solo se ejecuta el primer bloque cuya condición sea verdadera.
@@ -400,6 +409,7 @@ if (nota >= 90) {
 ```
 :::
 
+(condicionales-anidados)=
 ### Condicionales Anidados
 
 Es posible colocar estructuras `if` dentro de otras estructuras `if`. Esto se llama **anidamiento** y permite expresar condiciones más complejas.
@@ -442,6 +452,7 @@ if (a && b && c) {
 ```
 :::
 
+(el-operador-ternario)=
 ### El Operador Ternario `? :`
 
 El operador ternario (también llamado **operador condicional**) es una forma compacta de expresar una selección entre dos valores. Es el único operador de Java que toma tres operandos.
@@ -516,6 +527,7 @@ if (condicion) {
 ```
 :::
 
+(la-sentencia-switch)=
 ### La Sentencia `switch`
 
 El `switch` permite seleccionar entre múltiples alternativas basándose en el valor de una expresión. Es útil cuando se compara una variable contra varios valores constantes, especialmente cuando hay muchas alternativas.
@@ -706,6 +718,7 @@ String descripcion = switch (estado) {
 Cuando el switch se usa como expresión (asignando su resultado a una variable), debe ser **exhaustivo**: cubrir todos los valores posibles o incluir un `default`. El compilador verifica esto.
 :::
 
+(estructuras-de-repeticion-lazos)=
 ## Estructuras de Repetición: Lazos
 
 En Java, utilizamos el término **lazos** para referirnos a los bucles o ciclos. Los lazos permiten ejecutar un bloque de código **múltiples veces** sin tener que escribirlo repetidamente.
@@ -729,6 +742,7 @@ Cada tipo de lazo tiene una semántica específica según el punto de evaluació
 Comparación del flujo de ejecución entre for, while y do-while. Observá cuándo se evalúa la condición en cada caso.
 ```
 
+(el-lazo-for)=
 ### El Lazo `for`
 
 El lazo `for` es ideal cuando se conoce de antemano la cantidad de iteraciones. Consta de tres partes separadas por punto y coma: inicialización, condición y actualización.
@@ -849,6 +863,7 @@ for (int j = 0; j < 10; ) {
 // }
 ```
 
+(el-lazo-while)=
 ### El Lazo `while`
 
 El lazo `while` evalúa la condición **antes** de ejecutar el cuerpo. Si la condición es falsa desde el inicio, el cuerpo nunca se ejecuta (cero iteraciones).
@@ -969,6 +984,7 @@ Este patrón tiene varias ventajas:
 - El estado final es predecible: `encontrado` indica el resultado, `indice` indica la posición
 - Es fácil de depurar y entender
 
+(el-lazo-do-while)=
 ### El Lazo `do-while`
 
 El lazo `do-while` evalúa la condición **después** de ejecutar el cuerpo. Esto garantiza que el cuerpo se ejecuta **al menos una vez**, independientemente del valor de la condición.
@@ -1066,6 +1082,7 @@ do {
 } while (x < 10);
 ```
 
+(comparacion-de-lazos)=
 ### Comparación de Lazos
 
 | Lazo | Evaluación de Condición | Ejecución Mínima | Uso Típico | Estructura Equivalente en C |
@@ -1098,6 +1115,7 @@ do {
 } while (!datoValido());
 ```
 
+(equivalencia-entre-for-y-while)=
 ### Equivalencia entre `for` y `while`
 
 Todo lazo `for` puede reescribirse como `while` y viceversa. La elección entre uno u otro es principalmente una cuestión de **claridad y convención**:
@@ -1154,6 +1172,7 @@ Aunque son equivalentes, la comunidad Java tiene convenciones:
 - **`do-while`**: validación de entrada, menús interactivos
 :::
 
+(lazos-anidados)=
 ### Lazos Anidados
 
 Es posible colocar un lazo dentro de otro. El lazo interno se ejecuta **completamente** por cada iteración del lazo externo. Esto es útil para trabajar con estructuras bidimensionales (matrices) o generar combinaciones.
@@ -1263,6 +1282,7 @@ for (double d = 0.0; d < 0.99; d = d + 0.1) {
 Este problema se hereda de C y es común a todos los lenguajes que usan punto flotante IEEE 754.
 :::
 
+(lazos-infinitos-y-como-evitarlos)=
 ### Lazos Infinitos y Cómo Evitarlos
 
 Un **lazo infinito** es un lazo cuya condición nunca se vuelve falsa, causando que el programa se ejecute indefinidamente (hasta que se lo detenga externamente o se agote algún recurso).
@@ -1301,6 +1321,7 @@ while (k != 10) {  // k solo toma valores impares
 3. Usar condiciones con `<` o `>` en lugar de `!=` cuando sea posible
 4. Evitar punto flotante como variables de control
 
+(sentencias-de-control-de-flujo-break-y-continue)=
 ## Sentencias de Control de Flujo: `break` y `continue`
 
 Java proporciona las sentencias `break` y `continue` para alterar el flujo normal de los lazos. Estas sentencias permiten salir anticipadamente de un lazo o saltar a la siguiente iteración.
@@ -1314,6 +1335,7 @@ Esta restricción existe porque:
 3. Prepara para entornos donde `break` en lazos está prohibido por estándares de codificación
 :::
 
+(la-sentencia-break)=
 ### La Sentencia `break`
 
 La sentencia `break` termina inmediatamente el lazo más interno que la contiene. La ejecución continúa en la primera sentencia después del lazo.
@@ -1344,6 +1366,7 @@ if (encontrado) {
 }
 ```
 
+(la-sentencia-continue)=
 ### La Sentencia `continue`
 
 La sentencia `continue` salta a la siguiente iteración del lazo, omitiendo el resto del código en la iteración actual. En un `for`, ejecuta la actualización antes de verificar la condición.
@@ -1367,6 +1390,7 @@ for (int i = 0; i < 10; i = i + 1) {
 }
 ```
 
+(uso-permitido-de-break-en-switch)=
 ### Uso Permitido de `break`: en `switch`
 
 El único lugar donde `break` está permitido en este curso es dentro de sentencias `switch`, donde es necesario para evitar el fall-through:
@@ -1387,10 +1411,12 @@ switch (opcion) {
 }
 ```
 
+(comparativa-de-seguridad-con-c)=
 ## Comparativa de Seguridad con C
 
 Java hereda la sintaxis de control de flujo de C pero añade verificaciones que previenen errores comunes:
 
+(1-asignacion-en-condiciones)=
 ### 1. Asignación en Condiciones
 
 En C, `if (x = 5)` es un error común que asigna 5 a x y evalúa a verdadero (porque 5 es distinto de cero). En Java, esto falla en compilación (a menos que x sea `boolean`), previniendo errores lógicos sutiles.
@@ -1408,6 +1434,7 @@ int x = 0;
 if (x == 5) { }  // Comparación
 ```
 
+(2-inicializacion-obligatoria)=
 ### 2. Inicialización Obligatoria
 
 Java exige que las variables locales estén inicializadas antes de ser usadas en cualquier estructura de control. El compilador analiza todos los caminos posibles.
@@ -1433,6 +1460,7 @@ if (condicion) {
 System.out.println(resultado);  // OK
 ```
 
+(3-tipo-booleano-estricto)=
 ### 3. Tipo Booleano Estricto
 
 Las condiciones deben ser expresiones `boolean`. No se puede usar un entero, referencia a objeto, o cualquier otro tipo directamente como condición.
@@ -1452,6 +1480,7 @@ if (cantidad != 0) { }     // Comparación explícita
 while (texto != null) { }  // Comparación explícita
 ```
 
+(4-alcance-de-variables-en-lazos)=
 ### 4. Alcance de Variables en Lazos
 
 En Java moderno, declarar la variable de control en el `for` la limita al ámbito del lazo, evitando conflictos de nombres y uso accidental posterior.
@@ -1472,6 +1501,7 @@ for (int i = 0; i < 5; i = i + 1) {
 
 Estas diferencias hacen que Java sea más seguro que C para programación a gran escala, aunque la sintaxis sea visualmente similar.
 
+(ejercicios-de-nivel-universitario)=
 ## Ejercicios de Nivel Universitario
 
 ```exercise
@@ -1696,6 +1726,7 @@ for (int fila = 1; fila <= 5; fila = fila + 1) {
 | 5 | 1, 2, 3, 4, 5 | ***** |
 ```
 
+(referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - **Schildt, H.** (2022). _Java: A Beginner's Guide_ (9na ed.). McGraw Hill. (Capítulo 3: Program Control Statements).

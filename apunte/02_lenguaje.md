@@ -5,6 +5,7 @@ description:
   como lenguaje de programación de propósito general y con tipado estático.
 ---
 
+(caracteristicas-del-lenguaje-java)=
 # Características del Lenguaje Java
 
 Este capítulo analiza las características fundamentales de Java como lenguaje de programación. Entender estas características te ayudará a comprender por qué el código se escribe de cierta manera y qué ventajas ofrece Java frente a otros lenguajes.
@@ -23,12 +24,14 @@ orientada a objetos (clases, objetos, herencia, polimorfismo) se estudiarán en 
 Por ahora, usaremos Java de forma similar a como usabas C: escribiendo funciones (que en Java se llaman "métodos") dentro de una estructura obligatoria llamada "clase".
 :::
 
+(lenguaje-de-proposito-general)=
 ## Lenguaje de Propósito General
 
 Java es un **lenguaje de propósito general**, lo que significa que no está
 diseñado para resolver un único tipo de problema específico, sino que puede utilizarse
 para desarrollar prácticamente cualquier tipo de software.
 
+(que-significa-proposito-general)=
 ### ¿Qué significa "propósito general"?
 
 Para entender esto, primero hay que conocer la diferencia con los **lenguajes de dominio específico** (DSL - Domain Specific Languages). Estos son lenguajes diseñados para resolver un problema muy particular:
@@ -45,6 +48,7 @@ Para entender esto, primero hay que conocer la diferencia con los **lenguajes de
 
 En contraste, un **lenguaje de propósito general** como Java (o C, Python, C++, Go) puede usarse para crear:
 
+(aplicaciones-donde-java-es-utilizado)=
 ### Aplicaciones donde Java es utilizado
 
 :::{list-table} Aplicaciones de Java por dominio
@@ -77,6 +81,7 @@ En contraste, un **lenguaje de propósito general** como Java (o C, Python, C++,
   - LWJGL (gráficos OpenGL), jMonkeyEngine, libGDX
 :::
 
+(significa-que-java-es-la-mejor-opcion-para-todo)=
 ### ¿Significa que Java es la mejor opción para todo?
 
 **No.** Ser de propósito general significa que Java *puede* usarse para casi cualquier cosa, pero no que sea la *mejor* opción para todo. Cada lenguaje tiene fortalezas:
@@ -94,6 +99,7 @@ En contraste, un **lenguaje de propósito general** como Java (o C, Python, C++,
 Java brilla en: aplicaciones empresariales de gran escala, sistemas que necesitan mantenerse por décadas, equipos grandes donde la consistencia y las herramientas importan.
 :::
 
+(ventajas-de-aprender-un-lenguaje-de-proposito-general)=
 ### Ventajas de aprender un lenguaje de propósito general
 
 1. **Reutilización de conocimientos:** Una vez que dominás Java, podés trabajar en aplicaciones web, Android, sistemas distribuidos, o Big Data sin aprender un lenguaje completamente nuevo.
@@ -102,11 +108,13 @@ Java brilla en: aplicaciones empresariales de gran escala, sistemas que necesita
 
 3. **Comunidad amplia:** Hay millones de desarrolladores Java en el mundo. Cualquier problema que tengas, probablemente alguien ya lo resolvió y documentó.
 
+(tipado-estatico-y-fuerte)=
 ## Tipado Estático y Fuerte
 
 Java implementa un sistema de **tipado estático y fuerte**. Esta característica
 fundamental influye profundamente en cómo se escribe, se verifica y se ejecuta el código.
 
+(que-es-un-tipo-en-programacion)=
 ### ¿Qué es un "tipo" en programación?
 
 Un **tipo de dato** define tres cosas importantes:
@@ -119,6 +127,7 @@ Un **tipo de dato** define tres cosas importantes:
 
 En C ya trabajaste con tipos: `int`, `float`, `double`, `char`, punteros, structs. Java tiene un sistema de tipos similar pero más estricto.
 
+(tipado-estatico-los-tipos-se-verifican-antes-de-ejecutar)=
 ### Tipado Estático: los tipos se verifican ANTES de ejecutar
 
 En un lenguaje con **tipado estático**, el tipo de cada variable:
@@ -193,6 +202,7 @@ edad = "treinta";   // ❌ Error de compilación: esto no se llega a ejecutar
 
 El compilador de Java te fuerza a pensar en los tipos desde el principio. Esto puede parecer restrictivo, pero en proyectos grandes con múltiples desarrolladores, previene categorías enteras de bugs.
 
+(tipado-fuerte-conversiones-explicitas-obligatorias)=
 ### Tipado Fuerte: conversiones explícitas obligatorias
 
 Java también implementa **tipado fuerte**, lo que significa que no permite
@@ -222,6 +232,7 @@ int precioEntero = precio;  // ❌ Error: possible lossy conversion from double 
 Los tipos primitivos, sus rangos, las reglas de conversión (widening y narrowing), y todos los detalles técnicos sobre el sistema de tipos se estudian en profundidad en el capítulo {ref}`Tipos de Datos en Java <apunte/03_tipos_de_datos.md>`.
 :::
 
+(comparacion-con-tipado-dinamico-python)=
 ### Comparación con Tipado Dinámico (Python)
 
 En lenguajes con **tipado dinámico** como Python, las variables no tienen tipos fijos:
@@ -234,6 +245,7 @@ edad = [1, 2, 3]    # ✅ Ahora edad contiene una lista
 
 Este código Python ejecuta sin problemas, pero puede causar errores inesperados en tiempo de ejecución. Java detecta estos problemas en tiempo de compilación, antes de que el programa se ejecute.
 
+(ventajas-del-tipado-estatico-y-fuerte)=
 ### Ventajas del tipado estático y fuerte
 
 Ahora que entendés la diferencia, veamos por qué Java eligió este enfoque:
@@ -256,6 +268,7 @@ Ahora que entendés la diferencia, veamos por qué Java eligió este enfoque:
 
 5. **Contratos claros:** Los tipos establecen "contratos" entre diferentes partes del código. Si una función espera un `String`, no podés pasarle un `int` por error.
 
+(tabla-comparativa-de-sistemas-de-tipos)=
 ### Tabla comparativa de sistemas de tipos
 
 :::{list-table} Comparación de sistemas de tipos
@@ -288,6 +301,7 @@ Ahora que entendés la diferencia, veamos por qué Java eligió este enfoque:
 C también es de tipado estático, pero es de tipado **débil**: permite muchas conversiones implícitas (especialmente con punteros) y no verifica límites de arreglos. Por eso C es más propenso a bugs de memoria que Java.
 :::
 
+(la-estructura-obligatoria-clases-en-java)=
 ## La Estructura Obligatoria: Clases en Java
 
 Aunque Java es fundamentalmente un lenguaje **orientado a objetos**, en las
@@ -295,6 +309,7 @@ primeras etapas del aprendizaje trabajaremos principalmente con los aspectos
 procedurales del lenguaje: tipos de datos, operadores, estructuras de control y
 funciones (que en Java se llaman "métodos").
 
+(por-que-todo-debe-estar-en-una-clase)=
 ### ¿Por qué todo debe estar en una clase?
 
 Esta es una diferencia importante con C. En C, podés escribir funciones "sueltas":
@@ -331,6 +346,7 @@ public class Calculadora {      // ← Todo dentro de una clase
 
 ¿Por qué Java toma esta decisión? Porque fue diseñado desde cero como un lenguaje orientado a objetos. La filosofía es: "todo es un objeto" (o pertenece a una clase que puede crear objetos). Incluso cuando no necesitás objetos, la estructura de clase está presente.
 
+(la-clase-como-contenedor-obligatorio)=
 ### La clase como "contenedor obligatorio"
 
 Por ahora, pensá en la clase como un **contenedor obligatorio** para tu código. Es como un archivo en C, pero con reglas adicionales:
@@ -341,6 +357,7 @@ Por ahora, pensá en la clase como un **contenedor obligatorio** para tu código
 
 3. **El método `main` es el punto de entrada**, igual que en C, pero debe estar dentro de una clase.
 
+(el-programa-java-mas-simple)=
 ### El programa Java más simple
 
 ```java
@@ -371,6 +388,7 @@ Descomponiendo cada parte:
 Por ahora, memorizá esta estructura como una "receta" necesaria. Todos tus programas empezarán así. Con el tiempo, cada parte tendrá sentido completo cuando estudies orientación a objetos.
 :::
 
+(metodos-estaticos-funciones-sin-necesidad-de-objetos)=
 ### Métodos Estáticos: Funciones sin necesidad de objetos
 
 En las primeras semanas del curso, escribirás métodos dentro de clases, pero
@@ -472,6 +490,7 @@ public class OtroPrograma {
 
 Este es exactamente el mismo patrón que usás con métodos de Java como `Math.sqrt()`, `Math.abs()`, `Integer.parseInt()`, etc. Son métodos estáticos de clases de la biblioteca estándar.
 
+(por-que-empezar-con-metodos-estaticos)=
 ### ¿Por qué empezar con métodos estáticos?
 
 Este enfoque te permite:
@@ -488,6 +507,7 @@ Este enfoque te permite:
 Más adelante en el curso, aprenderás cuándo y por qué usar objetos en lugar de métodos estáticos. Hay situaciones donde los métodos estáticos son apropiados (funciones utilitarias, factories) y situaciones donde crear objetos es mejor (modelar entidades con estado y comportamiento). Por ahora, todos tus métodos serán estáticos.
 :::
 
+(diferencias-clave-entre-java-y-c)=
 ## Diferencias Clave entre Java y C
 
 Dado que venís de programar en C, es útil tener un resumen de las diferencias principales que encontrarás al empezar con Java:
@@ -531,6 +551,7 @@ Dado que venís de programar en C, es útil tener un resumen de las diferencias 
   - No existe
 :::
 
+(ejemplo-lado-a-lado)=
 ### Ejemplo lado a lado
 
 **El mismo programa en C y Java:**
@@ -592,6 +613,7 @@ public class Programa {
 
 7. **Concatenación con `+`:** En vez de usar `%d` y format strings, Java permite concatenar directamente strings con números.
 
+(resumen)=
 ## Resumen
 
 Java se caracteriza por ser:
@@ -612,6 +634,7 @@ Java se caracteriza por ser:
 
 La estrategia pedagógica **"Late Objects"** que usamos en este curso permite dominar primero los fundamentos del lenguaje (tipos, operadores, estructuras de control, métodos) antes de abordar los conceptos de programación orientada a objetos. Esto aprovecha tu conocimiento previo de C mientras te prepara gradualmente para las características más avanzadas de Java.
 
+(referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - Gosling, J., Joy, B., Steele, G., & Bracha, G. (2005). _The Java Language
@@ -625,6 +648,7 @@ La estrategia pedagógica **"Late Objects"** que usamos en este curso permite do
 
 ---
 
+(ejercicios)=
 ## Ejercicios
 
 ```{exercise}

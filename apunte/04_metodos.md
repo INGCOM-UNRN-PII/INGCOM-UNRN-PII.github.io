@@ -3,6 +3,7 @@ title: "\"Funciones\" en Java"
 description: Estudio técnico sobre la abstracción de procedimientos, gestión de la pila de llamadas y mecanismos de pasaje de parámetros.
 ---
 
+(metodos-en-java)=
 # Métodos en Java
 
 Un **método** en Java es la unidad fundamental de comportamiento y abstracción. Permite agrupar un conjunto de instrucciones bajo un nombre, de manera que puedan ejecutarse múltiples veces sin repetir el código. Si ya se trabajó con funciones en C, la transición a métodos en Java resulta bastante natural: la sintaxis es similar y los conceptos fundamentales —parámetros, retorno, variables locales— funcionan de forma análoga.
@@ -15,6 +16,7 @@ En C hablamos de **funciones**. En Java, el término correcto es **método** por
 A lo largo de este curso, usaremos ambos términos de forma intercambiable cuando el contexto sea claro, pero recordá que en Java técnicamente son **métodos**.
 :::
 
+(por-que-usar-metodos)=
 ## ¿Por qué usar métodos?
 
 Antes de entrar en la sintaxis, vale la pena entender las razones por las que se organizan los programas en métodos:
@@ -27,8 +29,10 @@ Antes de entrar en la sintaxis, vale la pena entender las razones por las que se
 
 4. **Legibilidad**: Un método con un nombre descriptivo hace que el código sea más fácil de leer. Comparar `if (esPrimo(n))` con `if (n > 1 && ...)` seguido de un lazo complejo muestra claramente la ventaja.
 
+(anatomia-de-un-metodo)=
 ## Anatomía de un Método
 
+(sintaxis-general)=
 ### Sintaxis General
 
 ```{code} java
@@ -56,6 +60,7 @@ Cada parte de esta estructura tiene un propósito específico:
 
 - **return** (obligatorio si no es `void`): La sentencia que finaliza la ejecución del método y devuelve un valor al código que lo llamó. El tipo del valor devuelto debe coincidir con el tipoRetorno declarado.
 
+(comparacion-con-c)=
 ### Comparación con C
 
 Para quien viene de programar en C, la siguiente tabla muestra las equivalencias:
@@ -70,6 +75,7 @@ Para quien viene de programar en C, la siguiente tabla muestra las equivalencias
 
 La diferencia más notable es que en Java no existen los prototipos (_forward declarations_). En C, si `main()` llama a `sumar()` pero `sumar()` está definida después, se necesita declarar el prototipo antes. En Java, los métodos pueden estar en cualquier orden dentro de la clase y el compilador los encuentra sin problema.
 
+(ejemplos-de-declaracion)=
 ### Ejemplos de Declaración
 
 ```{code} java
@@ -107,10 +113,12 @@ public static boolean esPar(int numero) {
 
 Este último ejemplo muestra un patrón muy común: métodos que verifican una condición y devuelven `true` o `false`. Por convención, estos métodos suelen nombrarse con prefijos como `es`, `tiene`, `puede` (`esPar`, `tieneElementos`, `puedeAcceder`). En C, esto se haría con `int` retornando 0 o 1, ya que C89 no tiene tipo booleano nativo.
 
+(invocacion-de-metodos)=
 ## Invocación de Métodos
 
 Para ejecutar un método, se lo **invoca** (o llama) usando su nombre seguido de paréntesis con los argumentos necesarios. La invocación puede hacerse de varias formas según el contexto.
 
+(invocacion-basica)=
 ### Invocación Básica
 
 ```{code} java
@@ -134,6 +142,7 @@ if (esPar(numero)) {
 }
 ```
 
+(el-flujo-de-ejecucion-durante-una-llamada)=
 ### El Flujo de Ejecución Durante una Llamada
 
 Cuando se invoca un método, ocurre lo siguiente:
@@ -156,8 +165,10 @@ Estos dos términos se confunden frecuentemente, pero tienen significados distin
 En otras palabras: los parámetros se definen una vez cuando se escribe el método; los argumentos se proporcionan cada vez que se llama al método. Esta distinción es la misma que en C.
 :::
 
+(tipos-de-retorno)=
 ## Tipos de Retorno
 
+(metodos-void)=
 ### Métodos `void`
 
 Un método `void` no devuelve ningún valor. Se usa para acciones que producen un efecto (imprimir en pantalla, modificar estado) pero no generan un resultado que el código llamante necesite usar.
@@ -190,6 +201,7 @@ public static void procesarEdad(int edad) {
 ```
 :::
 
+(metodos-con-retorno)=
 ### Métodos con Retorno
 
 Un método con tipo de retorno **debe** devolver un valor de ese tipo en todos los caminos de ejecución posibles. Esto significa que sin importar qué rama de un `if` se tome o cuántas vueltas dé un lazo, eventualmente debe ejecutarse un `return` con un valor del tipo correcto.
@@ -261,8 +273,10 @@ public static int obtenerValor(boolean condicion) {
 Este análisis del compilador es más estricto que en C, donde podés olvidar un `return` y el programa compila (aunque con advertencias) y produce comportamiento indefinido.
 :::
 
+(parametros-y-argumentos)=
 ## Parámetros y Argumentos
 
+(parametros-multiples)=
 ### Parámetros Múltiples
 
 Un método puede recibir cualquier cantidad de parámetros, separados por comas. Cada parámetro necesita su propio tipo declarado, incluso si varios parámetros tienen el mismo tipo:
@@ -283,6 +297,7 @@ double miIMC = calcularIMC(70.5, 1.75);
 En C se puede declarar `int sumar(int a, b)` donde `b` hereda el tipo de `a`. En Java esto **no está permitido**; cada parámetro requiere su tipo explícito: `int sumar(int a, int b)`.
 :::
 
+(orden-de-los-argumentos)=
 ### Orden de los Argumentos
 
 El orden de los argumentos debe coincidir exactamente con el orden de los parámetros. Java asocia el primer argumento con el primer parámetro, el segundo con el segundo, y así sucesivamente:
@@ -303,6 +318,7 @@ mostrarDatos("Ana", 30, 50000.0);
 
 Si los tipos coincidieran por casualidad (por ejemplo, tres parámetros `int`), el compilador no detectaría el error pero el programa produciría resultados incorrectos. Por eso es importante elegir nombres de parámetros claros y verificar el orden al invocar.
 
+(compatibilidad-de-tipos-y-promocion-automatica)=
 ### Compatibilidad de Tipos y Promoción Automática
 
 Java permite pasar argumentos de tipos "más pequeños" cuando el parámetro espera un tipo "más grande". Esto se llama **promoción automática** o _widening conversion_. Es el mismo mecanismo que existe en C.
@@ -348,8 +364,10 @@ metodo((int) 5.7);  // Funciona, pero pierde la parte decimal
 En C esto también genera advertencias, aunque el compilador suele permitirlo. Java es más estricto y lo rechaza directamente.
 :::
 
+(firma-de-un-metodo-y-sobrecarga)=
 ## Firma de un Método y Sobrecarga
 
+(que-es-la-firma-de-un-metodo)=
 ### ¿Qué es la Firma de un Método?
 
 La **firma** (_signature_) de un método es su identificador único para el compilador. Permite distinguir un método de otro, incluso si tienen el mismo nombre. Se compone estrictamente de:
@@ -373,10 +391,12 @@ Esto significa que dos métodos con el mismo nombre y parámetros pero diferente
 Sobrecarga de métodos: ejemplos válidos e inválidos basados en la firma.
 ```
 
+(que-es-la-sobrecarga)=
 ### ¿Qué es la Sobrecarga?
 
 La **sobrecarga** (_overloading_) es la capacidad de definir múltiples métodos con el mismo nombre pero con firmas diferentes. Esto permite que un mismo nombre represente operaciones conceptualmente similares pero que trabajan con distintos tipos o cantidades de datos.
 
+(ejemplos-de-sobrecarga)=
 ### Ejemplos de Sobrecarga
 
 ```{code} java
@@ -423,6 +443,7 @@ public static double calcular(int x) {  // Solo difiere en retorno
 
 El compilador no puede distinguir cuál método llamar basándose solo en el tipo de retorno. ¿Qué debería hacer con `calcular(5)` si se usa sin asignar a ninguna variable?
 
+(resolucion-de-sobrecarga-overload-resolution)=
 ### Resolución de Sobrecarga (_Overload Resolution_)
 
 Cuando invocás un método sobrecargado, el compilador debe determinar cuál de las versiones ejecutar. Este proceso se llama **resolución de sobrecarga** y sigue un orden de prioridad:
@@ -483,6 +504,7 @@ Ambos métodos requieren exactamente una promoción de `int` a `long`. Para el c
 C no soporta sobrecarga de funciones. Si necesitás una función que opere sobre diferentes tipos, tenés que darle nombres diferentes (`sumar_int`, `sumar_double`) o usar punteros genéricos (`void *`). Java, como C++, permite sobrecarga, lo que simplifica las interfaces de las bibliotecas.
 :::
 
+(mecanismo-de-pasaje-de-parametros)=
 ## Mecanismo de Pasaje de Parámetros
 
 Entender cómo se pasan los datos a los métodos es fundamental para evitar errores sutiles. En Java existe una regla simple pero que genera confusión: **Java siempre pasa por valor**.
@@ -499,6 +521,7 @@ Sin embargo, hay un matiz importante que depende de si el dato es un tipo primit
 Diferencia entre pasaje de primitivos (copia de valor) y referencias (copia de dirección).
 ```
 
+(pasaje-de-tipos-primitivos)=
 ### Pasaje de Tipos Primitivos
 
 Cuando se pasa un tipo primitivo (`int`, `double`, `boolean`, etc.), se copia el valor numérico. Cualquier modificación dentro del método afecta solo a la copia local, no a la variable original.
@@ -534,6 +557,7 @@ int main() {
 }
 ```
 
+(pasaje-de-referencias-tipos-no-primitivos)=
 ### Pasaje de Referencias (Tipos no Primitivos)
 
 Cuando se pasa un objeto (un tipo no primitivo como `String`, arreglos, o cualquier instancia de clase), lo que se pasa es una **copia de la referencia**. La referencia es esencialmente la dirección de memoria donde está el objeto.
@@ -590,6 +614,7 @@ int main() {
 En Java no existen punteros explícitos ni el operador `&`. Las referencias a objetos funcionan implícitamente como punteros, pero no se puede tomar la "dirección" de un primitivo para modificarlo desde afuera. Si necesitás ese comportamiento, tenés que encapsular el primitivo en un objeto o retornar el nuevo valor.
 :::
 
+(resumen-del-pasaje-de-parametros)=
 ### Resumen del Pasaje de Parámetros
 
 | Tipo de Dato | ¿Qué se Copia? | ¿Modificar afecta el original? |
@@ -597,10 +622,12 @@ En Java no existen punteros explícitos ni el operador `&`. Las referencias a ob
 | Primitivo (`int`, `double`, etc.) | El valor numérico | No |
 | Referencia (objetos, arreglos) | La dirección de memoria | Depende: modificar el objeto sí, reasignar la referencia no |
 
+(alcance-de-variables-scope)=
 ## Alcance de Variables (Scope)
 
 El **alcance** (o _scope_) de una variable determina en qué parte del código esa variable existe y puede ser accedida. Este concepto funciona de manera casi idéntica en C y Java.
 
+(variables-locales)=
 ### Variables Locales
 
 Las variables declaradas dentro de un método son **locales** a ese método. Existen desde el momento en que se declaran hasta que el método termina. Fuera del método, esas variables no existen.
@@ -622,6 +649,7 @@ public static void metodo2() {
 
 Las dos variables `x` son completamente independientes. Que tengan el mismo nombre no las relaciona de ninguna manera. Esto es igual que en C.
 
+(variables-de-bloque)=
 ### Variables de Bloque
 
 Dentro de un método, cada par de llaves `{}` define un **bloque**. Las variables declaradas dentro de un bloque solo existen dentro de ese bloque y sus bloques internos.
@@ -651,6 +679,7 @@ public static void ejemplo() {
 
 Una variable declarada en un bloque externo es visible en los bloques internos, pero no al revés. Esta regla se conoce como **anidamiento léxico** y es idéntica en C.
 
+(parametros-como-variables-locales)=
 ### Parámetros como Variables Locales
 
 Los parámetros de un método se comportan exactamente como variables locales que ya vienen inicializadas con los valores de los argumentos. Existen durante toda la ejecución del método y desaparecen cuando el método termina.
@@ -674,6 +703,7 @@ public static void main(String[] args) {
 
 Esto refuerza el concepto de pasaje por valor: modificar un parámetro es modificar una variable local, no el argumento original.
 
+(sombreado-de-variables-shadowing)=
 ### Sombreado de Variables (_Shadowing_)
 
 Java no permite declarar una variable local con el mismo nombre que un parámetro, pero sí permite que una variable local "sombree" (_shadow_) a una variable de un ámbito externo como un campo de clase, los campos de clase, son similares a las variables globales en el hecho que es un valor compartido, pero son mucho, pero mucho, más, ya que son la base de la programación orientada a objetos, que veremos mas adelante.
@@ -694,10 +724,12 @@ public class Ejemplo {
 
 El sombreado puede generar confusión, por lo que es mejor evitarlo usando nombres distintos.
 
+(gestion-de-la-pila-stack-frames)=
 ## Gestión de la Pila: Stack Frames
 
 Cuando un programa ejecuta métodos, la JVM (Java Virtual Machine) utiliza una estructura de datos llamada **pila de llamadas** (_call stack_) para gestionar la ejecución. Esta pila funciona exactamente igual que en C: cada vez que se invoca un método, se crea un nuevo "marco" (_frame_) en la pila; cuando el método termina, su marco se destruye.
 
+(que-contiene-un-stack-frame)=
 ### ¿Qué Contiene un Stack Frame?
 
 Cada **stack frame** (marco de pila) almacena toda la información necesaria para ejecutar un método:
@@ -718,6 +750,7 @@ Cada **stack frame** (marco de pila) almacena toda la información necesaria par
 Stack de llamadas mostrando los frames de métodos anidados.
 ```
 
+(el-ciclo-de-vida-de-un-frame)=
 ### El Ciclo de Vida de un Frame
 
 1. **Creación**: Cuando se invoca un método, se reserva espacio en el tope de la pila para su frame.
@@ -727,6 +760,7 @@ Stack de llamadas mostrando los frames de métodos anidados.
 
 Este mecanismo de pila tiene una propiedad importante: los métodos se completan en orden inverso al que fueron llamados (el último en entrar es el primero en salir, LIFO).
 
+(ejemplo-de-flujo-de-ejecucion)=
 ### Ejemplo de Flujo de Ejecución
 
 El siguiente ejemplo muestra paso a paso cómo se construye y destruye la pila de llamadas:
@@ -760,6 +794,7 @@ El estado de la pila en cada momento:
 | 5 | `main` imprime 22 | `main` |
 | 6 | `main` termina | (pila vacía) |
 
+(recursion-y-stackoverflowerror)=
 ### Recursión y `StackOverflowError`
 
 Un método puede llamarse a sí mismo; esto se llama **recursión**. Cada llamada recursiva crea un nuevo frame en la pila, con sus propias copias de las variables locales. Es fundamental que exista un **caso base** que detenga la recursión; de lo contrario, la pila crecerá indefinidamente hasta agotar la memoria asignada.
@@ -805,6 +840,7 @@ El **`StackOverflowError`** ocurre cuando la pila de llamadas crece más allá d
 En C ocurre lo mismo: la recursión usa el stack del sistema, y si se excede su tamaño, el programa falla (generalmente con "stack overflow" o "segmentation fault"). La diferencia es que Java detecta el problema y lanza una excepción controlable, mientras que C simplemente colapsa.
 :::
 
+(metodos-estaticos-vs-de-instancia)=
 ## Métodos Estáticos vs. de Instancia
 
 Los métodos (y variables) estáticos pertenecen a la clase y se cargan cuando la JVM carga la clase por primera vez, mientras que lo que _no_ es `static`, pertenece a los objetos creados a partir de esa clase.
@@ -825,6 +861,7 @@ Durante la primera parte del curso, antes de introducir programación orientada 
 Cuando se introduzcan objetos, se verán métodos sin `static` que operan sobre instancias específicas.
 :::
 
+(comparacion-rapida)=
 ### Comparación Rápida
 
 | Aspecto | Método Estático | Método de Instancia |
@@ -837,6 +874,7 @@ Cuando se introduzcan objetos, se verán métodos sin `static` que operan sobre 
 Por ahora, todos los métodos que escribamos serán `public static` para poder llamarlos desde `main`. La distinción con métodos de instancia se explorará más adelante.
 
 
+(ejercicios)=
 ## Ejercicios
 
 Los siguientes ejercicios permiten practicar los conceptos vistos. Se recomienda intentar resolverlos antes de ver las soluciones.
@@ -1042,10 +1080,12 @@ Resultado: 16
 **Nota:** Esta implementación es simple pero no es la más eficiente. Existe una versión que usa $b^n = (b^{n/2})^2$ cuando n es par, reduciendo la cantidad de llamadas recursivas de O(n) a O(log n).
 ````
 
+(buenas-practicas-para-metodos)=
 ## Buenas Prácticas para Métodos
 
 Las siguientes recomendaciones ayudan a escribir métodos claros, mantenibles y menos propensos a errores.
 
+(nombres-descriptivos)=
 ### Nombres descriptivos
 
 El nombre del método debe indicar claramente qué hace. La convención en Java es usar **verbos** o **frases verbales** en camelCase.
@@ -1072,6 +1112,7 @@ Para métodos que devuelven `boolean`, se suelen usar prefijos como:
 - `tiene` / `has`: `tieneElementos()`, `hasNext()`
 - `puede` / `can`: `puedeAcceder()`, `canRead()`
 
+(metodos-cortos-y-enfocados-principio-de-responsabilidad-unica)=
 ### Métodos Cortos y Enfocados (Principio de Responsabilidad Única)
 
 Cada método debe hacer **una sola cosa** y hacerla bien. Si un método hace demasiadas cosas, se vuelve difícil de entender, probar y modificar. 
@@ -1154,6 +1195,7 @@ public static void procesarDatos(int[] datos) {
 
 La segunda versión es más larga en total, pero cada método es simple, fácil de entender y fácil de probar de forma independiente.
 
+(evitar-efectos-secundarios-inesperados)=
 ### Evitar Efectos Secundarios Inesperados
 
 Un **efecto secundario** es cualquier cambio de estado observable fuera del método: imprimir en pantalla, modificar variables globales, escribir en archivos, etc. No todos los efectos secundarios son malos, pero deberían ser **esperables** según el nombre del método.
@@ -1191,6 +1233,7 @@ public static void imprimirSuma(int a, int b) {
 
 **Regla práctica:** Un método con nombre que empiece con "calcular", "obtener", "es", "tiene" no debería tener efectos secundarios. Un método con nombre que empiece con "imprimir", "guardar", "enviar" claramente tiene efectos y eso está bien.
 
+(documentacion-con-javadoc)=
 ### Documentación con Javadoc
 
 Los métodos públicos deberían documentarse con **Javadoc**, un formato especial de comentario que comienza con `/**` y puede incluir etiquetas estructuradas. Las herramientas de Java pueden extraer estos comentarios y generar documentación HTML automáticamente.
@@ -1227,6 +1270,7 @@ Las etiquetas más comunes son:
 
 Para métodos privados o muy simples, un comentario breve o ninguno puede ser suficiente si el código es autoexplicativo. La documentación excesiva de lo obvio puede ser contraproducente.
 
+(limitar-la-cantidad-de-parametros)=
 ### Limitar la Cantidad de Parámetros
 
 Un método con muchos parámetros (más de 3 o 4) se vuelve difícil de usar correctamente. Es fácil equivocarse en el orden de los argumentos.
@@ -1249,6 +1293,7 @@ Soluciones posibles:
 - Agrupar parámetros relacionados en una estructura (cuando se vean clases)
 - Usar patrones como Builder (tema avanzado)
 
+(referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - **Bloch, J.** (2018). _Effective Java_ (3ra ed.). Addison-Wesley Professional.

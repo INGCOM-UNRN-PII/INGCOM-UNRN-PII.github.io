@@ -1,7 +1,9 @@
+(varargs-cantidad-variable-de-argumentos)=
 ## Varargs: Cantidad Variable de Argumentos
 
 A veces es útil escribir un método que pueda recibir cualquier cantidad de argumentos del mismo tipo. Java proporciona una sintaxis especial para esto llamada **varargs** (del inglés _variable arguments_).
 
+(sintaxis-y-uso)=
 ### Sintaxis y Uso
 
 Se declara con tres puntos (`...`) después del tipo del último parámetro:
@@ -24,6 +26,7 @@ int r3 = sumarTodos(1, 2, 3);       // 3 argumentos, retorna 6
 int r4 = sumarTodos(1, 2, 3, 4, 5); // 5 argumentos, retorna 15
 ```
 
+(implementacion-interna)=
 ### Implementación Interna
 
 Internamente, el compilador convierte los varargs en un **arreglo**. El método `sumarTodos(int... numeros)` es equivalente a `sumarTodos(int[] numeros)`, pero con la diferencia de que al llamarlo no hace falta crear el arreglo explícitamente.
@@ -36,6 +39,7 @@ sumarTodos(1, 2, 3);
 sumarTodos(new int[]{1, 2, 3});  // Creando el arreglo explícitamente
 ```
 
+(restricciones)=
 ### Restricciones
 
 - Solo puede haber **un parámetro varargs** por método.

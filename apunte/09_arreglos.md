@@ -3,10 +3,12 @@ title: "Arreglos en Java"
 description: Estudio técnico sobre estructuras de datos homogéneas, declaración, acceso, recorrido y pasaje a métodos.
 ---
 
+(arreglos-en-java)=
 # Arreglos en Java
 
 En Java, los **arreglos** (_arrays_) son contenedores de tamaño fijo que almacenan elementos del mismo tipo. Si venís de C, la sintaxis te resultará familiar, aunque hay diferencias importantes en cómo Java gestiona la memoria y verifica los límites.
 
+(que-es-un-arreglo)=
 ## ¿Qué es un Arreglo?
 
 Un **arreglo** es una estructura de datos que permite almacenar múltiples valores del mismo tipo bajo un único nombre, organizados en posiciones consecutivas de memoria. Cada posición se identifica mediante un **índice numérico** que comienza en cero.
@@ -21,6 +23,7 @@ La idea fundamental es la misma que en C: un arreglo es una secuencia contigua d
 3. **Gestión de memoria automática**: no hay `malloc()` ni `free()`, el _garbage collector_ se encarga de liberar la memoria.
 :::
 
+(caracteristicas-fundamentales)=
 ## Características Fundamentales
 
 Antes de ver la sintaxis, es importante entender qué caracteriza a los arreglos en Java:
@@ -33,6 +36,7 @@ Antes de ver la sintaxis, es importante entender qué caracteriza a los arreglos
 | **Acceso directo** | Podés acceder a cualquier elemento directamente por su índice en tiempo constante O(1). |
 | **Almacenamiento contiguo** | Los elementos se almacenan en posiciones consecutivas de memoria (en el _heap_). |
 
+(declaracion-de-arreglos)=
 ## Declaración de Arreglos
 
 **Declarar** un arreglo significa indicarle al compilador que vamos a usar una variable que contendrá una referencia a un arreglo de un tipo específico.
@@ -75,6 +79,7 @@ int *numeros;  // Puntero sin inicializar (apunta a basura)
 La diferencia es que en Java la referencia está inicializada a `null`, un valor conocido, en lugar de contener basura.
 :::
 
+(creacion-de-arreglos)=
 ## Creación de Arreglos
 
 **Crear** un arreglo significa reservar memoria en el _heap_ para almacenar los elementos. Para esto se usa la palabra clave `new`, seguida del tipo y el tamaño entre corchetes:
@@ -115,6 +120,7 @@ int[] numeros = new int[5];  // Reserva e inicializa a 0
 Java elimina dos fuentes comunes de errores: valores sin inicializar y memory leaks por olvidar llamar a `free()`.
 :::
 
+(valores-por-defecto)=
 ### Valores por Defecto
 
 Al crear un arreglo con `new`, Java **garantiza** que todos los elementos se inicializan automáticamente a un valor por defecto. Esto es una diferencia importante con C, donde la memoria dinámica contiene "basura" hasta que la inicializás explícitamente.
@@ -154,6 +160,7 @@ int longitud = nombres[0].length();  // ✅ OK, retorna 4
 ```
 :::
 
+(creacion-con-inicializacion)=
 ### Creación con Inicialización
 
 Cuando conocés los valores iniciales al momento de crear el arreglo, podés usar una sintaxis abreviada con llaves. Java determina automáticamente el tamaño según la cantidad de elementos:
@@ -203,6 +210,7 @@ int[] primos = {2, 3, 5, 7, 11};
 La única diferencia es la posición de los corchetes (antes o después del nombre).
 :::
 
+(separacion-de-declaracion-e-inicializacion)=
 ### Separación de Declaración e Inicialización
 
 A veces necesitás declarar la variable en un lugar y crear el arreglo en otro (por ejemplo, dentro de un condicional). En ese caso, la sintaxis con llaves requiere incluir `new tipo[]` explícitamente:
@@ -237,6 +245,7 @@ int tamanio = obtenerTamanioDeUsuario();
 dinamico = new int[tamanio];
 ```
 
+(acceso-a-elementos)=
 ## Acceso a Elementos
 
 Una vez creado el arreglo, podés **leer** y **escribir** elementos individuales usando el operador de indexación `[]`. Los elementos se acceden usando índices entre corchetes, y **los índices comienzan en 0** (igual que en C).
@@ -258,6 +267,7 @@ numeros[1] = 25;            // Modifica: ahora es {10, 25, 30, 40, 50}
 
 El acceso por índice es una operación de **tiempo constante** O(1): acceder al elemento 0 toma el mismo tiempo que acceder al elemento 1000, porque Java calcula directamente la dirección de memoria usando aritmética de punteros internamente.
 
+(indices-validos)=
 ### Índices Válidos
 
 Para un arreglo de tamaño `n`, los índices válidos van de `0` a `n-1`:
@@ -268,6 +278,7 @@ Para un arreglo de tamaño `n`, los índices válidos van de `0` a `n-1`:
 | `new int[1]` | 1 | 0 |
 | `new int[100]` | 100 | 0 a 99 |
 
+(el-atributo-length)=
 ### El Atributo `length`
 
 Todo arreglo en Java tiene un atributo llamado `length` que indica cuántos elementos puede contener. Este atributo:
@@ -332,6 +343,7 @@ int tamString = texto.length();    // Con paréntesis (método)
 ```
 :::
 
+(verificacion-de-limites)=
 ### Verificación de Límites
 
 Java verifica **automáticamente** en tiempo de ejecución que el índice esté dentro del rango válido `[0, length-1]`. Si intentás acceder con un índice inválido (negativo o mayor o igual a `length`), Java lanza una excepción `ArrayIndexOutOfBoundsException` y el programa se detiene.
@@ -376,10 +388,12 @@ if (indice >= 0 && indice < datos.length) {
 }
 ```
 
+(recorrido-de-arreglos)=
 ## Recorrido de Arreglos
 
 **Recorrer** un arreglo significa visitar cada uno de sus elementos, generalmente para leerlos, procesarlos, o modificarlos. Es una de las operaciones más comunes.
 
+(recorrido-con-for-clasico)=
 ### Recorrido con `for` Clásico
 
 El lazo `for` clásico es la forma más flexible de recorrer un arreglo. Usás una variable índice que va desde 0 hasta `length - 1`:
@@ -431,6 +445,7 @@ Usá el `for` clásico cuando necesités:
 - Recorrer en orden inverso (de atrás hacia adelante).
 :::
 
+(recorrido-con-for-each)=
 ### Recorrido con `for-each`
 
 El lazo `for-each` (también llamado "enhanced for" o "for mejorado") proporciona una sintaxis más limpia cuando solo necesitás leer los elementos sin importar el índice:
@@ -494,6 +509,7 @@ Usá `for-each` cuando:
 Es especialmente útil para calcular sumas, promedios, o buscar si existe un elemento.
 :::
 
+(recorrido-parcial)=
 ### Recorrido Parcial
 
 A veces necesitás recorrer solo una porción del arreglo. El `for` clásico permite controlar exactamente dónde empezar y terminar:
@@ -509,6 +525,7 @@ for (int i = 2; i <= 4; i = i + 1) {
 }
 ```
 
+(recorrido-inverso)=
 ### Recorrido Inverso
 
 Para recorrer de atrás hacia adelante, empezá en `length - 1` y decrementá:
@@ -523,6 +540,7 @@ for (int i = numeros.length - 1; i >= 0; i = i - 1) {
 }
 ```
 
+(recorrido-con-while)=
 ### Recorrido con `while`
 
 Aunque el `for` es más común para recorrer arreglos, también podés usar `while`. Es especialmente útil cuando la condición de terminación es más compleja que simplemente llegar al final:
@@ -539,6 +557,7 @@ while (i < numeros.length) {
 }
 ```
 
+(recorrido-con-bandera-patron-de-busqueda)=
 ### Recorrido con Bandera (Patrón de Búsqueda)
 
 Uno de los patrones más importantes es la **búsqueda con bandera**: recorrer el arreglo hasta encontrar un elemento específico o llegar al final. Usamos una variable booleana (la "bandera") para controlar cuándo terminar.
@@ -586,10 +605,12 @@ El patrón con bandera tiene ventajas:
 - **Fácil de verificar**: la post-condición del lazo es clara (`encontrado` es verdadero si y solo si el elemento existe).
 :::
 
+(arreglos-como-referencias)=
 ## Arreglos como Referencias
 
 En Java, las variables de arreglo son **referencias** (conceptualmente similares a punteros en C). Entender esto es fundamental para evitar errores comunes.
 
+(que-es-una-referencia)=
 ### ¿Qué es una Referencia?
 
 Una **referencia** es un valor que indica la ubicación de un objeto en memoria. Cuando declarás `int[] numeros`, la variable `numeros` no contiene el arreglo en sí, sino una referencia (dirección de memoria) hacia donde está el arreglo en el _heap_.
@@ -620,6 +641,7 @@ int[] numeros = new int[5];  // numeros contiene una referencia
 La diferencia principal es que en Java no podés hacer aritmética de punteros ni acceder a memoria arbitraria. Las referencias son "punteros seguros".
 :::
 
+(asignacion-de-referencias-alias)=
 ### Asignación de Referencias (Alias)
 
 Cuando asignás un arreglo a otra variable, **no se copian los datos**. Solo se copia la referencia, por lo que ambas variables terminan apuntando al mismo arreglo en memoria. Esto se llama crear un **alias**.
@@ -651,6 +673,7 @@ System.out.println(alias[0]);     // Imprime: 100
 Muchos programadores novatos esperan que `int[] copia = original;` cree una copia independiente. ¡No es así! Si modificás `copia[0]`, también cambia `original[0]` porque son el mismo arreglo.
 :::
 
+(comparacion-de-arreglos)=
 ### Comparación de Arreglos
 
 El operador `==` compara **referencias** (direcciones de memoria), no el contenido de los arreglos:
@@ -687,6 +710,7 @@ System.out.println(Arrays.equals(a, d));  // false: contenido diferente
 1. Ambos arreglos tienen la misma longitud.
 2. Cada elemento en la posición `i` de un arreglo es igual al elemento en la posición `i` del otro.
 
+(copia-de-arreglos)=
 ### Copia de Arreglos
 
 Para crear una **copia independiente** de un arreglo (donde modificar uno no afecte al otro), tenés varias opciones:
@@ -763,10 +787,12 @@ int[] copia = Arrays.copyOf(original, original.length);
 Java ofrece métodos de más alto nivel que son más seguros (no podés especificar tamaños incorrectos que causen buffer overflow).
 :::
 
+(arreglos-y-metodos)=
 ## Arreglos y Métodos
 
 Los arreglos interactúan con los métodos de formas específicas que es importante entender para escribir código correcto.
 
+(pasaje-de-arreglos-a-metodos)=
 ### Pasaje de Arreglos a Métodos
 
 Cuando pasás un arreglo a un método, se pasa la **referencia** (la dirección de memoria), no una copia del arreglo. Esto tiene dos consecuencias importantes:
@@ -819,6 +845,7 @@ void duplicar(int arr[], int size) {
 La diferencia es que en Java no necesitás pasar el tamaño como parámetro adicional.
 :::
 
+(retorno-de-arreglos)=
 ### Retorno de Arreglos
 
 Un método puede crear un arreglo internamente y retornarlo. El método retorna la **referencia** al arreglo creado, que vive en el _heap_ y sobrevive después de que el método termine.
@@ -855,6 +882,7 @@ int* crearArreglo() {
 En Java esto nunca es un problema porque los arreglos siempre se crean en el _heap_ con `new`, y el _garbage collector_ se asegura de que no se liberen mientras haya referencias a ellos.
 :::
 
+(patron-metodo-que-calcula-sin-modificar)=
 ### Patrón: Método que Calcula sin Modificar
 
 Para evitar efectos secundarios y hacer el código más predecible, podés crear métodos que retornen un nuevo arreglo en lugar de modificar el original. Este estilo se llama **programación sin efectos secundarios** o estilo **funcional**:
@@ -891,6 +919,7 @@ public static void main(String[] args) {
 **Desventaja:**
 - Usa más memoria porque crea un nuevo arreglo.
 
+(reasignacion-de-la-referencia-dentro-del-metodo)=
 ### Reasignación de la Referencia dentro del Método
 
 Un detalle importante: un método **no puede cambiar a qué apunta una referencia fuera del método**. Reasignar el parámetro solo afecta la copia local de la referencia:
@@ -912,10 +941,12 @@ public static void main(String[] args) {
 
 El parámetro `arr` es una **copia de la referencia**. Modificar el contenido del arreglo (`arr[0] = 999`) sí afecta al original, pero reasignar `arr` a otro arreglo solo cambia la copia local.
 
+(arreglos-multidimensionales)=
 ## Arreglos Multidimensionales
 
 Java permite crear **arreglos de arreglos**, que se usan comúnmente para representar estructuras bidimensionales como matrices, tableros de juego, imágenes, etc.
 
+(concepto-arreglo-de-arreglos)=
 ### Concepto: Arreglo de Arreglos
 
 Técnicamente, Java no tiene "arreglos multidimensionales" verdaderos como otros lenguajes. Lo que tiene son **arreglos cuyos elementos son otros arreglos**. Una matriz `int[][]` es un arreglo de `int[]`.
@@ -933,6 +964,7 @@ Esta arquitectura tiene implicaciones importantes:
 - Las filas pueden tener diferentes tamaños (arreglos irregulares).
 - Acceder a un elemento requiere dos accesos a memoria (primero la fila, luego el elemento).
 
+(declaracion-y-creacion-de-matrices)=
 ### Declaración y Creación de Matrices
 
 ```{code} java
@@ -970,6 +1002,7 @@ int[][] matriz = new int[3][4];
 En C, toda la matriz está en un bloque contiguo de memoria. En Java, cada fila es un arreglo separado, lo que permite filas de diferentes tamaños.
 :::
 
+(inicializacion-de-matrices)=
 ### Inicialización de Matrices
 
 Al igual que con arreglos unidimensionales, podés inicializar una matriz directamente con valores:
@@ -989,6 +1022,7 @@ int valor = matriz[1][2];  // Fila 1, columna 2 → 7
 
 El compilador deduce las dimensiones automáticamente (3 filas × 4 columnas en este caso).
 
+(recorrido-de-matrices)=
 ### Recorrido de Matrices
 
 Para procesar todos los elementos de una matriz, usás **lazos anidados**: un lazo externo para las filas y uno interno para las columnas.
@@ -1031,6 +1065,7 @@ for (int fila = 0; fila < matriz.length; fila = fila + 1) {
 ```
 :::
 
+(recorrido-con-for-each)=
 ### Recorrido con for-each
 
 También podés usar `for-each` anidados para recorrer matrices:
@@ -1048,6 +1083,7 @@ for (int[] fila : matriz) {           // Cada fila es un int[]
 }
 ```
 
+(matrices-irregulares-jagged-arrays)=
 ### Matrices Irregulares (Jagged Arrays)
 
 Como cada fila es un arreglo independiente, pueden tener diferentes tamaños. Esto se llama **arreglo irregular** o **jagged array**:
@@ -1081,10 +1117,12 @@ int[][] pascal = {
 Si la matriz es irregular, usar `matriz[0].length` para todas las filas causará errores. Siempre usá `matriz[fila].length` para obtener el tamaño de cada fila específica.
 :::
 
+(operaciones-comunes-con-arreglos)=
 ## Operaciones Comunes con Arreglos
 
 Esta sección presenta algoritmos fundamentales que todo programador debe conocer. Estas operaciones son la base para resolver problemas más complejos.
 
+(encontrar-maximo-y-minimo)=
 ### Encontrar Máximo y Mínimo
 
 El patrón para encontrar el máximo es: asumir que el primer elemento es el máximo, y luego recorrer el resto comparando:
@@ -1134,6 +1172,7 @@ Empezar con `arr[0]` en lugar de un valor arbitrario (como `Integer.MIN_VALUE`) 
 La desventaja es que debés asegurarte de que el arreglo no esté vacío.
 :::
 
+(sumar-elementos)=
 ### Sumar Elementos
 
 El patrón acumulador: inicializar una variable a 0 y sumar cada elemento:
@@ -1160,6 +1199,7 @@ public static int sumarConForEach(int[] arr) {
 }
 ```
 
+(calcular-promedio)=
 ### Calcular Promedio
 
 El promedio es la suma dividida por la cantidad de elementos. Importante: hacer la división con punto flotante:
@@ -1178,6 +1218,7 @@ int[] notas = {7, 8, 6, 9, 10};
 double prom = promedio(notas);  // 8.0
 ```
 
+(contar-elementos-que-cumplen-una-condicion)=
 ### Contar Elementos que Cumplen una Condición
 
 Otro patrón fundamental: recorrer contando cuántos elementos satisfacen cierta condición:
@@ -1207,6 +1248,7 @@ public static int contarMayoresQue(int[] arr, int umbral) {
 }
 ```
 
+(verificar-si-todos-alguno-cumple-una-condicion)=
 ### Verificar si Todos/Alguno Cumple una Condición
 
 Dos patrones relacionados con el conteo:
@@ -1243,6 +1285,7 @@ public static boolean existeNegativo(int[] arr) {
 }
 ```
 
+(invertir-arreglo)=
 ### Invertir Arreglo
 
 Intercambiar elementos desde los extremos hacia el centro:
@@ -1272,6 +1315,7 @@ public static void invertir(int[] arr) {
 
 Este algoritmo es **in-place**: modifica el arreglo original sin crear uno nuevo, usando solo O(1) memoria adicional (la variable `temp`).
 
+(clase-arrays-utilidades)=
 ## Clase `Arrays` (Utilidades)
 
 Java provee la clase `java.util.Arrays` con métodos de utilidad para trabajar con arreglos. Estos métodos están optimizados y son más seguros que implementaciones manuales.
@@ -1282,6 +1326,7 @@ Para usar esta clase, debés importarla al inicio del archivo:
 import java.util.Arrays;
 ```
 
+(metodos-principales)=
 ### Métodos Principales
 
 ```{code} java
@@ -1331,6 +1376,7 @@ int[] copiaExtendida = Arrays.copyOf(original, 7);               // {1, 2, 3, 4,
 int[] rango = Arrays.copyOfRange(original, 1, 4);  // {2, 3, 4} (índices 1, 2, 3)
 ```
 
+(resumen-de-metodos-de-arrays)=
 ### Resumen de Métodos de Arrays
 
 | Método | Descripción | Precondición |
@@ -1355,10 +1401,12 @@ int pos2 = Arrays.binarySearch(ordenado, 2);    // ✅ Retorna 1 (índice correc
 ```
 :::
 
+(ejercicios-de-aplicacion)=
 ## Ejercicios de Aplicación
 
 Los siguientes ejercicios te ayudarán a consolidar los conceptos de arreglos. Intentá resolverlos antes de ver las soluciones.
 
+(ejercicios-de-comprension)=
 ### Ejercicios de Comprensión
 
 ````{exercise}
@@ -1397,6 +1445,7 @@ Imprime `[999, 2, 3]`.
 **Moraleja:** Podés modificar el **contenido** del arreglo desde un método, pero no podés cambiar a qué arreglo apunta la referencia original.
 ```
 
+(ejercicios-de-programacion)=
 ### Ejercicios de Programación
 
 ```{exercise}
@@ -1584,6 +1633,7 @@ public static int[] eliminarDuplicados(int[] ordenado) {
 ```
 ````
 
+(resumen)=
 ## Resumen
 
 Los arreglos en Java son estructuras fundamentales que todo programador debe dominar. Los puntos clave a recordar:
@@ -1598,6 +1648,7 @@ Los arreglos en Java son estructuras fundamentales que todo programador debe dom
 | **Referencias** | Las variables de arreglo son referencias, no copias |
 | **Pasaje a métodos** | Se pasa la referencia; el método puede modificar el contenido |
 
+(comparacion-java-vs-c)=
 ### Comparación Java vs C
 
 | Aspecto | C | Java |
@@ -1608,6 +1659,7 @@ Los arreglos en Java son estructuras fundamentales que todo programador debe dom
 | Valores iniciales | Basura | Valores por defecto (0, false, null) |
 | Retornar arreglos | Peligroso si es local | Seguro (siempre en heap) |
 
+(referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - **Schildt, H.** (2022). *Java: A Beginner's Guide* (9na ed.). McGraw Hill. Capítulo 5: Arrays.

@@ -4,6 +4,7 @@ description: Estudio técnico sobre el modelo de memoria de Java, pasaje de argu
 label: memoria
 ---
 
+(memoria-referencias-y-mutabilidad)=
 # Memoria, Referencias y Mutabilidad
 
 Este capítulo es fundamental para entender cómo funciona Java "por dentro". Si venís de C, muchos conceptos te resultarán familiares pero con diferencias importantes. Vamos a explicar todo desde cero, asumiendo que sabés programar en C pero no conocés los detalles internos de Java.
@@ -12,6 +13,7 @@ Este capítulo es fundamental para entender cómo funciona Java "por dentro". Si
 Muchos bugs difíciles de encontrar están relacionados con cómo Java maneja la memoria: variables que "misteriosamente" cambian de valor, comparaciones que dan resultados inesperados, o el temido `NullPointerException`. Entender el modelo de memoria te ayuda a evitar estos problemas.
 :::
 
+(modelo-de-memoria-de-la-jvm)=
 ## Modelo de Memoria de la JVM
 
 Cuando ejecutás un programa en C, el sistema operativo le asigna memoria directamente. En Java, tu programa corre dentro de la **JVM** (Java Virtual Machine), que actúa como intermediario. La JVM divide la memoria en varias regiones, pero las dos más importantes para nosotros son el **Stack** y el **Heap**.
@@ -24,6 +26,7 @@ Cuando ejecutás un programa en C, el sistema operativo le asigna memoria direct
 Modelo de memoria de la JVM: Stack (variables locales y referencias) vs Heap (objetos y arreglos).
 ```
 
+(stack-pila-de-ejecucion)=
 ### Stack (Pila de Ejecución)
 
 El **Stack** funciona exactamente igual que en C: es una región de memoria que crece y decrece automáticamente cuando llamás y retornás de métodos.
@@ -57,6 +60,7 @@ public static void ejemplo() {
 }
 ```
 
+(heap-monticulo)=
 ### Heap (Montículo)
 
 El **Heap** es la región de memoria donde viven los objetos y arreglos. A diferencia del Stack:
@@ -87,6 +91,7 @@ public static void ejemplo() {
 }
 ```
 
+(visualizacion-del-modelo)=
 ### Visualización del Modelo
 
 Imaginá que el Stack es tu escritorio y el Heap es un depósito grande. En tu escritorio (Stack) tenés notas con direcciones (referencias) que te dicen dónde están las cosas en el depósito (Heap).
@@ -112,6 +117,7 @@ Imaginá que el Stack es tu escritorio y el Heap es un depósito grande. En tu e
 └─────────────────────────┘     └─────────────────────────────────┘
 ```
 
+(que-pasa-cuando-termina-un-metodo)=
 ### ¿Qué pasa cuando termina un método?
 
 Cuando un método termina:
@@ -136,6 +142,7 @@ public static void main(String[] args) {
 }
 ```
 
+(referencias-los-punteros-seguros-de-java)=
 ## Referencias: Los "Punteros Seguros" de Java
 
 Una **referencia** en Java es conceptualmente similar a un puntero en C, pero con restricciones de seguridad:
@@ -153,6 +160,7 @@ Una **referencia** en Java es conceptualmente similar a un puntero en C, pero co
 - **Portabilidad:** La JVM puede mover objetos en memoria sin que tu código se entere.
 - **Simplicidad:** No necesitás preocuparte por el tamaño exacto de los tipos para calcular offsets.
 
+(tipos-primitivos-vs-tipos-referencia)=
 ### Tipos Primitivos vs Tipos Referencia
 
 Esta es una distinción fundamental en Java:
@@ -199,6 +207,7 @@ Stack:                               Stack:           Heap:
 (independientes)                     (apuntan al mismo lugar)
 ```
 
+(el-valor-null)=
 ## El Valor `null`
 
 Una referencia puede no apuntar a ningún objeto. Esto se representa con el valor especial `null`. Es el equivalente a `NULL` en C.
@@ -213,6 +222,7 @@ String texto = null;   // La referencia existe pero no apunta a ningún String
 // Es como tener un papel con la dirección borrada
 ```
 
+(valores-por-defecto)=
 ### Valores por defecto
 
 Cuando declarás una variable sin inicializarla, Java le asigna un valor por defecto:
@@ -239,6 +249,7 @@ public static void ejemplo() {
 ```
 :::
 
+(nullpointerexception)=
 ### NullPointerException
 
 Esta es una de las excepciones más comunes en Java (y uno de los errores más comunes en programación en general). Ocurre cuando intentás usar una referencia que es `null`.
@@ -271,6 +282,7 @@ try {
 ```
 :::
 
+(prevenir-nullpointerexception)=
 ### Prevenir NullPointerException
 
 La forma más simple es verificar antes de usar:
@@ -293,6 +305,7 @@ public static void procesarArreglo(int[] arr) {
 }
 ```
 
+(comparacion-de-referencias-vs-equals)=
 ## Comparación de Referencias: `==` vs `equals()`
 
 El operador `==` tiene comportamiento diferente según el tipo de dato:
@@ -331,6 +344,7 @@ a == b → ¿0x1234 == 0x5678? → NO
 a == c → ¿0x1234 == 0x1234? → SÍ
 ```
 
+(comparar-contenido-de-arreglos)=
 ### Comparar contenido de arreglos
 
 Para comparar si dos arreglos tienen el mismo contenido, usá `Arrays.equals()`:
@@ -349,6 +363,7 @@ System.out.println(Arrays.equals(a, b)); // true (mismo contenido)
 
 `Arrays.equals()` compara elemento por elemento. Para arreglos multidimensionales, usá `Arrays.deepEquals()`.
 
+(pasaje-de-argumentos-a-metodos)=
 ## Pasaje de Argumentos a Métodos
 
 Esta es una de las fuentes de confusión más comunes. La regla en Java es simple:
@@ -384,6 +399,7 @@ flowchart LR
     style R4 fill:#ffe0e0,stroke:#eb2141
 ````
 
+(pasaje-de-primitivos)=
 ### Pasaje de Primitivos
 
 Se pasa una **copia del valor**. El método trabaja con su propia copia independiente.
@@ -424,6 +440,7 @@ int main() {
 }
 ```
 
+(pasaje-de-referencias)=
 ### Pasaje de Referencias
 
 Se pasa una **copia de la referencia** (la dirección). El método puede modificar el contenido del objeto, pero **no puede** cambiar a qué apunta la referencia original.
@@ -463,6 +480,7 @@ public static void main(String[] args) {
 }
 ```
 
+(visualizacion-del-pasaje-de-referencias)=
 ### Visualización del Pasaje de Referencias
 
 ```
@@ -505,6 +523,7 @@ Stack (método)           ┌─────────────────
 Cuando el método termina, el nuevo arreglo queda sin referencias y será eliminado.
 ```
 
+(comparacion-con-c)=
 ### Comparación con C
 
 En C, para modificar una variable del llamador, necesitás pasar un puntero:
@@ -527,6 +546,7 @@ En Java no podés hacer esto con primitivos (no hay `&` ni `*`). Si necesitás q
 2. Retornar un valor y modificar un arreglo recibido
 3. (Más adelante) Crear un objeto que contenga los valores
 
+(efectos-secundarios-side-effects)=
 ## Efectos Secundarios (Side Effects)
 
 Un **efecto secundario** ocurre cuando un método modifica estado fuera de su propio alcance. Esto incluye:
@@ -558,6 +578,7 @@ ordenar(datos);
 // datos ahora está ordenado: {1, 2, 5, 8}
 ```
 
+(funciones-puras-vs-metodos-con-efectos)=
 ### Funciones Puras vs Métodos con Efectos
 
 Una **función pura**:
@@ -628,6 +649,7 @@ public static void ordenar(int[] arr) {
 ```
 :::
 
+(inmutabilidad)=
 ## Inmutabilidad
 
 Un valor u objeto **inmutable** es aquel cuyo estado no puede cambiar después de ser creado.
@@ -638,6 +660,7 @@ Un valor u objeto **inmutable** es aquel cuyo estado no puede cambiar después d
 
 **Strings:** Son **inmutables**. No podés cambiar el contenido de un String existente.
 
+(la-palabra-clave-final)=
 ### La Palabra Clave `final`
 
 `final` previene la **reasignación** de una variable. Pero si la variable es una referencia, **no** previene la modificación del contenido del objeto.
@@ -660,6 +683,7 @@ System.out.println(numeros[0]);  // 999
 
 **Analogía:** `final` significa "esta variable siempre apuntará a este objeto". Pero no dice nada sobre qué hay dentro del objeto.
 
+(estrategias-para-prevenir-modificaciones)=
 ### Estrategias para Prevenir Modificaciones
 
 **1. Copia defensiva al recibir:**
@@ -710,6 +734,7 @@ public static int[] obtenerDatosBien() {
 }
 ```
 
+(strings-inmutabilidad-especial)=
 ## Strings: Inmutabilidad especial
 
 En C, un "string" es simplemente un arreglo de `char` terminado en `'\0'`. Podés modificar cualquier carácter directamente:
@@ -722,6 +747,7 @@ texto[0] = 'M';  // Ahora es "Mola"
 
 En Java, la clase `String` es **inmutable por diseño**. Una vez que creás un String, su contenido **nunca puede cambiar**. Esto tiene varias implicaciones importantes.
 
+(por-que-los-strings-son-inmutables)=
 ### ¿Por qué los Strings son inmutables?
 
 Java diseñó los Strings inmutables por varias razones:
@@ -731,6 +757,7 @@ Java diseñó los Strings inmutables por varias razones:
 3. **Optimización (String Pool):** Java puede reutilizar Strings idénticos.
 4. **Uso como claves:** Los Strings pueden usarse como claves en tablas hash de forma segura.
 
+(string-pool)=
 ### String Pool
 
 Para optimizar memoria, Java mantiene un **String Pool** (también llamado String Intern Pool): una caché especial de Strings únicos en el Heap.
@@ -775,6 +802,7 @@ s3: 0x5678 ──────────────► "Hola" (0x5678) ← obj
 **¿Cuándo usar `new String()`?**
 Casi nunca. Usar `new String("texto")` crea un objeto innecesario fuera del pool. El uso principal es en casos muy específicos de performance o cuando necesitás explícitamente un objeto nuevo (raro).
 
+(metodos-de-string-no-modifican-el-original)=
 ### Métodos de String NO Modifican el Original
 
 Esta es la consecuencia más importante de la inmutabilidad. Todos los métodos de String que "transforman" el texto en realidad **crean y retornan un nuevo String**:
@@ -799,6 +827,7 @@ texto = texto.trim();  // La variable 'texto' ahora apunta al nuevo String
 System.out.println(texto);  // "espacios"
 ```
 
+(metodos-comunes-de-string)=
 ### Métodos Comunes de String
 
 | Método | Descripción | Retorna | Ejemplo |
@@ -848,6 +877,7 @@ String[] frutas = csv.split(",");
 // frutas = ["manzana", "banana", "naranja"]
 ```
 
+(comparacion-de-strings)=
 ### Comparación de Strings
 
 :::{warning} Nunca usar == para comparar contenido de Strings
@@ -884,6 +914,7 @@ if (entrada.equalsIgnoreCase(esperado)) { }
 if (entrada.toLowerCase().equals(esperado.toLowerCase())) { }
 ```
 
+(concatenacion-de-strings)=
 ### Concatenación de Strings
 
 El operador `+` concatena Strings:
@@ -904,10 +935,12 @@ String mensaje = "Hola, " + nombre + ". Tenés " + edad + " años.";
 
 Cada vez que usás `+`, Java crea un nuevo objeto String con la concatenación. Para una sola concatenación está bien, pero en un lazo esto es muy ineficiente.
 
+(stringbuilder-strings-mutables)=
 ## StringBuilder: Strings Mutables
 
 Cuando necesitás construir un String de forma incremental, especialmente dentro de lazos, usá `StringBuilder`. Esta clase es similar a un String pero **mutable**: podés modificar su contenido sin crear objetos nuevos.
 
+(el-problema-de-la-concatenacion-en-lazos)=
 ### El Problema de la Concatenación en Lazos
 
 ```{code} java
@@ -935,6 +968,7 @@ for (int i = 0; i < 1000; i = i + 1) {
 
 Total de caracteres copiados: 0 + 2 + 4 + ... + 3000 ≈ n²/2
 
+(la-solucion-stringbuilder)=
 ### La Solución: StringBuilder
 
 `StringBuilder` mantiene un buffer interno que crece cuando es necesario. Agregar caracteres es O(1) amortizado.
@@ -954,6 +988,7 @@ String resultado = sb.toString();  // Convertir a String al final
 // Complejidad: O(n)
 ```
 
+(metodos-de-stringbuilder)=
 ### Métodos de StringBuilder
 
 | Método | Descripción | Modifica el StringBuilder |
@@ -995,6 +1030,7 @@ sb.reverse();
 System.out.println(sb.toString());  // "odnuM aloh"
 ```
 
+(cuando-usar-string-vs-stringbuilder)=
 ### ¿Cuándo usar String vs StringBuilder?
 
 | Situación | Usar |
@@ -1005,6 +1041,7 @@ System.out.println(sb.toString());  // "odnuM aloh"
 | Pasar texto entre métodos | `String` |
 | Clave de diccionario/mapa | `String` |
 
+(resumen-reglas-clave)=
 ## Resumen: Reglas Clave
 
 Para cerrar, estas son las reglas fundamentales que debés recordar:
@@ -1029,6 +1066,7 @@ Para cerrar, estas son las reglas fundamentales que debés recordar:
 
 10. **`final` no es inmutabilidad**: `final` previene reasignación, no modificación de contenido.
 
+(ejercicios-de-aplicacion)=
 ## Ejercicios de Aplicación
 
 ````{exercise}
@@ -1187,6 +1225,7 @@ public static int contarMayusculas(String texto) {
 Siempre verificá que las referencias no sean `null` antes de usarlas, especialmente en parámetros de métodos públicos.
 ````
 
+(referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - **Schildt, H.** (2022). *Java: A Beginner's Guide* (9na ed.). McGraw Hill.

@@ -3,12 +3,14 @@ title: "Manejo de Archivos en Java"
 description: Estudio técnico sobre flujos de datos, NIO.2, manejo de excepciones y persistencia en sistemas de archivos.
 ---
 
+(manejo-de-archivos-en-java)=
 # Manejo de Archivos en Java
 
 Hasta ahora, todos los datos que manejaste en tus programas existían solo mientras el programa estaba en ejecución. Cuando el programa terminaba, toda la información se perdía. Si querías volver a usar esos datos, tenías que ingresarlos de nuevo. Los **archivos** resuelven este problema: permiten guardar información de manera **persistente** en el disco, para que esté disponible la próxima vez que ejecutes el programa, o incluso para que otros programas la lean.
 
 En la cursada de Programación I con C, ya trabajaste con archivos usando `FILE*`, `fopen()`, `fread()`, `fwrite()` y `fclose()`. Java ofrece un enfoque similar en concepto, pero con diferencias importantes en la implementación que hacen el código más seguro y legible.
 
+(por-que-necesitamos-archivos)=
 ## ¿Por qué necesitamos archivos?
 
 Pensá en cualquier aplicación real:
@@ -20,6 +22,7 @@ Pensá en cualquier aplicación real:
 
 Sin archivos, cada vez que cerrás la aplicación perdés todo. Los archivos permiten **persistir** (guardar de forma permanente) la información más allá de la ejecución del programa.
 
+(memoria-ram-vs-disco)=
 ### Memoria RAM vs. Disco
 
 Cuando tu programa crea una variable, esa variable vive en la **memoria RAM**. La RAM es rápida pero **volátil**: cuando apagás la computadora (o el programa termina), el contenido desaparece.
@@ -37,10 +40,12 @@ Los archivos viven en el **disco** (ya sea un disco rígido tradicional o un SSD
 En C, el manejo de archivos se hace con punteros `FILE*` y funciones como `fopen()`, `fread()`, `fclose()`. Java proporciona un enfoque similar pero con mayor seguridad: gestión automática de recursos y excepciones tipadas que indican exactamente qué salió mal.
 :::
 
+(conceptos-fundamentales-como-funcionan-los-archivos)=
 ## Conceptos Fundamentales: Cómo funcionan los archivos
 
 Antes de ver código, es importante entender qué pasa "detrás de escena" cuando un programa trabaja con archivos.
 
+(el-sistema-de-archivos)=
 ### El Sistema de Archivos
 
 El **sistema de archivos** es la estructura que el sistema operativo usa para organizar la información en el disco. Funciona como un árbol de carpetas (directorios) que contienen archivos o más carpetas.
@@ -57,6 +62,7 @@ C:\Users\usuario\documentos\datos.txt
 
 Java maneja automáticamente estas diferencias, por lo que tu código puede funcionar en cualquier sistema operativo sin cambios.
 
+(rutas-absolutas-vs-relativas)=
 ### Rutas Absolutas vs. Relativas
 
 Una **ruta absoluta** especifica la ubicación completa desde la raíz del sistema de archivos:
@@ -74,6 +80,7 @@ subdirectorio/datos.txt    (en un subdirectorio)
 
 En C, recordarás que `fopen("datos.txt", "r")` buscaba el archivo en el directorio actual. Java funciona igual con rutas relativas.
 
+(bytes-vs-caracteres-una-distincion-crucial)=
 ### Bytes vs. Caracteres: Una distinción crucial
 
 En C, trabajabas con archivos principalmente como secuencias de bytes (`fread`, `fwrite`), aunque también podías leer texto línea por línea con `fgets`. Java hace una distinción más explícita entre dos tipos de datos:
@@ -110,6 +117,7 @@ Reader lector = new FileReader("documento.txt");
 - Si tenés dudas, pensá: ¿puedo abrir este archivo en el Bloc de Notas y leer algo coherente? Si sí, es texto.
 :::
 
+(el-concepto-de-flujo-stream)=
 ### El concepto de "Flujo" (Stream)
 
 Tanto en C como en Java, los archivos se manejan como **flujos** (streams) de datos. Un flujo es como una manguera por la que pasan los datos, byte por byte (o carácter por carácter).
@@ -130,6 +138,7 @@ archivo.close();                                   // Cerrar flujo
 
 La diferencia principal es que en Java usamos diferentes tipos según si trabajamos con bytes o caracteres, y el manejo de errores es más explícito (con excepciones).
 
+(el-buffering-por-que-es-importante)=
 ### El Buffering: Por qué es importante
 
 Cada vez que tu programa lee o escribe un byte del disco, debe hacer una **llamada al sistema operativo**. Estas llamadas son lentas comparadas con operaciones en memoria. Si leés un archivo de 1 millón de caracteres uno por uno, hacés 1 millón de llamadas al sistema.
@@ -150,6 +159,7 @@ BufferedReader rapido = new BufferedReader(new FileReader("datos.txt"));
 
 Esta técnica de "envolver" un flujo básico con funcionalidad adicional (como buffering) es muy común en Java.
 
+(nio-2-la-api-moderna-de-java)=
 ## NIO.2: La API Moderna de Java
 
 Java tiene dos APIs principales para manejar archivos:
@@ -159,6 +169,7 @@ Java tiene dos APIs principales para manejar archivos:
 
 Vamos a usar principalmente la API moderna (NIO.2) porque es más potente, más segura, y produce código más legible. Sin embargo, vas a encontrar la API clásica en código existente, así que es bueno conocer ambas.
 
+(la-clase-path-representando-rutas)=
 ### La Clase `Path`: Representando Rutas
 
 `Path` representa una ruta en el sistema de archivos. No es el archivo en sí, sino la **dirección** donde está (o estará) el archivo. Pensalo como la diferencia entre una dirección postal y la casa que está en esa dirección.
@@ -186,6 +197,7 @@ Path ruta = Path.of("home", "usuario", "documentos", "datos.txt");
 
 En Java, `Path.of()` es un **método de fábrica** (factory method). En lugar de escribir `new Path(...)`, llamás a un método que te devuelve el objeto. Esto permite que Java elija internamente la implementación más adecuada según tu sistema operativo. No te preocupes por los detalles ahora; simplemente usá `Path.of()`.
 
+(obteniendo-informacion-de-un-path)=
 ### Obteniendo información de un Path
 
 Una vez que tenés un `Path`, podés extraer información sobre la ruta:
@@ -220,6 +232,7 @@ Path completa = directorio.resolve("documentos/archivo.txt");
 Crear un objeto `Path` **no** verifica si el archivo existe. Solo representa una ruta. Podés crear un `Path` a un archivo que no existe, y después crear ese archivo. La verificación de existencia se hace con métodos de la clase `Files`.
 :::
 
+(la-clase-files-operaciones-con-archivos)=
 ### La Clase `Files`: Operaciones con Archivos
 
 `Files` es una clase de utilidad que contiene métodos estáticos para realizar operaciones con archivos y directorios. Pensala como una caja de herramientas donde cada herramienta es un método.
@@ -250,6 +263,7 @@ boolean sePuedeEjecutar = Files.isExecutable(archivo);
 long tamanioBytes = Files.size(archivo);
 ```
 
+(comparacion-con-c)=
 ### Comparación con C
 
 | Operación | En C | En Java (NIO.2) |
@@ -259,10 +273,12 @@ long tamanioBytes = Files.size(archivo);
 | Obtener tamaño | `stat()` y estructura `st_size` | `Files.size(ruta)` |
 | Verificar permisos | `access(ruta, R_OK)` | `Files.isReadable(ruta)` |
 
+(lectura-de-archivos-de-texto)=
 ## Lectura de Archivos de Texto
 
 Vamos a ver las diferentes formas de leer archivos de texto, desde la más simple hasta las más eficientes.
 
+(metodo-simple-leer-todas-las-lineas-de-una-vez)=
 ### Método Simple: Leer Todas las Líneas de Una Vez
 
 Para archivos pequeños (que caben cómodamente en memoria), la forma más simple es leer todas las líneas de una vez:
@@ -311,6 +327,7 @@ No te preocupes por los detalles ahora; cuando veamos colecciones en profundidad
 `readAllLines()` carga **todo** el archivo en memoria. Si el archivo tiene 1GB, necesitás 1GB de memoria RAM libre. Para archivos muy grandes, esto puede causar un error `OutOfMemoryError` (quedarse sin memoria). Usá lectura línea por línea para archivos grandes.
 :::
 
+(lectura-linea-por-linea-con-bufferedreader)=
 ### Lectura Línea por Línea con BufferedReader
 
 Para archivos grandes, o cuando no necesitás todo el contenido en memoria al mismo tiempo, leé línea por línea:
@@ -369,6 +386,7 @@ fclose(archivo);
 
 La estructura es muy similar: un lazo que lee línea por línea hasta que la función de lectura indica que no hay más datos (retornando `NULL` en C o `null` en Java).
 
+(lectura-de-todo-el-contenido-como-un-solo-string)=
 ### Lectura de Todo el Contenido como un Solo String
 
 A veces querés todo el archivo como un único String (por ejemplo, para buscarlo con expresiones regulares):
@@ -402,10 +420,12 @@ String contenido = new String(Files.readAllBytes(archivo), StandardCharsets.UTF_
 ```
 :::
 
+(escritura-de-archivos-de-texto)=
 ## Escritura de Archivos de Texto
 
 Ahora veamos cómo guardar información en archivos. Las opciones son similares a la lectura: podés escribir todo de una vez o línea por línea.
 
+(metodo-simple-escribir-una-lista-de-lineas)=
 ### Método Simple: Escribir una Lista de Líneas
 
 La forma más simple de escribir un archivo es pasarle una lista de Strings a `Files.write()`:
@@ -458,6 +478,7 @@ fprintf(archivo, "Tercera línea\n");
 fclose(archivo);
 ```
 
+(escribir-un-unico-string)=
 ### Escribir un Único String
 
 Si tenés todo el contenido en un solo String:
@@ -484,6 +505,7 @@ public static void escribirString(String rutaArchivo, String contenido) {
 escribirString("mensaje.txt", "Hola, mundo!\nEsta es la segunda línea.");
 ```
 
+(escritura-con-bufferedwriter-mayor-control)=
 ### Escritura con BufferedWriter (Mayor Control)
 
 Para mayor control o archivos grandes, usá BufferedWriter:
@@ -518,6 +540,7 @@ El salto de línea varía según el sistema operativo:
 
 `writer.newLine()` usa automáticamente el salto de línea correcto para el sistema donde se ejecuta el programa. Esto hace que tu código sea portable.
 
+(agregar-al-final-de-un-archivo-append)=
 ### Agregar al Final de un Archivo (Append)
 
 A veces no querés sobrescribir el archivo, sino **agregar** contenido al final. Esto es común para archivos de log o registros históricos:
@@ -569,10 +592,12 @@ fprintf(archivo, "Nueva línea\n");
 fclose(archivo);
 ```
 
+(operaciones-con-archivos-y-directorios)=
 ## Operaciones con Archivos y Directorios
 
 Además de leer y escribir contenido, a menudo necesitás manipular los archivos mismos: crearlos, copiarlos, moverlos o eliminarlos. La clase `Files` proporciona métodos para todas estas operaciones.
 
+(crear-directorios-y-archivos-vacios)=
 ### Crear Directorios y Archivos Vacíos
 
 ```{code} java
@@ -609,6 +634,7 @@ Files.createFile(nuevoArchivo);  // Falla si ya existe
 | `Files.createDirectories(path)` | `mkdir -p a/b/c/d` | Crea toda la jerarquía |
 | `Files.createFile(path)` | `touch archivo` | Crea archivo vacío |
 
+(copiar-y-mover-archivos)=
 ### Copiar y Mover Archivos
 
 ```{code} java
@@ -641,6 +667,7 @@ Files.move(origen, archivoEnCarpeta, StandardCopyOption.REPLACE_EXISTING);
 
 En realidad, son la misma operación a nivel del sistema de archivos. "Renombrar" es solo "mover" al mismo directorio con diferente nombre. "Mover" es "renombrar" cambiando también el directorio.
 
+(eliminar-archivos-y-directorios)=
 ### Eliminar Archivos y Directorios
 
 ```{code} java
@@ -678,6 +705,7 @@ if (eliminado) {
 | `Files.deleteIfExists(path)` | `rm -f archivo` | No falla si no existe |
 | No hay equivalente directo | `rm -r directorio` | Hay que hacerlo manualmente |
 
+(manejo-de-excepciones-en-i-o)=
 ## Manejo de Excepciones en I/O
 
 Las operaciones con archivos pueden fallar por muchas razones que están fuera del control de tu programa:
@@ -690,6 +718,7 @@ Las operaciones con archivos pueden fallar por muchas razones que están fuera d
 
 Por eso, casi todas las operaciones de I/O en Java pueden lanzar excepciones. Entender estas excepciones te permite escribir programas robustos que manejan errores de manera elegante.
 
+(jerarquia-de-excepciones-de-i-o)=
 ### Jerarquía de Excepciones de I/O
 
 ```
@@ -708,6 +737,7 @@ IOException (excepción base para errores de entrada/salida)
 
 `FileNotFoundException` es de la API clásica (`java.io`), mientras que `NoSuchFileException` es de la API moderna (`java.nio.file`). Son conceptualmente lo mismo, pero de diferentes "generaciones" de Java. Si usás NIO.2 (como venimos haciendo), vas a encontrar `NoSuchFileException`.
 
+(captura-especifica-de-excepciones)=
 ### Captura Específica de Excepciones
 
 Capturar excepciones específicas te permite dar mensajes de error más útiles y tomar acciones diferentes según el tipo de problema:
@@ -770,6 +800,7 @@ if (archivo == NULL) {
 
 En Java, las excepciones hacen que el código de manejo de errores esté separado del código normal, y cada tipo de error tiene su propia excepción con información relevante.
 
+(excepciones-multiples-con-pipe)=
 ### Excepciones Múltiples con Pipe
 
 Si querés manejar varias excepciones de la misma manera (con el mismo código):
@@ -789,6 +820,7 @@ try {
 }
 ```
 
+(gestion-de-recursos-el-problema-de-cerrar-archivos)=
 ## Gestión de Recursos: El Problema de Cerrar Archivos
 
 Cuando abrís un archivo, el sistema operativo reserva recursos (un "descriptor de archivo") para esa conexión. Estos recursos son limitados: si abrís muchos archivos sin cerrarlos, eventualmente el sistema operativo te rechazará nuevas aperturas.
@@ -804,6 +836,7 @@ fclose(archivo);  // MUY IMPORTANTE: liberar el recurso
 
 El problema es que si algo falla entre `fopen` y `fclose`, el archivo queda abierto. En Java, este problema se manifiesta de manera similar.
 
+(el-problema-que-pasa-si-hay-una-excepcion)=
 ### El Problema: ¿Qué pasa si hay una excepción?
 
 ```{code} java
@@ -818,6 +851,7 @@ reader.close();  // Esta línea no se ejecuta si hubo excepción
 
 Si `readLine()` (o cualquier operación intermedia) lanza una excepción, el flujo del programa salta al manejo de la excepción y `reader.close()` nunca se ejecuta. El archivo queda abierto, "fugando" recursos del sistema.
 
+(solucion-clasica-try-finally)=
 ### Solución Clásica: try-finally
 
 El bloque `finally` se ejecuta **siempre**, haya o no excepción. Esto garantiza que el código de limpieza se ejecute:
@@ -866,6 +900,7 @@ public static void leerConFinally(String ruta) {
 - Propenso a errores (fácil olvidar el chequeo de null, el try-catch interno)
 - Difícil de leer y mantener
 
+(solucion-moderna-try-with-resources-java-7)=
 ### Solución Moderna: try-with-resources (Java 7+)
 
 Java 7 introdujo una sintaxis especial que simplifica enormemente la gestión de recursos:
@@ -902,6 +937,7 @@ public static void leerConTryResources(String ruta) {
 
 Es exactamente equivalente al try-finally anterior, pero mucho más corto y legible.
 
+(multiples-recursos-en-try-with-resources)=
 ### Múltiples Recursos en try-with-resources
 
 Podés declarar varios recursos separados por punto y coma:
@@ -938,6 +974,7 @@ public static void copiarArchivo(String origen, String destino) {
 Los recursos se cierran en **orden inverso** al que fueron declarados. En el ejemplo, primero se cierra `writer`, luego `reader`. Esto tiene sentido: si el writer depende del reader de alguna manera, querés cerrar el dependiente primero.
 :::
 
+(que-recursos-se-pueden-usar-con-try-with-resources)=
 ### ¿Qué recursos se pueden usar con try-with-resources?
 
 Para que un tipo funcione con try-with-resources, debe "prometer" que tiene un método `close()`. En términos técnicos, debe implementar la interfaz `AutoCloseable`. 
@@ -967,10 +1004,12 @@ try (Scanner scanner = new Scanner(System.in)) {
 Siempre que abras un recurso de I/O (archivo, conexión, etc.), usá try-with-resources. Es más seguro, más corto, y previene fugas de recursos.
 :::
 
+(codificacion-de-caracteres-charset)=
 ## Codificación de Caracteres (Charset)
 
 Cuando guardás texto en un archivo, las letras se convierten en bytes. Cuando leés ese archivo, los bytes se convierten de vuelta en letras. La **codificación** define las reglas de esta conversión.
 
+(por-que-importa-la-codificacion)=
 ### ¿Por qué importa la codificación?
 
 Pensá en la letra **ñ**. En tu pantalla, la ves como un único carácter. Pero en el archivo, puede representarse de diferentes maneras según la codificación:
@@ -992,6 +1031,7 @@ Si escribís un archivo con una codificación y lo leés con otra, los caractere
 // Resultado: "niÃ±o"  ← ¡Incorrecto!
 ```
 
+(la-solucion-especificar-siempre-utf-8)=
 ### La solución: Especificar siempre UTF-8
 
 UTF-8 es el estándar moderno. Puede representar cualquier carácter de cualquier idioma, y es compatible con ASCII (los caracteres ingleses básicos usan los mismos códigos).
@@ -1034,6 +1074,7 @@ Java usa la codificación por defecto del sistema operativo, que varía:
 
 Esto significa que un programa puede funcionar bien en tu computadora pero fallar en otra. Por eso, siempre es mejor especificar la codificación explícitamente.
 
+(codificaciones-comunes)=
 ### Codificaciones Comunes
 
 | Codificación | Descripción | Cuándo usarla |
@@ -1047,10 +1088,12 @@ Esto significa que un programa puede funcionar bien en tu computadora pero falla
 A menos que tengas una razón específica (como leer un archivo viejo que sabés que está en otra codificación), siempre usá UTF-8. Es el estándar de internet y soporta todos los caracteres de todos los idiomas.
 :::
 
+(eficiencia-la-importancia-del-buffering)=
 ## Eficiencia: La Importancia del Buffering
 
 Ya mencionamos el buffering antes, pero vale la pena profundizar porque tiene un impacto enorme en el rendimiento.
 
+(el-costo-de-acceder-al-disco)=
 ### El costo de acceder al disco
 
 Cada vez que tu programa lee o escribe datos del disco, ocurre lo siguiente:
@@ -1064,6 +1107,7 @@ Cada vez que tu programa lee o escribe datos del disco, ocurre lo siguiente:
 
 Este proceso toma **milisegundos**, que parecen poco, pero son eternidades para un procesador que hace billones de operaciones por segundo.
 
+(sin-buffer-vs-con-buffer)=
 ### Sin buffer vs. Con buffer
 
 ```{code} java
@@ -1092,6 +1136,7 @@ BufferedReader reader = Files.newBufferedReader(Path.of("datos.txt"));
 
 El tiempo de caminar al pozo es el cuello de botella, igual que el tiempo de acceso al disco.
 
+(impacto-real-en-tiempos)=
 ### Impacto real en tiempos
 
 Para darte una idea concreta, leer un archivo de 100MB carácter por carácter:
@@ -1103,6 +1148,7 @@ Para darte una idea concreta, leer un archivo de 100MB carácter por carácter:
 
 ¡La diferencia puede ser de 100x o más!
 
+(cuando-necesitas-pensar-en-buffering)=
 ### ¿Cuándo necesitás pensar en buffering?
 
 - Si usás `Files.newBufferedReader()` o `Files.newBufferedWriter()`: **ya tenés buffer**
@@ -1123,6 +1169,7 @@ BufferedReader conBuffer = new BufferedReader(new FileReader("datos.txt"));
 BufferedReader mejor = Files.newBufferedReader(Path.of("datos.txt"));
 ```
 
+(ejemplo-completo-procesar-archivo-csv)=
 ## Ejemplo Completo: Procesar Archivo CSV
 
 Los archivos CSV (Comma-Separated Values, valores separados por comas) son una forma común de almacenar datos tabulares. Cada línea representa una fila, y los valores de cada columna están separados por comas.
@@ -1244,6 +1291,7 @@ public class ProcesadorCSV {
 Este ejemplo asume que los datos no contienen comas. Si un valor puede contener comas (por ejemplo, "Pérez, Juan"), necesitarías un parser CSV más robusto que maneje valores entre comillas. Para casos complejos, considerá usar una biblioteca como OpenCSV.
 :::
 
+(resumen-mejores-practicas)=
 ## Resumen: Mejores Prácticas
 
 Después de todo lo visto, estas son las reglas que deberías seguir:
@@ -1262,6 +1310,7 @@ Después de todo lo visto, estas son las reglas que deberías seguir:
 
 7. **No cargues archivos enormes** en memoria completa. Si el archivo puede ser grande, procesalo línea por línea en lugar de usar `readAllLines()`.
 
+(comparacion-final-con-c)=
 ### Comparación final con C
 
 | Operación | C | Java (NIO.2) |
@@ -1273,6 +1322,7 @@ Después de todo lo visto, estas son las reglas que deberías seguir:
 | Verificar error | `if (f == NULL) { ... errno ... }` | `catch (IOException e) { ... }` |
 | Verificar existencia | `access(ruta, F_OK)` | `Files.exists(path)` |
 
+(ejercicios-de-aplicacion)=
 ## Ejercicios de Aplicación
 
 ```{exercise}
@@ -1484,12 +1534,14 @@ agregarAlLog("Error: conexión perdida con servidor");
 **Explicación:** Usamos `LocalDateTime.now()` para obtener la fecha y hora actual, y `DateTimeFormatter` para darle el formato deseado. Las opciones `APPEND` y `CREATE` garantizan que el archivo se cree si no existe, y que cada nueva línea se agregue al final sin borrar el contenido anterior.
 ````
 
+(testing-de-archivos-con-junit)=
 ## Testing de Archivos con JUnit
 
 Cuando escribís tests para métodos que trabajan con archivos, surge un problema: ¿dónde ponés los archivos de prueba? ¿Qué pasa si un test falla y deja basura? ¿Cómo evitás que un test afecte a otro?
 
 La solución es usar **archivos temporales** que se crean antes de cada test y se eliminan después.
 
+(el-problema)=
 ### El Problema
 
 Imaginá que tenés un método `contarLineas(String ruta)` y querés testearlo. Podrías:
@@ -1497,6 +1549,7 @@ Imaginá que tenés un método `contarLineas(String ruta)` y querés testearlo. 
 1. **Usar un archivo "real"** en tu proyecto → Malo: si cambiás el archivo, rompés el test
 2. **Crear el archivo en el test** → Mejor, pero: ¿quién lo borra? ¿Y si el test falla antes de borrarlo?
 
+(la-solucion-tempdir-de-junit-5)=
 ### La Solución: `@TempDir` de JUnit 5
 
 JUnit 5 ofrece la anotación `@TempDir` que crea un directorio temporal automáticamente. JUnit garantiza:
@@ -1553,6 +1606,7 @@ class LectorArchivosTest {
 
 `resolve()` combina el directorio con un nombre de archivo para crear la ruta completa. Si `directorioTemporal` es `/tmp/junit123456/`, entonces `resolve("datos.txt")` da `/tmp/junit123456/datos.txt`.
 
+(testing-de-excepciones)=
 ### Testing de Excepciones
 
 También podés verificar que tu código lance las excepciones correctas:
@@ -1595,6 +1649,7 @@ class ManejadorArchivosTest {
 }
 ```
 
+(patron-arrange-act-assert-con-archivos)=
 ### Patrón Arrange-Act-Assert con Archivos
 
 ```{code} java
@@ -1662,6 +1717,7 @@ class ProcesadorCSVTest {
 4. **Cada test debe ser independiente**: no asumas nada sobre el estado del sistema de archivos
 :::
 
+(referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - **Schildt, H.** (2022). _Java: A Beginner's Guide_ (9na ed.). McGraw Hill. (Capítulo 10: Using I/O).

@@ -3,12 +3,14 @@ title: "Entrada y Salida de Datos"
 description: Estudio técnico sobre flujos de sistema, parseo de tokens y formateo avanzado en Java.
 ---
 
+(entrada-y-salida-de-datos)=
 # Entrada y Salida de Datos
 
 Todo programa útil necesita comunicarse con el mundo exterior: mostrar resultados al usuario, recibir datos desde el teclado, leer archivos, o enviar información a otros programas. En Java, esta comunicación se realiza a través de una abstracción denominada **streams** (flujos de datos).
 
 Si ya se trabajó con C, los conceptos son familiares: `printf` para imprimir con formato, `scanf` para leer datos. Java ofrece mecanismos similares pero con diferencias importantes en la sintaxis y el manejo de errores. Este capítulo se centra en la entrada/salida básica por consola; el manejo de archivos se verá más adelante.
 
+(que-es-un-stream)=
 ## ¿Qué es un Stream?
 
 Un **stream** (flujo) es una secuencia ordenada de datos que fluye desde una fuente hacia un destino. La metáfora es la de un río: los datos "fluyen" en una dirección, uno tras otro.
@@ -18,10 +20,12 @@ Un **stream** (flujo) es una secuencia ordenada de datos que fluye desde una fue
 
 Esta abstracción permite que el mismo código funcione independientemente de si los datos vienen del teclado o de un archivo: el programa solo ve un flujo de datos.
 
+(arquitectura-de-los-flujos-de-sistema)=
 ## Arquitectura de los Flujos de Sistema
 
 El sistema operativo proporciona tres canales de comunicación estándar que todo programa hereda al iniciarse. En C se accede a ellos mediante `stdin`, `stdout` y `stderr`; en Java, a través de la clase `System`.
 
+(los-tres-flujos-estandar)=
 ### Los Tres Flujos Estándar
 
 La clase `System` proporciona tres flujos predefinidos:
@@ -32,6 +36,7 @@ La clase `System` proporciona tres flujos predefinidos:
 
 3. **`System.in`** (entrada estándar): El canal para recibir datos del usuario (normalmente el teclado). Es un `InputStream` que procesa bytes crudos. Como trabajar con bytes es incómodo, normalmente se envuelve en clases de más alto nivel como `Scanner`. Equivale a `stdin` en C.
 
+(que-es-un-bufer)=
 ### ¿Qué es un Búfer?
 
 Un **búfer** (_buffer_) es una zona de memoria temporal que acumula datos antes de enviarlos a su destino. Imaginá que en lugar de hacer un viaje al supermercado cada vez que necesitás un ingrediente, hacés una lista y vas una sola vez. El búfer funciona igual: acumula varios caracteres y los envía todos juntos, lo cual es más eficiente.
@@ -50,10 +55,12 @@ System.out.println(" continuación");      // El println fuerza la salida
 En C, `stdout` también tiene búfer de línea (se vacía al encontrar `\n` o al llamar a `fflush`), mientras que `stderr` no tiene búfer. El comportamiento es idéntico en Java.
 :::
 
+(salida-de-datos-metodos-de-impresion)=
 ## Salida de Datos: Métodos de Impresión
 
 Java ofrece tres métodos principales para mostrar información en la consola. Entender cuándo usar cada uno es fundamental para producir salidas claras y bien formateadas.
 
+(print-impresion-sin-salto-de-linea)=
 ### `print()` - Impresión Sin Salto de Línea
 
 El método `print()` imprime el texto y deja el cursor en la misma línea. Es útil cuando se quiere construir una línea de salida en varias partes, o cuando se espera que el usuario ingrese datos en la misma línea del mensaje.
@@ -76,6 +83,7 @@ System.out.print("Ingrese su nombre: ");  // El cursor queda después de ": "
 
 En C, esto equivale a `printf("texto")` sin `\n` al final.
 
+(println-impresion-con-salto-de-linea)=
 ### `println()` - Impresión Con Salto de Línea
 
 El método `println()` (del inglés _print line_) imprime el texto y **agrega automáticamente un salto de línea** al final. El cursor pasa a la siguiente línea.
@@ -104,6 +112,7 @@ System.out.println("Después");
 // Después
 ```
 
+(concatenacion-de-valores-en-print-println)=
 ### Concatenación de Valores en print/println
 
 A diferencia de C donde hay que especificar el formato de cada variable, Java permite **concatenar** valores de cualquier tipo usando el operador `+`:
@@ -123,6 +132,7 @@ System.out.println(nombre + " tiene " + edad + " años"); // Ana tiene 25 años
 
 Java convierte automáticamente los valores numéricos a texto cuando se concatenan con un `String`. Esto es muy conveniente pero ofrece poco control sobre el formato (cantidad de decimales, alineación, etc.). Para eso existe `printf()`.
 
+(printf-impresion-formateada)=
 ### `printf()` - Impresión Formateada
 
 El método `printf()` permite controlar exactamente cómo se muestra cada valor mediante **especificadores de formato**. Es prácticamente idéntico al `printf()` de C, lo cual facilita la transición.
@@ -151,6 +161,7 @@ En este ejemplo:
 - `%d` es reemplazado por el valor de `edad` (un entero decimal)
 - `%n` produce un salto de línea
 
+(comparacion-con-printf-de-c)=
 ### Comparación con printf() de C
 
 | C | Java | Descripción |
@@ -163,10 +174,12 @@ En este ejemplo:
 
 Como se puede ver, la sintaxis es casi idéntica. La diferencia principal es que en Java se llama como método de `System.out` y se recomienda usar `%n` en lugar de `\n` para portabilidad.
 
+(formateo-completo-con-printf)=
 ## Formateo Completo con `printf`
 
 El método `printf` utiliza internamente la clase `java.util.Formatter`. Es extremadamente potente y permite controlar precisamente el formato de salida. La sintaxis es compatible con la de C, por lo que los conocimientos previos son directamente aplicables.
 
+(sintaxis-general-de-un-especificador-de-formato)=
 ### Sintaxis General de un Especificador de Formato
 
 Cada especificador de formato sigue esta estructura:
@@ -196,6 +209,7 @@ Por ejemplo, en `%+10.2f`:
 - `.2` → precisión de 2 decimales
 - `f` → conversión: número de punto flotante
 
+(especificadores-de-conversion)=
 ### Especificadores de Conversión
 
 La letra de conversión indica qué tipo de dato se va a formatear. Estos son los especificadores más comunes:
@@ -242,6 +256,7 @@ El especificador `%n` genera el salto de línea apropiado para el sistema operat
 Aunque en la práctica `\n` funciona en casi todos lados, usar `%n` es la forma correcta y portable. En C se usa `\n` directamente porque no existe `%n`.
 :::
 
+(ancho-de-campo)=
 ### Ancho de Campo
 
 El **ancho** especifica el número **mínimo** de caracteres que ocupará el valor formateado. Si el valor tiene menos caracteres que el ancho especificado, se rellena con espacios.
@@ -280,6 +295,7 @@ System.out.printf("%10s%10d%n", "María", 28);
 En C se puede usar `*` para especificar el ancho como argumento: `printf("%*d", 10, valor)`. En Java esto también funciona, aunque es menos común.
 :::
 
+(precision)=
 ### Precisión
 
 La **precisión** tiene diferentes significados según el tipo de dato:
@@ -316,6 +332,7 @@ System.out.printf("Máximo 11: [%.11s]%n", texto);  // [Universidad]
 Si no se especifica precisión para `%f`, Java usa 6 decimales por defecto. Esto es igual que en C.
 :::
 
+(combinacion-de-ancho-y-precision)=
 ### Combinación de Ancho y Precisión
 
 El ancho y la precisión se pueden usar juntos para un control total sobre el formato:
@@ -334,6 +351,7 @@ System.out.printf("[%4.2f]%n", valor);   // [3.14]        (el ancho mínimo se s
 
 Para entender el resultado: primero el número se formatea con la precisión indicada (por ejemplo, `3.14` para `.2f`), y luego se rellena con espacios hasta alcanzar el ancho (10 en el primer ejemplo, resultando 6 espacios + 4 caracteres del número).
 
+(banderas-de-formato)=
 ### Banderas de Formato
 
 Las **banderas** son caracteres que modifican cómo se presenta el valor. Se colocan inmediatamente después del `%` y antes del ancho.
@@ -384,6 +402,7 @@ System.out.printf("Hex normal: [%x]%n", 255);       // [ff]
 System.out.printf("Hex con prefijo: [%#x]%n", 255); // [0xff]
 ```
 
+(combinacion-de-multiples-banderas)=
 ### Combinación de Múltiples Banderas
 
 Las banderas se pueden combinar. El orden no importa:
@@ -415,6 +434,7 @@ Algunas combinaciones no tienen sentido y generan error:
 - El espacio ` ` con `+`: El signo `+` hace redundante el espacio.
 :::
 
+(indexacion-de-argumentos)=
 ### Indexación de Argumentos
 
 Por defecto, los especificadores consumen los argumentos en orden: el primer `%` usa el primer argumento, el segundo `%` usa el segundo, etc. Pero podés especificar explícitamente qué argumento usar con la notación `n$`:
@@ -450,6 +470,7 @@ System.out.printf("En inglés: %1$s is %2$d years old%n", nombre, edad);
 En C, la indexación de argumentos (`%1$d`) es una extensión POSIX, no parte del estándar C89. En Java está siempre disponible.
 :::
 
+(tablas-formateadas)=
 ### Tablas Formateadas
 
 Una aplicación práctica de `printf` es crear tablas con columnas alineadas. La clave está en usar el mismo ancho para cada columna en todas las filas:
@@ -480,6 +501,7 @@ System.out.printf("%-15s %10s %10.2f%n", "TOTAL", "", 215.00);
 - Mantener los mismos anchos en todas las filas
 - Considerar usar separador de miles `%,` para números grandes
 
+(formateo-de-fechas-y-horas)=
 ### Formateo de Fechas y Horas
 
 `printf` tiene soporte para fechas y horas mediante especificadores que comienzan con `t` (minúscula) o `T` (mayúscula para versiones en mayúsculas). Requieren un objeto que represente fecha/hora como argumento.
@@ -538,12 +560,14 @@ guardarEnArchivo(linea);
 Esto es equivalente a `sprintf` en C.
 :::
 
+(entrada-de-datos-con-scanner)=
 ## Entrada de Datos con `Scanner`
 
 En C, la entrada de datos se hace típicamente con `scanf`, que lee directamente de `stdin` parseando según especificadores de formato. Java no tiene un equivalente directo a `scanf` incorporado en el lenguaje; en su lugar, se usa la clase `Scanner`.
 
 `Scanner` es más flexible que `scanf`: puede leer de múltiples fuentes (teclado, archivos, cadenas), tiene manejo de errores más robusto, y ofrece métodos específicos para cada tipo de dato. Sin embargo, tiene algunas peculiaridades que hay que entender para usarlo correctamente.
 
+(creacion-de-un-scanner)=
 ### Creación de un Scanner
 
 Para leer del teclado, se crea un `Scanner` que envuelve a `System.in`:
@@ -560,6 +584,7 @@ Scanner scanner = new Scanner(System.in);
 
 El `Scanner` actúa como intermediario: lee bytes de `System.in`, los convierte a texto, y ofrece métodos para extraer valores de diferentes tipos.
 
+(metodos-de-lectura)=
 ### Métodos de Lectura
 
 `Scanner` ofrece un método `nextX()` para cada tipo de dato primitivo:
@@ -594,12 +619,14 @@ System.out.printf("Hola %s, tenés %d años y medís %.2f metros.%n",
                   nombre, edad, altura);
 ```
 
+(que-es-un-token)=
 ### ¿Qué es un Token?
 
 Un **token** es una secuencia de caracteres delimitada por espacios en blanco (espacios, tabulaciones, saltos de línea). `Scanner` trabaja internamente dividiendo la entrada en tokens.
 
 Por ejemplo, si el usuario escribe `"Hola Mundo 42"` y presiona Enter, hay tres tokens: `"Hola"`, `"Mundo"`, y `"42"`.
 
+(diferencia-entre-next-y-nextline)=
 ### Diferencia entre `next()` y `nextLine()`
 
 Esta diferencia es crucial y fuente de muchos errores:
@@ -633,6 +660,7 @@ String token2 = scanner.next();       // "def"
 String resto = scanner.nextLine();    // " ghi" (nota el espacio al inicio)
 ```
 
+(verificacion-de-entrada-con-hasnext)=
 ### Verificación de Entrada con `hasNext`
 
 Antes de leer, se puede verificar si hay datos disponibles y si son del tipo esperado. Esto permite evitar errores si el usuario ingresa algo inesperado:
@@ -662,6 +690,7 @@ if (scanner.hasNextInt()) {
 
 Este patrón es útil para validar entrada antes de procesarla, evitando excepciones por datos mal formados.
 
+(el-problema-del-salto-de-linea-residual)=
 ### El Problema del Salto de Línea Residual
 
 Este es el error más común y confuso al usar `Scanner`. Ocurre cuando se mezclan métodos como `nextInt()` o `nextDouble()` con `nextLine()`.
@@ -718,6 +747,7 @@ System.out.println("Hola " + nombre + ", tenés " + edad + " años.");
 
 Este problema no existe en C con `scanf` porque `scanf("%d", &x)` también deja el `\n`, pero `scanf("%s", s)` lo ignora automáticamente. Sin embargo, si en C usás `fgets()` después de `scanf()`, tendrás el mismo problema.
 
+(patron-alternativo-leer-todo-como-linea)=
 ### Patrón Alternativo: Leer Todo como Línea
 
 Una forma de evitar completamente el problema del salto de línea residual es **siempre** usar `nextLine()` y convertir manualmente cuando se necesite un número:
@@ -760,6 +790,7 @@ System.out.printf("%s tiene %d años y mide %.2f metros.%n", nombre, edad, altur
 Para programas simples donde se confía en que el usuario ingresa datos correctos, este patrón es muy conveniente.
 :::
 
+(localizacion-y-separador-decimal)=
 ### Localización y Separador Decimal
 
 `Scanner` es sensible a la **configuración regional** (_Locale_) del sistema. En países hispanohablantes, el separador decimal suele ser la **coma** (`,`), mientras que en el estándar de programación y en países anglosajones se usa el **punto** (`.`).
@@ -793,6 +824,7 @@ Esto asegura que el programa funcione igual sin importar la configuración regio
 
 En C, `scanf` también es sensible al locale, pero es menos común encontrar el problema porque la configuración por defecto suele usar punto.
 
+(cierre-del-scanner)=
 ### Cierre del Scanner
 
 `Scanner` utiliza recursos del sistema (conexión al stream de entrada). Es buena práctica cerrarlo cuando ya no se necesita:
@@ -824,6 +856,7 @@ int y = sc2.nextInt();  // ¡Error! No se puede leer
 En programas más complejos o cuando se lee de archivos, el cierre es más importante y se maneja típicamente con `try-with-resources` (se verá más adelante).
 :::
 
+(lectura-de-datos-en-un-lazo)=
 ### Lectura de Datos en un Lazo
 
 Un patrón común es leer datos repetidamente hasta que el usuario indique que quiere terminar. Hay varias formas de hacerlo:
@@ -878,6 +911,7 @@ java MiPrograma < datos.txt
 
 En C, el equivalente sería `while (scanf("%d", &x) == 1)` para detectar el fin de archivo.
 
+(comparacion-de-metodos-de-salida)=
 ## Comparación de Métodos de Salida
 
 Esta tabla resume cuándo usar cada método de impresión:
@@ -913,6 +947,7 @@ System.out.printf("%-15s $%8.2f%n", producto, precio);
 - Usar `printf()` cuando se necesite alinear columnas o controlar decimales
 - Usar `print()` solo cuando se necesite continuar en la misma línea
 
+(secuencias-de-escape)=
 ## Secuencias de Escape
 
 Las **secuencias de escape** permiten incluir caracteres especiales dentro de las cadenas de texto. Comienzan con una barra invertida (`\`) seguida de un carácter que indica qué carácter especial representar.
@@ -967,10 +1002,12 @@ String json = """
 Esto es más cómodo para textos largos, pero por ahora las secuencias de escape son la forma estándar.
 :::
 
+(temas-avanzados-referencia)=
 ## Temas Avanzados (Referencia)
 
 Esta sección menciona brevemente temas que se profundizarán más adelante o que son útiles como referencia.
 
+(system-console-interaccion-con-terminal)=
 ### `System.console()` - Interacción con Terminal
 
 Para aplicaciones que se ejecutan en una terminal real (no en un IDE), Java ofrece `System.console()`:
@@ -993,6 +1030,7 @@ if (console != null) {
 **Desventaja:**
 - Retorna `null` si el programa corre en un IDE o con redirección de entrada
 
+(rendimiento-scanner-vs-bufferedreader)=
 ### Rendimiento: `Scanner` vs. `BufferedReader`
 
 Para la mayoría de los programas, `Scanner` es suficiente. Sin embargo, tiene un costo de rendimiento:
@@ -1003,6 +1041,7 @@ Para la mayoría de los programas, `Scanner` es suficiente. Sin embargo, tiene u
 
 En concursos de programación o procesamiento de archivos grandes (millones de líneas), `Scanner` puede ser el cuello de botella. Para la mayoría de las tareas académicas y profesionales, la diferencia es imperceptible.
 
+(ejercicios)=
 ## Ejercicios
 
 Los siguientes ejercicios permiten practicar los conceptos de entrada y salida. Se recomienda resolverlos antes de ver las soluciones.
@@ -1175,6 +1214,7 @@ Número válido: 42
 La clave es usar `hasNextInt()` para verificar si lo que sigue es un entero, y `scanner.next()` para descartar la entrada inválida cuando no lo es.
 ```
 
+(referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - **Schildt, H.** (2022). _Java: A Beginner's Guide_ (9na ed.). McGraw Hill. (Capítulo 10: Enumerations, Autoboxing, and Annotations - sección sobre I/O).

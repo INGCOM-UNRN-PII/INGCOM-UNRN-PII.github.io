@@ -5,14 +5,17 @@ description:
   Microsystems hasta la actualidad.
 ---
 
+(origenes-e-historia-de-java)=
 # Orígenes e Historia de Java
 
 Este capítulo presenta el contexto histórico y técnico que dio origen a Java. Comprender
 estos orígenes ayuda a entender las decisiones de diseño del lenguaje y por qué funciona
 como funciona.
 
+(el-nacimiento-de-java-el-green-project)=
 ## El Nacimiento de Java: El Green Project
 
+(el-contexto-sun-microsystems-y-los-anos-90)=
 ### El contexto: Sun Microsystems y los años 90
 
 **Sun Microsystems** fue una empresa estadounidense fundada en 1982, conocida por fabricar
@@ -27,6 +30,7 @@ dispositivos del hogar que comenzaban a incluir pequeños procesadores.
 
 Wikipedia: [Sun Microsystems](https://es.wikipedia.org/wiki/Sun_Microsystems)
 
+(el-green-team-y-el-proyecto-secreto)=
 ### El Green Team y el proyecto secreto
 
 En 1991, James Gosling (un ingeniero canadiense reconocido por crear el editor de texto
@@ -50,6 +54,7 @@ de dispositivo portátil con:
 Este dispositivo era, esencialmente, un **PDA** (Personal Digital Assistant) —precursor de
 los smartphones actuales— creado más de una década antes del iPhone.
 
+(el-green-team-los-arquitectos-originales)=
 ### El Green Team: Los Arquitectos Originales
 
 El equipo que dio vida a Java estaba compuesto por ingenieros excepcionales, cada uno con
@@ -81,11 +86,13 @@ cantidades.
 
 :::
 
+(por-que-necesitaban-un-nuevo-lenguaje)=
 ### ¿Por qué necesitaban un nuevo lenguaje?
 
 Para entender por qué el Green Team no usó un lenguaje existente, es necesario comprender
 el panorama de la programación en 1991.
 
+(el-desafio-tecnologico-frente-a-c-c)=
 ### El Desafío Tecnológico frente a C/C++
 
 En aquella época, el desarrollo de software estaba dominado por **C** y **C++**. Para
@@ -150,6 +157,7 @@ Java nació con la misión de eliminar estas deficiencias a través de una arqui
 basada en **abstracción**: el lenguaje escondería los detalles peligrosos del hardware
 detrás de una capa segura.
 
+(los-cinco-principios-de-diseno-originales)=
 ### Los Cinco Principios de Diseño Originales
 
 El equipo de Gosling estableció cinco objetivos fundamentales que guiaron el diseño del
@@ -210,12 +218,14 @@ principios.
 
 :::
 
+(la-maquina-virtual-de-java-jvm-y-el-bytecode)=
 ## La Máquina Virtual de Java (JVM) y el Bytecode
 
 La innovación fundamental de Java no fue solo el lenguaje, sino la creación de una
 **Máquina Virtual (JVM)** — una computadora simulada por software que ejecuta los
 programas Java.
 
+(que-es-una-maquina-virtual)=
 ### ¿Qué es una máquina virtual?
 
 Una **máquina virtual** es un programa que simula ser una computadora completa. Así como
@@ -238,6 +248,7 @@ La diferencia crucial con C++ es la siguiente:
   **bytecode**, un formato intermedio que ningún procesador físico entiende directamente.
   Luego, la JVM instalada en cada sistema lee ese bytecode y lo ejecuta.
 
+(que-es-el-bytecode)=
 ### ¿Qué es el bytecode?
 
 El **bytecode** es un conjunto de instrucciones diseñadas para una máquina virtual, no
@@ -253,6 +264,7 @@ Por ejemplo, el bytecode de Java incluye instrucciones como:
 Estas instrucciones son más simples y abstractas que las de un procesador real, lo que las
 hace portables pero también más lentas de ejecutar directamente.
 
+(como-funciona-el-flujo-wora)=
 ### ¿Cómo funciona el flujo WORA?
 
 **WORA** significa "Write Once, Run Anywhere" (Escribilo una vez, ejecutalo en cualquier
@@ -299,6 +311,7 @@ Kit) para garantizar que ejecutan el bytecode de forma idéntica.
 
 :::
 
+(estructura-interna-de-la-jvm)=
 ### Estructura Interna de la JVM
 
 La JVM no es un componente monolítico; está organizada en subsistemas especializados que
@@ -375,6 +388,7 @@ La JVM organiza la memoria en regiones específicas:
 - **PC Register:** Cada hilo tiene un registro que indica qué instrucción de bytecode está
   ejecutando actualmente.
 
+(el-modelo-de-seguridad-el-sandbox)=
 ### El Modelo de Seguridad: El Sandbox
 
 Uno de los aspectos más innovadores de Java fue su **modelo de seguridad en capas**,
@@ -439,14 +453,17 @@ Sin embargo, los conceptos de seguridad de la JVM siguen siendo fundamentales:
 
 :::
 
+(el-salto-a-la-web-1995)=
 ## El Salto a la Web (1995)
 
+(el-fracaso-comercial-inicial)=
 ### El fracaso comercial inicial
 
 Hacia 1994, el mercado de dispositivos inteligentes aún no estaba maduro. El Green Project
 intentó vender su tecnología a empresas de electrónica de consumo, pero ninguna mostró
 interés. El proyecto enfrentaba la cancelación.
 
+(la-oportunidad-de-la-world-wide-web)=
 ### La oportunidad de la World Wide Web
 
 Sin embargo, el surgimiento explosivo de la **World Wide Web** ofreció una oportunidad
@@ -461,6 +478,7 @@ Sun Microsystems se dio cuenta de que la red necesitaba precisamente lo que Java
 un lenguaje **seguro** (para que los usuarios confiaran en ejecutar código descargado) e
 **independiente de la plataforma** (ya que los usuarios tenían Windows, Mac y Unix).
 
+(el-lanzamiento-y-los-applets)=
 ### El lanzamiento y los Applets
 
 El lanzamiento oficial de Java en **mayo de 1995** incluyó los **Applets**, pequeños
@@ -477,6 +495,7 @@ Por primera vez, las páginas web podían tener:
 La demostración más famosa fue una animación de moléculas en 3D que los usuarios podían
 rotar con el mouse —algo trivial hoy, pero revolucionario en 1995.
 
+(que-son-exactamente-los-applets)=
 ### ¿Qué son exactamente los Applets?
 
 Un **Applet** era una clase Java que:
@@ -502,6 +521,7 @@ mismas capacidades sin necesitar plugins adicionales.
 
 :::
 
+(competidores-y-el-contexto-tecnologico-de-los-90)=
 ### Competidores y el Contexto Tecnológico de los 90
 
 Java no surgió en el vacío. Durante la década de 1990, varias tecnologías competían por
@@ -545,6 +565,7 @@ ataque más explotados de la historia de la computación.
 La ventaja competitiva de Java fue combinar la potencia de un lenguaje serio con la
 **seguridad del sandbox** que ActiveX no ofrecía.
 
+(la-guerra-de-los-navegadores-y-microsoft)=
 ### La Guerra de los Navegadores y Microsoft
 
 El éxito de Java en la web provocó una respuesta agresiva de Microsoft. En 1996, Microsoft
@@ -588,8 +609,10 @@ diferencias técnicas fundamentales.
 
 :::
 
+(evolucion-y-la-era-de-oracle)=
 ## Evolución y la Era de Oracle
 
+(de-sun-microsystems-a-oracle-2010)=
 ### De Sun Microsystems a Oracle (2010)
 
 Sun Microsystems, a pesar de haber creado Java y otras tecnologías influyentes (como el
@@ -624,6 +647,7 @@ Bajo el mando de Oracle, Java adoptó un ritmo de innovación más acelerado que
 - **Java 9 (2017):** Sistema de módulos (Project Jigsaw), permitiendo crear aplicaciones
   más pequeñas y seguras.
 
+(jakarta-ee-el-ecosistema-empresarial)=
 ### Jakarta EE: El ecosistema empresarial
 
 **Java EE** (Enterprise Edition) era el conjunto de especificaciones para aplicaciones
@@ -635,6 +659,7 @@ proyecto fue renombrado **Jakarta EE**. Esto consolidó un ecosistema de código
 donde la comunidad —no una sola empresa— controla el futuro de las especificaciones
 empresariales.
 
+(el-ciclo-moderno-de-lanzamientos)=
 ### El Ciclo Moderno de Lanzamientos
 
 #### El problema del ciclo antiguo
@@ -692,6 +717,7 @@ limitado de 6 meses, útiles para probar nuevas características pero no para pr
 
 :::
 
+(linea-temporal-de-las-versiones-principales)=
 ### Línea Temporal de las Versiones Principales
 
 La siguiente tabla resume las versiones más importantes de Java y sus características
@@ -737,12 +763,14 @@ más avanzados:
 - **Virtual Threads:** Hilos livianos gestionados por la JVM que permiten crear millones
   de hilos concurrentes.
 
+(impacto-y-legado)=
 ## Impacto y Legado
 
 Java no es solo un lenguaje de programación; es una de las **plataformas de software más
 influyentes de la historia**. Su impacto se mide no solo en líneas de código escritas,
 sino en la infraestructura crítica del mundo moderno que depende de él.
 
+(donde-se-usa-java-hoy)=
 ### ¿Dónde se usa Java hoy?
 
 - **Ecosistema empresarial:** Frameworks como **Spring** dominan el desarrollo de
@@ -765,6 +793,7 @@ sino en la infraestructura crítica del mundo moderno que depende de él.
   transacciones por segundo hasta el software de control de misiones de la NASA, Java es
   el estándar para software que **no puede fallar**.
 
+(el-ecosistema-de-herramientas)=
 ### El Ecosistema de Herramientas
 
 Alrededor de Java se desarrolló un ecosistema maduro de herramientas que amplificaron su
@@ -826,6 +855,7 @@ estructura base para desarrollar aplicaciones.
   Kubernetes) y entornos cloud. Tienen tiempos de inicio muy rápidos y bajo consumo de
   memoria.
 
+(lenguajes-sobre-la-jvm)=
 ### Lenguajes sobre la JVM
 
 La JVM demostró ser una plataforma tan robusta y bien optimizada que otros lenguajes
@@ -897,8 +927,10 @@ build, todo ejecutándose en la misma JVM.
 
 :::
 
+(java-en-la-actualidad-y-el-futuro)=
 ## Java en la Actualidad y el Futuro
 
+(estadisticas-de-adopcion)=
 ### Estadísticas de Adopción
 
 Según el índice **TIOBE** (que mide la popularidad de lenguajes según búsquedas en
@@ -925,6 +957,7 @@ críticos:
 - **Big Data:** Apache Hadoop, Kafka, Spark, Flink, Cassandra —la mayoría de las
   herramientas de datos masivos están escritas en Java o Scala (que corre en la JVM).
 
+(proyectos-de-innovacion-activos)=
 ### Proyectos de Innovación Activos
 
 Oracle y la comunidad OpenJDK continúan evolucionando la plataforma mediante proyectos
@@ -970,6 +1003,7 @@ debe "envolver" (_box_) el primitivo en un objeto, consumiendo memoria adicional
 Valhalla permitirá crear tipos de valor que se comporten como primitivos pero puedan
 usarse con genéricos.
 
+(graalvm-el-futuro-de-la-ejecucion)=
 ### GraalVM: El Futuro de la Ejecución
 
 **GraalVM** es una máquina virtual de nueva generación desarrollada por **Oracle Labs**
@@ -1038,6 +1072,7 @@ que usan mucha programación funcional o abstracciones complejas.
 
 ---
 
+(referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 Para profundizar en la historia técnica y social de Java, se recomiendan las siguientes
@@ -1057,6 +1092,7 @@ fuentes:
 
 ---
 
+(ejercicios)=
 ## Ejercicios
 
 ```{exercise}

@@ -4,6 +4,7 @@ description: Guía práctica sobre implementación de tests unitarios con JUnit 
 label: junit
 ---
 
+(testing-con-junit-5)=
 # Testing con JUnit 5
 
 :::{note} Observación I
@@ -15,6 +16,7 @@ Este apunte trata _todo_ lo referido testing de Java con jUnit, por lo que van a
 La idea es que este sea una referencia del tema, por lo que tendrán que volver eventualmente y saltear aquello que no les suene.
 :::
 
+(del-testing-manual-en-c-al-automatizado-en-java)=
 ## Del Testing Manual en C al Automatizado en Java
 
 Si venís de programar en C, probablemente verificabas que tu código funcionara ejecutándolo manualmente e inspeccionando la salida con `printf`:
@@ -38,6 +40,7 @@ void factorial_conCero_retornaUno() {
 
 Si el resultado no es 1, JUnit falla y te muestra exactamente qué salió mal. Además, podés ejecutar cientos de tests con un solo comando.
 
+(junit-framework-de-testing-para-java)=
 ## JUnit: Framework de Testing para Java
 
 Un **framework de testing** es una librería que proporciona herramientas para escribir y ejecutar tests de forma organizada. En C no hay un framework estándar (existen librerías como CUnit, Unity, etc., pero no son parte del lenguaje). En Java, **JUnit** es el estándar de facto.
@@ -48,6 +51,7 @@ JUnit te da:
 - **Un ejecutor** que encuentra y ejecuta todos los tests, reportando cuáles pasan y cuáles fallan
 - **Hooks** para setup y cleanup antes/después de cada test
 
+(historia-breve)=
 ### Historia breve
 
 - **JUnit 3** (2000): Primera versión ampliamente adoptada. Los tests se identificaban por herencia de clases y nombres de métodos.
@@ -58,6 +62,7 @@ JUnit te da:
 Utilizaremos **JUnit 5** en toda la cátedra. Si encontrás ejemplos de JUnit 4 en internet (muy comunes en Stack Overflow), tené en cuenta que algunas anotaciones cambiaron: `@Before` → `@BeforeEach`, `@BeforeClass` → `@BeforeAll`, etc.
 :::
 
+(configuracion-del-proyecto)=
 ### Configuración del proyecto
 
 Para usar JUnit 5 en un proyecto Gradle, agregá la siguiente dependencia al `build.gradle`. _En las prácticas de la cátedra esto ya está configurado._
@@ -80,6 +85,7 @@ test {
 
 - `useJUnitPlatform()`: Le dice a Gradle que use el motor de JUnit 5 para ejecutar tests. Sin esta línea, Gradle no encontraría los tests.
 
+(estructura-de-un-proyecto-con-tests)=
 ### Estructura de un proyecto con tests
 
 Gradle utiliza la estructura estándar de Maven para separar código de producción y tests. Es una convención importante:
@@ -132,10 +138,12 @@ class CalculadoraTest {
 ```
 :::
 
+(primer-test-con-junit)=
 ## Primer Test con JUnit
 
 Veamos un ejemplo completo para entender la estructura básica de un test. Es como el "Hello World" del testing.
 
+(codigo-de-produccion)=
 ### Código de producción
 
 Supongamos que tenemos una clase `Calculadora` con métodos estáticos. Usamos métodos estáticos por ahora porque aún no vimos programación orientada a objetos en profundidad:
@@ -198,6 +206,7 @@ double dividir(double dividendo, double divisor) {
 }
 ```
 
+(clase-de-test)=
 ### Clase de test
 
 Ahora creamos la clase de test correspondiente. Aquí aplica la {ref}`regla-0x4000`: el test debe tener el mismo nombre que la clase bajo prueba con `Test` al final.
@@ -230,6 +239,7 @@ public class CalculadoraTest {
 
 Analicemos cada parte:
 
+(anatomia-de-un-test)=
 ### Anatomía de un test
 
 Analicemos los componentes del test anterior en detalle:
@@ -306,6 +316,7 @@ El mensaje opcional se muestra solo si el test falla, ayudando a entender qué s
 
 JUnit provee múltiples métodos de assertion que veremos en detalle más adelante.
 
+(ejecutar-los-tests)=
 ### Ejecutar los tests
 
 #### Desde el IDE
@@ -323,18 +334,23 @@ El IDE mostrará una vista con los resultados: tests verdes (✅) pasaron, rojos
 Es importante saber ejecutar tests desde la terminal, especialmente para integración continua (CI) o cuando el IDE tiene problemas.
 
 ```bash
+(ejecutar-todos-los-tests-del-proyecto)=
 # Ejecutar todos los tests del proyecto
 gradle test
 
+(usando-el-wrapper-recomendado-garantiza-misma-version-de-gradle-para-todos)=
 # Usando el wrapper (recomendado, garantiza misma versión de Gradle para todos)
 ./gradlew test
 
+(ejecutar-tests-de-una-clase-especifica)=
 # Ejecutar tests de una clase específica
 ./gradlew test --tests CalculadoraTest
 
+(ejecutar-un-metodo-de-test-especifico)=
 # Ejecutar un método de test específico
 ./gradlew test --tests CalculadoraTest.testSumar_ConDosNumerosPositivos_RetornaSuma
 
+(ejecutar-tests-que-coincidan-con-un-patron)=
 # Ejecutar tests que coincidan con un patrón
 ./gradlew test --tests "*Calculadora*"  # Todos los tests cuyo nombre contenga "Calculadora"
 ```
@@ -343,6 +359,7 @@ gradle test
 El **Gradle Wrapper** (`./gradlew` en Unix/Mac, `gradlew.bat` en Windows) es la forma recomendada de ejecutar Gradle. Es un script que descarga automáticamente la versión correcta de Gradle para el proyecto, garantizando que todos los desarrolladores usen exactamente la misma versión.
 :::
 
+(interpretacion-de-resultados)=
 ### Interpretación de resultados
 
 Cuando ejecutás los tests, JUnit muestra un reporte con el estado de cada test:
@@ -387,6 +404,7 @@ Un test **falla** (❌) por una de estas razones:
 3. Se esperaba una excepción que no se lanzó (Failure)
 :::
 
+(assertions-verificaciones-en-junit)=
 ## Assertions: Verificaciones en JUnit
 
 JUnit 5 provee una rica colección de métodos de assertion en la clase `org.junit.jupiter.api.Assertions`. Son las herramientas para verificar que el código hace lo esperado.
@@ -412,6 +430,7 @@ void testSumar() {
 }
 ```
 
+(assertions-basicos)=
 ### Assertions básicos
 
 #### `assertEquals` y `assertNotEquals`
@@ -530,6 +549,7 @@ char* resultado = buscar_por_clave("inexistente");
 if (resultado == NULL) { ... }  // Similar a assertNull
 ```
 
+(assertions-para-colecciones-y-arrays)=
 ### Assertions para colecciones y arrays
 
 #### `assertArrayEquals`
@@ -587,6 +607,7 @@ void testFiltrar_ConListaDeNumeros_RetornaListaFiltrada() {
 }
 ```
 
+(verificacion-de-excepciones)=
 ### Verificación de excepciones
 
 Una funcionalidad crucial es verificar que el código lanza excepciones en situaciones de error. Las excepciones son parte del **contrato** de un método: si la documentación dice "lanza `ArithmeticException` si el divisor es cero", debemos testear que eso realmente sucede.
@@ -673,6 +694,7 @@ void testDividir_ConDivisorNoNulo_NoLanzaExcepcion() {
 }
 ```
 
+(assertions-compuestos)=
 ### Assertions compuestos
 
 #### Múltiples verificaciones
@@ -703,6 +725,7 @@ Si una assertion falla, las siguientes no se ejecutan. Por esto es importante qu
 
 Utilicen esta estrategia solo para verificar diferentes aspectos de un único resultado.
 
+(mensajes-de-falla-descriptivos)=
 ### Mensajes de falla descriptivos
 
 Todos los assertions aceptan un mensaje opcional que se muestra cuando el test falla:
@@ -735,10 +758,12 @@ expected: <800.0> but was: <1000.0>
 Escribí mensajes de falla que expliquen **por qué** el test espera ese valor, no solo **qué** valor espera. Esto ayuda enormemente cuando un test falla meses después.
 :::
 
+(ciclo-de-vida-de-los-tests)=
 ## Ciclo de Vida de los Tests
 
 JUnit ofrece anotaciones para ejecutar código en diferentes momentos del ciclo de vida de los tests. Aunque al testear métodos estáticos no es estrictamente necesario preparar estado, estas anotaciones son útiles para preparar datos de entrada comunes o manejar recursos como archivos temporales.
 
+(anotaciones-de-ciclo-de-vida)=
 ### Anotaciones de ciclo de vida
 
 #### `@BeforeEach`
@@ -885,6 +910,7 @@ public class ProcesadorDatosTest {
 }
 ```
 
+(orden-completo-de-ejecucion)=
 ### Orden completo de ejecución
 
 Para una clase con múltiples tests, el orden de ejecución es:
@@ -903,6 +929,7 @@ Para una clase con múltiples tests, el orden de ejecución es:
 @AfterAll (una vez)
 ```
 
+(ejemplo-completo-del-ciclo-de-vida)=
 ### Ejemplo completo del ciclo de vida
 
 ```java
@@ -959,10 +986,12 @@ public class EjemploOrdenTest {
 @AfterAll: Ejecutado UNA vez
 ```
 
+(convenciones-de-nombrado)=
 ## Convenciones de Nombrado
 
 El nombrado correcto de tests es fundamental para la mantenibilidad. Aquí aplica la {ref}`regla-0x4003`.
 
+(estructura-del-nombre)=
 ### Estructura del nombre
 
 ```
@@ -976,6 +1005,7 @@ test<MetodoAProbar>_<CondicionOContexto>_<ResultadoEsperado>
 3. **Condición**: Bajo qué circunstancias o con qué datos
 4. **Resultado esperado**: Qué debe suceder
 
+(ejemplos-practicos)=
 ### Ejemplos prácticos
 
 #### Tests de métodos que retornan valores
@@ -1061,6 +1091,7 @@ public class ValidadorEmailTest {
 }
 ```
 
+(patrones-de-nombres-utiles)=
 ### Patrones de nombres útiles
 
 #### Para valores límite
@@ -1089,6 +1120,7 @@ testOperacion_ConEntradaNula_...
 testOperacion_ConEntradaVacia_...
 ```
 
+(nombres-descriptivos-vs-concisos)=
 ### Nombres descriptivos vs concisos
 
 ```java
@@ -1113,10 +1145,12 @@ void testSumar_ConDosNumerosNegativos_RetornaSumaNegativa() { }
 El nombre del test debe ser tan descriptivo que cuando falle, sepas exactamente qué funcionalidad está rota **sin leer el código del test**.
 :::
 
+(reglas-de-estilo-para-testing)=
 ## Reglas de Estilo para Testing
 
 Las reglas de testing son fundamentales para mantener una suite de tests robusta y mantenible. Repasemos las reglas clave.
 
+(regla-0x4000-nomenclatura-de-la-clase-de-test)=
 ### Regla 0x4000: Nomenclatura de la clase de test
 
 {ref}`regla-0x4000` establece que la clase de test debe nombrarse como la clase bajo prueba con el sufijo `Test`:
@@ -1141,6 +1175,7 @@ src/main/java/ar/unrn/poo/Calculadora.java
 src/test/java/ar/unrn/poo/CalculadoraTest.java
 ```
 
+(regla-0x4001-estructura-aaa)=
 ### Regla 0x4001: Estructura AAA
 
 {ref}`regla-0x4001` requiere que cada test siga la estructura Arrange-Act-Assert:
@@ -1171,6 +1206,7 @@ void testCalcularDescuento_ConPorcentajeValido_RetornaDescuento() {
 Usá líneas en blanco para separar visualmente las tres fases. Opcionalmente, agregá comentarios `// Arrange`, `// Act`, `// Assert`.
 :::
 
+(regla-0x4002-una-llamada-por-test)=
 ### Regla 0x4002: Una llamada por test
 
 {ref}`regla-0x4002` establece que cada test debe hacer una sola llamada al método bajo prueba:
@@ -1219,6 +1255,7 @@ void testParsearFecha_ConFormatoValido_RetornaComponentes() {
 }
 ```
 
+(regla-0x4003-nombres-descriptivos)=
 ### Regla 0x4003: Nombres descriptivos
 
 {ref}`regla-0x4003` ya la vimos en la sección de convenciones de nombrado. La convención es:
@@ -1227,6 +1264,7 @@ void testParsearFecha_ConFormatoValido_RetornaComponentes() {
 test<Accion>_<Condicion>_<ResultadoEsperado>
 ```
 
+(regla-0x4004-sin-logica-condicional)=
 ### Regla 0x4004: Sin lógica condicional
 
 {ref}`regla-0x4004` prohíbe estructuras de control (`if`, `for`, `while`, etc.) en los tests:
@@ -1265,6 +1303,7 @@ void testCalcular_ConNumeroImpar_RetornaTriple() {
 
 **Alternativa para datos múltiples:** Tests parametrizados (ver sección siguiente).
 
+(regla-0x4005-tests-independientes)=
 ### Regla 0x4005: Tests independientes
 
 {ref}`regla-0x4005` requiere que cada test sea completamente independiente:
@@ -1321,10 +1360,12 @@ public class MiTest {
 }
 ```
 
+(tests-parametrizados)=
 ## Tests Parametrizados
 
 A menudo queremos probar el mismo comportamiento con múltiples conjuntos de datos. Los **tests parametrizados** permiten esto sin violar la {ref}`regla-0x4004` (sin lógica condicional).
 
+(anotacion-parameterizedtest)=
 ### Anotación `@ParameterizedTest`
 
 ```java
@@ -1342,6 +1383,7 @@ public class CalculadoraTest {
 
 Este test se ejecuta 5 veces, una por cada valor en `@ValueSource`.
 
+(fuentes-de-parametros)=
 ### Fuentes de parámetros
 
 #### `@ValueSource`
@@ -1445,6 +1487,7 @@ entrada,esperado
 "123","123"
 ```
 
+(nombres-personalizados-para-tests-parametrizados)=
 ### Nombres personalizados para tests parametrizados
 
 Por defecto, JUnit genera nombres como `[1] 2, 3, 5`. Podés personalizarlos:
@@ -1478,10 +1521,12 @@ Tests parametrizados son ideales para:
 - Testing exhaustivo de funciones matemáticas
   :::
 
+(tests-de-excepciones)=
 ## Tests de Excepciones
 
 Las excepciones son parte integral del contrato de un método. Debemos testearlas con el mismo rigor que los casos exitosos.
 
+(verificar-que-se-lanza-excepcion)=
 ### Verificar que se lanza excepción
 
 ```java
@@ -1497,6 +1542,7 @@ void testDividir_ConDivisorCero_LanzaArithmeticException() {
 }
 ```
 
+(verificar-mensaje-de-excepcion)=
 ### Verificar mensaje de excepción
 
 ```java
@@ -1512,6 +1558,7 @@ void testValidarEdad_ConEdadNegativa_LanzaExcepcionConMensajeEspecifico() {
 }
 ```
 
+(verificar-causa-de-excepcion)=
 ### Verificar causa de excepción
 
 En algunos casos, necesitás verificar que una excepción envuelve otra (la causa):
@@ -1530,6 +1577,7 @@ void testParsearNumero_ConTextoInvalido_LanzaExcepcionConCausa() {
 }
 ```
 
+(multiples-verificaciones-sobre-excepcion)=
 ### Múltiples verificaciones sobre excepción
 
 ```java
@@ -1550,6 +1598,7 @@ void testValidar_ConDatosInvalidos_LanzaExcepcionConDetalles() {
 }
 ```
 
+(tests-con-try-catch)=
 ### Tests con try-catch
 
 Para verificar excepciones, usá bloques try-catch:
@@ -1567,10 +1616,12 @@ void testProcesar_ConDatoNull_LanzaExcepcion() {
 }
 ```
 
+(casos-de-prueba-completos)=
 ## Casos de Prueba Completos
 
 Veamos ejemplos completos que integran todos los conceptos vistos, centrados en métodos estáticos.
 
+(ejemplo-1-test-de-funciones-matematicas)=
 ### Ejemplo 1: Test de funciones matemáticas
 
 ```java
@@ -1651,6 +1702,7 @@ public class MatematicaTest {
 }
 ```
 
+(ejemplo-2-test-de-validador-de-emails)=
 ### Ejemplo 2: Test de validador de emails
 
 ```java
@@ -1736,6 +1788,7 @@ public class ValidadorEmailTest {
 }
 ```
 
+(ejemplo-3-test-de-utilidades-de-strings)=
 ### Ejemplo 3: Test de utilidades de strings
 
 ```java
@@ -1824,6 +1877,7 @@ public class StringUtilsTest {
 }
 ```
 
+(ejemplo-4-test-de-procesamiento-de-arreglos)=
 ### Ejemplo 4: Test de procesamiento de arreglos
 
 ```java
@@ -1911,8 +1965,10 @@ public class ArreglosTest {
 }
 ```
 
+(organizacion-de-tests)=
 ## Organización de Tests
 
+(tests-por-funcionalidad)=
 ### Tests por funcionalidad
 
 Organizá los tests agrupando funcionalidades relacionadas:
@@ -1938,6 +1994,7 @@ public class CalculadoraTest {
 }
 ```
 
+(clases-anidadas-con-nested)=
 ### Clases anidadas con `@Nested`
 
 JUnit 5 permite agrupar tests con clases internas:
@@ -1986,10 +2043,12 @@ Ventajas de `@Nested`:
 - Cada grupo puede tener su propio `@BeforeEach` para preparar datos
 - Mejora la organización en tests grandes
 
+(cobertura-de-tests)=
 ## Cobertura de Tests
 
 La **cobertura de tests** (test coverage) mide qué porcentaje del código es ejecutado por los tests.
 
+(tipos-de-cobertura)=
 ### Tipos de cobertura
 
 #### Cobertura de líneas
@@ -2026,6 +2085,7 @@ Porcentaje de caminos condicionales ejecutados:
 
 Porcentaje de métodos invocados al menos una vez.
 
+(herramientas-de-cobertura)=
 ### Herramientas de cobertura
 
 #### JaCoCo (Java Code Coverage)
@@ -2064,6 +2124,7 @@ Ejecutar:
 
 El reporte se genera en `build/reports/jacoco/test/html/index.html`.
 
+(interpretacion-de-cobertura)=
 ### Interpretación de cobertura
 
 :::{important}
@@ -2086,6 +2147,7 @@ void testDividir() {
 
 Este test tiene 100% cobertura pero NO verifica el caso `b == 0`.
 
+(meta-razonable)=
 ### Meta razonable
 
 - **70-80% de cobertura**: Objetivo razonable para proyectos
@@ -2096,8 +2158,10 @@ Este test tiene 100% cobertura pero NO verifica el caso `b == 0`.
 Priorizá **calidad** de tests sobre cantidad de cobertura. Un test bien pensado que verifica comportamiento es más valioso que 10 tests triviales que solo ejecutan código.
 :::
 
+(buenas-practicas)=
 ## Buenas Prácticas
 
+(first-caracteristicas-de-buenos-tests)=
 ### FIRST: Características de buenos tests
 
 Acrónimo que resume las características de tests efectivos:
@@ -2131,6 +2195,7 @@ Acrónimo que resume las características de tests efectivos:
 - Escribir tests junto con el código (o antes, en TDD)
 - No postponer el testing
 
+(principios-adicionales)=
 ### Principios adicionales
 
 #### DRY en tests, con moderación
@@ -2252,8 +2317,10 @@ void testOrdenar_ConArregloDesordenado_RetornaOrdenado() {
 }
 ```
 
+(anti-patrones-en-testing)=
 ## Anti-patrones en Testing
 
+(tests-fragiles)=
 ### Tests frágiles
 
 Tests que fallan frecuentemente por razones no relacionadas con bugs:
@@ -2276,6 +2343,7 @@ void testObtenerFecha_RetornaFormatoISO() {
 }
 ```
 
+(tests-que-ignoran-excepciones)=
 ### Tests que ignoran excepciones
 
 ```java
@@ -2302,6 +2370,7 @@ void testDividir_ConDivisorCero_LanzaExcepcion() {
 }
 ```
 
+(assertions-multiples-sin-mensajes-descriptivos)=
 ### Assertions múltiples sin mensajes descriptivos
 
 ```java
@@ -2325,6 +2394,7 @@ void testParsearFecha_RetornaComponentesCorrectos() {
 }
 ```
 
+(test-driven-development-con-junit)=
 ## Test-Driven Development con JUnit
 
 El **Test-Driven Development** (TDD) es una metodología donde los tests se escriben antes que el código de producción. 
@@ -2335,6 +2405,7 @@ Para los fundamentos teóricos del TDD, el ciclo Red-Green-Refactor completo, la
 
 En esta sección nos enfocamos en aspectos prácticos específicos de JUnit para aplicar TDD.
 
+(aplicando-tdd-con-junit-en-la-practica)=
 ### Aplicando TDD con JUnit en la Práctica
 
 Cuando aplicás TDD con JUnit, seguís este flujo:
@@ -2383,6 +2454,7 @@ public static double calcularDescuento(double monto) {
 // Tests siguen pasando ✅✅
 ```
 
+(tips-para-tdd-con-junit)=
 ### Tips para TDD con JUnit
 
 **Nombres descriptivos en TDD**
@@ -2422,10 +2494,12 @@ void testSumar() {
 
 -------------------------------------
 
+(estrategias-de-testing-con-junit)=
 ## Estrategias de Testing con JUnit
 
 Para diseñar buenos tests, necesitamos estrategias sistemáticas. Para la teoría sobre particiones de equivalencia, valores límite y análisis de casos de prueba, consultá {ref}`testing`. Aquí vemos la implementación con JUnit.
 
+(analisis-de-valores-limite-boundary-value-analysis)=
 ### Análisis de Valores Límite (Boundary Value Analysis)
 
 Los errores de programación ocurren frecuentemente en los **límites** o **bordes** de los rangos válidos. Pensá en los típicos errores off-by-one: `i < n` vs `i <= n`, `>= 0` vs `> 0`, etc.
@@ -2547,6 +2621,7 @@ void testEsEdadParaVotar_ValoresLimite(int edad, boolean esperado) {
 
 Notá que los valores marcados como "(LÍMITE)" son los críticos. Si hay un bug off-by-one, uno de estos tests lo detectará.
 
+(particiones-de-equivalencia)=
 ### Particiones de Equivalencia
 
 Esta técnica complementa el análisis de límites. La idea es dividir el dominio de entrada en **clases de equivalencia**: grupos de valores que deberían comportarse igual.
@@ -2624,6 +2699,7 @@ La estrategia más efectiva es combinar ambas técnicas:
 2. Para cada partición, testear un valor representativo del medio
 3. Testear los valores en los límites entre particiones
 
+(casos-de-prueba-especiales)=
 ### Casos de Prueba Especiales
 
 Además de límites y particiones, hay ciertos casos que siempre deberías considerar:
@@ -2724,10 +2800,12 @@ void testBuscarMaximo_ConUnElemento_RetornaEseElemento() {
 }
 ```
 
+(test-smells-con-junit)=
 ## Test Smells con JUnit
 
 Los **test smells** son señales de que los tests tienen problemas. Aquí vemos ejemplos concretos con JUnit.
 
+(test-interdependiente)=
 ### Test interdependiente
 
 **Problema:** Tests que deben ejecutarse en orden específico.
@@ -2764,6 +2842,7 @@ public class CalculadoraTest {
 }
 ```
 
+(test-obscuro)=
 ### Test obscuro
 
 **Problema:** No es claro qué se está testeando o por qué.
@@ -2791,6 +2870,7 @@ void testCalcularAniosHastaJubilacion_ConEdadActual35_Retorna30() {
 }
 ```
 
+(test-con-logica-compleja)=
 ### Test con lógica compleja
 
 **Problema:** Tests con condicionales, lazos, o cálculos complejos.
@@ -2833,6 +2913,7 @@ void testCalcular_ConNumeroImpar_RetornaTriple(int entrada, int esperado) {
 }
 ```
 
+(test-demasiado-largo)=
 ### Test demasiado largo
 
 **Olor:** Tests con más de 20-30 líneas, difíciles de entender.
@@ -2857,6 +2938,7 @@ void testPaso2_Calculo() { }
 void testPaso3_Formato() { }
 ```
 
+(assertion-redundante)=
 ### Assertion redundante
 
 **Olor:** Assertions que no aportan valor.
@@ -2879,6 +2961,7 @@ void testSumar_ConDosYTres_RetornaCinco() {
 }
 ```
 
+(test-silencioso)=
 ### Test silencioso
 
 **Problema:** Test que no falla cuando debería.
@@ -2905,10 +2988,12 @@ void testProcesar_ConDatosValidos_RetornaResultado() {
 Para más detalles sobre test smells y buenas prácticas generales, consultá {ref}`testing`.
 :::
 
+(debugging-de-tests-fallidos-con-junit)=
 ## Debugging de Tests Fallidos con JUnit
 
 Cuando un test falla, seguí estos pasos sistemáticos:
 
+(1-leer-el-mensaje-de-error-completo)=
 ### 1. Leer el mensaje de error completo
 
 ```
@@ -2925,6 +3010,7 @@ Información clave:
 - **Esperado vs. Obtenido**: 800.0 vs 1000.0
 - **Contexto**: Mensaje descriptivo
 
+(2-ejecutar-solo-ese-test)=
 ### 2. Ejecutar solo ese test
 
 ```bash
@@ -2933,6 +3019,7 @@ Información clave:
 
 Aislá el problema ejecutando solo el test que falla.
 
+(3-agregar-prints-temporales)=
 ### 3. Agregar prints temporales
 
 ```java
@@ -2955,6 +3042,7 @@ void testCalcularDescuento() {
 Recordá eliminar los prints antes de commitear el código.
 :::
 
+(4-usar-el-debugger-del-ide)=
 ### 4. Usar el debugger del IDE
 
 1. Ponele un **breakpoint** en la línea del assertion
@@ -2962,6 +3050,7 @@ Recordá eliminar los prints antes de commitear el código.
 3. Inspeccioná variables
 4. Avanzá paso a paso (Step Into/Over)
 
+(5-simplificar-el-test)=
 ### 5. Simplificar el test
 
 Si el test es complejo, simplificalo temporalmente:
@@ -2975,6 +3064,7 @@ void testProblematico() {
 }
 ```
 
+(6-verificar-precondiciones)=
 ### 6. Verificar precondiciones
 
 ```java
@@ -2993,6 +3083,7 @@ void testProcesar_ConDatosValidos_RetornaResultado() {
 }
 ```
 
+(7-revisar-cambios-recientes)=
 ### 7. Revisar cambios recientes
 
 Si el test pasaba antes:
@@ -3002,10 +3093,12 @@ Si el test pasaba antes:
 - ¿Se agregaron nuevos datos o configuración?
 
 ```bash
+(ver-diferencias-desde-ultimo-commit)=
 # Ver diferencias desde último commit
 git diff HEAD
 ```
 
+(ejemplo-de-debugging-completo)=
 ### Ejemplo de debugging completo
 
 **Test que falla:**
@@ -3081,6 +3174,7 @@ public static double aplicarDescuento(double precio, double porcentaje) {
 ✅ Test pasa
 ```
 
+(resumen)=
 ## Resumen
 
 Este apunte cubrió la implementación práctica de testing con JUnit 5:
@@ -3104,6 +3198,7 @@ Este apunte cubrió la implementación práctica de testing con JUnit 5:
 - {ref}`regla-0x4000` — Reglas de estilo para testing
 :::
 
+(ejercicios)=
 ## Ejercicios
 
 ```exercise

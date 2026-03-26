@@ -3,6 +3,7 @@ title: "Tipos de Datos en Java"
 description: Estudio profundo sobre el sistema de tipos, representación de datos y operadores en Java desde la perspectiva de un programador de C.
 ---
 
+(tipos-de-datos-en-java)=
 # Tipos de Datos en Java
 
 En el capítulo anterior vimos que Java tiene un sistema de tipos **estático** y **fuertemente tipado**: los tipos se declaran explícitamente, se verifican en tiempo de compilación, y las conversiones con pérdida de información requieren casting explícito.
@@ -13,6 +14,7 @@ Este capítulo profundiza en los **tipos de datos concretos** que ofrece Java: l
 Si venís de programar en C, vas a encontrar que la sintaxis de declaración de variables y el uso de tipos primitivos es **casi idéntica**. La diferencia principal es que Java **garantiza** el tamaño de cada tipo en todas las plataformas, mientras que en C el tamaño de `int` o `long` puede variar según el compilador y la arquitectura (16, 32 o 64 bits).
 :::
 
+(declaracion-de-variables)=
 ## Declaración de Variables
 
 Una **variable** es un espacio en memoria con un nombre que almacena un valor de un tipo específico. Pensá en una variable como una caja etiquetada: la etiqueta es el nombre, el tipo define qué puede contener la caja, y el valor es lo que está adentro.
@@ -32,6 +34,7 @@ tipo nombreVariable = valor;   // Declaración con inicialización (reserva y as
 
 2. **Declaración con inicialización:** Además de reservar espacio, le asignás un valor inicial inmediatamente. Es lo más seguro porque garantiza que la variable siempre tiene un valor conocido.
 
+(ejemplos-de-declaracion)=
 ### Ejemplos de Declaración
 
 ```{code} java
@@ -82,6 +85,7 @@ public static void main(String[] args) {
 ```
 :::
 
+(convencion-de-nombres)=
 ### Convención de Nombres
 
 Java tiene convenciones de nombres que **toda la comunidad sigue**. Aunque el compilador no te obliga, seguir estas convenciones hace tu código más legible y profesional.
@@ -118,12 +122,14 @@ Cuando ves `EdadUsuario` en código Java, inmediatamente sabés que es una **cla
 | Paquetes | minúsculas | `java.util`, `com.empresa.proyecto` |
 :::
 
+(tipos-primitivos)=
 ## Tipos Primitivos
 
 Un **tipo primitivo** es un tipo de dato básico provisto directamente por el lenguaje. No es un objeto, no tiene métodos, y se almacena directamente en la variable (no como referencia a otro lugar de memoria). Son los "átomos" con los que se construyen datos más complejos.
 
 Java define exactamente **8 tipos primitivos**. Este número es fijo —no se pueden crear nuevos tipos primitivos, solo usar estos ocho.
 
+(que-significa-tipo-primitivo)=
 ### ¿Qué significa "tipo primitivo"?
 
 En Java hay dos categorías de tipos:
@@ -133,6 +139,7 @@ En Java hay dos categorías de tipos:
 
 Por ahora nos enfocamos en los primitivos. La diferencia práctica es que los primitivos son más eficientes (no hay indirección) y tienen tamaños garantizados.
 
+(portabilidad-tamanos-garantizados)=
 ### Portabilidad: Tamaños Garantizados
 
 Una **diferencia fundamental con C** es que Java garantiza el tamaño de cada tipo en **todas las plataformas**. No importa si compilás para Windows, Linux, Mac, un teléfono Android o un servidor —un `int` siempre ocupa 32 bits y tiene el mismo rango.
@@ -147,6 +154,7 @@ En C, el tamaño de `int` puede ser 16, 32 o 64 bits dependiendo del compilador 
 Los 8 tipos primitivos de Java organizados por categoría: enteros, punto flotante, booleano y carácter.
 ```
 
+(tabla-de-tipos-primitivos)=
 ### Tabla de Tipos Primitivos
 
 :::{table} Especificación técnica de tipos primitivos
@@ -167,6 +175,7 @@ Los 8 tipos primitivos de Java organizados por categoría: enteros, punto flotan
 
 *El tamaño exacto de `boolean` no está especificado por la JVM; típicamente usa 1 byte por eficiencia de acceso a memoria.
 
+(por-que-tantos-tipos-enteros)=
 ### ¿Por qué tantos tipos enteros?
 
 Podrías preguntarte: ¿por qué no usar siempre `long` que es el más grande? La respuesta es **eficiencia**:
@@ -176,6 +185,7 @@ Podrías preguntarte: ¿por qué no usar siempre `long` que es el más grande? L
 
 En la práctica, para la mayoría de los casos usamos `int` para enteros y `double` para decimales. Los otros tipos se usan en situaciones específicas.
 
+(comparativa-de-tamanos-con-c)=
 ### Comparativa de Tamaños con C
 
 | Aspecto | C | Java |
@@ -195,10 +205,12 @@ int valorSinSigno = miByte & 0xFF;  // Máscara para obtener valor 0-255
 ```
 :::
 
+(tipos-enteros-en-detalle)=
 ## Tipos Enteros en Detalle
 
 Los tipos enteros almacenan números **sin parte decimal**. Java tiene cuatro tipos enteros, cada uno con diferente tamaño y rango. Todos usan **representación en complemento a dos** para números negativos (igual que en C).
 
+(byte-8-bits)=
 ### `byte` (8 bits)
 
 El tipo entero más pequeño. Almacena valores de -128 a 127.
@@ -227,6 +239,7 @@ b = (byte)(b + 1);       // b = -128 (overflow, da la vuelta)
 El **overflow** (desbordamiento) ocurre cuando un cálculo produce un resultado fuera del rango del tipo. En Java (igual que en C), el comportamiento es "dar la vuelta" (*wrap around*): después de 127 viene -128. Esto se debe a la representación en complemento a dos.
 :::
 
+(short-16-bits)=
 ### `short` (16 bits)
 
 Entero de 16 bits. Rango: -32,768 a 32,767.
@@ -247,6 +260,7 @@ short temperatura = 32767; // Máximo valor
 int poblacionMejor = 30000;  // Más idiomático en Java
 ```
 
+(int-32-bits-el-tipo-entero-principal)=
 ### `int` (32 bits) — El Tipo Entero Principal
 
 El tipo entero más común y el **tipo por defecto** para literales enteros. Cuando escribís `42` en tu código, Java lo interpreta como `int`.
@@ -273,6 +287,7 @@ int minimo = Integer.MIN_VALUE;  // -2147483648
 int respuesta = 42;
 ```
 
+(long-64-bits)=
 ### `long` (64 bits)
 
 Para valores que exceden el rango de `int`. Rango: aproximadamente ±9.2 quintillones.
@@ -311,6 +326,7 @@ long maxLong = Long.MAX_VALUE;   // 9223372036854775807
 long minLong = Long.MIN_VALUE;   // -9223372036854775808
 ```
 
+(literales-enteros-en-diferentes-bases)=
 ### Literales Enteros en Diferentes Bases
 
 Un **literal** es un valor escrito directamente en el código (como `42` o `"hola"`). Al igual que en C, Java permite escribir números enteros en diferentes bases numéricas:
@@ -346,6 +362,7 @@ int c = 10;    // Este sí es 10 en decimal
 ```
 :::
 
+(separador-de-digitos-guion-bajo)=
 ### Separador de Dígitos (Guión Bajo)
 
 Desde Java 7, podés usar guiones bajos (`_`) dentro de los números para mejorar la legibilidad. El compilador los ignora —son puramente visuales:
@@ -371,10 +388,12 @@ long telefono = 011_4444_5555L;
 
 **Tip:** Usá separadores para agrupar de a 3 dígitos (como los miles) o de a 4 bits en binario/hexadecimal.
 
+(tipos-de-punto-flotante)=
 ## Tipos de Punto Flotante
 
 Los tipos de punto flotante almacenan números con **parte decimal** (también llamados "números reales" en matemática, aunque la representación no es exacta). Java tiene dos tipos: `float` (precisión simple) y `double` (precisión doble).
 
+(que-significa-punto-flotante)=
 ### ¿Qué significa "punto flotante"?
 
 El nombre viene de cómo se almacenan estos números: el "punto decimal" puede "flotar" a diferentes posiciones usando un exponente. Es similar a la notación científica:
@@ -385,6 +404,7 @@ $$314159 = 3.14159 \times 10^{5}$$
 
 El mismo conjunto de dígitos (3.14159) representa diferentes magnitudes moviendo el punto.
 
+(float-32-bits-precision-simple)=
 ### `float` (32 bits) — Precisión Simple
 
 Almacena aproximadamente **7 dígitos significativos** de precisión. Los literales deben terminar con `F` o `f`.
@@ -407,6 +427,7 @@ float correcto = 36.5f;     // ✅ Con sufijo f
 float tambienOk = (float)36.5;  // ✅ Con casting explícito
 ```
 
+(double-64-bits-precision-doble-el-tipo-decimal-principal)=
 ### `double` (64 bits) — Precisión Doble — El Tipo Decimal Principal
 
 Almacena aproximadamente **15-16 dígitos significativos** de precisión. Es el **tipo por defecto** para literales decimales —cuando escribís `3.14` sin sufijo, Java lo interpreta como `double`.
@@ -429,6 +450,7 @@ double maxDouble = Double.MAX_VALUE;  // ≈1.7 × 10³⁰⁸
 double minPositivo = Double.MIN_VALUE;  // ≈4.9 × 10⁻³²⁴ (mínimo positivo)
 ```
 
+(notacion-cientifica)=
 ### Notación Científica
 
 Para números muy grandes o muy pequeños, usá notación científica con `e` (o `E`):
@@ -445,6 +467,7 @@ double velocidadLuz = 3e8; // 3 × 10⁸ m/s
 float grandeF = 1.5e10f;
 ```
 
+(representacion-ieee-754-como-se-almacenan-los-decimales)=
 ### Representación IEEE 754 — Cómo se almacenan los decimales
 
 Los tipos `float` y `double` siguen el estándar internacional **IEEE 754**, igual que en C y prácticamente todos los lenguajes modernos. Entender este estándar te ayuda a comprender por qué los números decimales a veces se comportan de formas "extrañas".
@@ -481,6 +504,7 @@ La cantidad de bits en la mantisa limita la **precisión** (cuántos dígitos si
 | `float` | 23 | ~7 | $10^{-38}$ a $10^{38}$ |
 | `double` | 52 | ~15-16 | $10^{-308}$ a $10^{308}$ |
 
+(el-problema-de-la-precision-importante)=
 ### El Problema de la Precisión — ¡Importante!
 
 Aquí viene un concepto **fundamental** que causa confusión a muchos programadores: la mayoría de los números decimales **no tienen representación binaria exacta**.
@@ -526,6 +550,7 @@ La función `Math.abs()` devuelve el valor absoluto (siempre positivo).
 
 Este comportamiento es **idéntico en C** y en casi todos los lenguajes. No es un defecto de Java.
 
+(valores-especiales-de-punto-flotante)=
 ### Valores Especiales de Punto Flotante
 
 IEEE 754 define valores especiales para representar situaciones matemáticas excepcionales. Java los expone como constantes:
@@ -577,10 +602,12 @@ double d = 1.0 / 0.0;  // OK, d = Infinity
 int i = 1 / 0;         // ❌ ArithmeticException: / by zero
 ```
 
+(el-tipo-boolean-verdadero-o-falso)=
 ## El Tipo `boolean` — Verdadero o Falso
 
 El tipo `boolean` representa valores lógicos: solo puede ser `true` (verdadero) o `false` (falso). No hay otros valores posibles.
 
+(diferencia-critica-con-c)=
 ### Diferencia Crítica con C
 
 Esta es una de las **diferencias más importantes** entre Java y C:
@@ -638,6 +665,7 @@ boolean b = true;
 boolean c = (x > 0);  // Resultado de comparación es boolean
 ```
 
+(por-que-java-es-tan-estricto)=
 ### ¿Por qué Java es tan estricto?
 
 Esta restricción previene una clase muy común de bugs en C: confundir asignación (`=`) con comparación (`==`):
@@ -663,6 +691,7 @@ if (x == 5) {   // ✅ Correcto: comparación
 
 El tipado estricto de Java convierte un bug silencioso en un error de compilación.
 
+(operaciones-con-boolean)=
 ### Operaciones con boolean
 
 Los valores `boolean` solo participan en operaciones lógicas:
@@ -689,6 +718,7 @@ boolean diferente = x != y; // true
 Aunque conceptualmente un `boolean` solo necesita 1 bit, la JVM típicamente usa **1 byte** (8 bits) para almacenarlo. Esto es porque los procesadores acceden a memoria de byte en byte —acceder a bits individuales sería más lento. En arreglos de boolean, algunas JVMs pueden optimizar esto.
 :::
 
+(el-tipo-char-caracteres-unicode)=
 ## El Tipo `char` — Caracteres Unicode
 
 El tipo `char` almacena un **carácter individual**. Pero hay una diferencia importante con C:
@@ -699,6 +729,7 @@ El tipo `char` almacena un **carácter individual**. Pero hay una diferencia imp
 | Codificación | ASCII (128 caracteres) | Unicode UTF-16 (65,536 caracteres) |
 | Caracteres especiales | Solo inglés básico | Acentos, ñ, cirílico, griego, chino, emoji, etc. |
 
+(por-que-16-bits)=
 ### ¿Por qué 16 bits?
 
 ASCII (7-8 bits) fue diseñado para inglés y solo tiene 128 caracteres. No incluye acentos, ni la ñ, ni caracteres de otros idiomas.
@@ -726,6 +757,7 @@ char omegaPorCodigo = '\u03A9';    // Ω (U+03A9)
 char corazonPorCodigo = '\u2665';  // ♥ (U+2665)
 ```
 
+(secuencias-de-escape)=
 ### Secuencias de Escape
 
 Las secuencias de escape permiten representar caracteres que no se pueden escribir directamente:
@@ -764,6 +796,7 @@ System.out.println("Ruta: C:\\Users\\Juan");
 // Ruta: C:\Users\Juan
 ```
 
+(char-como-valor-numerico)=
 ### `char` como Valor Numérico
 
 Al igual que en C, `char` es técnicamente un tipo numérico. Internamente almacena el **código Unicode** del carácter (un número entre 0 y 65535). Esto permite hacer aritmética con caracteres:
@@ -810,14 +843,17 @@ int valor = caracter - '0';  // valor = 7 (no 55 que es el código de '7')
 La diferencia entre mayúsculas y minúsculas es 32 (`'a' - 'A' = 32`).
 :::
 
+(diferencia-con-c-char-es-sin-signo)=
 ### Diferencia con C: `char` es sin signo
 
 En Java, `char` es el **único tipo primitivo sin signo**. Su rango es 0 a 65535 (no tiene valores negativos). En C, `char` puede ser con signo o sin signo dependiendo del compilador.
 
+(constantes-con-final)=
 ## Constantes con `final`
 
 Una **constante** es una variable cuyo valor no puede cambiar después de la inicialización. En Java, se declaran con la palabra clave `final`.
 
+(para-que-sirven-las-constantes)=
 ### ¿Para qué sirven las constantes?
 
 1. **Evitar "números mágicos":** En vez de escribir `7` por todos lados, usás `DIAS_POR_SEMANA`. Más legible y si cambia, lo modificás en un solo lugar.
@@ -843,6 +879,7 @@ final int PUERTO_HTTP = 80;
 // MAX_INTENTOS = 5;  // ❌ ERROR: cannot assign a value to final variable
 ```
 
+(comparativa-con-c)=
 ### Comparativa con C
 
 | C | Java |
@@ -852,6 +889,7 @@ final int PUERTO_HTTP = 80;
 
 La diferencia es que `#define` en C es una sustitución textual del preprocesador (sin verificación de tipos), mientras que `final` en Java crea una variable real con tipo verificado.
 
+(constantes-locales-vs-constantes-de-clase)=
 ### Constantes locales vs constantes de clase
 
 Las constantes pueden ser locales (dentro de un método) o de clase. Las constantes de clase se verán más adelante; por ahora, usá `final` para valores que no deben cambiar dentro de tu método:
@@ -870,10 +908,12 @@ public static void main(String[] args) {
 }
 ```
 
+(operadores)=
 ## Operadores
 
 Los operadores son símbolos que realizan operaciones sobre valores (operandos). Java tiene operadores muy similares a C, con algunas diferencias importantes.
 
+(operadores-aritmeticos)=
 ### Operadores Aritméticos
 
 Realizan operaciones matemáticas básicas. **Idénticos a C:**
@@ -902,6 +942,7 @@ int resto = a % b;      // 2 (17 = 5×3 + 2)
 int negativo = -a;      // -17
 ```
 
+(division-entera-vs-division-real-cuidado)=
 ### División Entera vs División Real — ¡Cuidado!
 
 Este es un punto que causa muchos errores. La división entre enteros **siempre produce un entero**, truncando (no redondeando) la parte decimal:
@@ -926,6 +967,7 @@ double mal = 7 / 2;  // mal = 3.0 (primero divide enteros → 3, luego convierte
 
 Este comportamiento es **idéntico en C**. La regla es: si ambos operandos son enteros, el resultado es entero.
 
+(operador-modulo-resto)=
 ### Operador Módulo (Resto)
 
 El operador `%` devuelve el **resto** de la división entera. Muy útil para:
@@ -949,6 +991,7 @@ int horaReal = hora % 24;  // 1 (25 horas = 1 hora del día siguiente)
 boolean divisiblePor5 = (numero % 5 == 0);  // false
 ```
 
+(operadores-de-asignacion-compuesta-prohibidos-en-el-curso)=
 ### Operadores de Asignación Compuesta — Prohibidos en el Curso
 
 :::{warning} Restricción Pedagógica del Curso
@@ -985,6 +1028,7 @@ Para más detalles, consultá la {ref}`regla-0x5001`.
 | `a++` o `++a` | `a = a + 1` |
 | `a--` o `--a` | `a = a - 1` |
 
+(operadores-relacionales-comparacion)=
 ### Operadores Relacionales (Comparación)
 
 Comparan dos valores y devuelven un `boolean` (`true` o `false`). **Idénticos a C:**
@@ -1027,6 +1071,7 @@ if (x == 5) {    // Comparación: ¿x es igual a 5?
 En Java, confundir estos en un `if` genera error de compilación (porque `x = 5` devuelve `int`, no `boolean`). En C, compila silenciosamente y causa bugs.
 :::
 
+(operadores-logicos)=
 ### Operadores Lógicos
 
 Operan sobre valores `boolean` y devuelven `boolean`. Son fundamentales para construir condiciones complejas:
@@ -1080,6 +1125,7 @@ boolean entradaGratis = !(edadVisitante > 12);  // true (10 no es > 12)
 entradaGratis = edadVisitante <= 12;
 ```
 
+(evaluacion-en-cortocircuito-muy-importante)=
 ### Evaluación en Cortocircuito — Muy Importante
 
 Los operadores `&&` y `||` usan **evaluación en cortocircuito** (*short-circuit evaluation*): si el resultado se puede determinar con el primer operando, el segundo **no se evalúa**.
@@ -1122,6 +1168,7 @@ if (texto != null && texto.length() > 5) {
 Cuando uses `&&`, poné primero la condición que actúa como "guarda" (la que evita el error). Cuando uses `||`, poné primero la condición más probable de ser `true` (optimización menor).
 :::
 
+(operadores-de-bits)=
 ### Operadores de Bits
 
 Operan sobre la representación binaria de los números, bit a bit. **Idénticos a C** (con una adición):
@@ -1188,6 +1235,7 @@ p = p ^ q;  // p = 3
 // Ahora p = 3, q = 5
 ```
 
+(operador-exclusivo-de-java)=
 ### Operador `>>>` — Exclusivo de Java
 
 Java tiene un operador de desplazamiento a la derecha **sin signo** (`>>>`), que no existe en C. La diferencia:
@@ -1209,6 +1257,7 @@ int a = positivo >> 2;   // 2
 int b = positivo >>> 2;  // 2
 ```
 
+(precedencia-de-operadores)=
 ### Precedencia de Operadores
 
 Cuando una expresión tiene múltiples operadores, Java los evalúa en un orden específico llamado **precedencia**. Los operadores con mayor precedencia se evalúan primero.
@@ -1258,6 +1307,7 @@ boolean ok = (x > 0 && x < 100) || (y > 0 && y < 100);
 ```
 :::
 
+(conversiones-de-tipo-casting)=
 ## Conversiones de Tipo (Casting)
 
 En ocasiones necesitás convertir un valor de un tipo a otro. Java tiene dos tipos de conversiones:
@@ -1265,6 +1315,7 @@ En ocasiones necesitás convertir un valor de un tipo a otro. Java tiene dos tip
 1. **Implícitas (automáticas):** Java las hace sin que lo pidas
 2. **Explícitas (casting):** Tenés que indicarlas con `(tipo)`
 
+(conversiones-implicitas-promocion-automatica-widening)=
 ### Conversiones Implícitas (Promoción Automática / Widening)
 
 Java promueve automáticamente tipos más pequeños a más grandes **cuando no hay riesgo de perder información**. Esto se llama *widening* (ensanchamiento) porque el tipo destino es "más ancho" (tiene más bits).
@@ -1312,6 +1363,7 @@ float f = grande;  // f = 1.23456788E14 (perdió dígitos)
 Esto compila sin advertencia, pero puede causar problemas. Usá `double` si necesitás mantener la precisión.
 :::
 
+(conversiones-explicitas-casting-narrowing)=
 ### Conversiones Explícitas (Casting / Narrowing)
 
 Cuando querés convertir de un tipo más grande a uno más pequeño, hay riesgo de **perder información**. Java no hace esto automáticamente —tenés que indicarlo explícitamente con un **cast**: `(tipo)valor`.
@@ -1365,6 +1417,7 @@ int poblacion = (int) poblacionMundial;  // poblacion = -589934592 (¡negativo!)
 ```
 :::
 
+(truncamiento-vs-redondeo)=
 ### Truncamiento vs Redondeo
 
 El casting de `double`/`float` a entero **trunca** (elimina la parte decimal), no redondea:
@@ -1385,6 +1438,7 @@ long redondeado = Math.round(9.5);  // 10
 int redondeadoInt = (int) Math.round(9.5);  // 10
 ```
 
+(promocion-automatica-en-expresiones)=
 ### Promoción Automática en Expresiones
 
 Cuando operás con valores de diferentes tipos en una expresión, Java promueve automáticamente al tipo "más grande" antes de operar. Esta regla es idéntica a C:
@@ -1436,6 +1490,7 @@ int c = a + b;      // c = 200 (correcto, cabe en int)
 byte d = (byte)(a + b);  // d = -56 (overflow intencional)
 ```
 
+(resumen-de-conversiones)=
 ### Resumen de Conversiones
 
 | Conversión | Tipo | Sintaxis | ¿Pérdida de información? |
@@ -1448,6 +1503,7 @@ byte d = (byte)(a + b);  // d = -56 (overflow intencional)
 | `long` → `int` | **Explícita** | `int i = (int) l;` | Posible (overflow) |
 | `int` → `byte` | **Explícita** | `byte b = (byte) i;` | Posible (overflow) |
 
+(conversiones-entre-string-y-tipos-primitivos)=
 ### Conversiones entre String y Tipos Primitivos
 
 El casting **no funciona** entre `String` y tipos primitivos porque son categorías completamente diferentes. Para estas conversiones, Java provee métodos específicos.
@@ -1528,6 +1584,7 @@ String s9 = String.format("%.2f", precio); // "19.99" (2 decimales)
 La opción `String.valueOf()` es la más legible y explícita. La concatenación `"" + numero` es común pero puede confundir a lectores novatos. Elegí un estilo y mantenelo consistente en tu código.
 :::
 
+(comparacion-con-python)=
 ### Comparación con Python
 
 Python, al igual que Java, requiere conversiones explícitas entre tipos incompatibles (tipado fuerte). La diferencia clave es **cuándo** se detectan los errores:
@@ -1557,6 +1614,7 @@ Java detecta estos errores **en tiempo de compilación**, antes de ejecutar. Inc
 **Ejemplo práctico de la diferencia:**
 
 ```python
+(en-python-funciona-hasta-que-se-ejecuta-la-rama-problematica)=
 # En Python: funciona hasta que se ejecuta la rama problemática
 def calcular(x, es_texto):
     if es_texto:
@@ -1580,6 +1638,7 @@ public static String calcular(Object x, boolean esTexto) {
 Java te obliga a ser explícito sobre los tipos desde el principio. Esto puede parecer restrictivo, pero en proyectos grandes previene categorías enteras de bugs que en Python solo descubrirías al ejecutar ese código específico.
 :::
 
+(ejercicios-de-aplicacion)=
 ## Ejercicios de Aplicación
 
 ::::{exercise}
@@ -1898,6 +1957,7 @@ int i3 = (int) l1;
 **Lección:** Java no detecta overflow en tiempo de ejecución para tipos primitivos. Es responsabilidad del programador verificar que los valores estén dentro del rango esperado.
 ::::
 
+(referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - **Bloch, J.** (2018). _Effective Java_ (3ra ed.). Addison-Wesley Professional.

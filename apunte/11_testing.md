@@ -4,6 +4,7 @@ description: Conceptos teóricos sobre pruebas de software, desarrollo guiado po
 label: testing
 ---
 
+(fundamentos-del-testing-de-software)=
 # Fundamentos del Testing de Software
 
 En la ingeniería de software, el testing no es una fase posterior al desarrollo, sino una actividad integral del mismo. Las **pruebas de software** permiten validar que el código se comporta según lo esperado, detectar errores tempranamente y documentar el comportamiento del sistema.
@@ -12,8 +13,10 @@ En la ingeniería de software, el testing no es una fase posterior al desarrollo
 Este apunte cubre los **fundamentos teóricos** del testing. Para la implementación práctica con JUnit 5, anotaciones, assertions y ejemplos de código, consultá {ref}`junit`.
 :::
 
+(del-testing-manual-al-automatizado)=
 ## Del Testing Manual al Automatizado
 
+(el-problema-con-el-testing-manual)=
 ### El Problema con el Testing Manual
 
 Si venís de programar en C, probablemente verificabas que tu código funcionara de manera manual: ejecutabas el programa, ingresabas datos y revisabas la salida con `printf()`. Este enfoque, conocido como **testing manual**, funciona para programas pequeños pero tiene limitaciones serias:
@@ -26,10 +29,12 @@ Si venís de programar en C, probablemente verificabas que tu código funcionara
 4. **No es repetible**: Otros desarrolladores no saben exactamente qué casos verificar.
 5. **No hay registro**: Si un test falla, no queda documentado automáticamente.
 
+(la-solucion-testing-automatizado)=
 ### La Solución: Testing Automatizado
 
 El **testing automatizado** resuelve estos problemas: escribís código que verifica que tu otro código funciona correctamente. Una vez escrito, el test se puede ejecutar miles de veces con un solo comando. La verificación la hace el framework (por ejemplo, JUnit en Java), no vos mirando la pantalla.
 
+(por-que-testeamos)=
 ## ¿Por Qué Testeamos?
 
 El testing de software responde a una realidad ineludible: **los programadores cometen errores**. Según estudios de ingeniería de software, un desarrollador introduce entre 15 y 50 defectos por cada 1000 líneas de código. El costo de corregir un bug crece exponencialmente según la fase en que se detecta:
@@ -48,6 +53,7 @@ El testing de software responde a una realidad ineludible: **los programadores c
 
 Este crecimiento exponencial se debe a que un bug detectado tarde requiere más esfuerzo para ser localizado, reproducido y corregido, además del posible daño a usuarios o reputación.
 
+(beneficios-del-testing-automatizado)=
 ### Beneficios del Testing Automatizado
 
 El testing automatizado aporta múltiples beneficios:
@@ -62,6 +68,7 @@ El testing automatizado aporta múltiples beneficios:
 
 5. **Diseño mejorado**: Pensar en cómo testear el código mientras lo escribís te obliga a diseñar funciones más modulares, con responsabilidades claras y dependencias explícitas.
 
+(la-piramide-de-testing)=
 ## La Pirámide de Testing
 
 Mike Cohn propuso la **pirámide de testing** como modelo para distribuir los esfuerzos de prueba. La forma de pirámide no es casualidad: representa la proporción ideal de cada tipo de test.
@@ -74,6 +81,7 @@ Mike Cohn propuso la **pirámide de testing** como modelo para distribuir los es
 Pirámide de testing: muchas pruebas unitarias en la base, pocas E2E en la cima.
 ```
 
+(tests-unitarios-base)=
 ### Tests Unitarios (Base)
 
 Prueban una **unidad aislada** (una función, un método). Son:
@@ -84,10 +92,12 @@ Prueban una **unidad aislada** (una función, un método). Son:
 
 En C, sería como escribir un `main()` que solo prueba una función específica.
 
+(tests-de-integracion-medio)=
 ### Tests de Integración (Medio)
 
 Verifican que **múltiples componentes colaboren** correctamente. Por ejemplo, que tu código se conecte bien a una base de datos. Son más lentos porque pueden involucrar operaciones de I/O.
 
+(tests-end-to-end-cima)=
 ### Tests End-to-End (Cima)
 
 Simulan el **uso real del sistema completo** desde la perspectiva del usuario. Son lentos, frágiles (se rompen fácilmente por cambios menores) y costosos de mantener. Por eso deberías tener pocos (10% aproximadamente).
@@ -96,6 +106,7 @@ Simulan el **uso real del sistema completo** desde la perspectiva del usuario. S
 Una distribución saludable es aproximadamente 70% unitarias, 20% integración, 10% E2E. En este curso nos concentramos exclusivamente en **tests unitarios**.
 :::
 
+(verificacion-vs-validacion)=
 ## Verificación vs Validación
 
 Es crucial distinguir estos conceptos que a menudo se confunden:
@@ -106,6 +117,7 @@ Es crucial distinguir estos conceptos que a menudo se confunden:
 
 Por ejemplo, podés tener una función `calcularImpuesto()` perfectamente implementada (verificada) pero que use una fórmula fiscal incorrecta (no validada). Las pruebas unitarias se enfocan primariamente en **verificación**.
 
+(taxonomia-de-defectos)=
 ## Taxonomía de Defectos
 
 Comprender los tipos de errores ayuda a diseñar tests más efectivos:
@@ -121,14 +133,17 @@ Comprender los tipos de errores ayuda a diseñar tests más efectivos:
 
 - **Errores de regresión:** Funcionalidad que dejó de funcionar tras un cambio.
 
+(principios-f-i-r-s-t)=
 ## Principios F.I.R.S.T.
 
 Para que una suite de pruebas sea efectiva, debe cumplir con los principios F.I.R.S.T. Este acrónimo resume las características que hacen que los tests sean útiles:
 
+(fast-rapida)=
 ### Fast (Rápida)
 
 Los tests deben ejecutarse en milisegundos. Una suite de cientos de tests unitarios debería correr en segundos. Si son lentos, los desarrolladores evitan ejecutarlos y pierden su utilidad.
 
+(independent-independiente)=
 ### Independent (Independiente)
 
 Ningún test debe depender del resultado o del estado dejado por otro. El orden de ejecución no debe importar. Deberías poder ejecutar cualquier test de forma aislada y obtener el mismo resultado.
@@ -158,22 +173,27 @@ class BuenTest {
 }
 ```
 
+(repeatable-repetible)=
 ### Repeatable (Repetible)
 
 Deben dar el mismo resultado en cualquier entorno (tu máquina, la de tu compañero, el servidor de CI) y en cualquier momento. Tests que "a veces pasan y a veces fallan" (llamados *flaky tests*) son peores que no tener tests.
 
+(self-validating-autovalidable)=
 ### Self-validating (Autovalidable)
 
 El test debe tener un resultado binario: **pasa** o **falla**. No debe requerir que un humano revise logs o archivos de salida para determinar si funcionó.
 
+(timely-oportuno)=
 ### Timely (Oportuno)
 
 Los tests deben escribirse junto con el código productivo, no "cuando haya tiempo" (que suele ser nunca).
 
+(desarrollo-guiado-por-pruebas-tdd)=
 ## Desarrollo Guiado por Pruebas (TDD)
 
 El **Test-Driven Development** (TDD) es una técnica de diseño de software que invierte el proceso tradicional: en lugar de escribir código y después testearlo, escribís el test primero y después el código que lo hace pasar.
 
+(el-ciclo-red-green-refactor)=
 ### El Ciclo RED-GREEN-REFACTOR
 
 TDD se basa en un ciclo corto y repetitivo de tres pasos:
@@ -198,6 +218,7 @@ Después repetís el ciclo con el siguiente test.
 TDD no es solo para encontrar bugs; es una **herramienta de diseño**. Escribir el test primero te obliga a pensar en cómo se va a usar tu función antes de implementarla.
 :::
 
+(por-que-escribir-tests-primero)=
 ### ¿Por qué escribir tests primero?
 
 La idea clave de TDD es que **los tests definen el comportamiento deseado**. Antes de escribir código, te forzás a pensar:
@@ -211,6 +232,7 @@ En lugar de escribir código y después preguntarte "¿cómo lo testeo?", defin�
 
 **Analogía**: Es como escribir el enunciado de un problema antes de resolverlo. Si no tenés claro qué querés lograr, es difícil saber si lo lograste.
 
+(beneficios-de-tdd)=
 ### Beneficios de TDD
 
 1. **Diseño mejorado**: Al escribir tests primero, pensás en la API desde la perspectiva del usuario (quien llama al método). Esto produce interfaces más limpias y usables.
@@ -225,6 +247,7 @@ En lugar de escribir código y después preguntarte "¿cómo lo testeo?", defin�
 
 6. **Progreso medible**: Cada test verde es progreso tangible. Sabés cuánto avanzaste y cuánto falta.
 
+(ejemplo-completo-funcion-factorial)=
 ### Ejemplo Completo: Función Factorial
 
 Desarrollemos una función `factorial` usando TDD paso a paso para ilustrar el ciclo completo.
@@ -361,6 +384,7 @@ public class Matematica {
 
 Ejecutás todos los tests después del refactor: ✅ ✅ ✅ siguen pasando. El refactor fue seguro.
 
+(las-tres-reglas-del-tdd)=
 ### Las Tres Reglas del TDD
 
 Robert C. Martin (Uncle Bob) formalizó las reglas estrictas del TDD:
@@ -371,6 +395,7 @@ Robert C. Martin (Uncle Bob) formalizó las reglas estrictas del TDD:
 
 Estas reglas mantienen el ciclo corto y enfocado. Cada iteración agrega una pequeña pieza de funcionalidad verificada.
 
+(patrones-de-tdd)=
 ### Patrones de TDD
 
 Beck identificó patrones recurrentes que te ayudan a avanzar:
@@ -385,6 +410,7 @@ Beck identificó patrones recurrentes que te ayudan a avanzar:
 | **Triangulation** | Agregar más tests hasta que la generalización sea obvia | Cuando no está claro cómo generalizar |
 :::
 
+(tdd-vs-test-after)=
 ### TDD vs Test-After
 
 | Aspecto | TDD (Test-First) | Test-After |
@@ -412,6 +438,7 @@ TDD es especialmente útil cuando:
 - **Vas a refactorizar código existente**: Primero escribís tests que capturan el comportamiento actual, después refactorizás con seguridad.
 :::
 
+(beneficios-y-criticas-del-tdd)=
 ### Beneficios y Críticas del TDD
 
 **Beneficios demostrados:**
@@ -433,8 +460,10 @@ TDD es especialmente útil cuando:
 En esta cátedra, practicaremos ambas aproximaciones. Lo fundamental es que **el código tenga tests**, independientemente de cuándo se escribieron.
 :::
 
+(estrategias-de-diseno-de-casos-de-prueba)=
 ## Estrategias de Diseño de Casos de Prueba
 
+(tecnicas-de-caja-negra)=
 ### Técnicas de Caja Negra
 
 Las pruebas de caja negra se diseñan **sin conocer la implementación interna**, basándose solo en la especificación.
@@ -460,6 +489,7 @@ Probar en las **fronteras** de las particiones, donde la mayoría de los bugs oc
 - 18 (exactamente en el límite)
 - 19 (justo después del límite)
 
+(tecnicas-de-caja-blanca)=
 ### Técnicas de Caja Blanca
 
 Con acceso al código fuente, podemos diseñar tests que ejerciten caminos específicos.
@@ -468,6 +498,7 @@ Con acceso al código fuente, podemos diseñar tests que ejerciten caminos espec
 
 Cada decisión (`if`, `switch`) debe evaluarse tanto a verdadero como falso. Para un método con tres ramas de decisión, se necesitan al menos tres tests que ejecuten cada rama.
 
+(casos-especiales-a-considerar)=
 ### Casos Especiales a Considerar
 
 :::{table} Casos especiales comunes
@@ -481,16 +512,19 @@ Cada decisión (`if`, `switch`) debe evaluarse tanto a verdadero como falso. Par
 | Fechas | Bisiestos, fin de mes, cambio de año |
 :::
 
+(cobertura-de-codigo)=
 ## Cobertura de Código
 
 La **cobertura** es una métrica que indica qué porcentaje del código ha sido ejecutado por los tests.
 
+(tipos-de-cobertura)=
 ### Tipos de Cobertura
 
 - **Cobertura de Líneas:** ¿Se ejecutó esta línea?
 - **Cobertura de Ramas:** ¿Se probaron todos los caminos de un `if`?
 - **Cobertura de Métodos:** ¿Se invocó este método al menos una vez?
 
+(herramientas)=
 ### Herramientas
 
 En Java, la herramienta más utilizada es **JaCoCo** (Java Code Coverage), que se integra con Gradle y genera reportes HTML detallados.
@@ -499,32 +533,38 @@ En Java, la herramienta más utilizada es **JaCoCo** (Java Code Coverage), que s
 Una cobertura del 100% **no garantiza** la ausencia de bugs. La cobertura indica qué código no ha sido probado, pero no garantiza que las pruebas existentes sean de calidad.
 :::
 
+(meta-razonable)=
 ### Meta Razonable
 
 - **70-80%**: Objetivo razonable para proyectos típicos
 - **90-100%**: Para código crítico (seguridad, finanzas)
 - **< 60%**: Señal de testing insuficiente
 
+(antipatrones-de-testing)=
 ## Antipatrones de Testing
 
+(tests-fragiles)=
 ### Tests Frágiles
 
 Tests que fallan por cambios no relacionados con lo que prueban. Por ejemplo, un test que depende del orden de elementos en una colección cuando el orden no es parte del contrato.
 
 **Solución:** Verificar propiedades esenciales (contenido, tamaño) en lugar de detalles de implementación (orden específico).
 
+(tests-que-prueban-la-implementacion)=
 ### Tests que Prueban la Implementación
 
 Tests acoplados a cómo se hace algo en lugar de qué se hace. Esto hace que refactorings seguros rompan tests.
 
 **Solución:** Verificar comportamiento observable desde la perspectiva del usuario del código.
 
+(tests-sin-aserciones)=
 ### Tests sin Aserciones
 
 Tests que ejecutan código pero no verifican nada. Siempre pasan, incluso si el código falla.
 
 **Solución:** Todo test debe tener al menos una verificación explícita del resultado esperado.
 
+(ejercicios-conceptuales)=
 ## Ejercicios Conceptuales
 
 ```{exercise}
@@ -599,6 +639,7 @@ Identificá las particiones de equivalencia y proponé un conjunto mínimo de te
 9. monto = 1500 (P5, representante)
 ```
 
+(referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - **Beck, K.** (2003). _Test Driven Development: By Example_. Addison-Wesley.
