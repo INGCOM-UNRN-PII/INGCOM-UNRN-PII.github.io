@@ -1,7 +1,6 @@
 ---
 title: "Tipos de Datos en Java"
-description: Estudio profundo sobre el sistema de tipos,
-representación de datos y operadores en Java desde la perspectiva de un programador de C.
+description: Estudio profundo sobre el sistema de tipos, representación de datos y operadores en Java desde la perspectiva de un programador de C.
 ---
 
 # Tipos de Datos en Java
