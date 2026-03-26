@@ -23,8 +23,6 @@ project:
     
   toc:
     - file: README.md
-    - file: glosario.md
-    - file: reglas.md
     - title: Cátedra
       children:
       - file: catedra/programa.md
@@ -53,6 +51,20 @@ project:
         - file: guias/git.md
         - file: guias/git_avanzado.md
         - file: guias/markdown.md
+    - file: glosario.md
+    - file: reglas/indice.md
+      children:
+      - file: reglas/0_generales.md
+      - file: reglas/1_documentacion.md
+      - file: reglas/2_oop.md
+      - file: reglas/3_excepciones.md
+      - file: reglas/4_testing.md
+      - file: reglas/5_control.md
+      - file: reglas/6_restricciones.md
+      - file: reglas/E_errores.md
+      - file: reglas/convenciones_codigo_java.md
+
+    
 
 
 #    - title: Patrones

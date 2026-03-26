@@ -1,3 +1,7 @@
+---
+title: 0x3 - Manejo de Excepciones
+---
+
 # Serie 0x3 - Manejo de Excepciones
 
 (regla-0x3000)=

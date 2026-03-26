@@ -1,17 +1,19 @@
-
+---
+title: 0xE - Errores Comunes
+---
 
 # Serie 0xE - Errores Comunes (Error-Prone)
 
 (regla-0xE000)=
-## `0xE000` - No es correcto concatenar String en un bucle
+## `0xE000` - No es correcto concatenar `String` en un bucle
 
 ### Explicación
 
-Concatenar strings dentro de un lazo usando el operador `+` es extremadamente ineficiente porque cada concatenación crea un nuevo objeto `String` inmutable. En un lazo de N iteraciones, esto genera N objetos temporales innecesarios. Debe usarse `StringBuilder` para construcción eficiente de strings.
+Concatenar cadenas dentro de un lazo usando el operador `+` es extremadamente ineficiente porque cada concatenación crea un nuevo objeto `String` inmutable. En un lazo de $n$ iteraciones, esto genera $n$ objetos temporales innecesarios. Debe usarse `StringBuilder` para construcción eficiente de strings.
 
 ### Justificación
 
-1. **Performance**: `StringBuilder` es O(n), concatenación es O(n²).
+1. **Performance**: `StringBuilder` es $O(n)$, concatenación es $O(n²)$.
 2. **Memoria**: Evita crear objetos temporales que saturan el garbage collector.
 3. **Escalabilidad**: La diferencia es dramática con grandes volúmenes de datos.
 4. **Buena práctica**: Estándar en toda aplicación Java profesional.
@@ -308,7 +310,7 @@ Uno de los errores más comunes y peligrosos en Java es usar el operador `==` pa
 
 ### Justificación
 
-1. **Semántica incorrecta**: `==` responde "¿son el mismo objeto en memoria?" mientras que `equals()` responde "¿tienen el mismo valor?"
+1. **Semántica incorrecta**: `==` responde "¿son el mismo objeto en memoria?", mientras que `equals()` responde "¿tienen el mismo valor?"
 2. **Comportamiento inesperado**: Dos objetos con el mismo contenido pueden tener referencias diferentes
 3. **String pooling confunde**: Los literales String se optimizan, pero no los objetos creados dinámicamente
 4. **Contrato de Object**: El método `equals()` está diseñado específicamente para comparación de valores

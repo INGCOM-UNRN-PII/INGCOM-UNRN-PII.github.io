@@ -1,5 +1,5 @@
 ---
-title: Estilo serie 0x0
+title: 0x0 - Nomenclatura y Formato
 ---
 
 # Serie 0x0 - Nomenclatura y Formato
@@ -44,6 +44,7 @@ en las entregas.
 
 :::
 
+
 ### Casos Especiales
 
 - **Acrónimos conocidos**: Siguen siendo válidos (HTTP, URL, JSON), pero deben
@@ -57,11 +58,13 @@ en las entregas.
 
 La mayoría de los IDEs modernos incluyen corrector ortográfico, en particular 
 **IntelliJ IDEA** que pueden configurar en `Settings > Editor > Spelling`
+:::{tip}
 
-:::{tip} Configurá tu entorno para que marque errores ortográficos en comentarios
+Configurá tu entorno para que marque errores ortográficos en comentarios
 e identificadores. Esto te ayudará a detectar problemas antes de hacer commit.
 
 :::
+
 
 (regla-0x0001)=
 ## `0x0001` - Los nombres de las clases van en `CamelloCase`
@@ -143,7 +146,6 @@ public class ConexionHTTP {  // Aceptable
 public class AnalizadorXML {
 public class ClienteAPI {
 ```
-
 :::{important} **Consistencia**
 
 Elegí un enfoque y mantenelo en todo el proyecto. La primera opción es preferible
@@ -151,6 +153,7 @@ porque evita ambigüedades como `XMLHTTPRequest` vs `XmlHttpRequest` (un combo d
 acrónimos)
 
 :::
+
 
 #### Nombres compuestos
 
@@ -169,7 +172,6 @@ public class GestorInventarioAlmacen {
 ```
 
 
-
 :::{note} Origen del nombre
 
 El nombre "CamelloCase" viene de que las mayúsculas parecen jorobas de
@@ -177,8 +179,8 @@ camello: **C**alculadora**A**vanzada. Mientras que `dromedarioCase` tiene solo
 una "joroba" al principio: calcular**P**romedio. 
 
 :::
-(regla-0x0002)=
 
+(regla-0x0002)=
 ## `0x0002` - Los identificadores válidos son solo con alfabéticos `[a-zA-Z]`
 
 ### Explicación
@@ -288,10 +290,13 @@ Tenés tres opciones:
    descripción → descripcion o desc
    configuración → configuracion o config
    ```
+:::{tip}
 
-:::{tip} Para proyectos que se distribuirán internacionalmente, preferí nombres
+Para proyectos que se distribuirán internacionalmente, preferí nombres
 en inglés. Para proyectos locales o educativos, la latinización es aceptable.
+
 :::
+
 
 #### Constantes y enumeraciones
 
@@ -325,10 +330,14 @@ public class Año2024 {  // Compila, pero ❌ para nosotros
 
 La diferencia visual entre algo con tilde o no, es mínima, esto puede traer
 dolores de cabeza a la hora de debuggear.
+:::{warning}
 
-:::{warning} Que el compilador lo acepte no significa que sea una buena
+Que el compilador lo acepte no significa que sea una buena
 práctica. Esta regla existe para garantizar código portable, mantenible y
-profesional. :::
+profesional. 
+
+:::
+
 
 ### Ventajas de esta restricción
 
@@ -341,7 +350,6 @@ profesional. :::
 | **Consistencia** | Fuerza un estándar uniforme en todo el proyecto                |
 
 (regla-0x0003)=
-
 ## `0x0003` - Variables, parámetros y variables locales van en `dromedarioCase`
 
 ### Explicación
@@ -458,10 +466,14 @@ double a = 2.0;
 double b = 3.5;
 double c = Math.sqrt(a * a + b * b);
 ```
+:::{warning}
 
-:::{warning} Las variables de una letra solo son apropiadas en contextos
+Las variables de una letra solo son apropiadas en contextos
 matemáticos estándar o bucles simples. En cualquier otro caso, usá nombres
-descriptivos. :::
+descriptivos. 
+
+:::
+
 
 #### Acrónimos en variables
 
@@ -486,9 +498,13 @@ private int id;
 private String html;
 private Object json;
 ```
+:::{important}
 
-:::{important} Si el acrónimo está al inicio, debe ir completamente en
-minúsculas: `htmlParser`, `xmlDocument`, `httpClient`. :::
+Si el acrónimo está al inicio, debe ir completamente en
+minúsculas: `htmlParser`, `xmlDocument`, `httpClient`. 
+
+:::
+
 
 #### Variables booleanas
 
@@ -534,12 +550,15 @@ private int numeroDeClientes;    // ✅ Claro y específico
 private String nombreCompleto;   // ✅ Describe el contenido
 private double saldoDisponible;  // ✅ Contexto claro
 ```
+:::{tip}
 
-:::{tip} Un buen nombre de variable debe responder la pregunta: "¿Qué
-información almacena esto?" sin necesidad de leer el resto del código. :::
+Un buen nombre de variable debe responder la pregunta: "¿Qué
+información almacena esto?" sin necesidad de leer el resto del código. 
+
+:::
+
 
 (regla-0x0004)=
-
 ## `0x0004` - Los nombres de los métodos van en `dromedarioCase`
 
 ### Explicación
@@ -557,11 +576,14 @@ acción que realiza el método.
 3. **Legibilidad**: Los nombres verbales facilitan entender qué hace el método.
 4. **Consistencia**: Mantiene coherencia con las variables, ya que ambos
    representan acciones o valores específicos.
+:::{note} **Terminología**
 
-:::{note} **Terminología**: En Java, técnicamente no existen "funciones" sino
-**métodos** (funciones asociadas a una clase). Usamos ambos términos en la
-cátedra para facilitar la transición desde C, donde sí existen funciones
-independientes. :::
+En Java, técnicamente no existen "funciones" sino **métodos** (funciones asociadas
+a una clase). Usamos ambos términos en la cátedra para facilitar la transición
+desde C, donde sí existen funciones independientes.
+
+:::
+
 
 ### Sintaxis
 
@@ -721,10 +743,14 @@ Usá verbos claros que indiquen la acción:
 | `agregar` / `add`        | Añadir elemento               | `agregarItem()`, `addElement()`          |
 | `remover` / `remove`     | Quitar elemento               | `removerItem()`, `removeElement()`       |
 | `buscar` / `find`        | Localizar elemento            | `buscarPorId()`, `findByName()`          |
+:::{important}
 
-:::{important} El nombre del método debe describir **qué hace**, no **cómo lo
+El nombre del método debe describir **qué hace**, no **cómo lo
 hace**. La implementación interna puede cambiar, pero el propósito del método
-debe ser claro desde su nombre. :::
+debe ser claro desde su nombre. 
+
+:::
+
 
 ### Métodos largos vs. cortos
 
@@ -741,13 +767,16 @@ public void procesarTransaccion(Transaccion t) {  // ✅
 private void validarTransaccion(Transaccion t) { ... }
 private void guardarEnBaseDeDatos(Transaccion t) { ... }
 ```
+:::{tip}
 
-:::{tip} Si el nombre del método es muy largo, probablemente esté haciendo
+Si el nombre del método es muy largo, probablemente esté haciendo
 demasiadas cosas. Considerá dividirlo en métodos más pequeños y específicos
-(Single Responsibility Principle). :::
+(Single Responsibility Principle). 
+
+:::
+
 
 (regla-0x0005)=
-
 ## `0x0005` - Las constantes van en mayúsculas con `SNAKE_CASE`
 
 ### Explicación
@@ -910,10 +939,10 @@ public class Ejemplo {
     }
 }
 ```
-
 :::{important} Solo usá `SNAKE_CASE` para constantes verdaderas
 (`static final`). Las variables de instancia `final` siguen usando
-`dromedarioCase` porque su valor puede variar entre objetos. :::
+`dromedarioCase` porque su valor puede variar entre objetos. 
+:::
 
 #### Constantes privadas vs. públicas
 
@@ -986,12 +1015,15 @@ if (edad >= EDAD_MINIMA_LEGAL) {
 }
 double area = radio * radio * PI;
 ```
+:::{tip}
 
-:::{tip} Si usás un valor literal más de una vez en tu código, probablemente
-debería ser una constante. Esto facilita el mantenimiento y reduce errores. :::
+Si usás un valor literal más de una vez en tu código, probablemente
+debería ser una constante. Esto facilita el mantenimiento y reduce errores. 
+
+:::
+
 
 (regla-0x0006)=
-
 ## `0x0006` - Los identificadores DEBEN ser descriptivos
 
 ### Explicación
@@ -1125,15 +1157,19 @@ double b = coeficiente2;
 double c = terminoIndependiente;
 double discriminante = b * b - 4 * a * c;
 ```
+:::{warning}
 
-:::{warning} Las variables de una letra **solo** son apropiadas en:
+Las variables de una letra **solo** son apropiadas en:
 
 - Índices de bucles simples (`i`, `j`, `k`)
 - Coordenadas espaciales (`x`, `y`, `z`)
 - Fórmulas matemáticas estándar (`a`, `b`, `c`)
 - Límites numéricos en contexto claro (`n`, `m`)
 
-En **cualquier otro contexto**, usá nombres descriptivos completos. :::
+En **cualquier otro contexto**, usá nombres descriptivos completos.
+
+:::
+
 
 #### Abreviaciones comúnmente aceptadas
 
@@ -1190,12 +1226,15 @@ for (Estudiante estudiante : estudiantes) {
 ```
 
 ### Reglas de oro para nombres descriptivos
+:::{important} **Pregunta clave**
 
-:::{important} **Pregunta clave**: Si alguien lee solo el nombre del
-identificador, ¿puede entender qué representa sin leer código adicional?
+Si alguien lee solo el nombre del identificador, ¿puede entender qué representa sin leer código adicional?
 
 - **SÍ** → Nombre descriptivo ✅
-- **NO** → Necesita mejorarse ❌ :::
+- **NO** → Necesita mejorarse ❌ 
+
+:::
+
 
 #### Test de pronunciabilidad
 
@@ -1263,13 +1302,16 @@ public void procesarSubcadena(String textoOriginal, int longitudMaxima) {
     }
 }
 ```
+:::{tip}
 
-:::{tip} Si necesitás comentarios para explicar qué hace una variable,
+Si necesitás comentarios para explicar qué hace una variable,
 probablemente el nombre no es lo suficientemente descriptivo. Mejorá el nombre
-en lugar de agregar comentarios. :::
+en lugar de agregar comentarios. 
+
+:::
+
 
 (regla-0x0006A)=
-
 ## `0x0006A` - Nomenclatura de interfaces según su propósito
 
 ### Explicación
@@ -1480,12 +1522,16 @@ int resultado = comparador.compare(p1, p2);  // Comparación externa
 | `-or`/`-er` | Operación funcional    | ❌ No             | Estático/Stateless | Estrategia externa        | `Comparator`, `Validator`, `Processor`    |
 
 ### Patrones de diseño relacionados
+:::{note} **Strategy Pattern**
 
-:::{note} **Strategy Pattern**: Las interfaces con sufijo `-or` frecuentemente
+Las interfaces con sufijo `-or` frecuentemente
 implementan el patrón Strategy, donde el comportamiento se inyecta desde afuera.
 
 **Capability Pattern**: Las interfaces con sufijo `-able` representan
-capacidades que el objeto posee inherentemente. :::
+capacidades que el objeto posee inherentemente. 
+
+:::
+
 
 ### Casos especiales y excepciones
 
@@ -1528,6 +1574,13 @@ public interface Evaluador<T> {
     boolean evaluar(T objeto);
 }
 ```
+
+:::{note} Restricción sobre Programación Funcional
+
+Recuerden que no es objetivo de la cátedra el uso de las características de
+programación funcional.
+
+:::
 
 #### ¿Qué pasa con nombres sin sufijos?
 
@@ -1625,13 +1678,15 @@ public class ValidadorContrasena implements Validador<String> {
     }
 }
 ```
-
 :::{tip} **¿Cuál elegir?**
 
 - Si el comportamiento es **inherente al objeto** y usa su estado → `-able`
 - Si el comportamiento es una **estrategia externa** reutilizable → `-or`/`-er`
 - Si no está claro, preguntate: "¿Este comportamiento podría aplicarse a objetos
-  de diferentes clases?" → Si es sí, probablemente sea `-or` :::
+  de diferentes clases?" → Si es sí, probablemente sea `-or` 
+  
+:::
+
 
 ### Anti-patrones a evitar
 
@@ -1661,7 +1716,6 @@ public interface Comparable<T> {
 usará la interfaz.
 
 (regla-0x0007)=
-
 ## `0x0007` - Los identificadores booleanos deben usar prefijos interrogativos
 
 ### Explicación
@@ -1828,10 +1882,10 @@ if (!estaActivo) {  // ✅ Una sola negación
     // ...
 }
 ```
-
 :::{warning} Evitá nombres booleanos negativos (`noEsValido`, `noTienePermisos`,
 `noPuedeEditar`). Preferí la forma afirmativa y negá en la condición cuando sea
-necesario. :::
+necesario. 
+:::
 
 #### Getters para booleanos
 
@@ -2062,10 +2116,10 @@ public boolean puedeAprobarCredito(Cliente cliente, double monto) {
            cumpleEdadMinima;
 }
 ```
-
 :::{tip} Si tu expresión booleana es compleja, extraé sub-condiciones en
 variables con nombres interrogativos. Esto documenta la lógica y mejora
-drásticamente la legibilidad. :::
+drásticamente la legibilidad. 
+:::
 
 ### Comparación: Con y sin prefijos
 
@@ -2080,7 +2134,6 @@ if (usuario.estaActivo() && documento.estaDisponible() && sistema.estaFuncionand
     // Obviamente retornan booleanos y se leen como preguntas
 }
 ```
-
 :::{important} **Regla de oro**: Si leés en voz alta el código y suena como una
 pregunta natural, el nombre es correcto.
 
@@ -2088,10 +2141,10 @@ Ejemplos:
 
 - `if (usuario.esAdministrador())` → "¿El usuario es administrador?"
 - `if (archivo.puedeLeerse())` → "¿El archivo puede leerse?"
-- `if (lista.tieneElementos())` → "¿La lista tiene elementos?" :::
+- `if (lista.tieneElementos())` → "¿La lista tiene elementos?" 
+:::
 
 (regla-0x0008)=
-
 ## `0x0008` - Los identificadores no deben llevar el tipo de lo que procesan
 
 ### Explicación
@@ -2226,10 +2279,10 @@ List<Integer> idsActivos;
 Set<Persona> personasAutorizadas;
 Map<String, Usuario> usuariosPorEmail;
 ```
-
 :::{tip} Para colecciones, el plural ya sugiere que es una colección múltiple.
 Agregá contexto adicional si mejora la claridad, pero evitá redundancia con el
-tipo. :::
+tipo. 
+:::
 
 #### Variables temporales
 
@@ -2311,10 +2364,10 @@ int intBuffer = 0;
 String construccionMensaje = "...";
 int tamanioBuffer = 0;
 ```
-
 :::{warning} Solo porque una API de Java o biblioteca externa use notación con
 tipos, no significa que debas hacerlo en tu código. Mantené la consistencia con
-las convenciones modernas de Java. :::
+las convenciones modernas de Java. 
+:::
 
 ### Herramientas del IDE
 
@@ -2324,13 +2377,12 @@ Los IDEs modernos hacen innecesaria la notación húngara:
 - **Autocompletado**: Sugiere métodos según el tipo
 - **Navegación**: Salta a la declaración con un clic
 - **Inlay hints**: Muestra tipos inferidos inline
-
 :::{tip} Si sentís que necesitás el tipo en el nombre para entender el código,
 probablemente el problema es que el IDE no está configurado adecuadamente o el
-nombre no es suficientemente descriptivo. :::
+nombre no es suficientemente descriptivo. 
+:::
 
 (regla-0x0009)=
-
 ## `0x0009` - Un espacio antes y después de los operadores
 
 ### Explicación
@@ -2502,7 +2554,6 @@ lista . get(i)     // Sin espacios alrededor de .
 ### Autoformateador del IDE
 
 Esta regla existe principalmente para incentivar el uso del autoformateador:
-
 :::{important} **Herramientas de autoformato:**
 
 - **IntelliJ IDEA**: `Ctrl + Alt + L` (Windows/Linux) o `Cmd + Option + L` (Mac)
@@ -2510,7 +2561,8 @@ Esta regla existe principalmente para incentivar el uso del autoformateador:
 - **VS Code**: `Shift + Alt + F`
 
 Configurá estos atajos y usá el autoformato antes de cada commit. Esto garantiza
-espaciado consistente sin esfuerzo manual. :::
+espaciado consistente sin esfuerzo manual. 
+:::
 
 ### Configuración recomendada
 
@@ -2548,13 +2600,12 @@ if (usuario.esActivo() && !usuario.estaBloqueado() &&
     double resultado = (a + b) * (c - d) / e + f * g;
 }
 ```
-
 :::{tip} Aunque el cambio parezca mínimo, los espacios consistentes reducen
 significativamente la carga cognitiva al leer código complejo. En expresiones
-largas, la diferencia es dramática. :::
+largas, la diferencia es dramática. 
+:::
 
 (regla-0x000A)=
-
 ## `0x000A` - No apilen líneas
 
 ### Explicación
@@ -2639,7 +2690,6 @@ if (condicion) {
     instruccion2();  // ✅ Claramente dentro del bloque
 }
 ```
-
 :::{warning} **Apple's goto fail bug**: Un bug de seguridad crítico en iOS/OSS
 fue causado por no usar llaves en un `if`. Una línea adicional quedó fuera del
 bloque condicional por error, comprometiendo la validación SSL.
@@ -2650,7 +2700,8 @@ if (error)
     goto fail;  // ❌ Esta línea SIEMPRE se ejecuta!
 ```
 
-Siempre usá llaves, incluso para una sola instrucción. :::
+Siempre usá llaves, incluso para una sola instrucción. 
+:::
 
 ### Problema 2: Encadenamiento excesivo (Method Chaining)
 
@@ -2754,9 +2805,9 @@ List<String> nombres = estudiantes.stream()
 // ❌ Incorrecto - Todo en una línea
 Persona p = new PersonaBuilder().nombre("Juan").apellido("Pérez").edad(30).build();
 ```
-
 :::{note} Las Fluent APIs están diseñadas para encadenamiento, pero deben
-formatearse con una llamada por línea para mantener legibilidad. :::
+formatearse con una llamada por línea para mantener legibilidad. 
+:::
 
 ### Múltiples sentencias por línea
 
@@ -2777,13 +2828,12 @@ String nombre = "Juan";
 String apellido = "Pérez";
 String email = "juan@mail.com";
 ```
-
 :::{tip} **Regla práctica**: Si necesitás scroll horizontal para leer una línea,
 probablemente está apiilada. El código debe caber cómodamente en la pantalla sin
-desplazamiento horizontal. :::
+desplazamiento horizontal. 
+:::
 
 (regla-0x000B)=
-
 ## `0x000B` - No hacer `import paquete.*`, solo traer lo que se necesita
 
 ### Explicación
@@ -2924,7 +2974,6 @@ Todos los IDEs pueden optimizar imports:
 - **IntelliJ IDEA**: `Ctrl + Alt + O` (Optimize Imports)
 - **Eclipse**: `Ctrl + Shift + O` (Organize Imports)
 - **VS Code**: Comando "Organize Imports"
-
 :::{important} Configurá tu IDE para:
 
 1. **Optimizar imports al guardar** (elimina no usados, ordena, no usa
@@ -2936,7 +2985,8 @@ Todos los IDEs pueden optimizar imports:
 
 - ☑ Optimize imports on the fly
 - ☑ Add unambiguous imports on the fly
-- Imports threshold: `999` (para que nunca use `*`) :::
+- Imports threshold: `999` (para que nunca use `*`) 
+:::
 
 ### Detección de código no usado
 
@@ -2990,10 +3040,10 @@ public class CalculosGeometricos {
     // Mismo código, pero claro qué métodos de Math se usan
 }
 ```
-
 :::{warning} Incluso para imports estáticos, preferí ser explícito. Solo
 considerá wildcards si importás 5+ elementos del mismo paquete y todos son
-realmente necesarios. :::
+realmente necesarios. 
+:::
 
 ### Impacto en diffs de Git
 
@@ -3007,13 +3057,12 @@ realmente necesarios. :::
 + import java.util.Set;
 + import java.util.HashSet;
 ```
-
 :::{tip} Los imports explícitos hacen que los code reviews sean más
 informativos, porque es inmediatamente visible qué nuevas dependencias se
-agregaron. :::
+agregaron. 
+:::
 
 (regla-0x000C)=
-
 ## `0x000C` - Los números mágicos deben convertirse en constantes nombradas
 
 ### Explicación
@@ -3292,9 +3341,9 @@ public final class Constantes {
     public static final int MAX_INTENTOS_CONEXION = 5;
 }
 ```
-
 :::{note} Para proyectos muy grandes, es mejor tener clases de constantes por
-módulo o dominio, en lugar de una única clase con todas las constantes. :::
+módulo o dominio, en lugar de una única clase con todas las constantes. 
+:::
 
 ### Expresiones calculadas vs. literales
 
@@ -3321,9 +3370,9 @@ private static final int EDAD_MINIMA_LEGAL = 18;
 private static final double PI = 3.14159;
 private static final int MAX_ELEMENTOS_PAGINA = 100;
 ```
-
 :::{warning} Declarar una constante no es suficiente. El **nombre** debe
-explicar qué representa el número y en qué contexto se usa. :::
+explicar qué representa el número y en qué contexto se usa. 
+:::
 
 ### Cuándo NO usar constantes
 
@@ -3457,10 +3506,10 @@ public class Configuracion {
     }
 }
 ```
-
 :::{tip} Si un "número mágico" puede variar entre entornos (desarrollo, testing,
 producción), debería ser un parámetro de configuración en lugar de una constante
-hard-coded. :::
+hard-coded. 
+:::
 
 ### Refactoring: De mágicos a constantes
 
@@ -3509,13 +3558,12 @@ public class Validador {
     }
 }
 ```
-
 :::{important} Cuando extraigas constantes, agrupalas lógicamente y considerá si
 el significado es realmente claro. Una constante mal nombrada es tan
-problemática como un número mágico. :::
+problemática como un número mágico. 
+:::
 
 (regla-0x000D)=
-
 ## `0x000D` - Los comentarios deben explicar el "por qué", no el "qué"
 
 ### Explicación
@@ -3770,11 +3818,11 @@ public double calcularDescuento(double monto) {
     // ...
 }
 ```
-
 :::{important} **Regla de oro**: Si necesitás un comentario para explicar
 **qué** hace el código, probablemente necesitás **refactorizar** (extraer
 método, renombrar variables, etc.). Los comentarios deben explicar **por qué**
-se hace de esa forma. :::
+se hace de esa forma. 
+:::
 
 ### Tipos de Comentarios Útiles
 
@@ -3811,7 +3859,6 @@ private static final int TIMEOUT_MILISEGUNDOS = 30000;
 indice++;
 Elemento actual = array[indice];
 ```
-
 :::{warning} **Señales de advertencia** de comentarios malos:
 
 - Comentario más largo que el código que describe
@@ -3819,15 +3866,16 @@ Elemento actual = array[indice];
 - Comentario que describe nombres de variables o métodos
 - Comentario que se vuelve obsoleto apenas cambia el código
 
-Si encontrás estos patrones, **refactorizá el código** en lugar de comentar. :::
-
+Si encontrás estos patrones, **refactorizá el código** en lugar de comentar. 
+:::
 :::{tip} **Test de calidad para comentarios**: Preguntate:
 
 1. ¿Este comentario aporta información que no está en el código?
 2. ¿Un programador competente lo necesitaría para entender la intención?
 3. ¿Seguirá siendo válido si refactorizo el código?
 
-Si la respuesta a alguna es "no", eliminá o mejorá el comentario. :::
+Si la respuesta a alguna es "no", eliminá o mejorá el comentario. 
+:::
 
 ### Referencias Relacionadas
 

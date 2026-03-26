@@ -1390,7 +1390,7 @@ copiarLineasConPalabra("libro.txt", "capitulo1.txt", "Capítulo 1");
 **Explicación:** Abrimos ambos archivos simultáneamente. Por cada línea del origen, verificamos si contiene la palabra buscada usando `contains()`. Si la contiene, la escribimos en el destino. Ambos archivos se cierran automáticamente al salir del try.
 ````
 
-```{exercise}
+````{exercise}
 :label: ej-try-resources
 ¿Por qué el siguiente código es problemático? Explicá qué puede salir mal y reescribilo usando try-with-resources.
 
@@ -1401,7 +1401,7 @@ String segunda = reader.readLine();
 reader.close();
 System.out.println(primera + " - " + segunda);
 ```
-```
+````
 
 ````{solution} ej-try-resources
 :class: dropdown
@@ -1497,7 +1497,7 @@ Imaginá que tenés un método `contarLineas(String ruta)` y querés testearlo. 
 1. **Usar un archivo "real"** en tu proyecto → Malo: si cambiás el archivo, rompés el test
 2. **Crear el archivo en el test** → Mejor, pero: ¿quién lo borra? ¿Y si el test falla antes de borrarlo?
 
-### La Solución: @TempDir de JUnit 5
+### La Solución: `@TempDir` de JUnit 5
 
 JUnit 5 ofrece la anotación `@TempDir` que crea un directorio temporal automáticamente. JUnit garantiza:
 - El directorio existe antes de cada test
@@ -1505,7 +1505,7 @@ JUnit 5 ofrece la anotación `@TempDir` que crea un directorio temporal automát
 - Incluso si el test falla con una excepción
 
 ```{code} java
-:caption: Uso básico de @TempDir
+:caption: Uso básico de `@TempDir`
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.io.TempDir;
@@ -1656,7 +1656,7 @@ class ProcesadorCSVTest {
 ```
 
 :::{tip} Buenas prácticas para tests con archivos
-1. **Usá @TempDir** para que JUnit maneje la limpieza automáticamente
+1. **Usá `@TempDir`** para que JUnit maneje la limpieza automáticamente
 2. **Creá los archivos dentro del test** con contenido específico para cada caso
 3. **No dependas de archivos externos** que puedan cambiar
 4. **Cada test debe ser independiente**: no asumas nada sobre el estado del sistema de archivos

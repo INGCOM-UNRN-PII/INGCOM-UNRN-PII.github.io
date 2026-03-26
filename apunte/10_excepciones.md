@@ -1346,7 +1346,7 @@ int r4 = dividirSeguro(null, 0, 1);   // Error null, retorna 0
 **Nota**: La opción 1 (verificación preventiva) es generalmente preferible cuando sabés exactamente qué puede fallar. Es más eficiente y el código es más claro. La opción 2 con try-catch es útil cuando no podés predecir todas las condiciones de error, o cuando trabajás con código externo que puede lanzar excepciones.
 ````
 
-```{exercise}
+````{exercise}
 :label: ej-propagacion
 Dado el siguiente código, indicá qué se imprime cuando se ejecuta `main`. Seguí el flujo de excepciones paso a paso.
 
@@ -1373,7 +1373,7 @@ public static void metodoB() {
     throw new RuntimeException("Error en B");
 }
 ```
-```
+````
 
 ````{solution} ej-propagacion
 :class: dropdown
@@ -1401,7 +1401,7 @@ Paso a paso:
 - **Bloch, J.** (2018). _Effective Java_ (3ra ed.). Addison-Wesley Professional. (Capítulo 10: Exceptions).
 - **Martin, R. C.** (2009). _Clean Code_. Prentice Hall. (Capítulo 7: Error Handling).
 
-:::seealso
+:::{seealso}
 - {ref}`regla-0x3001` - Manejo de excepciones checked.
 - {ref}`regla-0x3002` - Manejo de excepciones unchecked.
 :::

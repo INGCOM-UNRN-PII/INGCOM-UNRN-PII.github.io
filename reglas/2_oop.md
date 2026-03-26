@@ -1,3 +1,6 @@
+---
+title: 0x2 - Diseño de Clases y POO
+---
 
 # Serie 0x2 - Diseño de Clases y POO
 

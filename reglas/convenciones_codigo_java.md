@@ -10,10 +10,13 @@ description:
 :::{note}
 
 - **Revisado**: 20 de Abril de 1999 por Scott Hommel, Sun Microsystems Inc.
-- **Traducido al castellano**: 10 de Mayo del 2001 por Alberto Molpeceres
+- **Traducido al castellano**: 10 de mayo del 2001 por Alberto Molpeceres
   ([javaHispano](http://www.javahispano.com))
 - **Revisión y corrección**: Marzo de 2007 por Lucas Vieites
-  ([Codexion](http://www.codexion.com)) :::
+  ([Codexion](http://www.codexion.com)) 
+
+:::
+
 
 ## 1 Introducción
 
@@ -29,8 +32,12 @@ razones:
 - Si distribuye su código fuente como un producto, necesita asegurarse de que
   está bien hecho y presentado como cualquier otro producto.
 
-:::{important} Para que funcionen las convenciones, cada persona que escribe
-software debe seguir la convención. **Todos**. :::
+:::{important} 
+
+Para que funcionen las convenciones, cada persona que escribe software debe 
+seguir la convención. **Todos**. 
+
+:::
 
 ### 1.2 Agradecimientos
 
@@ -60,7 +67,8 @@ Esta sección enumera las extensiones y los nombres de archivo más usados.
 
 El software Java usa las siguientes extensiones para sus archivos:
 
-:::{table} Extensiones de archivos Java :label: tbl-extensiones-java
+:::{table} Extensiones de archivos Java 
+:label: tbl-extensiones-java
 
 | Tipo de archivo  | Extensión |
 | :--------------- | :-------- |
@@ -73,7 +81,8 @@ El software Java usa las siguientes extensiones para sus archivos:
 
 Entre los nombres de archivo más utilizados se encuentran:
 
-:::{table} Nombres de archivo comunes :label: tbl-nombres-archivo
+:::{table} Nombres de archivo comunes 
+:label: tbl-nombres-archivo
 
 | Nombre de archivo | Uso                                                                                         |
 | :---------------- | :------------------------------------------------------------------------------------------ |
@@ -130,11 +139,15 @@ package java.awt;
 import java.awt.peer.CanvasPeer;
 ```
 
-:::{note} El primer componente del nombre de un paquete único se escribe siempre
+:::{note} 
+
+El primer componente del nombre de un paquete único se escribe siempre
 en minúsculas con caracteres ASCII y debe ser uno de los nombres de dominio de
 último nivel, actualmente `com`, `edu`, `gov`, `mil`, `net`, `org`, o uno de los
 códigos de dos letras que especifican el país como se define en el estándar ISO
-3166, 1981. :::
+3166, 1981. 
+
+:::
 
 #### 3.1.3 Declaraciones de clases e interfaces
 
@@ -142,8 +155,8 @@ La siguiente tabla describe las partes de la declaración de una clase o
 interfaz, en el orden en el que deberían aparecer. Vea
 [Ejemplo de archivo fuente Java](#ejemplo-archivo-fuente).
 
-:::{table} Partes de la declaración de una clase o interfaz :label:
-tbl-declaracion-clase
+:::{table} Partes de la declaración de una clase o interfaz 
+:label:tbl-declaracion-clase
 
 |  #  | Parte                                                                              | Notas                                                                                                                                                         |
 | :-: | :--------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -168,8 +181,12 @@ Los tabuladores deben ser exactamente cada 8 espacios (no 4).
 Evite las líneas de más de 80 caracteres ya que no son interpretadas
 correctamente por muchas terminales y herramientas.
 
-:::{note} Los ejemplos destinados a uso en la documentación deben tener una
-longitud inferior, generalmente no más de 70 caracteres. :::
+:::{note}
+
+Los ejemplos destinados a uso en la documentación deben tener una
+longitud inferior, generalmente no más de 70 caracteres. 
+
+:::
 
 ### 4.2 Rotura de líneas
 
@@ -296,13 +313,17 @@ clara) en el código ya que es fácil que los comentarios redundantes se queden
 obsoletos. En general, evite cualquier comentario que pueda quedar obsoleto a
 medida que el código evoluciona.
 
-:::{tip} La frecuencia de comentarios a veces refleja la escasez de calidad del
+:::{tip} 
+La frecuencia de comentarios a veces refleja la escasez de calidad del
 código. Cuando se sienta obligado a escribir un comentario considere reescribir
-el código para hacerlo más claro. :::
+el código para hacerlo más claro. 
+:::
 
-:::{warning} Los comentarios no deben encerrarse en grandes cuadrados dibujados
+:::{warning} 
+Los comentarios no deben encerrarse en grandes cuadrados dibujados
 con asteriscos u otros caracteres. Los comentarios nunca deben incluir
-caracteres especiales como «backspace». :::
+caracteres especiales como «backspace». 
+:::
 
 ### 5.1 Formatos de los comentarios de implementación
 
@@ -342,9 +363,11 @@ reformateado:
  */
 ```
 
-:::{note} Si no se va a utilizar `indent(1)`, no se deberá usar `/*-` en el
+:::{note} 
+Si no se va a utilizar `indent(1)`, no se deberá usar `/*-` en el
 código o hacer ninguna otra concesión a la posibilidad de que alguien ejecute
-`indent(1)` sobre él. :::
+`indent(1)` sobre él. 
+:::
 
 #### 5.1.2 Comentarios de una línea
 
@@ -403,7 +426,8 @@ if (foo > 1) {
 
 ### 5.2 Comentarios de documentación
 
-:::{note} Vea [Ejemplo de archivo fuente Java](#ejemplo-archivo-fuente) para
+:::{note} 
+Vea [Ejemplo de archivo fuente Java](#ejemplo-archivo-fuente) para
 obtener ejemplos de los formatos de comentarios descritos aquí. Para más
 detalles, vea
 [How to Write Doc Comments for Javadoc](http://java.sun.com/products/jdk/javadoc/writingdoccomments.shtml).
@@ -436,7 +460,8 @@ declaración. Por ejemplo, detalles de implementación de una clase deben ir en 
 comentario de implementación de bloque siguiendo a la sentencia `class`, no en
 el comentario de documentación de la clase.
 
-:::{important} Los comentarios de documentación no deben colocarse en el
+:::{important} 
+Los comentarios de documentación no deben colocarse en el
 interior de la definición de un método o constructor, ya que Java asocia los
 comentarios de documentación con la primera declaración después del comentario.
 :::
@@ -467,7 +492,8 @@ int foo, fooarray[];  // ERROR!
 
 :::
 
-:::{note} Los ejemplos anteriores usan un espacio entre el tipo y el
+:::{note} 
+Los ejemplos anteriores usan un espacio entre el tipo y el
 identificador. Una alternativa aceptable es usar tabuladores:
 
 ```java
@@ -511,7 +537,8 @@ for (int i = 0; i < maximoVueltas; i++) {
 }
 ```
 
-:::{warning} Evite las declaraciones locales que oculten declaraciones de
+:::{warning} 
+Evite las declaraciones locales que oculten declaraciones de
 niveles superiores. No declare el mismo nombre de variable en un bloque interno:
 
 ```java
@@ -620,7 +647,8 @@ if (condicion) {
 }
 ```
 
-:::{warning} Las sentencias `if` usan siempre llaves `{}`. Evite la siguiente
+:::{warning} 
+Las sentencias `if` usan siempre llaves `{}`. Evite la siguiente
 forma, propensa a errores:
 
 ```java
@@ -648,11 +676,13 @@ forma:
 for (inicializacion; condicion; actualizacion);
 ```
 
-:::{tip} Al usar el operador «coma» en la cláusula de inicialización o
+:::{tip} 
+Al usar el operador «coma» en la cláusula de inicialización o
 actualización de una sentencia `for` evite la complejidad de usar más de tres
 variables. Si es necesario utilice sentencias separadas antes del lazo `for`
 (para la cláusula de inicialización) o al final del lazo (para la cláusula de
-actualización). :::
+actualización). 
+:::
 
 ### 7.6 Sentencias while
 
@@ -707,7 +737,8 @@ switch (condicion) {
   comentario donde normalmente se encontraría la sentencia `break`.
 - Cada sentencia `switch` debe incluir un caso «por defecto» (`default`). El
   `break` en el caso «por defecto» es redundante, pero previene que se propague
-  por error si luego se añade otro caso. :::
+  por error si luego se añade otro caso. 
+:::
 
 ### 7.9 Sentencias try-catch
 
@@ -767,9 +798,11 @@ while (true) {
 }
 ```
 
-:::{note} No se debe usar un espacio en blanco entre el nombre de un método y su
+:::{note}
+No se debe usar un espacio en blanco entre el nombre de un método y su
 paréntesis de apertura. Esto ayuda a distinguir palabras clave de llamadas a
-métodos. :::
+métodos.
+:::
 
 - **Después de comas:** Debe aparecer un espacio en blanco después de cada coma
   en las listas de argumentos.
@@ -811,7 +844,8 @@ hacerlo más fácil de leer. También pueden dar información sobre la función 
 identificador, por ejemplo, cuando es una constante, un paquete o una clase, lo
 cual puede ser útil para entender el código.
 
-:::{table} Convenciones de nomenclatura Java :label: tbl-nomenclatura
+:::{table} Convenciones de nomenclatura Java 
+:label: tbl-nomenclatura
 
 | Tipo de identificador | Reglas de nomenclatura                                                                                                                                                                                                                                                                                                                                          | Ejemplos                                                                                                            |
 | :-------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------ |
@@ -832,11 +866,13 @@ No haga pública ninguna variable de instancia o clase sin una buena razón. A
 menudo las variables de instancia no necesitan ser asignadas o consultadas
 explícitamente; esto suele suceder como efecto de una llamada a método.
 
-:::{note} Un ejemplo de una variable de instancia pública apropiada es el caso
+:::{note}
+Un ejemplo de una variable de instancia pública apropiada es el caso
 en que la clase es esencialmente una estructura de datos, sin comportamiento. En
 otras palabras, si usara la palabra `struct` en lugar de una clase (si Java
 soportara `struct`), entonces sería adecuado hacer las variables de instancia
-públicas. :::
+públicas.
+:::
 
 ### 10.2 Referencias a variables y métodos de clase
 
@@ -856,8 +892,8 @@ Las constantes numéricas (literales) no se deben codificar directamente, except
 
 ### 10.4 Asignaciones de variables
 
-:::{warning} Evite asignar el mismo valor a varias variables en la misma
-sentencia. Es difícil de leer:
+:::{warning}
+Evite asignar el mismo valor a varias variables en la misma sentencia. Es difícil de leer:
 
 ```java
 fooBar.fChar = barFoo.lchar = 'c';  // EVITAR!
@@ -950,7 +986,6 @@ Use `XXX` en un comentario para indicar que algo tiene algún error pero
 funciona. Use `FIXME` para indicar que algo tiene algún error y no funciona.
 
 (ejemplo-archivo-fuente)=
-
 ## 11 Ejemplo de código
 
 ### 11.1 Ejemplo de archivo fuente Java
@@ -1075,3 +1110,4 @@ siguientes líneas:
 
 Asimismo, aunque no se requiere, se agradecerá que incluya un enlace al sitio
 web de javaHispano: http://www.javaHispano.com
+

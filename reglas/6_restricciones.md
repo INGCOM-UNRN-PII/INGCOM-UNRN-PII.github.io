@@ -1,5 +1,8 @@
+---
+title: 0x6 - Restricciones sobre Programación Funcional
+---
 
-# Serie 0x6 - Restricciones de Programación Funcional
+# Serie 0x6 - Restricciones sobre Programación Funcional
 
 :::{note}
 **Nota pedagógica**: Estas reglas están diseñadas para el aprendizaje de POO imperativa clásica. La programación funcional es valiosa, pero se enseñará en contextos apropiados más adelante.
