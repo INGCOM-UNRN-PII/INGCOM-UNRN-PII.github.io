@@ -651,16 +651,16 @@ La estrategia pedagógica **"Late Objects"** que usamos en este curso permite do
 (ejercicios)=
 ## Ejercicios
 
-```{exercise}
+````{exercise}
 :label: ej-tipado-1
 
 Explicá por qué el siguiente código genera un error de compilación y cómo solucionarlo:
 
-\`\`\`java
+```java
 double precio = 19.99;
 int precioEntero = precio;
-\`\`\`
 ```
+````
 
 ````{solution} ej-tipado-1
 :class: dropdown
@@ -683,7 +683,7 @@ consciente de la posible pérdida de precisión.
 :label: ej-metodos-estaticos
 
 Escribí un método estático `esPar` que reciba un número entero y devuelva `true` si es par y `false` si es impar. Luego, crea un método `main` que lo pruebe.
-````
+```
 
 ````{solution} ej-metodos-estaticos
 :class: dropdown
@@ -700,7 +700,7 @@ public class Utilidades {
         System.out.println("-2 es par: " + esPar(-2)); // true
     }
 }
-````
+```
 
 **Nota:** El operador `%` (módulo) devuelve el resto de la división. Si el resto
 de dividir por 2 es 0, el número es par.
@@ -711,7 +711,7 @@ de dividir por 2 es 0, el número es par.
 :label: ej-oop-vs-procedural
 
 ¿Por qué en Java todo programa necesita al menos una clase, incluso si solo querés escribir código procedural simple?
-````
+```
 
 ````{solution} ej-oop-vs-procedural
 :class: dropdown
@@ -734,7 +734,7 @@ public class HolaMundo {
         System.out.println("¡Hola!");
     }
 }
-````
+```
 
 Aunque usemos `static` para evitar crear objetos inicialmente, la estructura de
 clase está presente desde el principio.
@@ -745,7 +745,7 @@ clase está presente desde el principio.
 :label: ej-proposito-general
 
 Java es un lenguaje de propósito general, pero ¿significa eso que es la mejor opción para cualquier proyecto? Argumentá tu respuesta con ejemplos.
-````
+```
 
 ```{solution} ej-proposito-general
 :class: dropdown
@@ -787,7 +787,7 @@ public class Conversor {
 ```
 ````
 
-```{solution} ej-estructura-basica
+````{solution} ej-estructura-basica
 :class: dropdown
 
 **Análisis del programa:**
@@ -819,9 +819,9 @@ public class Conversor {
 - Métodos estáticos (sin necesidad de objetos)
 - Tipado explícito (`double`)
 - Concatenación de String con `+`
-```
+````
 
-```{exercise}
+````{exercise}
 :label: ej-widening-narrowing
 
 Indicá cuáles de las siguientes líneas compilan y cuáles no. Para las que no compilan, explicá por qué y cómo solucionarlo:
@@ -834,7 +834,7 @@ int d = c;
 byte e = a;
 float f = 3.14;
 ```
-```
+````
 
 ```{solution} ej-widening-narrowing
 :class: dropdown
@@ -860,7 +860,7 @@ float f = 3.14;
 **Regla general:** Las conversiones de "mayor a menor" (long→int, double→float, int→byte) requieren casting explícito porque pueden perder información.
 ```
 
-```{exercise}
+````{exercise}
 :label: ej-comparacion-c-java
 
 Convertí el siguiente programa de C a Java, manteniendo la misma lógica pero adaptando la sintaxis:
@@ -883,9 +883,9 @@ int main() {
     return 0;
 }
 ```
-```
+````
 
-```{solution} ej-comparacion-c-java
+````{solution} ej-comparacion-c-java
 :class: dropdown
 
 ```java
@@ -910,7 +910,7 @@ public class Comparador {
         System.out.printf("El máximo entre %d y %d es %d%n", x, y, resultado);
     }
 }
-```
+````
 
 **Cambios realizados:**
 1. Todo el código está dentro de `public class Comparador`
@@ -921,7 +921,7 @@ public class Comparador {
 6. No hace falta `return 0;` en `main` de Java (es `void`)
 ```
 
-```{exercise}
+````{exercise}
 :label: ej-tipado-estatico-dinamico
 
 Explicá qué imprimiría cada línea en Python y qué pasaría si intentaras lo mismo en Java:
@@ -932,7 +932,7 @@ print("5" + 3)
 print("5" * 3)
 print(int("5") + 3)
 ```
-```
+````
 
 ```{solution} ej-tipado-estatico-dinamico
 :class: dropdown
