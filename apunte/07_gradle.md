@@ -1845,7 +1845,7 @@ Guardá esta guía en favoritos. La vas a consultar frecuentemente durante la cu
 (ejercicios-de-practica)=
 ## Ejercicios de Práctica
 
-```exercise
+````{exercise}
 :label: ej-gradle-1
 
 Practicá los comandos básicos:
@@ -1855,9 +1855,9 @@ Practicá los comandos básicos:
 3. Ejecutá `./gradlew build`
 4. Navegá a `build/reports/tests/test/` y abrí `index.html`
 5. Ejecutá `./gradlew clean` y verificá que la carpeta `build/` desapareció
-```
+````
 
-```exercise
+````{exercise}
 :label: ej-gradle-2
 
 Creá una clase nueva:
@@ -1867,9 +1867,9 @@ Creá una clase nueva:
 3. Creá `src/test/java/ar/unrn/SaludadorTest.java`
 4. Escribí un test para el método
 5. Ejecutá `./gradlew test` y verificá que pase
-```
+````
 
-```exercise
+````{exercise}
 :label: ej-gradle-3
 
 Practicá con los reportes:
@@ -1879,9 +1879,9 @@ Practicá con los reportes:
 3. Abrí el reporte HTML y leé el error
 4. Corregí el error
 5. Ejecutá nuevamente y verificá que pase
-```
+````
 
-```exercise
+````{exercise}
 :label: ej-gradle-4
 
 Usá IntelliJ:
@@ -1890,4 +1890,4 @@ Usá IntelliJ:
 2. Ejecutá la tarea `test` desde el panel
 3. Ejecutá la tarea `build` desde el panel
 4. Compará los tiempos con ejecutar desde terminal
-```
+````

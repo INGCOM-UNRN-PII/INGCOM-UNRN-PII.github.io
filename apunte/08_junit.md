@@ -3306,7 +3306,7 @@ Identificá las particiones de equivalencia y escribí tests que cubran:
 Usá `@CsvSource` para organizar los casos de prueba.
 ```
 
-```{exercise}
+````{exercise}
 :label: ej-junit-test-smells
 
 El siguiente código contiene múltiples test smells. Identificalos y refactorizá los tests corrigiendo cada problema:
@@ -3345,7 +3345,7 @@ public class CalculadoraTest {
 ```
 
 Reescribí todos los tests siguiendo las buenas prácticas vistas en el apunte.
-```
+````
 
 ````{exercise}
 :label: ej-junit-debugging

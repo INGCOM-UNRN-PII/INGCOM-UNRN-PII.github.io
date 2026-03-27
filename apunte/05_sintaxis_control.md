@@ -1504,12 +1504,12 @@ Estas diferencias hacen que Java sea más seguro que C para programación a gran
 (ejercicios-de-nivel-universitario)=
 ## Ejercicios de Nivel Universitario
 
-```exercise
+```{exercise}
 :label: ej-logic-short
 Dada la expresión `(x != 0) && (y / x > 1)`, explicá por qué nunca lanzará una `ArithmeticException` (excepción de división por cero) incluso si `x` es cero.
 ```
 
-```solution
+```{solution}
 :for: ej-logic-short
 Gracias al **cortocircuito** del operador `&&`, si `x` es 0, la primera condición `(x != 0)` evalúa a `false`. En ese momento, Java detiene la evaluación de la expresión completa porque ya sabe que el resultado será `false` (en un AND, si uno es falso, todo es falso).
 
@@ -1528,14 +1528,14 @@ if (objeto != null && objeto.metodo()) { ... }
 ```
 ```
 
-```exercise
+```{exercise}
 :label: ej-for-while
 Reescribí el siguiente lazo `for` como un lazo `while` equivalente:
 
 `for (int i = 10; i > 0; i = i - 2) { System.out.println(i); }`
 ```
 
-```solution
+````{solution}
 :for: ej-for-while
 ```java
 int i = 10;              // Inicialización: antes del while
@@ -1553,14 +1553,14 @@ while (i > 0) {          // Condición: en el while
 Ambos lazos imprimen: 10, 8, 6, 4, 2
 
 **Nota**: Cuando la variable se declara fuera del `while`, su alcance es mayor (existe después del lazo). En el `for` original, `i` deja de existir al terminar el lazo.
-```
+````
 
-```exercise
+```{exercise}
 :label: ej-busqueda-bandera
 Escribí un fragmento de código que busque el primer número negativo en una secuencia de 10 números ingresados por el usuario, usando una bandera booleana (sin usar `break`).
 ```
 
-```solution
+````{solution}
 :for: ej-busqueda-bandera
 ```java
 Scanner scanner = new Scanner(System.in);
@@ -1593,14 +1593,14 @@ if (encontrado) {
 - La condición `!encontrado` permite salir del lazo anticipadamente
 - Solo incrementamos `contador` cuando NO encontramos (para conservar la posición)
 - Después del lazo, la bandera indica si la búsqueda fue exitosa
-```
+````
 
-```exercise
+```{exercise}
 :label: ej-do-while
 ¿Cuál es la diferencia fundamental entre `while` y `do-while`? Escribí un ejemplo donde sea más apropiado usar `do-while` que `while`.
 ```
 
-```solution
+````{solution}
 :for: ej-do-while
 La diferencia fundamental es el **momento de evaluación de la condición**:
 - `while` evalúa la condición **antes** de ejecutar el cuerpo (puede ejecutarse 0 veces)
@@ -1626,9 +1626,9 @@ System.out.println("Número válido: " + numero);
 - Siempre necesitamos pedir **al menos un número** antes de verificar si es válido
 - Con `while`, tendríamos que duplicar el código de entrada o usar una variable auxiliar inicializada con un valor inválido
 - El `do-while` expresa naturalmente la semántica de "hacer algo y repetir si es necesario"
-```
+````
 
-```exercise
+````{exercise}
 :label: ej-switch-vs-if
 ¿Cuándo es preferible usar `switch` en lugar de `if-else if`? Reescribí el siguiente código usando switch:
 
@@ -1644,9 +1644,9 @@ if (codigo == 1) {
     tipo = "Desconocido";
 }
 ```
-```
+````
 
-```solution
+````{solution}
 :for: ej-switch-vs-if
 **Cuándo preferir `switch`:**
 - Cuando se compara **una variable** contra **múltiples valores constantes**
@@ -1680,12 +1680,12 @@ String tipo = switch (codigo) {
     case 3 -> "Administrativo";
     default -> "Desconocido";
 };
-```
+````
 
 El `switch` es más legible cuando hay muchas comparaciones de igualdad contra el mismo valor.
 ```
 
-```exercise
+````{exercise}
 :label: ej-lazos-anidados
 Escribí un programa que imprima el siguiente patrón usando lazos anidados:
 
@@ -1696,9 +1696,9 @@ Escribí un programa que imprima el siguiente patrón usando lazos anidados:
 ****
 *****
 ```
-```
+````
 
-```solution
+````{solution}
 :for: ej-lazos-anidados
 ```java
 for (int fila = 1; fila <= 5; fila = fila + 1) {
@@ -1724,7 +1724,7 @@ for (int fila = 1; fila <= 5; fila = fila + 1) {
 | 3 | 1, 2, 3 | *** |
 | 4 | 1, 2, 3, 4 | **** |
 | 5 | 1, 2, 3, 4, 5 | ***** |
-```
+````
 
 (referencias-bibliograficas)=
 ## Referencias Bibliográficas
@@ -1738,4 +1738,4 @@ for (int fila = 1; fila <= 5; fila = fila + 1) {
 
 - {ref}`regla-0x5001` - Estilo de llaves y bloques en estructuras de control.
 - {ref}`regla-0xE001` - Comparación de tipos primitivos vs objetos.
-  :::
+:::

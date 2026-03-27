@@ -1068,7 +1068,7 @@ System.out.println("Edad: " + edad);
 ¿Cuál es el problema y cómo se soluciona?
 ````
 
-```{solution} ej-scanner-logic
+````{solution} ej-scanner-logic
 :class: dropdown
 
 El problema es que `nextInt()` lee `42` pero deja el `\n` (salto de línea) en el búfer. Cuando se ejecuta `nextLine()`, encuentra inmediatamente el `\n`, asume que la línea terminó, y devuelve una cadena vacía.
@@ -1095,7 +1095,7 @@ System.out.println("Edad: " + edad);
 Nombre: [Juan]
 Edad: 42
 ```
-```
+````
 
 ````{exercise}
 :label: ej-printf-formato
@@ -1108,7 +1108,7 @@ Escribí una sentencia `printf` que muestre el número `3.14159` con:
 ¿Cuál es el resultado exacto?
 ````
 
-```{solution} ej-printf-formato
+````{solution} ej-printf-formato
 :class: dropdown
 
 ```java
@@ -1125,7 +1125,7 @@ Explicación de los especificadores:
 - `f` → formato de punto flotante
 
 El número formateado es `+3.142` (6 caracteres), y como el ancho es 10, se agregan 4 espacios a la izquierda.
-```
+````
 
 ````{exercise}
 :label: ej-tabla-printf
@@ -1135,7 +1135,7 @@ Usando `printf`, mostrá una tabla de conversión de temperaturas de Celsius a F
 Las columnas deben estar alineadas y los valores Fahrenheit con 1 decimal.
 ````
 
-```{solution} ej-tabla-printf
+````{solution} ej-tabla-printf
 :class: dropdown
 
 ```java
@@ -1163,7 +1163,7 @@ Celsius    Fahrenheit
 Explicación:
 - `%-10s` y `%-10d`: alinean a la izquierda en 10 caracteres
 - `%12.1f`: alinea a la derecha en 12 caracteres con 1 decimal
-```
+````
 
 ````{exercise}
 :label: ej-lectura-validada
@@ -1171,7 +1171,7 @@ Explicación:
 Escribí un programa que pida al usuario un número entero positivo. Si el usuario ingresa algo que no es un entero o es negativo, debe mostrar un mensaje de error y volver a pedir el número. Use `hasNextInt()` para la validación.
 ````
 
-```{solution} ej-lectura-validada
+````{solution} ej-lectura-validada
 :class: dropdown
 
 ```java
@@ -1212,7 +1212,7 @@ Número válido: 42
 ```
 
 La clave es usar `hasNextInt()` para verificar si lo que sigue es un entero, y `scanner.next()` para descartar la entrada inválida cuando no lo es.
-```
+````
 
 (referencias-bibliograficas)=
 ## Referencias Bibliográficas

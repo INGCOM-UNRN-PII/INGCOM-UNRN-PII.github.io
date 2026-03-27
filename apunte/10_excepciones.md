@@ -1214,7 +1214,7 @@ Los siguientes ejercicios te ayudarán a practicar los conceptos de manejo de ex
 Escribí un método `validarEdad(int edad)` que lance `IllegalArgumentException` si la edad es negativa o mayor a 150, y retorne la edad si es válida. El mensaje de error debe indicar claramente qué condición se violó y qué valor se recibió.
 ```
 
-````solution
+````{solution}
 :for: ej-validar-edad
 ```java
 public static int validarEdad(int edad) {
