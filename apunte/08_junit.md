@@ -3201,7 +3201,7 @@ Este apunte cubrió la implementación práctica de testing con JUnit 5:
 (ejercicios)=
 ## Ejercicios
 
-```exercise
+```{exercise}
 :label: ej-junit-calculadora
 
 Implementá la clase `Calculadora` con métodos estáticos `sumar`, `restar`, `multiplicar` y `dividir`. Luego escribí una clase `CalculadoraTest` completa que:
@@ -3215,7 +3215,7 @@ Implementá la clase `Calculadora` con métodos estáticos `sumar`, `restar`, `m
 Asegurate de seguir todas las reglas de testing vistas.
 ```
 
-```exercise
+```{exercise}
 :label: ej-junit-arreglos
 
 Implementá una clase `Arreglos` con métodos estáticos para manipular arreglos de enteros: `suma`, `promedio`, `maximo`, `minimo`, `ordenar`, `buscar`. Escribí tests completos que:
@@ -3229,7 +3229,7 @@ Implementá una clase `Arreglos` con métodos estáticos para manipular arreglos
 Incluí al menos 15 tests diferentes.
 ```
 
-```exercise
+```{exercise}
 :label: ej-junit-validador
 
 Creá una clase `ValidadorContrasena` con un método estático `esValida(String contrasena)` que valide que una contraseña cumpla:
@@ -3241,7 +3241,7 @@ Creá una clase `ValidadorContrasena` con un método estático `esValida(String 
 Escribí tests parametrizados que verifiquen múltiples contraseñas válidas e inválidas. Usá `@CsvSource` con al menos 10 casos de prueba.
 ```
 
-```exercise
+```{exercise}
 :label: ej-junit-strings
 
 Implementá una clase `StringUtils` con métodos estáticos:
@@ -3253,7 +3253,7 @@ Implementá una clase `StringUtils` con métodos estáticos:
 Escribí tests completos para toda la funcionalidad, manteniendo las reglas de testing.
 ```
 
-```exercise
+```{exercise}
 :label: ej-junit-tdd-matematica
 
 Usando TDD (Test-Driven Development), implementá una clase `Matematica` con métodos estáticos:
@@ -3270,7 +3270,7 @@ Requisitos:
 5. Al finalizar, deberías tener al menos 12 tests
 ```
 
-```exercise
+```{exercise}
 :label: ej-junit-valores-limite
 
 Creá una clase `Validador` con métodos estáticos que validen fechas según estas reglas:
@@ -3288,7 +3288,7 @@ Escribí tests usando análisis de valores límite para:
 Usá tests parametrizados donde sea apropiado.
 ```
 
-```exercise
+```{exercise}
 :label: ej-junit-particiones
 
 Implementá una clase `Tarifas` con un método estático `calcularTarifaEstacionamiento(double horas)`:
@@ -3306,12 +3306,12 @@ Identificá las particiones de equivalencia y escribí tests que cubran:
 Usá `@CsvSource` para organizar los casos de prueba.
 ```
 
-```exercise
+```{exercise}
 :label: ej-junit-test-smells
 
 El siguiente código contiene múltiples test smells. Identificalos y refactorizá los tests corrigiendo cada problema:
 
-\`\`\`java
+```java
 public class CalculadoraTest {
     private static int acumulador = 0;  // Estado compartido
 
@@ -3342,23 +3342,23 @@ public class CalculadoraTest {
         Calculadora.dividir(10, 2);  // Sin assertion
     }
 }
-\`\`\`
+```
 
 Reescribí todos los tests siguiendo las buenas prácticas vistas en el apunte.
 ```
 
-```exercise
+````{exercise}
 :label: ej-junit-debugging
 
 Un test está fallando con el siguiente error:
 
-\`\`\`
+```
 expected: <[1, 2, 3, 4, 5]> but was: <[5, 4, 3, 2, 1]>
-\`\`\`
+```
 
 El test es:
 
-\`\`\`java
+```java
 @Test
 void testOrdenar_ConArregloDesordenado_RetornaOrdenado() {
     int[] entrada = {3, 1, 4, 5, 2};
@@ -3367,11 +3367,12 @@ void testOrdenar_ConArregloDesordenado_RetornaOrdenado() {
     
     assertArrayEquals(new int[]{1, 2, 3, 4, 5}, resultado);
 }
-\`\`\`
+```
 
 Tareas:
 1. Analizá el error: ¿Qué está pasando?
 2. Formulá al menos 3 hipótesis de qué puede estar causando el problema
 3. Describí qué pasos de debugging usarías (prints, breakpoints, etc.)
 4. Proponé posibles soluciones según cada hipótesis
-```
+
+````
