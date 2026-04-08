@@ -27,7 +27,7 @@ project:
       children:
       - file: catedra/programa.md
       - file: catedra/acuerdo_ia.md
-    - title: Apunte
+    - title: Apunte 1
       children:
         - file: apunte/01_origenes.md
         - file: apunte/02_lenguaje.md
@@ -43,6 +43,9 @@ project:
         - file: apunte/12_archivos.md
         - file: apunte/13_memoria.md
         - file: apunte/indice.md
+    - title: Apunte 2
+      children:
+        - file: apunte_2/01_oop_fundamentos.md
     - file: guias/indice.md
       children:
         - file: guias/instalacion_intellij.md
