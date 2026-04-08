@@ -714,7 +714,7 @@ $                          # fin de línea
 
 # Ejemplos con grep
 grep '^[A-Z]' archivo.txt          # líneas que empiezan con mayúscula
-grep '[0-9]\\{3\}' archivo.txt      # exactamente 3 dígitos
+grep '[0-9]\｛3｝' archivo.txt      # exactamente 3 dígitos
 grep -E '[0-9]{2,4}' archivo.txt   # entre 2 y 4 dígitos
 grep '\\b[A-Za-z]+@[A-Za-z]+\\.[A-Za-z]+\\b' emails.txt  # emails básicos
 ```
