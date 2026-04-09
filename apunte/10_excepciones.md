@@ -286,7 +286,6 @@ El bloque `finally` garantiza que el código de limpieza se ejecute sin importar
 
 ```{figure} 10/flujo_try_catch_finally.svg
 :label: fig-flujo-try-catch-finally
-:align: center
 :width: 85%
 
 Flujo de ejecución del bloque try-catch-finally en diferentes escenarios.
@@ -401,7 +400,6 @@ En Java, todo lo que puede ser "lanzado" con `throw` y "atrapado" con `catch` de
 
 ```{figure} 10/jerarquia_excepciones.svg
 :label: fig-jerarquia-excepciones
-:align: center
 :width: 85%
 
 Jerarquía completa de Throwable: Error vs Exception, Checked vs Unchecked.
@@ -633,7 +631,6 @@ public void metodo() throws IOException {
 Solo necesitás `throws` para excepciones **checked**. Las unchecked (RuntimeException y sus subclases) no requieren declaración.
 
 ````{mermaid}
-:align: center
 
 flowchart TD
     Start([metodoA llama metodoB]) --> Check{metodoB puede<br/>lanzar IOException?}
@@ -1214,8 +1211,7 @@ Los siguientes ejercicios te ayudarán a practicar los conceptos de manejo de ex
 Escribí un método `validarEdad(int edad)` que lance `IllegalArgumentException` si la edad es negativa o mayor a 150, y retorne la edad si es válida. El mensaje de error debe indicar claramente qué condición se violó y qué valor se recibió.
 ```
 
-````{solution}
-:for: ej-validar-edad
+````{solution} ej-validar-edad
 ```java
 public static int validarEdad(int edad) {
     if (edad < 0) {

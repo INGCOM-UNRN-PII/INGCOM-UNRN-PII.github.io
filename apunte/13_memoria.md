@@ -20,7 +20,6 @@ Cuando ejecutás un programa en C, el sistema operativo le asigna memoria direct
 
 ```{figure} 13/stack_heap_modelo.svg
 :label: fig-stack-heap-modelo
-:align: center
 :width: 95%
 
 Modelo de memoria de la JVM: Stack (variables locales y referencias) vs Heap (objetos y arreglos).
@@ -375,7 +374,6 @@ Pero "valor" significa cosas diferentes:
 - Para **referencias**: el valor es la **dirección** del objeto
 
 ````{mermaid}
-:align: center
 
 flowchart LR
     subgraph Primitivo["Tipo Primitivo"]
@@ -766,7 +764,6 @@ Cuando escribís un literal de String (texto entre comillas), Java primero busca
 
 ```{figure} 13/string_pool.svg
 :label: fig-string-pool
-:align: center
 :width: 90%
 
 String Pool e inmutabilidad: cómo Java optimiza el uso de Strings en memoria.

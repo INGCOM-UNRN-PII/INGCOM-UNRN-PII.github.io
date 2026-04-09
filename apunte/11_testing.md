@@ -73,7 +73,7 @@ El testing automatizado aporta múltiples beneficios:
 
 Mike Cohn propuso la **pirámide de testing** como modelo para distribuir los esfuerzos de prueba. La forma de pirámide no es casualidad: representa la proporción ideal de cada tipo de test.
 
-```{figure} 11/piramide_testing.svg
+```{figure} 08/piramide_testing.svg
 :label: fig-piramide-testing
 :align: center
 :width: 70%
@@ -198,7 +198,7 @@ El **Test-Driven Development** (TDD) es una técnica de diseño de software que 
 
 TDD se basa en un ciclo corto y repetitivo de tres pasos:
 
-```{figure} 11/tdd_ciclo.svg
+```{figure} 08/tdd_ciclo.svg
 :label: fig-tdd-ciclo
 :align: center
 :width: 60%

@@ -418,6 +418,9 @@ IntelliJ IDEA tiene **integración nativa con Gradle**. Podés hacer casi todo d
 
 Panel de Gradle en IntelliJ IDEA mostrando todas las tareas disponibles.
 ```
+:::{note}
+El panel de Gradle en IntelliJ IDEA muestra todas las tareas disponibles organizadas por categoría. Podés hacer doble clic en cualquier tarea para ejecutarla directamente.
+:::
 
 (ejecutar-tests-desde-el-ide)=
 ### Ejecutar tests desde el IDE
