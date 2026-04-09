@@ -1,6 +1,7 @@
 ---
 title: "OOP 2: Encapsulamiento y Relaciones entre Objetos"
 subtitle: "Protegiendo el Estado y Modelando Colaboraciones"
+subject: Programación Orientada a Objetos
 ---
 
 (oop2-encapsulamiento-relaciones)=
@@ -15,6 +16,18 @@ En este capítulo profundizamos en dos conceptos fundamentales de OOP:
 
 :::{important}
 Este capítulo se enfoca en los **conceptos** y el **modelado**. La sintaxis específica de Java para implementar estos conceptos se aborda en el {ref}`java-sintaxis-clases`.
+:::
+
+:::{admonition} Objetivos de Aprendizaje
+:class: tip
+
+Al finalizar este capítulo, serás capaz de:
+
+1. Explicar qué es el encapsulamiento y por qué es fundamental en OOP
+2. Identificar invariantes y diseñar clases que las protejan
+3. Distinguir entre asociación, composición y agregación
+4. Leer y escribir diagramas UML con cardinalidad
+5. Decidir qué tipo de relación usar en diferentes escenarios
 :::
 
 ---
@@ -226,12 +239,90 @@ Al controlar el acceso al estado, garantizamos que:
 **Principio General**: Si un objeto necesita mantener su estado consistente, **el propio objeto** debe ser el responsable de modificarlo. No delegues esa responsabilidad a quien lo usa.
 :::
 
+(ejemplo-encapsulamiento-completo)=
+### Ejemplo Completo: Termostato
+
+Para consolidar los conceptos de encapsulamiento, analicemos un ejemplo más completo.
+
+**Escenario**: Un termostato inteligente que controla la temperatura de una habitación.
+
+**Invariantes del termostato:**
+
+1. La temperatura objetivo debe estar entre 15°C y 30°C
+2. El modo solo puede ser "calefacción", "refrigeración" o "apagado"
+3. Si el termostato está apagado, no puede estar calentando ni enfriando
+
+**Sin encapsulamiento (mal diseño):**
+
+```
+Termostato {
+    temperaturaObjetivo: 25      // Cualquiera podría poner -100
+    modo: "calefacción"          // Cualquiera podría poner "hola"
+    estaActivo: true             // Inconsistente con modo "apagado"
+}
+
+// Código externo puede hacer:
+termostato.temperaturaObjetivo = -50;  // ❌ Viola invariante 1
+termostato.modo = "explosión";         // ❌ Viola invariante 2
+termostato.modo = "apagado";
+termostato.estaActivo = true;          // ❌ Viola invariante 3
+```
+
+**Con encapsulamiento (buen diseño):**
+
+```
+Termostato {
+    // Estado privado (no accesible directamente)
+    - temperaturaObjetivo: 25
+    - modo: "calefacción"
+    - estaActivo: true
+    
+    // Interfaz pública (métodos controlados)
+    + ajustarTemperatura(nuevaTemp)
+        → Si nuevaTemp < 15 o > 30: rechazar
+        → Si no: actualizar temperaturaObjetivo
+    
+    + cambiarModo(nuevoModo)
+        → Si nuevoModo no es válido: rechazar
+        → Si nuevoModo es "apagado": estaActivo = false
+        → Si no: actualizar modo, estaActivo = true
+    
+    + obtenerEstado()
+        → Retorna información del estado actual
+}
+```
+
+**Beneficios observados:**
+
+| Aspecto | Sin encapsulamiento | Con encapsulamiento |
+| :--- | :--- | :--- |
+| Validación | No hay | Cada método valida |
+| Consistencia | Puede romperse | Siempre garantizada |
+| Cambios futuros | Afectan a todos | Localizados en la clase |
+| Responsabilidad | Del usuario | Del objeto |
+
+:::{note}
+Observá que el termostato encapsulado **sabe cómo protegerse**. No depende de que quien lo use "se porte bien". Esta es la esencia del encapsulamiento: **el objeto es responsable de su propia integridad**.
+:::
+
 ---
 
 (relaciones-entre-objetos)=
 ## Relaciones entre Objetos
 
 En sistemas orientados a objetos, raramente los objetos existen de forma aislada. Los objetos **colaboran** para resolver problemas complejos, y estas colaboraciones se modelan mediante **relaciones**.
+
+:::{admonition} ¿Por qué son importantes las relaciones?
+:class: note
+
+Las relaciones definen **cómo se estructura** un sistema:
+- Qué objetos conocen a cuáles otros
+- Quién es responsable de qué
+- Cómo fluye la información
+- Qué pasa cuando un objeto se destruye
+
+Un diseño con relaciones bien definidas es **más fácil de entender, mantener y extender**.
+:::
 
 (notacion-uml-cardinalidad)=
 ### Notación UML y Cardinalidad
@@ -352,6 +443,31 @@ Persona  1 ────────── 0..1 Pasaporte
 
 Una persona puede tener 0 o 1 pasaporte. El pasaporte puede existir antes de ser asignado a una persona.
 
+(asociacion-direccionalidad)=
+#### Direccionalidad de la Asociación
+
+Las asociaciones pueden ser:
+
+**Unidireccional**: Solo una clase conoce a la otra.
+
+```
+Pedido ──────────► Producto
+```
+
+El pedido conoce qué productos contiene, pero el producto no sabe en qué pedidos está.
+
+**Bidireccional**: Ambas clases se conocen mutuamente.
+
+```
+Estudiante ◄──────► Curso
+```
+
+El estudiante sabe en qué cursos está inscripto, y el curso sabe qué estudiantes tiene.
+
+:::{tip}
+**Preferí asociaciones unidireccionales** siempre que sea posible. Son más simples de mantener y generan menor acoplamiento.
+:::
+
 ---
 
 (composicion-concepto)=
@@ -403,6 +519,51 @@ El diamante negro indica propiedad fuerte.
 - `Universidad` ♦─ `Facultad`: Las facultades existen porque existe la universidad
 - `Libro` ♦─ `Pagina`: Las páginas son parte integral del libro
 - `Casa` ♦─ `Habitacion`: Las habitaciones no existen fuera de la casa
+
+(composicion-ejemplo-detallado)=
+#### Ejemplo Detallado: Factura y Líneas de Detalle
+
+Una factura **está compuesta** por líneas de detalle:
+
+```
+┌─────────────────────────────────┐
+│          Factura                │
+│  - numero: "F-2024-001"         │
+│  - fecha: 2024-03-15            │
+│  - cliente: "Juan Pérez"        │
+│                                 │
+│  ♦─── LineaDetalle              │
+│       - producto: "Laptop"      │
+│       - cantidad: 1             │
+│       - precioUnitario: 1500.00 │
+│                                 │
+│  ♦─── LineaDetalle              │
+│       - producto: "Mouse"       │
+│       - cantidad: 2             │
+│       - precioUnitario: 25.00   │
+│                                 │
+│  + calcularTotal(): 1550.00     │
+└─────────────────────────────────┘
+```
+
+**¿Por qué es composición?**
+
+1. Las líneas de detalle **no existen sin la factura** — no tiene sentido una línea suelta
+2. La factura **crea** las líneas cuando se agregan productos
+3. Si se **elimina** la factura, las líneas desaparecen con ella
+4. Una línea pertenece a **exactamente una** factura
+
+**Ciclo de vida:**
+
+```
+Crear factura → Agregar líneas → La factura existe con sus líneas
+                                            │
+                                            ▼
+                                    Eliminar factura
+                                            │
+                                            ▼
+                            Las líneas se eliminan automáticamente
+```
 
 :::{warning}
 **Diferencia crucial**: En composición, las partes se **crean dentro** del constructor del todo y se **destruyen** cuando el todo se destruye. No se pasan partes preexistentes.
@@ -457,6 +618,61 @@ El diamante blanco indica una relación de pertenencia más laxa.
 - `Equipo` ◊─ `Jugador`: Los jugadores pueden cambiar de equipo
 - `Biblioteca` ◊─ `Libro`: Los libros existían antes y pueden moverse entre bibliotecas
 - `PlayList` ◊─ `Cancion`: Las canciones pueden estar en múltiples playlists
+
+(agregacion-ejemplo-detallado)=
+#### Ejemplo Detallado: Equipo de Fútbol
+
+Un equipo de fútbol **agrupa** jugadores:
+
+```
+┌─────────────────────────────────┐
+│        Equipo                   │
+│  - nombre: "River Plate"        │
+│  - fundacion: 1901              │
+│                                 │
+│  ◊─── Jugador                   │
+│       - nombre: "Enzo Pérez"    │
+│       - posicion: "Mediocampo"  │
+│       - añoNacimiento: 1986     │
+│                                 │
+│  ◊─── Jugador                   │
+│       - nombre: "Nacho Fernández│
+│       - posicion: "Mediocampo"  │
+│       - añoNacimiento: 1990     │
+│                                 │
+│  + obtenerPlantilla()           │
+└─────────────────────────────────┘
+```
+
+**¿Por qué es agregación?**
+
+1. Los jugadores **existían antes** de unirse al equipo (nacieron, crecieron, jugaron en otros equipos)
+2. Los jugadores **pueden cambiar** de equipo (pases, transferencias)
+3. Si el equipo **se disuelve**, los jugadores **siguen existiendo** (pueden retirarse o ir a otro equipo)
+4. Un jugador puede incluso pertenecer a **múltiples contextos** (equipo + selección nacional)
+
+**Ciclo de vida:**
+
+```
+Jugador existe ──► Se une al equipo ──► El equipo lo tiene
+      │                                        │
+      │                                        ▼
+      │                               Equipo se disuelve
+      │                                        │
+      ▼                                        ▼
+Jugador sigue existiendo ◄────────── Jugador sigue existiendo
+(puede ir a otro equipo)             (puede ir a otro equipo)
+```
+
+:::{important}
+**La pregunta clave sigue siendo:**
+
+> ¿Los jugadores existen independientemente del equipo?
+
+**Sí** → Por eso es **agregación** (◊)
+
+Si los jugadores fueran robots creados específicamente para ese equipo y destruidos cuando el equipo se disuelve, sería **composición** (♦).
+:::
 
 :::{tip}
 **Pregunta clave** para distinguir composición de agregación:
@@ -543,6 +759,85 @@ Libro
 - Un `Libro` **está compuesto** por `Paginas`
 - Un `Libro` **está asociado** a `Autores` (que pueden escribir múltiples libros)
 
+(caso-estudio-sistema-universidad)=
+### Caso de Estudio: Sistema Universitario
+
+Analicemos un sistema más complejo para practicar la identificación de relaciones.
+
+**Requerimiento:**
+
+> "Una universidad tiene facultades. Cada facultad ofrece carreras. Los estudiantes se inscriben en una carrera y cursan materias. Los profesores dictan materias y pertenecen a un departamento dentro de una facultad."
+
+**Paso 1: Identificar clases principales**
+
+- Universidad
+- Facultad
+- Carrera
+- Estudiante
+- Materia
+- Profesor
+- Departamento
+
+**Paso 2: Analizar relaciones**
+
+| Relación | Tipo | Justificación |
+| :--- | :---: | :--- |
+| Universidad – Facultad | ♦ | Las facultades no existen sin la universidad |
+| Facultad – Departamento | ♦ | Los departamentos son parte de la facultad |
+| Facultad – Carrera | ♦ | Las carreras pertenecen a una facultad específica |
+| Carrera – Materia | ♦ | Las materias son parte del plan de estudios |
+| Estudiante – Carrera | Asoc | Un estudiante puede cambiarse de carrera |
+| Estudiante – Materia | Asoc | Se inscribe/cursa/aprueba materias |
+| Profesor – Departamento | ◊ | El profesor existe independientemente |
+| Profesor – Materia | Asoc | El profesor "dicta" materias (no las posee) |
+
+**Paso 3: Diagrama resultante**
+
+```
+Universidad
+    ♦──── * Facultad
+              ♦──── * Departamento
+              │            ◊──── * Profesor ─────┐
+              │                                   │
+              ♦──── * Carrera                    │ dicta
+                       ♦──── * Materia ◄────────┘
+                       │
+                       │ cursa
+                       │
+                 Estudiante
+```
+
+**Paso 4: Cardinalidades**
+
+```
+Universidad  1 ────♦──── 1..* Facultad
+Facultad     1 ────♦──── 1..* Departamento
+Facultad     1 ────♦──── 1..* Carrera
+Carrera      1 ────♦──── 5..* Materia
+Departamento 1 ────◊──── 1..* Profesor
+Profesor     1..* ────── 1..* Materia
+Estudiante   * ────────── 1   Carrera
+Estudiante   * ────────── *   Materia
+```
+
+**Lecturas:**
+- Una universidad tiene 1 o más facultades
+- Una facultad tiene 1 o más departamentos y 1 o más carreras
+- Una carrera tiene al menos 5 materias
+- Un departamento agrupa 1 o más profesores
+- Un profesor dicta 1 o más materias; una materia puede ser dictada por varios profesores
+- Un estudiante está inscripto en exactamente 1 carrera
+- Un estudiante cursa 0 o más materias; una materia puede tener 0 o más estudiantes inscriptos
+
+:::{tip}
+**Proceso recomendado:**
+
+1. Identificar clases del dominio
+2. Para cada par de clases relacionadas, preguntar: "¿La parte existe sin el todo?"
+3. Definir cardinalidades pensando en casos reales
+4. Verificar consistencia del modelo
+:::
+
 ---
 
 (referencias-cruzadas)=
@@ -583,6 +878,62 @@ Las asociaciones bidireccionales son aceptables cuando:
 - La navegación en ambos sentidos es una **necesidad del dominio**
 - Podés garantizar la consistencia (típicamente mediante métodos que actualizan ambos lados)
 - El beneficio supera el costo en complejidad
+
+(ejemplo-bidireccional)=
+#### Ejemplo: Implementación Correcta
+
+Si decidís que necesitás bidireccionalidad entre `Cliente` y `Pedido`, tenés que mantener la consistencia:
+
+```
+Clase Cliente {
+    - pedidos: Lista<Pedido>
+    
+    + agregarPedido(pedido) {
+        pedidos.agregar(pedido)
+        pedido.establecerCliente(this)  // Mantiene consistencia
+    }
+    
+    + removerPedido(pedido) {
+        pedidos.remover(pedido)
+        pedido.establecerCliente(null)  // Mantiene consistencia
+    }
+}
+
+Clase Pedido {
+    - cliente: Cliente
+    
+    // Método interno, no público
+    ~ establecerCliente(nuevoCliente) {
+        this.cliente = nuevoCliente
+    }
+}
+```
+
+**Patrón recomendado:** Un solo lado de la relación (el "dueño") maneja las modificaciones. El otro lado tiene métodos de acceso restringido.
+
+(alternativa-unidireccional)=
+#### Alternativa: Evitar la Bidireccionalidad
+
+En muchos casos, podés evitar la bidireccionalidad usando un **repositorio** o **servicio**:
+
+```
+Clase RepositorioPedidos {
+    + buscarPorCliente(cliente): Lista<Pedido> {
+        // Busca en la base de datos o colección
+        return pedidos.filtrar(p -> p.cliente == cliente)
+    }
+}
+```
+
+Así, `Cliente` no necesita conocer sus pedidos directamente; los consultás a través del repositorio cuando los necesitás.
+
+:::{important}
+**Regla práctica:**
+
+- En **modelos de dominio pequeños**: La bidireccionalidad puede ser aceptable
+- En **sistemas grandes**: Preferí repositorios y servicios para consultas
+- **Siempre:** Documentá tu decisión y las reglas de consistencia
+:::
 
 ---
 
@@ -631,18 +982,18 @@ Las asociaciones bidireccionales son aceptables cuando:
 En este capítulo viste los **conceptos fundamentales** de encapsulamiento y relaciones entre objetos. Para implementar estos conceptos en Java, consultá:
 
 - {ref}`java-sintaxis-clases`: Sintaxis de clases, atributos, constructores y métodos
-- {ref}`java-modificadores-acceso`: Implementación de encapsulamiento con `private` y `public`
-- {ref}`java-asociaciones`: Cómo implementar asociaciones, composición y agregación en código
 
 :::{seealso}
 - {ref}`fundamentos-de-la-programacion-orientada-a-objetos`: Conceptos básicos de OOP
-- Guía de PlantUML para diagramas de clases
+- [Guía de PlantUML](guia_plantUML.md) para diagramas de clases
 :::
 
 ---
 
 (ejercicios-oop2)=
 ## Ejercicios
+
+### Identificación de Relaciones
 
 ```{exercise}
 :label: ej-identificar-relacion-1
@@ -651,6 +1002,26 @@ Analizá el siguiente escenario e identificá el tipo de relación (asociación,
 "Un pedido en una tienda online contiene productos. Los productos existen en el catálogo de la tienda independientemente de los pedidos."
 
 ¿Qué tipo de relación existe entre `Pedido` y `Producto`?
+```
+
+```{solution} ej-identificar-relacion-1
+:class: dropdown
+
+**Respuesta: Agregación (◊)**
+
+**Justificación:**
+
+1. Los productos **preexisten** al pedido — están en el catálogo antes de que alguien los pida
+2. Si se cancela el pedido, los productos **siguen existiendo** en el catálogo
+3. Un producto puede estar en **múltiples pedidos** simultáneamente
+4. El pedido no "crea" los productos, solo los **referencia**
+
+**Diagrama:**
+```
+Pedido ◊────── * Producto
+```
+
+**Nota:** El pedido contiene **líneas de pedido** (cantidad + producto), pero la relación con el producto en sí es de agregación. Las líneas de pedido serían composición del pedido.
 ```
 
 ```{exercise}
@@ -663,11 +1034,70 @@ c) `Documento` – `Parrafo`
 d) `Proyecto` – `Desarrollador`
 ```
 
+```{solution} ej-identificar-relacion-2
+:class: dropdown
+
+**a) `Computadora` – `Procesador`: Composición (♦)**
+
+- El procesador fue diseñado/elegido **para** esa computadora específica
+- Si destruís la computadora, el procesador pierde su contexto de uso
+- Generalmente un procesador no se "reutiliza" en otra computadora
+
+Sin embargo, esto es **debatible**: si considerás que los procesadores pueden venderse como repuestos, sería agregación. Depende del contexto del sistema.
+
+**b) `Playlist` – `Cancion`: Agregación (◊)**
+
+- Las canciones **preexisten** a la playlist
+- Una canción puede estar en **múltiples playlists**
+- Si elimino la playlist, las canciones **siguen existiendo**
+
+**c) `Documento` – `Parrafo`: Composición (♦)**
+
+- Los párrafos se **crean dentro** del documento
+- Un párrafo no tiene sentido fuera de su documento
+- Si elimino el documento, los párrafos desaparecen
+
+**d) `Proyecto` – `Desarrollador`: Agregación (◊)**
+
+- Los desarrolladores **existen antes** de unirse al proyecto
+- Un desarrollador puede trabajar en **múltiples proyectos**
+- Si termina el proyecto, los desarrolladores **siguen existiendo**
+```
+
+### Cardinalidad y UML
+
 ```{exercise}
 :label: ej-cardinalidad-uml
 Dibujá el diagrama UML con cardinalidad correcta para:
 
 "Un estudiante puede estar inscripto en múltiples cursos. Un curso debe tener al menos 5 estudiantes y como máximo 40."
+```
+
+```{solution} ej-cardinalidad-uml
+:class: dropdown
+
+**Diagrama:**
+
+```
+Estudiante  * ────────── 5..40  Curso
+             "inscripto en"
+```
+
+**Lectura:**
+
+- Un estudiante está inscripto en 0 o más cursos (`*`)
+- Un curso tiene entre 5 y 40 estudiantes (`5..40`)
+
+**Alternativa con clase de asociación** (si necesitamos guardar información de la inscripción):
+
+```
+Estudiante  * ────────── 5..40  Curso
+                 │
+                 ▼
+           Inscripcion
+           - fecha
+           - estado
+```
 ```
 
 ```{exercise}
@@ -679,6 +1109,66 @@ Diseñá una clase `Rectangulo` que debe mantener la siguiente invariante:
 ¿Qué atributos necesitás? ¿Qué métodos expondrías? ¿Cómo garantizarías la invariante?
 ```
 
+```{solution} ej-encapsulamiento-invariante
+:class: dropdown
+
+**Diseño de la clase:**
+
+```
+Clase Rectangulo {
+    // Atributos privados
+    - ancho: double
+    - alto: double
+    
+    // Constructor que valida
+    + Rectangulo(ancho, alto) {
+        validarDimension(ancho, "ancho")
+        validarDimension(alto, "alto")
+        this.ancho = ancho
+        this.alto = alto
+    }
+    
+    // Métodos de consulta (getters válidos en este caso)
+    + obtenerAncho(): double { return ancho }
+    + obtenerAlto(): double { return alto }
+    
+    // Métodos de modificación con validación
+    + cambiarAncho(nuevoAncho) {
+        validarDimension(nuevoAncho, "ancho")
+        this.ancho = nuevoAncho
+    }
+    
+    + cambiarAlto(nuevoAlto) {
+        validarDimension(nuevoAlto, "alto")
+        this.alto = nuevoAlto
+    }
+    
+    // Métodos de comportamiento
+    + calcularArea(): double {
+        return ancho * alto
+    }
+    
+    + calcularPerimetro(): double {
+        return 2 * (ancho + alto)
+    }
+    
+    // Método privado de validación
+    - validarDimension(valor, nombre) {
+        if (valor <= 0) {
+            lanzar error "El " + nombre + " debe ser mayor a 0"
+        }
+    }
+}
+```
+
+**Garantías:**
+
+1. Los atributos son **privados** → no se pueden modificar directamente
+2. El **constructor valida** → no se puede crear un rectángulo inválido
+3. Los **métodos de modificación validan** → no se puede violar la invariante después
+4. La lógica de validación está **centralizada** → fácil de mantener
+```
+
 ```{exercise}
 :label: ej-asociacion-bidireccional
 Analizá si necesitás asociación bidireccional o unidireccional en:
@@ -686,4 +1176,153 @@ Analizá si necesitás asociación bidireccional o unidireccional en:
 "Un libro pertenece a una editorial. Queremos poder preguntarle a un libro cuál es su editorial, y también consultar todos los libros que publicó una editorial."
 
 ¿Es necesario que `Libro` conozca a `Editorial` **y** que `Editorial` conozca sus libros? ¿O hay una forma mejor de modelarlo?
+```
+
+```{solution} ej-asociacion-bidireccional
+:class: dropdown
+
+**Análisis:**
+
+| Caso de uso | Dirección necesaria |
+| :--- | :--- |
+| Dado un libro, obtener su editorial | Libro → Editorial |
+| Dada una editorial, obtener sus libros | Editorial → Libro |
+
+Parece que necesitamos **bidireccionalidad**, pero hay alternativas.
+
+**Opción 1: Bidireccional simple**
+
+```
+Libro {
+    - editorial: Editorial
+    + obtenerEditorial(): Editorial
+}
+
+Editorial {
+    - libros: Lista<Libro>
+    + obtenerLibros(): Lista<Libro>
+}
+```
+
+**Problema:** Hay que mantener consistencia en ambos lados.
+
+**Opción 2: Unidireccional + Repositorio (recomendada)**
+
+```
+Libro {
+    - editorial: Editorial
+    + obtenerEditorial(): Editorial
+}
+
+Editorial {
+    // No conoce directamente sus libros
+}
+
+RepositorioLibros {
+    + buscarPorEditorial(editorial): Lista<Libro>
+}
+```
+
+**Ventajas:**
+- `Libro` → `Editorial` es la relación natural (el libro sabe quién lo publicó)
+- La consulta inversa se hace a través del repositorio
+- No hay riesgo de inconsistencia
+- El modelo es más simple
+
+**Recomendación:** Opción 2, especialmente si usás una base de datos donde las consultas inversas son eficientes.
+```
+
+### Ejercicio Integrador
+
+```{exercise}
+:label: ej-integrador-hospital
+Analizá el siguiente requerimiento y diseñá el modelo de clases con relaciones:
+
+"Un hospital tiene varios pisos. Cada piso tiene habitaciones. Las habitaciones pueden ser simples (1 cama) o compartidas (2-4 camas). Los pacientes son internados en camas específicas. Los médicos atienden a pacientes y pueden tener varias especialidades. Las enfermeras están asignadas a pisos específicos."
+
+Incluí:
+1. Identificación de clases
+2. Tipo de relación entre cada par de clases
+3. Cardinalidades
+4. Justificación de las decisiones
+```
+
+```{solution} ej-integrador-hospital
+:class: dropdown
+
+**1. Clases identificadas:**
+
+- Hospital
+- Piso
+- Habitacion
+- Cama
+- Paciente
+- Medico
+- Especialidad
+- Enfermera
+
+**2. Análisis de relaciones:**
+
+| Relación | Tipo | Justificación |
+| :--- | :---: | :--- |
+| Hospital – Piso | ♦ | Los pisos son parte estructural del hospital |
+| Piso – Habitacion | ♦ | Las habitaciones son parte del piso |
+| Habitacion – Cama | ♦ | Las camas son parte de la habitación |
+| Cama – Paciente | Asoc | El paciente existe independientemente |
+| Medico – Paciente | Asoc | Relación de "atiende", no de posesión |
+| Medico – Especialidad | ◊ | Las especialidades preexisten |
+| Piso – Enfermera | ◊ | Las enfermeras pueden cambiar de piso |
+
+**3. Diagrama con cardinalidades:**
+
+```
+Hospital  1 ──♦── 1..* Piso  1 ──◊── 1..* Enfermera
+                    │
+                    ♦
+                    │
+                  1..*
+              Habitacion
+                    │
+                    ♦
+                    │
+                  1..4
+                 Cama ──────── 0..1 Paciente
+                                      │
+                                      │ atiende
+                                      │
+                               1..* Medico ◊── 1..* Especialidad
+```
+
+**4. Justificaciones detalladas:**
+
+**Hospital ♦── Piso:**
+- Un piso no tiene sentido fuera del hospital
+- El hospital define cuántos pisos tiene desde su construcción
+
+**Piso ♦── Habitacion:**
+- Las habitaciones son parte del piso
+- Si "destruís" el piso (remodelación total), las habitaciones desaparecen
+
+**Habitacion ♦── Cama:**
+- Las camas están fijas en la habitación
+- Cardinalidad 1..4 porque puede ser simple (1) o compartida (2-4)
+
+**Cama ── Paciente:**
+- Asociación simple: el paciente "ocupa" la cama temporalmente
+- Cardinalidad 0..1: una cama puede estar vacía o tener un paciente
+
+**Piso ◊── Enfermera:**
+- Las enfermeras existen independientemente del piso
+- Pueden ser reasignadas a otros pisos
+- Cardinalidad 1..* en piso: al menos una enfermera por piso
+
+**Medico ── Paciente:**
+- Relación de "atiende", no posesión
+- Un médico atiende varios pacientes
+- Un paciente puede ser atendido por varios médicos
+
+**Medico ◊── Especialidad:**
+- Las especialidades (Cardiología, Pediatría) preexisten
+- Un médico puede tener varias especialidades
+- Las especialidades no desaparecen si el médico deja el hospital
 ```
