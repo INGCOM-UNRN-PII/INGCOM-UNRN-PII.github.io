@@ -119,7 +119,6 @@ Los operadores `&&` (AND) y `||` (OR) realizan una evaluación **perezosa** o en
 Esta característica no es solo una optimización de rendimiento; es una herramienta fundamental para escribir código seguro.
 
 ````{mermaid}
-:align: center
 
 flowchart LR
     subgraph AND["Evaluación de a && b"]
@@ -144,7 +143,6 @@ flowchart LR
 
 ```{figure} 05/cortocircuito.svg
 :label: fig-cortocircuito
-:align: center
 :width: 95%
 
 Diagrama de evaluación en cortocircuito: cuando la primera condición determina el resultado, la segunda no se evalúa.
@@ -218,7 +216,6 @@ if (condicion) {
 La condición debe ser una expresión que evalúe a `boolean`. A diferencia de C, no se puede usar un entero directamente.
 
 ````{mermaid}
-:align: center
 
 flowchart TD
     Start([Código anterior]) --> Cond{condición}
@@ -272,7 +269,6 @@ if (condicion) {
 ```
 
 ````{mermaid}
-:align: center
 
 flowchart TD
     Start([Código anterior]) --> Cond{condición}
@@ -338,7 +334,6 @@ if (condicion1) {
 - El `else` final es opcional pero recomendado para manejar casos no previstos
 
 ````{mermaid}
-:align: center
 
 flowchart TD
     Start([Inicio]) --> Cond1{nota >= 90?}
@@ -569,7 +564,6 @@ switch (expresion) {
 - `default`: Caso opcional que se ejecuta si ningún `case` coincide
 
 ````{mermaid}
-:align: center
 
 flowchart TD
     Start([Inicio]) --> Eval[Evaluar expresión]
@@ -736,7 +730,6 @@ Cada tipo de lazo tiene una semántica específica según el punto de evaluació
 
 ```{figure} 05/comparacion_lazos.svg
 :label: fig-comparacion-lazos
-:align: center
 :width: 95%
 
 Comparación del flujo de ejecución entre for, while y do-while. Observá cuándo se evalúa la condición en cada caso.
@@ -761,7 +754,6 @@ for (inicializacion; condicion; actualizacion) {
 3. **Actualización**: Se ejecuta **después de cada iteración**, antes de volver a evaluar la condición. Generalmente modifica la variable de control.
 
 ````{mermaid}
-:align: center
 
 flowchart TD
     Start([Inicio]) --> Init[1. Inicialización: i = 0]
@@ -883,7 +875,6 @@ while (condicion) {
 - Es ideal cuando no se sabe cuántas iteraciones serán necesarias
 
 ````{mermaid}
-:align: center
 
 flowchart TD
     Start([Inicio]) --> Cond{Condición}
@@ -949,7 +940,6 @@ En este curso, para implementar búsquedas que pueden terminar anticipadamente, 
 
 ```{figure} 05/patron_bandera.svg
 :label: fig-patron-bandera
-:align: center
 :width: 85%
 
 Patrón recomendado: búsqueda con bandera booleana en lugar de break. La bandera `encontrado` controla la terminación anticipada del lazo.
@@ -1004,7 +994,6 @@ do {
 - Si la condición es `false` después de la primera ejecución, el lazo termina
 
 ````{mermaid}
-:align: center
 
 flowchart TD
     Start([Inicio]) --> Body[Cuerpo del lazo]
@@ -1142,7 +1131,6 @@ while (i < 10) {              // Condición
 ```
 
 ````{mermaid}
-:align: center
 
 flowchart LR
     subgraph FOR["for (init; cond; upd) { cuerpo }"]
@@ -1224,7 +1212,6 @@ for (int i = 1; i <= 3; i = i + 1) {
 ```
 
 ````{mermaid}
-:align: center
 
 flowchart TD
     Start([Inicio]) --> Init1[i = 1]
@@ -1501,16 +1488,17 @@ for (int i = 0; i < 5; i = i + 1) {
 
 Estas diferencias hacen que Java sea más seguro que C para programación a gran escala, aunque la sintaxis sea visualmente similar.
 
-(ejercicios-de-nivel-universitario)=
-## Ejercicios de Nivel Universitario
+(ejercicios-control)=
+## Ejercicios
 
 ```{exercise}
 :label: ej-logic-short
 Dada la expresión `(x != 0) && (y / x > 1)`, explicá por qué nunca lanzará una `ArithmeticException` (excepción de división por cero) incluso si `x` es cero.
-```
+````
 
-```{solution}
-:for: ej-logic-short
+````{solution} ej-logic-short
+:class: dropdown
+
 Gracias al **cortocircuito** del operador `&&`, si `x` es 0, la primera condición `(x != 0)` evalúa a `false`. En ese momento, Java detiene la evaluación de la expresión completa porque ya sabe que el resultado será `false` (en un AND, si uno es falso, todo es falso).
 
 Por lo tanto, la segunda parte `(y / x > 1)` **nunca se ejecuta** cuando `x` es 0, evitando así la división por cero.
@@ -1526,17 +1514,18 @@ if (indice >= 0 && indice < arr.length && arr[indice] == valor) { ... }
 // Proteger referencia nula
 if (objeto != null && objeto.metodo()) { ... }
 ```
-```
+````
 
-```{exercise}
+::::{exercise}
 :label: ej-for-while
 Reescribí el siguiente lazo `for` como un lazo `while` equivalente:
 
 `for (int i = 10; i > 0; i = i - 2) { System.out.println(i); }`
-```
+::::
 
-````{solution}
-:for: ej-for-while
+::::{solution} ej-for-while
+:class: dropdown
+
 ```java
 int i = 10;              // Inicialización: antes del while
 while (i > 0) {          // Condición: en el while
@@ -1553,15 +1542,17 @@ while (i > 0) {          // Condición: en el while
 Ambos lazos imprimen: 10, 8, 6, 4, 2
 
 **Nota**: Cuando la variable se declara fuera del `while`, su alcance es mayor (existe después del lazo). En el `for` original, `i` deja de existir al terminar el lazo.
-````
+::::
 
-```{exercise}
-:label: ej-busqueda-bandera
+::::{exercise}
+:label: ej-busqueda-bandera 
+
 Escribí un fragmento de código que busque el primer número negativo en una secuencia de 10 números ingresados por el usuario, usando una bandera booleana (sin usar `break`).
-```
+::::
 
-````{solution}
-:for: ej-busqueda-bandera
+::::{solution} ej-busqueda-bandera
+:class:dropdown
+
 ```java
 Scanner scanner = new Scanner(System.in);
 boolean encontrado = false;  // Bandera: ¿encontramos un negativo?
@@ -1593,15 +1584,17 @@ if (encontrado) {
 - La condición `!encontrado` permite salir del lazo anticipadamente
 - Solo incrementamos `contador` cuando NO encontramos (para conservar la posición)
 - Después del lazo, la bandera indica si la búsqueda fue exitosa
-````
+::::
 
-```{exercise}
-:label: ej-do-while
+::::{exercise}
+:label: ej-do-while 
+
 ¿Cuál es la diferencia fundamental entre `while` y `do-while`? Escribí un ejemplo donde sea más apropiado usar `do-while` que `while`.
-```
+::::
 
-````{solution}
-:for: ej-do-while
+::::{solution} ej-do-while
+:class: dropdown
+
 La diferencia fundamental es el **momento de evaluación de la condición**:
 - `while` evalúa la condición **antes** de ejecutar el cuerpo (puede ejecutarse 0 veces)
 - `do-while` evalúa la condición **después** (se ejecuta **al menos 1 vez**)
@@ -1626,10 +1619,11 @@ System.out.println("Número válido: " + numero);
 - Siempre necesitamos pedir **al menos un número** antes de verificar si es válido
 - Con `while`, tendríamos que duplicar el código de entrada o usar una variable auxiliar inicializada con un valor inválido
 - El `do-while` expresa naturalmente la semántica de "hacer algo y repetir si es necesario"
-````
+::::
 
-````{exercise}
+::::{exercise}
 :label: ej-switch-vs-if
+
 ¿Cuándo es preferible usar `switch` en lugar de `if-else if`? Reescribí el siguiente código usando switch:
 
 ```java
@@ -1644,10 +1638,11 @@ if (codigo == 1) {
     tipo = "Desconocido";
 }
 ```
-````
+::::
 
-````{solution}
-:for: ej-switch-vs-if
+::::{solution} ej-switch-vs-if
+:class: dropdown
+
 **Cuándo preferir `switch`:**
 - Cuando se compara **una variable** contra **múltiples valores constantes**
 - Cuando hay **más de 2-3 alternativas**
@@ -1680,12 +1675,12 @@ String tipo = switch (codigo) {
     case 3 -> "Administrativo";
     default -> "Desconocido";
 };
-````
-
-El `switch` es más legible cuando hay muchas comparaciones de igualdad contra el mismo valor.
 ```
 
-````{exercise}
+El `switch` es más legible cuando hay muchas comparaciones de igualdad contra el mismo valor.
+::::
+
+::::{exercise}
 :label: ej-lazos-anidados
 Escribí un programa que imprima el siguiente patrón usando lazos anidados:
 
@@ -1696,10 +1691,11 @@ Escribí un programa que imprima el siguiente patrón usando lazos anidados:
 ****
 *****
 ```
-````
+::::
 
-````{solution}
-:for: ej-lazos-anidados
+````{solution} ej-lazos-anidados
+:class: dropdown
+
 ```java
 for (int fila = 1; fila <= 5; fila = fila + 1) {
     for (int columna = 1; columna <= fila; columna = columna + 1) {
