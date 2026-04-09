@@ -46,6 +46,10 @@ project:
     - title: Apunte 2
       children:
         - file: apunte_2/01_oop_fundamentos.md
+        - file: apunte_2/02_oop_relaciones.md
+    - title: Java
+      children:
+        - file: java/01_sintaxis_clases.md
     - file: guias/indice.md
       children:
         - file: guias/instalacion_intellij.md
