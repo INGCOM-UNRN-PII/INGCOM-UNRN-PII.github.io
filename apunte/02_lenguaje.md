@@ -672,7 +672,7 @@ El código genera un error porque Java tiene **tipado fuerte** y no permite conv
 double precio = 19.99;
 int precioEntero = (int) precio;  // Casting explícito
 System.out.println(precioEntero);  // 19
-````
+```
 
 El **casting explícito** `(int)` indica al compilador que el programador es
 consciente de la posible pérdida de precisión.
@@ -910,7 +910,7 @@ public class Comparador {
         System.out.printf("El máximo entre %d y %d es %d%n", x, y, resultado);
     }
 }
-````
+```
 
 **Cambios realizados:**
 1. Todo el código está dentro de `public class Comparador`
@@ -919,7 +919,7 @@ public class Comparador {
 4. `printf` se convierte en `System.out.printf` o se usa concatenación
 5. En `printf` de Java, usamos `%n` en vez de `\n` para portabilidad
 6. No hace falta `return 0;` en `main` de Java (es `void`)
-```
+````
 
 ````{exercise}
 :label: ej-tipado-estatico-dinamico
