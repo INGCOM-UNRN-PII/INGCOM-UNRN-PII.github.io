@@ -760,7 +760,7 @@ Abstraer es un proceso de **filtrado consciente**:
 Una buena abstracción es aquella que captura exactamente lo necesario: ni más (complejidad innecesaria) ni menos (información faltante).
 :::
 
-(el-encapsulamiento)=
+(encapsulamiento-introduccion)=
 ## El Encapsulamiento
 
 :::{admonition} Definición: Encapsulamiento
@@ -812,50 +812,14 @@ El segundo aspecto del encapsulamiento es igualmente importante: **ocultar los d
 2. **Flexibilidad**: Permite cambiar la implementación interna sin afectar al código que usa el objeto.
 3. **Simplicidad**: El usuario del objeto solo ve lo que necesita saber.
 
-**Analogía: Un televisor**
-
-Cuando usás un televisor, interactuás con él a través de una **interfaz simple**: botones de encendido, volumen, canales. No necesitás saber:
-- Cómo funciona el circuito interno
-- Qué señales electrónicas se procesan
-- Cómo se iluminan los píxeles
-
-El televisor **oculta** toda esa complejidad y te expone solo lo que necesitás para usarlo. Si el fabricante cambia la tecnología interna (de LCD a OLED, por ejemplo), tu forma de usar el televisor no cambia.
-
-```
-                 ┌─────────────────────────────────────┐
-                 │            TELEVISOR                │
-                 │                                     │
-Usuario ───────► │  INTERFAZ PÚBLICA                   │
-                 │  ├── encender()                     │
-                 │  ├── apagar()                       │
-                 │  ├── subirVolumen()                 │
-                 │  └── cambiarCanal()                 │
-                 │                                     │
-                 │  ─────────────────────────────      │
-                 │                                     │
-                 │  IMPLEMENTACIÓN OCULTA              │
-                 │  ├── procesarSeñal()                │
-                 │  ├── decodificarVideo()             │
-                 │  ├── ajustarBrillo()                │
-                 │  └── sincronizarAudio()             │
-                 │                                     │
-                 └─────────────────────────────────────┘
-```
-
-:::{tip}
-El encapsulamiento permite que el objeto **controle** cómo se accede y modifica su estado. En lugar de permitir que cualquiera modifique directamente los atributos, el objeto expone métodos que realizan validaciones y mantienen la consistencia.
+:::{seealso}
+El tema de encapsulamiento se profundiza en {ref}`encapsulamiento-concepto`, donde se analizan:
+- Analogías detalladas (control remoto, televisor)
+- Control de invariantes
+- Beneficios para mantenimiento y acoplamiento
+- Implementación en Java con modificadores de acceso
 :::
 
-(beneficios-del-encapsulamiento)=
-### Beneficios del encapsulamiento
-
-1. **Mantenimiento simplificado**: Los cambios internos no afectan al código externo.
-
-2. **Prevención de errores**: El objeto puede validar los datos antes de aceptarlos.
-
-3. **Código más legible**: La interfaz pública documenta lo que el objeto puede hacer.
-
-4. **Reutilización**: Un objeto bien encapsulado puede usarse en diferentes contextos sin modificaciones
 
 (heuristicas-de-analisis)=
 ## Modelado de Objetos: Heurísticas de Análisis
@@ -1107,19 +1071,19 @@ Además de clases y atributos, el análisis debe identificar las **relaciones** 
 **Tipos de relaciones comunes:**
 
 1. **Asociación**: Una clase "conoce" o "usa" a otra.
-   - "El cliente tiene una dirección"
-   - "La reserva involucra un vehículo"
-
 2. **Agregación**: Una clase "contiene" a otras (relación todo-parte débil).
-   - "El equipo tiene jugadores"
-
 3. **Composición**: Una clase "está compuesta por" otras (relación todo-parte fuerte).
-   - "La factura está compuesta por líneas de detalle"
-
 4. **Dependencia**: Una clase "usa temporalmente" a otra.
-   - "El generador de reportes usa un formateador"
 
-**Ejemplo:**
+:::{seealso}
+Las relaciones entre objetos se estudian en profundidad en {ref}`tipos-de-relaciones`, que incluye:
+- Notación UML y cardinalidad
+- Diferencias entre Composición y Agregación
+- Asociaciones bidireccionales
+- Implementación en Java
+:::
+
+**Ejemplo rápido:**
 
 > "Una **biblioteca** tiene muchos **libros**. Cada libro tiene un **autor**. Los **socios** pueden tomar **préstamos** de libros."
 
@@ -1518,7 +1482,7 @@ Aplicá las heurísticas de análisis al siguiente requerimiento. Identificá cl
 > "Un **hospital** necesita gestionar las **citas médicas**. Los **pacientes** tienen **nombre**, **DNI**, **obra social** y **teléfono**. Los **médicos** tienen **nombre**, **matrícula** y **especialidad**. Una cita registra el **paciente**, el **médico**, la **fecha y hora**, y el **consultorio** donde se realizará. Los pacientes pueden **solicitar** citas y **cancelarlas**. Los médicos pueden **confirmar** o **reprogramar** citas."
 ```
 
-```{solution} ej-heuristica-hospital
+````{solution} ej-heuristica-hospital
 :class: dropdown
 
 **Sustantivos identificados:**
@@ -1588,7 +1552,7 @@ Clase: Hospital
 ├── buscarMedicoPorEspecialidad(esp): lista
 └── obtenerAgendaMedico(medico, fecha): lista de Cita
 ```
-```
+````
 
 ```{exercise}
 :label: ej-filtro-complejidad
@@ -1643,7 +1607,7 @@ b) Sistema de librería online (venta de libros).
 c) Sistema de recomendaciones de lectura.
 ```
 
-```{solution} ej-abstraccion-contextual
+````{solution} ej-abstraccion-contextual
 :class: dropdown
 
 **a) Sistema de biblioteca:**
@@ -1699,4 +1663,4 @@ Clase: Libro
 ```
 
 **Observación clave:** El mismo concepto del mundo real (un libro) produce modelos completamente diferentes según el objetivo del sistema. Esto demuestra que la abstracción es contextual.
-```
+````

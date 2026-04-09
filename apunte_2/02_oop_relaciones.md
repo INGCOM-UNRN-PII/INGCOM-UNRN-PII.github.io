@@ -46,6 +46,106 @@ Del mismo modo, un objeto bien encapsulado:
 - Oculta sus datos internos (atributos privados)
 - Expone métodos públicos que permiten interactuar con él de forma controlada
 
+(fusion-datos-comportamiento)=
+### Fusión de Datos y Comportamiento
+
+El primer aspecto del encapsulamiento es la **fusión** de datos y comportamiento en una misma unidad. En el paradigma estructurado, datos y funciones están separados; en POO, están unificados en el objeto.
+
+**Comparación visual:**
+
+```
+Paradigma estructurado:              Paradigma OO:
+
+┌──────────────┐                    ┌──────────────────────┐
+│    DATOS     │                    │       OBJETO         │
+│              │                    │  ┌────────────────┐  │
+│  struct      │                    │  │     DATOS      │  │
+│  Persona {   │                    │  │   nombre       │  │
+│    nombre;   │                    │  │   edad         │  │
+│    edad;     │                    │  └────────────────┘  │
+│  }           │                    │  ┌────────────────┐  │
+└──────────────┘                    │  │ COMPORTAMIENTO │  │
+                                    │  │   saludar()    │  │
+┌──────────────┐                    │  │   cumplirAnios │  │
+│  FUNCIONES   │                    │  └────────────────┘  │
+│              │                    └──────────────────────┘
+│  saludar(p)  │                    
+│  cumplir(p)  │                    El objeto es una unidad
+└──────────────┘                    indivisible
+                                    
+Datos y funciones                   
+están separados                     
+```
+
+Esta fusión tiene consecuencias profundas:
+
+1. **Los datos conocen sus operaciones**: No hay funciones "sueltas" que operen sobre datos ajenos
+2. **Cohesión alta**: Todo lo relacionado con una responsabilidad está en un solo lugar
+3. **Menor acoplamiento**: No hay dependencias globales a funciones externas
+
+:::{note}
+En C (paradigma estructurado), tendrías:
+```c
+struct Persona {
+    char nombre[50];
+    int edad;
+};
+
+void saludar(struct Persona* p) { ... }
+void cumplirAnios(struct Persona* p) { ... }
+```
+
+En Java (POO), todo está unificado:
+```java
+class Persona {
+    private String nombre;
+    private int edad;
+    
+    public void saludar() { ... }
+    public void cumplirAnios() { ... }
+}
+```
+:::
+
+(ocultamiento-informacion)=
+### Ocultamiento de Información
+
+El segundo aspecto del encapsulamiento es igualmente fundamental: **ocultar los detalles de implementación**.
+
+**Analogía Extendida: El Televisor**
+
+Cuando usás un televisor, interactuás con él a través de una **interfaz simple**: botones de encendido, volumen, canales. No necesitás saber:
+- Cómo funciona el circuito interno
+- Qué señales electrónicas se procesan
+- Cómo se iluminan los píxeles
+
+El televisor **oculta** toda esa complejidad y te expone solo lo que necesitás para usarlo. Si el fabricante cambia la tecnología interna (de LCD a OLED, por ejemplo), tu forma de usar el televisor no cambia.
+
+```
+                 ┌─────────────────────────────────────┐
+                 │            TELEVISOR                │
+                 │                                     │
+Usuario ───────► │  INTERFAZ PÚBLICA                   │
+                 │  ├── encender()                     │
+                 │  ├── apagar()                       │
+                 │  ├── subirVolumen()                 │
+                 │  └── cambiarCanal()                 │
+                 │                                     │
+                 │  ─────────────────────────────      │
+                 │                                     │
+                 │  IMPLEMENTACIÓN OCULTA              │
+                 │  ├── procesarSeñal()                │
+                 │  ├── decodificarVideo()             │
+                 │  ├── ajustarBrillo()                │
+                 │  └── sincronizarAudio()             │
+                 │                                     │
+                 └─────────────────────────────────────┘
+```
+
+:::{tip}
+El encapsulamiento permite que el objeto **controle** cómo se accede y modifica su estado. En lugar de permitir que cualquiera modifique directamente los atributos, el objeto expone métodos que realizan validaciones y mantienen la consistencia.
+:::
+
 (por-que-encapsular)=
 ### ¿Por Qué Encapsular?
 
