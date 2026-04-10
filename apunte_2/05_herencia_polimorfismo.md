@@ -1,5 +1,5 @@
 ---
-title: "Java 2: Herencia y Polimorfismo"
+title: "5: Herencia y Polimorfismo"
 subtitle: "Reutilización y Flexibilidad en el Diseño"
 subject: Programación Orientada a Objetos
 ---

@@ -1,5 +1,5 @@
 ---
-title: "Java 1: Sintaxis de Clases y Objetos"
+title: "3: Sintaxis de Clases y Objetos"
 subtitle: "De la Burbuja al Código"
 ---
 

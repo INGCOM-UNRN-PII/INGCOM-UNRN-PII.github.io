@@ -1,13 +1,13 @@
 ---
-title: "OOP 7: Refactoring y Code Smells"
+title: "8: Refactoring y Code Smells"
 subtitle: "El Arte de Mejorar Código Existente"
 subject: Programación Orientada a Objetos
 ---
 
-(oop7-refactoring-code-smells)=
+(oop-refactoring)=
 # OOP 7: Refactoring y Code Smells
 
-En los capítulos anteriores aprendimos a diseñar sistemas orientados a objetos aplicando principios sólidos. Pero, ¿qué pasa cuando heredamos código mal diseñado? ¿O cuando nuestro propio código evoluciona y acumula decisiones cuestionables?
+En los capítulos anteriores aprendimos a diseñar sistemas orientados a objetos aplicando contratos ({ref}`oop-contratos`), patrones ({ref}`oop5-patrones-diseno`) y principios sólidos ({ref}`oop-solid`). Pero, ¿qué pasa cuando heredamos código mal diseñado? ¿O cuando nuestro propio código evoluciona y acumula decisiones cuestionables?
 
 El **refactoring** es la disciplina de mejorar la estructura interna del código sin cambiar su comportamiento observable. Los **code smells** son indicadores que nos alertan sobre problemas de diseño que merecen atención.
 
@@ -104,7 +104,7 @@ Momentos ideales para refactorizar:
 1. **Antes de agregar una feature**: "Primero limpio, luego agrego"
 2. **Después de arreglar un bug**: "Si fue difícil encontrarlo, simplifiquemos"
 3. **Durante code review**: "Este código podría ser más claro"
-4. **Cuando el código huele mal**: Detectás un {ref}`code-smells-detectando-problemas`
+4. **Cuando el código huele mal**: Detectás un {ref}`code-smells`
 
 (cuando-no-refactorizar)=
 ### ¿Cuándo NO Refactorizar?

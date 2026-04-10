@@ -1,18 +1,17 @@
 ---
-title: "OOP 5: Diseño por Contratos"
+title: "13: Diseño por Contratos"
 subtitle: "Especificaciones Formales para Software Confiable"
 subject: Programación Orientada a Objetos
 ---
 
-(oop5-diseno-contratos)=
-# OOP 5: Diseño por Contratos
+(oop-contratos)=
+# OOP 4: Diseño por Contratos
 
-En los capítulos anteriores construimos objetos con buena estructura y relaciones claras ({ref}`fundamentos-de-la-programacion-orientada-a-objetos`, {ref}`oop2-encapsulamiento-relaciones`). Pero, ¿cómo garantizamos que esos objetos se **comporten correctamente**? ¿Cómo especificamos qué espera un método y qué promete entregar?
+En los capítulos anteriores construimos objetos con buena estructura ({ref}`fundamentos-de-la-programacion-orientada-a-objetos`), establecimos relaciones claras ({ref}`oop2-encapsulamiento-relaciones`), y aprendimos sobre herencia y polimorfismo ({ref}`oop3-herencia-polimorfismo` y {ref}`java-herencia-polimorfismo`). Pero, ¿cómo garantizamos que esos objetos se **comporten correctamente**? ¿Cómo especificamos qué espera un método y qué promete entregar?
 
 El **Diseño por Contratos** (Design by Contract, DbC) es una metodología que responde estas preguntas estableciendo **obligaciones y garantías formales** entre los objetos que colaboran. Este enfoque se relaciona estrechamente con el {ref}`principio-sustitucion-liskov` y con el manejo de {ref}`java-excepciones`.
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 
@@ -67,8 +66,7 @@ En software, los **métodos** establecen contratos similares:
 
 El Diseño por Contratos fue formalizado por **Bertrand Meyer** en los años 80, como parte del lenguaje de programación **Eiffel**. Meyer se inspiró en la lógica de Hoare y las especificaciones formales.
 
-:::{admonition} Cita de Bertrand Meyer
-:class: note
+:::{note} Cita de Bertrand Meyer
 
 "Un sistema de software confiable es uno que hace lo que se supone que debe hacer. Para saber qué se supone que debe hacer, necesitamos una especificación."
 
@@ -218,8 +216,7 @@ Esta es una pregunta de diseño importante:
 | **El método verifica** | Defensa en profundidad | Overhead en cada llamada |
 | **Ambos verifican** | Máxima seguridad | Redundancia, más código |
 
-:::{admonition} Recomendación Práctica
-:class: tip
+:::{tip} Recomendación Práctica
 
 En desarrollo, verificá siempre (fail-fast). En producción, el nivel de verificación depende del contexto:
 
@@ -519,8 +516,7 @@ void transferir(double monto, Cuenta destino) {
 }
 ```
 
-:::{warning}
-**Problema de Concurrencia**
+:::{warning} **Problema de Concurrencia**
 
 En programas multihilo, los "momentos intermedios" pueden ser observados por otros hilos. Esto requiere sincronización adicional para mantener los invariantes.
 :::
@@ -760,8 +756,7 @@ void procesar(String dato) {
 }
 ```
 
-:::{admonition} ¿Cuál es Mejor?
-:class: note
+:::{note} ¿Cuál es Mejor?
 
 Depende del contexto:
 
@@ -1232,7 +1227,7 @@ Analizá si las siguientes redefiniciones de métodos respetan las reglas de con
    Subclase: `procesar(Object o)` solo acepta String
 ```
 
-```{exercise}
+````{exercise}
 :label: ej-refactoring-contratos
 Refactorizá el siguiente código para usar Diseño por Contratos apropiadamente:
 
@@ -1251,4 +1246,4 @@ String procesarPedido(Pedido pedido, Cliente cliente, String direccion) {
 ```
 
 ¿Qué condiciones son precondiciones? ¿Cuáles deberían ser invariantes de clase? ¿Cómo documentarías el contrato?
-```
+````

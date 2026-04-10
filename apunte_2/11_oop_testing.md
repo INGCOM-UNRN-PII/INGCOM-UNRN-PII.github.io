@@ -1,13 +1,13 @@
 ---
-title: "OOP 8: Testing en Programación Orientada a Objetos"
+title: "11: Testing en Programación Orientada a Objetos"
 subtitle: "Verificación y Validación de Sistemas Orientados a Objetos"
 subject: Programación Orientada a Objetos
 ---
 
-(oop8-testing)=
+(oop-testing)=
 # OOP 8: Testing en Programación Orientada a Objetos
 
-En los capítulos anteriores diseñamos sistemas orientados a objetos aplicando principios sólidos ({ref}`oop-solid`), patrones de diseño ({ref}`oop4-patrones-diseno`) y técnicas de refactoring ({ref}`oop7-refactoring-code-smells`). Pero, ¿cómo sabemos que nuestro código **funciona correctamente**? ¿Cómo nos aseguramos de que los cambios futuros **no rompan funcionalidad existente**?
+En los capítulos anteriores diseñamos sistemas orientados a objetos aplicando contratos ({ref}`oop-contratos`), patrones de diseño ({ref}`oop5-patrones-diseno`), principios SOLID ({ref}`oop-solid`) y técnicas de refactoring ({ref}`oop-refactoring`). Pero, ¿cómo sabemos que nuestro código **funciona correctamente**? ¿Cómo nos aseguramos de que los cambios futuros **no rompan funcionalidad existente**?
 
 El **testing** es la disciplina que permite verificar el comportamiento del software de manera sistemática y repetible. En el contexto de la programación orientada a objetos, el testing presenta desafíos y oportunidades particulares debido a las características del paradigma: encapsulamiento, herencia, polimorfismo y la interacción entre objetos.
 

@@ -1,11 +1,11 @@
 ---
-title: "Java 3: Colecciones y Genéricos"
+title: "7: Colecciones y Genéricos"
 subtitle: "Estructuras de Datos Flexibles y Tipado Seguro"
 subject: Programación Orientada a Objetos
 ---
 
 (java-colecciones-genericos)=
-# Java 3: Colecciones y Genéricos
+# Java 4: Colecciones y Genéricos
 
 En los capítulos anteriores aprendimos a crear clases, usar herencia y polimorfismo. Ahora abordamos un tema fundamental para cualquier programa real: **cómo almacenar y manipular grupos de objetos** de manera eficiente y segura.
 

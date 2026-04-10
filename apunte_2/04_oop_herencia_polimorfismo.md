@@ -1,5 +1,5 @@
 ---
-title: "OOP 3: Herencia y Polimorfismo Conceptual"
+title: "4: Herencia y Polimorfismo Conceptual"
 subtitle: "Jerarquías, Especialización y Flexibilidad en el Diseño"
 subject: Programación Orientada a Objetos
 ---

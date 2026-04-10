@@ -1,16 +1,15 @@
 ---
-title: "OOP 10: Anti-patrones y Code Smells"
+title: "12: Anti-patrones y Code Smells"
 subtitle: "Reconociendo y Evitando Errores de Diseño Comunes"
 subject: Programación Orientada a Objetos
 ---
 
-(oop10-antipatrones)=
-# OOP 10: Anti-patrones y Code Smells
+(oop-antipatrones)=
+# OOP 9: Anti-patrones y Code Smells
 
-Hasta ahora estudiamos cómo diseñar bien: patrones ({ref}`oop4-patrones-diseno`), principios SOLID ({ref}`oop-solid`), testing ({ref}`oop8-testing`), refactoring ({ref}`oop7-refactoring-code-smells`). Pero igual de importante es aprender a **reconocer qué está mal**. Los anti-patrones y code smells son señales de alerta que indican problemas en el diseño, muchos de ellos sutiles y difíciles de detectar hasta que el código ya está deteriorado.
+Hasta ahora estudiamos cómo diseñar bien: patrones ({ref}`oop5-patrones-diseno`), principios SOLID ({ref}`oop-solid`), testing ({ref}`oop-testing`), refactoring ({ref}`oop-refactoring`). Pero igual de importante es aprender a **reconocer qué está mal**. Los anti-patrones y code smells son señales de alerta que indican problemas en el diseño, muchos de ellos sutiles y difíciles de detectar hasta que el código ya está deteriorado.
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 
@@ -30,8 +29,7 @@ Al finalizar este capítulo, serás capaz de:
 (definiciones)=
 ### Definiciones
 
-:::{admonition} Definición
-:class: important
+:::{important} Definición
 
 Un **anti-patrón** es una solución común a un problema recurrente que parece apropiada pero resulta inefectiva o contraproducente. A diferencia de un simple error, un anti-patrón:
 
@@ -43,8 +41,7 @@ Un **anti-patrón** es una solución común a un problema recurrente que parece 
 — Brown et al., "AntiPatterns: Refactoring Software, Architectures, and Projects in Crisis"
 :::
 
-:::{admonition} Definición
-:class: important
+:::{important} Definición
 
 Un **code smell** (olor de código) es un síntoma superficial que indica un problema más profundo en el diseño. No es un bug —el código funciona— pero sugiere fragilidad, duplicación o complejidad innecesaria.
 
@@ -1273,8 +1270,7 @@ Sin embargo, **el criterio humano es irremplazable**. Las herramientas ayudan, p
 (regla-boy-scout)=
 ### La Regla del Boy Scout
 
-:::{admonition} Regla del Boy Scout
-:class: tip
+:::{tip} Regla del Boy Scout
 
 "Dejá el código mejor de lo que lo encontraste."
 
@@ -1286,8 +1282,7 @@ Cada vez que tocás un archivo, hacé una pequeña mejora: renombrá una variabl
 (resumen-antipatrones)=
 ## Resumen
 
-:::{admonition} Conceptos Clave
-:class: tip
+:::{tip} Conceptos Clave
 
 1. **Anti-patrones** son soluciones que parecen buenas pero causan problemas
 2. **Code smells** son síntomas de problemas de diseño más profundos
@@ -1322,7 +1317,7 @@ Cada vez que tocás un archivo, hacé una pequeña mejora: renombrá una variabl
 
 ---
 
-```{exercise}
+````{exercise}
 :label: ej-identificar-smells
 
 Identificá al menos 5 code smells en el siguiente código y explicá cómo los refactorizarías:
@@ -1357,9 +1352,9 @@ public class S {
     }
 }
 ```
-```
+````
 
-```{solution} ej-identificar-smells
+````{solution} ej-identificar-smells
 :class: dropdown
 
 **Smells identificados:**
@@ -1430,9 +1425,9 @@ public class CalculadoraPrecio {
     }
 }
 ```
-```
+````
 
-```{exercise}
+````{exercise}
 :label: ej-refactorizar-god-class
 
 La siguiente clase es una God Class. Identificá las responsabilidades separadas y proponé una refactorización con al menos 3 clases.
@@ -1464,9 +1459,9 @@ public class Tienda {
     public void imprimirTicket(String ventaId) { }
 }
 ```
-```
+````
 
-```{solution} ej-refactorizar-god-class
+````{solution} ej-refactorizar-god-class
 :class: dropdown
 
 **Responsabilidades identificadas:**
@@ -1541,7 +1536,7 @@ public class Tienda {
     // Métodos que delegan a los componentes apropiados
 }
 ```
-```
+````
 
 ---
 

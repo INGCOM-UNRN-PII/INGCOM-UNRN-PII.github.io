@@ -1,5 +1,5 @@
 ---
-title: "OOP 2: Encapsulamiento y Relaciones entre Objetos"
+title: "2: Encapsulamiento y Relaciones entre Objetos"
 subtitle: "Protegiendo el Estado y Modelando Colaboraciones"
 subject: Programación Orientada a Objetos
 ---

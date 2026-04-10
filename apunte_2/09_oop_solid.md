@@ -1,15 +1,15 @@
 ---
-title: "OOP 6: Principios SOLID"
+title: "9: Principios SOLID"
 subtitle: "Fundamentos del Diseño Orientado a Objetos de Calidad"
 subject: Programación Orientada a Objetos
 ---
 
-(oop6-principios-solid)=
+(oop-solid)=
 # OOP 6: Principios SOLID
 
-En los capítulos anteriores construimos objetos, establecimos relaciones, aplicamos patrones y definimos contratos. Pero, ¿cómo sabemos si nuestro diseño es **bueno**? ¿Qué características debe tener un sistema orientado a objetos para ser **mantenible**, **extensible** y **robusto**?
+En los capítulos anteriores construimos objetos, establecimos relaciones, exploramos herencia y polimorfismo, definimos contratos ({ref}`oop-contratos`), y estudiamos patrones de diseño ({ref}`oop5-patrones-diseno`). Pero, ¿cómo sabemos si nuestro diseño es **bueno**? ¿Qué características debe tener un sistema orientado a objetos para ser **mantenible**, **extensible** y **robusto**?
 
-Los **principios SOLID** son cinco directrices fundamentales que guían el diseño de software orientado a objetos hacia sistemas de alta calidad. Fueron recopilados y popularizados por **Robert C. Martin** (Uncle Bob) a principios de los 2000, aunque cada principio tiene raíces más antiguas. Estos principios también ayudan a identificar y corregir {ref}`code-smells-detectando-problemas` en el código.
+Los **principios SOLID** son cinco directrices fundamentales que guían el diseño de software orientado a objetos hacia sistemas de alta calidad. Fueron recopilados y popularizados por **Robert C. Martin** (Uncle Bob) a principios de los 2000, aunque cada principio tiene raíces más antiguas. Estos principios también ayudan a identificar y corregir {ref}`code-smells` en el código.
 
 :::{admonition} Objetivos de Aprendizaje
 :class: tip

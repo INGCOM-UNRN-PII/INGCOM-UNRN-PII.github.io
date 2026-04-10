@@ -1,11 +1,11 @@
 ---
-title: "Java 4: Excepciones Orientadas a Objetos"
+title: "6: Excepciones Orientadas a Objetos"
 subtitle: "Diseño de Jerarquías y Contratos de Error"
 subject: Programación Orientada a Objetos
 ---
 
 (java-excepciones)=
-# Java 4: Excepciones Orientadas a Objetos
+# Java 3: Excepciones Orientadas a Objetos
 
 Este capítulo es una continuación de {ref}`excepciones-en-java`, donde vimos los fundamentos del manejo de errores, la sintaxis `try-catch-finally`, y la diferencia entre excepciones checked y unchecked. Ahora profundizamos en **cómo las excepciones son objetos** y cómo diseñar sistemas de excepciones que aprovechen la orientación a objetos.
 
