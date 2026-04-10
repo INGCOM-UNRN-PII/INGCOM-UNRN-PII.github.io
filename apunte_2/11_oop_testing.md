@@ -7,7 +7,7 @@ subject: Programación Orientada a Objetos
 (oop8-testing)=
 # OOP 8: Testing en Programación Orientada a Objetos
 
-En los capítulos anteriores diseñamos sistemas orientados a objetos aplicando principios sólidos, patrones de diseño y técnicas de refactoring. Pero, ¿cómo sabemos que nuestro código **funciona correctamente**? ¿Cómo nos aseguramos de que los cambios futuros **no rompan funcionalidad existente**?
+En los capítulos anteriores diseñamos sistemas orientados a objetos aplicando principios sólidos ({ref}`oop-solid`), patrones de diseño ({ref}`oop4-patrones-diseno`) y técnicas de refactoring ({ref}`oop7-refactoring-code-smells`). Pero, ¿cómo sabemos que nuestro código **funciona correctamente**? ¿Cómo nos aseguramos de que los cambios futuros **no rompan funcionalidad existente**?
 
 El **testing** es la disciplina que permite verificar el comportamiento del software de manera sistemática y repetible. En el contexto de la programación orientada a objetos, el testing presenta desafíos y oportunidades particulares debido a las características del paradigma: encapsulamiento, herencia, polimorfismo y la interacción entre objetos.
 
@@ -1086,7 +1086,7 @@ public class Servicio {
 (relacion-solid-testing)=
 ### Relación SOLID-Testing
 
-Los principios SOLID facilitan el testing:
+Los principios SOLID (ver {ref}`oop-solid`) facilitan el testing:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐

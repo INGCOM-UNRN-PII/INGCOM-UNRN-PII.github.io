@@ -12,7 +12,20 @@ description:
 Este capítulo presenta los fundamentos conceptuales del paradigma orientado a objetos (POO). Se explora la transición desde el paradigma estructurado, se introducen los conceptos esenciales que definen este paradigma, y se desarrollan las heurísticas que permiten identificar objetos a partir de los requerimientos de un sistema.
 
 :::{note}
-Este capítulo se enfoca en los **conceptos del paradigma**, independientes de cualquier lenguaje de programación particular. Los detalles de implementación en lenguajes específicos se tratarán en capítulos posteriores.
+Este capítulo se enfoca en los **conceptos del paradigma**, independientes de cualquier lenguaje de programación particular. Los detalles de implementación en Java se abordan en {ref}`java-sintaxis-clases`, mientras que las relaciones entre objetos se profundizan en {ref}`oop2-encapsulamiento-relaciones`.
+:::
+
+:::{admonition} Objetivos de Aprendizaje
+:class: tip
+
+Al finalizar este capítulo, serás capaz de:
+
+1. Comprender la transición del paradigma estructurado al orientado a objetos
+2. Identificar los conceptos fundamentales de POO: objetos, clases, atributos y métodos
+3. Aplicar la heurística lingüística para modelar dominios
+4. Distinguir entre objetos del dominio y del sistema
+5. Evaluar abstracciones usando los filtros de relevancia y complejidad
+6. Modelar sistemas básicos usando burbujas conceptuales
 :::
 
 (introduccion-la-transicion-de-paradigma)=
@@ -1416,18 +1429,18 @@ Este capítulo ha presentado los **fundamentos conceptuales** del paradigma orie
 
 4. **Abstracción y Encapsulamiento**:
    - La abstracción selecciona solo lo relevante para el objetivo.
-   - El encapsulamiento fusiona datos y comportamiento y oculta detalles.
+   - El encapsulamiento fusiona datos y comportamiento y oculta detalles (ver {ref}`encapsulamiento-concepto`).
 
 5. **Heurísticas de análisis**:
    - Sustantivos → Clases o Atributos.
    - Verbos → Métodos.
    - Filtro de abstracción: eliminar lo irrelevante.
-   - Filtro de complejidad: decidir entre primitivo y clase nueva.
+   - Filtro de complejidad: decidir entre primitivo y clase nueva (implementación en {ref}`java-sintaxis-clases`).
 
 6. **Principios de diseño**:
-   - Los objetos colaboran, ninguno hace todo.
-   - Responsabilidad única: una razón para cambiar.
-   - Alta cohesión, bajo acoplamiento.
+   - Los objetos colaboran, ninguno hace todo (ver {ref}`tipos-de-relaciones`).
+   - Responsabilidad única: una razón para cambiar (ver {ref}`s-principio-de-responsabilidad-unica`).
+   - Alta cohesión, bajo acoplamiento (ver {ref}`d-principio-de-inversion-de-dependencias`).
 
 :::{important}
 El diseño orientado a objetos es un **proceso iterativo** y **contextual**. No existe un único diseño "correcto"; el mejor diseño depende del problema específico, los requerimientos, y las restricciones del proyecto. Las heurísticas y principios presentados son guías, no reglas absolutas.

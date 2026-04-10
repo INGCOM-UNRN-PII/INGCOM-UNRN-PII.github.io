@@ -104,7 +104,7 @@ Momentos ideales para refactorizar:
 1. **Antes de agregar una feature**: "Primero limpio, luego agrego"
 2. **Después de arreglar un bug**: "Si fue difícil encontrarlo, simplifiquemos"
 3. **Durante code review**: "Este código podría ser más claro"
-4. **Cuando el código huele mal**: Detectás un code smell
+4. **Cuando el código huele mal**: Detectás un {ref}`code-smells-detectando-problemas`
 
 (cuando-no-refactorizar)=
 ### ¿Cuándo NO Refactorizar?
@@ -1772,7 +1772,7 @@ public String clasificar(int valor) {    // +1 base
 (relacion-solid-smells)=
 ## Relación entre SOLID y Code Smells
 
-Los code smells frecuentemente indican violaciones de principios SOLID:
+Los code smells frecuentemente indican violaciones de principios SOLID (ver {ref}`oop-solid`):
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐

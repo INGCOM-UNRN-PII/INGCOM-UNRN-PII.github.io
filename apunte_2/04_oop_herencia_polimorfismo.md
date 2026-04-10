@@ -430,7 +430,7 @@ Cualquier clase que implemente `Ordenable` puede ser ordenada, sin importar qué
 
 #### 3. Polimorfismo Paramétrico (Genéricos)
 
-Escribir código que funciona con cualquier tipo.
+Escribir código que funciona con cualquier tipo (profundizado en {ref}`genericos-java`).
 
 ```
 // Una lista que funciona con cualquier tipo T
@@ -995,11 +995,11 @@ Diseñemos un sistema que maneje diferentes medios de pago:
 
 ### Principios SOLID
 
-- **S**ingle Responsibility: Una razón para cambiar
-- **O**pen/Closed: Extensible, no modificable
-- **L**iskov Substitution: Subclases sustituibles
-- **I**nterface Segregation: Interfaces pequeñas
-- **D**ependency Inversion: Depender de abstracciones
+- **S**ingle Responsibility: Una razón para cambiar (ver {ref}`s-principio-de-responsabilidad-unica`)
+- **O**pen/Closed: Extensible, no modificable (ver {ref}`o-principio-abierto-cerrado`)
+- **L**iskov Substitution: Subclases sustituibles (ver {ref}`l-principio-de-sustitucion-de-liskov`)
+- **I**nterface Segregation: Interfaces pequeñas (ver {ref}`i-principio-de-segregacion-de-interfaces`)
+- **D**ependency Inversion: Depender de abstracciones (ver {ref}`d-principio-de-inversion-de-dependencias`)
 
 ---
 

@@ -7,7 +7,7 @@ subject: Programación Orientada a Objetos
 (oop10-antipatrones)=
 # OOP 10: Anti-patrones y Code Smells
 
-Hasta ahora estudiamos cómo diseñar bien: patrones, principios SOLID, testing, arquitectura. Pero igual de importante es aprender a **reconocer qué está mal**. Los anti-patrones y code smells son señales de alerta que indican problemas en el diseño, muchos de ellos sutiles y difíciles de detectar hasta que el código ya está deteriorado.
+Hasta ahora estudiamos cómo diseñar bien: patrones ({ref}`oop4-patrones-diseno`), principios SOLID ({ref}`oop-solid`), testing ({ref}`oop8-testing`), refactoring ({ref}`oop7-refactoring-code-smells`). Pero igual de importante es aprender a **reconocer qué está mal**. Los anti-patrones y code smells son señales de alerta que indican problemas en el diseño, muchos de ellos sutiles y difíciles de detectar hasta que el código ya está deteriorado.
 
 :::{admonition} Objetivos de Aprendizaje
 :class: tip

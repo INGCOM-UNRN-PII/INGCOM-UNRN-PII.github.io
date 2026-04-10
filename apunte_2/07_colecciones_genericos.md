@@ -328,7 +328,7 @@ public class EjemploHashSet {
 | `contains(elemento)` | O(1) | Muy rápido |
 
 :::{important}
-**Requisito para HashSet**: Los objetos deben implementar correctamente `hashCode()` y `equals()`. Si no, el comportamiento es impredecible.
+**Requisito para HashSet**: Los objetos deben implementar correctamente `hashCode()` y `equals()` (ver {ref}`equals-hashcode`). Si no, el comportamiento es impredecible.
 :::
 
 (treeset-java)=

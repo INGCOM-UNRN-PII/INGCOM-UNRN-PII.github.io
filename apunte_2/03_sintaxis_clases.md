@@ -19,6 +19,19 @@ Aquí aprenderás cómo **materializar** esos conceptos en código Java funciona
 - Conocer los principios de {ref}`encapsulamiento-concepto` y {ref}`tipos-de-relaciones`
 :::
 
+:::{admonition} Objetivos de Aprendizaje
+:class: tip
+
+Al finalizar este capítulo, serás capaz de:
+
+1. Escribir la sintaxis completa de una clase en Java
+2. Implementar constructores para inicializar objetos correctamente
+3. Aplicar modificadores de acceso para controlar el encapsulamiento
+4. Crear y utilizar métodos de instancia y estáticos
+5. Implementar relaciones de asociación, composición y agregación en código
+6. Usar la palabra clave `this` apropiadamente
+:::
+
 ---
 
 ## Bloque 1: De la "Burbuja" al Código
@@ -2435,6 +2448,7 @@ Este capítulo cubrió la transición desde el diseño conceptual (las "burbujas
 - Se diferencian por la **lista de parámetros** (cantidad o tipos)
 - Común en **constructores** para ofrecer diferentes formas de crear objetos
 - Proporciona **flexibilidad** sin cambiar la interfaz conceptual
+- No confundir con **sobreescritura** (ver {ref}`sobreescritura-override`)
 
 (resumen-relaciones)=
 ### Relaciones entre Clases
@@ -2475,9 +2489,9 @@ Este capítulo materializa los conceptos abstractos del capítulo {ref}`fundamen
 
 Con los fundamentos de sintaxis, encapsulamiento y asociaciones establecidos, la siguiente unidad abordará conceptos más avanzados del paradigma:
 
-- **Herencia:** Crear jerarquías de clases donde las subclases extienden a las superclases
-- **Polimorfismo:** Permitir que diferentes objetos respondan al mismo mensaje de formas distintas
-- **Conversiones Upcast/Downcast:** Trabajar con referencias de tipos diferentes en una jerarquía
+- **Herencia:** Crear jerarquías de clases donde las subclases extienden a las superclases (ver {ref}`java-herencia-polimorfismo`)
+- **Polimorfismo:** Permitir que diferentes objetos respondan al mismo mensaje de formas distintas (ver {ref}`polimorfismo-concepto`)
+- **Interfaces y clases abstractas:** Definir contratos y comportamientos compartidos (ver {ref}`clases-abstractas-e-interfaces`)
 
 Estos conceptos permitirán crear diseños más flexibles y aprovechar al máximo la reutilización de código que ofrece el paradigma orientado a objetos.
 

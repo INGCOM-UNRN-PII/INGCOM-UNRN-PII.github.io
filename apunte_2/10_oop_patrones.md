@@ -7,7 +7,7 @@ subject: Programación Orientada a Objetos
 (oop4-patrones-diseno)=
 # OOP 4: Patrones de Diseño Fundamentales
 
-En los capítulos anteriores dominamos los fundamentos de OOP ({ref}`fundamentos-de-la-programacion-orientada-a-objetos`), las relaciones entre objetos ({ref}`oop2-encapsulamiento-relaciones`), y los conceptos de herencia, polimorfismo y principios SOLID ({ref}`oop3-herencia-polimorfismo`).
+En los capítulos anteriores dominamos los fundamentos de OOP ({ref}`fundamentos-de-la-programacion-orientada-a-objetos`), las relaciones entre objetos ({ref}`oop2-encapsulamiento-relaciones`), y los conceptos de herencia, polimorfismo y principios SOLID ({ref}`oop3-herencia-polimorfismo` y {ref}`oop-solid`).
 
 Ahora aplicamos todo ese conocimiento en **patrones de diseño**: soluciones elegantes y probadas a problemas que aparecen una y otra vez en el desarrollo de software.
 
@@ -287,11 +287,11 @@ Singleton s2 = Singleton.obtenerInstancia();
 
 El Singleton es uno de los patrones más criticados:
 
-- Introduce **estado global** (dificulta testing)
-- Viola el **Principio de Responsabilidad Única** (la clase controla su ciclo de vida)
+- Introduce **estado global** (dificulta testing, ver {ref}`oop8-testing`)
+- Viola el **Principio de Responsabilidad Única** (ver {ref}`s-principio-de-responsabilidad-unica`) - la clase controla su ciclo de vida
 - Dificulta el **testing** (no se puede inyectar mock fácilmente)
 
-Alternativa: **Inyección de Dependencias** - crear la instancia externamente e inyectarla donde se necesita.
+Alternativa: **Inyección de Dependencias** (ver {ref}`d-principio-de-inversion-de-dependencias`) - crear la instancia externamente e inyectarla donde se necesita.
 :::
 
 ---

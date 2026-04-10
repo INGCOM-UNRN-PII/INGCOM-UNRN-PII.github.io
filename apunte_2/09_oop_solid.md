@@ -9,7 +9,7 @@ subject: Programación Orientada a Objetos
 
 En los capítulos anteriores construimos objetos, establecimos relaciones, aplicamos patrones y definimos contratos. Pero, ¿cómo sabemos si nuestro diseño es **bueno**? ¿Qué características debe tener un sistema orientado a objetos para ser **mantenible**, **extensible** y **robusto**?
 
-Los **principios SOLID** son cinco directrices fundamentales que guían el diseño de software orientado a objetos hacia sistemas de alta calidad. Fueron recopilados y popularizados por **Robert C. Martin** (Uncle Bob) a principios de los 2000, aunque cada principio tiene raíces más antiguas.
+Los **principios SOLID** son cinco directrices fundamentales que guían el diseño de software orientado a objetos hacia sistemas de alta calidad. Fueron recopilados y popularizados por **Robert C. Martin** (Uncle Bob) a principios de los 2000, aunque cada principio tiene raíces más antiguas. Estos principios también ayudan a identificar y corregir {ref}`code-smells-detectando-problemas` en el código.
 
 :::{admonition} Objetivos de Aprendizaje
 :class: tip
@@ -663,13 +663,13 @@ public class Cuadrado implements Figura {
 (lsp-relacion-contratos)=
 ### Relación con Diseño por Contratos
 
-LSP está íntimamente relacionado con el **Diseño por Contratos** que vimos en el capítulo anterior:
+LSP está íntimamente relacionado con el **Diseño por Contratos** (ver {ref}`oop-contratos`):
 
 | Concepto | LSP | DbC |
 |----------|-----|-----|
-| Entrada | Precondiciones no fortalecidas | Precondiciones del contrato |
-| Salida | Postcondiciones no debilitadas | Postcondiciones del contrato |
-| Estado | Invariantes preservados | Invariantes de clase |
+| Entrada | Precondiciones no fortalecidas | Precondiciones del contrato (ver {ref}`precondiciones-lo-que-el-cliente-debe-garantizar`) |
+| Salida | Postcondiciones no debilitadas | Postcondiciones del contrato (ver {ref}`postcondiciones-lo-que-el-metodo-garantiza`) |
+| Estado | Invariantes preservados | Invariantes de clase (ver {ref}`invariantes-de-clase-lo-que-siempre-debe-ser-verdad`) |
 
 ---
 

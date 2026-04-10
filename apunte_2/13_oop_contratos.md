@@ -7,9 +7,9 @@ subject: Programación Orientada a Objetos
 (oop5-diseno-contratos)=
 # OOP 5: Diseño por Contratos
 
-En los capítulos anteriores construimos objetos con buena estructura y relaciones claras. Pero, ¿cómo garantizamos que esos objetos se **comporten correctamente**? ¿Cómo especificamos qué espera un método y qué promete entregar?
+En los capítulos anteriores construimos objetos con buena estructura y relaciones claras ({ref}`fundamentos-de-la-programacion-orientada-a-objetos`, {ref}`oop2-encapsulamiento-relaciones`). Pero, ¿cómo garantizamos que esos objetos se **comporten correctamente**? ¿Cómo especificamos qué espera un método y qué promete entregar?
 
-El **Diseño por Contratos** (Design by Contract, DbC) es una metodología que responde estas preguntas estableciendo **obligaciones y garantías formales** entre los objetos que colaboran.
+El **Diseño por Contratos** (Design by Contract, DbC) es una metodología que responde estas preguntas estableciendo **obligaciones y garantías formales** entre los objetos que colaboran. Este enfoque se relaciona estrechamente con el {ref}`principio-sustitucion-liskov` y con el manejo de {ref}`java-excepciones`.
 
 :::{admonition} Objetivos de Aprendizaje
 :class: tip

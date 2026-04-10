@@ -922,7 +922,7 @@ public class Pedido implements Serializable { ... }
 ```
 
 - Clases **no relacionadas** comparten comportamiento
-- Querés definir un **contrato** sin imponer jerarquía
+- Querés definir un **contrato** sin imponer jerarquía (ver {ref}`oop-contratos`)
 - Necesitás **herencia múltiple** de tipos
 
 ### Ejemplo Combinado
@@ -1061,6 +1061,8 @@ Este comportamiento se llama **dispatch dinámico** y es lo que hace posible el 
 El **Principio de Sustitución de Liskov** (LSP) establece:
 
 > "Si S es un subtipo de T, entonces los objetos de tipo T pueden ser reemplazados por objetos de tipo S sin alterar las propiedades deseables del programa."
+
+Este principio es fundamental para el diseño de jerarquías correctas. Para un análisis detallado, consultá {ref}`l-principio-de-sustitucion-de-liskov`.
 
 **Ejemplo que viola LSP:**
 
