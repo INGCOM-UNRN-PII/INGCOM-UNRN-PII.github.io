@@ -93,6 +93,19 @@ public class Persona {
 
 Cada zona tiene un propósito específico y reglas sintácticas propias que se detallan a continuación.
 
+```{mermaid}
+classDiagram
+    class Persona {
+        -String nombre
+        -int edad
+        +Persona(String, int)
+        +saludar()
+        +cumplirAnios()
+    }
+    
+    note for Persona "Estructura tripartita:\n1. Atributos (estado)\n2. Constructor (inicialización)\n3. Métodos (comportamiento)"
+```
+
 :::{note}
 La palabra clave `public` antes de `class` indica que la clase es accesible desde cualquier otra clase del programa. Este es un **modificador de acceso** que se explicará en profundidad en la sección {ref}`modificadores-acceso-java`.
 :::
