@@ -270,26 +270,19 @@ termostato.estaActivo = true;          // ❌ Viola invariante 3
 
 **Con encapsulamiento (buen diseño):**
 
-```
-Termostato {
-    // Estado privado (no accesible directamente)
-    - temperaturaObjetivo: 25
-    - modo: "calefacción"
-    - estaActivo: true
+```{mermaid}
+classDiagram
+    class Termostato {
+        -double temperaturaObjetivo
+        -String modo
+        -boolean estaActivo
+        +ajustarTemperatura(double nuevaTemp) boolean
+        +cambiarModo(String nuevoModo) boolean
+        +obtenerEstado() String
+        +obtenerTemperaturaActual() double
+    }
     
-    // Interfaz pública (métodos controlados)
-    + ajustarTemperatura(nuevaTemp)
-        → Si nuevaTemp < 15 o > 30: rechazar
-        → Si no: actualizar temperaturaObjetivo
-    
-    + cambiarModo(nuevoModo)
-        → Si nuevoModo no es válido: rechazar
-        → Si nuevoModo es "apagado": estaActivo = false
-        → Si no: actualizar modo, estaActivo = true
-    
-    + obtenerEstado()
-        → Retorna información del estado actual
-}
+    note for Termostato "Estado privado protegido; validación en métodos públicos; Invariantes garantizados"
 ```
 
 **Beneficios observados:**
@@ -421,6 +414,51 @@ La **asociación** es la relación más general entre dos clases. Indica que exi
 
 **Ejemplos de asociación:**
 
+```{mermaid}
+classDiagram
+    class Estudiante {
+        -String nombre
+        -String legajo
+        +inscribirCurso(Curso)
+    }
+    
+    class Curso {
+        -String nombre
+        -String codigo
+        +agregarEstudiante(Estudiante)
+    }
+    
+    class Medico {
+        -String nombre
+        -String matricula
+        +atenderPaciente(Paciente)
+    }
+    
+    class Paciente {
+        -String nombre
+        -String dni
+        +consultarMedico(Medico)
+    }
+    
+    class Cliente {
+        -String nombre
+        -String email
+        +realizarPedido() Pedido
+    }
+    
+    class Pedido {
+        -int numero
+        -Date fecha
+        -Cliente cliente
+    }
+    
+    Estudiante "*" -- "*" Curso : se inscribe
+    Medico "1..*" -- "*" Paciente : atiende
+    Cliente "1" -- "*" Pedido : realiza
+    
+    note for Estudiante "Independencia de ciclo de vida:<br>los objetos pueden existir por separado"
+```
+
 - `Estudiante` – `Curso`: Un estudiante se inscribe en cursos
 - `Medico` – `Paciente`: Un médico atiende a pacientes
 - `Cliente` – `Pedido`: Un cliente realiza pedidos
@@ -516,6 +554,48 @@ El diamante negro indica propiedad fuerte.
 
 **Ejemplos de composición:**
 
+```{mermaid}
+classDiagram
+    class Universidad {
+        -String nombre
+        -List~Facultad~ facultades
+        +crearFacultad(String nombre)
+    }
+    
+    class Facultad {
+        -String nombre
+        -List~Departamento~ departamentos
+    }
+    
+    class Libro {
+        -String titulo
+        -List~Pagina~ paginas
+        +agregarPagina(String contenido)
+    }
+    
+    class Pagina {
+        -int numero
+        -String contenido
+    }
+    
+    class Casa {
+        -String direccion
+        -List~Habitacion~ habitaciones
+        +construirHabitacion()
+    }
+    
+    class Habitacion {
+        -String nombre
+        -double superficie
+    }
+    
+    Universidad "1" *-- "*" Facultad : compuesta por
+    Libro "1" *-- "1..*" Pagina : compuesta por
+    Casa "1" *-- "1..*" Habitacion : compuesta por
+    
+    note for Universidad "Composición (♦):<br>Ciclo de vida dependiente<br>Las partes no existen sin el todo"
+```
+
 - `Universidad` ♦─ `Facultad`: Las facultades existen porque existe la universidad
 - `Libro` ♦─ `Pagina`: Las páginas son parte integral del libro
 - `Casa` ♦─ `Habitacion`: Las habitaciones no existen fuera de la casa
@@ -525,25 +605,29 @@ El diamante negro indica propiedad fuerte.
 
 Una factura **está compuesta** por líneas de detalle:
 
-```
-┌─────────────────────────────────┐
-│          Factura                │
-│  - numero: "F-2024-001"         │
-│  - fecha: 2024-03-15            │
-│  - cliente: "Juan Pérez"        │
-│                                 │
-│  ♦─── LineaDetalle              │
-│       - producto: "Laptop"      │
-│       - cantidad: 1             │
-│       - precioUnitario: 1500.00 │
-│                                 │
-│  ♦─── LineaDetalle              │
-│       - producto: "Mouse"       │
-│       - cantidad: 2             │
-│       - precioUnitario: 25.00   │
-│                                 │
-│  + calcularTotal(): 1550.00     │
-└─────────────────────────────────┘
+```{mermaid}
+classDiagram
+    class Factura {
+        -String numero
+        -Date fecha
+        -String cliente
+        -List~LineaDetalle~ lineas
+        +agregarLinea(String producto, int cantidad, double precio)
+        +calcularTotal() double
+        +eliminar()
+    }
+    
+    class LineaDetalle {
+        -String producto
+        -int cantidad
+        -double precioUnitario
+        +calcularSubtotal() double
+    }
+    
+    Factura "1" *-- "*" LineaDetalle : compuesta por
+    
+    note for Factura "Al eliminar la factura,<br>las líneas se eliminan automáticamente"
+    note for LineaDetalle "No existe sin su factura padre"
 ```
 
 **¿Por qué es composición?**
@@ -615,6 +699,56 @@ El diamante blanco indica una relación de pertenencia más laxa.
 
 **Ejemplos de agregación:**
 
+```{mermaid}
+classDiagram
+    class Equipo {
+        -String nombre
+        -int fundacion
+        -List~Jugador~ jugadores
+        +agregarJugador(Jugador)
+        +removerJugador(Jugador)
+        +obtenerPlantilla() List~Jugador~
+    }
+    
+    class Jugador {
+        -String nombre
+        -String posicion
+        -int añoNacimiento
+        +cambiarEquipo(Equipo)
+    }
+    
+    class Biblioteca {
+        -String nombre
+        -List~Libro~ libros
+        +agregarLibro(Libro)
+        +prestarLibro(Libro)
+    }
+    
+    class Libro {
+        -String titulo
+        -String isbn
+        -boolean disponible
+    }
+    
+    class PlayList {
+        -String nombre
+        -List~Cancion~ canciones
+        +agregarCancion(Cancion)
+    }
+    
+    class Cancion {
+        -String titulo
+        -String artista
+        -int duracion
+    }
+    
+    Equipo "0..*" o-- "*" Jugador : agrupa
+    Biblioteca "0..*" o-- "*" Libro : contiene
+    PlayList "*" o-- "*" Cancion : incluye
+    
+    note for Equipo "Agregación (◊):<br>Ciclo de vida independiente<br>Los objetos pueden existir por separado"
+```
+
 - `Equipo` ◊─ `Jugador`: Los jugadores pueden cambiar de equipo
 - `Biblioteca` ◊─ `Libro`: Los libros existían antes y pueden moverse entre bibliotecas
 - `PlayList` ◊─ `Cancion`: Las canciones pueden estar en múltiples playlists
@@ -624,24 +758,29 @@ El diamante blanco indica una relación de pertenencia más laxa.
 
 Un equipo de fútbol **agrupa** jugadores:
 
-```
-┌─────────────────────────────────┐
-│        Equipo                   │
-│  - nombre: "River Plate"        │
-│  - fundacion: 1901              │
-│                                 │
-│  ◊─── Jugador                   │
-│       - nombre: "Enzo Pérez"    │
-│       - posicion: "Mediocampo"  │
-│       - añoNacimiento: 1986     │
-│                                 │
-│  ◊─── Jugador                   │
-│       - nombre: "Nacho Fernández│
-│       - posicion: "Mediocampo"  │
-│       - añoNacimiento: 1990     │
-│                                 │
-│  + obtenerPlantilla()           │
-└─────────────────────────────────┘
+```{mermaid}
+classDiagram
+    class Equipo {
+        -String nombre
+        -int fundacion
+        -List~Jugador~ plantilla
+        +agregarJugador(Jugador)
+        +transferirJugador(Jugador, Equipo)
+        +obtenerPlantilla() List~Jugador~
+    }
+    
+    class Jugador {
+        -String nombre
+        -String posicion
+        -int añoNacimiento
+        -Equipo equipoActual
+        +cambiarEquipo(Equipo nuevoEquipo)
+    }
+    
+    Equipo "0..1" o-- "*" Jugador : agrupa
+    
+    note for Equipo "Si el equipo se disuelve,<br>los jugadores siguen existiendo"
+    note for Jugador "Pueden cambiar de equipo<br>o pertenecer a selección nacional"
 ```
 
 **¿Por qué es agregación?**
@@ -742,22 +881,57 @@ Tanto la composición como la agregación son instancias del **patrón estructur
 
 Un sistema de biblioteca puede combinar composición y agregación:
 
-```
-Biblioteca
-    ♦─── Seccion  (Composición: las secciones son creadas por la biblioteca)
-    ◊─── Libro    (Agregación: los libros preexisten y pueden moverse)
-
-Libro
-    ♦─── Pagina   (Composición: las páginas son parte del libro)
-    ◊─── Autor    (Agregación: los autores existen independientemente)
+```{mermaid}
+classDiagram
+    class Biblioteca {
+        -String nombre
+        -List~Seccion~ secciones
+        -List~Libro~ libros
+        +crearSeccion(String nombre)
+        +adquirirLibro(Libro)
+        +prestarLibro(Libro, Socio)
+    }
+    
+    class Seccion {
+        -String nombre
+        -String ubicacion
+        +agregarLibro(Libro)
+    }
+    
+    class Libro {
+        -String titulo
+        -String isbn
+        -List~Pagina~ paginas
+        -List~Autor~ autores
+        +agregarAutor(Autor)
+    }
+    
+    class Pagina {
+        -int numero
+        -String contenido
+    }
+    
+    class Autor {
+        -String nombre
+        -String nacionalidad
+        -List~Libro~ obrasPublicadas
+    }
+    
+    Biblioteca "1" *-- "*" Seccion : compuesta por
+    Biblioteca "1" o-- "*" Libro : contiene
+    Libro "1" *-- "1..*" Pagina : compuesta por
+    Libro "*" o-- "1..*" Autor : escrito por
+    
+    note for Biblioteca "Mezcla de relaciones:<br>♦ Composición con Secciones<br>◊ Agregación con Libros"
+    note for Libro "♦ Composición con Páginas<br>◊ Agregación con Autores"
 ```
 
 **Interpretación:**
 
-- Una `Biblioteca` **crea** sus `Secciones` (Infantil, Referencia, etc.)
-- Una `Biblioteca` **contiene** `Libros` que fueron adquiridos
-- Un `Libro` **está compuesto** por `Paginas`
-- Un `Libro` **está asociado** a `Autores` (que pueden escribir múltiples libros)
+- Una `Biblioteca` **crea** sus `Secciones` (Infantil, Referencia, etc.) → **Composición**
+- Una `Biblioteca` **contiene** `Libros` que fueron adquiridos → **Agregación**
+- Un `Libro` **está compuesto** por `Paginas` → **Composición**
+- Un `Libro` **está asociado** a `Autores` (que pueden escribir múltiples libros) → **Agregación**
 
 (caso-estudio-sistema-universidad)=
 ### Caso de Estudio: Sistema Universitario
