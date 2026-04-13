@@ -99,7 +99,7 @@ void saludar(struct Persona p) {
 }
 ```
 
-Este enfoque presenta problemas estructurales serios:
+Este enfoque presenta algunos problemas estructurales:
 
 1. **Acoplamiento alto**: La función `saludar()` debe conocer todos los tipos de nacionalidades posibles y sus comportamientos específicos.
 
@@ -152,21 +152,21 @@ La idea central de la POO es **fusionar el dato y el comportamiento en una misma
 
 Conceptualmente, el ejemplo de las nacionalidades se resolvería así en POO:
 
+```{mermaid}
+classDiagram
+    class Persona {
+        -String nombre
+        -int edad
+        -String nacionalidad
+        +saludar()
+        +despedirse()
+        +presentarse()
+    }
+    
+    note for Persona "Fusión de datos y comportamiento:<br>El objeto sabe cómo saludarse a sí mismo"
 ```
-┌─────────────────────────────────────┐
-│           Persona                   │
-├─────────────────────────────────────┤
-│  DATOS (Estado):                    │
-│    - nombre                         │
-│    - edad                           │
-│    - nacionalidad                   │
-├─────────────────────────────────────┤
-│  COMPORTAMIENTO:                    │
-│    - saludar()                      │
-│    - despedirse()                   │
-│    - presentarse()                  │
-└─────────────────────────────────────┘
 
+```java
 // Uso conceptual:
 persona.saludar()   // El objeto sabe cómo saludarse a sí mismo
 ```
@@ -199,14 +199,54 @@ Funciones: prestarLibro(), devolverLibro(), buscarLibro(), etc.
 ```
 
 **Visión orientada a objetos**:
+
+```{mermaid}
+classDiagram
+    class Biblioteca {
+        -List~Libro~ libros
+        -List~Socio~ socios
+        +prestar(Socio, Libro) Prestamo
+        +devolver(Prestamo)
+        +verificarDisponibilidad(Libro) boolean
+    }
+    
+    class Libro {
+        -String titulo
+        -String isbn
+        -boolean disponible
+        +marcarPrestado()
+        +marcarDisponible()
+    }
+    
+    class Socio {
+        -String nombre
+        -int numeroSocio
+        -List~Prestamo~ prestamosActivos
+        +solicitarLibro(Libro)
+        +devolverLibro(Prestamo)
+    }
+    
+    class Prestamo {
+        -Socio socio
+        -Libro libro
+        -Date fechaPrestamo
+        -Date fechaVencimiento
+        +estaVencido() boolean
+    }
+    
+    Biblioteca "1" -- "*" Libro : gestiona
+    Biblioteca "1" -- "*" Socio : registra
+    Prestamo "*" -- "1" Socio : realiza
+    Prestamo "*" -- "1" Libro : involucra
+    
+    note for Biblioteca "Cada entidad tiene<br>responsabilidades claras<br>y colaboran entre sí"
 ```
-Objetos: Libro, Socio, Préstamo, Biblioteca
-Interacciones (comportamiento): 
-  - El socio le pide un libro a la biblioteca
-  - La biblioteca verifica disponibilidad
-  - El libro se marca como prestado
-  - Se crea un préstamo que relaciona socio y libro
-```
+
+**Interacciones (comportamiento):**
+- El socio le pide un libro a la biblioteca
+- La biblioteca verifica disponibilidad
+- El libro se marca como prestado
+- Se crea un préstamo que relaciona socio y libro
 
 En la visión orientada a objetos, cada entidad tiene "vida propia": el libro sabe si está disponible, el socio sabe cuántos préstamos activos tiene, el préstamo sabe cuándo vence. Esta distribución de responsabilidades hace que el sistema sea más fácil de entender, modificar y extender
 
@@ -240,21 +280,18 @@ Pero los planos **no son una casa**. Son la descripción de cómo construir casa
 
 De la misma manera, una clase `Persona` describe qué información tiene una persona (nombre, edad, nacionalidad) y qué puede hacer (saludar, presentarse), pero la clase en sí no es ninguna persona en particular.
 
-```
-┌─────────────────────────────────────┐
-│        Clase: Persona               │
-│        (El molde)                   │
-├─────────────────────────────────────┤
-│  Atributos:                         │
-│    - nombre                         │
-│    - edad                           │
-│    - nacionalidad                   │
-├─────────────────────────────────────┤
-│  Métodos:                           │
-│    - saludar()                      │
-│    - cumplirAnios()                 │
-│    - presentarse()                  │
-└─────────────────────────────────────┘
+```{mermaid}
+classDiagram
+    class Persona {
+        -String nombre
+        -int edad
+        -String nacionalidad
+        +saludar()
+        +cumplirAnios()
+        +presentarse()
+    }
+    
+    note for Persona "Clase: El molde/plantilla<br>Define estructura y comportamiento"
 ```
 
 :::{tip}
@@ -684,42 +721,58 @@ La abstracción **depende del contexto y del objetivo del sistema**. Los mismos 
 
 Considerá cómo se modelaría una "Persona" en diferentes sistemas:
 
-**Sistema de gestión universitaria:**
+```{mermaid}
+classDiagram
+    class PersonaUniversidad {
+        -String nombre
+        -String dni
+        -Date fechaNacimiento
+        -String emailInstitucional
+        -String legajo
+        -List~Carrera~ carreras
+        +inscribirCarrera(Carrera)
+        +consultarHistorial()
+    }
+    
+    class PersonaGimnasio {
+        -String nombre
+        -byte[] fotoRostro
+        -byte[] huellaDactilar
+        -boolean membresiaActiva
+        -Date fechaVencimiento
+        +verificarAcceso() boolean
+        +renovarMembresia()
+    }
+    
+    class PersonaDonante {
+        -String nombre
+        -String dni
+        -TipoSangre tipoSangre
+        -FactorRH factorRH
+        -Date ultimaDonacion
+        -List~String~ enfermedades
+        +puedeDonar() boolean
+        +registrarDonacion()
+    }
+    
+    note for PersonaUniversidad "Sistema Universitario:<br>Solo atributos académicos relevantes"
+    note for PersonaGimnasio "Control de Acceso:<br>Datos biométricos y membresía"
+    note for PersonaDonante "Donación de Sangre:<br>Datos médicos críticos"
 ```
-Clase: Persona
-├── nombre
-├── dni
-├── fecha de nacimiento
-├── email institucional
-├── legajo
-└── carreras inscriptas
 
-(Irrelevantes: color de pelo, altura, peso, tipo de sangre...)
+**Sistema de gestión universitaria:**
+```java
+// Irrelevantes: color de pelo, altura, peso, tipo de sangre...
 ```
 
 **Sistema de control de acceso a un gimnasio:**
-```
-Clase: Persona
-├── nombre
-├── foto del rostro
-├── huella dactilar
-├── membresía activa
-└── fecha de vencimiento
-
-(Irrelevantes: DNI, carrera universitaria, email...)
+```java
+// Irrelevantes: DNI, carrera universitaria, email...
 ```
 
 **Sistema de donación de sangre:**
-```
-Clase: Persona
-├── nombre
-├── dni
-├── tipo de sangre
-├── factor RH
-├── fecha última donación
-└── enfermedades preexistentes
-
-(Irrelevantes: legajo universitario, huella dactilar...)
+```java
+// Irrelevantes: legajo universitario, huella dactilar...
 ```
 
 Observá cómo la misma entidad del mundo real (una persona) se modela de formas radicalmente diferentes según el propósito del sistema.
@@ -1100,19 +1153,45 @@ Las relaciones entre objetos se estudian en profundidad en {ref}`tipos-de-relaci
 
 > "Una **biblioteca** tiene muchos **libros**. Cada libro tiene un **autor**. Los **socios** pueden tomar **préstamos** de libros."
 
-```
-┌─────────────┐         ┌─────────────┐
-│ Biblioteca  │─────────│   Libro     │
-└─────────────┘  tiene  └──────┬──────┘
-                               │ tiene
-                               ▼
-                        ┌─────────────┐
-                        │   Autor     │
-                        └─────────────┘
-
-┌─────────────┐         ┌─────────────┐
-│   Socio     │─────────│  Préstamo   │─────── Libro
-└─────────────┘  tiene  └─────────────┘ involucra
+```{mermaid}
+classDiagram
+    class Biblioteca {
+        -String nombre
+        -List~Libro~ libros
+        +agregarLibro(Libro)
+        +buscarLibro(String) Libro
+    }
+    
+    class Libro {
+        -String titulo
+        -String isbn
+        -Autor autor
+        +getAutor() Autor
+    }
+    
+    class Autor {
+        -String nombre
+        -String nacionalidad
+        +getLibros() List~Libro~
+    }
+    
+    class Socio {
+        -String nombre
+        -List~Prestamo~ prestamos
+        +tomarPrestamo(Libro)
+    }
+    
+    class Prestamo {
+        -Socio socio
+        -Libro libro
+        -Date fechaPrestamo
+        -Date fechaDevolucion
+    }
+    
+    Biblioteca "1" -- "*" Libro : tiene
+    Libro "*" -- "1" Autor : tiene
+    Socio "1" -- "*" Prestamo : realiza
+    Prestamo "*" -- "1" Libro : involucra
 ```
 
 (ejemplo-completo-de-analisis)=
@@ -1163,49 +1242,66 @@ Las relaciones entre objetos se estudian en profundidad en {ref}`tipos-de-relaci
 
 **Paso 4: Modelo resultante**
 
-```
-Clase: Mascota
-├── nombre: texto
-├── especie: texto
-├── raza: texto
-├── fechaNacimiento: Fecha
-├── duenio: Duenio
-└── obtenerEdad(): entero
-
-Clase: Duenio
-├── nombre: texto
-├── telefono: texto
-├── direccion: Direccion
-└── obtenerMascotas(): lista de Mascota
-
-Clase: Direccion
-├── calle: texto
-├── numero: texto
-├── ciudad: texto
-├── codigoPostal: texto
-└── formatear(): texto
-
-Clase: Veterinario
-├── nombre: texto
-├── matricula: texto
-└── realizarConsulta(mascota, motivo): Consulta
-
-Clase: Consulta
-├── fecha: Fecha
-├── mascota: Mascota
-├── veterinario: Veterinario
-├── motivo: texto
-├── diagnostico: texto
-├── tratamiento: texto
-└── registrarDiagnostico(diagnostico, tratamiento)
-
-Clase: Veterinaria (sistema coordinador)
-├── mascotas: lista de Mascota
-├── veterinarios: lista de Veterinario
-├── consultas: lista de Consulta
-├── registrarMascota(mascota)
-├── buscarMascota(nombre): Mascota
-└── obtenerHistorialConsultas(mascota): lista de Consulta
+```{mermaid}
+classDiagram
+    class Veterinaria {
+        -List~Mascota~ mascotas
+        -List~Veterinario~ veterinarios
+        -List~Consulta~ consultas
+        +registrarMascota(Mascota)
+        +buscarMascota(String nombre) Mascota
+        +obtenerHistorialConsultas(Mascota) List~Consulta~
+    }
+    
+    class Mascota {
+        -String nombre
+        -String especie
+        -String raza
+        -Date fechaNacimiento
+        -Duenio duenio
+        +obtenerEdad() int
+    }
+    
+    class Duenio {
+        -String nombre
+        -String telefono
+        -Direccion direccion
+        +obtenerMascotas() List~Mascota~
+    }
+    
+    class Direccion {
+        -String calle
+        -String numero
+        -String ciudad
+        -String codigoPostal
+        +formatear() String
+    }
+    
+    class Veterinario {
+        -String nombre
+        -String matricula
+        +realizarConsulta(Mascota, String) Consulta
+    }
+    
+    class Consulta {
+        -Date fecha
+        -Mascota mascota
+        -Veterinario veterinario
+        -String motivo
+        -String diagnostico
+        -String tratamiento
+        +registrarDiagnostico(String, String)
+    }
+    
+    Veterinaria "1" -- "*" Mascota : gestiona
+    Veterinaria "1" -- "*" Veterinario : emplea
+    Veterinaria "1" -- "*" Consulta : registra
+    Mascota "*" -- "1" Duenio : pertenece
+    Duenio "1" *-- "1" Direccion : tiene
+    Consulta "*" -- "1" Mascota : sobre
+    Consulta "*" -- "1" Veterinario : realiza
+    
+    note for Veterinaria "Sistema coordinador<br>que gestiona todas las entidades"
 ```
 
 (actividad-practica)=
@@ -1291,30 +1387,42 @@ Un sistema orientado a objetos es una **red de objetos que colaboran** para cump
 
 **Ejemplo de colaboración:**
 
-```
-Sistema de Facturación:
-
-┌──────────────────┐
-│     Factura      │
-├──────────────────┤
-│ - cliente        │───────►  Cliente (conoce dirección, CUIT)
-│ - lineas         │───────►  LineaFactura (conoce producto, cantidad)
-│ - calcularTotal()│
-└────────┬─────────┘
-         │
-         │ para calcular total:
-         │ 1. pide a cada linea su subtotal
-         │ 2. suma todos los subtotales
-         │ 3. aplica impuestos
-         │
-         ▼
-┌──────────────────┐
-│  LineaFactura    │
-├──────────────────┤
-│ - producto       │───────►  Producto (conoce precio)
-│ - cantidad       │
-│ - subtotal()     │  ← delega en Producto: cantidad * producto.precio
-└──────────────────┘
+```{mermaid}
+classDiagram
+    class Factura {
+        -Cliente cliente
+        -List~LineaFactura~ lineas
+        -Date fecha
+        +calcularTotal() double
+        +aplicarImpuestos() double
+    }
+    
+    class Cliente {
+        -String nombre
+        -String cuit
+        -String direccion
+        +obtenerDatos() String
+    }
+    
+    class LineaFactura {
+        -Producto producto
+        -int cantidad
+        +subtotal() double
+    }
+    
+    class Producto {
+        -String nombre
+        -double precio
+        -String codigo
+        +getPrecio() double
+    }
+    
+    Factura "1" -- "1" Cliente : emitida a
+    Factura "1" *-- "*" LineaFactura : contiene
+    LineaFactura "*" -- "1" Producto : referencia
+    
+    note for Factura "Para calcular total:<br>1. Pide a cada línea su subtotal<br>2. Suma todos los subtotales<br>3. Aplica impuestos"
+    note for LineaFactura "Delega en Producto:<br>subtotal = cantidad * producto.precio"
 ```
 
 La Factura no sabe cómo calcular el precio de un producto; **delega** esa responsabilidad en `Producto`. La `LineaFactura` no sabe el nombre del cliente; esa información está en `Cliente`. Cada objeto hace lo suyo y **colabora** con los demás.
