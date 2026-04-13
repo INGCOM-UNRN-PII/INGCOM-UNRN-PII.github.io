@@ -118,22 +118,34 @@ Esta clase tiene **tres razones para cambiar**:
 2. **RRHH** podría modificar el formato del reporte
 3. **IT** podría cambiar el esquema de base de datos
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                      EMPLEADO                               │
-├─────────────────────────────────────────────────────────────┤
-│  ┌───────────────┐  ┌───────────────┐  ┌───────────────┐   │
-│  │ Contabilidad  │  │     RRHH      │  │      IT       │   │
-│  │               │  │               │  │               │   │
-│  │ calcular      │  │ generar       │  │ guardar       │   │
-│  │ Salario()     │  │ ReporteRRHH() │  │ EnBaseDeDatos │   │
-│  └───────────────┘  └───────────────┘  └───────────────┘   │
-│           │                 │                  │            │
-│           └─────────────────┼──────────────────┘            │
-│                             │                               │
-│                    TRES RAZONES PARA CAMBIAR                │
-│                    = VIOLACIÓN DEL SRP                      │
-└─────────────────────────────────────────────────────────────┘
+```{mermaid}
+classDiagram
+    class Empleado {
+        -String nombre
+        -double salarioBase
+        -int horasTrabajadas
+        +calcularSalario() double
+        +generarReporteRRHH() String
+        +guardarEnBaseDeDatos()
+    }
+    
+    class Contabilidad {
+        <<actor>>
+    }
+    
+    class RRHH {
+        <<actor>>
+    }
+    
+    class IT {
+        <<actor>>
+    }
+    
+    Contabilidad ..> Empleado : usa calcularSalario()
+    RRHH ..> Empleado : usa generarReporteRRHH()
+    IT ..> Empleado : usa guardarEnBaseDeDatos()
+    
+    note for Empleado "❌ VIOLACIÓN SRP:<br>TRES razones para cambiar<br>TRES actores diferentes"
 ```
 
 (srp-problemas)=
@@ -185,22 +197,53 @@ public class EmpleadoRepository {
 
 Ahora cada clase tiene **una única razón para cambiar**:
 
-```
-┌──────────────────┐   ┌──────────────────┐   ┌──────────────────┐
-│ CalculadorSalario│   │GeneradorReporte  │   │EmpleadoRepository│
-├──────────────────┤   ├──────────────────┤   ├──────────────────┤
-│ Contabilidad     │   │ RRHH             │   │ IT               │
-│                  │   │                  │   │                  │
-│ UNA razón para   │   │ UNA razón para   │   │ UNA razón para   │
-│ cambiar          │   │ cambiar          │   │ cambiar          │
-└────────┬─────────┘   └────────┬─────────┘   └────────┬─────────┘
-         │                      │                      │
-         └──────────────────────┼──────────────────────┘
-                                │
-                         ┌──────┴──────┐
-                         │  Empleado   │
-                         │  (datos)    │
-                         └─────────────┘
+```{mermaid}
+classDiagram
+    class Empleado {
+        -String nombre
+        -double salarioBase
+        -int horasTrabajadas
+        +getNombre() String
+        +getSalarioBase() double
+        +getHorasTrabajadas() int
+    }
+    
+    class CalculadorSalario {
+        +calcular(Empleado) double
+    }
+    
+    class GeneradorReporteRRHH {
+        +generar(Empleado) String
+    }
+    
+    class EmpleadoRepository {
+        +guardar(Empleado)
+        +buscar(int id) Empleado
+    }
+    
+    class Contabilidad {
+        <<actor>>
+    }
+    
+    class RRHH {
+        <<actor>>
+    }
+    
+    class IT {
+        <<actor>>
+    }
+    
+    CalculadorSalario ..> Empleado : usa
+    GeneradorReporteRRHH ..> Empleado : usa
+    EmpleadoRepository ..> Empleado : usa
+    
+    Contabilidad ..> CalculadorSalario : solicita cambios
+    RRHH ..> GeneradorReporteRRHH : solicita cambios
+    IT ..> EmpleadoRepository : solicita cambios
+    
+    note for Empleado "✓ CUMPLE SRP:<br>Datos puros sin lógica de negocio"
+    note for CalculadorSalario "✓ UNA razón para cambiar:<br>Cambios en reglas salariales"
+    note for GeneradorReporteRRHH "✓ UNA razón para cambiar:<br>Cambios en formato de reporte"
 ```
 
 (srp-granularidad)=
@@ -285,19 +328,39 @@ public class CalculadorArea {
 
 Cada vez que se agrega una nueva figura, hay que **modificar** `CalculadorArea`. La clase no está cerrada para modificación.
 
+```{mermaid}
+classDiagram
+    class CalculadorArea {
+        +calcularAreaTotal(List~Object~) double
+    }
+    
+    class Rectangulo {
+        -double ancho
+        -double alto
+        +getAncho() double
+        +getAlto() double
+    }
+    
+    class Circulo {
+        -double radio
+        +getRadio() double
+    }
+    
+    class Triangulo {
+        -double base
+        -double altura
+        +getBase() double
+        +getAltura() double
+    }
+    
+    CalculadorArea ..> Rectangulo : instanceof
+    CalculadorArea ..> Circulo : instanceof
+    CalculadorArea ..> Triangulo : instanceof
+    
+    note for CalculadorArea "❌ VIOLACIÓN OCP:<br>Cada nueva figura requiere<br>MODIFICAR este código<br>(agregar nuevo if/else)"
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    AGREGAR HEXÁGONO                         │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  1. Crear clase Hexagono ✓                                 │
-│  2. MODIFICAR CalculadorArea ← Violación OCP               │
-│  3. Agregar nuevo if/else                                  │
-│  4. Testear todo de nuevo                                  │
-│                                                             │
-│  Riesgo: Romper cálculos existentes                        │
-└─────────────────────────────────────────────────────────────┘
-```
+
+**Problema:** Agregar una nueva figura (Hexágono, Trapecio) requiere modificar `CalculadorArea`.
 
 (ocp-refactorizacion)=
 ### Refactorización: Usar Abstracción
@@ -353,18 +416,51 @@ public class CalculadorArea {
 
 Ahora agregar un `Hexagono` no requiere modificar `CalculadorArea`:
 
+```{mermaid}
+classDiagram
+    class Figura {
+        <<interface>>
+        +calcularArea() double
+    }
+    
+    class CalculadorArea {
+        +calcularAreaTotal(List~Figura~) double
+    }
+    
+    class Rectangulo {
+        -double ancho
+        -double alto
+        +calcularArea() double
+    }
+    
+    class Circulo {
+        -double radio
+        +calcularArea() double
+    }
+    
+    class Triangulo {
+        -double base
+        -double altura
+        +calcularArea() double
+    }
+    
+    class Hexagono {
+        -double lado
+        +calcularArea() double
+    }
+    
+    Figura <|.. Rectangulo
+    Figura <|.. Circulo
+    Figura <|.. Triangulo
+    Figura <|.. Hexagono
+    
+    CalculadorArea ..> Figura : usa
+    
+    note for CalculadorArea "✓ CUMPLE OCP:<br>CERRADO para modificación<br>ABIERTO para extensión"
+    note for Hexagono "Nueva figura agregada<br>sin modificar CalculadorArea"
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    AGREGAR HEXÁGONO                         │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  1. Crear clase Hexagono implements Figura ✓               │
-│  2. Implementar calcularArea() ✓                           │
-│  3. ¡Listo! CalculadorArea funciona sin cambios            │
-│                                                             │
-│  Sin riesgo de romper código existente                     │
-└─────────────────────────────────────────────────────────────┘
-```
+
+**Beneficio:** Agregar `Hexagono` solo requiere crear la nueva clase, sin tocar `CalculadorArea`.
 
 (ocp-mecanismos)=
 ### Mecanismos para Lograr OCP
@@ -495,25 +591,28 @@ public void agrandarRectangulo(Rectangulo r) {
 }
 ```
 
+```{mermaid}
+classDiagram
+    class Rectangulo {
+        #int ancho
+        #int alto
+        +setAncho(int)
+        +setAlto(int)
+        +getArea() int
+    }
+    
+    class Cuadrado {
+        +setAncho(int)
+        +setAlto(int)
+    }
+    
+    Rectangulo <|-- Cuadrado
+    
+    note for Rectangulo "Contrato esperado:<br>setAlto() NO modifica ancho<br>setAncho() NO modifica alto"
+    note for Cuadrado "❌ VIOLACIÓN LSP:<br>setAlto() MODIFICA ancho<br>setAncho() MODIFICA alto<br><br>No sustituible por Rectangulo"
 ```
-┌─────────────────────────────────────────────────────────────┐
-│              VIOLACIÓN DE LSP: CUADRADO                     │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  Cliente espera (basado en contrato de Rectangulo):        │
-│    • setAlto() solo modifica alto                          │
-│    • setAncho() solo modifica ancho                        │
-│    • Son operaciones independientes                        │
-│                                                             │
-│  Cuadrado viola estas expectativas:                        │
-│    • setAlto() también modifica ancho                      │
-│    • setAncho() también modifica alto                      │
-│    • ¡Las operaciones están acopladas!                     │
-│                                                             │
-│  Resultado: El programa falla cuando sustituimos           │
-│             Rectangulo por Cuadrado                        │
-└─────────────────────────────────────────────────────────────┘
-```
+
+**Problema:** `Cuadrado` viola las expectativas del cliente que usa `Rectangulo`.
 
 (lsp-reglas)=
 ### Reglas de LSP
@@ -643,21 +742,36 @@ Sin herencia, sin problema. Cada figura tiene su propio comportamiento coherente
 
 #### Opción 2: Interfaz común sin setters
 
-```java
-public interface Figura {
-    double getArea();
-    double getPerimetro();
-}
-
-public class Rectangulo implements Figura {
-    private int ancho, alto;
-    // setters permitidos
-}
-
-public class Cuadrado implements Figura {
-    private int lado;
-    // solo setLado()
-}
+```{mermaid}
+classDiagram
+    class Figura {
+        <<interface>>
+        +getArea() double
+        +getPerimetro() double
+    }
+    
+    class Rectangulo {
+        -int ancho
+        -int alto
+        +setAncho(int)
+        +setAlto(int)
+        +getArea() double
+        +getPerimetro() double
+    }
+    
+    class Cuadrado {
+        -int lado
+        +setLado(int)
+        +getArea() double
+        +getPerimetro() double
+    }
+    
+    Figura <|.. Rectangulo
+    Figura <|.. Cuadrado
+    
+    note for Figura "✓ CUMPLE LSP:<br>Interfaz común solo lectura<br>Cada clase con sus propios setters"
+    note for Rectangulo "setAncho() y setAlto()<br>independientes"
+    note for Cuadrado "Solo setLado()<br>mantiene invariante"
 ```
 
 (lsp-relacion-contratos)=
@@ -730,24 +844,27 @@ public class ImpresoraBasica implements DispositivoMultifuncion {
 }
 ```
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                  VIOLACIÓN DE ISP                           │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│         DispositivoMultifuncion                             │
-│    ┌──────────────────────────────┐                         │
-│    │ imprimir()     ←─ usa       │                         │
-│    │ escanear()     ←─ no usa    │  ImpresoraBasica        │
-│    │ enviarFax()    ←─ no usa    │  forzada a implementar  │
-│    │ fotocopiar()   ←─ no usa    │  métodos inútiles       │
-│    └──────────────────────────────┘                         │
-│                                                             │
-│  Problemas:                                                 │
-│    • Código muerto (throw UnsupportedOperation)             │
-│    • Cambios en escanear() recompilan ImpresoraBasica      │
-│    • Violación de LSP (no es un verdadero Multifuncion)    │
-└─────────────────────────────────────────────────────────────┘
+```{mermaid}
+classDiagram
+    class DispositivoMultifuncion {
+        <<interface>>
+        +imprimir(Documento)
+        +escanear(Documento)
+        +enviarFax(Documento)
+        +fotocopiar(Documento)
+    }
+    
+    class ImpresoraBasica {
+        +imprimir(Documento)
+        +escanear(Documento)
+        +enviarFax(Documento)
+        +fotocopiar(Documento)
+    }
+    
+    DispositivoMultifuncion <|.. ImpresoraBasica
+    
+    note for DispositivoMultifuncion "❌ VIOLACIÓN ISP:<br>Interfaz demasiado grande"
+    note for ImpresoraBasica "Forzada a implementar<br>métodos que no usa<br>(lanza excepciones)"
 ```
 
 (isp-refactorizacion)=
@@ -800,29 +917,53 @@ public class EscanerEpson implements Escaner {
 }
 ```
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                  DISEÑO CON ISP                             │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐    │
-│  │Impresora │  │ Escaner  │  │   Fax    │  │Fotocopia │    │
-│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘    │
-│       │             │             │             │           │
-│       │             │             │             │           │
-│  ┌────┴─────┐  ┌────┴─────┐      │             │           │
-│  │Impresora │  │ Escaner  │      │             │           │
-│  │ Basica   │  │  Epson   │      │             │           │
-│  └──────────┘  └──────────┘      │             │           │
-│                                   │             │           │
-│               ┌───────────────────┴─────────────┤           │
-│               │                                 │           │
-│         ┌─────┴─────────────────────────────────┴──┐        │
-│         │          CanonMultifuncion               │        │
-│         │  implements Impresora, Escaner,          │        │
-│         │            Fax, Fotocopiadora            │        │
-│         └──────────────────────────────────────────┘        │
-└─────────────────────────────────────────────────────────────┘
+```{mermaid}
+classDiagram
+    class Impresora {
+        <<interface>>
+        +imprimir(Documento)
+    }
+    
+    class Escaner {
+        <<interface>>
+        +escanear(Documento)
+    }
+    
+    class Fax {
+        <<interface>>
+        +enviarFax(Documento)
+    }
+    
+    class Fotocopiadora {
+        <<interface>>
+        +fotocopiar(Documento)
+    }
+    
+    class ImpresoraBasica {
+        +imprimir(Documento)
+    }
+    
+    class EscanerEpson {
+        +escanear(Documento)
+    }
+    
+    class CanonMultifuncion {
+        +imprimir(Documento)
+        +escanear(Documento)
+        +enviarFax(Documento)
+        +fotocopiar(Documento)
+    }
+    
+    Impresora <|.. ImpresoraBasica
+    Escaner <|.. EscanerEpson
+    Impresora <|.. CanonMultifuncion
+    Escaner <|.. CanonMultifuncion
+    Fax <|.. CanonMultifuncion
+    Fotocopiadora <|.. CanonMultifuncion
+    
+    note for Impresora "✓ CUMPLE ISP:<br>Interfaces pequeñas y específicas"
+    note for ImpresoraBasica "Solo implementa lo que necesita"
+    note for CanonMultifuncion "Combina múltiples interfaces"
 ```
 
 (isp-beneficios)=
@@ -907,29 +1048,24 @@ public class ServicioNotificaciones {
 }
 ```
 
+```{mermaid}
+classDiagram
+    class ServicioNotificaciones {
+        -EnviadorEmail enviador
+        +notificarUsuario(Usuario, String)
+    }
+    
+    class EnviadorEmail {
+        +enviar(String, String)
+    }
+    
+    ServicioNotificaciones --> EnviadorEmail
+    
+    note for ServicioNotificaciones "❌ VIOLACIÓN DIP:<br>Módulo ALTO nivel depende<br>directamente de módulo BAJO nivel"
+    note for EnviadorEmail "Detalle de implementación<br>concreto (SMTP)"
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                  VIOLACIÓN DE DIP                           │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  ┌─────────────────────────┐                               │
-│  │ ServicioNotificaciones  │  ← Módulo de ALTO nivel       │
-│  │     (Lógica de negocio) │                               │
-│  └───────────┬─────────────┘                               │
-│              │                                              │
-│              │ depende de (conoce la implementación)        │
-│              ▼                                              │
-│  ┌─────────────────────────┐                               │
-│  │    EnviadorEmail        │  ← Módulo de BAJO nivel       │
-│  │     (Detalle técnico)   │                               │
-│  └─────────────────────────┘                               │
-│                                                             │
-│  Problemas:                                                 │
-│    • No se puede cambiar a SMS sin modificar alto nivel    │
-│    • Difícil de testear (requiere servidor SMTP real)      │
-│    • Alto nivel acoplado a bajo nivel                      │
-└─────────────────────────────────────────────────────────────┘
-```
+
+**Problemas:** No se puede cambiar a SMS, difícil de testear, acoplamiento alto.
 
 (dip-refactorizacion)=
 ### Refactorización: Invertir la Dependencia
@@ -976,32 +1112,44 @@ public class NotificadorMock implements Notificador {
 }
 ```
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                  DISEÑO CON DIP                             │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  ┌─────────────────────────┐                               │
-│  │ ServicioNotificaciones  │  ← Módulo de ALTO nivel       │
-│  └───────────┬─────────────┘                               │
-│              │                                              │
-│              │ depende de                                   │
-│              ▼                                              │
-│  ┌─────────────────────────┐                               │
-│  │     <<interface>>       │  ← ABSTRACCIÓN                │
-│  │      Notificador        │    (propiedad de alto nivel)  │
-│  └───────────┬─────────────┘                               │
-│              │                                              │
-│              │ implementado por                             │
-│    ┌─────────┼─────────┬──────────────┐                    │
-│    ▼         ▼         ▼              ▼                    │
-│  ┌─────┐  ┌─────┐  ┌───────┐  ┌──────────┐                │
-│  │Email│  │ SMS │  │ Push  │  │   Mock   │  ← BAJO nivel  │
-│  └─────┘  └─────┘  └───────┘  └──────────┘                │
-│                                                             │
-│  La ABSTRACCIÓN pertenece al módulo de alto nivel          │
-│  Los DETALLES dependen de la abstracción                   │
-└─────────────────────────────────────────────────────────────┘
+```{mermaid}
+classDiagram
+    class ServicioNotificaciones {
+        -Notificador notificador
+        +ServicioNotificaciones(Notificador)
+        +notificarUsuario(Usuario, String)
+    }
+    
+    class Notificador {
+        <<interface>>
+        +enviar(String, String)
+    }
+    
+    class NotificadorEmail {
+        +enviar(String, String)
+    }
+    
+    class NotificadorSMS {
+        +enviar(String, String)
+    }
+    
+    class NotificadorPush {
+        +enviar(String, String)
+    }
+    
+    class NotificadorMock {
+        +enviar(String, String)
+    }
+    
+    ServicioNotificaciones --> Notificador
+    Notificador <|.. NotificadorEmail
+    Notificador <|.. NotificadorSMS
+    Notificador <|.. NotificadorPush
+    Notificador <|.. NotificadorMock
+    
+    note for Notificador "✓ CUMPLE DIP:<br>Abstracción propiedad<br>del módulo de alto nivel"
+    note for ServicioNotificaciones "Alto nivel depende<br>de ABSTRACCIÓN"
+    note for NotificadorEmail "Bajo nivel depende<br>de ABSTRACCIÓN"
 ```
 
 (dip-inversion-control)=

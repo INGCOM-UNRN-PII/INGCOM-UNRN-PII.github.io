@@ -33,26 +33,26 @@ Al finalizar este capítulo, serás capaz de:
 
 Imaginá un contrato entre un cliente y un proveedor de servicios:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    CONTRATO DE SERVICIO                     │
-│─────────────────────────────────────────────────────────────│
-│                                                             │
-│  CLIENTE se compromete a:                                   │
-│    • Proveer dirección válida                              │
-│    • Pagar el monto acordado                               │
-│    • Estar disponible en horario laboral                   │
-│                                                             │
-│  PROVEEDOR se compromete a:                                 │
-│    • Entregar el producto en 48 horas                      │
-│    • Producto en condiciones óptimas                       │
-│    • Reembolso si no cumple                                │
-│                                                             │
-│  DURANTE TODO EL CONTRATO:                                  │
-│    • Comunicación respetuosa                               │
-│    • Confidencialidad de datos                             │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+```{mermaid}
+graph TB
+    subgraph "CONTRATO DE SERVICIO"
+        A[CLIENTE se compromete a:]
+        A1[• Proveer dirección válida<br/>• Pagar monto acordado<br/>• Estar disponible]
+        
+        B[PROVEEDOR se compromete a:]
+        B1[• Entregar en 48 horas<br/>• Producto en óptimas condiciones<br/>• Reembolso si no cumple]
+        
+        C[DURANTE TODO EL CONTRATO:]
+        C1[• Comunicación respetuosa<br/>• Confidencialidad de datos]
+        
+        A --> A1
+        B --> B1
+        C --> C1
+    end
+    
+    style A fill:#aaf,stroke:#333
+    style B fill:#afa,stroke:#333
+    style C fill:#faa,stroke:#333
 ```
 
 En software, los **métodos** establecen contratos similares:
@@ -235,21 +235,14 @@ En desarrollo, verificá siempre (fail-fast). En producción, el nivel de verifi
 
 Una **postcondición** es una condición que **debe ser verdadera después** de que se ejecute un método (asumiendo que las precondiciones se cumplieron). Es la **obligación del proveedor** (el método) garantizar que se cumple.
 
-```
-┌─────────────────────────────────────────┐
-│              MÉTODO                     │
-│─────────────────────────────────────────│
-│                                         │
-│  POSTCONDICIÓN (responsabilidad método) │
-│  ═══════════════════════════════════    │
-│  "Si cumpliste las precondiciones,      │
-│   yo garantizo que..."                  │
-│                                         │
-│  • Valor de retorno correcto            │
-│  • Estado modificado apropiadamente     │
-│  • Efectos secundarios esperados        │
-│                                         │
-└─────────────────────────────────────────┘
+```{mermaid}
+classDiagram
+    class CuentaBancaria {
+        -double saldo
+        +transferir(double, Cuenta)
+    }
+    
+    note for CuentaBancaria "CONTRATO transferir():\n\nPRECONDICIONES (cliente):\n• monto > 0\n• monto <= saldo\n• destino != null\n\nPOSTCONDICIONES (método):\n• this.saldo = old(saldo) - monto\n• destino.saldo = old(destino.saldo) + monto\n• conservación: suma total igual"
 ```
 
 (ejemplos-postcondiciones)=
@@ -531,30 +524,27 @@ En programas multihilo, los "momentos intermedios" pueden ser observados por otr
 
 Un contrato completo tiene tres partes:
 
+```{mermaid}
+graph TB
+    subgraph "CONTRATO COMPLETO"
+        A[PRECONDICIONES]
+        A1[Obligación del CLIENTE<br/>─────────────────<br/>• Parámetros válidos<br/>• Estado apropiado<br/>• Recursos disponibles]
+        
+        B[POSTCONDICIONES]
+        B1[Obligación del MÉTODO<br/>─────────────────<br/>• Valor de retorno correcto<br/>• Estado modificado<br/>• Efectos secundarios]
+        
+        C[INVARIANTES]
+        C1[Siempre verdadero<br/>─────────────────<br/>• Condiciones sobre estado<br/>• Antes y después del método<br/>• En toda la vida del objeto]
+        
+        A --> A1
+        B --> B1
+        C --> C1
+    end
+    
+    style A fill:#aaf,stroke:#333
+    style B fill:#afa,stroke:#333
+    style C fill:#faa,stroke:#333
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                    CONTRATO DEL MÉTODO                      │
-│═════════════════════════════════════════════════════════════│
-│                                                             │
-│  PRECONDICIONES (obligación del cliente)                    │
-│  ────────────────────────────────────────                   │
-│  • Condición 1 sobre parámetros                            │
-│  • Condición 2 sobre estado del objeto                     │
-│  • ...                                                      │
-│                                                             │
-│  POSTCONDICIONES (obligación del método)                    │
-│  ─────────────────────────────────────────                  │
-│  • Valor de retorno                                         │
-│  • Cambios en el estado                                     │
-│  • Efectos secundarios                                      │
-│  • ...                                                      │
-│                                                             │
-│  INVARIANTE DE CLASE (siempre verdadero)                    │
-│  ────────────────────────────────────────                   │
-│  • Condiciones sobre el estado interno                     │
-│  • (Heredado de la definición de clase)                    │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
 ```
 
 (ejemplo-pila-contrato)=

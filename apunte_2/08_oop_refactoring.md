@@ -46,27 +46,23 @@ La palabra clave es **comportamiento externo**. Después de un refactoring:
 - Los usuarios no notan ningún cambio
 - El código es más legible, mantenible o extensible
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    REFACTORING                              │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│   ANTES                         DESPUÉS                     │
-│  ┌──────────────┐             ┌──────────────┐             │
-│  │ Código       │             │ Código       │             │
-│  │ desordenado  │ ──────────▶ │ limpio       │             │
-│  │ pero         │   refactor  │ y            │             │
-│  │ funcional    │             │ funcional    │             │
-│  └──────────────┘             └──────────────┘             │
-│         │                            │                      │
-│         │  mismo comportamiento      │                      │
-│         ▼                            ▼                      │
-│  ┌──────────────────────────────────────────┐              │
-│  │         Tests pasan ✓                    │              │
-│  │    Usuarios no notan cambios ✓           │              │
-│  └──────────────────────────────────────────┘              │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
+```{mermaid}
+graph LR
+    A[Código<br/>Funcional<br/>pero Desordenado] -->|Refactoring| B[Código<br/>Limpio<br/>y Funcional]
+    
+    A -.->|mismo comportamiento| C[Tests Pasan ✓]
+    B -.->|mismo comportamiento| C
+    
+    A -.->|misma funcionalidad| D[Usuarios<br/>No Notan Cambios ✓]
+    B -.->|misma funcionalidad| D
+    
+    style A fill:#faa,stroke:#333
+    style B fill:#afa,stroke:#333
+    style C fill:#aaf,stroke:#333
+    style D fill:#ffa,stroke:#333
+    
+    note1[Estructura interna mejorada]
+    note2[Sin cambios en comportamiento observable]
 ```
 
 (por-que-refactorizar)=

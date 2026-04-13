@@ -48,31 +48,21 @@ Un **code smell** (olor de código) es un síntoma superficial que indica un pro
 — Martin Fowler, "Refactoring"
 :::
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│             TAXONOMÍA DE PROBLEMAS DE CÓDIGO                    │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   ┌─────────────┐                                               │
-│   │    Bug      │  El código no funciona correctamente          │
-│   └─────────────┘                                               │
-│          ▲                                                      │
-│          │ puede causar                                         │
-│   ┌─────────────┐                                               │
-│   │ Code Smell  │  El código funciona pero huele mal            │
-│   └─────────────┘  (síntoma de problemas estructurales)         │
-│          ▲                                                      │
-│          │ acumulados forman                                    │
-│   ┌─────────────┐                                               │
-│   │Anti-patrón  │  Solución estructurada que no funciona        │
-│   └─────────────┘  (problema de diseño recurrente)              │
-│          ▲                                                      │
-│          │ a gran escala                                        │
-│   ┌─────────────┐                                               │
-│   │Deuda Técnica│  Acumulación de decisiones subóptimas         │
-│   └─────────────┘  que dificultan cambios futuros               │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```{mermaid}
+graph TB
+    A[Bug] -->|puede causar| B[Code Smell]
+    B -->|acumulados forman| C[Anti-patrón]
+    C -->|a gran escala| D[Deuda Técnica]
+    
+    A1[El código NO funciona] -.-> A
+    B1[Funciona pero huele mal<br/>Síntoma superficial] -.-> B
+    C1[Solución estructurada<br/>pero contraproducente] -.-> C
+    D1[Acumulación de decisiones<br/>subóptimas] -.-> D
+    
+    style A fill:#faa,stroke:#333
+    style B fill:#ffa,stroke:#333
+    style C fill:#fda,stroke:#333
+    style D fill:#daa,stroke:#333
 ```
 
 ---
@@ -172,6 +162,63 @@ public class GeneradorReportes {
     public Reporte ventasPorPeriodo(Date desde, Date hasta) { ... }
     public Reporte inventarioActual() { ... }
 }
+```
+
+```{mermaid}
+classDiagram
+    class SistemaCompleto {
+        ❌ God Class
+        -List~Usuario~ usuarios
+        -List~Producto~ productos
+        -List~Venta~ ventas
+        -Connection conexionBD
+        +registrarUsuario()
+        +autenticarUsuario()
+        +agregarProducto()
+        +actualizarStock()
+        +procesarVenta()
+        +generarFactura()
+        +generarReporte()
+        +cargarConfiguracion()
+        +log()
+        ... 50 métodos más
+    }
+    
+    class GestorUsuarios {
+        ✓ Responsabilidad única
+        -RepositorioUsuarios repo
+        -ServicioEmail email
+        +registrar()
+        +autenticar()
+        +recuperarPassword()
+    }
+    
+    class GestorProductos {
+        ✓ Responsabilidad única
+        -RepositorioProductos repo
+        +agregar()
+        +actualizarStock()
+        +buscar()
+    }
+    
+    class ServicioVentas {
+        ✓ Responsabilidad única
+        -RepositorioVentas repo
+        -GestorProductos productos
+        +procesar()
+    }
+    
+    class GeneradorReportes {
+        ✓ Responsabilidad única
+        -RepositorioVentas ventas
+        +ventasPorPeriodo()
+        +inventarioActual()
+    }
+    
+    ServicioVentas --> GestorProductos
+    
+    note for SistemaCompleto "Violación SRP masiva:<br>Sabe demasiado<br>Hace demasiado<br>Difícil de mantener"
+    note for GestorUsuarios "Cada clase tiene<br>una responsabilidad<br>clara y cohesiva"
 ```
 
 (clase-de-datos)=

@@ -34,52 +34,31 @@ Al finalizar este capítulo, serás capaz de:
 
 El software sin tests es como un puente sin inspección estructural: puede funcionar hoy, pero no tenemos garantías sobre mañana.
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    CÓDIGO SIN TESTS                             │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   "Funciona en mi máquina"                                      │
-│           │                                                     │
-│           ▼                                                     │
-│   ┌───────────────┐                                             │
-│   │   Cambio en   │                                             │
-│   │   el código   │                                             │
-│   └───────┬───────┘                                             │
-│           │                                                     │
-│           ▼                                                     │
-│   ┌───────────────┐     ┌───────────────┐                       │
-│   │   ¿Sigue      │ ──▶ │     ???       │                       │
-│   │   funcionando?│     │  Nadie sabe   │                       │
-│   └───────────────┘     └───────────────┘                       │
-│                                                                 │
-│   Resultado: Miedo a cambiar, código congelado, bugs ocultos   │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
-
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    CÓDIGO CON TESTS                             │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   Tests automatizados verifican comportamiento                  │
-│           │                                                     │
-│           ▼                                                     │
-│   ┌───────────────┐                                             │
-│   │   Cambio en   │                                             │
-│   │   el código   │                                             │
-│   └───────┬───────┘                                             │
-│           │                                                     │
-│           ▼                                                     │
-│   ┌───────────────┐     ┌───────────────┐                       │
-│   │   Ejecutar    │ ──▶ │   VERDE ✓     │  Confianza            │
-│   │   tests       │     │   o ROJO ✗    │  para cambiar         │
-│   └───────────────┘     └───────────────┘                       │
-│                                                                 │
-│   Resultado: Confianza, refactoring seguro, documentación viva │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```{mermaid}
+graph TB
+    subgraph "Código SIN Tests"
+        A1[Funciona en mi máquina] --> B1[Cambio en el código]
+        B1 --> C1{¿Sigue funcionando?}
+        C1 --> D1[??? Nadie sabe]
+        D1 --> E1[Miedo a cambiar<br/>Código congelado<br/>Bugs ocultos]
+    end
+    
+    subgraph "Código CON Tests"
+        A2[Tests automatizados] --> B2[Cambio en el código]
+        B2 --> C2[Ejecutar tests]
+        C2 --> D2{Resultado}
+        D2 -->|Verde ✓| E2[Confianza para cambiar]
+        D2 -->|Rojo ✗| F2[Detecta problema]
+        E2 --> G2[Refactoring seguro<br/>Documentación viva]
+    end
+    
+    style A1 fill:#faa,stroke:#333
+    style D1 fill:#faa,stroke:#333
+    style E1 fill:#faa,stroke:#333
+    
+    style A2 fill:#afa,stroke:#333
+    style E2 fill:#afa,stroke:#333
+    style G2 fill:#afa,stroke:#333
 ```
 
 **Beneficios del testing**:

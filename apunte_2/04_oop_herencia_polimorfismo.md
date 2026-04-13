@@ -45,16 +45,59 @@ La **herencia** es un mecanismo que permite crear nuevas clases basadas en clase
 
 La herencia en programación se inspira en la clasificación biológica:
 
-```
-                    Animal
-                       │
-         ┌─────────────┼─────────────┐
-         │             │             │
-      Mamífero       Ave         Reptil
-         │             │             │
-    ┌────┴────┐    ┌───┴───┐    ┌───┴───┐
-    │         │    │       │    │       │
-  Perro    Gato  Águila Pingüino Serpiente
+```{mermaid}
+classDiagram
+    class Animal {
+        +respirar()
+        +alimentarse()
+        +reproducirse()
+    }
+    
+    class Mamifero {
+        +amamantarCrias()
+        +tenerSangreCaliente()
+    }
+    
+    class Ave {
+        +volar()
+        +ponerHuevos()
+    }
+    
+    class Reptil {
+        +mudarPiel()
+        +tenerSangreFria()
+    }
+    
+    class Perro {
+        +ladrar()
+    }
+    
+    class Gato {
+        +maullar()
+    }
+    
+    class Aguila {
+        +planear()
+    }
+    
+    class Pinguino {
+        +nadar()
+    }
+    
+    class Serpiente {
+        +reptar()
+    }
+    
+    Animal <|-- Mamifero
+    Animal <|-- Ave
+    Animal <|-- Reptil
+    Mamifero <|-- Perro
+    Mamifero <|-- Gato
+    Ave <|-- Aguila
+    Ave <|-- Pinguino
+    Reptil <|-- Serpiente
+    
+    note for Animal "Cada nivel hereda<br>las características del superior"
 ```
 
 Cada nivel **hereda** las características del nivel superior:
@@ -121,31 +164,43 @@ La herencia modela una relación **"es-un"** (o "es-un-tipo-de"):
 
 Modelemos un sistema de figuras geométricas:
 
-```
-                    ┌─────────────┐
-                    │   Figura    │
-                    │─────────────│
-                    │ - color     │
-                    │ - posicionX │
-                    │ - posicionY │
-                    │─────────────│
-                    │ + mover()   │
-                    │ + dibujar() │
-                    │ + area()    │
-                    └──────┬──────┘
-                           │
-         ┌─────────────────┼─────────────────┐
-         │                 │                 │
-         ▼                 ▼                 ▼
-┌─────────────┐   ┌─────────────┐   ┌─────────────┐
-│  Círculo    │   │ Rectángulo  │   │  Triángulo  │
-│─────────────│   │─────────────│   │─────────────│
-│ - radio     │   │ - ancho     │   │ - base      │
-│             │   │ - alto      │   │ - altura    │
-│─────────────│   │─────────────│   │─────────────│
-│ + area()    │   │ + area()    │   │ + area()    │
-│ + perimetro()│  │ + perimetro()│  │ + perimetro()│
-└─────────────┘   └─────────────┘   └─────────────┘
+```{mermaid}
+classDiagram
+    class Figura {
+        -String color
+        -double posicionX
+        -double posicionY
+        +mover(double x, double y)
+        +dibujar()
+        +area() double
+    }
+    
+    class Circulo {
+        -double radio
+        +area() double
+        +perimetro() double
+    }
+    
+    class Rectangulo {
+        -double ancho
+        -double alto
+        +area() double
+        +perimetro() double
+    }
+    
+    class Triangulo {
+        -double base
+        -double altura
+        +area() double
+        +perimetro() double
+    }
+    
+    Figura <|-- Circulo
+    Figura <|-- Rectangulo
+    Figura <|-- Triangulo
+    
+    note for Figura "Clase base con<br>características comunes"
+    note for Circulo "Especializa el cálculo<br>de área: π * r²"
 ```
 
 **Análisis:**
@@ -173,29 +228,35 @@ La herencia es apropiada cuando:
 
 **Ejemplo correcto:**
 
-```
-┌─────────────────┐
-│ CuentaBancaria  │
-│─────────────────│
-│ - numero        │
-│ - titular       │
-│ - saldo         │
-│─────────────────│
-│ + depositar()   │
-│ + retirar()     │
-│ + consultarSaldo()│
-└────────┬────────┘
-         │
-    ┌────┴────┐
-    │         │
-    ▼         ▼
-┌─────────┐ ┌─────────┐
-│CuentaAhorro│ │CuentaCorriente│
-│─────────│ │─────────│
-│ - tasaInteres │ │ - limiteDescubierto│
-│─────────│ │─────────│
-│ + aplicarInteres()│ │ + permitirDescubierto()│
-└─────────┘ └─────────┘
+```{mermaid}
+classDiagram
+    class CuentaBancaria {
+        -String numero
+        -String titular
+        -double saldo
+        +depositar(double monto)
+        +retirar(double monto) boolean
+        +consultarSaldo() double
+    }
+    
+    class CuentaAhorro {
+        -double tasaInteres
+        +aplicarInteres()
+        +calcularIntereses() double
+    }
+    
+    class CuentaCorriente {
+        -double limiteDescubierto
+        +permitirDescubierto(double monto) boolean
+        +verificarSobregiro() boolean
+    }
+    
+    CuentaBancaria <|-- CuentaAhorro
+    CuentaBancaria <|-- CuentaCorriente
+    
+    note for CuentaBancaria "Herencia correcta:<br>Comparten comportamiento real"
+    note for CuentaAhorro "Es una CuentaBancaria ✓"
+    note for CuentaCorriente "Es una CuentaBancaria ✓"
 ```
 
 - `CuentaAhorro` **es una** `CuentaBancaria` ✓
@@ -214,24 +275,36 @@ La composición es apropiada cuando:
 
 **Ejemplo incorrecto de herencia (debería ser composición):**
 
-```
-// ❌ MAL: Herencia incorrecta
-┌─────────┐
-│  Motor  │
-└────┬────┘
-     │
-     ▼
-┌─────────┐
-│  Auto   │  ← Un Auto NO ES UN Motor
-└─────────┘
+```{mermaid}
+classDiagram
+    class Motor {
+        -int cilindrada
+        -String tipo
+        +encender()
+        +apagar()
+    }
+    
+    class Auto {
+        -String marca
+        -String modelo
+        -Motor motor
+        +arrancar()
+        +acelerar()
+    }
+    
+    Auto *-- Motor : tiene-un
+    
+    note for Auto "✓ BIEN: Composición<br>Auto TIENE-UN Motor<br>(no ES-UN Motor)"
 ```
 
+**Incorrecto:**
 ```
-// ✓ BIEN: Composición
-┌─────────┐       ┌─────────┐
-│  Auto   │◆─────│  Motor  │
-└─────────┘       └─────────┘
-           tiene-un
+Auto hereda de Motor ❌ (Un Auto NO ES UN Motor)
+```
+
+**Correcto:**
+```
+Auto tiene-un Motor ✓ (Composición)
 ```
 
 (favor-composicion)=

@@ -130,23 +130,95 @@ public class ListaContactos {
 
 El Framework de Colecciones está organizado en una jerarquía de interfaces:
 
-```
-                        Iterable<E>
-                            │
-                        Collection<E>
-                ┌───────────┼───────────┐
-                │           │           │
-            List<E>      Set<E>      Queue<E>
-                │           │           │
-        ┌───────┴───┐   ┌───┴───┐   ┌───┴───┐
-        │           │   │       │   │       │
-   ArrayList   LinkedList  HashSet  TreeSet  PriorityQueue
-                                    
-                        
-                        Map<K,V>
-                ┌───────────┼───────────┐
-                │           │           │
-           HashMap     TreeMap    LinkedHashMap
+```{mermaid}
+classDiagram
+    class Iterable~E~ {
+        <<interface>>
+        +iterator() Iterator~E~
+    }
+    
+    class Collection~E~ {
+        <<interface>>
+        +add(E) boolean
+        +remove(Object) boolean
+        +contains(Object) boolean
+        +size() int
+        +isEmpty() boolean
+        +clear()
+    }
+    
+    class List~E~ {
+        <<interface>>
+        +get(int) E
+        +set(int, E) E
+        +add(int, E)
+        +remove(int) E
+        +indexOf(Object) int
+    }
+    
+    class Set~E~ {
+        <<interface>>
+        +add(E) boolean
+    }
+    
+    class Queue~E~ {
+        <<interface>>
+        +offer(E) boolean
+        +poll() E
+        +peek() E
+    }
+    
+    class ArrayList~E~ {
+        -Object[] elementData
+        -int size
+        +add(E) boolean
+        +get(int) E
+    }
+    
+    class LinkedList~E~ {
+        -Node~E~ first
+        -Node~E~ last
+        +addFirst(E)
+        +addLast(E)
+    }
+    
+    class HashSet~E~ {
+        -HashMap~E,Object~ map
+        +add(E) boolean
+    }
+    
+    class TreeSet~E~ {
+        -TreeMap~E,Object~ map
+        +add(E) boolean
+    }
+    
+    class Map~K,V~ {
+        <<interface>>
+        +put(K, V) V
+        +get(Object) V
+        +remove(Object) V
+        +containsKey(Object) boolean
+        +keySet() Set~K~
+    }
+    
+    class HashMap~K,V~ {
+        -Node~K,V~[] table
+        +put(K, V) V
+    }
+    
+    Iterable <|.. Collection
+    Collection <|.. List
+    Collection <|.. Set
+    Collection <|.. Queue
+    List <|.. ArrayList
+    List <|.. LinkedList
+    Queue <|.. LinkedList
+    Set <|.. HashSet
+    Set <|.. TreeSet
+    
+    note for List "Secuencia ordenada<br>Permite duplicados<br>Acceso por índice"
+    note for Set "Sin duplicados<br>No garantiza orden<br>(salvo TreeSet)"
+    note for Map "Pares clave-valor<br>Claves únicas<br>No hereda Collection"
 ```
 
 ### Interfaces Principales

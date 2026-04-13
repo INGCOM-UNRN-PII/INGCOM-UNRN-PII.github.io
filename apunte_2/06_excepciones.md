@@ -66,6 +66,53 @@ public class Throwable {
 }
 ```
 
+```{mermaid}
+classDiagram
+    class Throwable {
+        -String message
+        -Throwable cause
+        -StackTraceElement[] trace
+        +Throwable()
+        +Throwable(String message)
+        +Throwable(String message, Throwable cause)
+        +getMessage() String
+        +getCause() Throwable
+        +printStackTrace()
+        +getStackTrace() StackTraceElement[]
+    }
+    
+    class Error {
+        <<Java>>
+    }
+    
+    class Exception {
+        <<Java>>
+    }
+    
+    class RuntimeException {
+        <<Java Unchecked>>
+    }
+    
+    class IOException {
+        <<Java Checked>>
+    }
+    
+    class SQLException {
+        <<Java Checked>>
+    }
+    
+    Throwable <|-- Error
+    Throwable <|-- Exception
+    Exception <|-- RuntimeException
+    Exception <|-- IOException
+    Exception <|-- SQLException
+    
+    note for Throwable "Raíz de jerarquía<br>Contiene mensaje, causa<br>y stack trace"
+    note for Error "Errores graves del sistema<br>NO se deben capturar"
+    note for Exception "Excepciones de aplicación<br>Pueden ser checked/unchecked"
+    note for RuntimeException "Excepciones no verificadas<br>No requieren try-catch"
+```
+
 ### Herencia en Excepciones
 
 Como cualquier clase, las excepciones pueden:
@@ -257,22 +304,81 @@ public void realizarTransferencia(String origen, String destino, double monto) {
 
 ### Jerarquía de Ejemplo Completa
 
-```
-BancoException (abstract)
-├── CuentaException (abstract)
-│   ├── CuentaNoEncontradaException
-│   ├── CuentaBloqueadaException
-│   └── SaldoInsuficienteException
-├── TransferenciaException (abstract)
-│   ├── LimiteExcedidoException
-│   ├── DestinoInvalidoException
-│   └── TransferenciaRechazadaException
-├── AutenticacionException (abstract)
-│   ├── CredencialesInvalidasException
-│   └── SesionExpiradaException
-└── SeguridadException (abstract)
-    ├── FraudeDetectadoException
-    └── AccesoNoAutorizadoException
+```{mermaid}
+classDiagram
+    class Throwable {
+        <<Java>>
+        -String message
+        -Throwable cause
+        +getMessage() String
+        +getCause() Throwable
+    }
+    
+    class Exception {
+        <<Java>>
+    }
+    
+    class RuntimeException {
+        <<Java>>
+    }
+    
+    class BancoException {
+        <<abstract>>
+        -String codigoError
+        -LocalDateTime timestamp
+        +getCodigoError() String
+        +esRecuperable()* boolean
+    }
+    
+    class CuentaException {
+        <<abstract>>
+    }
+    
+    class TransferenciaException {
+        <<abstract>>
+    }
+    
+    class SeguridadException {
+        <<abstract>>
+    }
+    
+    class CuentaNoEncontradaException {
+        -String numeroCuenta
+        +esRecuperable() boolean
+    }
+    
+    class SaldoInsuficienteException {
+        -double saldoActual
+        -double montoSolicitado
+        +getDeficit() double
+        +esRecuperable() boolean
+    }
+    
+    class LimiteExcedidoException {
+        -double limite
+        -double montoIntentado
+        +esRecuperable() boolean
+    }
+    
+    class FraudeDetectadoException {
+        -String motivo
+        +esRecuperable() boolean
+    }
+    
+    Throwable <|-- Exception
+    Exception <|-- RuntimeException
+    Exception <|-- BancoException
+    BancoException <|-- CuentaException
+    BancoException <|-- TransferenciaException
+    BancoException <|-- SeguridadException
+    CuentaException <|-- CuentaNoEncontradaException
+    CuentaException <|-- SaldoInsuficienteException
+    TransferenciaException <|-- LimiteExcedidoException
+    SeguridadException <|-- FraudeDetectadoException
+    
+    note for BancoException "Excepción base del dominio<br>con atributos comunes"
+    note for CuentaException "Agrupa errores<br>relacionados con cuentas"
+    note for FraudeDetectadoException "Excepción específica<br>con contexto adicional"
 ```
 
 ---
@@ -400,15 +506,33 @@ public class ServicioD implements Servicio {
 
 En arquitecturas por capas, las excepciones de capas inferiores no deberían escapar a capas superiores:
 
+```{mermaid}
+graph TB
+    subgraph "Arquitectura por Capas"
+        A[Capa Presentación<br/>UI/Controllers]
+        B[Capa Negocio<br/>Services]
+        C[Capa Datos<br/>Repositories]
+        D[(Base de Datos)]
+    end
+    
+    A -->|usa| B
+    B -->|usa| C
+    C -->|accede| D
+    
+    D -.->|SQLException| C
+    C -.->|RepositorioException| B
+    B -.->|PedidoException| A
+    
+    style D fill:#f9f,stroke:#333
+    style C fill:#bbf,stroke:#333
+    style B fill:#bfb,stroke:#333
+    style A fill:#fbb,stroke:#333
+    
+    note1[❌ SQLException NO debe<br/>llegar a Presentación]
+    note2[✓ Cada capa traduce<br/>a sus propias excepciones]
 ```
-┌─────────────────────────────────┐
-│      Capa de Presentación       │  ← No debería ver SQLException
-├─────────────────────────────────┤
-│      Capa de Negocio            │  ← Traduce excepciones técnicas
-├─────────────────────────────────┤
-│      Capa de Datos              │  ← Lanza SQLException
-└─────────────────────────────────┘
-```
+
+**Principio:** Cada capa traduce excepciones técnicas a excepciones de su nivel de abstracción.
 
 ### Encadenamiento de Excepciones
 

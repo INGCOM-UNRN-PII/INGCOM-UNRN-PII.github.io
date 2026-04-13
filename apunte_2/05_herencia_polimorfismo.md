@@ -149,6 +149,40 @@ public class Gerente extends Empleado {
 }
 ```
 
+```{mermaid}
+classDiagram
+    class Empleado {
+        -String nombre
+        -String dni
+        #double salarioBase
+        +Empleado(String, String, double)
+        +calcularSalario() double
+        +obtenerInformacion() String
+    }
+    
+    class Gerente {
+        -double bonificacion
+        -String departamento
+        +Gerente(String, String, double, double, String)
+        +calcularSalario() double
+        +obtenerDepartamento() String
+    }
+    
+    class Desarrollador {
+        -String lenguajePrincipal
+        -int añosExperiencia
+        +Desarrollador(String, String, double, String, int)
+        +obtenerTecnologias() List~String~
+    }
+    
+    Empleado <|-- Gerente
+    Empleado <|-- Desarrollador
+    
+    note for Empleado "Clase base<br>define comportamiento común"
+    note for Gerente "Hereda nombre, dni, salarioBase<br>Sobrescribe calcularSalario()"
+    note for Desarrollador "Hereda todo de Empleado<br>Agrega atributos específicos"
+```
+
 **Beneficios:**
 
 1. **Reutilización**: El código común está en un solo lugar

@@ -102,38 +102,46 @@ Necesitás crear objetos, pero no sabés de antemano qué tipo concreto crear. E
 
 Definí una interfaz para crear objetos, pero dejá que las subclases decidan qué clase instanciar.
 
-```
-┌───────────────────────┐
-│      «interface»      │
-│        Creador        │
-│───────────────────────│
-│ + crearProducto()     │  ← Factory Method (abstracto)
-│ + operacion()         │
-└───────────┬───────────┘
-            │
-   ┌────────┴────────┐
-   │                 │
-   ▼                 ▼
-┌─────────────┐  ┌─────────────┐
-│CreadorConcretoA│ │CreadorConcretoB│
-│─────────────│  │─────────────│
-│+crearProducto()│ │+crearProducto()│
-│ return A    │  │ return B    │
-└─────────────┘  └─────────────┘
-
-┌───────────────────────┐
-│      «interface»      │
-│        Producto       │
-│───────────────────────│
-│ + operacion()         │
-└───────────┬───────────┘
-            │
-   ┌────────┴────────┐
-   │                 │
-   ▼                 ▼
-┌─────────────┐  ┌─────────────┐
-│ ProductoA   │  │ ProductoB   │
-└─────────────┘  └─────────────┘
+```{mermaid}
+classDiagram
+    class Creador {
+        <<interface>>
+        +crearProducto() Producto
+        +operacion()
+    }
+    
+    class CreadorConcreto A {
+        +crearProducto() Producto
+    }
+    
+    class CreadorConcretoB {
+        +crearProducto() Producto
+    }
+    
+    class Producto {
+        <<interface>>
+        +operacion()
+    }
+    
+    class ProductoA {
+        +operacion()
+    }
+    
+    class ProductoB {
+        +operacion()
+    }
+    
+    Creador <|.. CreadorConcreto A
+    Creador <|.. CreadorConcretoB
+    Producto <|.. ProductoA
+    Producto <|.. ProductoB
+    
+    CreadorConcreto A ..> ProductoA : crea
+    CreadorConcretoB ..> ProductoB : crea
+    Creador ..> Producto : usa
+    
+    note for Creador "Factory Method define<br>la interfaz de creación"
+    note for CreadorConcreto A "Subclases deciden<br>qué crear"
 ```
 
 #### Ejemplo: Fábrica de Documentos
@@ -239,17 +247,18 @@ Necesitás exactamente **una instancia** de una clase, accesible globalmente. Po
 
 La clase controla su propia instanciación y provee un punto de acceso global.
 
-```
-┌─────────────────────────────┐
-│         Singleton           │
-│─────────────────────────────│
-│ - instancia: Singleton      │  ← Única instancia (estática)
-│ - configuracion: Map        │
-│─────────────────────────────│
-│ - Singleton()               │  ← Constructor privado
-│ + obtenerInstancia()        │  ← Punto de acceso global
-│ + getConfiguracion()        │
-└─────────────────────────────┘
+```{mermaid}
+classDiagram
+    class Singleton {
+        -Singleton instancia$
+        -Map configuracion
+        -Singleton()
+        +obtenerInstancia()$ Singleton
+        +getConfiguracion() Map
+        +setConfiguracion(String, Object)
+    }
+    
+    note for Singleton "Patrón Singleton:<br>- Constructor privado<br>- Instancia estática única<br>- Método de acceso global"
 ```
 
 #### Implementación Conceptual
@@ -307,26 +316,38 @@ Necesitás crear objetos complejos con muchos parámetros opcionales. Los constr
 
 Separá la construcción de un objeto complejo de su representación, permitiendo crear diferentes representaciones con el mismo proceso.
 
-```
-┌─────────────────────────────┐
-│          Producto           │
-│─────────────────────────────│
-│ - parteA                    │
-│ - parteB                    │
-│ - parteC (opcional)         │
-│ - parteD (opcional)         │
-└─────────────────────────────┘
-
-┌─────────────────────────────┐
-│      «interface»            │
-│         Builder             │
-│─────────────────────────────│
-│ + construirParteA()         │
-│ + construirParteB()         │
-│ + construirParteC()         │
-│ + construirParteD()         │
-│ + obtenerResultado()        │
-└─────────────────────────────┘
+```{mermaid}
+classDiagram
+    class Pizza {
+        -String tamaño
+        -String masa
+        -String queso
+        -boolean tomate
+        -boolean jamon
+        -boolean cebolla
+        +Pizza()
+    }
+    
+    class PizzaBuilder {
+        -String tamaño
+        -String masa
+        -String queso
+        -boolean tomate
+        -boolean jamon
+        -boolean cebolla
+        +tamaño(String) PizzaBuilder
+        +masa(String) PizzaBuilder
+        +conQueso(String) PizzaBuilder
+        +conTomate() PizzaBuilder
+        +conJamon() PizzaBuilder
+        +sinCebolla() PizzaBuilder
+        +construir() Pizza
+    }
+    
+    PizzaBuilder ..> Pizza : construye
+    
+    note for PizzaBuilder "Fluent Interface:<br>Métodos encadenables<br>que retornan this"
+    note for Pizza "Objeto complejo<br>con múltiples parámetros"
 ```
 
 #### Ejemplo: Constructor de Pizzas
@@ -392,23 +413,32 @@ Tenés una clase con una interfaz incompatible con lo que el cliente espera. Nec
 
 Crea una clase intermedia que "traduce" entre las dos interfaces.
 
-```
-┌─────────────────┐       ┌─────────────────┐
-│     Cliente     │──────▶│   «interface»   │
-│                 │       │     Target      │
-└─────────────────┘       │─────────────────│
-                          │ + operacion()   │
-                          └────────┬────────┘
-                                   │
-                                   │ implementa
-                                   ▼
-                          ┌─────────────────┐       ┌─────────────────┐
-                          │    Adaptador    │──────▶│    Adaptado     │
-                          │─────────────────│       │─────────────────│
-                          │ + operacion()   │       │ + metodoEspecifico()│
-                          │   → adapatado.  │       └─────────────────┘
-                          │   metodoEspecifico()│
-                          └─────────────────┘
+```{mermaid}
+classDiagram
+    class Target {
+        <<interface>>
+        +operacion()
+    }
+    
+    class Cliente {
+        +ejecutar()
+    }
+    
+    class Adaptador {
+        -Adaptado adaptado
+        +operacion()
+    }
+    
+    class Adaptado {
+        +metodoEspecifico()
+    }
+    
+    Cliente --> Target : usa
+    Target <|.. Adaptador : implementa
+    Adaptador --> Adaptado : delega
+    
+    note for Adaptador "Traduce entre<br>Target y Adaptado"
+    note for Adaptado "Clase existente<br>con interfaz incompatible"
 ```
 
 #### Ejemplo: Adaptador de Formatos
@@ -460,37 +490,42 @@ Necesitás agregar responsabilidades a objetos individuales dinámicamente, sin 
 
 Envuelve el objeto en otro objeto que agrega el comportamiento extra.
 
-```
-┌───────────────────────┐
-│     «interface»       │
-│      Componente       │
-│───────────────────────│
-│ + operacion()         │
-└───────────┬───────────┘
-            │
-   ┌────────┴────────┐
-   │                 │
-   ▼                 ▼
-┌─────────────┐  ┌─────────────────────┐
-│Componente   │  │     «abstract»      │
-│Concreto     │  │     Decorador       │
-│─────────────│  │─────────────────────│
-│+operacion() │  │ - componente        │
-└─────────────┘  │─────────────────────│
-                 │ + operacion()       │
-                 │   → componente.     │
-                 │   operacion()       │
-                 └──────────┬──────────┘
-                            │
-                   ┌────────┴────────┐
-                   │                 │
-                   ▼                 ▼
-            ┌─────────────┐  ┌─────────────┐
-            │DecoradorA   │  │DecoradorB   │
-            │─────────────│  │─────────────│
-            │+operacion() │  │+operacion() │
-            │ + extra A   │  │ + extra B   │
-            └─────────────┘  └─────────────┘
+```{mermaid}
+classDiagram
+    class Componente {
+        <<interface>>
+        +operacion()
+    }
+    
+    class ComponenteConcreto {
+        +operacion()
+    }
+    
+    class Decorador {
+        <<abstract>>
+        #Componente componente
+        +Decorador(Componente)
+        +operacion()
+    }
+    
+    class DecoradorA {
+        +operacion()
+        +comportamientoExtra()
+    }
+    
+    class DecoradorB {
+        +operacion()
+        +otraFuncionalidad()
+    }
+    
+    Componente <|.. ComponenteConcreto
+    Componente <|.. Decorador
+    Decorador <|-- DecoradorA
+    Decorador <|-- DecoradorB
+    Decorador o-- Componente : envuelve
+    
+    note for Decorador "Mantiene referencia<br>al componente envuelto"
+    note for DecoradorA "Agrega funcionalidad<br>antes/después de delegar"
 ```
 
 #### Ejemplo: Café con Decoradores
@@ -660,24 +695,38 @@ Tenés varias formas de hacer algo (algoritmos) y querés poder cambiar entre el
 
 Definí una familia de algoritmos, encapsulá cada uno, y hacelos intercambiables.
 
-```
-┌───────────────────────┐
-│       Contexto        │
-│───────────────────────│
-│ - estrategia          │───────▶┌───────────────────────┐
-│───────────────────────│        │     «interface»       │
-│ + setEstrategia(e)    │        │      Estrategia       │
-│ + ejecutar()          │        │───────────────────────│
-│   → estrategia.       │        │ + algoritmo()         │
-│   algoritmo()         │        └───────────┬───────────┘
-└───────────────────────┘                    │
-                                    ┌────────┼────────┐
-                                    │        │        │
-                                    ▼        ▼        ▼
-                              ┌─────────┐┌─────────┐┌─────────┐
-                              │Estrategia││Estrategia││Estrategia│
-                              │    A    ││    B    ││    C    │
-                              └─────────┘└─────────┘└─────────┘
+```{mermaid}
+classDiagram
+    class Contexto {
+        -Estrategia estrategia
+        +setEstrategia(Estrategia)
+        +ejecutarOperacion()
+    }
+    
+    class Estrategia {
+        <<interface>>
+        +algoritmo()
+    }
+    
+    class EstrategiaA {
+        +algoritmo()
+    }
+    
+    class EstrategiaB {
+        +algoritmo()
+    }
+    
+    class EstrategiaC {
+        +algoritmo()
+    }
+    
+    Contexto o-- Estrategia : usa
+    Estrategia <|.. EstrategiaA
+    Estrategia <|.. EstrategiaB
+    Estrategia <|.. EstrategiaC
+    
+    note for Contexto "Delega el algoritmo<br>a la estrategia actual"
+    note for Estrategia "Familia de algoritmos<br>intercambiables"
 ```
 
 #### Ejemplo: Estrategias de Ordenamiento
@@ -762,31 +811,48 @@ Un objeto cambia de estado y otros objetos necesitan ser notificados automática
 
 Definí una dependencia uno-a-muchos donde cuando un objeto cambia, todos sus dependientes son notificados.
 
-```
-┌───────────────────────┐
-│       «interface»     │
-│        Sujeto         │
-│───────────────────────│
-│ + agregarObservador() │
-│ + eliminarObservador()│
-│ + notificar()         │
-└───────────┬───────────┘
-            │
-            ▼
-┌───────────────────────┐        ┌───────────────────────┐
-│    SujetoConcreto     │        │     «interface»       │
-│───────────────────────│        │      Observador       │
-│ - estado              │        │───────────────────────│
-│ - observadores: List  │───────▶│ + actualizar(estado)  │
-│───────────────────────│        └───────────┬───────────┘
-│ + setEstado(e)        │                    │
-│   → notificar()       │           ┌────────┼────────┐
-└───────────────────────┘           │        │        │
-                                    ▼        ▼        ▼
-                              ┌─────────┐┌─────────┐┌─────────┐
-                              │Observador││Observador││Observador│
-                              │    A    ││    B    ││    C    │
-                              └─────────┘└─────────┘└─────────┘
+```{mermaid}
+classDiagram
+    class Sujeto {
+        <<interface>>
+        +agregarObservador(Observador)
+        +eliminarObservador(Observador)
+        +notificar()
+    }
+    
+    class SujetoConcreto {
+        -List~Observador~ observadores
+        -String estado
+        +setEstado(String)
+        +getEstado() String
+        +notificar()
+    }
+    
+    class Observador {
+        <<interface>>
+        +actualizar(String estado)
+    }
+    
+    class ObservadorA {
+        +actualizar(String estado)
+    }
+    
+    class ObservadorB {
+        +actualizar(String estado)
+    }
+    
+    class ObservadorC {
+        +actualizar(String estado)
+    }
+    
+    Sujeto <|.. SujetoConcreto
+    SujetoConcreto o-- Observador : notifica a
+    Observador <|.. ObservadorA
+    Observador <|.. ObservadorB
+    Observador <|.. ObservadorC
+    
+    note for SujetoConcreto "Cuando cambia estado,<br>notifica a todos los observadores"
+    note for Observador "Reciben actualizaciones<br>automáticamente"
 ```
 
 #### Ejemplo: Sistema de Notificaciones
@@ -882,29 +948,32 @@ Tenés un algoritmo con pasos fijos, pero algunos pasos varían según la implem
 
 Definí el esqueleto de un algoritmo en una operación, delegando algunos pasos a las subclases.
 
-```
-┌─────────────────────────────┐
-│        «abstract»           │
-│       ClaseAbstracta        │
-│─────────────────────────────│
-│ + metodoPlantilla() {final} │  ← Define el algoritmo
-│   → paso1()                 │
-│   → paso2()                 │
-│   → paso3()                 │
-│ + paso1() {abstract}        │  ← Subclases implementan
-│ + paso2() {abstract}        │
-│ # paso3()                   │  ← Hook: implementación default opcional
-└─────────────┬───────────────┘
-              │
-     ┌────────┴────────┐
-     │                 │
-     ▼                 ▼
-┌─────────────┐   ┌─────────────┐
-│ClaseConcretaA│  │ClaseConcretaB│
-│─────────────│   │─────────────│
-│ + paso1()   │   │ + paso1()   │
-│ + paso2()   │   │ + paso2()   │
-└─────────────┘   └─────────────┘
+```{mermaid}
+classDiagram
+    class ClaseAbstracta {
+        <<abstract>>
+        +metodoPlantilla() final
+        +paso1()* abstract
+        +paso2()* abstract
+        #paso3() hook
+    }
+    
+    class ClaseConcretaA {
+        +paso1()
+        +paso2()
+        #paso3()
+    }
+    
+    class ClaseConcretaB {
+        +paso1()
+        +paso2()
+    }
+    
+    ClaseAbstracta <|-- ClaseConcretaA
+    ClaseAbstracta <|-- ClaseConcretaB
+    
+    note for ClaseAbstracta "metodoPlantilla() define<br>el esqueleto del algoritmo:<br>1. paso1()<br>2. paso2()<br>3. paso3()"
+    note for ClaseConcretaA "Implementa pasos abstractos<br>Puede override hooks"
 ```
 
 #### Ejemplo: Preparación de Bebidas
