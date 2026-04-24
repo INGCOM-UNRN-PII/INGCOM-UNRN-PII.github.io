@@ -1065,7 +1065,7 @@ for (int fila = 0; fila < matriz.length; fila = fila + 1) {
 ```
 :::
 
-(recorrido-matriz-for-each)=
+(recorrido-con-for-each)=
 ### Recorrido con for-each
 
 También podés usar `for-each` anidados para recorrer matrices:

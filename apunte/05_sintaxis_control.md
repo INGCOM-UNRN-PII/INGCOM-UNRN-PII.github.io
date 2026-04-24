@@ -1488,7 +1488,7 @@ for (int i = 0; i < 5; i = i + 1) {
 
 Estas diferencias hacen que Java sea más seguro que C para programación a gran escala, aunque la sintaxis sea visualmente similar.
 
-(ejercicios-control)=
+(ejercicios)=
 ## Ejercicios
 
 ```{exercise}
