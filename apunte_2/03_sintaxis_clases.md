@@ -317,7 +317,7 @@ Como se mencionó en {ref}`concepto-metodo`, los métodos pueden clasificarse se
 :::
 
 (puntero-this-java)=
-### El Puntero `this`
+### La referencia `this`
 
 La palabra clave `this` es una **referencia especial** que todo objeto tiene **a sí mismo**. Cuando un método se ejecuta, `this` apunta automáticamente al objeto sobre el cual se invocó el método.
 
@@ -325,22 +325,12 @@ La palabra clave `this` es una **referencia especial** que todo objeto tiene **a
 
 Recordemos de la discusión sobre {ref}`concepto-objeto` que cada objeto tiene una **identidad** única. En términos de implementación, esa identidad corresponde a la **dirección de memoria** donde reside el objeto en el *Heap*. La palabra clave `this` es precisamente esa dirección: una referencia que el objeto tiene hacia sí mismo.
 
-```
-       Stack                           Heap
-    ┌─────────────┐                ┌─────────────────────────┐
-    │  juan       │───────────────►│  Objeto Persona         │
-    │ (referencia)│                │  ┌─────────────────────┐│
-    └─────────────┘                │  │ nombre: "Juan"      ││
-                                   │  │ edad: 25            ││
-                                   │  │                     ││
-                                   │  │ this ──────────────┐││
-                                   │  └────────────────────┼┘│
-                                   │                       │ │
-                                   └───────────────────────┼─┘
-                                                           │
-                                           ┌───────────────┘
-                                           │ (apunta a sí mismo)
-                                           ▼
+```{figure} 03/modelo_memoria_this.svg
+:label: fig-modelo-memoria-this
+:align: center
+:width: 80%
+
+El puntero `this` como referencia al propio objeto en el Heap.
 ```
 
 (usos-this)=
@@ -501,22 +491,12 @@ El proceso de instanciación involucra varias operaciones internas:
 
 4. **Retorno de la referencia:** El operador `new` retorna una referencia (dirección de memoria) que se almacena en la variable.
 
-```
-                                          HEAP
-                                   ┌────────────────────┐
-  STACK                            │                    │
-┌─────────────┐                    │  ┌──────────────┐  │
-│ juan  ──────┼───────────────────►│  │nombre:"Juan" │  │
-│ (0x7A3F)    │                    │  │edad: 25      │  │
-└─────────────┘                    │  └──────────────┘  │
-                                   │     (0x7A3F)       │
-┌─────────────┐                    │                    │
-│ maria ──────┼───────────────────►│  ┌──────────────┐  │
-│ (0x8B2C)    │                    │  │nombre:"María"│  │
-└─────────────┘                    │  │edad: 30      │  │
-                                   │  └──────────────┘  │
-                                   │     (0x8B2C)       │
-                                   └────────────────────┘
+```{figure} 03/instanciacion_memoria.svg
+:label: fig-instanciacion-memoria
+:align: center
+:width: 85%
+
+Modelo de memoria Stack/Heap durante la instanciación de múltiples objetos.
 ```
 
 **Ejemplo completo de instanciación y uso:**
@@ -1486,10 +1466,12 @@ Las asociaciones se implementan mediante **atributos** que contienen referencias
 (asociacion-uno-a-uno)=
 #### Asociación Uno a Uno (1:1)
 
-```
-┌──────────────┐         1      1     ┌──────────────┐
-│   Persona    │──────────────────────│     DNI      │
-└──────────────┘                      └──────────────┘
+```{figure} 03/asociacion_uno_a_uno.svg
+:label: fig-asociacion-1-1
+:align: center
+:width: 60%
+
+Asociación uno a uno (1:1) entre Persona y DNI.
 ```
 
 **Implementación:**
@@ -1527,10 +1509,12 @@ public class Persona {
 (asociacion-uno-a-muchos)=
 #### Asociación Uno a Muchos (1:*)
 
-```
-┌──────────────┐         1      *     ┌──────────────┐
-│   Persona    │──────────────────────│    Libro     │
-└──────────────┘                      └──────────────┘
+```{figure} 03/asociacion_uno_a_muchos.svg
+:label: fig-asociacion-1-n
+:align: center
+:width: 60%
+
+Asociación uno a muchos (1:*) entre Persona y Libro.
 ```
 
 **Implementación usando colecciones:**
@@ -1603,10 +1587,12 @@ El atributo `libros` es de tipo `List<Libro>`, que es una **interfaz** de Java q
 
 A veces, la navegación debe ser posible en **ambas direcciones**:
 
-```
-┌──────────────┐         1      *     ┌──────────────┐
-│   Persona    │◄────────────────────►│    Libro     │
-└──────────────┘   propietario        └──────────────┘
+```{figure} 03/asociacion_bidireccional.svg
+:label: fig-asociacion-bidireccional
+:align: center
+:width: 70%
+
+Asociación bidireccional entre Persona y Libro. Ambos lados mantienen la referencia al otro.
 ```
 
 **Implementación:**
@@ -1673,20 +1659,12 @@ Esta relación corresponde conceptualmente a lo que se describió en {ref}`relac
 
 La composición se representa con un **rombo relleno (♦)** del lado del "todo":
 
-```
-                              ♦ Composición
-┌──────────────┐ ♦───────────────────── ┌──────────────┐
-│     Auto     │                        │    Motor     │
-├──────────────┤                        ├──────────────┤
-│ - modelo     │                        │ - cilindros  │
-│ - año        │                        │ - potencia   │
-├──────────────┤                        ├──────────────┤
-│ + arrancar() │                        │ + encender() │
-└──────────────┘                        └──────────────┘
+```{figure} 03/uml_composicion.svg
+:label: fig-uml-composicion
+:align: center
+:width: 80%
 
-Interpretación: El Auto ESTÁ COMPUESTO por un Motor.
-                El Motor no existe sin el Auto.
-                Si el Auto se destruye, el Motor también.
+Diagrama de clases UML que representa la composición entre Auto y Motor.
 ```
 
 (composicion-implementacion)=
@@ -1822,20 +1800,12 @@ La **agregación** es una relación de **"todo/parte"** más débil que la compo
 
 La agregación se representa con un **rombo vacío (◇)** del lado del contenedor:
 
-```
-                              ◇ Agregación
-┌──────────────┐ ◇───────────────────── ┌──────────────┐
-│     Auto     │                        │  Conductor   │
-├──────────────┤                        ├──────────────┤
-│ - modelo     │                        │ - nombre     │
-│ - año        │                        │ - licencia   │
-├──────────────┤                        ├──────────────┤
-│ + viajar()   │                        │ + conducir() │
-└──────────────┘                        └──────────────┘
+```{figure} 03/uml_agregacion.svg
+:label: fig-uml-agregacion
+:align: center
+:width: 80%
 
-Interpretación: El Auto TIENE un Conductor (agregado).
-                El Conductor existe independientemente del Auto.
-                Si el Auto se destruye, el Conductor sigue existiendo.
+Diagrama de clases UML que representa la agregación entre Auto y Conductor.
 ```
 
 (agregacion-implementacion)=
@@ -2363,19 +2333,12 @@ Dibujamos el diagrama UML identificando:
 - Relaciones (asociación, composición ♦, agregación ◇)
 - Cardinalidades
 
-```
-                    ♦                                    ◇
-┌─────────────┐  1     *  ┌─────────────┐  *      *  ┌─────────────┐
-│ Estantería  │───────────│   Libro     │────────────│   Socio     │
-├─────────────┤           ├─────────────┤            ├─────────────┤
-│ - numero    │           │ - isbn      │            │ - numero    │
-│ - seccion   │           │ - titulo    │            │ - nombre    │
-├─────────────┤           │ - autor     │            │ - email     │
-│ + agregar() │           │ - disponible│            ├─────────────┤
-│ + listar()  │           ├─────────────┤            │ + prestar() │
-│ + buscar()  │           │ + prestar() │            │ + devolver()│
-└─────────────┘           │ + devolver()│            └─────────────┘
-                          └─────────────┘
+```{figure} 03/uml_biblioteca_integracion.svg
+:label: fig-uml-biblioteca-completo
+:align: center
+:width: 100%
+
+Diagrama de clases completo para el sistema de biblioteca, integrando composición y agregación.
 ```
 
 (paso3-implementacion)=

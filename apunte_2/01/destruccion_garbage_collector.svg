@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="500"
+   height="200"
+   viewBox="0 0 500 200"
+   version="1.1"
+   id="svg8"
+   sodipodi:docname="destruccion_garbage_collector.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview8"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.45"
+     inkscape:cx="272.75862"
+     inkscape:cy="139.31034"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg8" />
+  <style
+     id="style1">.title { font-family: 'Fabrikat', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: var(--unrn-dark-blue); text-anchor: middle; }
+.label { font-family: 'Lato', Arial, sans-serif; font-size: 12px; fill: var(--gray-700); }
+.label-bold { font-family: 'Lato', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: var(--unrn-dark-blue); }
+.label-small { font-family: 'Lato', Arial, sans-serif; font-size: 10px; fill: var(--gray-600); }
+.code { font-family: 'Share Tech Mono', monospace; font-size: 11px; fill: var(--gray-700); }
+.code-comment { font-family: 'Share Tech Mono', monospace; font-size: 10px; fill: var(--gray-500); font-style: italic; }
+.node { fill: #ffffff; stroke: var(--gray-700); stroke-width: 2; }
+.node-data { fill: var(--blue-lightest); stroke: var(--gray-400); stroke-width: 1.5; }
+.node-highlight { fill: #fff3e0; stroke: var(--unrn-red); stroke-width: 2.5; }
+.info-box { fill: var(--blue-lightest); stroke: var(--blue-light); stroke-width: 1; rx: 3; }
+.code-block { fill: var(--gray-100); stroke: var(--gray-300); stroke-width: 1; rx: 3; }
+.highlight-box { fill: var(--red-lightest); stroke: var(--unrn-red); stroke-width: 1; rx: 3; }
+.memory-cell { fill: #ffffff; stroke: var(--gray-600); stroke-width: 1.5; }
+.arrow { fill: none; stroke: var(--gray-700); stroke-width: 2; }
+.divider { stroke: var(--gray-300); stroke-width: 1; }
+.divider-bold { stroke: var(--gray-600); stroke-width: 2; }
+.valid { stroke: #2e7d32; stroke-width: 2.5; }
+.invalid { stroke: var(--unrn-red); stroke-width: 2.5; }
+.divider-dashed { stroke: var(--gray-300); stroke-width: 1; stroke-dasharray: 4; }
+</style>
+  <defs
+     id="defs1">
+    <marker
+       id="arrowhead"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="10,3 0,6 0,0 "
+         fill="var(--unrn-red)"
+         id="polygon1" />
+    </marker>
+  </defs>
+  <text
+     x="249.752"
+     y="30"
+     class="title"
+     id="text1">Destrucción: Objeto no accesible</text>
+  <rect
+     x="30"
+     y="54"
+     width="120"
+     height="40"
+     class="stack-node"
+     id="rect1"
+     style="fill:#aaeeff" />
+  <text
+     x="90"
+     y="78.401009"
+     class="label-bold"
+     id="text2">referencia</text>
+  <path
+     d="m 155,74 h 75"
+     class="arrow"
+     marker-end="url(#arrowhead)"
+     id="path2"
+     style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2;stroke-dasharray:none;stroke-opacity:1" />
+  <text
+     x="240"
+     y="77.850006"
+     class="code"
+     id="text3">null</text>
+  <text
+     x="90"
+     y="109"
+     class="label-small"
+     id="text4">(ya no apunta al objeto)</text>
+  <rect
+     x="330"
+     y="94"
+     width="140"
+     height="80"
+     class="invalid"
+     id="rect4"
+     style="fill:#ff9955" />
+  <text
+     x="381.418"
+     y="124"
+     class="label-bold"
+     id="text5">Objeto</text>
+  <text
+     x="374.30801"
+     y="149"
+     class="label-bold"
+     id="text6">Huérfano</text>
+  <text
+     x="130"
+     y="144"
+     class="label-small"
+     fill="var(--unrn-red)"
+     id="text7">← Sin referencias, es inaccesible.</text>
+  <text
+     x="130"
+     y="164"
+     class="label-small"
+     fill="var(--unrn-red)"
+     id="text8">El Garbage Collector liberará su memoria.</text>
+</svg>

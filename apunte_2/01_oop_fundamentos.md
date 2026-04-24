@@ -321,17 +321,12 @@ Mientras que la clase es la definición, el objeto es la "cosa" real que existe 
 
 Si la clase `Casa` es el plano arquitectónico, entonces cada casa construida es un **objeto**:
 
-```
-Planos de Casa           Casa de Juan          Casa de María
-(la clase)               (objeto 1)            (objeto 2)
-     │                        │                      │
-     │                   ┌────┴────┐            ┌────┴────┐
-     │                   │ Color:  │            │ Color:  │
-     └──────►            │ blanco  │            │ celeste │
-    Define               │ Hab: 3  │            │ Hab: 3  │
-    cómo son             │ Dueño:  │            │ Dueño:  │
-                         │ Juan    │            │ María   │
-                         └─────────┘            └─────────┘
+```{figure} 01/analogia_casa.svg
+:label: fig-analogia-casa
+:align: center
+:width: 80%
+
+Analogía de la casa: la clase como plano y los objetos como construcciones reales.
 ```
 
 Ambas casas fueron construidas según los mismos planos, pero son casas **diferentes**: están en ubicaciones distintas, tienen dueños distintos, pueden tener colores distintos. Modificar una no afecta a la otra.
@@ -358,23 +353,12 @@ Los atributos son las "variables" que cada objeto tiene para almacenar su inform
 
 **Ejemplo conceptual:**
 
-```
-Clase: Vehículo
-├── Atributos:
-│   ├── patente (identificación única)
-│   ├── marca (fabricante)
-│   ├── modelo (versión)
-│   ├── año de fabricación
-│   └── kilometraje (distancia recorrida)
-│
-└── Dos objetos de esta clase:
+```{figure} 01/vehiculo_atributos.svg
+:label: fig-vehiculo-atributos
+:align: center
+:width: 85%
 
-    Auto de Juan              Auto de María
-    ├── patente: "ABC123"     ├── patente: "XYZ789"
-    ├── marca: "Ford"         ├── marca: "Toyota"
-    ├── modelo: "Fiesta"      ├── modelo: "Corolla"
-    ├── año: 2018             ├── año: 2021
-    └── km: 45000             └── km: 12000
+Relación entre la clase Vehículo y sus instancias concretas con valores específicos.
 ```
 
 (concepto-estado)=
@@ -393,38 +377,12 @@ El estado es lo que diferencia a un objeto "recién creado" de uno que ha "vivid
 
 **Ejemplo de evolución del estado:**
 
-```
-Un objeto Auto recién creado:
-┌─────────────────────────────┐
-│ Estado inicial              │
-├─────────────────────────────┤
-│ patente: "ABC123"           │
-│ marca: "Ford"               │
-│ kilometraje: 0              │  ← Recién salido de fábrica
-│ encendido: false            │
-└─────────────────────────────┘
-         │
-         │ Se ejecuta: auto.recorrer(100)
-         ▼
-┌─────────────────────────────┐
-│ Estado después del viaje    │
-├─────────────────────────────┤
-│ patente: "ABC123"           │  ← No cambió
-│ marca: "Ford"               │  ← No cambió
-│ kilometraje: 100            │  ← ¡Cambió!
-│ encendido: false            │
-└─────────────────────────────┘
-         │
-         │ Se ejecuta: auto.encender()
-         ▼
-┌─────────────────────────────┐
-│ Estado actual               │
-├─────────────────────────────┤
-│ patente: "ABC123"           │
-│ marca: "Ford"               │
-│ kilometraje: 100            │
-│ encendido: true             │  ← ¡Cambió!
-└─────────────────────────────┘
+```{figure} 01/auto_estado_evolucion.svg
+:label: fig-auto-estado-evolucion
+:align: center
+:width: 80%
+
+Evolución del estado de un objeto Auto tras recibir mensajes.
 ```
 
 :::{note}
@@ -454,15 +412,12 @@ Ambas frases son correctas y dicen esencialmente lo mismo, pero con diferente é
 
 El proceso de crear un objeto a partir de una clase se llama **instanciación**:
 
-```
-Clase Persona
-     │
-     │  instanciación
-     │  (crear un objeto)
-     ▼
-┌─────────────┐
-│ Objeto juan │ ← "juan" es una instancia de Persona
-└─────────────┘
+```{figure} 01/persona_instanciacion.svg
+:label: fig-persona-instanciacion
+:align: center
+:width: 60%
+
+Instanciación de la clase Persona para crear el objeto juan.
 ```
 
 (concepto-metodo)=
@@ -493,20 +448,12 @@ Si los atributos responden a la pregunta "¿qué sabe el objeto?", los métodos 
 
 **Ejemplo conceptual:**
 
-```
-Clase: CuentaBancaria
-├── Atributos:
-│   ├── numero
-│   ├── titular
-│   └── saldo
-│
-├── Métodos de consulta:
-│   ├── obtenerSaldo()      → retorna el saldo actual
-│   └── obtenerTitular()    → retorna el nombre del titular
-│
-└── Métodos de modificación:
-    ├── depositar(monto)    → aumenta el saldo
-    └── extraer(monto)      → disminuye el saldo
+```{figure} 01/cuenta_bancaria_estructura.svg
+:label: fig-cuenta-bancaria-estructura
+:align: center
+:width: 85%
+
+Representación de atributos y métodos de la clase CuentaBancaria.
 ```
 
 (concepto-mensaje)=
@@ -519,18 +466,12 @@ Un **mensaje** es la forma en que los objetos se comunican entre sí. Enviar un 
 
 La comunicación mediante mensajes es central en la POO. Los objetos no "llaman funciones"; se **envían mensajes** unos a otros:
 
-```
-Objeto emisor                    Objeto receptor
-┌───────────┐                    ┌───────────┐
-│  Sistema  │  ─── mensaje ───►  │  cuenta   │
-│           │  "depositar(100)"  │           │
-└───────────┘                    └───────────┘
-                                      │
-                                      ▼
-                               El objeto cuenta
-                               ejecuta su método
-                               depositar() y 
-                               actualiza su saldo
+```{figure} 01/mensaje_pasaje.svg
+:label: fig-mensaje-pasaje
+:align: center
+:width: 80%
+
+Envío de un mensaje de un objeto emisor a un receptor.
 ```
 
 Esta forma de pensar tiene implicaciones importantes:
@@ -564,21 +505,12 @@ La construcción es el "nacimiento" del objeto. Es el momento en que pasa de ser
 
 El constructor es un método especial que se ejecuta automáticamente cuando se crea un objeto. Su responsabilidad es garantizar que el objeto nazca en un **estado válido y consistente**.
 
-```
-Proceso de construcción:
+```{figure} 01/construccion_proceso.svg
+:label: fig-construccion-proceso
+:align: center
+:width: 80%
 
-1. [Solicitud]     "Quiero crear una Persona con nombre 'Juan' y edad 25"
-         │
-         ▼
-2. [Reserva]       Se reserva memoria para el nuevo objeto
-         │
-         ▼
-3. [Inicialización] Se ejecuta el constructor:
-                    - nombre ← "Juan"
-                    - edad ← 25
-         │
-         ▼
-4. [Objeto listo]  El objeto existe y está listo para usarse
+Etapas del proceso de construcción de un nuevo objeto.
 ```
 
 :::{important}
@@ -618,17 +550,12 @@ La gestión de la destrucción varía según el lenguaje:
 - El programador no debe preocuparse por la liberación manual.
 - Común en lenguajes modernos como Java, Python, C#, Go.
 
-```
-Objeto ya no accesible:
+```{figure} 01/destruccion_garbage_collector.svg
+:label: fig-destruccion-garbage-collector
+:align: center
+:width: 80%
 
-┌─────────────┐
-│ referencia  │ ──────► null (ya no apunta al objeto)
-└─────────────┘
-
-┌─────────────┐
-│  objeto     │ ← Sin referencias, no es accesible
-│  huérfano   │   El Garbage Collector lo detectará
-└─────────────┘   y liberará su memoria
+Objeto sin referencias (huérfano) esperando ser recolectado por el Garbage Collector.
 ```
 
 :::{note} El destructor en Java
@@ -653,13 +580,12 @@ La **identidad** es lo que hace único a cada objeto, lo que lo distingue de tod
 
 La identidad es un concepto sutil pero fundamental. Considerá este escenario:
 
-```
-Dos objetos Persona:
+```{figure} 01/persona_identidad.svg
+:label: fig-persona-identidad
+:align: center
+:width: 80%
 
-persona1                    persona2
-├── nombre: "Juan"          ├── nombre: "Juan"
-├── edad: 25                ├── edad: 25
-└── dni: "12345678"         └── dni: "12345678"
+Dos objetos con el mismo estado pero diferente identidad física.
 ```
 
 Ambos objetos tienen **exactamente los mismos valores** en todos sus atributos. Sin embargo, son **dos objetos diferentes**: ocupan diferentes posiciones en memoria y tienen existencias independientes. Si modificamos `persona1`, `persona2` no se ve afectada.
@@ -796,30 +722,12 @@ La abstracción opera en múltiples niveles:
 
 Abstraer es un proceso de **filtrado consciente**:
 
-```
-                     Mundo Real
-                         │
-                         │
-      ┌──────────────────┼──────────────────┐
-      │                  │                  │
-      ▼                  ▼                  ▼
-   Detalles          Detalles          Detalles
-   físicos           sociales          biológicos
-      │                  │                  │
-      │    FILTRO: ¿Es relevante para      │
-      │    el objetivo del sistema?         │
-      │                  │                  │
-      ▼                  ▼                  ▼
-   ┌─────┐           ┌─────┐           ┌─────┐
-   │ ✗   │           │ ✓   │           │ ✗   │
-   └─────┘           └─────┘           └─────┘
-                         │
-                         ▼
-                  ┌─────────────┐
-                  │   Modelo    │
-                  │ Abstracto   │
-                  │ (la clase)  │
-                  └─────────────┘
+```{figure} 01/abstraccion_filtro.svg
+:label: fig-abstraccion-filtro
+:align: center
+:width: 80%
+
+El proceso de filtrado de detalles para obtener un modelo abstracto.
 ```
 
 :::{tip}
@@ -843,28 +751,12 @@ El **encapsulamiento** es el principio de ocultar los detalles internos de un ob
 
 Ya vimos que la POO fusiona datos y comportamiento. Esta fusión tiene consecuencias importantes:
 
-```
-Paradigma estructurado:              Paradigma OO:
+```{figure} 01/encapsulamiento_comparacion.svg
+:label: fig-encapsulamiento-comparacion
+:align: center
+:width: 85%
 
-┌──────────────┐                    ┌──────────────────────┐
-│    DATOS     │                    │       OBJETO         │
-│              │                    │  ┌────────────────┐  │
-│  struct      │                    │  │     DATOS      │  │
-│  Persona {   │                    │  │   nombre       │  │
-│    nombre;   │                    │  │   edad         │  │
-│    edad;     │                    │  └────────────────┘  │
-│  }           │                    │  ┌────────────────┐  │
-└──────────────┘                    │  │ COMPORTAMIENTO │  │
-                                    │  │   saludar()    │  │
-┌──────────────┐                    │  │   cumplirAnios │  │
-│  FUNCIONES   │                    │  └────────────────┘  │
-│              │                    └──────────────────────┘
-│  saludar(p)  │                    
-│  cumplir(p)  │                    El objeto es una unidad
-└──────────────┘                    indivisible
-                                    
-Datos y funciones                   
-están separados                     
+Comparación entre la separación de datos/funciones y la unidad objeto (encapsulamiento).
 ```
 
 (ocultamiento-de-informacion)=
@@ -975,20 +867,12 @@ Verbos identificados:
 
 **Modelo preliminar:**
 
-```
-Clase: Cliente
-├── Atributos: (por determinar)
-└── Métodos:
-    └── realizarReserva(vehiculo, fechaInicio, fechaFin)
+```{figure} 01/modelo_preliminar_vehiculos.svg
+:label: fig-modelo-preliminar-vehiculos
+:align: center
+:width: 85%
 
-Clase: Vehiculo
-├── Atributos: patente, marca, modelo
-└── Métodos:
-    └── verificarDisponibilidad(fechaInicio, fechaFin)
-
-Clase: Reserva
-├── Atributos: cliente, vehiculo, fechaInicio, fechaFin
-└── Métodos: (por determinar)
+Modelo preliminar resultante del análisis lingüístico inicial.
 ```
 
 (refinando-el-modelo)=
@@ -1022,11 +906,12 @@ Aplicando el filtro de abstracción para un sistema de **control de acceso**:
 
 **Modelo filtrado:**
 
-```
-Clase: Persona (para sistema de control de acceso)
-├── nombre      ← mantener
-├── dni         ← mantener
-└── (color de pelo, equipo de fútbol → eliminados)
+```{figure} 01/persona_modelo_filtrado.svg
+:label: fig-persona-modelo-filtrado
+:align: center
+:width: 70%
+
+Modelo filtrado de Persona para un sistema de control de acceso.
 ```
 
 :::{important}
@@ -1058,31 +943,12 @@ Si la respuesta es **sí** a una o más preguntas, considerar crear una **clase 
 
 ¿`fechaNacimiento` debe ser un texto simple o una clase?
 
-**Opción A: Valor simple (texto)**
-```
-Persona
-├── nombre: texto
-├── dni: texto
-└── fechaNacimiento: texto ("15/03/1998")
+```{figure} 01/filtro_complejidad_fecha.svg
+:label: fig-filtro-complejidad-fecha
+:align: center
+:width: 85%
 
-Problema: Si se necesita calcular la edad, validar el formato, 
-comparar fechas... toda esa lógica queda dispersa.
-```
-
-**Opción B: Clase independiente**
-```
-Clase: Fecha
-├── dia: entero
-├── mes: entero
-├── anio: entero
-├── calcularEdad(): entero
-├── esAnteriorA(otraFecha): booleano
-└── formatear(): texto
-
-Persona
-├── nombre: texto
-├── dni: texto
-└── fechaNacimiento: Fecha  ← objeto con comportamiento
+Comparación entre representar la fecha como un valor simple vs. una clase independiente.
 ```
 
 La Opción B es superior porque:
@@ -1102,15 +968,12 @@ Análisis:
 
 **Decisión**: Depende del contexto. Si el sistema necesita validar y formatear DNIs frecuentemente, una clase `DNI` es apropiada. Si solo se guarda y muestra, un texto puede bastar.
 
-```
-Clase: DNI
-├── numero: texto
-├── validar(): booleano
-├── formatear(): texto  → "12.345.678"
-└── obtenerNumero(): texto
+```{figure} 01/filtro_complejidad_dni.svg
+:label: fig-filtro-complejidad-dni
+:align: center
+:width: 70%
 
-// Uso:
-dni.formatear() → "12.345.678"
+Estructura de la clase DNI con sus métodos de validación y formateo.
 ```
 
 :::{tip}
@@ -1329,43 +1192,12 @@ Diseñar un modelo para calcular los viáticos a pagar a los conductores.
 
 **Posible resolución:**
 
-*Grupo A - Mantenimiento:*
-```
-Vehículo
-├── patente (para identificar)
-├── marca (para repuestos)
-├── modelo (para repuestos)
-├── kilometraje (crítico para determinar service)
-├── fechaUltimoService
-├── necesitaService(): booleano
-└── registrarService(fecha, km)
+```{figure} 01/actividad_cazadores_auditores.svg
+:label: fig-actividad-cazadores-auditores
+:align: center
+:width: 85%
 
-Viaje (solo para actualizar km)
-├── distanciaRecorrida
-└── actualizarKilometraje()
-```
-
-*Grupo B - Viáticos:*
-```
-Vehículo
-├── patente (para identificar)
-├── consumoPromedio (para calcular combustible)
-└── calcularCostoCombustible(distancia)
-
-Viaje
-├── origen
-├── destino
-├── distancia
-├── conductor
-├── fechaViaje
-├── calcularViaticos(): dinero
-└── liquidar()
-
-Conductor
-├── nombre
-├── dni
-├── tarifaPorKm
-└── obtenerLiquidacion(periodo): dinero
+Comparación de abstracciones para sistemas de mantenimiento y viáticos.
 ```
 
 :::{note}
@@ -1437,40 +1269,14 @@ Una clase debe tener **una única razón para cambiar**. Esto significa que cada
 
 Este principio, formulado por Robert C. Martin, es una guía fundamental para diseñar clases cohesivas.
 
-**Ejemplo de violación:**
+**Ejemplo de violación y diseño mejorado:**
 
-```
-Clase: Usuario (hace demasiadas cosas)
-├── nombre
-├── email
-├── validarEmail()          ← Responsabilidad 1: Validación
-├── guardarEnBaseDeDatos()  ← Responsabilidad 2: Persistencia
-├── enviarEmailBienvenida() ← Responsabilidad 3: Notificaciones
-└── generarReporteActividad() ← Responsabilidad 4: Reportes
-```
+```{figure} 01/srp_ejemplo.svg
+:label: fig-srp-ejemplo
+:align: center
+:width: 85%
 
-Esta clase tiene **cuatro razones para cambiar**: si cambian las reglas de validación, si cambia la base de datos, si cambia el sistema de emails, o si cambia el formato de reportes.
-
-**Diseño mejorado:**
-
-```
-Clase: Usuario              (solo gestiona datos del usuario)
-├── nombre
-├── email
-└── cambiarEmail(nuevoEmail)
-
-Clase: ValidadorEmail       (solo valida emails)
-└── validar(email): booleano
-
-Clase: RepositorioUsuarios  (solo persiste usuarios)
-├── guardar(usuario)
-└── buscar(email): Usuario
-
-Clase: NotificadorUsuarios  (solo envía notificaciones)
-└── enviarBienvenida(usuario)
-
-Clase: GeneradorReportes    (solo genera reportes)
-└── generarActividad(usuario): Reporte
+Refactorización de una clase con múltiples responsabilidades hacia un diseño que cumple el SRP.
 ```
 
 Ahora cada clase tiene una única responsabilidad y una única razón para cambiar.
@@ -1492,23 +1298,12 @@ Dos métricas fundamentales para evaluar la calidad de un diseño orientado a ob
 Un buen diseño busca **maximizar la cohesión** (cada clase hace una cosa bien) y **minimizar el acoplamiento** (las clases dependen poco unas de otras).
 :::
 
-```
-Ejemplo de análisis:
+```{figure} 01/cohesion_ejemplo.svg
+:label: fig-cohesion-ejemplo
+:align: center
+:width: 85%
 
-┌─────────────────────┐       ┌─────────────────────┐
-│ Clase con ALTA      │       │ Clase con BAJA      │
-│ cohesión            │       │ cohesión            │
-├─────────────────────┤       ├─────────────────────┤
-│ CuentaBancaria      │       │ Utilidades          │
-│ - saldo             │       │ + calcularEdad()    │
-│ - titular           │       │ + formatearFecha()  │
-│ + depositar()       │       │ + enviarEmail()     │
-│ + extraer()         │       │ + comprimir()       │
-│ + calcularIntereses │       │ + validarDNI()      │
-└─────────────────────┘       └─────────────────────┘
-                              
-Todo se relaciona con        Los métodos no tienen
-"cuenta bancaria"            relación entre sí
+Comparación entre una clase altamente cohesiva y una clase de utilidades con baja cohesión.
 ```
 
 (resumen-conceptual)=
@@ -1634,44 +1429,12 @@ Aplicá las heurísticas de análisis al siguiente requerimiento. Identificá cl
 
 **Modelo propuesto:**
 
-```
-Clase: Paciente
-├── nombre
-├── dni
-├── obraSocial
-├── telefono
-├── solicitarCita(medico, fecha): Cita
-└── cancelarCita(cita)
+```{figure} 01/ejercicio_hospital_modelo.svg
+:label: fig-ejercicio-hospital-modelo
+:align: center
+:width: 85%
 
-Clase: Medico
-├── nombre
-├── matricula
-├── especialidad
-├── confirmarCita(cita)
-└── reprogramarCita(cita, nuevaFecha)
-
-Clase: CitaMedica
-├── paciente
-├── medico
-├── fechaHora
-├── consultorio
-├── estado (pendiente, confirmada, cancelada)
-├── confirmar()
-├── cancelar()
-└── reprogramar(nuevaFecha)
-
-Clase: Consultorio
-├── numero
-├── ubicacion (piso, ala)
-└── estaDisponible(fecha): booleano
-
-Clase: Hospital
-├── pacientes
-├── medicos
-├── citas
-├── consultorios
-├── buscarMedicoPorEspecialidad(esp): lista
-└── obtenerAgendaMedico(medico, fecha): lista de Cita
+Modelo de clases propuesto para la resolución del ejercicio del Hospital.
 ```
 ````
 
@@ -1731,56 +1494,12 @@ c) Sistema de recomendaciones de lectura.
 ````{solution} ej-abstraccion-contextual
 :class: dropdown
 
-**a) Sistema de biblioteca:**
-```
-Clase: Libro
-├── isbn
-├── titulo
-├── autor
-├── ejemplaresDisponibles
-├── ubicacionEstante
-├── estaDisponible(): booleano
-├── prestar(): Prestamo
-└── devolver()
+```{figure} 01/ejercicio_abstraccion_contextos.svg
+:label: fig-ejercicio-abstraccion-contextos
+:align: center
+:width: 85%
 
-// Relevante: disponibilidad, ubicación física
-// Irrelevante: precio, ventas, popularidad
-```
-
-**b) Sistema de librería online:**
-```
-Clase: Libro
-├── isbn
-├── titulo
-├── autor
-├── precio
-├── stockDisponible
-├── editorial
-├── pesoEnvio
-├── calcularEnvio(destino): dinero
-├── aplicarDescuento(porcentaje)
-└── agregarAlCarrito()
-
-// Relevante: precio, stock, envío
-// Irrelevante: ubicación en estante, préstamos
-```
-
-**c) Sistema de recomendaciones:**
-```
-Clase: Libro
-├── isbn
-├── titulo
-├── autor
-├── genero
-├── etiquetas (lista)
-├── puntuacionPromedio
-├── cantidadResenas
-├── esParecidoA(otroLibro): float
-├── obtenerLibrosSimilares(): lista
-└── calcularAfinidadConUsuario(usuario): float
-
-// Relevante: género, etiquetas, puntuaciones
-// Irrelevante: precio, ubicación física, stock
+Comparación de modelos para el concepto "Libro" en diferentes contextos de aplicación.
 ```
 
 **Observación clave:** El mismo concepto del mundo real (un libro) produce modelos completamente diferentes según el objetivo del sistema. Esto demuestra que la abstracción es contextual.

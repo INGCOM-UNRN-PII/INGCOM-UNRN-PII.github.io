@@ -121,25 +121,12 @@ La herencia puede verse desde dos perspectivas:
 - Extraemos una superclase
 - Ejemplo: `Perro`, `Gato`, `Caballo` → `Mamífero`
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     GENERALIZACIÓN                          │
-│                          ▲                                  │
-│                          │                                  │
-│    ┌─────────┐    ┌─────────┐    ┌─────────┐               │
-│    │ Círculo │    │Rectángulo│   │Triángulo│               │
-│    └────┬────┘    └────┬────┘    └────┬────┘               │
-│         │              │              │                     │
-│         └──────────────┼──────────────┘                     │
-│                        │                                    │
-│                        ▼                                    │
-│                 ┌─────────────┐                             │
-│                 │   Figura    │                             │
-│                 └─────────────┘                             │
-│                        │                                    │
-│                        ▼                                    │
-│                  ESPECIALIZACIÓN                            │
-└─────────────────────────────────────────────────────────────┘
+```{figure} 04/01_generalizacion.svg
+:label: fig-generalizacion-especializacion
+:align: center
+:width: 80%
+
+Conceptos de Generalización y Especialización en una jerarquía de clases.
 ```
 
 (relacion-es-un)=
@@ -328,46 +315,24 @@ Este es un principio de diseño ampliamente aceptado:
 
 Intuitivamente, un Cuadrado "es un" Rectángulo (matemáticamente, un cuadrado es un rectángulo con lados iguales). Pero en código:
 
-```
-┌─────────────┐
-│ Rectángulo  │
-│─────────────│
-│ - ancho     │
-│ - alto      │
-│─────────────│
-│ + setAncho()│
-│ + setAlto() │
-│ + area()    │
-└──────┬──────┘
-       │
-       ▼
-┌─────────────┐
-│  Cuadrado   │  ← ¿Cómo maneja setAncho() y setAlto()?
-└─────────────┘
+```{figure} 04/02_cuadrado_rectangulo_problema.svg
+:label: fig-cuadrado-rectangulo-problema
+:align: center
+:width: 60%
+
+El problema de la herencia entre Cuadrado y Rectángulo.
 ```
 
 **El problema**: Si `Cuadrado` hereda de `Rectángulo`, ¿qué pasa cuando alguien llama `setAncho(5)` seguido de `setAlto(3)`? Un cuadrado no puede tener ancho ≠ alto.
 
 **Solución con composición**:
 
-```
-┌─────────────┐      ┌─────────────┐
-│  Cuadrado   │      │ Rectángulo  │
-│─────────────│      │─────────────│
-│ - lado      │      │ - ancho     │
-│─────────────│      │ - alto      │
-│ + setLado() │      │─────────────│
-│ + area()    │      │ + area()    │
-└─────────────┘      └─────────────┘
-       │                    │
-       └────────┬───────────┘
-                │
-                ▼
-         ┌─────────────┐
-         │   Figura    │  ← Interface común
-         │─────────────│
-         │ + area()    │
-         └─────────────┘
+```{figure} 04/03_cuadrado_rectangulo_solucion.svg
+:label: fig-cuadrado-rectangulo-solucion
+:align: center
+:width: 70%
+
+Solución usando una interfaz común en lugar de herencia directa.
 ```
 
 Ambos implementan `Figura`, pero no hay herencia entre ellos.
@@ -398,22 +363,12 @@ Imaginá un control remoto universal:
 - Cada dispositivo **interpreta** "Play" de manera diferente
 - El usuario no necesita saber los detalles internos
 
-```
-                    ┌──────────────┐
-                    │   Control    │
-                    │   (Play ▶️)   │
-                    └───────┬──────┘
-                            │
-       ┌────────────────────┼────────────────────┐
-       │                    │                    │
-       ▼                    ▼                    ▼
-┌─────────────┐    ┌─────────────┐    ┌─────────────┐
-│     TV      │    │    DVD      │    │  Streaming  │
-│─────────────│    │─────────────│    │─────────────│
-│ Play:       │    │ Play:       │    │ Play:       │
-│ Mostrar     │    │ Girar disco │    │ Descargar   │
-│ canal       │    │ y reproducir│    │ y reproducir│
-└─────────────┘    └─────────────┘    └─────────────┘
+```{figure} 04/04_control_universal.svg
+:label: fig-control-universal-polimorfismo
+:align: center
+:width: 80%
+
+Analogía del control universal para explicar el polimorfismo.
 ```
 
 (beneficios-polimorfismo)=
@@ -482,21 +437,12 @@ System.out.println(figura.area());  // área del rectángulo
 
 Similar, pero usando interfaces en lugar de clases base.
 
-```
-┌─────────────┐
-│ «interface» │
-│  Ordenable  │
-│─────────────│
-│ + comparar()│
-└──────┬──────┘
-       │
-  ┌────┴────────────┐
-  │                 │
-  ▼                 ▼
-┌─────────┐   ┌─────────┐
-│ Persona │   │Producto │
-│(por edad)│   │(por precio)│
-└─────────┘   └─────────┘
+```{figure} 04/05_polimorfismo_interfaz.svg
+:label: fig-polimorfismo-interfaz
+:align: center
+:width: 60%
+
+Polimorfismo a través de interfaces compartidas.
 ```
 
 Cualquier clase que implemente `Ordenable` puede ser ordenada, sin importar qué tan diferentes sean.
@@ -550,19 +496,12 @@ El código espera que `setAncho()` y `setAlto()` sean independientes. `Cuadrado`
 
 **Ejemplo 2: El Ave que no vuela**
 
-```
-┌─────────────┐
-│     Ave     │
-│─────────────│
-│ + volar()   │
-└──────┬──────┘
-       │
-       ▼
-┌─────────────┐
-│  Pingüino   │
-│─────────────│
-│ + volar()   │  ← ¿Qué hace? ¡Los pingüinos no vuelan!
-└─────────────┘
+```{figure} 04/06_lsp_violacion.svg
+:label: fig-lsp-violacion-ave
+:align: center
+:width: 50%
+
+Violación del Principio de Sustitución de Liskov.
 ```
 
 Opciones problemáticas:
@@ -572,29 +511,12 @@ Opciones problemáticas:
 
 **Solución: Rediseñar la jerarquía**
 
-```
-                    ┌─────────────┐
-                    │     Ave     │
-                    │─────────────│
-                    │ + comer()   │
-                    │ + dormir()  │
-                    └──────┬──────┘
-                           │
-         ┌─────────────────┴─────────────────┐
-         │                                   │
-         ▼                                   ▼
-┌─────────────────┐               ┌─────────────────┐
-│   AveVoladora   │               │ AveNoVoladora   │
-│─────────────────│               │─────────────────│
-│ + volar()       │               │ + nadar()       │
-└────────┬────────┘               └────────┬────────┘
-         │                                 │
-    ┌────┴────┐                      ┌─────┴─────┐
-    │         │                      │           │
-    ▼         ▼                      ▼           ▼
-┌───────┐ ┌───────┐              ┌───────┐  ┌───────┐
-│Águila │ │Gorrión│              │Pingüino│ │Avestruz│
-└───────┘ └───────┘              └───────┘  └───────┘
+```{figure} 04/07_lsp_solucion.svg
+:label: fig-lsp-solucion-ave
+:align: center
+:width: 85%
+
+Rediseño de la jerarquía para cumplir con LSP.
 ```
 
 (como-cumplir-lsp)=
@@ -641,24 +563,12 @@ Una **clase abstracta** es una clase que:
 - Puede tener métodos concretos (con implementación)
 - Sirve como plantilla para subclases
 
-```
-┌─────────────────────┐
-│    «abstract»       │
-│      Figura         │
-│─────────────────────│
-│ - color             │
-│ - posicion          │
-│─────────────────────│
-│ + mover()           │  ← Método concreto (tiene implementación)
-│ + area() {abstract} │  ← Método abstracto (sin implementación)
-└──────────┬──────────┘
-           │
-           ▼
-    ┌─────────────┐
-    │   Circulo   │
-    │─────────────│
-    │ + area()    │  ← DEBE implementar area()
-    └─────────────┘
+```{figure} 04/08_clases_abstractas.svg
+:label: fig-clase-abstracta-figura
+:align: center
+:width: 60%
+
+Estructura de una clase abstracta y su implementación en una subclase.
 ```
 
 (interface-concepto)=
@@ -666,24 +576,12 @@ Una **clase abstracta** es una clase que:
 
 Una **interface** define un **contrato**: un conjunto de métodos que una clase debe implementar, sin especificar cómo.
 
-```
-┌─────────────────────┐
-│    «interface»      │
-│     Dibujable       │
-│─────────────────────│
-│ + dibujar()         │
-│ + ocultar()         │
-└─────────────────────┘
-         △
-         │
-         │ implementa
-         │
-┌────────┴────────┐
-│                 │
-▼                 ▼
-┌─────────┐    ┌─────────┐
-│ Circulo │    │ Boton   │
-└─────────┘    └─────────┘
+```{figure} 04/09_interfaces.svg
+:label: fig-interface-dibujable
+:align: center
+:width: 60%
+
+Definición de contrato mediante una interfaz.
 ```
 
 Tanto `Circulo` (una figura) como `Boton` (un componente de UI) pueden ser `Dibujable`, aunque no comparten ninguna otra característica.
@@ -700,38 +598,12 @@ Tanto `Circulo` (una figura) como `Boton` (un componente de UI) pueden ser `Dibu
 
 **Ejemplo combinado:**
 
-```
-┌─────────────────────┐
-│    «interface»      │
-│    Reproducible     │
-│─────────────────────│
-│ + play()            │
-│ + pause()           │
-│ + stop()            │
-└─────────────────────┘
-         △
-         │
-┌────────┴─────────────────────────────┐
-│                                      │
-▼                                      ▼
-┌─────────────────────┐    ┌─────────────────────┐
-│     «abstract»      │    │        Radio        │
-│      Multimedia     │    │─────────────────────│
-│─────────────────────│    │ + play()            │
-│ - archivo           │    │ + pause()           │
-│ - duracion          │    │ + stop()            │
-│─────────────────────│    │ + sintonizar()      │
-│ + play()            │    └─────────────────────┘
-│ + pause()           │
-│ + stop()            │
-└──────────┬──────────┘
-           │
-      ┌────┴────┐
-      │         │
-      ▼         ▼
-┌─────────┐  ┌─────────┐
-│  Audio  │  │  Video  │
-└─────────┘  └─────────┘
+```{figure} 04/10_ejemplo_combinado.svg
+:label: fig-ejemplo-combinado-oop
+:align: center
+:width: 85%
+
+Uso combinado de interfaces y clases abstractas.
 ```
 
 - `Reproducible`: Interface que define el contrato
@@ -761,26 +633,22 @@ Los principios SOLID son cinco principios de diseño orientado a objetos que pro
 
 **Ejemplo de violación:**
 
-```
-┌─────────────────────────┐
-│        Empleado         │  ← ¡Demasiadas responsabilidades!
-│─────────────────────────│
-│ + calcularSalario()     │  ← Reglas de negocio de RRHH
-│ + guardarEnBD()         │  ← Persistencia
-│ + generarReporte()      │  ← Presentación
-│ + enviarEmail()         │  ← Comunicación
-└─────────────────────────┘
+```{figure} 04/11_srp_violacion.svg
+:label: fig-srp-violacion
+:align: center
+:width: 50%
+
+Clase que viola el Principio de Responsabilidad Única.
 ```
 
 **Diseño correcto:**
 
-```
-┌───────────────┐    ┌───────────────┐    ┌───────────────┐
-│   Empleado    │    │RepositorioEmp│    │ ReporteEmp    │
-│───────────────│    │───────────────│    │───────────────│
-│ + calcularSalario()│ + guardar()   │    │ + generar()   │
-└───────────────┘    │ + buscar()    │    └───────────────┘
-                     └───────────────┘
+```{figure} 04/12_srp_solucion.svg
+:label: fig-srp-solucion
+:align: center
+:width: 85%
+
+Separación de responsabilidades siguiendo SRP.
 ```
 
 (ocp-concepto)=
@@ -826,38 +694,22 @@ Ya lo vimos en detalle: las subclases deben poder reemplazar a la superclase sin
 
 **Ejemplo de violación:**
 
-```
-┌─────────────────────────┐
-│    «interface»          │
-│       Trabajador        │
-│─────────────────────────│
-│ + trabajar()            │
-│ + comer()               │
-│ + dormir()              │
-│ + programar()           │  ← No todos los trabajadores programan
-│ + conducir()            │  ← No todos los trabajadores conducen
-└─────────────────────────┘
+```{figure} 04/13_isp_violacion.svg
+:label: fig-isp-violacion
+:align: center
+:width: 50%
+
+Interfaz con demasiados métodos (Fat Interface).
 ```
 
 **Diseño correcto:**
 
-```
-┌─────────────┐  ┌─────────────┐  ┌─────────────┐
-│ «interface» │  │ «interface» │  │ «interface» │
-│ Trabajador  │  │ Programador │  │  Conductor  │
-│─────────────│  │─────────────│  │─────────────│
-│ + trabajar()│  │ + programar()│ │ + conducir()│
-└─────────────┘  └─────────────┘  └─────────────┘
-       △               △               △
-       │               │               │
-       └───────┬───────┴───────┬───────┘
-               │               │
-               ▼               ▼
-        ┌───────────┐   ┌───────────┐
-        │Desarrollador│  │ Chofer   │
-        │(implementa  │  │(implementa│
-        │ ambas)      │  │ Conductor)│
-        └───────────┘   └───────────┘
+```{figure} 04/14_isp_solucion.svg
+:label: fig-isp-solucion
+:align: center
+:width: 85%
+
+Segregación de interfaces según las necesidades de los clientes.
 ```
 
 (dip-concepto)=
@@ -867,49 +719,22 @@ Ya lo vimos en detalle: las subclases deben poder reemplazar a la superclase sin
 
 **Ejemplo de violación:**
 
-```
-┌───────────────┐
-│   Servicio    │
-│───────────────│
-│ - mysql: MySQL│  ← Depende directamente de MySQL
-│───────────────│
-│ + guardar()   │
-└───────────────┘
-        │
-        │ depende de
-        ▼
-┌───────────────┐
-│     MySQL     │  ← Si cambio a PostgreSQL, debo modificar Servicio
-└───────────────┘
+```{figure} 04/15_dip_violacion.svg
+:label: fig-dip-violacion
+:align: center
+:width: 50%
+
+Dependencia de una implementación concreta (violación DIP).
 ```
 
 **Diseño correcto:**
 
-```
-┌───────────────┐
-│   Servicio    │
-│───────────────│
-│ - db: BaseDatos│  ← Depende de abstracción
-│───────────────│
-│ + guardar()   │
-└───────────────┘
-        │
-        │ depende de
-        ▼
-┌───────────────────┐
-│   «interface»     │
-│    BaseDatos      │
-│───────────────────│
-│ + conectar()      │
-│ + ejecutar()      │
-└─────────┬─────────┘
-          │
-     ┌────┴────┐
-     │         │
-     ▼         ▼
-┌─────────┐ ┌───────────┐
-│  MySQL  │ │ PostgreSQL│  ← Puedo cambiar sin tocar Servicio
-└─────────┘ └───────────┘
+```{figure} 04/16_dip_solucion.svg
+:label: fig-dip-solucion
+:align: center
+:width: 80%
+
+Inversión de dependencias usando abstracciones.
 ```
 
 ---
@@ -984,40 +809,12 @@ Diseñemos un sistema que maneje diferentes medios de pago:
 
 ### Diseño con Herencia y Polimorfismo
 
-```
-                    ┌───────────────────────┐
-                    │     «interface»       │
-                    │      MedioPago        │
-                    │───────────────────────│
-                    │ + procesarPago(monto) │
-                    │ + verificarFondos()   │
-                    │ + obtenerRecibo()     │
-                    └───────────┬───────────┘
-                                │
-        ┌───────────────────────┼───────────────────────┐
-        │                       │                       │
-        ▼                       ▼                       ▼
-┌───────────────┐     ┌─────────────────┐     ┌───────────────┐
-│   «abstract»  │     │    Efectivo     │     │ «abstract»    │
-│    Tarjeta    │     │─────────────────│     │  Billetera    │
-│───────────────│     │ + procesarPago()│     │───────────────│
-│ - numero      │     │ + verificar...()│     │ - email       │
-│ - titular     │     │ + obtenerRecibo()│    │ - saldo       │
-│ - vencimiento │     └─────────────────┘     │───────────────│
-│───────────────│                             │ + recargar()  │
-│ + validar()   │                             └───────┬───────┘
-└───────┬───────┘                                     │
-        │                                    ┌────────┴────────┐
-   ┌────┴────┐                               │                 │
-   │         │                               ▼                 ▼
-   ▼         ▼                      ┌─────────────┐  ┌─────────────┐
-┌─────────┐ ┌─────────┐             │ MercadoPago │  │   PayPal    │
-│ Credito │ │ Debito  │             └─────────────┘  └─────────────┘
-│─────────│ │─────────│
-│ - limite│ │ - cuenta│
-│─────────│ │─────────│
-│ + procesarPago()│ │ + procesarPago()│
-└─────────┘ └─────────┘
+```{figure} 04/17_medios_pago.svg
+:label: fig-sistema-medios-pago
+:align: center
+:width: 100%
+
+Jerarquía completa de un sistema de medios de pago.
 ```
 
 ### Aplicación de Principios

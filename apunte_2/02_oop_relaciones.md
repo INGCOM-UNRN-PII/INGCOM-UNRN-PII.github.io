@@ -66,28 +66,12 @@ El primer aspecto del encapsulamiento es la **fusión** de datos y comportamient
 
 **Comparación visual:**
 
-```
-Paradigma estructurado:              Paradigma OO:
+```{figure} 02/paradigma_estructurado_vs_oo.svg
+:label: fig-paradigma-oo
+:align: center
+:width: 80%
 
-┌──────────────┐                    ┌──────────────────────┐
-│    DATOS     │                    │       OBJETO         │
-│              │                    │  ┌────────────────┐  │
-│  struct      │                    │  │     DATOS      │  │
-│  Persona {   │                    │  │   nombre       │  │
-│    nombre;   │                    │  │   edad         │  │
-│    edad;     │                    │  └────────────────┘  │
-│  }           │                    │  ┌────────────────┐  │
-└──────────────┘                    │  │ COMPORTAMIENTO │  │
-                                    │  │   saludar()    │  │
-┌──────────────┐                    │  │   cumplirAnios │  │
-│  FUNCIONES   │                    │  └────────────────┘  │
-│              │                    └──────────────────────┘
-│  saludar(p)  │                    
-│  cumplir(p)  │                    El objeto es una unidad
-└──────────────┘                    indivisible
-                                    
-Datos y funciones                   
-están separados                     
+Comparación entre el paradigma estructurado (datos y funciones separados) y el paradigma orientado a objetos (unificados en una sola unidad).
 ```
 
 Esta fusión tiene consecuencias profundas:
@@ -134,25 +118,12 @@ Cuando usás un televisor, interactuás con él a través de una **interfaz simp
 
 El televisor **oculta** toda esa complejidad y te expone solo lo que necesitás para usarlo. Si el fabricante cambia la tecnología interna (de LCD a OLED, por ejemplo), tu forma de usar el televisor no cambia.
 
-```
-                 ┌─────────────────────────────────────┐
-                 │            TELEVISOR                │
-                 │                                     │
-Usuario ───────► │  INTERFAZ PÚBLICA                   │
-                 │  ├── encender()                     │
-                 │  ├── apagar()                       │
-                 │  ├── subirVolumen()                 │
-                 │  └── cambiarCanal()                 │
-                 │                                     │
-                 │  ─────────────────────────────      │
-                 │                                     │
-                 │  IMPLEMENTACIÓN OCULTA              │
-                 │  ├── procesarSeñal()                │
-                 │  ├── decodificarVideo()             │
-                 │  ├── ajustarBrillo()                │
-                 │  └── sincronizarAudio()             │
-                 │                                     │
-                 └─────────────────────────────────────┘
+```{figure} 02/televisor_interfaz_implementacion.svg
+:label: fig-televisor-encapsulamiento
+:align: center
+:width: 80%
+
+El encapsulamiento en un televisor: la interfaz pública oculta la complejidad de la implementación interna.
 ```
 
 :::{tip}
@@ -333,9 +304,12 @@ En UML, una asociación se representa como una **línea** que conecta dos clases
 
 **Ejemplo básico:**
 
-```
-Persona ──────── Direccion
-         vive en
+```{figure} 02/asociacion_persona_direccion.svg
+:label: fig-asociacion-persona-direccion
+:align: center
+:width: 60%
+
+Ejemplo de asociación básica entre una Persona y su Dirección.
 ```
 
 Esto se lee: "Una Persona **vive en** una Dirección".
@@ -360,9 +334,12 @@ La **cardinalidad** especifica cuántas instancias de una clase pueden estar rel
 
 **Ejemplo con cardinalidad:**
 
-```
-Empresa  1 ────────── * Empleado
-        "emplea"
+```{figure} 02/asociacion_empresa_empleado.svg
+:label: fig-asociacion-empresa-empleado
+:align: center
+:width: 70%
+
+Asociación con cardinalidad: una empresa emplea a cero o más empleados.
 ```
 
 Se lee: "Una Empresa (1) emplea a cero o más (*) Empleados".
@@ -372,8 +349,12 @@ Se lee: "Una Empresa (1) emplea a cero o más (*) Empleados".
 
 La cardinalidad se lee **desde el otro extremo** de la relación:
 
-```
-A  cardX ──── cardY  B
+```{figure} 02/asociacion_cardinalidad_base.svg
+:label: fig-cardinalidad-base
+:align: center
+:width: 60%
+
+Cómo interpretar las cardinalidades en una asociación entre dos clases A y B.
 ```
 
 - **Desde A hacia B**: Cada instancia de A está relacionada con `cardY` instancias de B
@@ -381,9 +362,12 @@ A  cardX ──── cardY  B
 
 **Ejemplo práctico:**
 
-```
-Autor  1..* ──────── 1..* Libro
-       "escribe"
+```{figure} 02/asociacion_autor_libro.svg
+:label: fig-asociacion-autor-libro
+:align: center
+:width: 70%
+
+Relación muchos a muchos: un autor escribe uno o más libros, y un libro puede tener varios autores.
 ```
 
 - Un Autor escribe 1 o más Libros
@@ -474,9 +458,12 @@ Línea simple sin decoración especial.
 
 **Ejemplo:**
 
-```
-Persona  1 ────────── 0..1 Pasaporte
-         "tiene"
+```{figure} 02/asociacion_persona_pasaporte.svg
+:label: fig-asociacion-persona-pasaporte
+:align: center
+:width: 70%
+
+Asociación entre Persona y Pasaporte: una persona puede tener o no un pasaporte.
 ```
 
 Una persona puede tener 0 o 1 pasaporte. El pasaporte puede existir antes de ser asignado a una persona.
@@ -488,16 +475,24 @@ Las asociaciones pueden ser:
 
 **Unidireccional**: Solo una clase conoce a la otra.
 
-```
-Pedido ──────────► Producto
+```{figure} 02/asociacion_pedido_producto.svg
+:label: fig-asociacion-pedido-producto
+:align: center
+:width: 60%
+
+Asociación unidireccional: el Pedido conoce sus Productos, pero no viceversa.
 ```
 
 El pedido conoce qué productos contiene, pero el producto no sabe en qué pedidos está.
 
 **Bidireccional**: Ambas clases se conocen mutuamente.
 
-```
-Estudiante ◄──────► Curso
+```{figure} 02/asociacion_estudiante_curso.svg
+:label: fig-asociacion-estudiante-curso
+:align: center
+:width: 60%
+
+Asociación bidireccional: tanto el Estudiante como el Curso se conocen mutuamente.
 ```
 
 El estudiante sabe en qué cursos está inscripto, y el curso sabe qué estudiantes tiene.
@@ -536,10 +531,12 @@ Un auto **está compuesto** por un motor, ruedas, carrocería, etc.
 
 La composición se representa con un **diamante relleno (♦)** en el extremo del contenedor:
 
-```
-Auto ♦────── Motor
-     ♦────── Carroceria
-     ♦────── 4 Rueda
+```{figure} 02/composicion_auto.svg
+:label: fig-composicion-auto
+:align: center
+:width: 80%
+
+Composición en un automóvil: las partes (motor, carrocería, ruedas) pertenecen exclusivamente al auto.
 ```
 
 El diamante negro indica propiedad fuerte.
@@ -639,14 +636,12 @@ classDiagram
 
 **Ciclo de vida:**
 
-```
-Crear factura → Agregar líneas → La factura existe con sus líneas
-                                            │
-                                            ▼
-                                    Eliminar factura
-                                            │
-                                            ▼
-                            Las líneas se eliminan automáticamente
+```{figure} 02/ciclo_vida_composicion_factura.svg
+:label: fig-ciclo-vida-factura
+:align: center
+:width: 90%
+
+Ciclo de vida en una relación de composición: las partes mueren con el todo.
 ```
 
 :::{warning}
@@ -683,8 +678,12 @@ Un departamento universitario **tiene** profesores, pero:
 
 La agregación se representa con un **diamante vacío (◊)** en el extremo del contenedor:
 
-```
-Departamento ◊────── * Profesor
+```{figure} 02/agregacion_departamento_profesor.svg
+:label: fig-agregacion-departamento-profesor
+:align: center
+:width: 70%
+
+Agregación: el Departamento agrupa Profesores que existen independientemente.
 ```
 
 El diamante blanco indica una relación de pertenencia más laxa.
@@ -721,7 +720,7 @@ classDiagram
         -String nombre
         -List~Libro~ libros
         +agregarLibro(Libro)
-        +prestarLibro(Libro)
+        +prestarLibro(Libro, Socio)
     }
     
     class Libro {
@@ -792,15 +791,12 @@ classDiagram
 
 **Ciclo de vida:**
 
-```
-Jugador existe ──► Se une al equipo ──► El equipo lo tiene
-      │                                        │
-      │                                        ▼
-      │                               Equipo se disuelve
-      │                                        │
-      ▼                                        ▼
-Jugador sigue existiendo ◄────────── Jugador sigue existiendo
-(puede ir a otro equipo)             (puede ir a otro equipo)
+```{figure} 02/ciclo_vida_agregacion_equipo.svg
+:label: fig-ciclo-vida-equipo
+:align: center
+:width: 90%
+
+Ciclo de vida en una relación de agregación: las partes sobreviven al contenedor.
 ```
 
 :::{important}
@@ -967,31 +963,22 @@ Analicemos un sistema más complejo para practicar la identificación de relacio
 
 **Paso 3: Diagrama resultante**
 
-```
-Universidad
-    ♦──── * Facultad
-              ♦──── * Departamento
-              │            ◊──── * Profesor ─────┐
-              │                                   │
-              ♦──── * Carrera                    │ dicta
-                       ♦──── * Materia ◄────────┘
-                       │
-                       │ cursa
-                       │
-                 Estudiante
+```{figure} 02/universidad_jerarquia.svg
+:label: fig-universidad-jerarquia
+:align: center
+:width: 80%
+
+Jerarquía de clases en el sistema universitario, mostrando las relaciones de composición y agregación.
 ```
 
 **Paso 4: Cardinalidades**
 
-```
-Universidad  1 ────♦──── 1..* Facultad
-Facultad     1 ────♦──── 1..* Departamento
-Facultad     1 ────♦──── 1..* Carrera
-Carrera      1 ────♦──── 5..* Materia
-Departamento 1 ────◊──── 1..* Profesor
-Profesor     1..* ────── 1..* Materia
-Estudiante   * ────────── 1   Carrera
-Estudiante   * ────────── *   Materia
+```{figure} 02/universidad_cardinalidades.svg
+:label: fig-universidad-cardinalidades
+:align: center
+:width: 80%
+
+Cardinalidades detalladas para cada una de las relaciones del sistema universitario.
 ```
 
 **Lecturas:**
@@ -1029,8 +1016,12 @@ En algunos casos, dos objetos necesitan conocerse mutuamente. Esto se llama **as
 
 Esto crea una navegación en ambas direcciones:
 
-```
-Cliente  1 ←──→ * Pedido
+```{figure} 02/cliente_pedido_bidireccional.svg
+:label: fig-cliente-pedido-bidireccional
+:align: center
+:width: 60%
+
+Asociación bidireccional entre Cliente y Pedido.
 ```
 
 (problemas-asociaciones-bidireccionales)=
@@ -1191,8 +1182,13 @@ Analizá el siguiente escenario e identificá el tipo de relación (asociación,
 4. El pedido no "crea" los productos, solo los **referencia**
 
 **Diagrama:**
-```
-Pedido ◊────── * Producto
+
+```{figure} 02/pedido_producto_agregacion.svg
+:label: fig-pedido-producto-agregacion
+:align: center
+:width: 70%
+
+Relación de agregación entre Pedido y Producto en el contexto de un catálogo.
 ```
 
 **Nota:** El pedido contiene **líneas de pedido** (cantidad + producto), pero la relación con el producto en sí es de agregación. Las líneas de pedido serían composición del pedido.
@@ -1252,9 +1248,12 @@ Dibujá el diagrama UML con cardinalidad correcta para:
 
 **Diagrama:**
 
-```
-Estudiante  * ────────── 5..40  Curso
-             "inscripto en"
+```{figure} 02/estudiante_curso_cardinalidad.svg
+:label: fig-estudiante-curso-cardinalidad
+:align: center
+:width: 70%
+
+Asociación con cardinalidad específica entre Estudiante y Curso.
 ```
 
 **Lectura:**
@@ -1264,13 +1263,12 @@ Estudiante  * ────────── 5..40  Curso
 
 **Alternativa con clase de asociación** (si necesitamos guardar información de la inscripción):
 
-```
-Estudiante  * ────────── 5..40  Curso
-                 │
-                 ▼
-           Inscripcion
-           - fecha
-           - estado
+```{figure} 02/estudiante_inscripcion_clase_asoc.svg
+:label: fig-estudiante-inscripcion-clase-asoc
+:align: center
+:width: 70%
+
+Clase de asociación 'Inscripción' para capturar datos adicionales de la relación entre Estudiante y Curso.
 ```
 ```
 
@@ -1449,22 +1447,12 @@ Incluí:
 
 **3. Diagrama con cardinalidades:**
 
-```
-Hospital  1 ──♦── 1..* Piso  1 ──◊── 1..* Enfermera
-                    │
-                    ♦
-                    │
-                  1..*
-              Habitacion
-                    │
-                    ♦
-                    │
-                  1..4
-                 Cama ──────── 0..1 Paciente
-                                      │
-                                      │ atiende
-                                      │
-                               1..* Medico ◊── 1..* Especialidad
+```{figure} 02/hospital_integrador.svg
+:label: fig-hospital-integrador
+:align: center
+:width: 100%
+
+Modelo de clases completo para el sistema hospitalario, integrando diversos tipos de relaciones y cardinalidades.
 ```
 
 **4. Justificaciones detalladas:**

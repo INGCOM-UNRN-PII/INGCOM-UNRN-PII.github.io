@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="750" height="550" viewBox="0 0 750 550" xmlns="http://www.w3.org/2000/svg">
+<style>
+  :root {
+    --unrn-red: #eb2141;
+    --unrn-dark-blue: #192437;
+    --blue-light: #2d3a50;
+    --blue-lightest: #e8ebf0;
+    --gray-100: #f5f5f5;
+    --gray-300: #d4d4d4;
+    --gray-400: #a3a3a3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --gray-700: #404040;
+    --red-lightest: #fce8ec;
+  }
+  .title { font-family: 'Fabrikat', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: var(--unrn-dark-blue); text-anchor: middle; }
+  .label { font-family: 'Lato', Arial, sans-serif; font-size: 12px; fill: var(--gray-700); }
+  .label-bold { font-family: 'Lato', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: var(--unrn-dark-blue); }
+  .label-small { font-family: 'Lato', Arial, sans-serif; font-size: 10px; fill: var(--gray-600); }
+  .code { font-family: 'Share Tech Mono', monospace; font-size: 11px; fill: var(--gray-700); }
+  .code-comment { font-family: 'Share Tech Mono', monospace; font-size: 10px; fill: var(--gray-500); font-style: italic; }
+  .node { fill: #ffffff; stroke: var(--gray-700); stroke-width: 2; }
+  .node-data { fill: var(--blue-lightest); stroke: var(--gray-400); stroke-width: 1.5; }
+  .node-highlight { fill: #fff3e0; stroke: var(--unrn-red); stroke-width: 2.5; }
+  .info-box { fill: var(--blue-lightest); stroke: var(--blue-light); stroke-width: 1; rx: 3; }
+  .code-block { fill: var(--gray-100); stroke: var(--gray-300); stroke-width: 1; rx: 3; }
+  .highlight-box { fill: var(--red-lightest); stroke: var(--unrn-red); stroke-width: 1; rx: 3; }
+  .memory-cell { fill: #ffffff; stroke: var(--gray-600); stroke-width: 1.5; }
+  .arrow { fill: none; stroke: var(--gray-700); stroke-width: 2; }
+  .divider { stroke: var(--gray-300); stroke-width: 1; }
+  .divider-bold { stroke: var(--gray-600); stroke-width: 2; }
+  .valid { stroke: #2e7d32; stroke-width: 2.5; }
+  .invalid { stroke: var(--unrn-red); stroke-width: 2.5; }
+  .divider-dashed { stroke: var(--gray-300); stroke-width: 1; stroke-dasharray: 4; }
+</style>
+  <text x="375" y="30" class="title">Modelo de Clases: Sistema Hospitalario</text>
+  
+  <!-- Paciente -->
+  <rect x="30" y="60" width="220" height="150" class="node"/>
+  <rect x="30" y="60" width="220" height="30" class="node-highlight"/>
+  <text x="140" y="80" class="label-bold" fill="white">Paciente</text>
+  <text x="40" y="105" class="label-small">nombre, dni, obraSocial</text>
+  <line x1="30" y1="115" x2="250" y2="115" class="divider"/>
+  <text x="40" y="135" class="code">solicitarCita()</text>
+  <text x="40" y="155" class="code">cancelarCita()</text>
+  
+  <!-- Medico -->
+  <rect x="280" y="60" width="220" height="150" class="node"/>
+  <rect x="280" y="60" width="220" height="30" class="node-highlight"/>
+  <text x="390" y="80" class="label-bold" fill="white">Medico</text>
+  <text x="290" y="105" class="label-small">nombre, matricula, especialidad</text>
+  <line x1="280" y1="115" x2="500" y2="115" class="divider"/>
+  <text x="290" y="135" class="code">confirmarCita()</text>
+  <text x="290" y="155" class="code">reprogramarCita()</text>
+  
+  <!-- CitaMedica -->
+  <rect x="30" y="230" width="220" height="150" class="node"/>
+  <rect x="30" y="230" width="220" height="30" class="node-highlight"/>
+  <text x="140" y="250" class="label-bold" fill="white">CitaMedica</text>
+  <text x="40" y="275" class="label-small">paciente, medico, fechaHora</text>
+  <text x="40" y="295" class="label-small">estado: (pendiente, etc)</text>
+  <line x1="30" y1="305" x2="250" y2="305" class="divider"/>
+  <text x="40" y="325" class="code">confirmar(), cancelar()</text>
+  <text x="40" y="345" class="code">reprogramar()</text>
+  
+  <!-- Consultorio -->
+  <rect x="280" y="230" width="220" height="100" class="node"/>
+  <rect x="280" y="230" width="220" height="30" class="node-highlight"/>
+  <text x="390" y="250" class="label-bold" fill="white">Consultorio</text>
+  <text x="290" y="275" class="label-small">numero, ubicacion</text>
+  <line x1="280" y1="285" x2="500" y2="285" class="divider"/>
+  <text x="290" y="305" class="code">estaDisponible()</text>
+  
+  <!-- Hospital -->
+  <rect x="530" y="60" width="200" height="270" class="info-box"/>
+  <text x="630" y="85" class="label-bold">Hospital</text>
+  <line x1="530" y1="100" x2="730" y2="100" class="divider-bold"/>
+  <text x="540" y="125" class="label-small">List&lt;Paciente&gt; pacientes</text>
+  <text x="540" y="145" class="label-small">List&lt;Medico&gt; medicos</text>
+  <text x="540" y="165" class="label-small">List&lt;Cita&gt; citas</text>
+  <line x1="530" y1="180" x2="730" y2="180" class="divider"/>
+  <text x="540" y="205" class="code">buscarMedico()</text>
+  <text x="540" y="225" class="code">obtenerAgenda()</text>
+</svg>
