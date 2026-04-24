@@ -862,6 +862,469 @@ Algunos temas disponibles: `cerulean`, `materia`, `sketchy`, `blueprint`, `plain
 
 ---
 
+## Incrustar diagramas PlantUML en archivos Markdown de GitHub
+
+Esta sección explica cómo incluir diagramas PlantUML en documentos Markdown en repositorios de GitHub.
+
+### Método 1: PlantUML Proxy URL (Recomendado)
+
+GitHub no renderiza PlantUML directamente, pero podés usar el servidor público de PlantUML como proxy:
+
+````markdown
+![Diagrama de clases](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/usuario/repo/main/diagramas/biblioteca.puml)
+````
+
+**Ventajas:**
+- Se actualiza automáticamente cuando modificás el archivo `.puml`
+- No requiere generar imágenes manualmente
+- Versionable: el código PlantUML está en el repo
+
+**Desventajas:**
+- Requiere conexión a internet para visualizar
+- Dependencia de servidor externo
+
+#### Paso a paso:
+
+**1. Crear archivo PlantUML en el repositorio:**
+
+Estructura de carpetas sugerida:
+```
+mi-proyecto/
+├── README.md
+├── docs/
+│   └── arquitectura.md
+└── diagramas/
+    ├── biblioteca.puml
+    └── clases-dominio.puml
+```
+
+**2. Contenido de `diagramas/biblioteca.puml`:**
+
+```plantuml
+@startuml
+!theme cerulean
+
+class Libro {
+  -titulo: String
+  -autor: String
+  -isbn: String
+  +prestar(): void
+  +devolver(): void
+}
+
+class Usuario {
+  -nombre: String
+  -dni: String
+  +registrar(): void
+}
+
+class Prestamo {
+  -fechaPrestamo: Date
+  -fechaDevolucion: Date
+  +calcularMulta(): double
+}
+
+Usuario "1" --> "*" Prestamo : realiza
+Prestamo "*" --> "1" Libro : incluye
+@enduml
+```
+
+**3. Referenciar en `README.md` o cualquier `.md`:**
+
+```markdown
+## Arquitectura del Sistema
+
+El siguiente diagrama muestra las clases principales:
+
+![Diagrama de biblioteca](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/usuario/repo/main/diagramas/biblioteca.puml)
+```
+
+**Importante:** Reemplazar `usuario/repo/main` con tu información:
+- `usuario`: tu usuario de GitHub
+- `repo`: nombre del repositorio
+- `main`: rama (puede ser `master`, `develop`, etc.)
+
+### Método 2: PlantUML Encoded URL
+
+Para diagramas cortos, podés codificar el PlantUML directamente en la URL:
+
+**1. Codificar tu diagrama:**
+
+Visitar [PlantUML Web Server](http://www.plantuml.com/plantuml/uml/) y copiar el código codificado de la URL.
+
+Ejemplo de código PlantUML:
+```plantuml
+@startuml
+Alice -> Bob: Hello
+@enduml
+```
+
+**2. URL generada:**
+```
+http://www.plantuml.com/plantuml/png/SoWkIImgAStDuNBAJrBGjLDmpCbCJbMmKiX8pSd9vt98pKi1IW80
+```
+
+**3. Usar en Markdown:**
+
+```markdown
+![Secuencia simple](http://www.plantuml.com/plantuml/png/SoWkIImgAStDuNBAJrBGjLDmpCbCJbMmKiX8pSd9vt98pKi1IW80)
+```
+
+**Ventajas:**
+- No requiere archivos separados
+- Funciona inmediatamente
+
+**Desventajas:**
+- Difícil de mantener (URL codificada no es legible)
+- No recomendado para diagramas complejos
+
+### Método 3: Exportar como imagen (Control total)
+
+Para proyectos que requieren control total sobre las imágenes:
+
+**1. Generar imagen localmente:**
+
+```bash
+# Instalar PlantUML (requiere Java)
+# En Linux/Mac con brew:
+brew install plantuml
+
+# En Windows, descargar JAR de plantuml.com
+
+# Generar SVG (recomendado por escalabilidad)
+plantuml -tsvg diagramas/biblioteca.puml
+
+# O generar PNG
+plantuml -tpng diagramas/biblioteca.puml
+```
+
+**2. Estructura de carpetas:**
+
+```
+mi-proyecto/
+├── README.md
+├── diagramas/
+│   ├── biblioteca.puml        # Fuente versionable
+│   └── rendered/
+│       └── biblioteca.svg     # Imagen generada
+```
+
+**3. Agregar al `.gitignore` (opcional):**
+
+Si querés versionar solo el `.puml` y regenerar imágenes en CI/CD:
+
+```gitignore
+diagramas/rendered/*.svg
+diagramas/rendered/*.png
+```
+
+**4. Referenciar en Markdown:**
+
+```markdown
+![Diagrama de biblioteca](diagramas/rendered/biblioteca.svg)
+```
+
+**Ventajas:**
+- No depende de servicios externos
+- Control total sobre el renderizado
+- Funciona offline
+
+**Desventajas:**
+- Requiere regenerar manualmente (o con CI/CD)
+- Imágenes pueden quedar desactualizadas
+
+### Método 4: GitHub Actions para auto-generar imágenes (Avanzado)
+
+Automatizar la generación de imágenes cada vez que se actualiza un `.puml`:
+
+**1. Crear workflow `.github/workflows/plantuml.yml`:**
+
+```yaml
+name: Generate PlantUML Diagrams
+
+on:
+  push:
+    paths:
+      - 'diagramas/**.puml'
+  pull_request:
+    paths:
+      - 'diagramas/**.puml'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Generate diagrams
+        uses: cloudbees/plantuml-github-action@master
+        with:
+          args: -v -tsvg diagramas/*.puml -o rendered
+          
+      - name: Commit generated images
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add diagramas/rendered/*.svg
+          git diff --quiet && git diff --staged --quiet || git commit -m "Auto-generate PlantUML diagrams"
+          git push
+```
+
+**2. Resultado:**
+- Cada commit que modifica `.puml` regenera automáticamente las imágenes
+- Las imágenes se commitean al repo
+- Los README.md ven siempre la última versión
+
+### Mejores prácticas para GitHub Markdown
+
+#### 1. Estructura de carpetas recomendada
+
+```
+proyecto/
+├── README.md
+├── docs/
+│   ├── arquitectura.md
+│   └── diseño.md
+└── diagramas/
+    ├── README.md               # Índice de diagramas
+    ├── dominio/
+    │   ├── clases.puml
+    │   └── relaciones.puml
+    ├── secuencia/
+    │   └── flujo-prestamo.puml
+    └── rendered/               # Si usás Método 3
+        ├── clases.svg
+        └── flujo-prestamo.svg
+```
+
+#### 2. Usar `cache=no` en URLs de proxy
+
+Para asegurar que GitHub muestre la última versión:
+
+```markdown
+![Diagrama](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/...)
+```
+
+Sin `cache=no`, GitHub puede mostrar versión en caché.
+
+#### 3. Agregar texto alternativo descriptivo
+
+```markdown
+![Diagrama de clases del dominio de biblioteca mostrando Usuario, Libro y Préstamo con sus relaciones](http://www.plantuml.com/plantuml/proxy?...)
+```
+
+El texto alternativo:
+- Mejora accesibilidad
+- Se muestra si la imagen no carga
+- Ayuda a motores de búsqueda
+
+#### 4. Crear índice de diagramas
+
+En `diagramas/README.md`:
+
+```markdown
+# Diagramas del Proyecto
+
+## Dominio
+
+- [Clases principales](dominio/clases.puml) - Modelo de dominio básico
+  
+  ![Clases](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/usuario/repo/main/diagramas/dominio/clases.puml)
+
+- [Relaciones](dominio/relaciones.puml) - Asociaciones entre entidades
+
+  ![Relaciones](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/usuario/repo/main/diagramas/dominio/relaciones.puml)
+
+## Secuencias
+
+- [Flujo de préstamo](secuencia/flujo-prestamo.puml)
+
+  ![Secuencia préstamo](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/usuario/repo/main/diagramas/secuencia/flujo-prestamo.puml)
+```
+
+#### 5. Comentar archivos `.puml` extensamente
+
+```plantuml
+@startuml
+!theme cerulean
+
+' ============================================
+' DOMINIO: Sistema de Biblioteca
+' Versión: 2.0
+' Fecha: 2024-04-14
+' Autor: Equipo de desarrollo
+' ============================================
+
+' Clases principales del modelo de negocio
+class Libro {
+  ' Atributos identificatorios
+  -titulo: String
+  -isbn: String
+  
+  ' Métodos de negocio
+  +prestar(): void
+}
+
+' Relación: Un usuario puede tener múltiples préstamos
+' Cardinalidad: 1 a muchos
+Usuario "1" --> "*" Prestamo : realiza
+
+@enduml
+```
+
+### Solución de problemas comunes en GitHub
+
+#### Problema: Imagen no se muestra en GitHub
+
+**Posibles causas:**
+
+1. **URL incorrecta:**
+   - Verificar que la rama sea correcta (`main` vs `master`)
+   - Verificar que el path al archivo sea correcto
+   - Usar `raw.githubusercontent.com`, NO `github.com`
+
+2. **Archivo `.puml` con errores:**
+   - Probar en [PlantUML Web Server](http://www.plantuml.com/plantuml/uml/)
+   - Verificar sintaxis con `plantuml -syntax archivo.puml`
+
+3. **Servidor PlantUML caído:**
+   - Probar URL directamente en navegador
+   - Considerar servidor alternativo: `https://kroki.io/plantuml/svg/...`
+
+#### Problema: Cambios no se reflejan
+
+**Solución:** Agregar `cache=no` y refrescar navegador con Ctrl+F5.
+
+```markdown
+![Diagrama](http://www.plantuml.com/plantuml/proxy?cache=no&src=...)
+```
+
+#### Problema: Diagrama muy grande en GitHub
+
+**Solución 1:** Usar HTML en Markdown (GitHub lo soporta):
+
+```html
+<img src="http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/usuario/repo/main/diagramas/biblioteca.puml" width="600">
+```
+
+**Solución 2:** Dividir en múltiples diagramas más pequeños.
+
+#### Problema: Necesito diagrama privado
+
+**Solución:** Usar Método 3 (exportar imagen) en repositorio privado. El Método 1 (proxy) no funciona con repos privados porque `raw.githubusercontent.com` requiere autenticación.
+
+### Comparación de métodos
+
+| Método | Versionable | Auto-actualiza | Offline | Privado | Dificultad |
+|--------|-------------|----------------|---------|---------|------------|
+| 1. Proxy URL | ✅ | ✅ | ❌ | ❌ | Fácil |
+| 2. Encoded URL | ❌ | ❌ | ❌ | ✅ | Fácil |
+| 3. Exportar imagen | ✅ | ❌ | ✅ | ✅ | Media |
+| 4. GitHub Actions | ✅ | ✅ | ✅ | ✅ | Difícil |
+
+**Recomendación general:**
+- **Repositorio público + diagrama simple:** Método 1 (Proxy URL)
+- **Repositorio privado:** Método 3 (Exportar) + Método 4 (Actions)
+- **Diagrama muy corto (< 5 líneas):** Método 2 (Encoded)
+
+### Ejemplo completo: README.md con PlantUML
+
+```markdown
+# Sistema de Biblioteca
+
+Sistema para gestión de préstamos de libros desarrollado en Java.
+
+## Arquitectura
+
+### Diagrama de clases del dominio
+
+El siguiente diagrama muestra las entidades principales y sus relaciones:
+
+![Diagrama de dominio](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/usuario/repo/main/diagramas/dominio.puml)
+
+**Descripción:**
+- `Libro`: Representa un material prestable
+- `Usuario`: Cliente de la biblioteca
+- `Prestamo`: Relación entre usuario y libro con fechas
+
+### Diagrama de secuencia: Realizar préstamo
+
+Flujo de operaciones cuando un usuario solicita un libro:
+
+![Secuencia préstamo](http://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/usuario/repo/main/diagramas/secuencia-prestamo.puml)
+
+## Código fuente
+
+Ver [diagramas/](diagramas/) para código PlantUML completo.
+
+## Instalación
+
+\```bash
+git clone https://github.com/usuario/repo.git
+cd repo
+./gradlew build
+\```
+```
+
+### Plantilla de archivo `.puml` para GitHub
+
+```plantuml
+@startuml
+' ============================================
+' Nombre: diagrama-ejemplo.puml
+' Proyecto: Sistema de Biblioteca
+' Descripción: [Describir qué muestra el diagrama]
+' Versión: 1.0
+' Última modificación: 2024-04-14
+' ============================================
+
+' Configuración de estilo
+!theme cerulean
+skinparam classAttributeIconSize 0
+
+' ============================================
+' CLASES PRINCIPALES
+' ============================================
+
+class Libro {
+  -titulo: String
+  -autor: String
+  -isbn: String
+  --
+  +prestar(): void
+  +devolver(): void
+}
+
+class Usuario {
+  -nombre: String
+  -dni: String
+  --
+  +registrar(): void
+}
+
+' ============================================
+' RELACIONES
+' ============================================
+
+' Un usuario puede tener múltiples préstamos activos
+Usuario "1" --> "*" Prestamo : realiza
+
+' Cada préstamo está asociado a exactamente un libro
+Prestamo "*" --> "1" Libro : incluye
+
+@enduml
+```
+
+### Recursos adicionales para GitHub
+
+- [PlantUML Cheat Sheet](https://plantuml.com/sitemap-language-specification)
+- [PlantUML Web Server](http://www.plantuml.com/plantuml/uml/) - Para probar diagramas
+- [Awesome PlantUML](https://github.com/plantuml/awesome-plantuml) - Recursos y ejemplos
+- [Kroki](https://kroki.io/) - Servidor alternativo para renderizar PlantUML
+
+---
+
 ## Ejercicios propuestos
 
 ```{exercise}
