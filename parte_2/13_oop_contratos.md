@@ -117,7 +117,7 @@ Una **precondición** es una condición que **debe ser verdadera antes** de que 
 /**
  * Divide dos números.
  * 
- * @precondition divisor != 0
+ * \@precondition divisor != 0
  */
 double dividir(double dividendo, double divisor) {
     // Si divisor es 0, el cliente violó el contrato
@@ -131,8 +131,8 @@ double dividir(double dividendo, double divisor) {
 /**
  * Obtiene el elemento en la posición indicada.
  * 
- * @precondition indice >= 0
- * @precondition indice < tamaño()
+ * \@precondition indice >= 0
+ * \@precondition indice < tamaño()
  */
 Elemento obtener(int indice) {
     return elementos[indice];
@@ -145,10 +145,10 @@ Elemento obtener(int indice) {
 /**
  * Transfiere dinero a otra cuenta.
  * 
- * @precondition monto > 0
- * @precondition monto <= saldo
- * @precondition cuentaDestino != null
- * @precondition cuentaDestino.estaActiva()
+ * \@precondition monto > 0
+ * \@precondition monto <= saldo
+ * \@precondition cuentaDestino != null
+ * \@precondition cuentaDestino.estaActiva()
  */
 void transferir(double monto, Cuenta cuentaDestino) {
     this.saldo -= monto;
@@ -254,9 +254,9 @@ classDiagram
 /**
  * Calcula la raíz cuadrada de un número.
  * 
- * @precondition numero >= 0
- * @postcondition resultado >= 0
- * @postcondition resultado * resultado ≈ numero (con tolerancia)
+ * \@precondition numero >= 0
+ * \@postcondition resultado >= 0
+ * \@postcondition resultado * resultado ≈ numero (con tolerancia)
  */
 double raizCuadrada(double numero) {
     // Implementación...
@@ -270,10 +270,10 @@ double raizCuadrada(double numero) {
 /**
  * Agrega un elemento al final de la lista.
  * 
- * @precondition elemento != null
- * @postcondition tamaño() == old(tamaño()) + 1
- * @postcondition obtener(tamaño() - 1) == elemento
- * @postcondition contiene(elemento) == true
+ * \@precondition elemento != null
+ * \@postcondition tamaño() == old(tamaño()) + 1
+ * \@postcondition obtener(tamaño() - 1) == elemento
+ * \@postcondition contiene(elemento) == true
  */
 void agregar(Elemento elemento) {
     // Implementación...
@@ -290,10 +290,10 @@ La notación `old(expresion)` representa el valor de la expresión **antes** de 
 /**
  * Ordena la lista en orden ascendente.
  * 
- * @postcondition para todo i en [0, tamaño()-1): 
+ * \@postcondition para todo i en [0, tamaño()-1): 
  *                obtener(i) <= obtener(i+1)
- * @postcondition tamaño() == old(tamaño())
- * @postcondition contiene exactamente los mismos elementos que antes
+ * \@postcondition tamaño() == old(tamaño())
+ * \@postcondition contiene exactamente los mismos elementos que antes
  */
 void ordenar() {
     // Implementación...
@@ -306,13 +306,13 @@ void ordenar() {
 /**
  * Transfiere dinero a otra cuenta.
  * 
- * @precondition monto > 0
- * @precondition monto <= saldo
- * @precondition destino != null
+ * \@precondition monto > 0
+ * \@precondition monto <= saldo
+ * \@precondition destino != null
  * 
- * @postcondition this.saldo == old(this.saldo) - monto
- * @postcondition destino.saldo == old(destino.saldo) + monto
- * @postcondition old(this.saldo) + old(destino.saldo) == 
+ * \@postcondition this.saldo == old(this.saldo) - monto
+ * \@postcondition destino.saldo == old(destino.saldo) + monto
+ * \@postcondition old(this.saldo) + old(destino.saldo) == 
  *                this.saldo + destino.saldo  // Conservación del dinero
  */
 void transferir(double monto, Cuenta destino) {
@@ -330,13 +330,13 @@ void transferir(double monto, Cuenta destino) {
 /**
  * Lee el contenido de un archivo.
  * 
- * @precondition ruta != null
- * @precondition ruta no está vacía
+ * \@precondition ruta != null
+ * \@precondition ruta no está vacía
  * 
- * @postcondition.normal resultado contiene el contenido del archivo
- * @postcondition.excepcional si archivo no existe: 
+ * \@postcondition.normal resultado contiene el contenido del archivo
+ * \@postcondition.excepcional si archivo no existe: 
  *                            lanza ArchivoNoEncontradoException
- * @postcondition.excepcional si no hay permisos: 
+ * \@postcondition.excepcional si no hay permisos: 
  *                            lanza PermisoNegadoException
  */
 String leerArchivo(String ruta) throws ArchivoNoEncontradoException, 
@@ -384,10 +384,10 @@ Un **invariante de clase** es una condición que **siempre debe ser verdadera** 
 /**
  * Representa una cuenta bancaria.
  * 
- * @invariant saldo >= 0
- * @invariant numero != null && numero.length() == 20
- * @invariant titular != null
- * @invariant fechaApertura <= fechaActual
+ * \@invariant saldo >= 0
+ * \@invariant numero != null && numero.length() == 20
+ * \@invariant titular != null
+ * \@invariant fechaApertura <= fechaActual
  */
 class CuentaBancaria {
     private double saldo;
@@ -405,9 +405,9 @@ class CuentaBancaria {
 /**
  * Representa una fracción matemática.
  * 
- * @invariant denominador != 0
- * @invariant denominador > 0  // Normalizamos: signo en numerador
- * @invariant mcd(|numerador|, denominador) == 1  // Siempre simplificada
+ * \@invariant denominador != 0
+ * \@invariant denominador > 0  // Normalizamos: signo en numerador
+ * \@invariant mcd(|numerador|, denominador) == 1  // Siempre simplificada
  */
 class Fraccion {
     private int numerador;
@@ -445,7 +445,7 @@ class Fraccion {
 /**
  * Representa un intervalo cerrado [inicio, fin].
  * 
- * @invariant inicio <= fin
+ * \@invariant inicio <= fin
  */
 class Intervalo {
     private double inicio;
@@ -475,7 +475,7 @@ class Intervalo {
 /**
  * Lista que mantiene sus elementos ordenados.
  * 
- * @invariant para todo i en [0, tamaño()-1): 
+ * \@invariant para todo i en [0, tamaño()-1): 
  *            obtener(i) <= obtener(i+1)
  */
 class ListaOrdenada<T extends Comparable<T>> {
@@ -554,11 +554,11 @@ graph TB
 /**
  * Pila LIFO (Last In, First Out) con capacidad limitada.
  * 
- * @invariant tamaño() >= 0
- * @invariant tamaño() <= capacidad()
- * @invariant capacidad() > 0
- * @invariant estaVacia() == (tamaño() == 0)
- * @invariant estaLlena() == (tamaño() == capacidad())
+ * \@invariant tamaño() >= 0
+ * \@invariant tamaño() <= capacidad()
+ * \@invariant capacidad() > 0
+ * \@invariant estaVacia() == (tamaño() == 0)
+ * \@invariant estaLlena() == (tamaño() == capacidad())
  */
 class Pila<T> {
     private T[] elementos;
@@ -568,10 +568,10 @@ class Pila<T> {
     /**
      * Crea una pila con la capacidad especificada.
      * 
-     * @precondition capacidad > 0
-     * @postcondition tamaño() == 0
-     * @postcondition capacidad() == capacidad
-     * @postcondition estaVacia() == true
+     * \@precondition capacidad > 0
+     * \@postcondition tamaño() == 0
+     * \@postcondition capacidad() == capacidad
+     * \@postcondition estaVacia() == true
      */
     Pila(int capacidad) {
         if (capacidad <= 0) {
@@ -585,11 +585,11 @@ class Pila<T> {
     /**
      * Apila un elemento.
      * 
-     * @precondition elemento != null
-     * @precondition !estaLlena()
-     * @postcondition tamaño() == old(tamaño()) + 1
-     * @postcondition tope() == elemento
-     * @postcondition !estaVacia()
+     * \@precondition elemento != null
+     * \@precondition !estaLlena()
+     * \@postcondition tamaño() == old(tamaño()) + 1
+     * \@postcondition tope() == elemento
+     * \@postcondition !estaVacia()
      */
     void apilar(T elemento) {
         if (elemento == null) {
@@ -604,10 +604,10 @@ class Pila<T> {
     /**
      * Desapila y retorna el elemento del tope.
      * 
-     * @precondition !estaVacia()
-     * @postcondition tamaño() == old(tamaño()) - 1
-     * @postcondition resultado == old(tope())
-     * @postcondition !estaLlena()
+     * \@precondition !estaVacia()
+     * \@postcondition tamaño() == old(tamaño()) - 1
+     * \@postcondition resultado == old(tope())
+     * \@postcondition !estaLlena()
      */
     T desapilar() {
         if (estaVacia()) {
@@ -621,9 +621,9 @@ class Pila<T> {
     /**
      * Consulta el elemento del tope sin removerlo.
      * 
-     * @precondition !estaVacia()
-     * @postcondition resultado == el último elemento apilado
-     * @postcondition tamaño() == old(tamaño())  // No modifica
+     * \@precondition !estaVacia()
+     * \@postcondition resultado == el último elemento apilado
+     * \@postcondition tamaño() == old(tamaño())  // No modifica
      */
     T tope() {
         if (estaVacia()) {
@@ -633,21 +633,21 @@ class Pila<T> {
     }
     
     /**
-     * @postcondition resultado == cantidad de elementos en la pila
+     * \@postcondition resultado == cantidad de elementos en la pila
      */
     int tamaño() {
         return tope + 1;
     }
     
     /**
-     * @postcondition resultado == (tamaño() == 0)
+     * \@postcondition resultado == (tamaño() == 0)
      */
     boolean estaVacia() {
         return tope < 0;
     }
     
     /**
-     * @postcondition resultado == (tamaño() == capacidad())
+     * \@postcondition resultado == (tamaño() == capacidad())
      */
     boolean estaLlena() {
         return tope >= capacidad - 1;
@@ -697,8 +697,8 @@ class Pila<T> {
 ```
 class Calculadora {
     /**
-     * @precondition b != 0
-     * @postcondition resultado * b == a (aproximadamente)
+     * \@precondition b != 0
+     * \@postcondition resultado * b == a (aproximadamente)
      */
     double dividir(double a, double b) {
         return a / b;
@@ -737,8 +737,8 @@ void procesar(String dato) {
 **Diseño por Contratos**: "Cumplí tu parte"
 ```
 /**
- * @precondition dato != null
- * @precondition !dato.isEmpty()
+ * \@precondition dato != null
+ * \@precondition !dato.isEmpty()
  */
 void procesar(String dato) {
     assert dato != null && !dato.isEmpty();
@@ -794,7 +794,7 @@ Cuando una subclase sobrescribe un método, debe respetar ciertas reglas para ma
 ```
 class Calculadora {
     /**
-     * @precondition numero >= 0
+     * \@precondition numero >= 0
      */
     double raiz(double numero) {
         return Math.sqrt(numero);
@@ -803,7 +803,7 @@ class Calculadora {
 
 class CalculadoraCientifica extends Calculadora {
     /**
-     * @precondition numero puede ser cualquier valor (incluidos negativos)
+     * \@precondition numero puede ser cualquier valor (incluidos negativos)
      * 
      * Precondición MÁS DÉBIL: acepta más casos ✓
      */
@@ -831,7 +831,7 @@ void procesar(Calculadora calc) {
 ```
 class Coleccion {
     /**
-     * @precondition elemento != null
+     * \@precondition elemento != null
      */
     void agregar(Object elemento) {
         // ...
@@ -840,8 +840,8 @@ class Coleccion {
 
 class ColeccionEstricta extends Coleccion {
     /**
-     * @precondition elemento != null
-     * @precondition elemento instanceof String  // ❌ MÁS FUERTE
+     * \@precondition elemento != null
+     * \@precondition elemento instanceof String  // ❌ MÁS FUERTE
      */
     @Override
     void agregar(Object elemento) {
@@ -867,7 +867,7 @@ void llenar(Coleccion col) {
 ```
 class Buscador {
     /**
-     * @postcondition resultado contiene elementos que matchean
+     * \@postcondition resultado contiene elementos que matchean
      */
     List<Resultado> buscar(String query) {
         // Búsqueda básica
@@ -877,8 +877,8 @@ class Buscador {
 
 class BuscadorOrdenado extends Buscador {
     /**
-     * @postcondition resultado contiene elementos que matchean
-     * @postcondition resultado está ordenado por relevancia  // MÁS FUERTE ✓
+     * \@postcondition resultado contiene elementos que matchean
+     * \@postcondition resultado está ordenado por relevancia  // MÁS FUERTE ✓
      */
     @Override
     List<Resultado> buscar(String query) {
@@ -903,16 +903,16 @@ Las reglas de contratos en herencia se relacionan con:
 ```
 class Animal {
     /**
-     * @precondition comida instanceof Alimento
-     * @postcondition estado es mejor o igual
+     * \@precondition comida instanceof Alimento
+     * \@postcondition estado es mejor o igual
      */
     void comer(Alimento comida) { }
 }
 
 class Gato extends Animal {
     /**
-     * @precondition comida instanceof Alimento (o más general)
-     * @postcondition estado es mejor (más específico) ✓
+     * \@precondition comida instanceof Alimento (o más general)
+     * \@postcondition estado es mejor (más específico) ✓
      */
     @Override
     void comer(Alimento comida) {
@@ -942,12 +942,12 @@ Los contratos se documentan típicamente en los comentarios:
  * @param n el número del cual calcular el factorial
  * @return el factorial de n
  * 
- * @precondition n >= 0
- * @precondition n <= 20 (para evitar overflow en long)
+ * \@precondition n >= 0
+ * \@precondition n <= 20 (para evitar overflow en long)
  * 
- * @postcondition resultado >= 1
- * @postcondition resultado == n * (n-1) * ... * 1 para n > 0
- * @postcondition resultado == 1 para n == 0
+ * \@postcondition resultado >= 1
+ * \@postcondition resultado == n * (n-1) * ... * 1 para n > 0
+ * \@postcondition resultado == 1 para n == 0
  * 
  * @throws IllegalArgumentException si n < 0 o n > 20
  */
@@ -1092,8 +1092,8 @@ void procesar(Usuario usuario) {
 
 ```
 /**
- * @precondition usuario != null
- * @postcondition resultado != null
+ * \@precondition usuario != null
+ * \@postcondition resultado != null
  */
 String formatear(Usuario usuario) {
     Objects.requireNonNull(usuario, "Usuario no puede ser null");
@@ -1105,8 +1105,8 @@ String formatear(Usuario usuario) {
 
 ```
 /**
- * @postcondition resultado.isPresent() si el usuario existe
- * @postcondition resultado.isEmpty() si no existe
+ * \@postcondition resultado.isPresent() si el usuario existe
+ * \@postcondition resultado.isEmpty() si no existe
  */
 Optional<Usuario> buscar(String id) {
     Usuario u = baseDatos.buscar(id);

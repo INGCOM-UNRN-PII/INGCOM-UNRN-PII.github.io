@@ -1,19 +1,267 @@
 ---
 title: "Patrón Flyweight"
-subtitle: "Descripción breve"
+subtitle: "Compartir datos entre múltiples objetos"
 subject: Patrones de Diseño Estructurales
 ---
 
-# Flyweight
+(patron-flyweight)=
+# Flyweight: Compartir Datos
 
-Patrón estructural para flexibilidad y extensibilidad.
+El patrón **Flyweight** usa compartición para soportar grandes cantidades de objetos granulares eficientemente, separando estado intrínseco (compartido) del extrínseco (particular).
 
 :::{admonition} Propósito
 :class: note
 
-Proporciona una solución a un problema común de diseño.
+Reducir uso de memoria compartiendo datos entre múltiples objetos.
 :::
 
-## Uso
+---
 
-Este patrón es útil para...
+## Concepto
+
+**Estado intrínseco**: Datos que se pueden compartir (ej: forma, color)
+**Estado extrínseco**: Datos únicos por instancia (ej: posición, ID)
+
+```
+Sin Flyweight:   N objetos × tamaño completo = mucha memoria
+Con Flyweight:   1 flyweight × tamaño completo + N referencias extrínsecas = poca memoria
+```
+
+---
+
+## Problema
+
+```java
+// ❌ Millones de árboles en un bosque virtual: cada uno copia su forma y textura
+class Árbol {
+    private String especie;        // "Pino", "Roble" - repetido!
+    private String textura;        // Datos de imagen - repetido!
+    private double x, y, z;        // Posición única
+    private double altura;         // Altura única
+}
+
+// 1 millón de árboles × 2MB cada uno = 2GB de memoria!
+List<Árbol> bosque = new ArrayList<>();
+for (int i = 0; i < 1_000_000; i++) {
+    bosque.add(new Árbol("Pino", "textura.png", x, y, z, altura));
+}
+```
+
+---
+
+## Solución: Flyweight
+
+```java
+/**
+ * Datos compartidos (Flyweight): estado intrínseco.
+ */
+public class TipoÁrbol {
+    private final String especie;
+    private final byte[] texturaComprimida;
+    
+    public TipoÁrbol(String especie, byte[] textura) {
+        this.especie = especie;
+        this.texturaComprimida = textura;
+    }
+    
+    public String getEspecie() { return especie; }
+    public byte[] getTextura() { return texturaComprimida; }
+}
+
+/**
+ * Factory para compartir Flyweights.
+ */
+public class FábricaTipoÁrbol {
+    private static final Map<String, TipoÁrbol> tipos = new HashMap<>();
+    
+    public static TipoÁrbol obtenerTipo(String especie, byte[] textura) {
+        if (!tipos.containsKey(especie)) {
+            tipos.put(especie, new TipoÁrbol(especie, textura));
+        }
+        return tipos.get(especie);
+    }
+}
+
+/**
+ * Árbol con estado extrínseco (posición, altura).
+ */
+public class Árbol {
+    private TipoÁrbol tipo;     // Compartido (Flyweight)
+    private double x, y, z;     // Extrínseco: posición
+    private double altura;      // Extrínseco: altura
+    
+    public Árbol(TipoÁrbol tipo, double x, double y, double z, double altura) {
+        this.tipo = tipo;
+        this.x = x;
+        this.y = y;
+        this.z = z;
+        this.altura = altura;
+    }
+    
+    public void dibujar() {
+        System.out.println("Dibujando " + tipo.getEspecie() + 
+                         " en (" + x + "," + y + "," + z + "), altura: " + altura);
+    }
+}
+
+/**
+ * Bosque que reutiliza Flyweights.
+ */
+public class Bosque {
+    private List<Árbol> árboles = new ArrayList<>();
+    
+    public void plantarÁrbol(String especie, double x, double y, double z, double altura) {
+        // Obtener tipo compartido
+        TipoÁrbol tipo = FábricaTipoÁrbol.obtenerTipo(especie, obtenerTextura(especie));
+        Árbol árbol = new Árbol(tipo, x, y, z, altura);
+        árboles.add(árbol);
+    }
+    
+    public void dibujarBosque() {
+        for (Árbol árbol : árboles) {
+            árbol.dibujar();
+        }
+    }
+    
+    private byte[] obtenerTextura(String especie) {
+        // Simulación: cargar textura real desde disco
+        return new byte[1024 * 10]; // 10 KB por tipo (compartido)
+    }
+}
+
+// ✅ Uso eficiente
+Bosque bosque = new Bosque();
+for (int i = 0; i < 1_000_000; i++) {
+    // Solo la referencia al tipo compartido (8 bytes + posiciones)
+    bosque.plantarÁrbol("Pino", Math.random() * 1000, Math.random() * 1000, 0, 20);
+}
+bosque.dibujarBosque();
+```
+
+---
+
+## Diagrama UML
+
+```
+     ┌─────────────────────────┐
+     │   FábricaTipoÁrbol      │
+     ├─────────────────────────┤
+     │- tipos: Map             │
+     │+ obtenerTipo()          │
+     └────────────┬────────────┘
+                  │
+                  ▼
+        ┌────────────────────┐
+        │   TipoÁrbol        │
+        │  (Flyweight)       │
+        ├────────────────────┤
+        │- especie: String   │  <- Compartido
+        │- textura: byte[]   │  <- Compartido
+        └────────────────────┘
+                  ▲
+                  │ usa
+                  │
+        ┌─────────┴──────────┐
+        │      Árbol         │
+        ├────────────────────┤
+        │- tipo: TipoÁrbol   │
+        │- x, y, z: double  │  <- Extrínseco
+        │- altura: double    │  <- Extrínseco
+        └────────────────────┘
+```
+
+---
+
+## Ventajas y Desventajas
+
+### ✅ Ventajas
+
+- **Economía de memoria**: Reducción dramática de memoria
+- **Performance**: Menos asignaciones y garbage collection
+- **Escalabilidad**: Soporta millones de objetos
+- **Simplicidad**: Cliente no ve complejidad
+
+### ❌ Desventajas
+
+- **Complejidad**: Separar estado es difícil
+- **CPU vs. Memoria**: CPU extra en lookup de factory
+- **Thread safety**: Necesita sincronización en factory
+- **Debugging**: Difícil rastrear estado compartido
+
+---
+
+## Casos de Uso
+
+✅ **Ideal para:**
+- Juegos (partículas, sprites)
+- Editores de texto (caracteres)
+- Navegadores web (bloques de caché)
+- Sistemas de bases de datos (conexiones compartidas)
+
+❌ **Evita cuando:**
+- Pocos objetos (overhead no compensa)
+- Estado muta frecuentemente
+- Sincronización es prohibitiva
+
+---
+
+## Ejercicio
+
+```{exercise}
+:label: ej-flyweight-caracteres
+
+Crea editor de texto con Flyweights:
+1. `Carácter` (intrínseco): glifo, fuente, color
+2. `Posición` (extrínseco): x, y
+3. Factory para compartir caracteres idénticos
+```
+
+```{solution} ej-flyweight-caracteres
+:class: dropdown
+
+```java
+public class GlifoCaácter {
+    private final char carácter;
+    private final String fuente;
+    private final int tamaño;
+    
+    public GlifoCaácter(char c, String fuente, int tamaño) {
+        this.carácter = c;
+        this.fuente = fuente;
+        this.tamaño = tamaño;
+    }
+}
+
+public class FábricaGlifo {
+    private static Map<String, GlifoCaácter> cache = new HashMap<>();
+    
+    public static GlifoCaácter obtenerGlifo(char c, String fuente, int tamaño) {
+        String clave = c + ":" + fuente + ":" + tamaño;
+        cache.putIfAbsent(clave, new GlifoCaácter(c, fuente, tamaño));
+        return cache.get(clave);
+    }
+}
+
+public class CaráacterEnPantalla {
+    private GlifoCaácter glifo;
+    private int x, y;
+    
+    public CaráacterEnPantalla(GlifoCaácter g, int x, int y) {
+        this.glifo = g;
+        this.x = x;
+        this.y = y;
+    }
+}
+
+// Uso
+FábricaGlifo fabrica = new FábricaGlifo();
+List<CaráacterEnPantalla> línea = new ArrayList<>();
+
+String texto = "programación";
+int x = 0;
+for (char c : texto.toCharArray()) {
+    GlifoCaácter glifo = FábricaGlifo.obtenerGlifo(c, "Arial", 12);
+    línea.add(new CaráacterEnPantalla(glifo, x++, 0));
+}
+```
+```

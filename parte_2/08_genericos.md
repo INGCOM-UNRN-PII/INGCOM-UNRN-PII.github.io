@@ -803,7 +803,7 @@ Crea una clase genérica `ContenedorOrdenado<T extends Comparable<T>>` que:
 Prueba con String e Integer.
 ```
 
-```{solution} ej-contenedor-comparable
+````{solution} ej-contenedor-comparable
 :class: dropdown
 
 ```java
@@ -876,7 +876,7 @@ public class PruebaContenedor {
     }
 }
 ```
-```
+````
 
 ---
 
