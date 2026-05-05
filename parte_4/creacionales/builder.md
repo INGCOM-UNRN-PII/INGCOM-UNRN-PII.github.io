@@ -68,41 +68,63 @@ Se utiliza cuando:
 
 ## Estructura
 
-### Diagrama de Clases
+### Diagramas
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+**Diagrama de Clases**
 
-class Director {
-  - builder: Builder
-  + construir(tipo: String)
-}
+```mermaid
+classDiagram
+    class Director {
+        -builder: Builder
+        +construir(tipo: String)
+    }
+    
+    class Builder {
+        <<interface>>
+        +reset()
+        +construirParteA()
+        +construirParteB()
+        +obtenerResultado() Producto
+    }
+    
+    class BuilderConcreto {
+        -producto: Producto
+        +reset()
+        +construirParteA()
+        +construirParteB()
+        +obtenerResultado() Producto
+    }
+    
+    class Producto {
+        +partes: List
+    }
+    
+    Director o--> Builder
+    Builder <|.. BuilderConcreto
+    BuilderConcreto ..> Producto : crea
+```
 
-interface Builder {
-  + reset()
-  + construirParteA()
-  + construirParteB()
-  + obtenerResultado(): Producto
-}
+**Diagrama de Secuencia**
 
-class BuilderConcreto {
-  - producto: Producto
-  + reset()
-  + construirParteA()
-  + construirParteB()
-  + obtenerResultado(): Producto
-}
-
-class Producto {
-  + partes: List
-}
-
-Director o-- Builder
-Builder <|.. BuilderConcreto
-BuilderConcreto ..> Producto : <<create>>
-
-@enduml
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant D as Director
+    participant B as BuilderConcreto
+    
+    C->>B: new BuilderConcreto()
+    C->>D: new Director(builder)
+    C->>D: construir()
+    activate D
+    D->>B: reset()
+    D->>B: construirParteA()
+    D->>B: construirParteB()
+    D-->>C: OK
+    deactivate D
+    C->>B: obtenerResultado()
+    activate B
+    B-->>C: Producto
+    deactivate B
 ```
 
 ## Ejemplos

@@ -66,58 +66,85 @@ Se aplica en sistemas donde:
 
 ## Estructura
 
-### Diagrama de Clases
+### Diagramas
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+**Diagrama de Clases**
 
-interface AbstractFactory {
-  + crearProductoA(): ProductoA
-  + crearProductoB(): ProductoB
-}
+```mermaid
+classDiagram
+    class Cliente {
+        -fabrica: AbstractFactory
+        +operacion()
+    }
+    
+    class AbstractFactory {
+        <<interface>>
+        +crearProductoA() ProductoA
+        +crearProductoB() ProductoB
+    }
+    
+    class FabricaConcreta1 {
+        +crearProductoA() ProductoA
+        +crearProductoB() ProductoB
+    }
+    
+    class FabricaConcreta2 {
+        +crearProductoA() ProductoA
+        +crearProductoB() ProductoB
+    }
+    
+    class ProductoA {
+        <<interface>>
+    }
+    
+    class ProductoB {
+        <<interface>>
+    }
+    
+    class ProductoA1
+    class ProductoB1
+    class ProductoA2
+    class ProductoB2
+    
+    AbstractFactory <|.. FabricaConcreta1
+    AbstractFactory <|.. FabricaConcreta2
+    ProductoA <|.. ProductoA1
+    ProductoA <|.. ProductoA2
+    ProductoB <|.. ProductoB1
+    ProductoB <|.. ProductoB2
+    
+    FabricaConcreta1 --> ProductoA1 : crea
+    FabricaConcreta1 --> ProductoB1 : crea
+    FabricaConcreta2 --> ProductoA2 : crea
+    FabricaConcreta2 --> ProductoB2 : crea
+    
+    Cliente --> AbstractFactory : usa
+    Cliente --> ProductoA : usa
+    Cliente --> ProductoB : usa
+```
 
-class FabricaConcreta1 {
-  + crearProductoA(): ProductoA
-  + crearProductoB(): ProductoB
-}
+**Diagrama de Secuencia**
 
-class FabricaConcreta2 {
-  + crearProductoA(): ProductoA
-  + crearProductoB(): ProductoB
-}
-
-interface ProductoA
-interface ProductoB
-
-class ProductoA1
-class ProductoA2
-class ProductoB1
-class ProductoB2
-
-AbstractFactory <|.. FabricaConcreta1
-AbstractFactory <|.. FabricaConcreta2
-
-ProductoA <|.. ProductoA1
-ProductoA <|.. ProductoA2
-ProductoB <|.. ProductoB1
-ProductoB <|.. ProductoB2
-
-FabricaConcreta1 ..> ProductoA1 : <<create>>
-FabricaConcreta1 ..> ProductoB1 : <<create>>
-FabricaConcreta2 ..> ProductoA2 : <<create>>
-FabricaConcreta2 ..> ProductoB2 : <<create>>
-
-class Cliente {
-  - fabrica: AbstractFactory
-  + operacion()
-}
-
-Cliente -> AbstractFactory
-Cliente -> ProductoA
-Cliente -> ProductoB
-
-@enduml
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant F as AbstractFactory (Concreta1)
+    participant PA as ProductoA (A1)
+    participant PB as ProductoB (B1)
+    
+    C->>F: crearProductoA()
+    activate F
+    F-->>C: retorna ProductoA1
+    deactivate F
+    
+    C->>F: crearProductoB()
+    activate F
+    F-->>C: retorna ProductoB1
+    deactivate F
+    
+    Note over C: El cliente usa los<br/>productos creados
+    C->>PA: usar()
+    C->>PB: usar()
 ```
 
 ## Ejemplos

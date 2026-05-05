@@ -133,38 +133,54 @@ conector.conectar();      // Funciona como se esperaba
 conector.desconectar();
 ```
 
-### Diagrama de Clases
+### Diagramas
 
+**Diagrama de Clases**
+
+```mermaid
+classDiagram
+    class Cliente {
+    }
+    
+    class TargetaConector {
+        <<interface>>
+        +conectar()
+        +desconectar()
+    }
+    
+    class AdaptadorEuroAmer {
+        -dispositivo: DispositivoAntiguoEuropeo
+        +conectar()
+        +desconectar()
+    }
+    
+    class DispositivoAntiguoEuropeo {
+        +enchufar()
+        +desenchufar()
+    }
+    
+    Cliente --> TargetaConector : usa
+    TargetaConector <|.. AdaptadorEuroAmer : implementa
+    AdaptadorEuroAmer --> DispositivoAntiguoEuropeo : contiene
 ```
-      ┌──────────────────┐
-      │  TargetaConector │
-      │   <<interface>>  │
-      ├──────────────────┤
-      │+ conectar()      │
-      │+ desconectar()   │
-      └────────┬─────────┘
-               │
-               │ implementa
-               │
-       ┌───────▼──────────────┐
-       │    Adapter           │
-       │ AdaptadorEuroAmer    │
-       ├──────────────────────┤
-       │+ conectar()          │
-       │+ desconectar()       │
-       ├──────────────────────┤
-       │- dispositivo:        │
-       │  DispositivoAntiguoE │
-       └───────────────────────┘
-               │
-               │ contiene
-               │
-       ┌───────▼──────────────────┐
-       │ DispositivoAntiguoEuropeo│
-       ├──────────────────────────┤
-       │+ enchufar()              │
-       │+ desenchufar()           │
-       └──────────────────────────┘
+
+**Diagrama de Secuencia**
+
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant A as AdaptadorEuroAmer
+    participant D as DispositivoAntiguoEuropeo
+    
+    C->>A: conectar()
+    activate A
+    Note over A: Adapta la petición
+    A->>D: enchufar()
+    activate D
+    D-->>A: OK
+    deactivate D
+    A-->>C: OK
+    deactivate A
 ```
 
 ## Ejemplos

@@ -147,41 +147,73 @@ Forma circuloGL = new Circulo(opengl, 50, 50, 20);
 circuloGL.dibujar();  // OpenGL: Dibujando círculo...
 ```
 
-### Diagrama de Clases
+### Diagramas
 
+**Diagrama de Clases**
+
+```mermaid
+classDiagram
+    class Forma {
+        <<abstract>>
+        #renderizador: Renderizador
+        +Forma(Renderizador)
+        +dibujar()*
+    }
+    
+    class Circulo {
+        -x: int
+        -y: int
+        -radio: int
+        +dibujar()
+    }
+    
+    class Cuadrado {
+        -x: int
+        -y: int
+        -lado: int
+        +dibujar()
+    }
+    
+    class Renderizador {
+        <<interface>>
+        +dibujarCirculo(x, y, radio)
+        +dibujarCuadrado(x, y, lado)
+    }
+    
+    class RenderizadorOpenGL {
+        +dibujarCirculo(x, y, radio)
+        +dibujarCuadrado(x, y, lado)
+    }
+    
+    class RenderizadorVulkan {
+        +dibujarCirculo(x, y, radio)
+        +dibujarCuadrado(x, y, lado)
+    }
+    
+    Forma o--> Renderizador : usa
+    Forma <|-- Circulo
+    Forma <|-- Cuadrado
+    Renderizador <|.. RenderizadorOpenGL
+    Renderizador <|.. RenderizadorVulkan
 ```
-       ┌─────────────────────┐
-       │      Forma          │
-       │    <<abstract>>     │
-       ├─────────────────────┤
-       │- renderizador       │
-       │+ Forma(rend)        │
-       │+ dibujar()          │
-       └──────────┬──────────┘
-                  │
-         ┌────────┴────────┐
-         │                 │
-    ┌────▼─────┐    ┌─────▼────┐
-    │ Circulo  │    │Cuadrado   │
-    └──────────┘    └───────────┘
-         │                 │
-         │                 │
-         └────────┬────────┘
-                  │ usa
-                  │
-       ┌──────────▼──────────┐
-       │ <<interface>>       │
-       │ Renderizador        │
-       ├─────────────────────┤
-       │+ dibujarCirculo()   │
-       │+ dibujarCuadrado()  │
-       └──────────┬──────────┘
-                  │
-         ┌────────┴────────┐
-         │                 │
-    ┌────▼──────┐     ┌────▼──────┐
-    │RenderGL   │     │RenderVulkan│
-    └───────────┘     └────────────┘
+
+**Diagrama de Secuencia**
+
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant F as Forma (Circulo)
+    participant R as Renderizador
+    
+    C->>F: dibujar()
+    activate F
+    Note over F: Delega el dibujo<br/>a la implementación
+    F->>R: dibujarCirculo(x, y, radio)
+    activate R
+    R-->>F: renderizado completado
+    deactivate R
+    F-->>C: OK
+    deactivate F
 ```
 
 ## Ejemplos

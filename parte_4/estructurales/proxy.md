@@ -183,25 +183,56 @@ try {
 }
 ```
 
-### Diagrama de Clases
+### Diagramas
 
+**Diagrama de Clases**
+
+```mermaid
+classDiagram
+    class AccesoBD {
+        <<interface>>
+        +query(sql) String
+    }
+    
+    class BaseDatosReal {
+        +query(sql) String
+    }
+    
+    class ProxyAccesoBD {
+        -acceso: BaseDatosReal
+        -cache: Map
+        -usuarioActual: String
+        -estaAutenticado: boolean
+        +ProxyAccesoBD(usuario, password)
+        +query(sql) String
+    }
+    
+    AccesoBD <|.. BaseDatosReal
+    AccesoBD <|.. ProxyAccesoBD
+    ProxyAccesoBD --> BaseDatosReal : delega
 ```
-          ┌──────────────────┐
-          │   Sujeto         │
-          │  <<interface>>   │
-          ├──────────────────┤
-          │+ operación()     │
-          └────────┬─────────┘
-                   │
-          ┌────────┴────────┐
-          │                 │
-     ┌────▼────────┐  ┌────▼───────────┐
-     │ SujetoReal  │  │     Proxy      │
-     ├─────────────┤  ├────────────────┤
-     │+ operación()│  │- sujetoReal    │
-     └─────────────┘  │- caché         │
-                      │+ operación()   │
-                      └────────────────┘
+
+**Diagrama de Secuencia**
+
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant P as ProxyAccesoBD
+    participant R as BaseDatosReal
+    
+    C->>P: query("SELECT *")
+    activate P
+    Note over P: Verifica autenticación<br/>y chequea caché
+    alt Caché miss
+        P->>R: query("SELECT *")
+        activate R
+        Note over R: Ejecuta query costosa
+        R-->>P: resultado
+        deactivate R
+        Note over P: Guarda en caché
+    end
+    P-->>C: resultado
+    deactivate P
 ```
 
 ## Ejemplos

@@ -207,33 +207,61 @@ raiz.mostrar(0);
 System.out.println("Tamaño total: " + raiz.obtenerTamaño() + " KB");
 ```
 
-### Diagrama de Clases
+### Diagramas
 
+**Diagrama de Clases**
+
+```mermaid
+classDiagram
+    class ElementoSistemaArchivos {
+        <<abstract>>
+        #nombre: String
+        +mostrar(indentacion)*
+        +obtenerTamaño()* int
+    }
+    
+    class Archivo {
+        -tamaño: int
+        +mostrar(indentacion)
+        +obtenerTamaño() int
+    }
+    
+    class Carpeta {
+        -elementos: List~ElementoSistemaArchivos~
+        +agregar(ElementoSistemaArchivos)
+        +remover(ElementoSistemaArchivos)
+        +mostrar(indentacion)
+        +obtenerTamaño() int
+    }
+    
+    ElementoSistemaArchivos <|-- Archivo
+    ElementoSistemaArchivos <|-- Carpeta
+    Carpeta o--> ElementoSistemaArchivos : contiene
 ```
-          ┌─────────────────────────────┐
-          │ ElementoSistemaArchivos     │
-          │     <<abstract>>             │
-          ├─────────────────────────────┤
-          │# nombre: String             │
-          │+ mostrar()                  │
-          │+ obtenerTamaño()            │
-          └──────────────┬──────────────┘
-                         │
-              ┌──────────┴──────────┐
-              │                     │
-         ┌────▼──────────┐  ┌──────▼────────────┐
-         │   Archivo     │  │    Carpeta       │
-         ├───────────────┤  ├──────────────────┤
-         │ - tamaño      │  │ - elementos: []  │
-         │+ mostrar()    │  │+ agregar()       │
-         │+ obtenerTamaño│  │+ remover()       │
-         └───────────────┘  │+ mostrar()       │
-                            │+ obtenerTamaño()│
-                            └──────────────────┘
-                                    │
-                                    │ contiene
-                                    ▼
-                            ElementoSistemaArchivos
+
+**Diagrama de Secuencia**
+
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant R as Carpeta (Raíz)
+    participant D as Carpeta (Docs)
+    participant A as Archivo (Tesis)
+    
+    C->>R: obtenerTamaño()
+    activate R
+    Note over R: Itera sobre hijos
+    R->>D: obtenerTamaño()
+    activate D
+    Note over D: Itera sobre hijos
+    D->>A: obtenerTamaño()
+    activate A
+    A-->>D: 5000
+    deactivate A
+    D-->>R: 5000
+    deactivate D
+    R-->>C: 5000 (Total)
+    deactivate R
 ```
 
 ## Ejemplos

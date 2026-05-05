@@ -168,26 +168,74 @@ cine.verPelícula("The Matrix");
 cine.terminarPelícula();
 ```
 
-### Diagrama de Clases
+### Diagramas
 
+**Diagrama de Clases**
+
+```mermaid
+classDiagram
+    class Cliente {
+    }
+    
+    class CineEnCasaFacade {
+        -popcorn: PopcornEra
+        -proyector: Proyector
+        -dvd: DVD
+        -amplificador: Amplificador
+        +verPelícula(nombre)
+        +terminarPelícula()
+    }
+    
+    class PopcornEra {
+        +encender()
+        +apagar()
+    }
+    
+    class Proyector {
+        +encender()
+        +apagar()
+        +setBrillo(nivel)
+    }
+    
+    class DVD {
+        +cargarDVD(pelicula)
+        +reproducir()
+        +parar()
+    }
+    
+    class Amplificador {
+        +encender()
+        +apagar()
+        +setVolumen(nivel)
+    }
+    
+    Cliente --> CineEnCasaFacade : usa
+    CineEnCasaFacade --> PopcornEra : delega
+    CineEnCasaFacade --> Proyector : delega
+    CineEnCasaFacade --> DVD : delega
+    CineEnCasaFacade --> Amplificador : delega
 ```
-               ┌──────────────────┐
-               │ CineEnCasaFacade │
-               ├──────────────────┤
-               │- popcorn         │
-               │- proyector       │
-               │- dvd             │
-               │- amplificador    │
-               ├──────────────────┤
-               │+ verPelícula()   │
-               │+ terminarPelíc() │
-               └──────────┬───────┘
-                          │
-          ┌───────────┬───┼───┬────────────┐
-          │           │       │            │
-     ┌────▼──┐  ┌────▼──┐ ┌──▼──┐  ┌─────▼────┐
-     │ DVD   │  │Proyector│ │Popcorn│  │Amplificador│
-     └────────┘  └─────────┘ └──────┘  └──────────┘
+
+**Diagrama de Secuencia**
+
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant F as CineEnCasaFacade
+    participant P as Proyector
+    participant D as DVD
+    participant A as Amplificador
+    
+    C->>F: verPelícula("Matrix")
+    activate F
+    F->>P: encender()
+    F->>P: setBrillo(100)
+    F->>A: encender()
+    F->>A: setVolumen(30)
+    F->>D: cargarDVD("Matrix")
+    F->>D: reproducir()
+    F-->>C: OK
+    deactivate F
 ```
 
 ## Ejemplos

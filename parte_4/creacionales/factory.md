@@ -70,40 +70,61 @@ Se aplica cuando:
 
 ## Estructura
 
-### Diagrama de Clases
+### Diagramas
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+**Diagrama de Clases**
 
-abstract class Creador {
-  + operacion()
-  + {abstract} factoryMethod(): Producto
-}
+```mermaid
+classDiagram
+    class Creador {
+        <<abstract>>
+        +operacion()
+        +factoryMethod()* Producto
+    }
+    
+    class CreadorConcretoA {
+        +factoryMethod() Producto
+    }
+    
+    class CreadorConcretoB {
+        +factoryMethod() Producto
+    }
+    
+    class Producto {
+        <<interface>>
+    }
+    
+    class ProductoConcretoA
+    class ProductoConcretoB
+    
+    Creador <|-- CreadorConcretoA
+    Creador <|-- CreadorConcretoB
+    Producto <|.. ProductoConcretoA
+    Producto <|.. ProductoConcretoB
+    
+    CreadorConcretoA ..> ProductoConcretoA : crea
+    CreadorConcretoB ..> ProductoConcretoB : crea
+```
 
-class CreadorConcretoA {
-  + factoryMethod(): Producto
-}
+**Diagrama de Secuencia**
 
-class CreadorConcretoB {
-  + factoryMethod(): Producto
-}
-
-interface Producto
-
-class ProductoConcretoA
-class ProductoConcretoB
-
-Creador <|-- CreadorConcretoA
-Creador <|-- CreadorConcretoB
-
-Producto <|.. ProductoConcretoA
-Producto <|.. ProductoConcretoB
-
-CreadorConcretoA ..> ProductoConcretoA : <<create>>
-CreadorConcretoB ..> ProductoConcretoB : <<create>>
-
-@enduml
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant CA as CreadorConcretoA
+    participant PA as ProductoConcretoA
+    
+    C->>CA: operacion()
+    activate CA
+    Note over CA: Llama internamente<br/>a factoryMethod()
+    CA->>CA: factoryMethod()
+    activate CA
+    CA-->>PA: new ProductoConcretoA()
+    deactivate CA
+    Note over CA: Trabaja con la interfaz Producto
+    CA->>PA: hacerAlgo()
+    CA-->>C: OK
+    deactivate CA
 ```
 
 ## Ejemplos

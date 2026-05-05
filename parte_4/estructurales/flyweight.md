@@ -180,34 +180,67 @@ for (int i = 0; i < 1_000_000; i++) {
 bosque.dibujarBosque();
 ```
 
-### Diagrama de Clases
+### Diagramas
 
+**Diagrama de Clases**
+
+```mermaid
+classDiagram
+    class FabricaTipoArbol {
+        -tipos: Map~String, TipoArbol~
+        +obtenerTipo(especie, textura)$ TipoArbol
+    }
+    
+    class TipoArbol {
+        <<Flyweight>>
+        -especie: String
+        -texturaComprimida: byte[]
+        +TipoArbol(especie, textura)
+        +getEspecie() String
+        +getTextura() byte[]
+    }
+    
+    class Arbol {
+        -tipo: TipoArbol
+        -x: double
+        -y: double
+        -z: double
+        -altura: double
+        +Arbol(TipoArbol, x, y, z, altura)
+        +dibujar()
+    }
+    
+    class Bosque {
+        -arboles: List~Arbol~
+        +plantarArbol(especie, x, y, z, altura)
+        +dibujarBosque()
+    }
+    
+    Bosque --> Arbol : crea
+    Bosque --> FabricaTipoArbol : usa
+    FabricaTipoArbol o--> TipoArbol : cachea
+    Arbol --> TipoArbol : referencia
 ```
-     ┌─────────────────────────┐
-     │   FábricaTipoÁrbol      │
-     ├─────────────────────────┤
-     │- tipos: Map             │
-     │+ obtenerTipo()          │
-     └────────────┬────────────┘
-                  │
-                  ▼
-        ┌────────────────────┐
-        │   TipoÁrbol        │
-        │  (Flyweight)       │
-        ├────────────────────┤
-        │- especie: String   │  ← Compartido
-        │- textura: byte[]   │  ← Compartido
-        └────────────────────┘
-                  ▲
-                  │ usa
-                  │
-        ┌─────────┴──────────┐
-        │      Árbol         │
-        ├────────────────────┤
-        │- tipo: TipoÁrbol   │
-        │- x, y, z: double  │  ← Extrínseco
-        │- altura: double    │  ← Extrínseco
-        └────────────────────┘
+
+**Diagrama de Secuencia**
+
+```mermaid
+sequenceDiagram
+    participant B as Bosque
+    participant F as FabricaTipoArbol
+    participant A as Arbol
+    
+    B->>F: obtenerTipo("Pino", textura)
+    activate F
+    alt Tipo no existe
+        Note over F: Crea nuevo TipoArbol
+        F->>F: tipos.put("Pino", nuevo)
+    end
+    F-->>B: tipo (Flyweight)
+    deactivate F
+    Note over B: Crea contexto (estado extrínseco)
+    B->>A: new Arbol(tipo, x, y, z, h)
+    B->>B: arboles.add(arbol)
 ```
 
 ## Ejemplos

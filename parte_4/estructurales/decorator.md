@@ -189,35 +189,71 @@ System.out.println(caféConLecheYAzúcar.getDescripcion()); // Café, leche, az�
 System.out.println("Costo: $" + caféConLecheYAzúcar.costo()); // 3.60
 ```
 
-### Diagrama de Clases
+### Diagramas
 
+**Diagrama de Clases**
+
+```mermaid
+classDiagram
+    class Bebida {
+        <<abstract>>
+        +costo()* double
+        +getDescripcion()* String
+    }
+    
+    class Cafe {
+        +costo() double
+        +getDescripcion() String
+    }
+    
+    class AditamentoBebida {
+        <<abstract>>
+        #bebidaDecorada: Bebida
+        +AditamentoBebida(Bebida)
+        +costo()* double
+        +getDescripcion()* String
+    }
+    
+    class Leche {
+        +costo() double
+        +getDescripcion() String
+    }
+    
+    class Azucar {
+        +costo() double
+        +getDescripcion() String
+    }
+    
+    Bebida <|-- Cafe
+    Bebida <|-- AditamentoBebida
+    AditamentoBebida o--> Bebida : envuelve
+    AditamentoBebida <|-- Leche
+    AditamentoBebida <|-- Azucar
 ```
-          ┌──────────────┐
-          │   Bebida     │
-          │  <<abstract>>│
-          ├──────────────┤
-          │+ costo()     │
-          │+ descripción │
-          └──────┬───────┘
-                 │
-       ┌─────────┴─────────┐
-       │                   │
-  ┌────▼────────┐  ┌──────▼─────────────┐
-  │   Café      │  │ AditamentoBebida  │
-  ├─────────────┤  │   <<abstract>>     │
-  │+ costo()    │  ├──────────────────┤
-  │ return 3.00 │  │ - bebidaDecorada  │
-  └─────────────┘  │+ costo()          │
-                   │+ getDescripción() │
-                   └────────┬──────────┘
-                            │
-               ┌────────────┼────────────┐
-               │            │            │
-          ┌────▼──┐     ┌───▼───┐   ┌──▼────┐
-          │ Leche │     │Azúcar │   │Crema  │
-          ├───────┤     ├───────┤   ├───────┤
-          │costo()│     │costo()│   │costo()│
-          └───────┘     └───────┘   └───────┘
+
+**Diagrama de Secuencia**
+
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant A as Azúcar (Decorador)
+    participant L as Leche (Decorador)
+    participant CF as Café (Base)
+    
+    C->>A: costo()
+    activate A
+    A->>L: costo()
+    activate L
+    L->>CF: costo()
+    activate CF
+    CF-->>L: 3.00
+    deactivate CF
+    Note over L: Añade costo de leche (+0.50)
+    L-->>A: 3.50
+    deactivate L
+    Note over A: Añade costo de azúcar (+0.10)
+    A-->>C: 3.60
+    deactivate A
 ```
 
 ## Ejemplos
