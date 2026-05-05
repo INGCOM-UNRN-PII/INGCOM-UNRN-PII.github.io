@@ -464,12 +464,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CuentaBancariaTest {
     
-    \@Nested
-    \@DisplayName("Creación de cuenta")
+    @Nested
+    @DisplayName("Creación de cuenta")
     class CreacionCuenta {
         
         @Test
-        \@DisplayName("Se crea con titular y saldo inicial")
+        @DisplayName("Se crea con titular y saldo inicial")
         void crearCuentaConDatosValidos() {
             CuentaBancaria cuenta = new CuentaBancaria("Juan Pérez", 1000);
             
@@ -478,7 +478,7 @@ class CuentaBancariaTest {
         }
         
         @Test
-        \@DisplayName("Se puede crear con saldo inicial cero")
+        @DisplayName("Se puede crear con saldo inicial cero")
         void crearCuentaConSaldoCero() {
             CuentaBancaria cuenta = new CuentaBancaria("María García", 0);
             
@@ -486,7 +486,7 @@ class CuentaBancariaTest {
         }
         
         @Test
-        \@DisplayName("Rechaza titular nulo")
+        @DisplayName("Rechaza titular nulo")
         void rechazaTitularNulo() {
             assertThrows(IllegalArgumentException.class, () -> 
                 new CuentaBancaria(null, 100)
@@ -494,7 +494,7 @@ class CuentaBancariaTest {
         }
         
         @Test
-        \@DisplayName("Rechaza titular vacío")
+        @DisplayName("Rechaza titular vacío")
         void rechazaTitularVacio() {
             assertThrows(IllegalArgumentException.class, () -> 
                 new CuentaBancaria("   ", 100)
@@ -502,7 +502,7 @@ class CuentaBancariaTest {
         }
         
         @Test
-        \@DisplayName("Rechaza saldo inicial negativo")
+        @DisplayName("Rechaza saldo inicial negativo")
         void rechazaSaldoNegativo() {
             assertThrows(IllegalArgumentException.class, () -> 
                 new CuentaBancaria("Juan", -100)
@@ -510,19 +510,19 @@ class CuentaBancariaTest {
         }
     }
     
-    \@Nested
-    \@DisplayName("Depósitos")
+    @Nested
+    @DisplayName("Depósitos")
     class Depositos {
         
         private CuentaBancaria cuenta;
         
-        \@BeforeEach
+        @BeforeEach
         void setUp() {
             cuenta = new CuentaBancaria("Test User", 500);
         }
         
         @Test
-        \@DisplayName("Depósito aumenta el saldo")
+        @DisplayName("Depósito aumenta el saldo")
         void depositoAumentaSaldo() {
             cuenta.depositar(200);
             
@@ -530,7 +530,7 @@ class CuentaBancariaTest {
         }
         
         @Test
-        \@DisplayName("Múltiples depósitos se acumulan")
+        @DisplayName("Múltiples depósitos se acumulan")
         void multiplesDepositos() {
             cuenta.depositar(100);
             cuenta.depositar(50);
@@ -540,7 +540,7 @@ class CuentaBancariaTest {
         }
         
         @Test
-        \@DisplayName("Rechaza depósito de monto cero")
+        @DisplayName("Rechaza depósito de monto cero")
         void rechazaDepositoCero() {
             assertThrows(IllegalArgumentException.class, () -> 
                 cuenta.depositar(0)
@@ -548,7 +548,7 @@ class CuentaBancariaTest {
         }
         
         @Test
-        \@DisplayName("Rechaza depósito de monto negativo")
+        @DisplayName("Rechaza depósito de monto negativo")
         void rechazaDepositoNegativo() {
             assertThrows(IllegalArgumentException.class, () -> 
                 cuenta.depositar(-50)
@@ -556,19 +556,19 @@ class CuentaBancariaTest {
         }
     }
     
-    \@Nested
-    \@DisplayName("Extracciones")
+    @Nested
+    @DisplayName("Extracciones")
     class Extracciones {
         
         private CuentaBancaria cuenta;
         
-        \@BeforeEach
+        @BeforeEach
         void setUp() {
             cuenta = new CuentaBancaria("Test User", 1000);
         }
         
         @Test
-        \@DisplayName("Extracción disminuye el saldo")
+        @DisplayName("Extracción disminuye el saldo")
         void extraccionDisminuyeSaldo() {
             cuenta.extraer(300);
             
@@ -576,7 +576,7 @@ class CuentaBancariaTest {
         }
         
         @Test
-        \@DisplayName("Puede extraer todo el saldo")
+        @DisplayName("Puede extraer todo el saldo")
         void extraerTodoElSaldo() {
             cuenta.extraer(1000);
             
@@ -584,7 +584,7 @@ class CuentaBancariaTest {
         }
         
         @Test
-        \@DisplayName("Rechaza extracción mayor al saldo")
+        @DisplayName("Rechaza extracción mayor al saldo")
         void rechazaExtraccionExcesiva() {
             SaldoInsuficienteException ex = assertThrows(
                 SaldoInsuficienteException.class, 
@@ -596,7 +596,7 @@ class CuentaBancariaTest {
         }
         
         @Test
-        \@DisplayName("Rechaza extracción de monto cero")
+        @DisplayName("Rechaza extracción de monto cero")
         void rechazaExtraccionCero() {
             assertThrows(IllegalArgumentException.class, () -> 
                 cuenta.extraer(0)
@@ -604,7 +604,7 @@ class CuentaBancariaTest {
         }
         
         @Test
-        \@DisplayName("El saldo no cambia si falla la extracción")
+        @DisplayName("El saldo no cambia si falla la extracción")
         void saldoNoCambiaSiFalla() {
             try {
                 cuenta.extraer(2000);
@@ -623,9 +623,9 @@ class CuentaBancariaTest {
 
 Los tests anteriores muestran varias buenas prácticas:
 
-1. **Clases anidadas (`\@Nested`)**: Agrupan tests relacionados
-2. **Nombres descriptivos (`\@DisplayName`)**: Documentan el comportamiento
-3. **Setup compartido (`\@BeforeEach`)**: Evita duplicación
+1. **Clases anidadas (`@Nested`)**: Agrupan tests relacionados
+2. **Nombres descriptivos (`@DisplayName`)**: Documentan el comportamiento
+3. **Setup compartido (`@BeforeEach`)**: Evita duplicación
 4. **Un assert por test** (idealmente): Cada test verifica una cosa
 
 ```
@@ -1098,7 +1098,7 @@ class ServicioNotificacionesTestConMockito {
     @InjectMocks
     private ServicioNotificaciones servicio;
     
-    \@BeforeEach
+    @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
     }
@@ -1510,7 +1510,7 @@ class CalculadoraGeometricaTest {
     
     private CalculadoraGeometrica calculadora;
     
-    \@BeforeEach
+    @BeforeEach
     void setUp() {
         calculadora = new CalculadoraGeometrica();
     }
@@ -1905,7 +1905,7 @@ Escribí tests que cubran:
 5. Casos límite (carrito vacío, descuento 100%, etc.)
 ```
 
-```{solution} testing-ex-carrito
+````{solution} testing-ex-carrito
 :class: dropdown
 
 ```java
@@ -1915,15 +1915,15 @@ class CarritoComprasTest {
     private Producto laptop;
     private Producto mouse;
     
-    \@BeforeEach
+    @BeforeEach
     void setUp() {
         carrito = new CarritoCompras();
         laptop = new Producto("Laptop", 1000.0);
         mouse = new Producto("Mouse", 50.0);
     }
     
-    \@Nested
-    \@DisplayName("Carrito vacío")
+    @Nested
+    @DisplayName("Carrito vacío")
     class CarritoVacio {
         
         @Test
@@ -1938,8 +1938,8 @@ class CarritoComprasTest {
         }
     }
     
-    \@Nested
-    \@DisplayName("Agregar productos")
+    @Nested
+    @DisplayName("Agregar productos")
     class AgregarProductos {
         
         @Test
@@ -1968,8 +1968,8 @@ class CarritoComprasTest {
         }
     }
     
-    \@Nested
-    \@DisplayName("Remover productos")
+    @Nested
+    @DisplayName("Remover productos")
     class RemoverProductos {
         
         @Test
@@ -2003,8 +2003,8 @@ class CarritoComprasTest {
         }
     }
     
-    \@Nested
-    \@DisplayName("Descuentos")
+    @Nested
+    @DisplayName("Descuentos")
     class Descuentos {
         
         @Test
@@ -2051,7 +2051,7 @@ class CarritoComprasTest {
     }
 }
 ```
-```
+````
 
 ```{exercise}
 :label: testing-ex-tdd-calculadora
@@ -2324,7 +2324,7 @@ class SistemaAlertasTest {
     
     private SistemaAlertas sistema;
     
-    \@BeforeEach
+    @BeforeEach
     void setUp() {
         sistema = new SistemaAlertas(
             List.of(emailNotificador, smsNotificador, pushNotificador),
@@ -2433,4 +2433,3 @@ class SistemaAlertasTest {
 - Freeman, S. & Pryce, N. (2009). *Growing Object-Oriented Software, Guided by Tests*
 - Meszaros, G. (2007). *xUnit Test Patterns: Refactoring Test Code*
 - Martin, R. C. (2008). *Clean Code*, Capítulo 9: Unit Tests
-
