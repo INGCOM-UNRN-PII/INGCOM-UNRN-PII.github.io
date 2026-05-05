@@ -489,14 +489,19 @@ public class CuentaAhorro extends CuentaBancaria {
 :::{tip}
 **Cuándo usar `protected`:**
 
-- Cuando querés que las subclases accedan directamente al atributo
-- Para métodos "auxiliares" que las subclases pueden necesitar
-- Como alternativa a getters cuando la herencia es el caso de uso principal
+- Para métodos que las subclases necesitan **especializar** (override)
+- Para pasos intermedios en algoritmos que la superclase controla (Template Method)
+- **NO** como excusa para exponer detalles internos mediante getters/setters
+
+**⚠️ Importante:**
+Las subclases interactúan con la superclase mediante **métodos de dominio**, no getters/setters.  
+Ver {ref}`regla-0x200C` y {ref}`regla-0x2011` para más detalles sobre encapsulamiento en jerarquías.
 
 **Cuándo evitarlo:**
 
 - Si no esperás que la clase sea extendida
 - Si querés mantener control total sobre el acceso (usá `private` + métodos)
+- Atributos `protected` que las subclases "usan directamente" (rompe encapsulamiento)
 :::
 
 ---
@@ -1344,8 +1349,195 @@ public class SistemaRRHH {
 
 ---
 
-(resumen-java2)=
-## Resumen
+(testing-herencia-sin-getters)=
+## Testing de Herencia sin Getters
+
+Un desafío común es: **¿Cómo testeau código con jerarquías si no puedo usar getters?**
+
+La respuesta es: **Usa métodos de dominio públicos** para verificar comportamiento.
+
+(testing-comportamiento-no-estado)=
+### Prueba Comportamiento, No Estado
+
+En lugar de verificar el estado interno (que requeriría getters), verifica el comportamiento resultante:
+
+**Incorrecto ❌:**
+```java
+@Test
+void testGerenciaSalario() {
+    Gerente g = new Gerente("Carlos", 5000.0, 1000.0);
+    
+    // ❌ Necesita getters para "verficar" estado
+    assertEquals(5000.0, g.getSalario());
+    assertEquals(1000.0, g.getBonificacion());
+}
+```
+
+**Correcto ✅:**
+```java
+@Test
+void testGerenciaSueldoFinal() {
+    Gerente g = new Gerente("Carlos", 5000.0, 1000.0);
+    
+    // ✅ Verifica el comportamiento mediante método de dominio
+    assertEquals(6000.0, g.calcularSueldoFinal(), 0.01);
+}
+```
+
+(ejemplo-testing-gerente-empleado)=
+### Ejemplo Completo: Gerente extends Empleado
+
+**Clase base (Empleado):**
+```java
+public class Empleado {
+    private String nombre;
+    private double salarioBase;
+    
+    public Empleado(String nombre, double salarioBase) {
+        this.nombre = nombre;
+        this.salarioBase = salarioBase;
+    }
+    
+    // Métodos de dominio (sin getters)
+    public double calcularSueldoFinal() {
+        return salarioBase;
+    }
+    
+    public boolean tieneNombre(String nombre) {
+        return this.nombre.equals(nombre);
+    }
+    
+    public void cambiarNombre(String nuevoNombre) {
+        if (nuevoNombre == null || nuevoNombre.isEmpty()) {
+            throw new IllegalArgumentException("Nombre inválido");
+        }
+        this.nombre = nuevoNombre;
+    }
+}
+```
+
+**Subclase (Gerente):**
+```java
+public class Gerente extends Empleado {
+    private double bonificacion;
+    
+    public Gerente(String nombre, double salarioBase, double bonificacion) {
+        super(nombre, salarioBase);
+        this.bonificacion = bonificacion;
+    }
+    
+    // Especialización: calcula sueldo con bonificación
+    @Override
+    public double calcularSueldoFinal() {
+        return super.calcularSueldoFinal() + bonificacion;
+    }
+    
+    // Método específico de gerente
+    public void incrementarBonificacion(double monto) {
+        if (monto < 0) {
+            throw new IllegalArgumentException("Bonificación no puede ser negativa");
+        }
+        this.bonificacion += monto;
+    }
+}
+```
+
+**Tests (Sin getters):**
+```java
+class TestEmpleado {
+    
+    @Test
+    void testEmpleadoCalculaSueldoBase() {
+        Empleado e = new Empleado("Ana", 3000.0);
+        assertEquals(3000.0, e.calcularSueldoFinal(), 0.01);
+    }
+    
+    @Test
+    void testEmpleadoTieneNombre() {
+        Empleado e = new Empleado("Ana", 3000.0);
+        assertTrue(e.tieneNombre("Ana"));
+        assertFalse(e.tieneNombre("Carlos"));
+    }
+    
+    @Test
+    void testEmpleadoCambiarNombre() {
+        Empleado e = new Empleado("Ana", 3000.0);
+        e.cambiarNombre("Analía");
+        assertTrue(e.tieneNombre("Analía"));
+    }
+    
+    @Test
+    void testEmpleadoCambiarNombreInvalido() {
+        Empleado e = new Empleado("Ana", 3000.0);
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> e.cambiarNombre("")
+        );
+    }
+}
+
+class TestGerente {
+    
+    @Test
+    void testGerenteSueldoConBonificacion() {
+        Gerente g = new Gerente("Carlos", 5000.0, 1000.0);
+        
+        // Verifica comportamiento polimórfico
+        assertEquals(6000.0, g.calcularSueldoFinal(), 0.01);
+    }
+    
+    @Test
+    void testGerenteHeredaNombre() {
+        Gerente g = new Gerente("Carlos", 5000.0, 1000.0);
+        
+        // Usa método heredado
+        assertTrue(g.tieneNombre("Carlos"));
+    }
+    
+    @Test
+    void testGerenteIncrementoBonificacion() {
+        Gerente g = new Gerente("Carlos", 5000.0, 1000.0);
+        
+        g.incrementarBonificacion(500.0);
+        
+        // Verifica el cambio mediante comportamiento
+        assertEquals(6500.0, g.calcularSueldoFinal(), 0.01);
+    }
+    
+    @Test
+    void testGerenteIncrementoBonificacionNegativa() {
+        Gerente g = new Gerente("Carlos", 5000.0, 1000.0);
+        
+        assertThrows(
+            IllegalArgumentException.class,
+            () -> g.incrementarBonificacion(-100.0)
+        );
+    }
+}
+```
+
+(testing-principios-jerarquias)=
+### Principios para Testing de Jerarquías
+
+1. **Cada clase tesatea su comportamiento específico**
+   - `TestEmpleado` verifica métodos de `Empleado`
+   - `TestGerente` verifica especialización y métodos nuevos
+
+2. **Prueba polimorfismo**
+   - Asegúrate que `Gerente.calcularSueldoFinal()` se comporta diferente a `Empleado`
+
+3. **Prueba invariantes**
+   - Si una clase tiene reglas (ej: "bonificación no negativa"), tesatea que se cumplen
+
+4. **No uses getters**
+   - Usa métodos públicos de dominio para verificar estado indirectamente
+   - Los invariantes se verifican a través del comportamiento
+
+5. **Usa métodos de dominio bien diseñados**
+   - `tieneNombre()`, `cambiarNombre()` son más expresivos que getters
+   - `incrementarBonificacion()` encapsula la lógica de validación
+
+---
 
 ### Herencia
 
