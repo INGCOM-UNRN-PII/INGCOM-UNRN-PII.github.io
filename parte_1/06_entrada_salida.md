@@ -1041,7 +1041,7 @@ Para la mayoría de los programas, `Scanner` es suficiente. Sin embargo, tiene u
 
 En concursos de programación o procesamiento de archivos grandes (millones de líneas), `Scanner` puede ser el cuello de botella. Para la mayoría de las tareas académicas y profesionales, la diferencia es imperceptible.
 
-(ejercicios)=
+(06-ejercicios)=
 ## Ejercicios
 
 Los siguientes ejercicios permiten practicar los conceptos de entrada y salida. Se recomienda resolverlos antes de ver las soluciones.

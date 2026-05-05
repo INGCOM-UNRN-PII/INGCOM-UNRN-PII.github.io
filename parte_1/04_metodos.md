@@ -874,7 +874,7 @@ Cuando se introduzcan objetos, se verán métodos sin `static` que operan sobre 
 Por ahora, todos los métodos que escribamos serán `public static` para poder llamarlos desde `main`. La distinción con métodos de instancia se explorará más adelante.
 
 
-(ejercicios)=
+(04-ejercicios)=
 ## Ejercicios
 
 Los siguientes ejercicios permiten practicar los conceptos vistos. Se recomienda intentar resolverlos antes de ver las soluciones.
@@ -926,7 +926,7 @@ Análisis paso a paso:
 ```
 
 ````{exercise}
-:label: ej-sobrecarga
+:label: ej-sobrecarga-1
 ¿Cuál de los siguientes métodos se invocará con la llamada `procesar(5)`? Explicá el proceso de resolución.
 
 ```java
@@ -936,7 +936,7 @@ public static void procesar(double x) { System.out.println("double"); }
 ```
 ````
 
-```{solution} ej-sobrecarga
+```{solution} ej-sobrecarga-1
 :class: dropdown
 
 Se invocará `procesar(int x)` y se imprimirá "int".

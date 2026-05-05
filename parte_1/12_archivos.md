@@ -1322,7 +1322,7 @@ Después de todo lo visto, estas son las reglas que deberías seguir:
 | Verificar error | `if (f == NULL) { ... errno ... }` | `catch (IOException e) { ... }` |
 | Verificar existencia | `access(ruta, F_OK)` | `Files.exists(path)` |
 
-(ejercicios-de-aplicacion)=
+(ejercicios-de-aplicacion-12)=
 ## Ejercicios de Aplicación
 
 ```{exercise}

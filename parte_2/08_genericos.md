@@ -664,7 +664,7 @@ public <T> void procesar(T objeto) {
 
 ---
 
-(ejercicios)=
+(08-genericos-ejercicios)=
 ## Ejercicios
 
 ```{exercise}

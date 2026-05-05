@@ -2669,7 +2669,7 @@ e) Un `Cuerpo` tiene `Organos`.
 ```
 
 ```{exercise}
-:label: ej-sobrecarga
+:label: ej-sobrecarga-2
 
 Implementá una clase `Mensaje` con constructores sobrecargados que permitan crear mensajes de las siguientes formas:
 
@@ -2681,7 +2681,7 @@ Implementá una clase `Mensaje` con constructores sobrecargados que permitan cre
 Usá delegación de constructores para evitar duplicación de código.
 ```
 
-```{solution} ej-sobrecarga
+```{solution} ej-sobrecarga-2
 :class: dropdown
 
 ```java

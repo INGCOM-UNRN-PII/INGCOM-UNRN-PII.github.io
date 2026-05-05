@@ -3198,7 +3198,7 @@ Este apunte cubrió la implementación práctica de testing con JUnit 5:
 - {ref}`regla-0x4000` — Reglas de estilo para testing
 :::
 
-(ejercicios)=
+(08-ejercicios)=
 ## Ejercicios
 
 ```{exercise}

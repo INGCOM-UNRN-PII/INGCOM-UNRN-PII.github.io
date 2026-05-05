@@ -1401,7 +1401,7 @@ int pos2 = Arrays.binarySearch(ordenado, 2);    // ✅ Retorna 1 (índice correc
 ```
 :::
 
-(ejercicios-de-aplicacion)=
+(ejercicios-de-aplicacion-09)=
 ## Ejercicios de Aplicación
 
 Los siguientes ejercicios te ayudarán a consolidar los conceptos de arreglos. Intentá resolverlos antes de ver las soluciones.

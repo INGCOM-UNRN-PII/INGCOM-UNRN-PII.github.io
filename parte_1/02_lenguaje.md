@@ -648,7 +648,7 @@ La estrategia pedagógica **"Late Objects"** que usamos en este curso permite do
 
 ---
 
-(ejercicios)=
+(02-ejercicios)=
 ## Ejercicios
 
 ````{exercise}

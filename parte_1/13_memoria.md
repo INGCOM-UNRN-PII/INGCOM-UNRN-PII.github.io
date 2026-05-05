@@ -1063,7 +1063,7 @@ Para cerrar, estas son las reglas fundamentales que debés recordar:
 
 10. **`final` no es inmutabilidad**: `final` previene reasignación, no modificación de contenido.
 
-(ejercicios-de-aplicacion)=
+(ejercicios-de-aplicacion-13)=
 ## Ejercicios de Aplicación
 
 ````{exercise}
