@@ -27,30 +27,30 @@ project:
       children:
       - file: catedra/programa.md
       - file: catedra/acuerdo_ia.md
-    - title: Apunte 1
+    - title: Parte 1
       children:
-        - file: apunte/01_origenes.md
-        - file: apunte/02_lenguaje.md
-        - file: apunte/03_tipos_de_datos.md
-        - file: apunte/04_metodos.md
-        - file: apunte/05_sintaxis_control.md
-        - file: apunte/06_entrada_salida.md
-        - file: apunte/07_gradle.md
-        - file: apunte/08_junit.md
-        - file: apunte/09_arreglos.md
-        - file: apunte/10_excepciones.md
-        - file: apunte/11_testing.md
-        - file: apunte/12_archivos.md
-        - file: apunte/13_memoria.md
-        - file: apunte/indice.md
-    - title: Apunte 2
+        - file: parte_1/01_origenes.md
+        - file: parte_1/02_lenguaje.md
+        - file: parte_1/03_tipos_de_datos.md
+        - file: parte_1/04_metodos.md
+        - file: parte_1/05_sintaxis_control.md
+        - file: parte_1/06_entrada_salida.md
+        - file: parte_1/07_gradle.md
+        - file: parte_1/08_junit.md
+        - file: parte_1/09_arreglos.md
+        - file: parte_1/10_excepciones.md
+        - file: parte_1/11_testing.md
+        - file: parte_1/12_archivos.md
+        - file: parte_1/13_memoria.md
+        - file: parte_1/indice.md
+    - title: Parte 2
       children:
-        - file: apunte_2/01_oop_fundamentos.md
-        - file: apunte_2/02_oop_relaciones.md
-    - title: Apunte 3
+        - file: parte_2/01_oop_fundamentos.md
+        - file: parte_2/02_oop_relaciones.md
+    - title: Parte 3
       children:
-        - file: apunte_3/indice.md
-        - file: apunte_3/01_patrones_diseno.md
+        - file: parte_3/indice.md
+        - file: parte_3/01_patrones_diseno.md
     - title: Java
       children:
         - file: java/01_sintaxis_clases.md
