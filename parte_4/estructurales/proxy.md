@@ -1,5 +1,5 @@
 ---
-title: "Patrón Proxy"
+title: "Proxy"
 subtitle: "Controlar acceso a otro objeto"
 subject: Patrones de Diseño Estructurales
 ---

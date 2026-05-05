@@ -1,5 +1,5 @@
 ---
-title: "Patrón Mediator"
+title: "Mediator"
 subtitle: "Centralizar comunicación entre objetos"
 subject: Patrones de Diseño de Comportamiento
 ---

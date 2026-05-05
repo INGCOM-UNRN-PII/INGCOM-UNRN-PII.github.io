@@ -1,5 +1,5 @@
 ---
-title: "Patrón Visitor"
+title: "Visitor"
 subtitle: "Representar operación a aplicar a elementos de estructura"
 subject: Patrones de Diseño de Comportamiento
 ---

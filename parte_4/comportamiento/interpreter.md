@@ -1,5 +1,5 @@
 ---
-title: "Patrón Interpreter"
+title: "Interpreter"
 subtitle: "Definir representación de gramática y interpretador"
 subject: Patrones de Diseño de Comportamiento
 ---

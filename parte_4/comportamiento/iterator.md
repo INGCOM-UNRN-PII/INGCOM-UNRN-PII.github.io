@@ -1,5 +1,5 @@
 ---
-title: "Patrón Iterator"
+title: "Iterator"
 subtitle: "Acceder a elementos de una colección secuencialmente"
 subject: Patrones de Diseño de Comportamiento
 ---

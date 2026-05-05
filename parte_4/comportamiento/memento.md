@@ -1,5 +1,5 @@
 ---
-title: "Patrón Memento"
+title: "Memento"
 subtitle: "Capturar y restaurar estado de un objeto"
 subject: Patrones de Diseño de Comportamiento
 ---

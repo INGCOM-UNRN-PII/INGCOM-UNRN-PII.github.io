@@ -1,5 +1,5 @@
 ---
-title: "Patrones Estructurales"
+title: "estructurales"
 subtitle: "Composición de clases y objetos"
 subject: Patrones de Diseño
 ---

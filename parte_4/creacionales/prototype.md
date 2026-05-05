@@ -1,5 +1,5 @@
 ---
-title: "Patrón Prototype"
+title: "Prototype"
 subtitle: "Clonar objetos existentes"
 subject: Patrones de Diseño Creacionales
 ---

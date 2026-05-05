@@ -1,5 +1,5 @@
 ---
-title: "Patrón Chain of Responsibility"
+title: "Chain of Responsibility"
 subtitle: "Pasar una solicitud por una cadena de controladores"
 subject: Patrones de Diseño de Comportamiento
 ---

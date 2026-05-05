@@ -1,5 +1,5 @@
 ---
-title: "Patrón Template Method"
+title: "Template Method"
 subtitle: "Definir estructura del algoritmo en la superclase"
 subject: Patrones de Diseño de Comportamiento
 ---

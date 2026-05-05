@@ -1,5 +1,5 @@
 ---
-title: "Patrón Observer"
+title: "Observer"
 subtitle: "Notificar múltiples objetos sobre cambios"
 subject: Patrones de Diseño de Comportamiento
 ---

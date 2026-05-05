@@ -1,5 +1,5 @@
 ---
-title: "Patrones de Comportamiento"
+title: "de Comportamiento"
 subtitle: "Responsabilidades de objetos e interacciones"
 subject: Patrones de Diseño
 ---

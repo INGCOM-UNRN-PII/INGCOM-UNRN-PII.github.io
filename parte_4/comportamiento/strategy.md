@@ -1,5 +1,5 @@
 ---
-title: "Patrón Strategy"
+title: "Strategy"
 subtitle: "Encapsular familia de algoritmos intercambiables"
 subject: Patrones de Diseño de Comportamiento
 ---

@@ -1,5 +1,5 @@
 ---
-title: "Patrón State"
+title: "State"
 subtitle: "Cambiar comportamiento según estado"
 subject: Patrones de Diseño de Comportamiento
 ---

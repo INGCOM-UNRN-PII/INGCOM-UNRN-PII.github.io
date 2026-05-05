@@ -1,6 +1,6 @@
 ---
-title: "Patrón Singleton"
-description: Documentación del patrón de diseño Singleton con ejemplos y diagramas UML.
+title: "Singleton"
+description: Patrón de diseño Singleton con ejemplos y diagramas UML.
 ---
 
 # Singleton

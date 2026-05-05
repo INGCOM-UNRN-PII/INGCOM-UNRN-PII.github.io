@@ -1,5 +1,5 @@
 ---
-title: "Patrón Command"
+title: "Command"
 subtitle: "Encapsular una solicitud como un objeto"
 subject: Patrones de Diseño de Comportamiento
 ---
