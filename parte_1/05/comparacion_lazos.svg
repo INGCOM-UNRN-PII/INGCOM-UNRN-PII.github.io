@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style type="text/css"><![CDATA[
+/* SVG Embedded Styles - UNRN */
+.title { font-family: 'Segoe UI', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #192437; text-anchor: middle; }
+.subtitle { font-family: 'Segoe UI', Arial, sans-serif; font-size: 14px; font-weight: 500; fill: #2d3a50; text-anchor: middle; }
+.label { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 400; fill: #404040; }
+.label-bold { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: #192437; }
+.label-small { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-weight: 400; fill: #525252; }
+.index { font-family: 'Segoe UI', Arial, sans-serif; font-size: 10px; font-weight: 400; fill: #737373; }
+.code { font-family: 'Consolas', 'Courier New', monospace; font-size: 11px; font-weight: 400; fill: #404040; }
+.code-comment { font-family: 'Consolas', 'Courier New', monospace; font-size: 10px; font-weight: 400; fill: #737373; font-style: italic; }
+.code-keyword { font-family: 'Consolas', 'Courier New', monospace; font-size: 11px; font-weight: 700; fill: #eb2141; }
+.node { fill: #ffffff; stroke: #404040; stroke-width: 2; }
+.node-header { fill: #f5f5f5; stroke: #404040; stroke-width: 1; }
+.node-data { fill: #e8ebf0; stroke: #a3a3a3; stroke-width: 1.5; }
+.node-pointer { fill: #ffccbc; stroke: #a3a3a3; stroke-width: 1.5; }
+.node-null { fill: #e5e5e5; stroke: #737373; stroke-width: 1.5; stroke-dasharray: 3,3; }
+.node-highlight { fill: #fff3e0; stroke: #eb2141; stroke-width: 2.5; }
+.stack-node { fill: #ffffff; stroke: #eb2141; stroke-width: 2; }
+.stack-data { fill: #ffe0e0; stroke: #a3a3a3; stroke-width: 1.5; }
+.stack-pointer { fill: #ffc9c9; stroke: #a3a3a3; stroke-width: 1.5; }
+.stack-arrow { fill: none; stroke: #eb2141; stroke-width: 2; }
+.stack-label { fill: #eb2141; font-weight: 700; }
+.queue-node { fill: #ffffff; stroke: #2e7d32; stroke-width: 2; }
+.queue-data { fill: #c8e6c9; stroke: #a3a3a3; stroke-width: 1.5; }
+.queue-pointer { fill: #a5d6a7; stroke: #a3a3a3; stroke-width: 1.5; }
+.queue-arrow { fill: none; stroke: #2e7d32; stroke-width: 2; }
+.queue-label { fill: #2e7d32; font-weight: 700; }
+.deque-node { fill: #ffffff; stroke: #6a1b9a; stroke-width: 2; }
+.deque-data { fill: #e1bee7; stroke: #a3a3a3; stroke-width: 1.5; }
+.deque-pointer { fill: #ce93d8; stroke: #a3a3a3; stroke-width: 1.5; }
+.deque-arrow { fill: none; stroke: #6a1b9a; stroke-width: 2; }
+.deque-label { fill: #6a1b9a; font-weight: 700; }
+.list-node { fill: #ffffff; stroke: #1565c0; stroke-width: 2; }
+.list-data { fill: #bbdefb; stroke: #a3a3a3; stroke-width: 1.5; }
+.list-pointer { fill: #90caf9; stroke: #a3a3a3; stroke-width: 1.5; }
+.list-arrow { fill: none; stroke: #1565c0; stroke-width: 2; }
+.list-label { fill: #1565c0; font-weight: 700; }
+.tree-node { fill: #ffffff; stroke: #558b2f; stroke-width: 2; }
+.tree-data { fill: #dcedc8; stroke: #a3a3a3; stroke-width: 1.5; }
+.tree-arrow { fill: none; stroke: #558b2f; stroke-width: 2; }
+.tree-label { fill: #558b2f; font-weight: 700; }
+.graph-node { fill: #ffffff; stroke: #e65100; stroke-width: 2; }
+.graph-data { fill: #ffe0b2; stroke: #a3a3a3; stroke-width: 1.5; }
+.graph-arrow { fill: none; stroke: #e65100; stroke-width: 2; }
+.graph-label { fill: #e65100; font-weight: 700; }
+.hash-node { fill: #ffffff; stroke: #283593; stroke-width: 2; }
+.hash-data { fill: #c5cae9; stroke: #a3a3a3; stroke-width: 1.5; }
+.hash-arrow { fill: none; stroke: #283593; stroke-width: 2; }
+.arrow { fill: none; stroke: #404040; stroke-width: 2; }
+.arrow-primary { fill: none; stroke: #eb2141; stroke-width: 2; }
+.arrow-secondary { fill: none; stroke: #192437; stroke-width: 2; }
+.arrow-dashed { fill: none; stroke: #737373; stroke-width: 2; stroke-dasharray: 5,5; }
+.code-block { fill: #f5f5f5; stroke: #d4d4d4; stroke-width: 1; rx: 3; }
+.highlight-box { fill: #fce8ec; stroke: #eb2141; stroke-width: 1; rx: 3; }
+.info-box { fill: #e8ebf0; stroke: #2d3a50; stroke-width: 1; rx: 3; }
+.memory-cell { fill: #ffffff; stroke: #525252; stroke-width: 1.5; }
+.memory-cell-filled { fill: #e8ebf0; stroke: #525252; stroke-width: 1.5; }
+.divider { stroke: #d4d4d4; stroke-width: 1; }
+.divider-bold { stroke: #525252; stroke-width: 2; }
+.valid { stroke: #2e7d32; stroke-width: 2.5; }
+.invalid { stroke: #eb2141; stroke-width: 2.5; }
+.warning { stroke: #f57c00; stroke-width: 2.5; }
+.text-center { text-anchor: middle; }
+.text-start { text-anchor: start; }
+.text-end { text-anchor: end; }
+    ]]></style>
+  </defs>
+  <title>Flujo de Ejecución de Lazos en Java</title>
+  
+  <!-- Título -->
+  <text x="400" y="30" class="title">Comparación de Lazos: for, while, do-while</text>
+  
+  <!-- Lazo FOR -->
+  <g id="for-loop">
+    <text x="130" y="65" class="subtitle">Lazo for</text>
+    
+    <rect x="20" y="80" width="220" height="380" class="code-block"/>
+    
+    <!-- Paso 1: Inicialización -->
+    <rect x="40" y="100" width="180" height="40" class="queue-data"/>
+    <text x="130" y="125" class="code text-center">1. Inicialización</text>
+    <text x="40" y="155" class="label-small">int i = 0</text>
+    <text x="40" y="170" class="code-comment">(solo una vez)</text>
+    
+    <!-- Paso 2: Condición -->
+    <rect x="40" y="190" width="180" height="40" class="stack-data"/>
+    <text x="130" y="215" class="code text-center">2. Condición</text>
+    <text x="40" y="245" class="label-small">i &lt; 5</text>
+    <text x="40" y="260" class="code-comment">(cada iteración)</text>
+    
+    <!-- Paso 3: Cuerpo -->
+    <rect x="40" y="280" width="180" height="40" class="list-data"/>
+    <text x="130" y="305" class="code text-center">3. Cuerpo</text>
+    <text x="40" y="335" class="label-small">Código del lazo</text>
+    
+    <!-- Paso 4: Actualización -->
+    <rect x="40" y="340" width="180" height="40" class="deque-data"/>
+    <text x="130" y="365" class="code text-center">4. Actualización</text>
+    <text x="40" y="395" class="label-small">i = i + 1</text>
+    <text x="40" y="410" class="code-comment">(después del cuerpo)</text>
+    
+    <!-- Flecha de ciclo -->
+    <defs>
+      <marker id="arrow-for" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+        <polygon points="0 0, 10 3, 0 6" fill="#2e7d32"/>
+      </marker>
+    </defs>
+    <path d="M 220 360 Q 260 280 220 210" class="queue-arrow" marker-end="url(#arrow-for)"/>
+    <text x="245" y="285" class="label-small">vuelve</text>
+  </g>
+  
+  <!-- Lazo WHILE -->
+  <g id="while-loop">
+    <text x="400" y="65" class="subtitle">Lazo while</text>
+    
+    <rect x="290" y="80" width="220" height="270" class="code-block"/>
+    
+    <!-- Condición (antes) -->
+    <rect x="310" y="100" width="180" height="50" class="stack-data"/>
+    <text x="400" y="130" class="code text-center">1. Condición</text>
+    <text x="310" y="160" class="label-small">Evalúa ANTES</text>
+    <text x="310" y="175" class="code-comment">(puede no ejecutarse)</text>
+    
+    <!-- Cuerpo -->
+    <rect x="310" y="170" width="180" height="50" class="list-data"/>
+    <text x="400" y="200" class="code text-center">2. Cuerpo</text>
+    <text x="310" y="230" class="code-comment">Si condición es true</text>
+    
+    <!-- Actualización manual -->
+    <rect x="310" y="240" width="180" height="50" class="deque-data"/>
+    <text x="400" y="270" class="code text-center">3. Actualización</text>
+    <text x="310" y="300" class="label-small">Manual en el cuerpo</text>
+    
+    <!-- Flecha de ciclo -->
+    <path d="M 490 260 Q 530 190 490 130" class="queue-arrow" marker-end="url(#arrow-for)"/>
+    <text x="515" y="195" class="label-small">vuelve</text>
+    
+    <!-- Ejecución mínima -->
+    <text x="400" y="330" class="label-bold text-center">Ejecución: 0 o más veces</text>
+  </g>
+  
+  <!-- Lazo DO-WHILE -->
+  <g id="do-while-loop">
+    <text x="670" y="65" class="subtitle">Lazo do-while</text>
+    
+    <rect x="560" y="80" width="220" height="270" class="code-block"/>
+    
+    <!-- Cuerpo (primero) -->
+    <rect x="580" y="100" width="180" height="50" class="list-data"/>
+    <text x="670" y="130" class="code text-center">1. Cuerpo</text>
+    <text x="580" y="160" class="code-comment">SIEMPRE se ejecuta</text>
+    
+    <!-- Actualización -->
+    <rect x="580" y="170" width="180" height="50" class="deque-data"/>
+    <text x="670" y="200" class="code text-center">2. Actualización</text>
+    <text x="580" y="230" class="label-small">Manual en el cuerpo</text>
+    
+    <!-- Condición (después) -->
+    <rect x="580" y="240" width="180" height="50" class="stack-data"/>
+    <text x="670" y="270" class="code text-center">3. Condición</text>
+    <text x="580" y="300" class="label-small">Evalúa DESPUÉS</text>
+    
+    <!-- Flecha de ciclo -->
+    <path d="M 760 260 Q 800 170 760 120" class="queue-arrow" marker-end="url(#arrow-for)"/>
+    <text x="783" y="190" class="label-small">vuelve</text>
+    
+    <!-- Ejecución mínima -->
+    <text x="670" y="330" class="label-bold text-center">Ejecución: 1 o más veces</text>
+  </g>
+  
+  <!-- Tabla comparativa -->
+  <rect x="20" y="420" width="760" height="1" class="divider-bold"/>
+  <text x="30" y="450" class="label-small">✓ for: cuando sabés cuántas iteraciones | while: cuando NO sabés | do-while: al menos 1 vez</text>
+  <text x="30" y="470" class="label-small">⚠️ En este curso: NO usar break/continue, usar banderas booleanas para salir anticipadamente</text>
+</svg>
