@@ -5,7 +5,7 @@ description: Reglas de estilo y correcciones generales para código Java en la c
 
 # Cuestiones de estilo y correcciones generales
 
-(regla-0x0000)=
+(2025-regla-0x0000)=
 ## `0x0000` - Sin errores de ortografía y apliquen formato markdown donde sea posible
 
 Usen el [apunte markdown](https://github.com/INGCOM-UNRN-PII/cursada-2025/blob/main/biblio-secundaria/markdown.pdf)
@@ -18,30 +18,30 @@ NO hay excusas, el IDE tiene corrector de ortografía por lo que typos en los id
 y documentación no serán aceptados.
 :::
 
-(regla-0x0001)=
+(2025-regla-0x0001)=
 ## `0x0001` - Los nombres de las class van en `CamelloCase`
 
-(regla-0x0002)=
+(2025-regla-0x0002)=
 ## `0x0002` - Variables, funciones y argumentos van en `dromedarioCase`
 
-(regla-0x0003)=
+(2025-regla-0x0003)=
 ## `0x0003` - Los identificadores válidos son solo con alfabéticos `[azAZ]`
 
-(regla-0x0004)=
+(2025-regla-0x0004)=
 ## `0x0004` - Los nombres de las funciones van en `dromedarioCase`
 
-(regla-0x0004-metodos)=
+(2025-regla-0x0004-metodos)=
 ## `0x0004` - Los nombres de los métodos van en `dromedarioCase`
 
-(regla-0x0005)=
+(2025-regla-0x0005)=
 ## `0x0005` - Los identificadores no son descriptivos; o son letras de contexto matemático o son palabras
 
-(regla-0x0006)=
+(2025-regla-0x0006)=
 ## `0x0006` - Un solo `return` por función
 
 Solo porque la función, termina con dos puntos de salida diferentes; este y el `return` implícito al finalizar la función.
 
-(regla-0x0007)=
+(2025-regla-0x0007)=
 ## `0x0007` - La documentación no sigue la forma dada
 
 ```{code} java
@@ -68,64 +68,64 @@ Versión extendida:
     private static long valorAbsoluto(long numero) {
 ```
 
-(regla-0x0008)=
+(2025-regla-0x0008)=
 ## `0x0008` - Las funciones no van con `printf` o `Scanner`
 
-(regla-0x0008-metodos)=
+(2025-regla-0x0008-metodos)=
 ## `0x0008` - Los métodos no van con `printf` o `Scanner`
 
 A no ser que sea explícitamente su propósito.
 
-(regla-0x0009)=
+(2025-regla-0x0009)=
 ## `0x0009` - Las constantes van en mayúsculas, con `SNAKE_CASE`
 
-(regla-0x000A)=
+(2025-regla-0x000A)=
 ## `0x000A` - Un espacio antes y después de los operadores
 
 Esta regla existe casi exclusivamente para exigirles el uso de autoformato, y aunque
 el cambio en la prolijidad es realmente bajo, ayuda mucho a no perder de vista código
 más complejo.
 
-(regla-0x000B)=
+(2025-regla-0x000B)=
 ## `0x000B` - Sin usar la asignación compuesta (`+=`,`*=`, etc)
 
-(regla-0x000C)=
+(2025-regla-0x000C)=
 ## `0x000C` - Sin break y continue en su lugar, usen banderas
 
-(regla-0x000D)=
+(2025-regla-0x000D)=
 ## `0x000D` - Debe tener el mismo nombre que la class con `Test` al final
 
-(regla-0x000E)=
+(2025-regla-0x000E)=
 ## `0x000E` - El test no sigue la estructura de test indicada
 
 :::{note}
 Debe ser: preparar / ejecutar / comprobar / limpiar. Con identificación y mensajes.
 :::
 
-(regla-0x000F)=
+(2025-regla-0x000F)=
 ## `0x000F` - Una llamada a función en cada caso de prueba
 
 Salvo que estén fuertemente conectadas como en `DivisionLenta`.
 
-(regla-0x0010)=
+(2025-regla-0x0010)=
 ## `0x0010` - No atajar la excepción si no es posible tomar una decisión
 
-(regla-0x0011)=
+(2025-regla-0x0011)=
 ## `0x0011` - El main de un programa no debe dejar pasar excepciones de tipo
 
-(regla-0x0012)=
+(2025-regla-0x0012)=
 ## `0x0012` - Qué familia de excepciones se eligió debe de estar documentada
 
-(regla-0x0013)=
+(2025-regla-0x0013)=
 ## `0x0013` - Usar argumentos como variables solo si no cambia su significado
 
-(regla-0x0014)=
+(2025-regla-0x0014)=
 ## `0x0014` - No atajar una excepción lanzada en el mismo bloque
 
-(regla-0x0015)=
+(2025-regla-0x0015)=
 ## `0x0015` - No convertir excepciones con tipo a sin tipo
 
-(regla-0x0016)=
+(2025-regla-0x0016)=
 ## `0x0016` - Todas las excepciones que lancemos deben de estar documentadas con `@throws`
 
 Si la misma excepción se lanza en dos contextos diferentes, explicar cada uno de ellos.
@@ -133,55 +133,55 @@ Si la misma excepción se lanza en dos contextos diferentes, explicar cada uno d
 Si es posible, incluir casos que están fuera de nuestro control, como por ejemplo, los que
 provengan de la librería.
 
-(regla-0x0017)=
+(2025-regla-0x0017)=
 ## `0x0017` - Las excepciones de tiempo de ejecución deben documentar como evitar su lanzamiento
 
-(regla-0x0018)=
+(2025-regla-0x0018)=
 ## `0x0018` - Sean específicos con lo que atajan, no está permitido atajar `Exception` o `RuntimeException`
 
-(regla-0x0019)=
+(2025-regla-0x0019)=
 ## `0x0019` - La inicialización de los atributos va en el constructor
 
-(regla-0x002A)=
+(2025-regla-0x002A)=
 ## `0x002A` - Las clases van en `CamelloCase` y sus atributos en `dromedarioCase`
 
-(regla-0x002B)=
+(2025-regla-0x002B)=
 ## `0x002B` - { Los atributos `private` O `protected` con justificación } y nunca `public`
 
-(regla-0x002C)=
+(2025-regla-0x002C)=
 ## `0x002C` - Los paquetes deben comenzar en `ar.unrn` e ir en minúsculas
 
-(regla-0x002D)=
+(2025-regla-0x002D)=
 ## `0x002D` - Implementar `equals` requiere implementar `hashCode`
 
-(regla-0x002E)=
+(2025-regla-0x002E)=
 ## `0x002E` - Al extender, sobreescribir solo para llamar a super no es correcto
 
 Excepto con el constructor.
 
-(regla-0x002F)=
+(2025-regla-0x002F)=
 ## `0x002F` - Minimizar el código duplicado
 
-(regla-0x0030)=
+(2025-regla-0x0030)=
 ## `0x0030` - Las clases, atributos y métodos llevan documentación
 
-(regla-0x0031)=
+(2025-regla-0x0031)=
 ## `0x0031` - Los métodos get/set no pueden ser usados para la lógica del problema
 
 Esto incluye métodos que conceptualmente tengan la misma función.
 
-(regla-0x0032)=
+(2025-regla-0x0032)=
 ## `0x0032` - La utilización de atributos estáticos debe de estar justificada
 
-(regla-0x0033)=
+(2025-regla-0x0033)=
 ## `0x0033` - No hacer `import paquete.*`, solo traer lo que se necesita
 
-(regla-0x0034)=
+(2025-regla-0x0034)=
 ## `0x0034` - No apilen líneas
 
 Todos los bloques llevan sus llaves, y no encadenar más de ~dos llamadas a métodos en una línea.
 
-(regla-0x0035)=
+(2025-regla-0x0035)=
 ## `0x0035` - Documenten el lanzamiento indirecto de excepciones propias
 
 En especial, cuando se utilizan métodos internos de verificación.
@@ -189,12 +189,12 @@ En especial, cuando se utilizan métodos internos de verificación.
 (regla-nuevas)=
 # Nuevas reglas y borradores
 
-(regla-0xF000)=
+(2025-regla-0xF000)=
 ## `0xF000` - No es correcto declarar el lanzamiento de una excepción no controlada
 
 La familia a la que pertenece `ArregloException` no hace que sea correcto declarar su lanzamiento.
 
-(regla-0xF001)=
+(2025-regla-0xF001)=
 ## `0xF001` - No está permitido atajar para relanzar sin agregar información útil
 
 Esto significa que la mayoría de las situaciones en las que se intenta hacer _probablemente_ no sean correctas.
@@ -203,18 +203,18 @@ En este caso, se está perdiendo la información acerca del tipo y causa verdade
 
 No está directamente relacionado al I/O, ya que el archivo pudo ser leído correctamente; debiera de ser una excepción propia.
 
-(regla-0xF002)=
+(2025-regla-0xF002)=
 ## `0xF002` - Atajar para hacer algún tipo de `print` no es gestionar la excepción
 
-(regla-0xF003)=
+(2025-regla-0xF003)=
 ## `0xF003` - No está permitido lanzar excepciones base, `Exception` o `RuntimeException`
 
-(regla-0xF004)=
+(2025-regla-0xF004)=
 ## `0xF004` - Aplicar el principio "mejor prevenir que atajar" siempre que sea posible
 
 Si se puede evitar una excepción con un `if`, es preferible hacerlo.
 
-(regla-0xF005)=
+(2025-regla-0xF005)=
 ## `0xF005` - A la hora de construir cadenas, usar `StringBuilder`
 
 Recordá lo que vimos con respecto a `String` y las concatenaciones. Para estas situaciones,
@@ -261,35 +261,35 @@ Si el `assert` no obtenemos el resultado esperado, el tema es dejar un mensaje d
 
 Esto para simplificar los mensajes y que no sea _tan_ laborioso.
 
-(regla-apuntes-0xE000)=
+(2025-regla-0xE000)=
 ## `0xE000` - Silenciar una excepción no es la forma de gestionarla
 
-(regla-apuntes-0xE001)=
+(2025-regla-0xE001)=
 ## `0xE001` - Mejor prevenir que atajar
 
 Siempre que sea posible, prevenir la excepción en lugar de esperar a que falle.
 
-(regla-apuntes-0xE002)=
+(2025-regla-0xE002)=
 ## `0xE002` - Declarar el lanzamiento de una excepción no controlada es un error
 
 Hacer `throws RuntimeException` no es correcto por la familia de excepción a la que pertenece.
 
-(regla-apuntes-0xE003)=
+(2025-regla-0xE003)=
 ## `0xE003` - No es correcto concatenar en un lazo
 
 Ya que esto crea una gran cantidad de instancias de `String`. Usá [`StringBuilder`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html).
 
-(regla-apuntes-0xE004)=
+(2025-regla-0xE004)=
 ## `0xE004` - La implementación de `hashCode` debe emplear la librería
 
 Presente en `Arrays` y `Objects`.
 
-(regla-apuntes-0xE005)=
+(2025-regla-0xE005)=
 ## `0xE005` - La implementación de `equals` debe usar Pattern Matching para el cast
 
 Esto para simplificar el código y utilizar la forma correcta de downcast seguro.
 
-(regla-apuntes-0xE006)=
+(2025-regla-0xE006)=
 ## `0xE006` - La implementación de `equals` debe ser primero la de `Object`
 
 No la de la clase que implementa.
@@ -300,7 +300,7 @@ No la de la clase que implementa.
     public boolean equals(Object arr) {
 ```
 
-(regla-apuntes-0xE007)=
+(2025-regla-0xE007)=
 ## `0xE007` - `equals` y `hashCode` deben ser implementados juntos o no estar
 
 Es importante respetar el contrato de estos métodos, el cual declara que la implementación de uno de ellos, implica la implementación del otro.
@@ -310,7 +310,7 @@ Es importante respetar el contrato de estos métodos, el cual declara que la imp
 - [`Object.equals(Object)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html))
 :::
 
-(regla-apuntes-0xE008)=
+(2025-regla-0xE008)=
 ## `0xE008` - Superposición en el lanzamiento de excepciones
 
 Estás superponiendo dos situaciones que, por lo menos, ameritan un mensaje separado,
@@ -318,25 +318,25 @@ e idealmente, dos tipos de excepciones diferentes, de forma que se puedan atajar
 
 Una cosa es que el arreglo esté vacío, pero otra muy diferente es que sea `null`.
 
-(regla-0xE007-doc)=
+(2025-regla-0xE007-doc)=
 ## `0xE007` - Al documentar, no se indica el tipo de los argumentos o retorno
 
 Solo se indica cuál es su rol o propósito, redacten de forma que la explicación fluya del mismo, para esto, es necesario que el identificador sea
 apropiado.
 
-(regla-apuntes-0xE009)=
+(2025-regla-0xE009)=
 ## `0xE009` - Los identificadores, no llevan el tipo (o clase) de lo que procesan
 
 Las funciones no necesitan indicar sobre qué trabajan cuando los argumentos que están a continuación lo indican.
 
 Por ejemplo con arreglos; `sumaArreglo` puede ser simplemente `suma`.
 
-(regla-apuntes-0xE00A)=
+(2025-regla-0xE00A)=
 ## `0xE00A` - Lanzar excepciones raíz no es correcto
 
 Ya que no es posible atajar la situación específica que las originó.
 
-(regla-apuntes-0xE00B)=
+(2025-regla-0xE00B)=
 ## `0xE00B` - Algo como 'largo cero' y `null` son dos situaciones bastante diferentes
 
 Que requieren de excepciones distintas para que su tratamiento pueda ser más específico.
