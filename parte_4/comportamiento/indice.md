@@ -38,3 +38,11 @@ Los **patrones de comportamiento** se ocupan de cómo distribuir responsabilidad
 - **Strategy**: Múltiples algoritmos intercambiables
 - **Template Method**: Algoritmo con pasos customizables
 - **Visitor**: Operaciones sobre estructuras complejas
+
+## Práctica integradora
+
+Después de los mini ejercicios por patrón, conviene cerrar con los [ejercicios integradores de comportamiento](ejercicios_integradores.md).
+
+:::{tip}
+En esta familia el error típico es elegir por parecido superficial. Antes de decidir, conviene mirar qué cambia: el algoritmo, el estado, la comunicación o la secuencia de pasos.
+:::

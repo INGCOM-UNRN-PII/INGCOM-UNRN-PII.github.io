@@ -168,6 +168,14 @@ public class AplicacionPDF extends Aplicacion {
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-factory-mini
+
+Un sistema de exportación debe generar `ReportePDF`, `ReporteCSV` o `ReporteJSON` según la configuración de cada cliente. Proponé una solución con **Factory Method** y explicá qué parte del código debería quedar desacoplada de las clases concretas.
+```
+
 ## Resumen
 
 El Factory Method es la herramienta definitiva para el desacoplamiento creacional. Su principal valor radica en permitir que un sistema evolucione permitiendo que nuevas subclases decidan cómo instanciar objetos existentes, manteniendo el código base limpio y enfocado en la lógica de alto nivel.

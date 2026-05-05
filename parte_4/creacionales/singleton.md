@@ -139,6 +139,14 @@ public class DatabaseConnector {
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-singleton-mini
+
+En una app de escritorio, varias pantallas necesitan escribir eventos en el mismo archivo de auditoría. El equipo propone un `AuditLogger.getInstancia()`. Indicá si el problema justifica **Singleton** o si conviene otra alternativa. Señalá al menos un riesgo de diseño.
+```
+
 ## Resumen
 
 El Singleton es una herramienta potente pero peligrosa. Su simplicidad lo hace atractivo, pero su naturaleza global puede corromper la arquitectura de un sistema si se usa para ocultar dependencias. Debe reservarse para recursos que son intrínsecamente únicos en el dominio del problema.

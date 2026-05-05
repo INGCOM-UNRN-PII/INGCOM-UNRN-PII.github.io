@@ -153,6 +153,14 @@ Expresion expr = new Suma(new Numero(5), new Numero(10));
 System.out.println("Resultado: " + expr.interpretar(null));
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-interpreter-mini
+
+Una cátedra quiere definir reglas simples de aprobación con expresiones como `asistencia AND (parcial1 OR recuperatorio)`. Indicá qué partes del problema podrían modelarse con **Interpreter** y cuándo dejaría de ser conveniente.
+```
+
 ## Resumen
 
 El patrón Interpreter es la forma más pura de transformar una gramática en código. Aunque su uso es limitado por cuestiones de rendimiento y escalabilidad, sigue siendo una herramienta fundamental para crear lenguajes de dominio específico (DSL) legibles y extensibles dentro de una aplicación.

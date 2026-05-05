@@ -279,6 +279,14 @@ BaseDatosConfigFacade bdConfig = new BaseDatosConfigFacade();
 bdConfig.inicializar("jdbc:mysql://localhost/midb");
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-facade-mini
+
+La inscripción a una materia requiere consultar correlativas, cupos, estado administrativo y generación de comprobante. Diseñá una **Facade** para ese subsistema e indicá qué complejidad le ocultás al cliente.
+```
+
 ## Resumen
 
 El patrón **Facade** es esencial para manejar subsistemas complejos. Al proporcionar una interfaz simplificada, reduce acoplamiento y mejora usabilidad. Aunque puede crecer excesivamente si no se controla, su beneficio en desacoplamiento y simplicidad lo hace fundamental en aplicaciones empresariales.

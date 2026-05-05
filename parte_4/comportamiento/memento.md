@@ -149,6 +149,14 @@ public class Historial {
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-memento-mini
+
+Un editor de texto necesita recuperar versiones previas sin exponer todos los detalles internos del documento. Indicá qué objeto guarda el estado y quién debería administrar el historial si usás **Memento**.
+```
+
 ## Resumen
 
 El Memento es la "máquina del tiempo" de los objetos. Su gran valor es permitir que un sistema tenga memoria de sus estados pasados sin comprometer la integridad ni la privacidad de sus datos internos, logrando un equilibrio entre funcionalidad y diseño limpio.

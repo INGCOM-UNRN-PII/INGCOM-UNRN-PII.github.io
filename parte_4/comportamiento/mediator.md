@@ -153,6 +153,14 @@ public class TorreControlConcreta implements TorreControl {
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-mediator-mini
+
+En un formulario de inscripción, cambiar la carrera habilita materias, turno y sede, y cada campo afecta a varios otros. Explicá cómo **Mediator** reduce el acoplamiento entre widgets.
+```
+
 ## Resumen
 
 El Mediator es el "coordinador central". Su valor reside en transformar una red caótica de dependencias en una estructura en estrella, donde la lógica de negocio sobre cómo colaboran los objetos queda aislada y protegida, permitiendo que los componentes individuales sigan siendo simples y reutilizables.

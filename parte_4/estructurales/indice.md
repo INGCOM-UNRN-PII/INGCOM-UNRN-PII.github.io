@@ -67,3 +67,11 @@ Los **patrones estructurales** se ocupan de cómo las clases y objetos se compon
 ¿Muchos objetos idénticos (memoria)? → **Flyweight**
 
 ¿Controlar acceso a objeto? → **Proxy**
+
+## Práctica integradora
+
+Después de recorrer los patrones individuales, conviene resolver los [ejercicios integradores de estructurales](ejercicios_integradores.md).
+
+:::{tip}
+En esta familia suele haber más de una respuesta plausible. La clave es justificar el costo de acoplamiento, indirección o complejidad que introduce cada patrón.
+:::

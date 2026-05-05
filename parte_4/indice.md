@@ -40,6 +40,17 @@ Esta portada funciona como mapa general. Para entrar a cada familia y navegar su
 Si se necesita una vista panorámica, conviene leer esta portada. Si se necesita estudiar una familia completa, conviene entrar directamente a su índice específico.
 :::
 
+## Práctica de cursada
+
+Parte 4 ya funciona como referencia. Para usarla como tramo de cursada, conviene trabajarla así:
+
+| Escala | Qué hacer |
+| :--- | :--- |
+| Patrón individual | Leer el contexto, contrastar **cuándo aplica / cuándo no aplica** y resolver el mini ejercicio del final |
+| Familia creacional | Cerrar con [ejercicios integradores de creacionales](creacionales/ejercicios_integradores.md) |
+| Familia estructural | Cerrar con [ejercicios integradores de estructurales](estructurales/ejercicios_integradores.md) |
+| Familia de comportamiento | Cerrar con [ejercicios integradores de comportamiento](comportamiento/ejercicios_integradores.md) |
+
 ---
 
 (que-son-patrones)=

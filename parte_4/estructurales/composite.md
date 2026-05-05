@@ -319,6 +319,14 @@ menuPrincipal.agregar(menuRecientes);
 menuPrincipal.mostrar();
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-composite-mini
+
+Modelá un sistema de archivos con carpetas y documentos donde ambos deben soportar la operación `pesoTotal()`. Indicá por qué **Composite** simplifica el código cliente.
+```
+
 ## Resumen
 
 El patrón **Composite** es fundamental para trabajar con estructuras jerárquicas. Al permitir tratar uniformemente hojas y compuestos, simplifica enormemente el código cliente y facilita la adición de nuevos tipos. Es ampliamente usado en sistemas que requieren representar relaciones padre-hijo de forma flexible.

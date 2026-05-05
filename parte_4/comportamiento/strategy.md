@@ -145,6 +145,14 @@ public class Carrito {
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-strategy-mini
+
+Un sistema de pagos debe calcular comisiones distintas para tarjeta, transferencia y billetera virtual. Diseñá una solución con **Strategy** e indicá qué cambia en el contexto cuando aparece un nuevo medio de pago.
+```
+
 ## Resumen
 
 El patrón Strategy es el patrón de la "intercambiabilidad". Al separar el *qué se hace* del *cómo se hace*, nos otorga una arquitectura limpia donde los algoritmos son piezas modulares que pueden evolucionar, testearse y reemplazarse sin afectar la estabilidad del resto del sistema.

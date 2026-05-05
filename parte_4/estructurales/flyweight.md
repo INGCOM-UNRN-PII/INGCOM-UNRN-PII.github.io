@@ -300,6 +300,14 @@ doc.agregarCarácter('a');
 doc.mostrar();
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-flyweight-mini
+
+Un editor de mapas representa miles de árboles iguales que solo cambian de posición y tamaño. Explicá qué estado harías compartido y cuál extrínseco si aplicás **Flyweight**.
+```
+
 ## Resumen
 
 El patrón **Flyweight** es crítico para aplicaciones que manejan cantidades masivas de objetos similares. Al separar estado compartible del estado particular, logra reducir dramáticamente el consumo de memoria. Su uso requiere cuidadosa identificación de estado intrínseco vs. extrínseco, pero el ahorro resultante es significativo en sistemas a gran escala.

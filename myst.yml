@@ -73,6 +73,7 @@ project:
       - file: parte_4/creacionales/abstract_factory.md
       - file: parte_4/creacionales/builder.md
       - file: parte_4/creacionales/prototype.md
+      - file: parte_4/creacionales/ejercicios_integradores.md
     - title: Estructurales
       children:
       - file: parte_4/estructurales/indice.md
@@ -83,6 +84,7 @@ project:
       - file: parte_4/estructurales/facade.md
       - file: parte_4/estructurales/flyweight.md
       - file: parte_4/estructurales/proxy.md
+      - file: parte_4/estructurales/ejercicios_integradores.md
     - title: Comportamiento
       children:
       - file: parte_4/comportamiento/indice.md
@@ -97,6 +99,7 @@ project:
       - file: parte_4/comportamiento/strategy.md
       - file: parte_4/comportamiento/template_method.md
       - file: parte_4/comportamiento/visitor.md
+      - file: parte_4/comportamiento/ejercicios_integradores.md
 #  - title: 'Parte 5: Estructuras de Datos'
 #    children:
 #    - file: parte_5/indice.md

@@ -140,6 +140,14 @@ public class ProcesadorEmail extends ProcesadorMensajes {
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-template-method-mini
+
+Una plataforma importa datos desde CSV, JSON y XML, pero siempre repite la secuencia `abrir`, `validar`, `transformar` y `persistir`. Explicá cómo **Template Method** permitiría fijar el esqueleto del algoritmo y variar pasos concretos.
+```
+
 ## Resumen
 
 El Template Method es el patrón de la "estructura compartida". Es una herramienta poderosa para construir sistemas coherentes donde la lógica de alto nivel está protegida en la base, mientras que la flexibilidad de los detalles queda en manos de las especializaciones, logrando un balance ideal entre control y extensibilidad.

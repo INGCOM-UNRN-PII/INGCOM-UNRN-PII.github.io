@@ -258,6 +258,14 @@ public class AdaptadorPorHerencia extends DispositivoAntiguoEuropeo
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-adapter-mini
+
+Una aplicación nueva necesita usar un servicio legacy de fax cuya API no coincide con la interfaz de notificaciones actual. Diseñá un caso mínimo con **Adapter** e indicá qué clases querés mantener sin modificar.
+```
+
 ## Resumen
 
 El patrón **Adapter** resuelve problemas de incompatibilidad entre interfaces proporcionando una clase intermediaria que traduce llamadas. Es fundamental en integración de sistemas heterogéneos y reutilización de código existente sin modificación. Aunque introduce indirección, su beneficio en separación de concerns y flexibilidad lo hacen invaluable en arquitecturas empresariales.

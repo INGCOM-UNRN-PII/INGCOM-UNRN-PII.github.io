@@ -169,6 +169,14 @@ public class CalculadorArea implements Visitante {
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-visitor-mini
+
+Una herramienta de análisis recorre un árbol sintáctico y necesita agregar operaciones nuevas como validación, conteo de nodos y exportación, sin modificar las clases de cada nodo. Indicá por qué **Visitor** puede ser una buena opción y qué costo introduce.
+```
+
 ## Resumen
 
 El Visitor es el patrón del "doble despacho". Su gran poder reside en la capacidad de extender la funcionalidad de una estructura compleja sin tocar una sola línea de código de las clases originales, permitiendo que el sistema crezca de forma modular y manteniendo las responsabilidades de procesamiento bien aisladas de las de representación.

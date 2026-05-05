@@ -177,6 +177,14 @@ public class MiLista<T> {
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-iterator-mini
+
+Tenés una colección propia de entregas de trabajos prácticos y querés recorrerla sin exponer su estructura interna. Diseñá la interfaz mínima de un **Iterator** y explicá qué desacoplamiento aporta.
+```
+
 ## Resumen
 
 El Iterator es el "traductor de recorridos". Es un patrón esencial que habilita el polimorfismo sobre estructuras de datos, permitiendo que el software sea agnóstico a la forma en que se almacenan los datos y se concentre en cómo se procesan.

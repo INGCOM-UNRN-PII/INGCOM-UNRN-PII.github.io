@@ -177,6 +177,14 @@ public class ControlRemoto {
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-command-mini
+
+Un editor de diagramas necesita soportar **deshacer** y **rehacer** para acciones como agregar nodo, mover nodo y borrar nodo. Explicá cómo **Command** ayuda a encapsular esas operaciones.
+```
+
 ## Resumen
 
 El patrón Command es la base de las aplicaciones interactivas modernas. Al transformar una acción en un objeto, nos otorga control sobre el flujo temporal de las operaciones, permitiéndonos pausar, revertir o agrupar intenciones de usuario de manera elegante y desacoplada.

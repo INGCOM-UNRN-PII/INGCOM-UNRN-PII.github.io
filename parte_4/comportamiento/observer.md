@@ -161,6 +161,14 @@ public class Inversor implements Observador {
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-observer-mini
+
+Cuando se publica una nota, hay que avisar a estudiantes, analítica académica y un servicio de notificaciones móviles. Diseñá un caso con **Observer** e indicá qué pasaría si el sujeto conociera en detalle a todos los receptores.
+```
+
 ## Resumen
 
 El Observer es el patrón de la "reactividad". Permite construir sistemas donde el flujo de información es automático y dinámico, asegurando que todos los componentes interesados estén siempre sincronizados con la fuente de la verdad (el sujeto) sin sacrificar la independencia de las clases.

@@ -168,6 +168,14 @@ public class SoporteNivel1 extends Manejador {
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-chain-mini
+
+Una solicitud académica debe pasar por docente, coordinación y secretaría, pero algunos casos pueden resolverse antes. Diseñá una cadena mínima con **Chain of Responsibility** e indicá qué gana el cliente al no conocer todos los eslabones.
+```
+
 ## Resumen
 
 El Chain of Responsibility es el patrón de los "niveles de atención". Su mayor ventaja es el desacoplamiento dinámico que permite construir tuberías de procesamiento donde cada eslabón decide su participación. Es ideal para sistemas extensibles de reglas de negocio o validaciones en cascada.

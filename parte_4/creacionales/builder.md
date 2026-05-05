@@ -181,6 +181,14 @@ Casa miCasa = new Casa.CasaBuilder()
     .construir();
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-builder-mini
+
+Diseñá la creación de un `ClienteHttp` que puede llevar `timeout`, autenticación, proxy, compresión y reintentos, pero no siempre usa todas esas opciones. Justificá por qué **Builder** mejora la legibilidad frente a un constructor con muchos parámetros.
+```
+
 ## Resumen
 
 El Builder es el patrón ideal para "ensamblar" objetos. Su mayor virtud es la legibilidad y la flexibilidad que aporta al cliente, permitiéndole construir objetos complejos sin perderse en una maraña de parámetros de constructor. Es especialmente popular en Java moderno a través de bibliotecas como Lombok o en la construcción de APIs fluidas.

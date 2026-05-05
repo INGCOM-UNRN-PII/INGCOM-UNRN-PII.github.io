@@ -273,6 +273,14 @@ Documento doc = new Informe(html, "Datos de ventas");
 doc.mostrar();  // <html>INFORME: Datos de ventas</html>
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-bridge-mini
+
+Un sistema de reportes debe combinar dos dimensiones de variación: **tipo de reporte** (resumen o detallado) y **salida** (PDF o HTML). Explicá cómo **Bridge** evita una explosión de subclases.
+```
+
 ## Resumen
 
 El patrón **Bridge** es esencial para manejar múltiples dimensiones de variación sin explosión de clases. Mediante la separación de abstracción e implementación, permite evolucionar ambas de forma independiente. Aunque introduce complejidad adicional, su beneficio en escalabilidad y mantenibilidad lo hace fundamental en sistemas grandes.

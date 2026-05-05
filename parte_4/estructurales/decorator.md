@@ -331,6 +331,14 @@ InputStream final_stream = new CompressedStream(buffered);
 final_stream.read();  // Descomprimiendo -> Buffered -> archivo
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-decorator-mini
+
+Un servicio de envío de correos ya funciona, pero ahora hay que poder agregar validación, logging y reintentos de manera combinable. Proponé una solución con **Decorator** y explicá por qué herencia sola no escala bien.
+```
+
 ## Resumen
 
 El patrón **Decorator** es esencial para agregar comportamiento dinámicamente sin crear explosión de subclases. Su flexibilidad permite combinar múltiples características en tiempo de ejecución. Aunque introduce complejidad, su adherencia al principio Open/Closed y Single Responsibility lo hacen invaluable en arquitectura extensible.

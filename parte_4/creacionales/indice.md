@@ -115,3 +115,11 @@ Todos los patrones creacionales:
 - **Extensibilidad**: Agregar nuevos tipos sin modificar código existente
 - **Encapsulación**: Ocultan detalles de creación
 - **Control**: Centralizan lógica de instanciación
+
+## Práctica integradora
+
+Después de resolver los mini ejercicios de cada patrón, conviene cerrar la familia con los [ejercicios integradores de creacionales](ejercicios_integradores.md).
+
+:::{tip}
+La consigna no es "nombrar un patrón", sino justificar por qué una estrategia de creación es mejor que otra en ese problema.
+:::

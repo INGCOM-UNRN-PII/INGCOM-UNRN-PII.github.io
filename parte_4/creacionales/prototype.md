@@ -155,6 +155,14 @@ public class Documento implements Cloneable {
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-prototype-mini
+
+Un laboratorio mantiene configuraciones base de máquinas virtuales para distintas materias y necesita generar variantes rápidas para cada comisión. Explicá cómo usarías **Prototype** y qué cuidado tendrías si la configuración contiene referencias compartidas a otros objetos.
+```
+
 ## Resumen
 
 El patrón Prototype es el patrón del "copiar y pegar". Su valor reside en la eficiencia y en la capacidad de crear variantes de objetos complejos sin depender de sus clases concretas ni de pesados procesos de inicialización. Es la base de los sistemas de prototipado donde los objetos evolucionan por copia y modificación.

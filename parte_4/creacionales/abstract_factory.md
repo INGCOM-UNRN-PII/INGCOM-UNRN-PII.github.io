@@ -237,6 +237,14 @@ public class Aplicacion {
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-abstract-factory-mini
+
+Una plataforma educativa debe correr en modo **escritorio** y **web**, y cada modo necesita botones, menús y cuadros de diálogo consistentes entre sí. Explicá por qué **Abstract Factory** encaja mejor que varias fábricas sueltas o que `new` directos dispersos.
+```
+
 ## Resumen
 
 El Abstract Factory es el "patrón de las familias". Su fuerza reside en garantizar la coherencia entre objetos relacionados y en desacoplar totalmente al cliente de las implementaciones concretas. Sin embargo, su rigidez ante la adición de nuevos tipos de productos requiere un diseño previo cuidadoso de las interfaces.

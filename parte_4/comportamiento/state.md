@@ -150,6 +150,14 @@ public class Semaforo {
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-state-mini
+
+Modelá el ciclo de vida de una inscripción con estados `Borrador`, `Enviada`, `Aprobada` y `Rechazada`. Explicá por qué **State** puede ser más claro que un gran bloque de condicionales.
+```
+
 ## Resumen
 
 El patrón State es la solución elegante a la complejidad de las máquinas de estado. Al transformar los estados en objetos, logramos un diseño donde el comportamiento es una propiedad dinámica y polimórfica, permitiendo que los objetos evolucionen de forma fluida y organizada a lo largo de su ciclo de vida.

@@ -304,6 +304,14 @@ public class ProxyServidor implements ServicioRemoto {
 }
 ```
 
+## Mini ejercicio
+
+```{exercise}
+:label: ex-parte4-proxy-mini
+
+Un repositorio de documentos carga archivos PDF muy pesados desde almacenamiento remoto. Diseñá una variante con **Proxy** y explicá en qué momento conviene crear el objeto real.
+```
+
 ## Resumen
 
 El patrón **Proxy** es fundamental para controlar acceso a objetos costosos o protegidos. Su versatilidad permite múltiples variantes (virtual, remoto, protector) adaptándose a diferentes necesidades. Aunque introduce indirección, sus beneficios en seguridad, performance y auditoría lo hacen indispensable en arquitecturas empresariales.
