@@ -9,8 +9,7 @@ subject: Patrones de Diseño Estructurales
 
 El patrón **Proxy** proporciona un sustituto (proxy) para otro objeto para controlar su acceso, permitiendo operaciones adicionales antes/después de acceder al objeto real.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Controlar acceso a un objeto proporcionando un sustituto.
 :::

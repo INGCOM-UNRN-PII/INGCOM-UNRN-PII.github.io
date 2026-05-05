@@ -9,8 +9,7 @@ subject: Patrones de Diseño de Comportamiento
 
 El patrón **Memento** captura y externaliza el estado interno de un objeto sin violar su encapsulación, permitiendo restaurarlo posteriormente.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Capturar estado de un objeto para poder restaurarlo sin revelar detalles internos.
 :::

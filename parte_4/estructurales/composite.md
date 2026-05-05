@@ -9,8 +9,7 @@ subject: Patrones de Diseño Estructurales
 
 El patrón **Composite** permite componer objetos en estructuras de árbol para representar jerarquías parte-todo, permitiendo que los clientes traten objetos individuales y composiciones de objetos de manera uniforme.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Componer objetos en estructuras de árbol y poder tratarlos como objetos individuales.
 :::

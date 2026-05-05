@@ -9,8 +9,7 @@ subject: Patrones de Diseño de Comportamiento
 
 El patrón **State** permite que un objeto altere su comportamiento cuando su estado interno cambia, aparentando cambiar su clase.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Permitir que un objeto cambie comportamiento según su estado.
 :::

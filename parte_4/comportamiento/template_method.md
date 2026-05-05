@@ -9,8 +9,7 @@ subject: Patrones de Diseño de Comportamiento
 
 El patrón **Template Method** define la estructura de un algoritmo en una clase base, dejando detalles específicos para las subclases. Define el esqueleto del algoritmo pero deja algunos pasos para que las subclases los implementen.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Definir estructura de algoritmo, permitiendo que subclases implementen pasos específicos.
 :::

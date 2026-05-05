@@ -9,8 +9,7 @@ subject: Patrones de Diseño Creacionales
 
 El patrón **Prototype** permite crear nuevos objetos clonando un objeto existente (prototipo) en lugar de crear desde cero.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Crear nuevas instancias copiando un objeto existente, útil cuando la construcción es costosa.
 :::

@@ -9,8 +9,7 @@ subject: Patrones de Diseño de Comportamiento
 
 El patrón **Visitor** representa una operación a ser realizada en los elementos de una estructura de objetos, permitiendo definir nuevas operaciones sin cambiar las clases de los elementos sobre los que opera.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Permitir definir nuevas operaciones sobre elementos de estructura sin modificarlos.
 :::

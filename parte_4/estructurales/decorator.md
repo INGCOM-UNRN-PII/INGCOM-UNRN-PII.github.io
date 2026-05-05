@@ -9,8 +9,7 @@ subject: Patrones de Diseño Estructurales
 
 El patrón **Decorator** permite agregar responsabilidades a un objeto dinámicamente, proporcionando una alternativa flexible a la herencia para extender funcionalidad.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Agregar responsabilidades a objetos de forma dinámica, en lugar de crear subclases.
 :::

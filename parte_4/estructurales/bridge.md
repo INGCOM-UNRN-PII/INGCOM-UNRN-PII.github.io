@@ -9,8 +9,7 @@ subject: Patrones de Diseño Estructurales
 
 El patrón **Bridge** desacopla una abstracción de su implementación para que puedan variar independientemente.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Permitir que abstracción e implementación varíen de manera independiente, evitando explosión de subclases.
 :::

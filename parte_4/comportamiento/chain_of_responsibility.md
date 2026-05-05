@@ -9,8 +9,7 @@ subject: Patrones de Diseño de Comportamiento
 
 El patrón **Chain of Responsibility** evita acoplar el remitente de una solicitud con su receptor permitiendo que múltiples objetos tengan la oportunidad de procesar la solicitud. Encadena los receptores y pasa la solicitud por la cadena hasta que un objeto la procesa.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Permitir que múltiples objetos procesen una solicitud, pasándola por una cadena.
 :::

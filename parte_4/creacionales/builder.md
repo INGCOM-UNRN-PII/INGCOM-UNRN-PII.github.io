@@ -9,8 +9,7 @@ subject: Patrones de Diseño Creacionales
 
 El patrón **Builder** separa la construcción de un objeto complejo de su representación, permitiendo construir el objeto paso a paso.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Construir objetos complejos de manera legible y flexible, sin requerir múltiples constructores.
 :::

@@ -9,8 +9,7 @@ subject: Patrones de Diseño de Comportamiento
 
 El patrón **Command** encapsula una solicitud como un objeto, permitiendo parametrizar clientes con diferentes solicitudes, encolar solicitudes y soportar operaciones deshacibles.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Encapsular solicitud como objeto para permitir deshacer, rehacer, encolar.
 :::

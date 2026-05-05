@@ -9,8 +9,7 @@ subject: Patrones de Diseño de Comportamiento
 
 El patrón **Observer** define una relación de uno-a-muchos entre objetos de tal forma que cuando uno cambia su estado, todos los demás son notificados automáticamente.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Notificar automáticamente a múltiples objetos sobre cambios.
 :::

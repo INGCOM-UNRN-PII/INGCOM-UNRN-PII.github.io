@@ -9,8 +9,7 @@ subject: Patrones de Diseño de Comportamiento
 
 El patrón **Mediator** define un objeto que encapsula cómo una serie de objetos interactúan, promoviendo débil acoplamiento al evitar que los objetos se refieran explícitamente entre sí.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Centralizar comunicación entre múltiples objetos para reducir acoplamiento.
 :::

@@ -9,8 +9,7 @@ subject: Patrones de Diseño Creacionales
 
 El patrón **Abstract Factory** proporciona una interfaz para crear **familias de objetos relacionados** sin especificar sus clases concretas.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Crear grupos de objetos relacionados manteniendo coherencia entre ellos.
 :::

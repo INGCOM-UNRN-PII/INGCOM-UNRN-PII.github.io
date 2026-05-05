@@ -9,8 +9,7 @@ subject: Patrones de Diseño Estructurales
 
 El patrón **Facade** proporciona una interfaz unificada y simplificada a un conjunto de interfaces de un subsistema, facilitando su uso.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Proporcionar interfaz simplificada a subsistema complejo.
 :::

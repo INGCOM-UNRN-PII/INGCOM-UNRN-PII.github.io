@@ -9,8 +9,7 @@ subject: Patrones de Diseño de Comportamiento
 
 El patrón **Iterator** proporciona una forma de acceder secuencialmente a los elementos de una colección sin exponer su estructura subyacente.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Recorrer elementos de colección sin exponer su estructura interna.
 :::

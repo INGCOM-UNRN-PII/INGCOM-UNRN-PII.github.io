@@ -9,8 +9,7 @@ subject: Patrones de Diseño Estructurales
 
 El patrón **Adapter** (también conocido como **Wrapper**) permite que clases con interfaces incompatibles trabajen juntas, convirtiendo la interfaz de una clase en otra que el cliente espera.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Permitir que objetos con interfaces incompatibles colaboren, adaptando una interfaz existente a otra que el cliente requiere.
 :::

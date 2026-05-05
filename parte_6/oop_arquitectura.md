@@ -11,8 +11,7 @@ Hasta ahora aprendimos a diseñar clases individuales, establecer relaciones ent
 
 La **arquitectura de software** se ocupa de las decisiones de diseño a gran escala: cómo dividimos el sistema en partes, cómo se comunican esas partes, y qué restricciones imponemos para mantener la mantenibilidad a largo plazo.
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 
@@ -32,8 +31,7 @@ Al finalizar este capítulo, serás capaz de:
 (definicion-arquitectura)=
 ### Definición
 
-:::{admonition} Definición
-:class: important
+:::{important} Definición
 
 **Arquitectura de software** es el conjunto de estructuras necesarias para razonar sobre un sistema, que comprende elementos de software, las relaciones entre ellos, y las propiedades de ambos.
 
@@ -1109,8 +1107,7 @@ public class ServicioVentas {
 (resumen-arquitectura)=
 ## Resumen
 
-:::{admonition} Conceptos Clave
-:class: tip
+:::{tip} Conceptos Clave
 
 1. **Arquitectura de software** organiza el sistema a gran escala
 2. **Capas** separan responsabilidades (presentación, lógica, datos)

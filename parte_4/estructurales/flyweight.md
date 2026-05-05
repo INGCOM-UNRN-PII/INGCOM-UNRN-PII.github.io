@@ -9,8 +9,7 @@ subject: Patrones de Diseño Estructurales
 
 El patrón **Flyweight** usa compartición para soportar grandes cantidades de objetos granulares eficientemente, separando estado intrínseco (compartido) del extrínseco (particular).
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Reducir uso de memoria compartiendo datos entre múltiples objetos.
 :::

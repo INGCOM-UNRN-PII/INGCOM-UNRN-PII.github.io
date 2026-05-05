@@ -11,8 +11,7 @@ Los programas modernos rara vez se ejecutan en un único hilo. Desde interfaces 
 
 Este capítulo explora cómo diseñar objetos que funcionen correctamente en entornos concurrentes, aplicando los principios de OOP que ya conocemos.
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 
@@ -248,8 +247,7 @@ public final class Dinero {
 }
 ```
 
-:::{admonition} Reglas para Inmutabilidad
-:class: important
+:::{important} Reglas para Inmutabilidad
 
 1. Declarar la clase como `final` (no se puede extender)
 2. Todos los campos `private final`
@@ -1040,8 +1038,7 @@ public class RegistroUsuarios {
 (resumen-concurrencia)=
 ## Resumen
 
-:::{admonition} Conceptos Clave
-:class: tip
+:::{tip} Conceptos Clave
 
 1. **Concurrencia** permite ejecutar múltiples tareas simultáneamente
 2. **Race conditions** ocurren cuando hilos acceden datos compartidos sin coordinación

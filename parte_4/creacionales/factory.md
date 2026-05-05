@@ -9,8 +9,7 @@ subject: Patrones de Diseño Creacionales
 
 El patrón **Factory Method** define una interfaz para crear objetos, permitiendo que las subclases decidan qué clase instanciar. Desacopla la creación de objetos del código cliente.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Crear objetos sin que el cliente necesite conocer las clases concretas exactas.
 :::

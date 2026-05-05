@@ -9,8 +9,7 @@ subject: Patrones de Diseño de Comportamiento
 
 El patrón **Strategy** define una familia de algoritmos, encapsula cada uno, y los hace intercambiables, permitiendo que el algoritmo varíe independientemente de los clientes que lo usan.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Encapsular algoritmos intercambiables en objetos.
 :::

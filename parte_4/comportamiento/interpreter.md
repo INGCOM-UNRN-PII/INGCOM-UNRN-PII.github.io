@@ -9,8 +9,7 @@ subject: Patrones de Diseño de Comportamiento
 
 El patrón **Interpreter** define una representación de una gramática para un lenguaje simple y un interpretador para procesarlo. Útil para lenguajes o expresiones específicas del dominio.
 
-:::{admonition} Propósito
-:class: note
+:::{note} Propósito
 
 Definir gramática personalizada e interpretador para procesarla.
 :::
