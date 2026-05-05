@@ -21,6 +21,23 @@ Al finalizar este capítulo, serás capaz de:
 4. Aplicar patrones estructurales: Adapter, Decorator, Composite
 5. Aplicar patrones de comportamiento: Strategy, Observer, Template Method
 6. Decidir cuándo usar (y cuándo no usar) cada patrón
+::: 
+
+---
+
+(navegacion-familias-patrones)=
+## Navegación por Familias
+
+Esta portada funciona como mapa general. Para entrar a cada familia y navegar sus patrones individuales:
+
+| Familia | Enlace | Qué vas a encontrar |
+| :--- | :--- | :--- |
+| **Creacionales** | [Ir al índice creacional](creacionales/indice.md) | Singleton, Factory, Abstract Factory, Builder y Prototype |
+| **Estructurales** | [Ir al índice estructural](estructurales/indice.md) | Adapter, Bridge, Composite, Decorator, Facade, Flyweight y Proxy |
+| **Comportamiento** | [Ir al índice de comportamiento](comportamiento/indice.md) | Strategy, Observer, Command, State, Template Method y otros |
+
+:::{note}
+Si se necesita una vista panorámica, conviene leer esta portada. Si se necesita estudiar una familia completa, conviene entrar directamente a su índice específico.
 :::
 
 ---
@@ -90,7 +107,7 @@ No todo necesita un patrón. Usar patrones donde no hacen falta agrega complejid
 
 Los patrones creacionales abstraen el proceso de instanciación de objetos, haciendo el sistema independiente de cómo se crean, componen y representan los objetos.
 
-Para un análisis profundo de patrones creacionales, incluidos **Singleton, Factory Method, Abstract Factory, Builder y Prototype**, consultá la sección dedicada: [03_patrones_creacionales](.\/03_patrones_creacionales.md)
+Para un análisis profundo de patrones creacionales, incluidos **Singleton, Factory Method, Abstract Factory, Builder y Prototype**, consultá la sección dedicada: [índice de patrones creacionales](creacionales/indice.md).
 
 ### Resumen Rápido
 
@@ -109,7 +126,7 @@ Para un análisis profundo de patrones creacionales, incluidos **Singleton, Fact
 
 Los patrones estructurales se ocupan de cómo se componen las clases y objetos para formar estructuras más grandes, facilitando la comunicación entre entidades.
 
-Para un análisis profundo de patrones estructurales, incluidos **Adapter, Bridge, Composite, Decorator, Facade, Flyweight y Proxy**, consultá la sección dedicada: [02_patrones_estructurales](.\/02_patrones_estructurales.md)
+Para un análisis profundo de patrones estructurales, incluidos **Adapter, Bridge, Composite, Decorator, Facade, Flyweight y Proxy**, consultá la sección dedicada: [índice de patrones estructurales](estructurales/indice.md).
 
 ### Resumen Rápido
 
@@ -130,7 +147,7 @@ Para un análisis profundo de patrones estructurales, incluidos **Adapter, Bridg
 
 Los patrones de comportamiento se ocupan de algoritmos y la asignación de responsabilidades entre objetos.
 
-Para un análisis profundo de patrones de comportamiento, incluidos **Strategy, Observer, Template Method, State, Command** y otros, consultá la sección dedicada: [04_patrones_comportamiento](.\/04_patrones_comportamiento.md)
+Para un análisis profundo de patrones de comportamiento, incluidos **Strategy, Observer, Template Method, State, Command** y otros, consultá la sección dedicada: [índice de patrones de comportamiento](comportamiento/indice.md).
 
 ### Resumen Rápido
 
@@ -244,4 +261,3 @@ proc.procesar(archivo);
 2. **Preferí composición sobre herencia**: Más flexible
 3. **Programá hacia interfaces**: Más desacoplado
 4. **Evitá la complejidad innecesaria**: YAGNI (You Aren't Gonna Need It)
-
