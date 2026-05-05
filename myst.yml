@@ -56,6 +56,7 @@ project:
     - file: parte_2/08_genericos.md
   - title: 'Parte 3: OOP Avanzado'
     children:
+    - file: parte_3/indice.md
     - file: parte_3/08_oop_refactoring.md
     - file: parte_3/09_oop_solid.md
     - file: parte_3/11_oop_testing.md
