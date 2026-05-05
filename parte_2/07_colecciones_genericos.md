@@ -725,10 +725,6 @@ Comparator<Persona> porNombre = new Comparator<Persona>() {
     }
 };
 
-// Con lambda (más conciso)
-Comparator<Persona> porNombreLambda = 
-    (p1, p2) -> p1.getNombre().compareTo(p2.getNombre());
-
 // Con method reference (aún más conciso)
 Comparator<Persona> porNombreRef = 
     Comparator.comparing(Persona::getNombre);
@@ -738,6 +734,9 @@ Collections.sort(personas, porNombre);  // Ordena por nombre
 ```
 
 ### Comparadores Compuestos
+
+Utilizando el `::` que es una referncia al método, podemos utilizarlo como argumento.
+
 
 ```java
 // Ordenar por edad, y si empatan, por nombre
