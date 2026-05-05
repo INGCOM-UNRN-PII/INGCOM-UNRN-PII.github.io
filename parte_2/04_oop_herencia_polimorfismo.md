@@ -803,7 +803,7 @@ Cualquier clase que implemente `Ordenable` puede ser ordenada, sin importar qué
 
 #### 3. Polimorfismo Paramétrico (Genéricos)
 
-Escribir código que funciona con cualquier tipo (profundizado en {ref}`genericos-java`).
+Escribir código que funciona con cualquier tipo (profundizado en [la sección de genéricos en Parte 2](../parte_2/08_genericos.md)).
 
 ```
 // Una lista que funciona con cualquier tipo T
@@ -1218,11 +1218,11 @@ Jerarquía completa de un sistema de medios de pago.
 
 ### Principios SOLID
 
-- **S**ingle Responsibility: Una razón para cambiar (ver {ref}`s-principio-de-responsabilidad-unica`)
-- **O**pen/Closed: Extensible, no modificable (ver {ref}`o-principio-abierto-cerrado`)
-- **L**iskov Substitution: Subclases sustituibles (ver {ref}`l-principio-de-sustitucion-de-liskov`)
-- **I**nterface Segregation: Interfaces pequeñas (ver {ref}`i-principio-de-segregacion-de-interfaces`)
-- **D**ependency Inversion: Depender de abstracciones (ver {ref}`d-principio-de-inversion-de-dependencias`)
+- **S**ingle Responsibility: Una razón para cambiar (ver [Principio de Responsabilidad Única (S)](../parte_3/09_oop_solid.md))
+- **O**pen/Closed: Extensible, no modificable (ver [Principio Abierto/Cerrado (O)](../parte_3/09_oop_solid.md))
+- **L**iskov Substitution: Subclases sustituibles (ver [Principio de Sustitución de Liskov (L)](../parte_3/09_oop_solid.md))
+- **I**nterface Segregation: Interfaces pequeñas (ver [Principio de Segregación de Interfaces (I)](../parte_3/09_oop_solid.md))
+- **D**ependency Inversion: Depender de abstracciones (ver [Principio de Inversión de Dependencias (D)](../parte_3/09_oop_solid.md))
 
 ---
 

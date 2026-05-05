@@ -1339,8 +1339,8 @@ Este capítulo ha presentado los **fundamentos conceptuales** del paradigma orie
 
 6. **Principios de diseño**:
    - Los objetos colaboran, ninguno hace todo (ver {ref}`tipos-de-relaciones`).
-   - Responsabilidad única: una razón para cambiar (ver {ref}`s-principio-de-responsabilidad-unica`).
-   - Alta cohesión, bajo acoplamiento (ver {ref}`d-principio-de-inversion-de-dependencias`).
+   - Responsabilidad única: una razón para cambiar (ver [Principio de Responsabilidad Única (S)](../parte_3/09_oop_solid.md)).
+   - Alta cohesión, bajo acoplamiento (ver [Principio de Inversión de Dependencias (D)](../parte_3/09_oop_solid.md)).
 
 :::{important}
 El diseño orientado a objetos es un **proceso iterativo** y **contextual**. No existe un único diseño "correcto"; el mejor diseño depende del problema específico, los requerimientos, y las restricciones del proyecto. Las heurísticas y principios presentados son guías, no reglas absolutas.

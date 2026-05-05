@@ -454,7 +454,7 @@ public interface Repositorio<T> {
 
 ### El Principio de Sustitución y Excepciones
 
-El **Principio de Sustitución de Liskov** (ver {ref}`l-principio-de-sustitucion-de-liskov`) tiene implicaciones para las excepciones:
+El **Principio de Sustitución de Liskov** (ver [Principio de Sustitución de Liskov (L)](../parte_3/09_oop_solid.md)) tiene implicaciones para las excepciones:
 
 :::{important} Regla de Covarianza en Excepciones
 Una subclase que sobrescribe un método **no puede declarar excepciones checked más amplias** que el método original. Puede:

@@ -1098,7 +1098,7 @@ El **Principio de Sustitución de Liskov** (LSP) establece:
 
 > "Si S es un subtipo de T, entonces los objetos de tipo T pueden ser reemplazados por objetos de tipo S sin alterar las propiedades deseables del programa."
 
-Este principio es fundamental para el diseño de jerarquías correctas. Para un análisis detallado, consultá {ref}`l-principio-de-sustitucion-de-liskov`.
+Este principio es fundamental para el diseño de jerarquías correctas. Para un análisis detallado, consultá [Principio de Sustitución de Liskov (L)](../parte_3/09_oop_solid.md).
 
 **Ejemplo que viola LSP:**
 

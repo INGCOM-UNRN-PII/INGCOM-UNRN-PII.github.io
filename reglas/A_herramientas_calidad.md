@@ -10,7 +10,7 @@ description: Fundamentos técnicos de las herramientas de análisis estático, t
 En el desarrollo de software profesional, escribir código que funcione no es suficiente. El código debe ser **mantenible**, **legible**, **libre de errores comunes** y estar **bien testeado**. Para lograr esto, utilizamos herramientas automatizadas que verifican la calidad del código en cada paso del desarrollo.
 
 :::{note}
-Este apunte se enfoca en los **conceptos técnicos y fundamentos** de cada herramienta. Para instrucciones prácticas sobre cómo ejecutar comandos de Gradle, consultá la {ref}`guía práctica de Gradle <1_guia_gradle>`.
+Este apunte se enfoca en los **conceptos técnicos y fundamentos** de cada herramienta. Para instrucciones prácticas sobre cómo ejecutar comandos de Gradle, consultá [la guía práctica de Gradle](../guias/guia_gradle.md).
 :::
 
 Este apunte profundiza en:
@@ -796,7 +796,7 @@ ArchUnit permite automatizar la verificación de las reglas de estilo de la cát
 
 El proyecto incluye una tarea que ejecuta **todas** las herramientas en secuencia y genera un reporte consolidado.
 
-Para instrucciones de uso, ver la {ref}`guía de Gradle <1_guia_gradle>`.
+Para instrucciones de uso, ver [la guía de Gradle](../guias/guia_gradle.md).
 
 ### Reporte Dredd
 

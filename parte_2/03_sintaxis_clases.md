@@ -526,7 +526,7 @@ Esto ilustra lo que describimos en {ref}`concepto-objeto`: aunque `juan` y `mari
 (encapsulamiento-implementacion)=
 ### Encapsulamiento: De Concepto a Implementación
 
-En {ref}`el-encapsulamiento` del capítulo anterior definimos el encapsulamiento como el principio de **ocultar los detalles internos** de un objeto exponiendo solo una interfaz controlada. Ahora veremos cómo implementar este principio en Java.
+En la sección de encapsulamiento en el capítulo anterior del capítulo anterior definimos el encapsulamiento como el principio de **ocultar los detalles internos** de un objeto exponiendo solo una interfaz controlada. Ahora veremos cómo implementar este principio en Java.
 
 El encapsulamiento tiene dos aspectos complementarios:
 
@@ -537,7 +537,7 @@ El encapsulamiento tiene dos aspectos complementarios:
 (objetivos-encapsulamiento)=
 #### ¿Por Qué Encapsular?
 
-Recordemos los beneficios del encapsulamiento descritos en {ref}`beneficios-del-encapsulamiento`:
+Recordemos los beneficios del encapsulamiento descritos en los beneficios del encapsulamiento descritos en el capítulo anterior:
 
 1. **Protección del estado:** Impedir que código externo corrompa el estado interno del objeto asignando valores inválidos o inconsistentes.
 
@@ -2396,7 +2396,7 @@ Este capítulo cubrió la transición desde el diseño conceptual (las "burbujas
 (resumen-encapsulamiento-impl)=
 ### Encapsulamiento en Práctica
 
-- Implementa el principio descrito en {ref}`el-encapsulamiento`
+- Implementa el principio descrito en la sección de encapsulamiento en el capítulo anterior
 - **Atributos `private`:** Protegen el estado interno
 - **Métodos `public`:** Exponen la interfaz controlada
 - **Comportamiento con nombre:** Preferir métodos con semántica de dominio sobre getters/setters genéricos
@@ -2420,7 +2420,7 @@ Este capítulo cubrió la transición desde el diseño conceptual (las "burbujas
 - Se diferencian por la **lista de parámetros** (cantidad o tipos)
 - Común en **constructores** para ofrecer diferentes formas de crear objetos
 - Proporciona **flexibilidad** sin cambiar la interfaz conceptual
-- No confundir con **sobreescritura** (ver {ref}`sobreescritura-override`)
+- No confundir con **sobreescritura** (ver la sección de sobreescritura)
 
 (resumen-relaciones)=
 ### Relaciones entre Clases
@@ -2450,7 +2450,7 @@ Este capítulo materializa los conceptos abstractos del capítulo {ref}`fundamen
 | {ref}`concepto-atributo` | `private tipo nombre;` |
 | {ref}`concepto-metodo` | `public tipoRetorno nombre(params) { }` |
 | {ref}`construccion-de-objetos` | Constructor |
-| {ref}`el-encapsulamiento` | Modificadores de acceso |
+| la sección de encapsulamiento en el capítulo anterior | Modificadores de acceso |
 | {ref}`concepto-mensaje` | Invocación de métodos |
 | {ref}`relaciones-entre-clases` | Composición y agregación |
 

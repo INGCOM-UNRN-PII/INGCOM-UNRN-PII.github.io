@@ -775,9 +775,9 @@ LSP está íntimamente relacionado con el **Diseño por Contratos** (ver {ref}`o
 
 | Concepto | LSP | DbC |
 |----------|-----|-----|
-| Entrada | Precondiciones no fortalecidas | Precondiciones del contrato (ver {ref}`precondiciones-lo-que-el-cliente-debe-garantizar`) |
-| Salida | Postcondiciones no debilitadas | Postcondiciones del contrato (ver {ref}`postcondiciones-lo-que-el-metodo-garantiza`) |
-| Estado | Invariantes preservados | Invariantes de clase (ver {ref}`invariantes-de-clase-lo-que-siempre-debe-ser-verdad`) |
+| Entrada | Precondiciones no fortalecidas | Precondiciones del contrato (lo que el cliente debe garantizar) |
+| Salida | Postcondiciones no debilitadas | Postcondiciones del contrato (lo que el método garantiza) |
+| Estado | Invariantes preservados | Invariantes de clase (lo que siempre debe ser verdad) |
 
 ---
 

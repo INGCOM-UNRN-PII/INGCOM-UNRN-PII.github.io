@@ -229,7 +229,7 @@ int precioEntero = precio;  // ❌ Error: possible lossy conversion from double 
 ```
 
 :::{note} Más detalles sobre tipos
-Los tipos primitivos, sus rangos, las reglas de conversión (widening y narrowing), y todos los detalles técnicos sobre el sistema de tipos se estudian en profundidad en el capítulo {ref}`Tipos de Datos en Java <parte_1/03_tipos_de_datos.md>`.
+Los tipos primitivos, sus rangos, las reglas de conversión (widening y narrowing), y todos los detalles técnicos sobre el sistema de tipos se estudian en profundidad en el capítulo {ref}`tipos-de-datos-en-java`.
 :::
 
 (comparacion-con-tipado-dinamico-python)=
@@ -977,7 +977,7 @@ print(int("5") + 3)
 
 ---
 
-**Anterior:** {ref}`Orígenes e Historia de Java <parte_1/01_origenes.md>`
+**Anterior:** {ref}`origenes-e-historia-de-java`
 
 **Siguiente:** Continuá explorando los fundamentos de Java con los tipos de
 datos primitivos y operadores.
