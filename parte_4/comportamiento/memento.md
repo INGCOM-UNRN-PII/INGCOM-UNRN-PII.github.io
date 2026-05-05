@@ -59,33 +59,61 @@ Sin violar la encapsulación, capturar y externalizar el estado interno de un ob
 
 ## Estructura
 
-### Diagrama de Clases
+### Diagramas
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+**Diagrama de Clases**
 
-class Originador {
-  - estado
-  + crearMemento(): Memento
-  + restaurar(m: Memento)
-}
+```mermaid
+classDiagram
+    class Originador {
+        -estado
+        +crearMemento() Memento
+        +restaurar(m: Memento)
+    }
+    
+    class Memento {
+        -estado
+        +Memento(estado)
+        +getEstado()
+    }
+    
+    class Cuidador {
+        -mementos: List~Memento~
+        +guardar()
+        +deshacer()
+    }
+    
+    Cuidador o--> Memento : almacena
+    Originador ..> Memento : crea/usa
+    Cuidador --> Originador : solicita mementos
+```
 
-class Memento {
-  - estado
-  - Memento(estado)
-  - getEstado()
-}
+**Diagrama de Secuencia**
 
-class Cuidador {
-  - mementos: List<Memento>
-  + guardar()
-  + deshacer()
-}
-
-Cuidador o-- Memento
-Originador ..> Memento : crea
-@enduml
+```mermaid
+sequenceDiagram
+    participant C as Cuidador
+    participant O as Originador
+    participant M as Memento
+    
+    Note over C, O: Proceso de guardado
+    C->>O: crearMemento()
+    activate O
+    O-->>M: new Memento(estado)
+    O-->>C: memento
+    deactivate O
+    Note over C: Almacena el memento
+    
+    Note over C, O: Proceso de restauración (Deshacer)
+    C->>O: restaurar(memento)
+    activate O
+    O->>M: getEstado()
+    activate M
+    M-->>O: estado
+    deactivate M
+    Note over O: Restaura su estado interno
+    O-->>C: OK
+    deactivate O
 ```
 
 ## Ejemplos
