@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="450" height="220" viewBox="0 0 450 220" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @font-face { font-family: 'Lato'; font-weight: 700; src: local('Arial'); }
+    .label-bold { font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 700; fill: #192437; }
+    .label { font-family: 'Lato', sans-serif; font-size: 12px; fill: #404040; }
+    .node { fill: #ffffff; stroke: #404040; stroke-width: 2; }
+    .line { stroke: #404040; stroke-width: 1.5; fill: none; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#404040"/>
+    </marker>
+  </defs>
+  
+  <rect x="20" y="40" width="120" height="40" class="node"/>
+  <text x="80" y="65" class="label-bold" text-anchor="middle">Estudiante</text>
+  
+  <text x="145" y="55" class="label">*</text>
+  <line x1="140" y1="60" x2="310" y2="60" class="line"/>
+  <text x="270" y="55" class="label">5..40</text>
+  
+  <rect x="310" y="40" width="120" height="40" class="node"/>
+  <text x="370" y="65" class="label-bold" text-anchor="middle">Curso</text>
+  
+  <!-- Association Class -->
+  <line x1="225" y1="60" x2="225" y2="120" class="line" stroke-dasharray="5,5"/>
+  <path d="M 225,110 L 225,120" class="line" marker-end="url(#arrowhead)"/>
+  
+  <rect x="165" y="125" width="120" height="65" class="node"/>
+  <text x="225" y="145" class="label-bold" text-anchor="middle">Inscripcion</text>
+  <line x1="165" y1="155" x2="285" y2="155" class="line"/>
+  <text x="175" y="170" class="label">- fecha</text>
+  <text x="175" y="182" class="label">- estado</text>
+</svg>

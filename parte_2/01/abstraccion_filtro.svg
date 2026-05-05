@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   width="600"
+   height="400"
+   viewBox="0 0 600 400"
+   version="1.1"
+   id="svg12"
+   sodipodi:docname="abstraccion_filtro.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview12"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.5783333"
+     inkscape:cx="267.68743"
+     inkscape:cy="214.78353"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg12" />
+  <style
+     id="style1">.title { font-family: 'Fabrikat', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: var(--unrn-dark-blue); text-anchor: middle; }
+.label { font-family: 'Lato', Arial, sans-serif; font-size: 12px; fill: var(--gray-700); }
+.label-bold { font-family: 'Lato', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: var(--unrn-dark-blue); }
+.label-small { font-family: 'Lato', Arial, sans-serif; font-size: 10px; fill: var(--gray-600); }
+.code { font-family: 'Share Tech Mono', monospace; font-size: 11px; fill: var(--gray-700); }
+.code-comment { font-family: 'Share Tech Mono', monospace; font-size: 10px; fill: var(--gray-500); font-style: italic; }
+.node { fill: #ffffff; stroke: var(--gray-700); stroke-width: 2; }
+.node-data { fill: var(--blue-lightest); stroke: var(--gray-400); stroke-width: 1.5; }
+.node-highlight { fill: #fff3e0; stroke: var(--unrn-red); stroke-width: 2.5; }
+.info-box { fill: var(--blue-lightest); stroke: var(--blue-light); stroke-width: 1; rx: 3; }
+.code-block { fill: var(--gray-100); stroke: var(--gray-300); stroke-width: 1; rx: 3; }
+.highlight-box { fill: var(--red-lightest); stroke: var(--unrn-red); stroke-width: 1; rx: 3; }
+.memory-cell { fill: #ffffff; stroke: var(--gray-600); stroke-width: 1.5; }
+.arrow { fill: none; stroke: var(--gray-700); stroke-width: 2; }
+.divider { stroke: var(--gray-300); stroke-width: 1; }
+.divider-bold { stroke: var(--gray-600); stroke-width: 2; }
+.valid { stroke: #2e7d32; stroke-width: 2.5; }
+.invalid { stroke: var(--unrn-red); stroke-width: 2.5; }
+.divider-dashed { stroke: var(--gray-300); stroke-width: 1; stroke-dasharray: 4; }
+</style>
+  <defs
+     id="defs1">
+    <marker
+       id="arrowhead"
+       markerWidth="10"
+       markerHeight="10"
+       refX="9"
+       refY="3"
+       orient="auto">
+      <polygon
+         points="0 0, 10 3, 0 6"
+         fill="var(--unrn-red)"
+         id="polygon1" />
+    </marker>
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter13"
+       x="-0.0022804381"
+       y="-0.019003651"
+       width="1.0045609"
+       height="1.0380073">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.47509128"
+         id="feGaussianBlur13" />
+    </filter>
+  </defs>
+  <text
+     x="299.88"
+     y="30"
+     class="title"
+     id="text1"
+     style="text-align:center;text-anchor:middle;-inkscape-font-specification:'Fabrikat, Arial, sans-serif, Bold';font-family:Fabrikat, Arial, sans-serif;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:24px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">El Proceso de Abstracción</text>
+  <text
+     x="299.892"
+     y="60"
+     class="label-bold"
+     id="text2"
+     style="text-align:center;text-anchor:middle;-inkscape-font-specification:'Lato, Arial, sans-serif, Bold';font-family:Lato, Arial, sans-serif;font-weight:bold;font-style:normal;font-stretch:normal;font-variant:normal;font-size:16px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Mundo Real</text>
+  <line
+     x1="100"
+     y1="80"
+     x2="500"
+     y2="80"
+     class="divider-bold"
+     id="line2"
+     style="stroke:#000000;stroke-opacity:1" />
+  <path
+     d="M 100,80 L 100,110"
+     class="arrow"
+     marker-end="url(#arrowhead)"
+     id="path2"
+     style="stroke:#000000;stroke-opacity:1" />
+  <path
+     d="M 300,80 L 300,110"
+     class="arrow"
+     marker-end="url(#arrowhead)"
+     id="path3"
+     style="stroke:#000000;stroke-opacity:1" />
+  <path
+     d="M 500,80 L 500,110"
+     class="arrow"
+     marker-end="url(#arrowhead)"
+     id="path4"
+     style="stroke:#000000;stroke-opacity:1" />
+  <text
+     x="99.737511"
+     y="130"
+     class="label-small"
+     id="text4"
+     style="text-align:center;text-anchor:middle;-inkscape-font-specification:'Lato, Arial, sans-serif, Normal';font-family:Lato, Arial, sans-serif;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:16px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Detalles físicos</text>
+  <text
+     x="299.73752"
+     y="130"
+     class="label-small"
+     id="text5"
+     style="text-align:center;text-anchor:middle;-inkscape-font-specification:'Lato, Arial, sans-serif, Normal';font-family:Lato, Arial, sans-serif;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:16px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Detalles sociales</text>
+  <text
+     x="499.73752"
+     y="130"
+     class="label-small"
+     id="text6"
+     style="text-align:center;text-anchor:middle;-inkscape-font-specification:'Lato, Arial, sans-serif, Normal';font-family:Lato, Arial, sans-serif;font-weight:normal;font-style:normal;font-stretch:normal;font-variant:normal;font-size:16px;font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Detalles biológicos</text>
+  <rect
+     x="50"
+     y="160"
+     width="500"
+     height="60"
+     class="highlight-box"
+     id="rect6"
+     style="stroke:none;filter:url(#filter13);fill:#8d8d8d;fill-opacity:1" />
+  <text
+     x="299.55731"
+     y="196.01112"
+     class="label-bold"
+     fill="#ffffff"
+     id="text7"
+     style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:21.335px;font-family:Lato, Arial, sans-serif;-inkscape-font-specification:'Lato, Arial, sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.60013;stroke-opacity:1">FILTRO: ¿Es relevante para el objetivo?</text>
+  <rect
+     x="75"
+     y="240"
+     width="50"
+     height="50"
+     class="invalid"
+     id="rect7"
+     style="fill:#e71d00;fill-opacity:1;stroke:#8f1010;stroke-opacity:1" />
+  <path
+     d="M 88.605717,282.5 82.530839,276.42382 111.42508,247.5 117.5,253.60719 Z m 22.788533,0 -28.894247,-28.89281 6.044045,-6.10719 28.925072,28.92382 z"
+     id="text8"
+     style="font-weight:700;font-size:12px;font-family:Lato, Arial, sans-serif;text-align:center;text-anchor:middle;fill:#ffffff;stroke-width:5.27681"
+     class="label-bold"
+     aria-label="✗" />
+  <rect
+     x="275.07355"
+     y="240.07355"
+     width="47.35289"
+     height="47.352894"
+     class="valid"
+     id="rect8"
+     style="fill:#8ffa74;fill-opacity:1" />
+  <path
+     d="m 281.24999,264.6692 4.59596,-4.6431 8.06062,7.91918 17.72389,-17.6296 4.61953,4.61949 -22.34342,22.24914 z"
+     id="text9"
+     style="font-weight:700;font-size:12px;font-family:Lato, Arial, sans-serif;text-align:center;text-anchor:middle;fill:#087b00;stroke-width:4.02244;fill-opacity:1"
+     class="label-bold"
+     aria-label="✓" />
+  <rect
+     x="475"
+     y="240"
+     width="50"
+     height="50"
+     class="invalid"
+     id="rect9"
+     style="fill:#e71d00;fill-opacity:1;stroke:#8f1010;stroke-opacity:1" />
+  <path
+     d="M 488.60569,282.5 482.53083,276.42387 511.4251,247.5 517.5,253.6072 Z m 22.78857,0 -28.89426,-28.8928 6.04407,-6.1072 28.9251,28.92387 z"
+     id="text10"
+     style="font-weight:700;font-size:12px;font-family:Lato, Arial, sans-serif;text-align:center;text-anchor:middle;fill:#ffffff;stroke-width:635.835"
+     class="label-bold"
+     aria-label="✗" />
+  <path
+     d="m 300,291 v 35"
+     class="arrow"
+     marker-end="url(#arrowhead)"
+     id="path10"
+     style="stroke-width:1.9999999;stroke-dasharray:none;stroke:#000000;stroke-opacity:1" />
+  <rect
+     x="191.04532"
+     y="331.48114"
+     width="217.90936"
+     height="59.482746"
+     class="node"
+     id="rect10"
+     style="stroke:#000000;stroke-opacity:1" />
+  <g
+     id="g12"
+     transform="matrix(1.2411394,0,0,1.2411394,-72.364485,-85.870646)">
+    <text
+       x="299.71799"
+       y="355"
+       class="label-bold"
+       id="text11"
+       style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:16px;font-family:Lato, Arial, sans-serif;-inkscape-font-specification:'Lato, Arial, sans-serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">Modelo Abstracto</text>
+    <text
+       x="300"
+       y="375"
+       class="label-small"
+       id="text12"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Lato, Arial, sans-serif;-inkscape-font-specification:'Lato, Arial, sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center;text-anchor:middle">(la clase)</text>
+  </g>
+</svg>

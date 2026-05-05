@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="600" height="300" viewBox="0 0 600 300" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style type="text/css">
+      :root {
+        --unrn-red: #eb2141;
+        --unrn-dark-blue: #192437;
+        --blue-lightest: #e8ebf0;
+        --gray-100: #f5f5f5;
+        --gray-200: #e5e5e5;
+        --gray-300: #d4d4d4;
+        --gray-400: #a3a3a3;
+        --gray-500: #737373;
+        --gray-600: #525252;
+        --gray-700: #404040;
+      }
+      .title { font-family: 'Fabrikat', sans-serif; font-size: 16px; font-weight: 700; fill: var(--unrn-dark-blue); text-anchor: middle; }
+      .label { font-family: 'Lato', sans-serif; font-size: 12px; fill: var(--gray-700); }
+      .label-bold { font-family: 'Lato', sans-serif; font-size: 12px; font-weight: 700; fill: var(--unrn-dark-blue); }
+      .node { fill: #ffffff; stroke: var(--gray-700); stroke-width: 2; }
+      .node-data { fill: var(--blue-lightest); stroke: var(--gray-400); stroke-width: 1.5; }
+      .arrow { fill: none; stroke: var(--gray-700); stroke-width: 2; marker-end: url(#arrowhead); }
+      .arrow-primary { fill: none; stroke: var(--unrn-red); stroke-width: 2; marker-end: url(#arrowhead-primary); }
+      .code { font-family: 'Share Tech Mono', monospace; font-size: 11px; fill: var(--gray-700); }
+    </style>
+    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#404040"/>
+    </marker>
+    <marker id="arrowhead-primary" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+      <polygon points="0 0, 10 3, 0 6" fill="#eb2141"/>
+    </marker>
+  </defs>
+
+  <rect width="600" height="300" fill="#ffffff"/>
+  
+  <text x="150" y="40" class="title">Stack</text>
+  <text x="450" y="40" class="title">Heap</text>
+  
+  <!-- Stack Frame -->
+  <rect x="50" y="60" width="150" height="60" class="node"/>
+  <text x="60" y="85" class="label-bold">juan</text>
+  <text x="60" y="105" class="label" style="font-size: 10px;">(referencia)</text>
+  
+  <!-- Pointer from Stack to Heap -->
+  <path d="M 200 90 L 320 90" class="arrow"/>
+  
+  <!-- Heap Object -->
+  <rect x="330" y="60" width="220" height="180" class="node" style="stroke: var(--unrn-dark-blue); fill: var(--gray-100);"/>
+  <text x="340" y="80" class="label-bold">Objeto Persona</text>
+  
+  <!-- Internal Data -->
+  <rect x="345" y="95" width="190" height="80" class="node-data"/>
+  <text x="355" y="115" class="code">nombre: "Juan"</text>
+  <text x="355" y="135" class="code">edad: 25</text>
+  
+  <!-- this pointer -->
+  <text x="355" y="165" class="code-keyword" style="fill: var(--unrn-red); font-weight: bold;">this</text>
+  <path d="M 390 162 L 560 162 L 560 260 L 440 260 L 440 242" class="arrow-primary" fill="none"/>
+  <text x="440" y="275" class="label-small" style="text-anchor: middle; font-size: 10px; fill: var(--unrn-red);">apunta a sí mismo</text>
+
+</svg>
