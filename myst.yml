@@ -26,12 +26,13 @@ project:
     children:
     - file: catedra/programa.md
     - file: catedra/acuerdo_ia.md
-  - title: Parte 1
+  - title: 'Parte 1: Fundamentos'
     children:
     - file: parte_1/01_origenes.md
     - file: parte_1/02_lenguaje.md
     - file: parte_1/03_tipos_de_datos.md
     - file: parte_1/04_metodos.md
+    - file: parte_1/04b_varargs.md
     - file: parte_1/05_sintaxis_control.md
     - file: parte_1/06_entrada_salida.md
     - file: parte_1/07_gradle.md
@@ -42,7 +43,7 @@ project:
     - file: parte_1/12_archivos.md
     - file: parte_1/13_memoria.md
     - file: parte_1/indice.md
-  - title: Parte 2
+  - title: 'Parte 2: Orientación a Objetos'
     children:
     - file: parte_2/01_oop_fundamentos.md
     - file: parte_2/02_oop_relaciones.md
@@ -52,21 +53,16 @@ project:
     - file: parte_2/06_excepciones.md
     - file: parte_2/07_colecciones_genericos.md
     - file: parte_2/08_genericos.md
-    - file: parte_2/08_oop_refactoring.md
-    - file: parte_2/09_oop_solid.md
-    - file: parte_2/10_oop_patrones.md
-    - file: parte_2/11_oop_testing.md
-    - file: parte_2/12_oop_antipatrones.md
     - file: parte_2/13_oop_contratos.md
     - file: parte_2/indice.md
-  - title: Parte 3
+  - title: 'Parte 3: Diseño Avanzado'
     children:
-    - file: parte_3/indice.md
-    - file: parte_3/01_patrones_diseno.md
-    - file: parte_3/02_patrones_estructurales.md
-    - file: parte_3/03_patrones_creacionales.md
-    - file: parte_3/04_patrones_comportamiento.md
-  - title: Parte 4
+    - file: parte_3/08_oop_refactoring.md
+    - file: parte_3/09_oop_solid.md
+    - file: parte_3/10_oop_patrones.md
+    - file: parte_3/11_oop_testing.md
+    - file: parte_3/12_oop_antipatrones.md
+  - title: 'Parte 4: Patrones de Diseño'
     children:
     - file: parte_4/indice.md
     - file: parte_4/01_patrones_diseno.md
@@ -102,24 +98,49 @@ project:
       - file: parte_4/comportamiento/strategy.md
       - file: parte_4/comportamiento/template_method.md
       - file: parte_4/comportamiento/visitor.md
-    - file: parte_4/09_oop_arquitectura.md
-    - file: parte_4/11_oop_concurrencia.md
+  - title: 'Parte 5: Estructuras de Datos'
+    children:
+    - file: parte_5/indice.md
+    - title: Secuencias
+      children:
+      - file: parte_5/secuencias/pilas.md
+      - file: parte_5/secuencias/colas.md
+      - file: parte_5/secuencias/listas_enlazadas.md
+  - title: 'Parte 6: Plataformas y Frameworks'
+    children:
+    - file: parte_6/indice.md
+    - file: parte_6/oop_arquitectura.md
+    - file: parte_6/oop_concurrencia.md
+    - file: parte_6/swing.md
+    - file: parte_6/javafx.md
+    - file: parte_6/networking.md
+    - file: parte_6/android.md
+  - title: Proyectos
+    children:
+    - file: proyectos/TPI-proyectos.md
+    - file: proyectos/TPI-2025.md
+    - file: proyectos/TPI-2025-rubrica.md
+    - file: proyectos/TPI-clinica.md
+    - file: proyectos/TPI-logistica.md
+    - file: proyectos/TPI-vuelos.md
+    - file: proyectos/TPI-Agenda.md
   - title: Referencia
     children:
     - file: referencia/01_java_como_c.md
     - file: referencia/02_java_full.md
     - file: referencia/03_conceptos_poo.md
+    - file: referencia/glosario.md
   - file: guias/indice.md
+    title: Guías
     children:
-    - file: guias/instalacion_intellij.md
     - file: guias/instalacion_jdk.md
+    - file: guias/instalacion_intellij.md
     - file: guias/guia_plantUML.md
     - file: guias/bash.md
     - file: guias/git.md
-    - file: guias/git_avanzado.md
     - file: guias/markdown.md
-  - file: referencia/glosario.md
   - file: reglas/indice.md
+    title: Reglas y Convenciones
     children:
     - file: reglas/0_generales.md
     - file: reglas/1_documentacion.md
@@ -128,8 +149,32 @@ project:
     - file: reglas/4_testing.md
     - file: reglas/5_control.md
     - file: reglas/6_restricciones.md
-    - file: reglas/E_errores.md
+    - file: reglas/A_herramientas_calidad.md
+    - file: reglas/apuntes_2025.md
     - file: reglas/convenciones_codigo_java.md
+    - file: reglas/E_errores.md
+  - title: Manuales Técnicos
+    children:
+    - title: MyST Markdown
+      children:
+      - file: manual_myst/typography.md
+      - file: manual_myst/math.md
+      - file: manual_myst/tables.md
+      - file: manual_myst/code.md
+      - file: manual_myst/diagrams.md
+      - file: manual_myst/exercises.md
+      - file: manual_myst/admonitions.md
+      - file: manual_myst/citations.md
+    - title: Mermaid Diagrams
+      children:
+      - file: manual_mermaid/flowchart.md
+      - file: manual_mermaid/classDiagram.md
+      - file: manual_mermaid/sequenceDiagram.md
+      - file: manual_mermaid/stateDiagram.md
+      - file: manual_mermaid/packet.md
+      - file: manual_mermaid/zenuml.md
+      - file: manual_mermaid/configuration.md
+      - file: manual_mermaid/examples.md
 site:
   template: book-theme
   options:
