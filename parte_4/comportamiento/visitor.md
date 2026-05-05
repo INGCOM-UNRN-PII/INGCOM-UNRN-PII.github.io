@@ -59,40 +59,65 @@ Representar una operación que se va a realizar sobre los elementos de una estru
 
 ## Estructura
 
-### Diagrama de Clases
+### Diagramas
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+**Diagrama de Clases**
 
-interface Visitante {
-  + visitarElementoA(e: ElementoA)
-  + visitarElementoB(e: ElementoB)
-}
+```mermaid
+classDiagram
+    class Visitante {
+        <<interface>>
+        +visitarElementoA(e: ElementoA)
+        +visitarElementoB(e: ElementoB)
+    }
+    
+    class Elemento {
+        <<interface>>
+        +aceptar(v: Visitante)
+    }
+    
+    class ElementoA {
+        +aceptar(v: Visitante)
+        +operacionA()
+    }
+    
+    class ElementoB {
+        +aceptar(v: Visitante)
+        +operacionB()
+    }
+    
+    class VisitanteConcreto {
+        +visitarElementoA(e: ElementoA)
+        +visitarElementoB(e: ElementoB)
+    }
+    
+    Visitante <|.. VisitanteConcreto
+    Elemento <|.. ElementoA
+    Elemento <|.. ElementoB
+    ElementoA ..> Visitante : usa
+    ElementoB ..> Visitante : usa
+    Cliente --> Visitante : crea
+    Cliente --> Elemento : pasa el visitante
+```
 
-interface Elemento {
-  + aceptar(v: Visitante)
-}
+**Diagrama de Secuencia (Doble Despacho)**
 
-class ElementoA {
-  + aceptar(v: Visitante)
-  + operacionA()
-}
-
-class ElementoB {
-  + aceptar(v: Visitante)
-  + operacionB()
-}
-
-class VisitanteConcreto {
-  + visitarElementoA(e: ElementoA)
-  + visitarElementoB(e: ElementoB)
-}
-
-Visitante <|.. VisitanteConcreto
-Elemento <|.. ElementoA
-Elemento <|.. ElementoB
-@enduml
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant EA as ElementoA
+    participant V as VisitanteConcreto
+    
+    C->>EA: aceptar(visitante)
+    activate EA
+    Note over EA: El elemento conoce su propio<br/>tipo y llama al método correcto
+    EA->>V: visitarElementoA(this)
+    activate V
+    Note over V: El visitante realiza la<br/>operación sobre el elemento
+    V-->>EA: OK
+    deactivate V
+    EA-->>C: OK
+    deactivate EA
 ```
 
 ## Ejemplos
