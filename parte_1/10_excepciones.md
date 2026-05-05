@@ -538,7 +538,7 @@ throw new IllegalArgumentException("mensaje descriptivo");
 3. `IllegalArgumentException`: El tipo de excepción que estamos lanzando
 4. `"mensaje descriptivo"`: Un String que explica qué salió mal (muy importante para debugging)
 
-(comparacion-con-c)=
+(10-comparacion-con-c)=
 ### Comparación con C
 
 En C, si una función no podía cumplir su propósito, tenías que retornar un valor especial y confiar en que el llamador lo verificara:

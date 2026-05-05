@@ -1406,7 +1406,7 @@ Define las interfaces `Predicado<T>` y `Transformador<T, U>`.
 Prueba con `List<Integer>` y `List<String>`.
 ```
 
-```{solution} ej-repositorio-generico
+````{solution} ej-repositorio-generico
 :class: dropdown
 
 ```java
@@ -1486,7 +1486,7 @@ public class PruebaRepositorio {
     }
 }
 ```
-```
+````
 
 ```{exercise}
 :label: ej-tuple-generico
@@ -1499,7 +1499,7 @@ Crea una clase genérica `Tupla<T, U>` que almacene dos valores de tipos diferen
 5. Método `mapear(Transformador<T, V>)` que transforme el primer elemento
 ```
 
-```{solution} ej-tuple-generico
+````{solution} ej-tuple-generico
 :class: dropdown
 
 ```java
@@ -1555,7 +1555,7 @@ public class PruebaTupla {
     }
 }
 ```
-```
+````
 
 ```{exercise}
 :label: ej-colector-generico
@@ -1567,7 +1567,7 @@ Crea una clase `Colector<T>` que coleccione elementos y aplique una acción fina
 4. Implémenta ejemplos que sumen números, concatenen strings, y encuentren máximo
 ```
 
-```{solution} ej-colector-generico
+````{solution} ej-colector-generico
 :class: dropdown
 
 ```java
@@ -1633,11 +1633,11 @@ public class PruebaColector {
     }
 }
 ```
-```
+````
 
 ---
 
-(resumen)=
+(resumen-genericos)=
 ## Resumen Completo
 
 Los genéricos en Java son un tema profundo que permite escribir código flexible y seguro:

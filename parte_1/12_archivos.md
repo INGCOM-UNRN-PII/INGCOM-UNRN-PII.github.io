@@ -263,7 +263,7 @@ boolean sePuedeEjecutar = Files.isExecutable(archivo);
 long tamanioBytes = Files.size(archivo);
 ```
 
-(comparacion-con-c)=
+(12-comparacion-con-c)=
 ### Comparación con C
 
 | Operación | En C | En Java (NIO.2) |

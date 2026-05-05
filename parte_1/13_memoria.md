@@ -521,7 +521,7 @@ Stack (método)           ┌─────────────────
 Cuando el método termina, el nuevo arreglo queda sin referencias y será eliminado.
 ```
 
-(comparacion-con-c)=
+(13-comparacion-con-c)=
 ### Comparación con C
 
 En C, para modificar una variable del llamador, necesitás pasar un puntero:

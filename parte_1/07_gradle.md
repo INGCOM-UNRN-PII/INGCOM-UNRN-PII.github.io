@@ -1829,7 +1829,7 @@ Esto es el **mínimo requerido** para entregar. La calidad del diseño y la lóg
 - [Gradle Tutorial for Beginners](https://www.youtube.com/watch?v=gKPMKRnnbXU) (inglés)
 - [IntelliJ IDEA Gradle Tutorial](https://www.youtube.com/watch?v=6V6G3RyxEMk) (inglés)
 
-(resumen)=
+(resumen-gradle)=
 ## Resumen
 
 **Lo mínimo que necesitás saber**:

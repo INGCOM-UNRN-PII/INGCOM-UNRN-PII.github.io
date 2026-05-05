@@ -3174,7 +3174,7 @@ public static double aplicarDescuento(double precio, double porcentaje) {
 ✅ Test pasa
 ```
 
-(resumen)=
+(resumen-junit)=
 ## Resumen
 
 Este apunte cubrió la implementación práctica de testing con JUnit 5:

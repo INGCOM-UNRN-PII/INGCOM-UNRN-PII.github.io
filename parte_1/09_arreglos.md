@@ -1633,7 +1633,7 @@ public static int[] eliminarDuplicados(int[] ordenado) {
 ```
 ````
 
-(resumen)=
+(resumen-arreglos)=
 ## Resumen
 
 Los arreglos en Java son estructuras fundamentales que todo programador debe dominar. Los puntos clave a recordar:
