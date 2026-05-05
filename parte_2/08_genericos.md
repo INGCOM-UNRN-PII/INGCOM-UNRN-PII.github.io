@@ -679,7 +679,7 @@ Crea una clase genérica `Caja<T>` que:
 Prueba la clase con tipos diferentes (String, Integer, Double).
 ```
 
-```{solution} ej-caja-generica
+````{solution} ej-caja-generica
 :class: dropdown
 
 ```java
@@ -727,7 +727,7 @@ public class PruebaCaja {
     }
 }
 ```
-```
+````
 
 ```{exercise}
 :label: ej-par-generica
@@ -741,7 +741,7 @@ Crea una clase genérica `Par<K, V>` que:
 Nota: Para intercambiar necesitarás hacer que `Par` tenga un tipo adicional.
 ```
 
-```{solution} ej-par-generica
+````{solution} ej-par-generica
 :class: dropdown
 
 ```java
@@ -787,7 +787,7 @@ public class PruebaPar {
     }
 }
 ```
-```
+````
 
 ```{exercise}
 :label: ej-contenedor-comparable
