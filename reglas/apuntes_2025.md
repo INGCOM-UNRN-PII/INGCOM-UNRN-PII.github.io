@@ -306,8 +306,8 @@ No la de la clase que implementa.
 Es importante respetar el contrato de estos métodos, el cual declara que la implementación de uno de ellos, implica la implementación del otro.
 
 :::{seealso}
-- [`Object.hashCode()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#hashCode())
-- [`Object.equals(Object)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object))
+- [`Object.hashCode()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html))
+- [`Object.equals(Object)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html))
 :::
 
 (regla-0xE008)=
@@ -411,7 +411,7 @@ Quizás debas usar algo como:
 Para que pueda procesar archivos creados en cualquier plataforma.
 
 :::{seealso}
-[System.lineSeparator()](http://docs.oracle.com/javase/8/docs/api/java/lang/System.html#lineSeparator)
+[System.lineSeparator()](http://docs.oracle.com/javase/8/docs/api/java/lang/System.html)
 :::
 
 (apuntes-tp9)=

@@ -1456,9 +1456,6 @@ public class Saludador {
 ---
 
 (bloque3-relaciones-colaboracion)=
-
-
-(java-asociaciones)=
 ### Implementación de Asociaciones en Java
 
 Las asociaciones se implementan mediante **atributos** que contienen referencias a objetos de la otra clase.

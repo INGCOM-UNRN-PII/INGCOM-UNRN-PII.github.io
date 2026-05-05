@@ -91,7 +91,7 @@ No todo necesita un patrón. Usar patrones donde no hacen falta agrega complejid
 
 Los patrones creacionales abstraen el proceso de instanciación de objetos, haciendo el sistema independiente de cómo se crean, componen y representan los objetos.
 
-Para un análisis profundo de patrones creacionales, incluidos **Singleton, Factory Method, Abstract Factory, Builder y Prototype**, consultá la sección dedicada: {doc}`03_patrones_creacionales`
+Para un análisis profundo de patrones creacionales, incluidos **Singleton, Factory Method, Abstract Factory, Builder y Prototype**, consultá la sección dedicada: [03_patrones_creacionales](.\/03_patrones_creacionales.md)
 
 ### Resumen Rápido
 
@@ -110,7 +110,7 @@ Para un análisis profundo de patrones creacionales, incluidos **Singleton, Fact
 
 Los patrones estructurales se ocupan de cómo se componen las clases y objetos para formar estructuras más grandes, facilitando la comunicación entre entidades.
 
-Para un análisis profundo de patrones estructurales, incluidos **Adapter, Bridge, Composite, Decorator, Facade, Flyweight y Proxy**, consultá la sección dedicada: {doc}`02_patrones_estructurales`
+Para un análisis profundo de patrones estructurales, incluidos **Adapter, Bridge, Composite, Decorator, Facade, Flyweight y Proxy**, consultá la sección dedicada: [02_patrones_estructurales](.\/02_patrones_estructurales.md)
 
 ### Resumen Rápido
 
@@ -131,7 +131,7 @@ Para un análisis profundo de patrones estructurales, incluidos **Adapter, Bridg
 
 Los patrones de comportamiento se ocupan de algoritmos y la asignación de responsabilidades entre objetos.
 
-Para un análisis profundo de patrones de comportamiento, incluidos **Strategy, Observer, Template Method, State, Command** y otros, consultá la sección dedicada: {doc}`04_patrones_comportamiento`
+Para un análisis profundo de patrones de comportamiento, incluidos **Strategy, Observer, Template Method, State, Command** y otros, consultá la sección dedicada: [04_patrones_comportamiento](.\/04_patrones_comportamiento.md)
 
 ### Resumen Rápido
 

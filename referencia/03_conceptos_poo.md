@@ -36,7 +36,7 @@ Acrónimo de los cinco principios fundamentales de diseño orientado a objetos d
 4. **I - Interface Segregation (Segregación de Interfaces):** Es mejor tener muchas interfaces específicas que una sola interfaz general "gorda".
 5. **D - Dependency Inversion (Inversión de Dependencias):** Depender de abstracciones (interfaces), no de implementaciones concretas.
 
-Consultá {doc}`../parte_2/09_oop_solid` para una explicación detallada.
+Consultá [../parte_2/09_oop_solid](.\/../parte_2/09_oop_solid.md) para una explicación detallada.
 
 ---
 
@@ -82,7 +82,7 @@ Un objeto no debería "navegar" a través de otros objetos para llegar a uno lej
 
 Es preferible construir objetos complejos combinando objetos simples (**tiene-un**) en lugar de crear jerarquías de herencia profundas (**es-un**). La composición es más flexible, menos acoplada y más fácil de cambiar en tiempo de ejecución.
 
-Consultá {doc}`../parte_2/04_oop_herencia_polimorfismo` para la comparativa completa.
+Consultá [../parte_2/04_oop_herencia_polimorfismo](.\/../parte_2/04_oop_herencia_polimorfismo.md) para la comparativa completa.
 
 ---
 

@@ -859,6 +859,57 @@ public static <T> void copiar(List<? extends T> src, List<? super T> dest) {
 }
 ```
 
+(borrado-tipos)=
+### Borrado de Tipos (Type Erasure)
+
+Es fundamental entender que los genéricos en Java existen **únicamente en tiempo de compilación**. Para mantener la compatibilidad con versiones antiguas de Java, el compilador realiza un proceso llamado **Type Erasure**:
+
+1. Reemplaza todos los parámetros de tipo por sus límites (bounds) o por `Object` si no están acotados.
+2. Inserta los casts necesarios para asegurar la seguridad de tipos.
+3. Genera métodos puente (*bridge methods*) para preservar el polimorfismo.
+
+**Consecuencia:** En tiempo de ejecución (runtime), la JVM no sabe si una lista es `List<String>` o `List<Integer>`. Para la JVM, ambas son simplemente `List`.
+
+:::{warning} Implicancias del Borrado
+Debido al borrado de tipos, **no podés**:
+- Usar `instanceof` con tipos genéricos: `if (lista instanceof List<String>)` ❌
+- Saber el tipo de `T` en runtime: `T.class` ❌
+- Crear arreglos de tipos genéricos: `new T[10]` ❌
+:::
+
+(varianza-genericos)=
+### Varianza: ¿Por qué `List<Integer>` no es `List<Number>`?
+
+En Java, los arreglos son **covariantes**: si `Integer` es hijo de `Number`, entonces `Integer[]` es hijo de `Number[]`. Sin embargo, los genéricos son **invariantes**.
+
+```java
+List<Integer> enteros = new ArrayList<>();
+List<Number> numeros = enteros; // ❌ Error de compilación
+```
+
+**¿Por qué esta restricción?** Para proteger la integridad de la colección. Si Java permitiera lo anterior, podrías hacer esto:
+
+```java
+List<Integer> enteros = new ArrayList<>();
+List<Number> numeros = enteros; // Supongamos que compila
+numeros.add(3.14); // ¡Metimos un Double en una lista de Integers!
+Integer n = enteros.get(0); // 💥 ClassCastException en runtime
+```
+
+Los wildcards (`? extends` y `? super`) son la herramienta para introducir varianza de forma segura cuando la necesitamos:
+- `List<? extends T>` introduce **covarianza** (lectura segura).
+- `List<? super T>` introduce **contravarianza** (escritura segura).
+
+(limitaciones-genericos)=
+### Limitaciones Técnicas de los Genéricos
+
+Para trabajar correctamente con genéricos, debés conocer sus restricciones técnicas:
+
+1. **No tipos primitivos:** No podés usar `List<int>`. Debés usar las clases envolventes (*wrappers*) como `List<Integer>`. Java realiza *Autoboxing* para facilitar esto.
+2. **No instanciación de parámetros de tipo:** No podés hacer `new T()`. Si necesitás crear instancias, debés pasar una factoría o usar reflexión (aunque esto último excede el curso).
+3. **No campos estáticos de tipo T:** Dado que el tipo `T` depende de la instancia, no puede haber un atributo `static` de tipo `T` compartido por todas las versiones de la clase.
+4. **No excepciones genéricas:** Una clase que extiende `Exception` o `Throwable` no puede ser genérica.
+
 ---
 
 (iteracion-colecciones)=

@@ -1728,7 +1728,7 @@ for (int fila = 1; fila <= 5; fila = fila + 1) {
 - **Schildt, H.** (2022). _Java: A Beginner's Guide_ (9na ed.). McGraw Hill. (Capítulo 3: Program Control Statements).
 - **Liang, Y. D.** (2017). _Introduction to Java Programming and Data Structures_ (11va ed.). Pearson.
 - **Bloch, J.** (2018). _Effective Java_ (3ra ed.). Addison-Wesley Professional.
-- **Oracle Corporation.** (2023). _The Java Language Specification_. [Control Flow](https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html#jls-14.14).
+- **Oracle Corporation.** (2023). _The Java Language Specification_. [Control Flow](https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html).
 
 :::seealso
 

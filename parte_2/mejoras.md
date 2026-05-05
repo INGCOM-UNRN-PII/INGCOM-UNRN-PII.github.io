@@ -648,14 +648,14 @@ public class Libro {
 ### Abstracción {#term-abstraccion}
 Proceso de identificar características esenciales...
 
-**Introducido en:** [Apunte 2, Doc 01](parte_2/01_oop_fundamentos.md#abstraccion)  
-**Profundizado en:** [Apunte 2, Doc 04](parte_2/04_oop_herencia_polimorfismo.md#clases-abstractas)  
+**Introducido en:** [Apunte 2, Doc 01](parte_2/01_oop_fundamentos.md)  
+**Profundizado en:** [Apunte 2, Doc 04](parte_2/04_oop_herencia_polimorfismo.md)  
 **Aplicado en:** Biblioteca v2
 
 ### Acoplamiento {#term-acoplamiento}
 Medida de dependencia entre módulos...
 
-**Introducido en:** [Apunte 2, Doc 01](parte_2/01_oop_fundamentos.md#cohesion-y-acoplamiento)  
+**Introducido en:** [Apunte 2, Doc 01](parte_2/01_oop_fundamentos.md)  
 **Relacionado con:** SOLID-D, Inversión de dependencias
 ```
 

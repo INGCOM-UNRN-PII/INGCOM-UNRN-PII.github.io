@@ -33,7 +33,7 @@ public class CuentaBancaria {
 }
 ```
 
-Para profundizar en la estructura de clases, consultá {doc}`../parte_2/03_sintaxis_clases`.
+Para profundizar en la estructura de clases, consultá [../parte_2/03_sintaxis_clases](.\/../parte_2/03_sintaxis_clases.md).
 
 ---
 
@@ -74,7 +74,7 @@ CuentaBancaria cuenta = new CuentaAhorro("123", 1000, 0.05);
 cuenta.depositar(500); // Se ejecuta el comportamiento apropiado
 ```
 
-Consultá {doc}`../parte_2/04_oop_herencia_polimorfismo` y {doc}`../parte_2/05_herencia_polimorfismo` para más detalles.
+Consultá [../parte_2/04_oop_herencia_polimorfismo](.\/../parte_2/04_oop_herencia_polimorfismo.md) y [../parte_2/05_herencia_polimorfismo](.\/../parte_2/05_herencia_polimorfismo.md) para más detalles.
 
 ---
 
@@ -113,7 +113,7 @@ for (String n : nombres) {
 }
 ```
 
-Podés encontrar la guía completa de colecciones en {doc}`../parte_2/07_colecciones_genericos`.
+Podés encontrar la guía completa de colecciones en [../parte_2/07_colecciones_genericos](.\/../parte_2/07_colecciones_genericos.md).
 
 ---
 
@@ -176,9 +176,9 @@ lista.forEach(System.out::println);
 ## 7. Temas Complementarios
 
 Durante el curso también exploraremos:
-- **SOLID:** Principios de diseño para código mantenible ({doc}`../parte_2/09_oop_solid`).
-- **Patrones de Diseño:** Soluciones probadas a problemas recurrentes ({doc}`../parte_2/10_oop_patrones`).
-- **Testing de Objetos:** Uso de JUnit en contextos de POO ({doc}`../parte_2/11_oop_testing`).
+- **SOLID:** Principios de diseño para código mantenible ([../parte_2/09_oop_solid](.\/../parte_2/09_oop_solid.md)).
+- **Patrones de Diseño:** Soluciones probadas a problemas recurrentes ([../parte_2/10_oop_patrones](.\/../parte_2/10_oop_patrones.md)).
+- **Testing de Objetos:** Uso de JUnit en contextos de POO ([../parte_2/11_oop_testing](.\/../parte_2/11_oop_testing.md)).
 
 ---
 

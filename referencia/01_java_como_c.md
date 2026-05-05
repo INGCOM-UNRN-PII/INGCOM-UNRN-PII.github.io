@@ -26,7 +26,7 @@ public class MiPrograma { // El nombre del archivo debe ser MiPrograma.java
 - Los comentarios usan `//` para una línea y `/* ... */` para bloques.
 :::
 
-Para más detalles sobre por qué usamos clases como contenedores, consultá {doc}`../parte_1/02_lenguaje`.
+Para más detalles sobre por qué usamos clases como contenedores, consultá [../parte_1/02_lenguaje](.\/../parte_1/02_lenguaje.md).
 
 ---
 
@@ -47,7 +47,7 @@ Java tiene tipos de datos muy similares a C, pero con una diferencia fundamental
 En Java, no podés usar un entero como si fuera un valor lógico. Esto significa que `if (1)` es un error de compilación. Debés usar `true` o `false` explícitamente.
 :::
 
-Podés profundizar en estos tipos en {doc}`../parte_1/03_tipos_de_datos`.
+Podés profundizar en estos tipos en [../parte_1/03_tipos_de_datos](.\/../parte_1/03_tipos_de_datos.md).
 
 ---
 
@@ -76,7 +76,7 @@ Java soporta los tres lazos clásicos:
 - `do { ... } while (condicion);`
 
 :::{tip} Estilo de Lazos
-Recordá que en la cátedra preferimos el término **lazo** en lugar de bucle. Consultá la regla de estilo sobre el uso de lazos en {doc}`../parte_1/05_sintaxis_control`.
+Recordá que en la cátedra preferimos el término **lazo** en lugar de bucle. Consultá la regla de estilo sobre el uso de lazos en [../parte_1/05_sintaxis_control](.\/../parte_1/05_sintaxis_control.md).
 :::
 
 ---
@@ -100,7 +100,7 @@ public static int sumar(int a, int b) {
 int resultado = sumar(5, 3);
 ```
 
-Para entender cómo se gestiona la memoria durante las llamadas a métodos, revisá {doc}`../parte_1/04_metodos`.
+Para entender cómo se gestiona la memoria durante las llamadas a métodos, revisá [../parte_1/04_metodos](.\/../parte_1/04_metodos.md).
 
 ---
 
@@ -120,7 +120,7 @@ numeros[0] = 42;
 int largo = numeros.length; // En C tendrías que pasar el tamaño por separado
 ```
 
-Para una comparativa detallada entre los arreglos de Java y C, consultá {doc}`../parte_1/09_arreglos`.
+Para una comparativa detallada entre los arreglos de Java y C, consultá [../parte_1/09_arreglos](.\/../parte_1/09_arreglos.md).
 
 ---
 
@@ -149,7 +149,7 @@ System.out.print("Ingresá un número: ");
 int numero = teclado.nextInt();
 ```
 
-Encontrá más ejemplos en {doc}`../parte_1/06_entrada_salida`.
+Encontrá más ejemplos en [../parte_1/06_entrada_salida](.\/../parte_1/06_entrada_salida.md).
 
 ---
 
@@ -163,4 +163,4 @@ Para que tu código sea legible y profesional, debés seguir las convenciones de
   - Constantes en `SNAKE_CASE` (ej: `VALOR_MAXIMO`).
 - **Nombres descriptivos:** Evitá variables de una sola letra (salvo en lazos simples).
 
-Consultá el {doc}`../reglas/indice` para el listado completo de reglas, como la {ref}`regla-0x0001` o la {ref}`regla-0x0003`.
+Consultá el [../reglas/indice](.\/../reglas/indice.md) para el listado completo de reglas, como la {ref}`regla-0x0001` o la {ref}`regla-0x0003`.

@@ -63,9 +63,6 @@ project:
     - file: parte_3/indice.md
     - file: parte_3/01_patrones_diseno.md
     - file: parte_3/02_patrones_estructurales.md
-  - title: Java
-    children:
-    - file: java/01_sintaxis_clases.md
   - title: Referencia
     children:
     - file: referencia/01_java_como_c.md

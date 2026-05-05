@@ -685,8 +685,8 @@ Ver regla {ref}`regla-0x2010` para más detalles sobre la implementación de `ha
 ### Referencias
 
 Ver:
-- [Object.hashCode()](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#hashCode())
-- [Object.equals()](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object))
+- [Object.hashCode()](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html))
+- [Object.equals()](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html))
 
 (regla-0x2005)=
 ## `0x2005` - `equals` y `hashCode` deben ser implementados juntos o no estar
@@ -717,8 +717,8 @@ Los IDEs pueden generar ambos métodos automáticamente:
 
 ### Referencias
 
-- [`Object.hashCode()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#hashCode())
-- [`Object.equals(Object)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object))
+- [`Object.hashCode()`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html))
+- [`Object.equals(Object)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html))
 
 (regla-0x2006)=
 ## `0x2006` - Al extender, sobreescribir solo para llamar a super no es correcto

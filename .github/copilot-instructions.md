@@ -2,6 +2,10 @@
 
 This is an educational website for the Programación II (Programming II) course at UNRN Andina, built with [MyST Markdown](https://mystmd.org/).
 
+## Git usage
+
+Create semantic commits for each change introduced.
+
 ## Build & Deploy
 
 **Build the site locally:**

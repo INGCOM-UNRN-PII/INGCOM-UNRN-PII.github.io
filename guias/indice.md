@@ -5,10 +5,10 @@ subtitle: Apuntes de temas auxiliares pero necesarios a la cátedra.
 
 # Índice de Guías
 
-* {doc}`instalacion_intellij`
-* {doc}`instalacion_jdk`
-* {doc}`bash`
-* {doc}`git`
-* {doc}`git_avanzado`
-* {doc}`guia_plantUML`
-* {doc}`markdown`
+* [instalacion_intellij](.\/instalacion_intellij.md)
+* [instalacion_jdk](.\/instalacion_jdk.md)
+* [bash](.\/bash.md)
+* [git](.\/git.md)
+* [git_avanzado](.\/git_avanzado.md)
+* [guia_plantUML](.\/guia_plantUML.md)
+* [markdown](.\/markdown.md)
