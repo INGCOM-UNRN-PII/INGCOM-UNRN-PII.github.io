@@ -17,7 +17,35 @@ Encapsular algoritmos intercambiables en objetos.
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Surge de necesidad de intercambiar algoritmos dinámicamente sin condicionales.
+
+## Motivación
+
+Necesario cuando:
+- Múltiples algoritmos para resolver un problema
+- Cambiar algoritmo en runtime
+- Evitar condicionales complejos
+- Cada algoritmo es variante de algo
+
+## Contexto
+
+**Patrón:** Contexto + Strategy intercambiable
+
+**Anatomía:**
+- **Strategy**: Interfaz (ejecutar)
+- **ConcreteStrategy**: Implementación específica
+- **Context**: Usa strategy sin conocer detalles
+- Cliente elige strategy en runtime
+
+**Distinción de State vs Strategy:**
+- **State**: Contexto cambia estado internamente
+- **Strategy**: Cliente elige strategy
+
+---
+
+## Problema
 
 ```
 Sin Strategy: Condicionales para elegir algoritmo

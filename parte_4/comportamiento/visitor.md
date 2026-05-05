@@ -17,7 +17,37 @@ Permitir definir nuevas operaciones sobre elementos de estructura sin modificarl
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Surge de compiladores: necesidad de múltiples operaciones sobre AST sin modificar estructura.
+
+## Motivación
+
+Necesario cuando:
+- Múltiples operaciones sobre estructura estable
+- Estructura no cambia pero operaciones sí
+- Agregar operaciones frecuentemente
+- Evitar condicionales de tipos
+
+## Contexto
+
+**Patrón:** Visitor recorre estructura y aplica operación
+
+**Anatomía:**
+- **Visitor**: Define operaciones
+- **ConcreteVisitor**: Implementa operaciones
+- **Element**: Acepta visitor (double dispatch)
+- **ObjectStructure**: Colección de elementos
+
+**Técnica:** Double dispatch: tipo del visitante + tipo del elemento
+
+**Distinción de Interpreter:**
+- **Interpreter**: Procesa estructura
+- **Visitor**: Aplica operación a estructura existente
+
+---
+
+## Problema
 
 ```
 Estructura: Documento

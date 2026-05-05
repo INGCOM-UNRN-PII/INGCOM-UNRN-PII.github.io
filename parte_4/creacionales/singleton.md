@@ -11,6 +11,33 @@ En su forma más breve, el patrón Singleton **garantiza que una clase tenga una
 
 De manera más detallada, el Singleton es un patrón creacional que restringe la creación de objetos de una clase a una única instancia. Esto es útil cuando exactamente un objeto es necesario para coordinar acciones en todo el sistema. Proporciona un método estático global que devuelve la única instancia de la clase, encapsulando así el proceso de creación y asegurando que no se puedan crear otras instancias directamente.
 
+## Origen e Historia
+
+El patrón Singleton fue descrito formalmente en el libro "Design Patterns: Elements of Reusable Object-Oriented Software" (Gang of Four) en 1994. Aunque el concepto de garantizar una única instancia existía en lenguajes anteriores, el Singleton formalizó esta idea como un patrón de diseño reutilizable y documentado para resolver problemas de coordinación global de recursos.
+
+## Motivación
+
+La necesidad del Singleton surge cuando:
+- Se requiere exactamente una instancia de una clase (ej: conexión a BD, logger global)
+- Esa instancia debe ser accesible desde múltiples lugares del código
+- Se quiere evitar crear varias instancias que competirían o causarían inconsistencias
+- Se necesita control centralizado sobre la creación y acceso
+
+## Contexto
+
+**Elementos principales:**
+- **Clase Singleton**: La clase que será instanciada solo una vez
+- **Constructor privado**: Previene instanciación directa
+- **Instancia estática**: Mantiene la única instancia
+- **Método getInstance()**: Proporciona acceso global y controlado
+
+**Cuándo aplicar:**
+- Sistemas de logging centralizados
+- Gestores de configuración
+- Pools de conexiones a BD
+- Cachés únicos en la aplicación
+- Controladores de eventos globales
+
 ## Casos en los que se utiliza
 
 El patrón Singleton es apropiado en situaciones donde:

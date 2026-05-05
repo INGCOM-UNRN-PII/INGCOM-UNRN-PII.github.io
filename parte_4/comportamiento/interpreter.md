@@ -17,7 +17,32 @@ Definir gramática personalizada e interpretador para procesarla.
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Surge de lenguajes formales y compiladores: necesidad de parsear y ejecutar lenguajes específicos del dominio.
+
+## Motivación
+
+Necesario cuando:
+- Necesitas procesar lenguaje/gramática simple
+- Quieres extender sintaxis frecuentemente
+- AST (Abstract Syntax Tree) es útil
+
+## Contexto
+
+**Patrón:** Entrada → Parser → AST → Intérprete → Salida
+
+**Anatomía:**
+- **Expression**: Interfaz (interpretar)
+- **TerminalExpression**: Valor literal
+- **NonTerminalExpression**: Operación (suma, resta, etc)
+- **Context**: Información de ambiente
+
+**Uso:** Calculadoras, filtros SQL personalizados, DSL
+
+---
+
+## Problema
 
 ```
 Entrada: "a + b * c"

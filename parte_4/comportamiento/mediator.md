@@ -17,7 +17,33 @@ Centralizar comunicación entre múltiples objetos para reducir acoplamiento.
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Surge de sistemas complejos donde objetos interactúan de forma complicada (ej: controladores MVC).
+
+## Motivación
+
+Necesario cuando:
+- Múltiples objetos comunicándose de forma compleja
+- Relaciones de muchos-a-muchos
+- Necesitas reutilizar objetos en contextos diferentes
+- Cambios de interacciones frecuentes
+
+## Contexto
+
+**Patrón:** Colegas → Mediador ← Colegas
+
+**Anatomía:**
+- **Mediator**: Define interfaz de interacción
+- **ConcreteMediator**: Implementa coordinación
+- **Colleague**: Conoce al Mediador pero no a otros colegas
+- Todos los mensajes van al Mediador
+
+**Ventaja:** N objetos acoplados → centralizados en Mediador
+
+---
+
+## Problema
 
 **Sin Mediator:** Objetos acoplados directamente
 ```

@@ -17,7 +17,37 @@ Controlar acceso a un objeto proporcionando un sustituto.
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Surge de sistemas distribuidos: necesidad de interceder antes de acceder a objetos remotos. Popularizado en RPC, ORM (Hibernate), y frameworks web.
+
+## Motivación
+
+Necesario cuando:
+- Necesitas control sobre acceso a objeto (autorización)
+- Objeto es costoso (remoto, BD, archivo grande)
+- Necesitas ejecutar lógica pre/post-acceso
+- Lazy loading: crear cuando se necesita
+- Ejemplo: proxy remoto = RPC, proxy de caché = BD
+
+## Contexto
+
+**Patrón:** Cliente → Proxy → RealSubject
+
+**Anatomía:**
+- **Subject**: Interfaz común
+- **RealSubject**: Objeto real (costoso/protegido)
+- **Proxy**: Intercede, mantiene referencia a RealSubject
+- Proxy y Real tienen misma interfaz
+
+**Tipos:**
+- Proxy virtual: lazy loading
+- Proxy remoto: llamada a servicio remoto
+- Proxy protector: autorización
+
+---
+
+## Problema
 
 Proxy actúa como intermediario:
 

@@ -18,8 +18,7 @@ En este capítulo profundizamos en dos conceptos fundamentales de OOP:
 Este capítulo se enfoca en los **conceptos** y el **modelado**. La sintaxis específica de Java para implementar estos conceptos se aborda en el {ref}`java-sintaxis-clases`.
 :::
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 
@@ -40,8 +39,8 @@ Al finalizar este capítulo, serás capaz de:
 
 El **encapsulamiento** es uno de los cuatro pilares fundamentales de la Programación Orientada a Objetos (junto con herencia, polimorfismo y abstracción). Se trata del principio de **ocultar los detalles internos** de un objeto y exponer únicamente lo necesario para que otros objetos interactúen con él.
 
-:::{admonition} Definición Formal
-:class: note
+:::{note} Definición Formal
+
 **Encapsulamiento** es el mecanismo mediante el cual se agrupan datos (estado) y operaciones (comportamiento) dentro de una unidad cohesiva (la clase), restringiendo el acceso directo al estado interno y exponiendo únicamente una interfaz pública controlada.
 :::
 
@@ -276,8 +275,7 @@ Observá que el termostato encapsulado **sabe cómo protegerse**. No depende de 
 
 En sistemas orientados a objetos, raramente los objetos existen de forma aislada. Los objetos **colaboran** para resolver problemas complejos, y estas colaboraciones se modelan mediante **relaciones**.
 
-:::{admonition} ¿Por qué son importantes las relaciones?
-:class: note
+:::{note} ¿Por qué son importantes las relaciones?
 
 Las relaciones definen **cómo se estructura** un sistema:
 - Qué objetos conocen a cuáles otros
@@ -512,8 +510,8 @@ La **composición** es una relación **fuerte** de tipo "tiene-un" donde:
 - Las partes **no tienen sentido** fuera del contexto del todo
 - Si se destruye el todo, se destruyen las partes
 
-:::{admonition} Definición Formal
-:class: note
+:::{note} Definición Formal
+
 **Composición** es una relación de agregación fuerte donde las partes no pueden existir independientemente del todo. El contenedor crea y destruye las partes.
 :::
 
@@ -659,9 +657,10 @@ La **agregación** es una relación **débil** de tipo "tiene-un" donde:
 - Los objetos contenidos **pueden existir independientemente**
 - El ciclo de vida no está acoplado
 
-:::{admonition} Definición Formal
-:class: note
+:::{note} Definición Formal
+
 **Agregación** es una relación de pertenencia débil donde los componentes pueden existir independientemente del contenedor. El contenedor recibe referencias a objetos ya existentes.
+
 :::
 
 (analogia-agregacion)=

@@ -19,8 +19,7 @@ Aquí aprenderás cómo **materializar** esos conceptos en código Java funciona
 - Conocer los principios de {ref}`encapsulamiento-concepto` y {ref}`tipos-de-relaciones`
 :::
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 

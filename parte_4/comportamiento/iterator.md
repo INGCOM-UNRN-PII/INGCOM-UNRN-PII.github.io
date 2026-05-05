@@ -17,7 +17,36 @@ Recorrer elementos de colección sin exponer su estructura interna.
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Surge de colecciones heterogéneas: necesidad de recorrer sin exponer estructura interna.
+
+## Motivación
+
+Necesario cuando:
+- Múltiples estructuras (Lista, Árbol, Grafo)
+- Cliente no debe conocer estructura interna
+- Múltiples recorridos simultáneamente
+- Quieres encapsulación
+
+## Contexto
+
+**Patrón:** Estructura → Iterator → Recorrido
+
+**Anatomía:**
+- **Iterator**: Interfaz (tieneProximo, proximo)
+- **ConcreteIterator**: Implementación específica
+- **Collection**: Crea iterador
+- **Client**: Usa Iterator
+
+**Variantes:**
+- Iterator bidireccional
+- Iterator con filtro
+- Deep iterator (recorrido profundo)
+
+---
+
+## Problema
 
 Iterator desacopla el algoritmo de recorrido de la estructura de datos:
 

@@ -17,7 +17,30 @@ Proporcionar interfaz simplificada a subsistema complejo.
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Surge de la necesidad de simplificar sistemas complejos. Popularizado en frameworks web (Rails, Spring): ActiveRecord, DataMapper, etc.
+
+## Motivación
+
+Necesario cuando:
+- Subsistema es complejo con múltiples componentes
+- Cliente solo quiere hacer operaciones simples
+- Necesitas desacoplar cliente del subsistema
+- Quieres punto de entrada único
+
+## Contexto
+
+**Patrón:** Cliente → Facade → [Subsistema interno]
+
+**Anatomía:**
+- **Facade**: Interfaz simplificada pública
+- **Subsistema**: Clases complejas internas (generalmente private)
+- Facade delega a componentes internos coordinadamente
+
+---
+
+## Problema
 
 Facade actúa como "puerta de entrada" a un sistema complejo:
 

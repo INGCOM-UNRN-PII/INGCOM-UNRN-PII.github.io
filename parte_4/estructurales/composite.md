@@ -17,7 +17,31 @@ Componer objetos en estructuras de árbol y poder tratarlos como objetos individ
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Surge de la necesidad de tratar uniformemente estructuras jerárquicas (árboles) sin que el cliente conozca si está trabajando con una hoja o un compuesto.
+
+## Motivación
+
+Necesario cuando:
+- Tienes estructuras jerárquicas parte-todo
+- Quieres que cliente trate uniformemente hojas y compuestos
+- Necesitas recursión sobre estructuras arbitrariamente profundas
+- Implementar sin Composite requiere condicionales constantes
+
+## Contexto
+
+**Escenario:** Archivos/carpetas, widgets UI, menús anidados
+
+**Anatomía:**
+- **Component**: Interfaz común
+- **Leaf**: Sin hijos (archivo, MenuItem)
+- **Composite**: Puede tener Component (carpeta, Menu)
+- Ambos responden a mismas operaciones
+
+---
+
+## Problema
 
 Composite permite crear estructuras donde:
 - **Hoja**: No tiene hijos (elemento terminal)

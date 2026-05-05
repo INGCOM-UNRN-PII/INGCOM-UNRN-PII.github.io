@@ -17,7 +17,33 @@ Reducir uso de memoria compartiendo datos entre múltiples objetos.
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Surge de optimización de memoria en juegos/gráficos. Inspirado en el concepto de "compartir" datos comunes.
+
+## Motivación
+
+Necesario cuando:
+- Millones de objetos similares consumirían demasiada memoria
+- Muchos objetos tienen estado común reutilizable
+- Crear nuevas instancias es costoso
+- Trade-off: CPU + acceso extra por memoria
+
+## Contexto
+
+**Patrón:** Estado intrínseco (compartido) vs. extrínseco (particular)
+
+**Anatomía:**
+- **Flyweight**: Objeto inmutable compartible
+- **Factory**: Crea/cachea flyweights
+- **Cliente**: Referencia a flyweight + estado extrínseco
+- Millones de referencias vs. una copia de flyweight
+
+**Ejemplo:** 1M árboles = 1 flyweight de "Pino" + 1M referencias
+
+---
+
+## Problema
 
 **Estado intrínseco**: Datos que se pueden compartir (ej: forma, color)
 **Estado extrínseco**: Datos únicos por instancia (ej: posición, ID)

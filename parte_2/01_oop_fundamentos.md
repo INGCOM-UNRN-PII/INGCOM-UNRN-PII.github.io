@@ -15,8 +15,7 @@ Este capítulo presenta los fundamentos conceptuales del paradigma orientado a o
 Este capítulo se enfoca en los **conceptos del paradigma**, independientes de cualquier lenguaje de programación particular. Los detalles de implementación en Java se abordan en {ref}`java-sintaxis-clases`, mientras que las relaciones entre objetos se profundizan en {ref}`oop2-encapsulamiento-relaciones`.
 :::
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 
@@ -572,8 +571,7 @@ De todas formas, sí está disponible en C++ que es orientado a objetos.
 (concepto-identidad)=
 ### Identidad
 
-:::{admonition} Definición: Identidad
-:class: note
+:::{note} Definición: Identidad
 
 La **identidad** es lo que hace único a cada objeto, lo que lo distingue de todos los demás objetos del sistema, incluso de aquellos que tienen exactamente el mismo estado.
 :::
@@ -737,8 +735,7 @@ Una buena abstracción es aquella que captura exactamente lo necesario: ni más 
 (encapsulamiento-introduccion)=
 ## El Encapsulamiento
 
-:::{admonition} Definición: Encapsulamiento
-:class: note
+:::{note} Definición: Encapsulamiento
 
 El **encapsulamiento** es el principio de ocultar los detalles internos de un objeto, exponiendo solo una interfaz controlada para interactuar con él. El encapsulamiento tiene dos aspectos:
 

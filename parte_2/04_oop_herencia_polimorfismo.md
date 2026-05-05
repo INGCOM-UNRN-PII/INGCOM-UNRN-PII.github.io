@@ -11,8 +11,7 @@ En los capítulos anteriores exploramos los fundamentos de OOP ({ref}`fundamento
 
 Este capítulo se enfoca en los **conceptos y el modelado**, no en la sintaxis de implementación. Para la sintaxis específica de Java, consultá {ref}`java-herencia-polimorfismo`.
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 
@@ -34,8 +33,7 @@ Al finalizar este capítulo, serás capaz de:
 
 La **herencia** es un mecanismo que permite crear nuevas clases basadas en clases existentes, heredando sus atributos y comportamiento, y añadiendo o modificando funcionalidad.
 
-:::{admonition} Definición Formal
-:class: note
+:::{note} Definición Formal
 
 **Herencia** es una relación "es-un" (*is-a*) entre clases donde una clase derivada (subclase) **especializa** una clase base (superclase), heredando su estructura y comportamiento, y potencialmente añadiendo nuevas características o modificando las existentes.
 :::
@@ -214,8 +212,7 @@ Cuando una subclase hereda de una superclase:
 - ❌ NO significa que deba acceder directamente a atributos privados o `protected`
 - ❌ NO significa que deba usar getters/setters para quebrar el contrato de la clase
 
-:::{admonition} Principio Fundamental
-:class: important
+:::{important} Principio fundamental
 
 **Las subclases responden a través de métodos públicos de dominio**, no mediante exposición de detalles internos. Si la superclase define un contrato (sus métodos públicos), la subclase debe respetarlo.
 
@@ -286,8 +283,7 @@ La clave: `Gerente` no accede a `salario`. En su lugar, llama a `calcularSueldoF
 - ❌ Atributos `protected` "para que subclases los usen directamente"
 - ❌ Getters/setters `protected` con la excusa de "es herencia"
 
-:::{admonition} Reglas de Cátedra
-:class: tip
+:::{tip} Reglas de Cátedra
 
 Ver {ref}`regla-0x200C` (No usar getters/setters si violan encapsulamiento) y {ref}`regla-0x2011` (No exponer detalles internos mediante getters).
 
@@ -301,7 +297,7 @@ Estas reglas aplican incluso en jerarquías. La herencia NO es una excusa para r
 Para verificar que una `Gerente` funciona correctamente, pruebas deben usar **métodos de dominio**:
 
 ```java
-@Test
+\@Test
 void testGerenciaCalculaSueldoConBonificacion() {
     Gerente g = new Gerente("Carlos", 3000, 1000);
     
@@ -309,7 +305,7 @@ void testGerenciaCalculaSueldoConBonificacion() {
     assertEquals(4000, g.calcularSueldoFinal(), 0.01);
 }
 
-@Test
+\@Test
 void testGerenciaTieneNombre() {
     Gerente g = new Gerente("Carlos", 3000, 1000);
     

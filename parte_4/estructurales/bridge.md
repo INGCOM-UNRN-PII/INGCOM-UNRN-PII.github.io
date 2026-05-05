@@ -17,7 +17,30 @@ Permitir que abstracción e implementación varíen de manera independiente, evi
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Documentado por Gang of Four en 1994. Bridge surge del reconocimiento de que herencia múltiple (combinar múltiples dimensiones de variación) crea explosión de clases. Fue popularizado especialmente en frameworks de gráficos.
+
+## Motivación
+
+Necesario cuando:
+- Tienes múltiples dimensiones de variación independientes
+- Quieres evitar jerarquías de herencia explosivas
+- Abstracciones e implementaciones varían independientemente
+- Necesitas compartir implementaciones entre abstracciones
+
+## Contexto
+
+**Estructura:**
+- **Abstracción**: Define interfaz general (ej: Forma)
+- **Implementador**: Define interfaz para implementaciones (ej: Renderizador)
+- **La connexión**: Abstracción usa Implementador, ambos varían independientemente
+
+**Anatomía:** N formas × M renderizadores sin N×M clases
+
+---
+
+## Problema
 
 Bridge resuelve el problema de tener múltiples dimensiones de variación:
 

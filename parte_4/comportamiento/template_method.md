@@ -17,7 +17,35 @@ Definir estructura de algoritmo, permitiendo que subclases implementen pasos esp
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Surge de frameworks que necesitan estructura fija pero pasos customizables (ej: Spring templates).
+
+## Motivación
+
+Necesario cuando:
+- Algoritmo tiene estructura similar, pasos diferentes
+- Múltiples clases con estructura parecida
+- Quieres reutilizar estructura, variar pasos
+- Evitar duplicación de código
+
+## Contexto
+
+**Patrón:** Superclase define estructura, subclases implementan pasos
+
+**Anatomía:**
+- **AbstractClass**: Define template method (final)
+- **AbstractClass**: Define pasos abstract
+- **ConcreteClass**: Implementa pasos
+- Inversión de control: framework llama tu código
+
+**Distinción de Strategy vs Template Method:**
+- **Template Method**: Herencia, estructura fija
+- **Strategy**: Composición, algoritmo intercambiable
+
+---
+
+## Problema
 
 ```
 Clase Base (Template)

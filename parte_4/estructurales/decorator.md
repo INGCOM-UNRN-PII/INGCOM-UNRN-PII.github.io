@@ -17,7 +17,31 @@ Agregar responsabilidades a objetos de forma dinámica, en lugar de crear subcla
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Proviene de la necesidad de evitar "explosión de subclases" cuando se combinan múltiples características. Popularizado en frameworks de I/O (Java streams: BufferedInputStream, DataInputStream, etc).
+
+## Motivación
+
+Necesario cuando:
+- Necesitas agregar responsabilidades dinámicamente
+- Herencia sería explosiva (N características × M tipos = N×M clases)
+- Combinar comportamientos en diferentes órdenes
+- Cada decorador es responsabilidad única
+
+## Contexto
+
+**Patrón:** Componente base → Stack de decoradores
+
+**Anatomía:**
+- **Component**: Interfaz común
+- **ConcreteComponent**: Objeto base
+- **Decorator**: Encapsula Component, implementa interfaz igual
+- Permite stacking: `new D1(new D2(new D3(component)))`
+
+---
+
+## Problema
 
 Decorator resuelve el problema de:
 - Herencia explosiva (múltiples combinaciones de características)

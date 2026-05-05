@@ -17,7 +17,36 @@ Capturar estado de un objeto para poder restaurarlo sin revelar detalles interno
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Surge de necesidad de capturar "snapshots" de estado para deshacer/restaurar sin violar encapsulación.
+
+## Motivación
+
+Necesario cuando:
+- Necesitas deshacer operaciones
+- Necesitas guardar puntos de guardado (checkpoint)
+- Quieres capturar estado sin violar encapsulación
+- Restaurar estado debe ser transparente
+
+## Contexto
+
+**Patrón:** Originador → Memento → Cuidador
+
+**Anatomía:**
+- **Originator**: Objeto cuyo estado se captura (Documento)
+- **Memento**: Captura inmutable (MementoDocumento)
+- **Caretaker**: Almacena mementos (Historial)
+- Memento no expone internos del Originador
+
+**Variantes:**
+- Historial amplio vs. snapshots
+- Compresión de mementos
+- Serialización para persistencia
+
+---
+
+## Problema
 
 ```
 Originador (Originator): objeto cuyo estado se desea capturar

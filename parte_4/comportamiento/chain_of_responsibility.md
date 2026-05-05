@@ -17,7 +17,33 @@ Permitir que múltiples objetos procesen una solicitud, pasándola por una caden
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Surge del reconocimiento de que algunos sistemas necesitan una cadena de responsabilidad implícita (handlers) en lugar de a quién enviar directamente.
+
+## Motivación
+
+Necesario cuando:
+- Múltiples objetos podrían procesar solicitud
+- No sabes quién lo hará en compile time
+- Quieres agregar nuevos handlers sin cambiar código
+- Desacoplar remitente de receptores
+
+## Contexto
+
+**Patrón:** Solicitud → Handler1 → Handler2 → Handler3
+
+**Anatomía:**
+- **Handler**: Interfaz (procesar o pasar siguiente)
+- **ConcreteHandler**: Implementa o pasa
+- **chain**: Cada handler conoce al siguiente
+- Cada manejador es responsabilidad única
+
+**Ejemplo:** Sistema de tickets por prioridad, validación en cascada
+
+---
+
+## Problema
 
 Cada manejador en la cadena puede:
 1. Procesar la solicitud → **Fin**

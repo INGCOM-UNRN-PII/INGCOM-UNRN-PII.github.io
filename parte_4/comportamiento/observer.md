@@ -17,7 +17,36 @@ Notificar automáticamente a múltiples objetos sobre cambios.
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Surge de sistemas de eventos: necesidad de que múltiples objetos reaccionen a cambios sin acoplamiento directo.
+
+## Motivación
+
+Necesario cuando:
+- Cambio en un objeto afecta múltiples
+- No sabes cuántos observadores habrá
+- Quieres desacoplar publicador de suscriptores
+- Reacciones dinámicas (agregar/remover observadores)
+
+## Contexto
+
+**Patrón:** Subject (Observable) → Notifica → Observadores
+
+**Anatomía:**
+- **Subject**: Mantiene lista de observadores
+- **Observer**: Interfaz de actualización
+- **ConcreteObserver**: Reacciona a cambios
+- Modelo publicador-suscriptor
+
+**Variantes:**
+- Observer con eventos
+- Weak references (para no mantener vivos)
+- Filtros (observador solo si condición)
+
+---
+
+## Problema
 
 ```
 Sujeto (Subject)

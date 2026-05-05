@@ -17,7 +17,36 @@ Encapsular solicitud como objeto para permitir deshacer, rehacer, encolar.
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Surge de sistemas que necesitan operaciones reversibles (deshacer), transacciones, y macros.
+
+## Motivación
+
+Necesario cuando:
+- Necesitas deshacer/rehacer operaciones
+- Necesitas encolar operaciones
+- Necesitas registrar cambios
+- Encapsular operación como objeto
+
+## Contexto
+
+**Patrón:** Operación → Objeto → Ejecutar/Deshacer
+
+**Anatomía:**
+- **Command**: Interfaz (ejecutar, deshacer)
+- **ConcreteCommand**: Encapsula receptor + parámetros
+- **Receiver**: Objeto que ejecuta
+- **Invoker**: Ejecuta comando + historial
+
+**Variantes:**
+- MacroCommand: Composite de comandos
+- Comando con parámetros
+- Comando con transacciones
+
+---
+
+## Problema
 
 Command transforma método en objeto:
 

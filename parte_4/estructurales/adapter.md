@@ -27,6 +27,33 @@ El adapter actúa como un "traductor" entre dos interfaces:
 
 ---
 
+## Origen e Historia
+
+El Adapter fue documentado por Gang of Four en 1994. Tiene raíces en el concepto de "adapters" físicos (como adaptadores de electricidad que permiten usar dispositivos en diferentes regiones). En software, se popularizó para resolver la integración de código heredado con código nuevo.
+
+## Motivación
+
+Surge cuando:
+- Necesitas integrar código legado con interfaces antiguas
+- Trabajas con librerías externas de terceros que no puedes modificar
+- Quieres reutilizar clases existentes pero sus interfaces no coinciden
+- Necesitas que objetos con interfaces diferentes colaboren
+
+## Contexto
+
+**Escenario típico:**
+- Cliente espera interfaz `TargetaConector`
+- Clase existente proporciona `DispositivoAntiguoEuropeo`
+- Adapter actúa como "traductor" entre ambas
+
+**Anatomía:**
+- **Target**: Interfaz que espera el cliente
+- **Adaptee**: Clase existente con interfaz diferente
+- **Adapter**: Clase que implementa Target y encapsula Adaptee
+- **Client**: Usa Target
+
+---
+
 ## Problema
 
 ```java

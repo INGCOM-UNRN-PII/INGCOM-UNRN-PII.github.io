@@ -17,7 +17,36 @@ Permitir que un objeto cambie comportamiento según su estado.
 
 ---
 
-## Concepto
+## Origen e Historia
+
+Gang of Four 1994. Surge de máquinas de estado complejas: necesidad de separar lógica de estado del contexto.
+
+## Motivación
+
+Necesario cuando:
+- Comportamiento depende del estado
+- Condicionales sobre estado son complejos
+- Estado cambia frecuentemente
+- Cada estado tiene responsabilidades únicas
+
+## Contexto
+
+**Patrón:** Contexto delega a objeto State
+
+**Anatomía:**
+- **State**: Interfaz (operaciones)
+- **ConcreteState**: Implementa comportamiento
+- **Context**: Mantiene referencia al estado actual
+- Cambios de estado son transiciones
+
+**Variantes:**
+- Estados con historial
+- Transiciones condicionales
+- Estados paralelos
+
+---
+
+## Problema
 
 ```
 Sin State: Condicionales complejos
