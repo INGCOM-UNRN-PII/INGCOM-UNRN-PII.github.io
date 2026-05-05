@@ -411,7 +411,7 @@ IntelliJ IDEA tiene **integración nativa con Gradle**. Podés hacer casi todo d
 2. Verás todas las tareas disponibles organizadas por categoría
 3. Hacé doble clic en cualquier tarea para ejecutarla
 
-```{figure} 1/gradle_panel_idea.png
+```{figure} 01/gradle_panel_idea.png
 :label: fig-gradle-panel
 :align: center
 :width: 80%
