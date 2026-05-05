@@ -261,35 +261,35 @@ Si el `assert` no obtenemos el resultado esperado, el tema es dejar un mensaje d
 
 Esto para simplificar los mensajes y que no sea _tan_ laborioso.
 
-(regla-0xE000)=
+(regla-apuntes-0xE000)=
 ## `0xE000` - Silenciar una excepción no es la forma de gestionarla
 
-(regla-0xE001)=
+(regla-apuntes-0xE001)=
 ## `0xE001` - Mejor prevenir que atajar
 
 Siempre que sea posible, prevenir la excepción en lugar de esperar a que falle.
 
-(regla-0xE002)=
+(regla-apuntes-0xE002)=
 ## `0xE002` - Declarar el lanzamiento de una excepción no controlada es un error
 
 Hacer `throws RuntimeException` no es correcto por la familia de excepción a la que pertenece.
 
-(regla-0xE003)=
+(regla-apuntes-0xE003)=
 ## `0xE003` - No es correcto concatenar en un lazo
 
 Ya que esto crea una gran cantidad de instancias de `String`. Usá [`StringBuilder`](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html).
 
-(regla-0xE004)=
+(regla-apuntes-0xE004)=
 ## `0xE004` - La implementación de `hashCode` debe emplear la librería
 
 Presente en `Arrays` y `Objects`.
 
-(regla-0xE005)=
+(regla-apuntes-0xE005)=
 ## `0xE005` - La implementación de `equals` debe usar Pattern Matching para el cast
 
 Esto para simplificar el código y utilizar la forma correcta de downcast seguro.
 
-(regla-0xE006)=
+(regla-apuntes-0xE006)=
 ## `0xE006` - La implementación de `equals` debe ser primero la de `Object`
 
 No la de la clase que implementa.
@@ -300,7 +300,7 @@ No la de la clase que implementa.
     public boolean equals(Object arr) {
 ```
 
-(regla-0xE007)=
+(regla-apuntes-0xE007)=
 ## `0xE007` - `equals` y `hashCode` deben ser implementados juntos o no estar
 
 Es importante respetar el contrato de estos métodos, el cual declara que la implementación de uno de ellos, implica la implementación del otro.
@@ -310,7 +310,7 @@ Es importante respetar el contrato de estos métodos, el cual declara que la imp
 - [`Object.equals(Object)`](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html))
 :::
 
-(regla-0xE008)=
+(regla-apuntes-0xE008)=
 ## `0xE008` - Superposición en el lanzamiento de excepciones
 
 Estás superponiendo dos situaciones que, por lo menos, ameritan un mensaje separado,
@@ -324,19 +324,19 @@ Una cosa es que el arreglo esté vacío, pero otra muy diferente es que sea `nul
 Solo se indica cuál es su rol o propósito, redacten de forma que la explicación fluya del mismo, para esto, es necesario que el identificador sea
 apropiado.
 
-(regla-0xE009)=
+(regla-apuntes-0xE009)=
 ## `0xE009` - Los identificadores, no llevan el tipo (o clase) de lo que procesan
 
 Las funciones no necesitan indicar sobre qué trabajan cuando los argumentos que están a continuación lo indican.
 
 Por ejemplo con arreglos; `sumaArreglo` puede ser simplemente `suma`.
 
-(regla-0xE00A)=
+(regla-apuntes-0xE00A)=
 ## `0xE00A` - Lanzar excepciones raíz no es correcto
 
 Ya que no es posible atajar la situación específica que las originó.
 
-(regla-0xE00B)=
+(regla-apuntes-0xE00B)=
 ## `0xE00B` - Algo como 'largo cero' y `null` son dos situaciones bastante diferentes
 
 Que requieren de excepciones distintas para que su tratamiento pueda ser más específico.
