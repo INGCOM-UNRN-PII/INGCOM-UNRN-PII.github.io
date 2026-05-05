@@ -2,3 +2,14 @@
 _build
 manual_mermaid
 manual_myst
+GEMINI.md
+mejora.md
+.gitignore
+pendientes.md
+
+# Python / uv
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/

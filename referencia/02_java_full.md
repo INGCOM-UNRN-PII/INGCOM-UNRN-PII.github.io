@@ -1,0 +1,1 @@
+Este documento debe describir la sintaxis completa de java, incluyendo streams y programación funcional (estos dos temas marcados de forma explícita no se dictarán)

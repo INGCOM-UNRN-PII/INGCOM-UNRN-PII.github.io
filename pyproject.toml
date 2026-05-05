@@ -1,0 +1,30 @@
+[project]
+name = "programacion-ii-scripts"
+version = "0.1.0"
+description = "Automation scripts for Programación II course materials site"
+readme = "README.md"
+requires-python = ">=3.9"
+authors = [
+    { name = "Martín René Vilugrón", email = "mrvilugron@unrn.edu.ar" }
+]
+keywords = ["myst", "markdown", "svg", "education"]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "black>=23.0",
+    "ruff>=0.1.0",
+]
+
+[tool.uv]
+python-version = "3.9"
+
+[tool.black]
+line-length = 100
+target-version = ['py39', 'py310', 'py311']
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+select = ["E", "F", "W", "I"]

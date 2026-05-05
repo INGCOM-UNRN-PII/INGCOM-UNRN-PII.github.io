@@ -23,12 +23,12 @@ El archivo `svg.css` ya está ubicado en `resources/svg.css`. No requiere instal
 ### Embeber el CSS en tu SVG 
 
 Embed the css within the svg file as the static files routes are different in development and production.
-
+Embed the css within the svg file as the static files routes are different in development and production.
 
 :::{note}
 Ajustá la ruta `../resources/svg.css` según la ubicación de tu SVG:
-- Desde `apunte/13/diagrama.svg` → `../../resources/svg.css`
-- Desde `apunte/diagrama.svg` → `../resources/svg.css`
+- Desde `parte_1/13/diagrama.svg` → `../../resources/svg.css`
+- Desde `parte_1/diagrama.svg` → `../resources/svg.css`
 :::
 
 ### Definir Marcadores de Flechas
