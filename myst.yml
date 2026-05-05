@@ -47,6 +47,10 @@ project:
       children:
         - file: apunte_2/01_oop_fundamentos.md
         - file: apunte_2/02_oop_relaciones.md
+    - title: Apunte 3
+      children:
+        - file: apunte_3/indice.md
+        - file: apunte_3/01_patrones_diseno.md
     - title: Java
       children:
         - file: java/01_sintaxis_clases.md
