@@ -663,58 +663,6 @@ numeros.removeIf(n -> n % 2 == 0);
 ```
 :::
 
-### forEach con Lambda (Java 8+)
-
-```java
-List<String> nombres = List.of("Ana", "Juan", "María");
-
-// forEach con lambda
-nombres.forEach(nombre -> System.out.println(nombre));
-
-// forEach con method reference
-nombres.forEach(System.out::println);
-
-// Con Maps
-Map<String, Integer> edades = Map.of("Ana", 25, "Juan", 30);
-edades.forEach((nombre, edad) -> 
-    System.out.println(nombre + " tiene " + edad + " años")
-);
-```
-
-### Streams (Java 8+)
-
-Los streams permiten operaciones declarativas y funcionales:
-
-```java
-List<Integer> numeros = List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-
-// Filtrar, transformar y recolectar
-List<Integer> paresDoblados = numeros.stream()
-    .filter(n -> n % 2 == 0)       // Solo pares: 2, 4, 6, 8, 10
-    .map(n -> n * 2)               // Doblar: 4, 8, 12, 16, 20
-    .collect(Collectors.toList()); // Convertir a lista
-
-// Sumar todos
-int suma = numeros.stream()
-    .reduce(0, Integer::sum);  // 55
-
-// Encontrar máximo
-Optional<Integer> max = numeros.stream()
-    .max(Integer::compareTo);  // Optional[10]
-
-// Contar
-long cantidadPares = numeros.stream()
-    .filter(n -> n % 2 == 0)
-    .count();  // 5
-
-// Verificar condiciones
-boolean todosMayoresACero = numeros.stream()
-    .allMatch(n -> n > 0);  // true
-
-boolean algunoMayorA5 = numeros.stream()
-    .anyMatch(n -> n > 5);  // true
-```
-
 ---
 
 (comparable-comparator)=
