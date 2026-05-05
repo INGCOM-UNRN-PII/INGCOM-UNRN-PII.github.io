@@ -8,6 +8,15 @@ description: Estudio técnico sobre estructuras de datos homogéneas, declaraci�
 
 En Java, los **arreglos** (_arrays_) son contenedores de tamaño fijo que almacenan elementos del mismo tipo. Si venís de C, la sintaxis te resultará familiar, aunque hay diferencias importantes en cómo Java gestiona la memoria y verifica los límites.
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Arreglos en Java** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](08_junit.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (que-es-un-arreglo)=
 ## ¿Qué es un Arreglo?
 
@@ -1668,3 +1677,6 @@ Los arreglos en Java son estructuras fundamentales que todo programador debe dom
 - **Oracle Corporation.** (2023). *The Java Language Specification*. [Chapter 10: Arrays](https://docs.oracle.com/javase/specs/jls/se21/html/jls-10.html).
 - **Oracle Corporation.** (2023). *Java API Documentation*. [java.util.Arrays](https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/Arrays.html).
 
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](10_excepciones.md), donde el recorrido continúa sobre esta base.

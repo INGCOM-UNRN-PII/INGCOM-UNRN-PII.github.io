@@ -12,6 +12,15 @@ Este capítulo presenta el contexto histórico y técnico que dio origen a Java.
 estos orígenes ayuda a entender las decisiones de diseño del lenguaje y por qué funciona
 como funciona.
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Orígenes e Historia de Java** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](indice.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (el-nacimiento-de-java-el-green-project)=
 ## El Nacimiento de Java: El Green Project
 
@@ -1231,3 +1240,11 @@ En la práctica, para aplicaciones de larga duración (servidores, por ejemplo),
 
 Donde Java sí es más lento es en el **tiempo de inicio** (la JVM necesita cargarse) y en el **consumo de memoria** (la JVM consume recursos adicionales). GraalVM con Native Image resuelve estos problemas.
 ```
+
+## Resumen
+
+Este capítulo presentó las ideas centrales de **Orígenes e Historia de Java** y dejó un marco de referencia para relacionarlas con el resto del recorrido.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](02_lenguaje.md), donde el recorrido continúa sobre esta base.

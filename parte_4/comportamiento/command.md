@@ -7,6 +7,15 @@ subject: Patrones de Diseño de Comportamiento
 (patron-command)=
 # Command
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Command** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](chain_of_responsibility.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Command** (Orden) es un patrón de diseño de comportamiento que convierte una solicitud en un objeto independiente que contiene toda la información sobre la misma. 
@@ -177,7 +186,7 @@ public class ControlRemoto {
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-command-mini
@@ -188,3 +197,7 @@ Un editor de diagramas necesita soportar **deshacer** y **rehacer** para accione
 ## Resumen
 
 El patrón Command es la base de las aplicaciones interactivas modernas. Al transformar una acción en un objeto, nos otorga control sobre el flujo temporal de las operaciones, permitiéndonos pausar, revertir o agrupar intenciones de usuario de manera elegante y desacoplada.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](interpreter.md), donde el recorrido continúa sobre esta base.

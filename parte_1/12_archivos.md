@@ -10,6 +10,15 @@ Hasta ahora, todos los datos que manejaste en tus programas existían solo mient
 
 En la cursada de Programación I con C, ya trabajaste con archivos usando `FILE*`, `fopen()`, `fread()`, `fwrite()` y `fclose()`. Java ofrece un enfoque similar en concepto, pero con diferencias importantes en la implementación que hacen el código más seguro y legible.
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Manejo de Archivos en Java** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](11_testing.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (por-que-necesitamos-archivos)=
 ## ¿Por qué necesitamos archivos?
 
@@ -1729,3 +1738,7 @@ class ProcesadorCSVTest {
 - {ref}`regla-0x3001` - Manejo de excepciones en operaciones de I/O.
 - {ref}`regla-0x000D` - Documentación de métodos que lanzan IOException.
 :::
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](13_memoria.md), donde el recorrido continúa sobre esta base.

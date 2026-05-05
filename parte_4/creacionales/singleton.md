@@ -6,6 +6,15 @@ description: Patrón de diseño Singleton con ejemplos y diagramas UML.
 (patron-singleton)=
 # Singleton
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Singleton** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](indice.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Singleton** (Instancia Única) es un patrón de diseño creacional que garantiza que una clase tenga una única instancia y proporciona un punto de acceso global a ella. 
@@ -139,7 +148,7 @@ public class DatabaseConnector {
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-singleton-mini
@@ -150,3 +159,7 @@ En una app de escritorio, varias pantallas necesitan escribir eventos en el mism
 ## Resumen
 
 El Singleton es una herramienta potente pero peligrosa. Su simplicidad lo hace atractivo, pero su naturaleza global puede corromper la arquitectura de un sistema si se usa para ocultar dependencias. Debe reservarse para recursos que son intrínsecamente únicos en el dominio del problema.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](factory.md), donde el recorrido continúa sobre esta base.

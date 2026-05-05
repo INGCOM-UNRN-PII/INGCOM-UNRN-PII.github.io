@@ -7,6 +7,15 @@ subject: Patrones de Diseño de Comportamiento
 (patron-interpreter)=
 # Interpreter
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Interpreter** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](command.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Interpreter** (Intérprete) es un patrón de diseño de comportamiento que define una representación de la gramática de un lenguaje junto con un intérprete que utiliza dicha representación para interpretar sentencias en el lenguaje.
@@ -153,7 +162,7 @@ Expresion expr = new Suma(new Numero(5), new Numero(10));
 System.out.println("Resultado: " + expr.interpretar(null));
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-interpreter-mini
@@ -164,3 +173,7 @@ Una cátedra quiere definir reglas simples de aprobación con expresiones como `
 ## Resumen
 
 El patrón Interpreter es la forma más pura de transformar una gramática en código. Aunque su uso es limitado por cuestiones de rendimiento y escalabilidad, sigue siendo una herramienta fundamental para crear lenguajes de dominio específico (DSL) legibles y extensibles dentro de una aplicación.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](iterator.md), donde el recorrido continúa sobre esta base.

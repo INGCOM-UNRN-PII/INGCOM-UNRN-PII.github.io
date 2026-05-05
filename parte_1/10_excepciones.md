@@ -8,6 +8,15 @@ description: Estudio avanzado sobre la gestión de errores, jerarquía de Throwa
 
 El manejo de excepciones en Java es un mecanismo que permite gestionar situaciones anormales o errores que ocurren durante la ejecución de un programa. A diferencia de C, donde el flujo de error se mezcla con el flujo de datos (usando códigos de retorno como `-1` o `NULL`), Java separa ambos canales, permitiendo una gestión más limpia y centralizada.
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Excepciones en Java** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](09_arreglos.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (que-es-una-excepcion)=
 ## ¿Qué es una excepción?
 
@@ -1461,3 +1470,11 @@ Paso a paso:
 - {ref}`regla-0x3001` - Manejo de excepciones checked.
 - {ref}`regla-0x3002` - Manejo de excepciones unchecked.
 :::
+
+## Resumen
+
+Este capítulo presentó las ideas centrales de **Excepciones en Java** y dejó un marco de referencia para relacionarlas con el resto del recorrido.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](11_testing.md), donde el recorrido continúa sobre esta base.

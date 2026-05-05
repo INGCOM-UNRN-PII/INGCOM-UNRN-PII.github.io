@@ -13,6 +13,15 @@ En la ingeniería de software, el testing no es una fase posterior al desarrollo
 Este apunte cubre los **fundamentos teóricos** del testing. Para la implementación práctica con JUnit 5, anotaciones, assertions y ejemplos de código, consultá {ref}`junit`.
 :::
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Fundamentos del Testing de Software** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](10_excepciones.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (del-testing-manual-al-automatizado)=
 ## Del Testing Manual al Automatizado
 
@@ -651,3 +660,11 @@ Identificá las particiones de equivalencia y proponé un conjunto mínimo de te
 - {ref}`junit` — Implementación práctica de testing con JUnit 5
 - {ref}`regla-0x4000` — Estándares de testing de la cátedra
 :::
+
+## Resumen
+
+Este capítulo presentó las ideas centrales de **Fundamentos del Testing de Software** y dejó un marco de referencia para relacionarlas con el resto del recorrido.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](12_archivos.md), donde el recorrido continúa sobre esta base.

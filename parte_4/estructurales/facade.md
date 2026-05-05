@@ -7,6 +7,15 @@ subject: Patrones de Diseño Estructurales
 (patron-facade)=
 # Facade
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Facade** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](decorator.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Facade** proporciona una interfaz unificada y simplificada a un conjunto de interfaces de un subsistema, facilitando su uso sin exponer complejidad interna.
@@ -279,7 +288,7 @@ BaseDatosConfigFacade bdConfig = new BaseDatosConfigFacade();
 bdConfig.inicializar("jdbc:mysql://localhost/midb");
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-facade-mini
@@ -290,3 +299,7 @@ La inscripción a una materia requiere consultar correlativas, cupos, estado adm
 ## Resumen
 
 El patrón **Facade** es esencial para manejar subsistemas complejos. Al proporcionar una interfaz simplificada, reduce acoplamiento y mejora usabilidad. Aunque puede crecer excesivamente si no se controla, su beneficio en desacoplamiento y simplicidad lo hace fundamental en aplicaciones empresariales.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](flyweight.md), donde el recorrido continúa sobre esta base.

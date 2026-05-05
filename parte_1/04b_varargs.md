@@ -3,6 +3,15 @@
 
 A veces es útil escribir un método que pueda recibir cualquier cantidad de argumentos del mismo tipo. Java proporciona una sintaxis especial para esto llamada **varargs** (del inglés _variable arguments_).
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Varargs: Cantidad Variable de Argumentos** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](04_metodos.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (sintaxis-y-uso)=
 ### Sintaxis y Uso
 
@@ -66,3 +75,19 @@ imprimir("Notas", 7, 8, 9, 10);  // Imprime: "Notas: 7 8 9 10"
 :::{note} Varargs y Sobrecarga
 Evitá sobrecargar métodos que usen varargs, ya que las reglas de resolución se vuelven complejas. Por ejemplo, si tenés `metodo(int... x)` y `metodo(int x, int... y)`, la llamada `metodo(5)` es ambigua y genera error de compilación.
 :::
+
+## Resumen
+
+Este capítulo presentó las ideas centrales de **Varargs: Cantidad Variable de Argumentos** y dejó un marco de referencia para relacionarlas con el resto del recorrido.
+
+## Ejercicios
+
+```{exercise}
+:label: ex-04b-varargs-cierre
+
+Escribí un ejemplo propio donde tengas que aplicar al menos dos ideas de este capítulo sobre **Varargs: Cantidad Variable de Argumentos**. Justificá qué decisión de diseño, sintaxis o modelado tomás y por qué.
+```
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](05_sintaxis_control.md), donde el recorrido continúa sobre esta base.

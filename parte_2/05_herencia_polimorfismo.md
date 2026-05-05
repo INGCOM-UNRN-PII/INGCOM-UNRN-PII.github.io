@@ -36,6 +36,13 @@ Al finalizar este capítulo, serás capaz de:
 
 ---
 
+:::{note} Hoja de ruta del capítulo
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](04_oop_herencia_polimorfismo.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (herencia-java)=
 ## Herencia: Extendiendo Clases
 
@@ -1643,3 +1650,11 @@ Diseñá un sistema de procesamiento de pagos:
 
 Implementá validaciones apropiadas en cada método de pago.
 ```
+
+## Resumen
+
+Este capítulo presentó las ideas centrales de **Herencia y Polimorfismo** y dejó un marco de referencia para relacionarlas con el resto del recorrido.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](06_excepciones.md), donde el recorrido continúa sobre esta base.

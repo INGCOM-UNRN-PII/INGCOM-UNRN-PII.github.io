@@ -38,6 +38,13 @@ Al finalizar este capítulo, serás capaz de:
 
 ---
 
+:::{note} Hoja de ruta del capítulo
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](07_colecciones_genericos.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (problema-sin-genericos)=
 ## El Problema: Pérdida de Tipo sin Genéricos
 
@@ -1679,3 +1686,7 @@ Los genéricos en Java son un tema profundo que permite escribir código flexibl
 Para profundizar, consultá:
 - {ref}`java-colecciones` para usar genéricos en colecciones
 - {ref}`oop3-herencia-polimorfismo` para entender polimorfismo (base de genéricos)
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](../parte_3/indice.md), donde el recorrido continúa sobre esta base.

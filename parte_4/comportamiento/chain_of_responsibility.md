@@ -7,6 +7,15 @@ subject: Patrones de Diseño de Comportamiento
 (patron-chain-of-responsibility)=
 # Chain of Responsibility
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Chain of Responsibility** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](indice.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Chain of Responsibility** (Cadena de Responsabilidad) es un patrón de diseño de comportamiento que evita acoplar al emisor de una solicitud con su receptor, permitiendo que múltiples objetos tengan la oportunidad de procesar la solicitud. 
@@ -168,7 +177,7 @@ public class SoporteNivel1 extends Manejador {
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-chain-mini
@@ -179,3 +188,7 @@ Una solicitud académica debe pasar por docente, coordinación y secretaría, pe
 ## Resumen
 
 El Chain of Responsibility es el patrón de los "niveles de atención". Su mayor ventaja es el desacoplamiento dinámico que permite construir tuberías de procesamiento donde cada eslabón decide su participación. Es ideal para sistemas extensibles de reglas de negocio o validaciones en cascada.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](command.md), donde el recorrido continúa sobre esta base.

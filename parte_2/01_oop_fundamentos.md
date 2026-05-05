@@ -27,6 +27,13 @@ Al finalizar este capítulo, serás capaz de:
 6. Modelar sistemas básicos usando burbujas conceptuales
 :::
 
+:::{note} Hoja de ruta del capítulo
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](indice.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (introduccion-la-transicion-de-paradigma)=
 ## Introducción: La transición de paradigma
 
@@ -1501,3 +1508,7 @@ Comparación de modelos para el concepto "Libro" en diferentes contextos de apli
 
 **Observación clave:** El mismo concepto del mundo real (un libro) produce modelos completamente diferentes según el objetivo del sistema. Esto demuestra que la abstracción es contextual.
 ````
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](02_oop_relaciones.md), donde el recorrido continúa sobre esta base.

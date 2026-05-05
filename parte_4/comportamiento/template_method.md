@@ -7,6 +7,15 @@ subject: Patrones de Diseño de Comportamiento
 (patron-template-method)=
 # Template Method
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Template Method** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](strategy.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Template Method** (Método Plantilla) es un patrón de diseño de comportamiento que define el esqueleto de un algoritmo en una operación, delegando algunos pasos a las subclases. 
@@ -140,7 +149,7 @@ public class ProcesadorEmail extends ProcesadorMensajes {
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-template-method-mini
@@ -151,3 +160,7 @@ Una plataforma importa datos desde CSV, JSON y XML, pero siempre repite la secue
 ## Resumen
 
 El Template Method es el patrón de la "estructura compartida". Es una herramienta poderosa para construir sistemas coherentes donde la lógica de alto nivel está protegida en la base, mientras que la flexibilidad de los detalles queda en manos de las especializaciones, logrando un balance ideal entre control y extensibilidad.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](visitor.md), donde el recorrido continúa sobre esta base.

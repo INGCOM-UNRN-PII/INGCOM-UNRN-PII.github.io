@@ -7,6 +7,15 @@ subject: Patrones de Diseño Creacionales
 (patron-prototype)=
 # Prototype
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Prototype** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](builder.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Prototype** (Prototipo) es un patrón de diseño creacional que permite la creación de nuevos objetos a partir de un objeto existente (el prototipo) mediante la clonación. En lugar de instanciar la clase desde cero, el cliente solicita al prototipo que cree una copia de sí mismo.
@@ -155,7 +164,7 @@ public class Documento implements Cloneable {
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-prototype-mini
@@ -166,3 +175,7 @@ Un laboratorio mantiene configuraciones base de máquinas virtuales para distint
 ## Resumen
 
 El patrón Prototype es el patrón del "copiar y pegar". Su valor reside en la eficiencia y en la capacidad de crear variantes de objetos complejos sin depender de sus clases concretas ni de pesados procesos de inicialización. Es la base de los sistemas de prototipado donde los objetos evolucionan por copia y modificación.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](ejercicios_integradores.md), donde el recorrido continúa sobre esta base.

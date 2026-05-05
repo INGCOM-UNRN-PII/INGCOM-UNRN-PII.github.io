@@ -25,6 +25,13 @@ Al finalizar este capítulo, serás capaz de:
 
 ---
 
+:::{note} Hoja de ruta del capítulo
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](09_oop_solid.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (fundamentos-testing)=
 ## Fundamentos del Testing
 
@@ -2433,3 +2440,7 @@ class SistemaAlertasTest {
 - Freeman, S. & Pryce, N. (2009). *Growing Object-Oriented Software, Guided by Tests*
 - Meszaros, G. (2007). *xUnit Test Patterns: Refactoring Test Code*
 - Martin, R. C. (2008). *Clean Code*, Capítulo 9: Unit Tests
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](12_oop_antipatrones.md), donde el recorrido continúa sobre esta base.

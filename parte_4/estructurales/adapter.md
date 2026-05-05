@@ -7,6 +7,15 @@ subject: Patrones de Diseño Estructurales
 (patron-adapter)=
 # Adapter
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Adapter** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](indice.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Adapter** (también conocido como **Wrapper**) permite que clases con interfaces incompatibles trabajen juntas, convirtiendo la interfaz de una clase en otra que el cliente espera. Actúa como un "traductor" entre dos interfaces, permitiendo que objetos con interfaces incompatibles colaboren.
@@ -258,7 +267,7 @@ public class AdaptadorPorHerencia extends DispositivoAntiguoEuropeo
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-adapter-mini
@@ -269,3 +278,7 @@ Una aplicación nueva necesita usar un servicio legacy de fax cuya API no coinci
 ## Resumen
 
 El patrón **Adapter** resuelve problemas de incompatibilidad entre interfaces proporcionando una clase intermediaria que traduce llamadas. Es fundamental en integración de sistemas heterogéneos y reutilización de código existente sin modificación. Aunque introduce indirección, su beneficio en separación de concerns y flexibilidad lo hacen invaluable en arquitecturas empresariales.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](bridge.md), donde el recorrido continúa sobre esta base.

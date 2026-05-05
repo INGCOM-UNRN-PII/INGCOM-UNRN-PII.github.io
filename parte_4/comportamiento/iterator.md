@@ -7,6 +7,15 @@ subject: Patrones de Diseño de Comportamiento
 (patron-iterator)=
 # Iterator
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Iterator** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](interpreter.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Iterator** (Iterador) es un patrón de diseño de comportamiento que permite recorrer los elementos de una colección sin exponer su representación subyacente (listas, pilas, árboles, etc.). 
@@ -177,7 +186,7 @@ public class MiLista<T> {
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-iterator-mini
@@ -188,3 +197,7 @@ Tenés una colección propia de entregas de trabajos prácticos y querés recorr
 ## Resumen
 
 El Iterator es el "traductor de recorridos". Es un patrón esencial que habilita el polimorfismo sobre estructuras de datos, permitiendo que el software sea agnóstico a la forma en que se almacenan los datos y se concentre en cómo se procesan.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](mediator.md), donde el recorrido continúa sobre esta base.

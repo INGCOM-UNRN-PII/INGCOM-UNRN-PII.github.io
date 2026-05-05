@@ -7,6 +7,15 @@ subject: Patrones de Diseño de Comportamiento
 (patron-memento)=
 # Memento
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Memento** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](mediator.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Memento** (Recuerdo) es un patrón de diseño de comportamiento que permite capturar y externalizar el estado interno de un objeto sin violar su encapsulación, de forma que el objeto pueda ser restaurado a dicho estado posteriormente.
@@ -149,7 +158,7 @@ public class Historial {
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-memento-mini
@@ -160,3 +169,7 @@ Un editor de texto necesita recuperar versiones previas sin exponer todos los de
 ## Resumen
 
 El Memento es la "máquina del tiempo" de los objetos. Su gran valor es permitir que un sistema tenga memoria de sus estados pasados sin comprometer la integridad ni la privacidad de sus datos internos, logrando un equilibrio entre funcionalidad y diseño limpio.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](observer.md), donde el recorrido continúa sobre esta base.

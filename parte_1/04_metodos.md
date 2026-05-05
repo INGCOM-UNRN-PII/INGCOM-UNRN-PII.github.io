@@ -16,6 +16,15 @@ En C hablamos de **funciones**. En Java, el término correcto es **método** por
 A lo largo de este curso, usaremos ambos términos de forma intercambiable cuando el contexto sea claro, pero recordá que en Java técnicamente son **métodos**.
 :::
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Métodos en Java** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](03_tipos_de_datos.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (por-que-usar-metodos)=
 ## ¿Por qué usar métodos?
 
@@ -1301,4 +1310,10 @@ Soluciones posibles:
 - **Schildt, H.** (2022). _Java: A Beginner's Guide_ (9na ed.). McGraw Hill.
 - **Gosling, J., et al.** (2015). _The Java Language Specification_. Oracle.
 
+## Resumen
 
+Este capítulo presentó las ideas centrales de **Métodos en Java** y dejó un marco de referencia para relacionarlas con el resto del recorrido.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](04b_varargs.md), donde el recorrido continúa sobre esta base.

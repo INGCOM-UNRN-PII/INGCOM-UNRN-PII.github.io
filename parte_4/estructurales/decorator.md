@@ -7,6 +7,15 @@ subject: Patrones de Diseño Estructurales
 (patron-decorator)=
 # Decorator
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Decorator** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](composite.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Decorator** permite agregar responsabilidades a un objeto dinámicamente, proporcionando una alternativa flexible a la herencia para extender funcionalidad.
@@ -331,7 +340,7 @@ InputStream final_stream = new CompressedStream(buffered);
 final_stream.read();  // Descomprimiendo -> Buffered -> archivo
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-decorator-mini
@@ -342,3 +351,7 @@ Un servicio de envío de correos ya funciona, pero ahora hay que poder agregar v
 ## Resumen
 
 El patrón **Decorator** es esencial para agregar comportamiento dinámicamente sin crear explosión de subclases. Su flexibilidad permite combinar múltiples características en tiempo de ejecución. Aunque introduce complejidad, su adherencia al principio Open/Closed y Single Responsibility lo hacen invaluable en arquitectura extensible.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](facade.md), donde el recorrido continúa sobre esta base.

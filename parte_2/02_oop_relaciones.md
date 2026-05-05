@@ -31,6 +31,13 @@ Al finalizar este capítulo, serás capaz de:
 
 ---
 
+:::{note} Hoja de ruta del capítulo
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](01_oop_fundamentos.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (encapsulamiento-concepto)=
 ## Encapsulamiento: Protegiendo el Estado
 
@@ -1487,3 +1494,7 @@ Modelo de clases completo para el sistema hospitalario, integrando diversos tipo
 - Un médico puede tener varias especialidades
 - Las especialidades no desaparecen si el médico deja el hospital
 ````
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](03_sintaxis_clases.md), donde el recorrido continúa sobre esta base.

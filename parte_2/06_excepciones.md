@@ -38,6 +38,13 @@ Al finalizar este capítulo, serás capaz de:
 
 ---
 
+:::{note} Hoja de ruta del capítulo
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](05_herencia_polimorfismo.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (excepciones-son-objetos)=
 ## Las Excepciones son Objetos
 
@@ -1582,3 +1589,7 @@ Demostrá el principio de sustitución con excepciones:
 - {ref}`oop-contratos` - Diseño por contratos y precondiciones
 - {ref}`java-herencia-polimorfismo` - Herencia e interfaces en Java
 :::
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](07_colecciones_genericos.md), donde el recorrido continúa sobre esta base.

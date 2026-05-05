@@ -7,6 +7,15 @@ subject: Patrones de Diseño Creacionales
 (patron-abstract-factory)=
 # Abstract Factory
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Abstract Factory** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](factory.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Abstract Factory** (Fábrica Abstracta) es un patrón de diseño creacional que proporciona una interfaz para crear familias de objetos relacionados o dependientes sin especificar sus clases concretas. 
@@ -237,7 +246,7 @@ public class Aplicacion {
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-abstract-factory-mini
@@ -248,3 +257,7 @@ Una plataforma educativa debe correr en modo **escritorio** y **web**, y cada mo
 ## Resumen
 
 El Abstract Factory es el "patrón de las familias". Su fuerza reside en garantizar la coherencia entre objetos relacionados y en desacoplar totalmente al cliente de las implementaciones concretas. Sin embargo, su rigidez ante la adición de nuevos tipos de productos requiere un diseño previo cuidadoso de las interfaces.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](builder.md), donde el recorrido continúa sobre esta base.

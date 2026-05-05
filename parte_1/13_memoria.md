@@ -13,6 +13,15 @@ Este capítulo es fundamental para entender cómo funciona Java "por dentro". Si
 Muchos bugs difíciles de encontrar están relacionados con cómo Java maneja la memoria: variables que "misteriosamente" cambian de valor, comparaciones que dan resultados inesperados, o el temido `NullPointerException`. Entender el modelo de memoria te ayuda a evitar estos problemas.
 :::
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Memoria, Referencias y Mutabilidad** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](12_archivos.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (modelo-de-memoria-de-la-jvm)=
 ## Modelo de Memoria de la JVM
 
@@ -1234,3 +1243,7 @@ Siempre verificá que las referencias no sean `null` antes de usarlas, especialm
 - {ref}`regla-0xE001` - Comparación de objetos con equals vs ==.
 - {ref}`regla-0x3002` - Manejo de NullPointerException.
 :::
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](../parte_2/indice.md), donde el recorrido continúa sobre esta base.

@@ -7,6 +7,15 @@ subject: Patrones de Diseño Estructurales
 (patron-composite)=
 # Composite
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Composite** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](bridge.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Composite** permite componer objetos en estructuras de árbol para representar jerarquías parte-todo, permitiendo que los clientes traten objetos individuales y composiciones de objetos de manera uniforme.
@@ -319,7 +328,7 @@ menuPrincipal.agregar(menuRecientes);
 menuPrincipal.mostrar();
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-composite-mini
@@ -330,3 +339,7 @@ Modelá un sistema de archivos con carpetas y documentos donde ambos deben sopor
 ## Resumen
 
 El patrón **Composite** es fundamental para trabajar con estructuras jerárquicas. Al permitir tratar uniformemente hojas y compuestos, simplifica enormemente el código cliente y facilita la adición de nuevos tipos. Es ampliamente usado en sistemas que requieren representar relaciones padre-hijo de forma flexible.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](decorator.md), donde el recorrido continúa sobre esta base.

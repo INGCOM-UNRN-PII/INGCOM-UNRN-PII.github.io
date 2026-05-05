@@ -6,6 +6,15 @@ description: Guía paso a paso para trabajar con Gradle en los proyectos de Prog
 (guia-practica-de-gradle)=
 # Guía Práctica de Gradle
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Guía Práctica de Gradle** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](06_entrada_salida.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (introduccion)=
 ## Introducción
 
@@ -1894,3 +1903,7 @@ Usá IntelliJ:
 3. Ejecutá la tarea `build` desde el panel
 4. Compará los tiempos con ejecutar desde terminal
 ````
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](08_junit.md), donde el recorrido continúa sobre esta base.

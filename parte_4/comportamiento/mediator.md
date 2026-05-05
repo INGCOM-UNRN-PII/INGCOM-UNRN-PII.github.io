@@ -7,6 +7,15 @@ subject: Patrones de Diseño de Comportamiento
 (patron-mediator)=
 # Mediator
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Mediator** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](iterator.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Mediator** (Mediador) es un patrón de diseño de comportamiento que define un objeto que encapsula cómo interactúan un conjunto de objetos. 
@@ -153,7 +162,7 @@ public class TorreControlConcreta implements TorreControl {
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-mediator-mini
@@ -164,3 +173,7 @@ En un formulario de inscripción, cambiar la carrera habilita materias, turno y 
 ## Resumen
 
 El Mediator es el "coordinador central". Su valor reside en transformar una red caótica de dependencias en una estructura en estrella, donde la lógica de negocio sobre cómo colaboran los objetos queda aislada y protegida, permitiendo que los componentes individuales sigan siendo simples y reutilizables.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](memento.md), donde el recorrido continúa sobre esta base.

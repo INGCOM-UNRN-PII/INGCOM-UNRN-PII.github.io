@@ -14,6 +14,15 @@ El **control de flujo** se refiere a las instrucciones que determinan el orden e
 - **Iteración**: Repetir bloques de código múltiples veces (`for`, `while`, `do-while`)
 - **Transferencia**: Alterar el flujo dentro de estructuras (`break`, `continue`, `return`)
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Sintaxis de Java: Control de Flujo** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](04b_varargs.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (logica-booleana-y-cortocircuito)=
 ## Lógica Booleana y Cortocircuito
 
@@ -1735,3 +1744,11 @@ for (int fila = 1; fila <= 5; fila = fila + 1) {
 - {ref}`regla-0x5001` - Estilo de llaves y bloques en estructuras de control.
 - {ref}`regla-0xE001` - Comparación de tipos primitivos vs objetos.
 :::
+
+## Resumen
+
+Este capítulo presentó las ideas centrales de **Sintaxis de Java: Control de Flujo** y dejó un marco de referencia para relacionarlas con el resto del recorrido.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](06_entrada_salida.md), donde el recorrido continúa sobre esta base.

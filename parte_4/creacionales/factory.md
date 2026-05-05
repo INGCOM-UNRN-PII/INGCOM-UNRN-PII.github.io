@@ -7,6 +7,15 @@ subject: Patrones de Diseño Creacionales
 (patron-factory-method)=
 # Factory Method
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Factory Method** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](singleton.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Factory Method** (Método de Fábrica) es un patrón de diseño creacional que define una interfaz para crear un objeto, pero deja que las subclases decidan qué clase instanciar. El Factory Method permite que una clase delegue la instanciación a sus subclases.
@@ -168,7 +177,7 @@ public class AplicacionPDF extends Aplicacion {
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-factory-mini
@@ -179,3 +188,7 @@ Un sistema de exportación debe generar `ReportePDF`, `ReporteCSV` o `ReporteJSO
 ## Resumen
 
 El Factory Method es la herramienta definitiva para el desacoplamiento creacional. Su principal valor radica en permitir que un sistema evolucione permitiendo que nuevas subclases decidan cómo instanciar objetos existentes, manteniendo el código base limpio y enfocado en la lógica de alto nivel.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](abstract_factory.md), donde el recorrido continúa sobre esta base.

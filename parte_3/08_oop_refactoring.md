@@ -25,6 +25,13 @@ Al finalizar este capítulo, serás capaz de:
 
 ---
 
+:::{note} Hoja de ruta del capítulo
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](indice.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (que-es-refactoring)=
 ## ¿Qué es Refactoring?
 
@@ -2479,3 +2486,7 @@ public class ReporteCliente {
 - Beck, K. (1999). *Extreme Programming Explained*
 - Martin, R. C. (2008). *Clean Code: A Handbook of Agile Software Craftsmanship*
 - Kerievsky, J. (2004). *Refactoring to Patterns*
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](09_oop_solid.md), donde el recorrido continúa sobre esta base.

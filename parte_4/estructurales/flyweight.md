@@ -7,6 +7,15 @@ subject: Patrones de Diseño Estructurales
 (patron-flyweight)=
 # Flyweight
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Flyweight** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](facade.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Flyweight** usa compartición para soportar grandes cantidades de objetos granulares eficientemente, separando estado intrínseco (compartido) del extrínseco (particular).
@@ -300,7 +309,7 @@ doc.agregarCarácter('a');
 doc.mostrar();
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-flyweight-mini
@@ -311,3 +320,7 @@ Un editor de mapas representa miles de árboles iguales que solo cambian de posi
 ## Resumen
 
 El patrón **Flyweight** es crítico para aplicaciones que manejan cantidades masivas de objetos similares. Al separar estado compartible del estado particular, logra reducir dramáticamente el consumo de memoria. Su uso requiere cuidadosa identificación de estado intrínseco vs. extrínseco, pero el ahorro resultante es significativo en sistemas a gran escala.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](proxy.md), donde el recorrido continúa sobre esta base.

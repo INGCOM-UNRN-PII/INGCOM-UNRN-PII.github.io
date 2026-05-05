@@ -16,6 +16,15 @@ Este apunte trata _todo_ lo referido testing de Java con jUnit, por lo que van a
 La idea es que este sea una referencia del tema, por lo que tendrán que volver eventualmente y saltear aquello que no les suene.
 :::
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Testing con JUnit 5** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](07_gradle.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (del-testing-manual-en-c-al-automatizado-en-java)=
 ## Del Testing Manual en C al Automatizado en Java
 
@@ -3376,3 +3385,7 @@ Tareas:
 4. Proponé posibles soluciones según cada hipótesis
 
 ````
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](09_arreglos.md), donde el recorrido continúa sobre esta base.

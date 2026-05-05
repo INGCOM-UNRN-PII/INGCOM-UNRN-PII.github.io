@@ -25,6 +25,13 @@ Al finalizar este capítulo, serás capaz de:
 
 ---
 
+:::{note} Hoja de ruta del capítulo
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](12_oop_antipatrones.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (filosofia-contratos)=
 ## La Filosofía del Contrato
 
@@ -1237,3 +1244,7 @@ String procesarPedido(Pedido pedido, Cliente cliente, String direccion) {
 
 ¿Qué condiciones son precondiciones? ¿Cuáles deberían ser invariantes de clase? ¿Cómo documentarías el contrato?
 ````
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](../parte_4/indice.md), donde el recorrido continúa sobre esta base.

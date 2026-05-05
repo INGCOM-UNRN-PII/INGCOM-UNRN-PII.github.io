@@ -24,6 +24,15 @@ orientada a objetos (clases, objetos, herencia, polimorfismo) se estudiarán en 
 Por ahora, usaremos Java de forma similar a como usabas C: escribiendo funciones (que en Java se llaman "métodos") dentro de una estructura obligatoria llamada "clase".
 :::
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Características del Lenguaje Java** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](01_origenes.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (lenguaje-de-proposito-general)=
 ## Lenguaje de Propósito General
 
@@ -981,3 +990,7 @@ print(int("5") + 3)
 
 **Siguiente:** Continuá explorando los fundamentos de Java con los tipos de
 datos primitivos y operadores.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](03_tipos_de_datos.md), donde el recorrido continúa sobre esta base.

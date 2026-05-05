@@ -7,6 +7,15 @@ subject: Patrones de Diseño de Comportamiento
 (patron-visitor)=
 # Visitor
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Visitor** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](template_method.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Visitor** (Visitante) es un patrón de diseño de comportamiento que permite definir una nueva operación sin cambiar las clases de los elementos sobre los que opera. 
@@ -169,7 +178,7 @@ public class CalculadorArea implements Visitante {
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-visitor-mini
@@ -180,3 +189,7 @@ Una herramienta de análisis recorre un árbol sintáctico y necesita agregar op
 ## Resumen
 
 El Visitor es el patrón del "doble despacho". Su gran poder reside en la capacidad de extender la funcionalidad de una estructura compleja sin tocar una sola línea de código de las clases originales, permitiendo que el sistema crezca de forma modular y manteniendo las responsabilidades de procesamiento bien aisladas de las de representación.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](ejercicios_integradores.md), donde el recorrido continúa sobre esta base.

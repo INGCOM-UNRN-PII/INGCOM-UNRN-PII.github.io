@@ -7,6 +7,15 @@ subject: Patrones de Diseño Estructurales
 (patron-bridge)=
 # Bridge
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Bridge** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](adapter.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Bridge** desacopla una abstracción de su implementación para que puedan variar independientemente. Permite tener múltiples dimensiones de variación sin crear una explosión de subclases.
@@ -273,7 +282,7 @@ Documento doc = new Informe(html, "Datos de ventas");
 doc.mostrar();  // <html>INFORME: Datos de ventas</html>
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-bridge-mini
@@ -284,3 +293,7 @@ Un sistema de reportes debe combinar dos dimensiones de variación: **tipo de re
 ## Resumen
 
 El patrón **Bridge** es esencial para manejar múltiples dimensiones de variación sin explosión de clases. Mediante la separación de abstracción e implementación, permite evolucionar ambas de forma independiente. Aunque introduce complejidad adicional, su beneficio en escalabilidad y mantenibilidad lo hace fundamental en sistemas grandes.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](composite.md), donde el recorrido continúa sobre esta base.

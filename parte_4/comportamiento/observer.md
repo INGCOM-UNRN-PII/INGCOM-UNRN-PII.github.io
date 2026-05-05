@@ -7,6 +7,15 @@ subject: Patrones de Diseño de Comportamiento
 (patron-observer)=
 # Observer
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Observer** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](memento.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Observer** (Observador) es un patrón de diseño de comportamiento que define una dependencia de uno-a-muchos entre objetos, de forma que cuando un objeto cambia de estado, todos sus dependientes son notificados y actualizados automáticamente.
@@ -161,7 +170,7 @@ public class Inversor implements Observador {
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-observer-mini
@@ -172,3 +181,7 @@ Cuando se publica una nota, hay que avisar a estudiantes, analítica académica 
 ## Resumen
 
 El Observer es el patrón de la "reactividad". Permite construir sistemas donde el flujo de información es automático y dinámico, asegurando que todos los componentes interesados estén siempre sincronizados con la fuente de la verdad (el sujeto) sin sacrificar la independencia de las clases.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](state.md), donde el recorrido continúa sobre esta base.

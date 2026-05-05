@@ -33,6 +33,13 @@ Al finalizar este capítulo, serás capaz de:
 
 ---
 
+:::{note} Hoja de ruta del capítulo
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](02_oop_relaciones.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Bloque 1: De la "Burbuja" al Código
 
 (estructura-clase-java)=
@@ -2741,3 +2748,7 @@ Mensaje m3 = new Mensaje("Hola", "juan@mail.com", "Saludo");
 Mensaje m4 = new Mensaje("URGENTE", "juan@mail.com", "Alerta", "alta");
 ```
 ````
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](04_oop_herencia_polimorfismo.md), donde el recorrido continúa sobre esta base.

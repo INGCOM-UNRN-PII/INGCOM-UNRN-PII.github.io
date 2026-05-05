@@ -7,6 +7,15 @@ subject: Patrones de Diseño Estructurales
 (patron-proxy)=
 # Proxy
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Proxy** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](flyweight.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Proxy** proporciona un sustituto (proxy) para otro objeto para controlar su acceso, permitiendo operaciones adicionales antes/después de acceder al objeto real.
@@ -304,7 +313,7 @@ public class ProxyServidor implements ServicioRemoto {
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-proxy-mini
@@ -315,3 +324,7 @@ Un repositorio de documentos carga archivos PDF muy pesados desde almacenamiento
 ## Resumen
 
 El patrón **Proxy** es fundamental para controlar acceso a objetos costosos o protegidos. Su versatilidad permite múltiples variantes (virtual, remoto, protector) adaptándose a diferentes necesidades. Aunque introduce indirección, sus beneficios en seguridad, performance y auditoría lo hacen indispensable en arquitecturas empresariales.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](ejercicios_integradores.md), donde el recorrido continúa sobre esta base.

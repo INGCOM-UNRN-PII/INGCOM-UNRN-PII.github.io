@@ -24,6 +24,13 @@ Al finalizar este capítulo, serás capaz de:
 
 ---
 
+:::{note} Hoja de ruta del capítulo
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](08_oop_refactoring.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (introduccion-solid)=
 ## Introducción: ¿Por qué SOLID?
 
@@ -1886,3 +1893,7 @@ GeneradorReportes reportesTest = new GeneradorReportes(
 - Martin, R. C. (2017). *Clean Architecture*
 - Meyer, B. (1997). *Object-Oriented Software Construction* (2nd ed.)
 - Fowler, M. (2018). *Refactoring: Improving the Design of Existing Code* (2nd ed.)
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](11_oop_testing.md), donde el recorrido continúa sobre esta base.

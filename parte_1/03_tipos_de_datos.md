@@ -14,6 +14,15 @@ Este capítulo profundiza en los **tipos de datos concretos** que ofrece Java: l
 Si venís de programar en C, vas a encontrar que la sintaxis de declaración de variables y el uso de tipos primitivos es **casi idéntica**. La diferencia principal es que Java **garantiza** el tamaño de cada tipo en todas las plataformas, mientras que en C el tamaño de `int` o `long` puede variar según el compilador y la arquitectura (16, 32 o 64 bits).
 :::
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Tipos de Datos en Java** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](02_lenguaje.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (declaracion-de-variables)=
 ## Declaración de Variables
 
@@ -1965,3 +1974,10 @@ int i3 = (int) l1;
 - **Schildt, H.** (2022). _Java: A Beginner's Guide_ (9na ed.). McGraw Hill.
 - **Oracle Corporation.** (2023). _The Java Language Specification_. [Disponible en línea](https://docs.oracle.com/javase/specs/).
 
+## Resumen
+
+Este capítulo presentó las ideas centrales de **Tipos de Datos en Java** y dejó un marco de referencia para relacionarlas con el resto del recorrido.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](04_metodos.md), donde el recorrido continúa sobre esta base.

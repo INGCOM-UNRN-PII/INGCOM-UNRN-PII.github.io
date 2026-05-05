@@ -25,6 +25,13 @@ Al finalizar este capítulo, serás capaz de:
 
 ---
 
+:::{note} Hoja de ruta del capítulo
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](03_sintaxis_clases.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (herencia-concepto)=
 ## Herencia: Especialización y Generalización
 
@@ -1292,3 +1299,7 @@ Diseñá un sistema de notificaciones:
 - Aplicá los principios vistos
 - Dibujá el diagrama de clases completo
 ```
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](05_herencia_polimorfismo.md), donde el recorrido continúa sobre esta base.

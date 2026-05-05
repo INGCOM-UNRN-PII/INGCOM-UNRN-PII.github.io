@@ -23,6 +23,13 @@ Al finalizar este capítulo, serás capaz de:
 
 ---
 
+:::{note} Hoja de ruta del capítulo
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](11_oop_testing.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (que-son-antipatrones)=
 ## ¿Qué Son los Anti-patrones?
 
@@ -1364,6 +1371,8 @@ Cada vez que tocás un archivo, hacé una pequeña mejora: renombrá una variabl
 
 ---
 
+## Ejercicios
+
 ````{exercise}
 :label: ej-identificar-smells
 
@@ -1593,3 +1602,8 @@ public class Tienda {
 - Brown et al. "AntiPatterns: Refactoring Software, Architectures, and Projects in Crisis"
 - Martin, Robert C. "Clean Code: A Handbook of Agile Software Craftsmanship"
 - Wake, William. "Refactoring Workbook"
+
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](13_oop_contratos.md), donde el recorrido continúa sobre esta base.

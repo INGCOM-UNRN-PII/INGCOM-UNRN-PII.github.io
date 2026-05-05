@@ -7,6 +7,15 @@ subject: Patrones de Diseño de Comportamiento
 (patron-strategy)=
 # Strategy
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Strategy** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](state.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Strategy** (Estrategia) es un patrón de diseño de comportamiento que define una familia de algoritmos, encapsula cada uno de ellos y los hace intercambiables. 
@@ -145,7 +154,7 @@ public class Carrito {
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-strategy-mini
@@ -156,3 +165,7 @@ Un sistema de pagos debe calcular comisiones distintas para tarjeta, transferenc
 ## Resumen
 
 El patrón Strategy es el patrón de la "intercambiabilidad". Al separar el *qué se hace* del *cómo se hace*, nos otorga una arquitectura limpia donde los algoritmos son piezas modulares que pueden evolucionar, testearse y reemplazarse sin afectar la estabilidad del resto del sistema.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](template_method.md), donde el recorrido continúa sobre esta base.

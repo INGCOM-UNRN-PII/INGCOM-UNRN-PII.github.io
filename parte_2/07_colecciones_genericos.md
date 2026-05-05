@@ -39,6 +39,13 @@ Para comprender genéricos en profundidad, consultá el capítulo dedicado: {ref
 
 ---
 
+:::{note} Hoja de ruta del capítulo
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](06_excepciones.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (problema-arreglos)=
 ## El Problema con los Arreglos
 
@@ -1110,3 +1117,7 @@ Implementá una clase genérica `Grafo<T>` que:
 - Implemente búsqueda en anchura (BFS)
 - Determine si existe camino entre dos nodos
 ```
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](08_genericos.md), donde el recorrido continúa sobre esta base.

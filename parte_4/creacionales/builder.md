@@ -7,6 +7,15 @@ subject: Patrones de Diseño Creacionales
 (patron-builder)=
 # Builder
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Builder** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](abstract_factory.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **Builder** (Constructor) es un patrón de diseño creacional que permite construir objetos complejos paso a paso. El patrón permite producir distintos tipos y representaciones de un objeto utilizando el mismo código de construcción.
@@ -181,7 +190,7 @@ Casa miCasa = new Casa.CasaBuilder()
     .construir();
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-builder-mini
@@ -192,3 +201,7 @@ Diseñá la creación de un `ClienteHttp` que puede llevar `timeout`, autenticac
 ## Resumen
 
 El Builder es el patrón ideal para "ensamblar" objetos. Su mayor virtud es la legibilidad y la flexibilidad que aporta al cliente, permitiéndole construir objetos complejos sin perderse en una maraña de parámetros de constructor. Es especialmente popular en Java moderno a través de bibliotecas como Lombok o en la construcción de APIs fluidas.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](prototype.md), donde el recorrido continúa sobre esta base.

@@ -10,6 +10,15 @@ Todo programa útil necesita comunicarse con el mundo exterior: mostrar resultad
 
 Si ya se trabajó con C, los conceptos son familiares: `printf` para imprimir con formato, `scanf` para leer datos. Java ofrece mecanismos similares pero con diferencias importantes en la sintaxis y el manejo de errores. Este capítulo se centra en la entrada/salida básica por consola; el manejo de archivos se verá más adelante.
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **Entrada y Salida de Datos** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](05_sintaxis_control.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 (que-es-un-stream)=
 ## ¿Qué es un Stream?
 
@@ -1227,3 +1236,11 @@ La clave es usar `hasNextInt()` para verificar si lo que sigue es un entero, y `
 - {ref}`regla-0x0001` - Convenciones de nomenclatura.
 - {ref}`regla-0x3001` - Manejo de errores en la entrada de datos.
   :::
+
+## Resumen
+
+Este capítulo presentó las ideas centrales de **Entrada y Salida de Datos** y dejó un marco de referencia para relacionarlas con el resto del recorrido.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](07_gradle.md), donde el recorrido continúa sobre esta base.

@@ -7,6 +7,15 @@ subject: Patrones de Diseño de Comportamiento
 (patron-state)=
 # State
 
+:::{note} Hoja de ruta del capítulo
+
+**Objetivo.** Comprender las ideas centrales de **State** y usarlas como base para el resto del recorrido.
+
+**Prerrequisitos.** Conviene haber leído [el material inmediatamente anterior](observer.md) para llegar con el hilo de la parte fresco.
+
+**Desarrollo.** El desarrollo del capítulo aparece en las secciones que siguen. Conviene recorrerlas en orden y volver al resumen antes de pasar al siguiente tema.
+:::
+
 ## Definición
 
 El patrón **State** (Estado) es un patrón de diseño de comportamiento que permite que un objeto altere su comportamiento cuando su estado interno cambia. El objeto parecerá haber cambiado su clase.
@@ -150,7 +159,7 @@ public class Semaforo {
 }
 ```
 
-## Mini ejercicio
+## Ejercicios
 
 ```{exercise}
 :label: ex-parte4-state-mini
@@ -161,3 +170,7 @@ Modelá el ciclo de vida de una inscripción con estados `Borrador`, `Enviada`, 
 ## Resumen
 
 El patrón State es la solución elegante a la complejidad de las máquinas de estado. Al transformar los estados en objetos, logramos un diseño donde el comportamiento es una propiedad dinámica y polimórfica, permitiendo que los objetos evolucionen de forma fluida y organizada a lo largo de su ciclo de vida.
+
+## Próximo paso
+
+Para seguir, conviene pasar a [el material siguiente](strategy.md), donde el recorrido continúa sobre esta base.
