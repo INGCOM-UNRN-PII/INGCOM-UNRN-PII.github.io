@@ -170,8 +170,246 @@ Cuando testeamos una clase, nos enfocamos en su **comportamiento observable**, n
 Si cambiás la implementación interna pero el comportamiento observable sigue igual, los tests no deberían romperse.
 :::
 
-(ejemplo-cuenta-bancaria)=
-### Ejemplo: Testing de una Cuenta Bancaria
+(testing-sin-getters)=
+### Testing Sin Getters/Setters
+
+Una pregunta frecuente: **¿Cómo testeau si no puedo usar getters?**
+
+Respuesta: **Los getters no son necesarios si diseñás métodos de dominio correctamente.**
+
+(problema-getters-testing)=
+#### El Problema con Getters en Tests
+
+Cuando testeas usando getters, tu test es **frágil** y **acoplado a la implementación**:
+
+```java
+// ❌ Malo: Test acoplado a getters
+@Test
+void testCuentaDepositoProblemático() {
+    CuentaBancaria cuenta = new CuentaBancaria(1000);
+    cuenta.depositar(500);
+    
+    // ❌ ¿Por qué usas getSaldo()? Estás verificando estado interno
+    assertEquals(1500, cuenta.getSaldo());
+}
+```
+
+Si mañana cambias de atributo `saldo` a algo más complejo, este test se rompe aunque el comportamiento sea el mismo.
+
+(solucion-metodos-dominio)=
+#### Solución: Métodos de Dominio
+
+Diseña métodos públicos que **representan acciones del dominio**:
+
+```java
+public class CuentaBancaria {
+    private double saldo;
+    
+    // ❌ NO HAGAS: getters
+    // public double getSaldo() { return saldo; }
+    
+    // ✅ HAAZ: métodos de dominio
+    public double consultarSaldo() {
+        return saldo;
+    }
+    
+    public boolean tienefondosSuficientes(double monto) {
+        return saldo >= monto;
+    }
+    
+    public boolean puedoRetirar(double monto) {
+        return tienefondosSuficientes(monto);
+    }
+    
+    public void depositar(double monto) {
+        if (monto <= 0) throw new IllegalArgumentException("Monto inválido");
+        saldo += monto;
+    }
+    
+    public void retirar(double monto) {
+        if (!puedoRetirar(monto)) {
+            throw new SaldoInsuficienteException("Fondos insuficientes");
+        }
+        saldo -= monto;
+    }
+}
+
+// ✅ Tests sin getters
+@Test
+void testCuentaDepositoCorrectamente() {
+    CuentaBancaria cuenta = new CuentaBancaria(1000);
+    cuenta.depositar(500);
+    
+    // Verifica mediante método de dominio, no getter
+    assertEquals(1500, cuenta.consultarSaldo());
+}
+
+@Test
+void testCuentaTienefondosSuficientes() {
+    CuentaBancaria cuenta = new CuentaBancaria(1000);
+    
+    // Verifica comportamiento: ¿tengo fondos?
+    assertTrue(cuenta.puedoRetirar(500));
+    assertTrue(cuenta.tienefondosSuficientes(1000));
+    assertFalse(cuenta.puedoRetirar(1500));
+}
+
+@Test
+void testCuentaRetiraFondos() {
+    CuentaBancaria cuenta = new CuentaBancaria(1000);
+    cuenta.retirar(300);
+    
+    // Verifica estado mediante comportamiento observable
+    assertEquals(700, cuenta.consultarSaldo());
+}
+
+@Test
+void testCuentaRetiraFondosInsuficientes() {
+    CuentaBancaria cuenta = new CuentaBancaria(1000);
+    
+    // Verifica manejo de errores
+    assertThrows(
+        SaldoInsuficienteException.class,
+        () -> cuenta.retirar(1500)
+    );
+}
+```
+
+(diferencia-getter-vs-dominio)=
+#### Diferencia: Getter vs Método de Dominio
+
+| Getter | Método de Dominio |
+| :--- | :--- |
+| `getSaldo()` | `consultarSaldo()` |
+| Expone estado interno | Expresa intención del negocio |
+| Trivial, sin lógica | Puede encapsular validación |
+| Acoplado a impl. interna | Contrato semánticamente significativo |
+| Tests frágiles | Tests robustos |
+
+(invariantes-sin-getters)=
+### Testing de Invariantes sin Getters
+
+Los **invariantes** son propiedades que siempre deben ser verdaderas. Los tests verifican invariantes a través de **comportamiento observable**:
+
+```java
+public class CuentaBancaria {
+    private double saldo;
+    private int depositos;
+    private int retiros;
+    
+    // Invariantes:
+    // 1. saldo >= 0
+    // 2. depositos >= 0
+    // 3. retiros >= 0
+    
+    public void depositar(double monto) {
+        if (monto <= 0) throw new IllegalArgumentException();
+        saldo += monto;
+        depositos++;
+    }
+    
+    public void retirar(double monto) {
+        if (monto > saldo) throw new SaldoInsuficienteException();
+        saldo -= monto;
+        retiros++;
+    }
+    
+    // Métodos para verificar invariantes (sin exponer detalles)
+    public int obtenerNroDepositos() {
+        return depositos;
+    }
+    
+    public int obtenerNroRetiros() {
+        return retiros;
+    }
+}
+
+// Tests verifican invariantes
+@Test
+void testInvarianteSaldoNunca Negativo() {
+    CuentaBancaria cuenta = new CuentaBancaria(1000);
+    
+    // No puedo hacer: assertEquals(1000, cuenta.saldo) [private]
+    // En su lugar, verifica que el comportamiento mantiene invariante
+    
+    assertTrue(cuenta.tienefondosSuficientes(0));    // saldo >= 0
+    assertThrows(
+        SaldoInsuficienteException.class,
+        () -> cuenta.retirar(2000)
+    );
+}
+
+@Test
+void testInvarianteContador() {
+    CuentaBancaria cuenta = new CuentaBancaria(1000);
+    
+    cuenta.depositar(100);
+    cuenta.depositar(200);
+    cuenta.retirar(50);
+    
+    // Verifica invariantes mediante métodos públicos
+    assertEquals(2, cuenta.obtenerNroDepositos());
+    assertEquals(1, cuenta.obtenerNroRetiros());
+}
+```
+
+(patrones-testing-encapsulado)=
+### Patrones para Testing de Código Encapsulado
+
+1. **Usa métodos públicos que representen acciones del dominio**
+   - No `getSaldo()`, usa `consultarSaldo()`
+   - No `setEstado()`, usa métodos semánticamente significativos
+
+2. **Verifica comportamiento a través de múltiples acciones**
+   ```java
+   // En lugar de verificar estado:
+   cuenta.depositar(100);
+   assertEquals(1100, cuenta.getSaldo());  // ❌
+   
+   // Verifica comportamiento completo:
+   cuenta.depositar(100);
+   assertTrue(cuenta.puedoRetirar(1100));   // ✅
+   ```
+
+3. **Diseña excepciones para verificar invariantes**
+   ```java
+   // En lugar de:
+   cuenta.retirar(2000);
+   assertEquals(1000, cuenta.getSaldo());  // ❌
+   
+   // Verifica que la clase rechaza operaciones inválidas:
+   assertThrows(SaldoInsuficienteException.class,
+       () -> cuenta.retirar(2000));  // ✅
+   ```
+
+4. **Utiliza métodos "observables" para verificar estado sin getters**
+   ```java
+   public class Usuario {
+       private String nombre;
+       private String email;
+       
+       // En lugar de getNombre():
+       public boolean tieneNombre(String nombre) {
+           return this.nombre.equals(nombre);
+       }
+       
+       public boolean tieneEmail(String email) {
+           return this.email.equals(email);
+       }
+   }
+   
+   // Test:
+   @Test
+   void testUsuarioTiene NombreYEmail() {
+       Usuario u = new Usuario("Ana", "ana@example.com");
+       assertTrue(u.tieneNombre("Ana"));
+       assertTrue(u.tieneEmail("ana@example.com"));
+   }
+   ```
+
+Ver {ref}`regla-0x200C` y {ref}`regla-0x2011` para más detalles sobre política de encapsulamiento en esta cátedra.
+
+---
 
 Comencemos con una clase simple:
 
