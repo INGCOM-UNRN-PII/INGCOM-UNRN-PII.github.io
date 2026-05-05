@@ -613,7 +613,7 @@ public class Programa {
 
 7. **Concatenación con `+`:** En vez de usar `%d` y format strings, Java permite concatenar directamente strings con números.
 
-(resumen)=
+(02-lenguaje-resumen)=
 ## Resumen
 
 Java se caracteriza por ser:

@@ -2048,7 +2048,7 @@ Ventajas de `@Nested`:
 
 La **cobertura de tests** (test coverage) mide qué porcentaje del código es ejecutado por los tests.
 
-(tipos-de-cobertura)=
+(08-junit-tipos-de-cobertura)=
 ### Tipos de cobertura
 
 #### Cobertura de líneas
@@ -2147,7 +2147,7 @@ void testDividir() {
 
 Este test tiene 100% cobertura pero NO verifica el caso `b == 0`.
 
-(meta-razonable)=
+(08-junit-meta-razonable)=
 ### Meta razonable
 
 - **70-80% de cobertura**: Objetivo razonable para proyectos
@@ -2158,7 +2158,7 @@ Este test tiene 100% cobertura pero NO verifica el caso `b == 0`.
 Priorizá **calidad** de tests sobre cantidad de cobertura. Un test bien pensado que verifica comportamiento es más valioso que 10 tests triviales que solo ejecutan código.
 :::
 
-(buenas-practicas)=
+(08-junit-buenas-practicas)=
 ## Buenas Prácticas
 
 (first-caracteristicas-de-buenos-tests)=
@@ -2195,7 +2195,7 @@ Acrónimo que resume las características de tests efectivos:
 - Escribir tests junto con el código (o antes, en TDD)
 - No postponer el testing
 
-(principios-adicionales)=
+(08-junit-principios-adicionales)=
 ### Principios adicionales
 
 #### DRY en tests, con moderación
@@ -2320,7 +2320,7 @@ void testOrdenar_ConArregloDesordenado_RetornaOrdenado() {
 (anti-patrones-en-testing)=
 ## Anti-patrones en Testing
 
-(tests-fragiles)=
+(08-junit-tests-fragiles)=
 ### Tests frágiles
 
 Tests que fallan frecuentemente por razones no relacionadas con bugs:

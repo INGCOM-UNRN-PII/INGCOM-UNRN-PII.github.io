@@ -614,7 +614,7 @@ class Persona {          // Sin public: solo visible en el paquete 'modelos'
 }
 ```
 
-(modificador-protected)=
+(03-sintaxis-clases-modificador-protected)=
 **`protected` — Acceso para herencia:**
 
 El miembro es accesible desde el mismo paquete **y** desde subclases (incluso en otros paquetes). Se utiliza principalmente cuando se desea que las subclases accedan a ciertos miembros sin exponerlos públicamente.

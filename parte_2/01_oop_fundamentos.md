@@ -249,7 +249,7 @@ classDiagram
 
 En la visión orientada a objetos, cada entidad tiene "vida propia": el libro sabe si está disponible, el socio sabe cuántos préstamos activos tiene, el préstamo sabe cuándo vence. Esta distribución de responsabilidades hace que el sistema sea más fácil de entender, modificar y extender
 
-(conceptos-fundamentales)=
+(01-oop-fundamentos-conceptos-fundamentales)=
 ## Conceptos Fundamentales del Paradigma
 
 Esta sección presenta los conceptos esenciales que definen el paradigma orientado a objetos. Estos conceptos son **universales**: aplican independientemente del lenguaje de programación que se utilice.

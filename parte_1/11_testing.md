@@ -524,7 +524,7 @@ La **cobertura** es una métrica que indica qué porcentaje del código ha sido 
 - **Cobertura de Ramas:** ¿Se probaron todos los caminos de un `if`?
 - **Cobertura de Métodos:** ¿Se invocó este método al menos una vez?
 
-(herramientas)=
+(11-testing-herramientas)=
 ### Herramientas
 
 En Java, la herramienta más utilizada es **JaCoCo** (Java Code Coverage), que se integra con Gradle y genera reportes HTML detallados.
@@ -564,7 +564,7 @@ Tests que ejecutan código pero no verifican nada. Siempre pasan, incluso si el 
 
 **Solución:** Todo test debe tener al menos una verificación explícita del resultado esperado.
 
-(ejercicios-conceptuales)=
+(11-testing-ejercicios-conceptuales)=
 ## Ejercicios Conceptuales
 
 ```{exercise}

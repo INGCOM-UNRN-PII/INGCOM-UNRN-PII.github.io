@@ -34,7 +34,7 @@ tipo nombreVariable = valor;   // Declaración con inicialización (reserva y as
 
 2. **Declaración con inicialización:** Además de reservar espacio, le asignás un valor inicial inmediatamente. Es lo más seguro porque garantiza que la variable siempre tiene un valor conocido.
 
-(ejemplos-de-declaracion)=
+(03-tipos-de-datos-ejemplos-de-declaracion)=
 ### Ejemplos de Declaración
 
 ```{code} java
@@ -757,7 +757,7 @@ char omegaPorCodigo = '\u03A9';    // Ω (U+03A9)
 char corazonPorCodigo = '\u2665';  // ♥ (U+2665)
 ```
 
-(secuencias-de-escape)=
+(03-tipos-de-datos-secuencias-de-escape)=
 ### Secuencias de Escape
 
 Las secuencias de escape permiten representar caracteres que no se pueden escribir directamente:
@@ -1071,7 +1071,7 @@ if (x == 5) {    // Comparación: ¿x es igual a 5?
 En Java, confundir estos en un `if` genera error de compilación (porque `x = 5` devuelve `int`, no `boolean`). En C, compila silenciosamente y causa bugs.
 :::
 
-(operadores-logicos)=
+(03-tipos-de-datos-operadores-logicos)=
 ### Operadores Lógicos
 
 Operan sobre valores `boolean` y devuelven `boolean`. Son fundamentales para construir condiciones complejas:
@@ -1638,7 +1638,7 @@ public static String calcular(Object x, boolean esTexto) {
 Java te obliga a ser explícito sobre los tipos desde el principio. Esto puede parecer restrictivo, pero en proyectos grandes previene categorías enteras de bugs que en Python solo descubrirías al ejecutar ese código específico.
 :::
 
-(ejercicios-de-aplicacion)=
+(03-tipos-de-datos-ejercicios-de-aplicacion)=
 ## Ejercicios de Aplicación
 
 ::::{exercise}

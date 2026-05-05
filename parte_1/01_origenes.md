@@ -1072,7 +1072,7 @@ que usan mucha programación funcional o abstracciones complejas.
 
 ---
 
-(referencias-bibliograficas)=
+(01-origenes-referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 Para profundizar en la historia técnica y social de Java, se recomiendan las siguientes
@@ -1092,7 +1092,7 @@ fuentes:
 
 ---
 
-(ejercicios)=
+(01-origenes-ejercicios)=
 ## Ejercicios
 
 ```{exercise}

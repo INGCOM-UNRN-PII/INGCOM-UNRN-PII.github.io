@@ -871,7 +871,7 @@ Tanto la composición como la agregación son instancias del **patrón estructur
 2. **Reusabilidad**: Las partes pueden reutilizarse en diferentes contextos (especialmente en agregación)
 3. **Jerarquía conceptual**: Modela naturalmente estructuras jerárquicas
 
-(ejemplo-mixto)=
+(02-oop-relaciones-ejemplo-mixto)=
 ### Ejemplo Mixto: Sistema de Biblioteca
 
 Un sistema de biblioteca puede combinar composición y agregación:
@@ -1101,7 +1101,7 @@ Así, `Cliente` no necesita conocer sus pedidos directamente; los consultás a t
 
 ---
 
-(resumen-relaciones)=
+(02-oop-relaciones-resumen-relaciones)=
 ## Resumen
 
 ### Encapsulamiento
@@ -1140,7 +1140,7 @@ Así, `Cliente` no necesita conocer sus pedidos directamente; los consultás a t
 
 ---
 
-(proximos-pasos-oop2)=
+(02-oop-relaciones-proximos-pasos-oop2)=
 ## Próximos Pasos
 
 En este capítulo viste los **conceptos fundamentales** de encapsulamiento y relaciones entre objetos. Para implementar estos conceptos en Java, consultá:
@@ -1154,7 +1154,7 @@ En este capítulo viste los **conceptos fundamentales** de encapsulamiento y rel
 
 ---
 
-(ejercicios-oop2)=
+(02-oop-relaciones-ejercicios-oop2)=
 ## Ejercicios
 
 ### Identificación de Relaciones

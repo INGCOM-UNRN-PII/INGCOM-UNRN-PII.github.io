@@ -60,7 +60,7 @@ Cada parte de esta estructura tiene un propósito específico:
 
 - **return** (obligatorio si no es `void`): La sentencia que finaliza la ejecución del método y devuelve un valor al código que lo llamó. El tipo del valor devuelto debe coincidir con el tipoRetorno declarado.
 
-(comparacion-con-c)=
+(04-metodos-comparacion-con-c)=
 ### Comparación con C
 
 Para quien viene de programar en C, la siguiente tabla muestra las equivalencias:
@@ -1085,7 +1085,7 @@ Resultado: 16
 
 Las siguientes recomendaciones ayudan a escribir métodos claros, mantenibles y menos propensos a errores.
 
-(nombres-descriptivos)=
+(04-metodos-nombres-descriptivos)=
 ### Nombres descriptivos
 
 El nombre del método debe indicar claramente qué hace. La convención en Java es usar **verbos** o **frases verbales** en camelCase.

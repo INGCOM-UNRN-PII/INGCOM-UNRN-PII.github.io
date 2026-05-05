@@ -9,7 +9,7 @@ código oficial de Java, la idea de seguirlas es hacer que nuestro código no so
 indistinguible del código de la plataforma. Sino que también nos ayude al leerlo,
 estableciendo expectativas claras.
 
-(regla-0x0000)=
+(regla-generales-0x0000)=
 ## `0x0000` - Sin errores de ortografía y apliquen formato markdown donde sea posible
 
 ### Explicación
@@ -66,7 +66,7 @@ e identificadores. Esto te ayudará a detectar problemas antes de hacer commit.
 :::
 
 
-(regla-0x0001)=
+(regla-generales-0x0001)=
 ## `0x0001` - Los nombres de las clases van en `CamelloCase`
 
 ### Explicación
@@ -180,7 +180,7 @@ una "joroba" al principio: calcular**P**romedio.
 
 :::
 
-(regla-0x0002)=
+(regla-generales-0x0002)=
 ## `0x0002` - Los identificadores válidos son solo con alfabéticos `[a-zA-Z]`
 
 ### Explicación
@@ -349,7 +349,7 @@ profesional.
 | **Búsqueda**     | Facilita buscar en el código sin preocuparse por acentos       |
 | **Consistencia** | Fuerza un estándar uniforme en todo el proyecto                |
 
-(regla-0x0003)=
+(regla-generales-0x0003)=
 ## `0x0003` - Variables, parámetros y variables locales van en `dromedarioCase`
 
 ### Explicación
@@ -558,7 +558,7 @@ información almacena esto?" sin necesidad de leer el resto del código.
 :::
 
 
-(regla-0x0004)=
+(regla-generales-0x0004)=
 ## `0x0004` - Los nombres de los métodos van en `dromedarioCase`
 
 ### Explicación
@@ -776,7 +776,7 @@ demasiadas cosas. Considerá dividirlo en métodos más pequeños y específicos
 :::
 
 
-(regla-0x0005)=
+(regla-generales-0x0005)=
 ## `0x0005` - Las constantes van en mayúsculas con `SNAKE_CASE`
 
 ### Explicación
@@ -1023,7 +1023,7 @@ debería ser una constante. Esto facilita el mantenimiento y reduce errores.
 :::
 
 
-(regla-0x0006)=
+(regla-generales-0x0006)=
 ## `0x0006` - Los identificadores DEBEN ser descriptivos
 
 ### Explicación
@@ -1715,7 +1715,7 @@ public interface Comparable<T> {
 **Nota**: Esta distinción ayuda a entender la intención del diseño y cómo se
 usará la interfaz.
 
-(regla-0x0007)=
+(regla-generales-0x0007)=
 ## `0x0007` - Los identificadores booleanos deben usar prefijos interrogativos
 
 ### Explicación
@@ -2144,7 +2144,7 @@ Ejemplos:
 - `if (lista.tieneElementos())` → "¿La lista tiene elementos?" 
 :::
 
-(regla-0x0008)=
+(regla-generales-0x0008)=
 ## `0x0008` - Los identificadores no deben llevar el tipo de lo que procesan
 
 ### Explicación
@@ -2382,7 +2382,7 @@ probablemente el problema es que el IDE no está configurado adecuadamente o el
 nombre no es suficientemente descriptivo. 
 :::
 
-(regla-0x0009)=
+(regla-generales-0x0009)=
 ## `0x0009` - Un espacio antes y después de los operadores
 
 ### Explicación

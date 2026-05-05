@@ -120,7 +120,7 @@ int[] numeros = new int[5];  // Reserva e inicializa a 0
 Java elimina dos fuentes comunes de errores: valores sin inicializar y memory leaks por olvidar llamar a `free()`.
 :::
 
-(valores-por-defecto)=
+(09-arreglos-valores-por-defecto)=
 ### Valores por Defecto
 
 Al crear un arreglo con `new`, Java **garantiza** que todos los elementos se inicializan automáticamente a un valor por defecto. Esto es una diferencia importante con C, donde la memoria dinámica contiene "basura" hasta que la inicializás explícitamente.
