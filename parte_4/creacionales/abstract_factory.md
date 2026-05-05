@@ -5,43 +5,122 @@ subject: Patrones de Diseño Creacionales
 ---
 
 (patron-abstract-factory)=
-# Abstract Factory: Crear Familias Coherentes
+# Abstract Factory
 
-El patrón **Abstract Factory** proporciona una interfaz para crear **familias de objetos relacionados** sin especificar sus clases concretas.
+## definicion
 
-:::{note} Propósito
+El patrón **Abstract Factory** (Fábrica Abstracta) es un patrón de diseño creacional que proporciona una interfaz para crear familias de objetos relacionados o dependientes sin especificar sus clases concretas. 
 
-Crear grupos de objetos relacionados manteniendo coherencia entre ellos.
+En lugar de instanciar productos directamente, el cliente interactúa con una interfaz de fábrica que declara métodos para crear cada uno de los productos abstractos.
+
+## origen e historia
+
+Este patrón fue formalizado por Erich Gamma, Richard Helm, Ralph Johnson y John Vlissides (el *Gang of Four* o GoF) en su libro seminal de 1994. Surgió de la necesidad de independizar a un sistema de cómo se crean, componen y representan sus productos, especialmente cuando un sistema debe configurarse con una de entre varias familias de productos.
+
+## motivacion
+
+La motivación principal surge cuando un sistema debe ser independiente de las plataformas o variantes de sus productos. Sin este patrón, el código cliente se llena de condicionales para instanciar clases específicas según el entorno (por ejemplo, diferentes sistemas operativos o temas visuales), lo que dificulta el mantenimiento y la extensión.
+
+:::{note} El Problema de la Inconsistencia
+Si creamos una ventana para Windows y un botón para Linux en la misma pantalla, la interfaz será visualmente incoherente. Abstract Factory previene esto forzando el uso de una misma "familia" de componentes.
 :::
 
----
+## contexto
 
-## Problema
+Se aplica en sistemas donde:
+- El sistema debe ser independiente de cómo se crean sus productos.
+- El sistema debe configurarse con una familia de productos entre varias disponibles.
+- Una familia de objetos relacionados está diseñada para ser usada en conjunto y es necesario asegurar esta restricción.
+- Querés proporcionar una biblioteca de clases de productos, pero solo revelar sus interfaces, no sus implementaciones.
 
-```java
-// ❌ Sin Abstract Factory: inconsistencia entre temas
-public class VentanaLinux { }
-public class BotonLinux { }
-public class VentanaWindows { }
-public class BotonWindows { }
+## casos en los que aplica
 
-// El cliente debe recordar usar componentes del mismo SO
-Ventana v;
-Boton b;
+- **Interfaces Multiplataforma (GUI):** Cuando una aplicación debe funcionar en Windows, macOS y Linux, manteniendo el *look and feel* nativo de cada uno.
+- **Sistemas de Temas/Skins:** Aplicaciones que permiten cambiar toda la estética (colores, fuentes, bordes) dinámicamente.
+- **Persistencia de Datos:** Cuando se necesita soportar múltiples motores de bases de datos (MySQL, Oracle, PostgreSQL) y cada uno requiere un conjunto de conectores y traductores específicos.
 
-if (sistemaOperativo.equals("LINUX")) {
-    v = new VentanaLinux();
-    b = new BotonLinux();
-} else {
-    v = new VentanaWindows();
-    b = new BotonWindows();
+## casos en los que no aplica
+
+- **Familias de un solo producto:** Si solo hay un tipo de objeto que crear, un *Factory Method* o incluso un constructor simple es preferible.
+- **Sistemas con pocos cambios:** Si la familia de productos nunca va a cambiar o extenderse, la abstracción añade una complejidad innecesaria.
+- **Cuando los productos no están relacionados:** Si los objetos no dependen entre sí ni deben ser coherentes como grupo, no hay beneficio en agruparlos en una fábrica.
+
+## consecuencias de su uso
+
+### positivas
+
+- **Aislamiento de clases concretas:** El cliente solo manipula interfaces abstractas.
+- **Facilidad de intercambio de familias:** Cambiar la fábrica concreta en tiempo de ejecución cambia toda la familia de productos instantáneamente.
+- **Consistencia de productos:** Asegura que el cliente siempre obtenga objetos de la misma familia.
+
+### negativas
+
+- **Dificultad para soportar nuevos tipos de productos:** Extender la fábrica para agregar un nuevo "producto abstracto" (ej. agregar `crearMenu()` a una fábrica que ya tiene `crearBoton()`) requiere modificar la interfaz `AbstractFactory` y todas sus subclases.
+- **Complejidad:** Introduce muchas interfaces y clases nuevas, lo que puede sobrecargar el diseño si no es estrictamente necesario.
+
+## alternativas
+
+- **Factory Method:** Si solo se necesita crear un tipo de objeto pero delegar la decisión a las subclases.
+- **Prototype:** Si los productos de la familia pueden crearse clonando objetos preconfigurados en lugar de usar fábricas concretas.
+- **Builder:** Si la creación de los objetos de la familia es muy compleja y requiere un proceso paso a paso.
+
+## estructura
+
+### Diagrama de Clases
+
+```plantuml
+@startuml
+skinparam classAttributeIconSize 0
+
+interface AbstractFactory {
+  + crearProductoA(): ProductoA
+  + crearProductoB(): ProductoB
 }
-// Riesgo: mezclar VentanaLinux con BotonWindows
+
+class FabricaConcreta1 {
+  + crearProductoA(): ProductoA
+  + crearProductoB(): ProductoB
+}
+
+class FabricaConcreta2 {
+  + crearProductoA(): ProductoA
+  + crearProductoB(): ProductoB
+}
+
+interface ProductoA
+interface ProductoB
+
+class ProductoA1
+class ProductoA2
+class ProductoB1
+class ProductoB2
+
+AbstractFactory <|.. FabricaConcreta1
+AbstractFactory <|.. FabricaConcreta2
+
+ProductoA <|.. ProductoA1
+ProductoA <|.. ProductoA2
+ProductoB <|.. ProductoB1
+ProductoB <|.. ProductoB2
+
+FabricaConcreta1 ..> ProductoA1 : <<create>>
+FabricaConcreta1 ..> ProductoB1 : <<create>>
+FabricaConcreta2 ..> ProductoA2 : <<create>>
+FabricaConcreta2 ..> ProductoB2 : <<create>>
+
+class Cliente {
+  - fabrica: AbstractFactory
+  + operacion()
+}
+
+Cliente -> AbstractFactory
+Cliente -> ProductoA
+Cliente -> ProductoB
+
+@enduml
 ```
 
----
-
-## Solución: Abstract Factory
+## ejemplos
 
 ```java
 /**
@@ -107,20 +186,6 @@ public class WindowsFactory implements UIFactory {
     }
 }
 
-public class VentanaWindows implements Ventana {
-    @Override
-    public void renderizar() {
-        System.out.println("Ventana con Win32...");
-    }
-}
-
-public class BotonWindows implements Boton {
-    @Override
-    public void presionar() {
-        System.out.println("Botón Windows presionado...");
-    }
-}
-
 /**
  * Aplicación que usa la factory.
  */
@@ -143,32 +208,8 @@ public class Aplicacion {
         boton.presionar();
     }
 }
-
-// Uso:
-String so = System.getProperty("os.name");
-UIFactory factory = so.contains("Windows") 
-    ? new WindowsFactory() 
-    : new LinuxFactory();
-
-Aplicacion app = new Aplicacion(factory);
-app.inicializar();
-app.mostrar();
 ```
 
----
+## resumen
 
-## Ventajas y Desventajas
-
-### ✅ Ventajas
-
-- **Coherencia**: Garantiza que objetos relacionados se usen juntos
-- **Escalabilidad**: Agregar nuevas familias es fácil
-- **Aislamiento**: Desvincula cliente de implementaciones concretas
-
-### ❌ Desventajas
-
-- **Complejidad**: Muchas clases e interfaces
-- **Rigidez**: Difícil agregar nuevos tipos a familias existentes
-- **Overhead**: Indirección adicional
-
-
+El Abstract Factory es el "patrón de las familias". Su fuerza reside en garantizar la coherencia entre objetos relacionados y en desacoplar totalmente al cliente de las implementaciones concretas. Sin embargo, su rigidez ante la adición de nuevos tipos de productos requiere un diseño previo cuidadoso de las interfaces.

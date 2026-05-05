@@ -5,44 +5,105 @@ subject: Patrones de Diseño Creacionales
 ---
 
 (patron-prototype)=
-# Prototype: Copiar Existentes
+# Prototype
 
-El patrón **Prototype** permite crear nuevos objetos clonando un objeto existente (prototipo) en lugar de crear desde cero.
+## definicion
 
-:::{note} Propósito
+El patrón **Prototype** (Prototipo) es un patrón de diseño creacional que permite la creación de nuevos objetos a partir de un objeto existente (el prototipo) mediante la clonación. En lugar de instanciar la clase desde cero, el cliente solicita al prototipo que cree una copia de sí mismo.
 
-Crear nuevas instancias copiando un objeto existente, útil cuando la construcción es costosa.
-:::
+## origen e historia
 
----
+Documentado por el GoF en 1994, el patrón Prototype tiene raíces en lenguajes como **Self**, donde la clonación de objetos es el mecanismo principal de herencia y creación (en lugar de clases). En Java, este patrón está integrado en el lenguaje a través de la interfaz `Cloneable` y el método `clone()`, aunque su implementación requiere cuidado con la clonación profunda.
 
-## Problema
+## motivacion
+
+La motivación principal es evitar el costo de creación de objetos complejos cuando ya existe una instancia configurada. 
 
 ```java
-// ❌ Sin Prototype: crear desde cero es costoso
-public class ConfiguracionCompleja {
-    private Map<String, String> datos;
-    private List<Modulo> modulos;
-    private Cache cache;
-    
-    public ConfiguracionCompleja() {
-        // Inicialización costosa
-        this.datos = cargarDatos();
-        this.modulos = inicializarModulos();
-        this.cache = crearCache();
-    }
-}
+// Sin Prototype: Re-configurar cada instancia es ineficiente
+Configuracion c1 = new Configuracion();
+c1.cargarDeBD(); // Proceso costoso
+c1.setModulos(...);
 
-// Cada instancia requiere inicialización completa
-ConfiguracionCompleja config1 = new ConfiguracionCompleja();  // Costoso
-ConfiguracionCompleja config2 = new ConfiguracionCompleja();  // Costoso
+Configuracion c2 = new Configuracion();
+c2.cargarDeBD(); // ❌ Repetir proceso costoso
 ```
 
----
+Con Prototype, `c2` simplemente se clonaría de `c1`, heredando todo su estado ya inicializado.
 
-## Solución: Prototype
+## contexto
 
-### Implementación Básica
+Se aplica cuando:
+- Las clases a instanciar se especifican en tiempo de ejecución.
+- Se desea evitar la creación de una jerarquía de fábricas paralela a la jerarquía de productos.
+- Las instancias de una clase pueden tener solo unos pocos estados diferentes. Puede ser más conveniente instalar un número correspondiente de prototipos y clonarlos en lugar de instanciar la clase manualmente cada vez.
+- La creación de un objeto es costosa en términos de tiempo o recursos (consultas a BD, carga de archivos grandes).
+
+## casos en los que aplica
+
+- **Sistemas de Juegos:** Clonar enemigos o proyectiles que ya tienen propiedades físicas configuradas.
+- **Editores Gráficos:** Copiar y pegar formas geométricas que tienen colores, posiciones y capas específicas.
+- **Gestores de Configuración:** Mantener una configuración base y crear variantes para diferentes módulos mediante clonación.
+
+## casos en los que no aplica
+
+- **Objetos simples:** Si crear un objeto con `new` es trivial y no requiere configuración previa.
+- **Grafos de objetos complejos con referencias circulares:** La clonación profunda de estructuras complejas puede ser extremadamente difícil de implementar correctamente y propensa a errores.
+- **Cuando el estado no es relevante:** Si cada nueva instancia debe empezar totalmente vacía o con datos únicos que no se pueden copiar.
+
+## consecuencias de su uso
+
+### positivas
+
+- **Oculta la complejidad de la creación:** El cliente no necesita saber cómo se ensambla un objeto complejo, solo cómo clonarlo.
+- **Permite añadir y eliminar productos en tiempo de ejecución:** Podés registrar nuevos prototipos dinámicamente en un "gestor de prototipos".
+- **Reducción de la subclasificación:** A diferencia de Factory Method, no necesitás una jerarquía de creadores.
+
+### negativas
+
+- **Dificultad en la clonación profunda:** Clonar objetos que contienen referencias a otros objetos requiere una implementación cuidadosa para asegurar que se copien los datos y no solo las direcciones de memoria (clonación superficial).
+- **Costo de implementación:** Cada subclase debe implementar el método de clonación, lo que puede ser tedioso si la jerarquía es muy grande.
+
+## alternativas
+
+- **Abstract Factory:** Se centra en crear familias desde cero. Prototype se centra en copiar lo que ya existe.
+- **Memento:** Puede usarse para guardar el estado de un objeto, pero su propósito es la restauración, no la creación de nuevas instancias para uso concurrente.
+
+## estructura
+
+### Diagrama de Clases
+
+```plantuml
+@startuml
+skinparam classAttributeIconSize 0
+
+interface Prototipo {
+  + clonar(): Prototipo
+}
+
+class PrototipoConcreto1 {
+  - estado
+  + clonar(): Prototipo
+}
+
+class PrototipoConcreto2 {
+  - estado
+  + clonar(): Prototipo
+}
+
+class Cliente {
+  - prototipo: Prototipo
+  + operacion()
+}
+
+Prototipo <|.. PrototipoConcreto1
+Prototipo <|.. PrototipoConcreto2
+Cliente -> Prototipo
+
+@enduml
+```
+
+## ejemplos
 
 ```java
 /**
@@ -57,208 +118,26 @@ public interface Cloneable {
  */
 public class Documento implements Cloneable {
     private String titulo;
-    private String contenido;
     private List<String> etiquetas;
-    private Autor autor;
     
-    public Documento(String titulo, String contenido) {
+    public Documento(String titulo) {
         this.titulo = titulo;
-        this.contenido = contenido;
         this.etiquetas = new ArrayList<>();
     }
     
-    // Constructor de copia
+    // Constructor de copia (Recomendado sobre clone() de Java)
     private Documento(Documento original) {
         this.titulo = original.titulo;
-        this.contenido = original.contenido;
-        this.etiquetas = new ArrayList<>(original.etiquetas);
-        this.autor = original.autor;
+        this.etiquetas = new ArrayList<>(original.etiquetas); // Clonación profunda de la lista
     }
     
     @Override
     public Documento clonar() {
         return new Documento(this);
     }
-    
-    public void agregarEtiqueta(String etiqueta) {
-        etiquetas.add(etiqueta);
-    }
-    
-    public void setAutor(Autor autor) {
-        this.autor = autor;
-    }
-    
-    @Override
-    public String toString() {
-        return "Documento{" +
-            "titulo='" + titulo + '\'' +
-            ", contenido='" + contenido + '\'' +
-            ", etiquetas=" + etiquetas +
-            ", autor=" + autor +
-            '}';
-    }
 }
-
-// Uso:
-Documento original = new Documento("Reporte 2024", "Contenido importante");
-original.agregarEtiqueta("importante");
-original.agregarEtiqueta("confidencial");
-
-// Clonar es mucho más rápido que crear desde cero
-Documento copia = original.clonar();
-copia.setAutor(new Autor("Juan"));
-
-System.out.println("Original: " + original);
-System.out.println("Copia: " + copia);
 ```
 
-### Clonación Profunda vs Superficial
+## resumen
 
-```java
-public class ImagenConCapas implements Cloneable {
-    private String nombre;
-    private List<Capa> capas;
-    
-    public ImagenConCapas(String nombre) {
-        this.nombre = nombre;
-        this.capas = new ArrayList<>();
-    }
-    
-    /**
-     * Clonación superficial: comparte referencias.
-     */
-    @Override
-    public ImagenConCapas clonar() {
-        try {
-            ImagenConCapas copia = (ImagenConCapas) super.clone();
-            // ⚠️ capas todavía apunta a la misma lista
-            return copia;
-        } catch (CloneNotSupportedException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    
-    /**
-     * Clonación profunda: copia todo.
-     */
-    public ImagenConCapas clonarProfundo() {
-        ImagenConCapas copia = new ImagenConCapas(this.nombre);
-        
-        // Copiar todas las capas
-        for (Capa capa : this.capas) {
-            copia.capas.add(capa.clonar());
-        }
-        
-        return copia;
-    }
-    
-    public void agregarCapa(Capa capa) {
-        capas.add(capa);
-    }
-}
-
-// Diferencia:
-ImagenConCapas original = new ImagenConCapas("fotografia.png");
-original.agregarCapa(new Capa("fondo"));
-
-ImagenConCapas copia = original.clonar();  // Superficial
-copia.agregarCapa(new Capa("filtro"));
-
-// ⚠️ La capa se agregó a AMBAS imágenes
-System.out.println("Original tiene " + original.capas.size() + " capas");  // 2!
-
-ImagenConCapas copia2 = original.clonarProfundo();  // Profunda
-copia2.agregarCapa(new Capa("efecto"));
-
-// ✅ Solo la copia tiene la capa nueva
-System.out.println("Original tiene " + original.capas.size() + " capas");  // 1 (correcto)
-```
-
----
-
-## Registro de Prototipos
-
-```java
-/**
- * Registry: almacena prototipos para clonarlos.
- */
-public class RegistroFormas {
-    private Map<String, Forma> formas = new HashMap<>();
-    
-    public void registrar(String nombre, Forma forma) {
-        formas.put(nombre, forma);
-    }
-    
-    public Forma obtener(String nombre) {
-        Forma forma = formas.get(nombre);
-        return forma != null ? forma.clonar() : null;
-    }
-}
-
-public interface Forma extends Cloneable {
-    Forma clonar();
-    void dibujar();
-}
-
-public class Circulo implements Forma {
-    private int radio;
-    private String color;
-    
-    public Circulo(int radio, String color) {
-        this.radio = radio;
-        this.color = color;
-    }
-    
-    @Override
-    public Circulo clonar() {
-        return new Circulo(radio, color);
-    }
-    
-    @Override
-    public void dibujar() {
-        System.out.println("Dibujando círculo: r=" + radio + ", color=" + color);
-    }
-}
-
-// Uso:
-RegistroFormas registro = new RegistroFormas();
-registro.registrar("circulo_rojo", new Circulo(5, "rojo"));
-registro.registrar("circulo_azul", new Circulo(10, "azul"));
-
-Forma c1 = registro.obtener("circulo_rojo");  // Clon
-Forma c2 = registro.obtener("circulo_rojo");  // Otro clon
-
-c1.dibujar();  // Dibujando círculo: r=5, color=rojo
-c2.dibujar();  // Dibujando círculo: r=5, color=rojo
-```
-
----
-
-## Ventajas y Desventajas
-
-### ✅ Ventajas
-
-- **Performance**: Más rápido que crear desde cero
-- **Flexibilidad**: Agregar nuevos tipos sin cambiar código cliente
-- **Independencia**: No necesitas conocer constructores complejos
-
-### ❌ Desventajas
-
-- **Complejidad**: Clonación profunda es complicada
-- **Confusión**: Difícil distinguir clones de origales
-- **Overhead**: Clonar puede ser costoso si el objeto es grande
-
----
-
-## Cuándo Usarlo
-
-✅ **Usa Prototype cuando:**
-- Crear objetos desde cero es muy costoso
-- Necesitas muchas instancias similares
-- Construcción es compleja
-
-❌ **Evita cuando:**
-- Construcción es simple
-- Clonación profunda es complicada
-
-
+El patrón Prototype es el patrón del "copiar y pegar". Su valor reside en la eficiencia y en la capacidad de crear variantes de objetos complejos sin depender de sus clases concretas ni de pesados procesos de inicialización. Es la base de los sistemas de prototipado donde los objetos evolucionan por copia y modificación.

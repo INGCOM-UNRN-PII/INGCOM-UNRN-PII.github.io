@@ -5,57 +5,119 @@ subject: Patrones de Diseño Creacionales
 ---
 
 (patron-factory-method)=
-# Factory Method: Creación Flexible
+# Factory Method
 
-El patrón **Factory Method** define una interfaz para crear objetos, permitiendo que las subclases decidan qué clase instanciar. Desacopla la creación de objetos del código cliente.
+## definicion
 
-:::{note} Propósito
+El patrón **Factory Method** (Método de Fábrica) es un patrón de diseño creacional que define una interfaz para crear un objeto, pero deja que las subclases decidan qué clase instanciar. El Factory Method permite que una clase delegue la instanciación a sus subclases.
 
-Crear objetos sin que el cliente necesite conocer las clases concretas exactas.
-:::
+## origen e historia
 
----
+Formalizado por el GoF en 1994, este patrón es una de las piedras angulares de la programación orientada a objetos moderna. Surgió como una solución para desacoplar el código que utiliza un objeto del código que lo crea, permitiendo que un sistema sea extensible sin necesidad de modificar el código existente.
 
-## Problema
+## motivacion
+
+La motivación surge cuando una clase no puede anticipar la clase de objetos que debe crear. 
 
 ```java
-// ❌ Sin Factory: acoplamiento a clases concretas
+// Sin Factory Method: Acoplamiento rígido
 public class Aplicacion {
-    public void crearDocumento(String tipo) {
-        Documento doc;
-        
-        if (tipo.equals("PDF")) {
-            doc = new DocumentoPDF();
-        } else if (tipo.equals("WORD")) {
-            doc = new DocumentoWORD();
-        } else if (tipo.equals("EXCEL")) {
-            doc = new DocumentoEXCEL();
-        }
-        
-        doc.abrir();
-        doc.editar();
+    public void abrir() {
+        Documento doc = new DocumentoPDF(); // ❌ Acoplado a PDF
+        doc.mostrar();
     }
 }
-// Problema: agregación de tipos requiere modificar código
 ```
 
----
+Al usar un Factory Method, la clase `Aplicacion` solo sabe que necesita un `Documento`, pero deja que una subclase específica (como `AplicacionPDF`) decida qué tipo de documento crear.
 
-## Solución: Factory Method
+## contexto
 
-### Estructura Básica
+Se aplica cuando:
+- Una clase no sabe de antemano qué subclases de objetos debe crear.
+- Una clase quiere que sus subclases especifiquen los objetos que crean.
+- Se desea centralizar la lógica de creación de objetos para facilitar el mantenimiento.
+
+## casos en los que aplica
+
+- **Frameworks de IU:** Un framework puede proporcionar una clase base para "Ventana", pero dejar que la aplicación concreta decida si la ventana es de tipo "Windows", "Material" o "GTK".
+- **Gestión de conexiones:** Una aplicación puede necesitar diferentes tipos de conectores (SSH, FTP, HTTP) dependiendo de la configuración.
+- **Procesamiento de archivos:** Crear diferentes lectores/escritores (JSON, XML, CSV) basados en la extensión del archivo.
+
+## casos en los que no aplica
+
+- **Cuando el tipo de objeto es fijo:** Si siempre vas a crear la misma clase y no hay jerarquía de productos, usar una fábrica es sobreingeniería.
+- **Creaciones simples:** Si un `new` directo es suficiente y no afecta la testabilidad ni la extensibilidad.
+- **Cuando el rendimiento es crítico:** En bucles extremadamente densos donde la indirección del método de fábrica podría (teóricamente) causar un *overhead* despreciable pero medible.
+
+## consecuencias de su uso
+
+### positivas
+
+- **Desacoplamiento:** El código cliente no está ligado a las clases concretas de los productos.
+- **Soporta el Principio de Abierto/Cerrado:** Podés introducir nuevos tipos de productos sin romper el código cliente existente.
+- **Responsabilidad Única:** La lógica de creación se mueve a un lugar específico (el método de fábrica).
+
+### negativas
+
+- **Proliferación de subclases:** Podrías terminar con una jerarquía de creadores paralela a la jerarquía de productos (por cada `ProductoA` necesitás un `CreadorA`).
+- **Complejidad innecesaria:** Si la jerarquía de productos es pequeña o estable, el patrón añade capas de abstracción que pueden dificultar la lectura inicial.
+
+## alternativas
+
+- **Abstract Factory:** Si necesitás crear familias de productos relacionados.
+- **Static Factory Method:** Una versión simplificada que usa un método estático en la clase base para devolver instancias, evitando la necesidad de subclases creadoras (aunque es menos flexible).
+
+## estructura
+
+### Diagrama de Clases
+
+```plantuml
+@startuml
+skinparam classAttributeIconSize 0
+
+abstract class Creador {
+  + operacion()
+  + {abstract} factoryMethod(): Producto
+}
+
+class CreadorConcretoA {
+  + factoryMethod(): Producto
+}
+
+class CreadorConcretoB {
+  + factoryMethod(): Producto
+}
+
+interface Producto
+
+class ProductoConcretoA
+class ProductoConcretoB
+
+Creador <|-- CreadorConcretoA
+Creador <|-- CreadorConcretoB
+
+Producto <|.. ProductoConcretoA
+Producto <|.. ProductoConcretoB
+
+CreadorConcretoA ..> ProductoConcretoA : <<create>>
+CreadorConcretoB ..> ProductoConcretoB : <<create>>
+
+@enduml
+```
+
+## ejemplos
 
 ```java
 /**
- * Clase abstracta (o interfaz) que define el factory method.
+ * Clase base que define el factory method.
  */
 public abstract class Aplicacion {
     protected abstract Documento crearDocumento();
     
     public void abrirDocumento() {
-        Documento doc = crearDocumento();  // Factory Method
+        Documento doc = crearDocumento(); // Factory Method
         doc.abrir();
-        doc.editar();
     }
 }
 
@@ -64,8 +126,6 @@ public abstract class Aplicacion {
  */
 public interface Documento {
     void abrir();
-    void editar();
-    void guardar();
 }
 
 /**
@@ -73,36 +133,7 @@ public interface Documento {
  */
 public class DocumentoPDF implements Documento {
     @Override
-    public void abrir() {
-        System.out.println("Abriendo PDF...");
-    }
-    
-    @Override
-    public void editar() {
-        System.out.println("Editando PDF...");
-    }
-    
-    @Override
-    public void guardar() {
-        System.out.println("Guardando como PDF...");
-    }
-}
-
-public class DocumentoWORD implements Documento {
-    @Override
-    public void abrir() {
-        System.out.println("Abriendo WORD...");
-    }
-    
-    @Override
-    public void editar() {
-        System.out.println("Editando WORD...");
-    }
-    
-    @Override
-    public void guardar() {
-        System.out.println("Guardando como WORD...");
-    }
+    public void abrir() { System.out.println("Abriendo PDF..."); }
 }
 
 /**
@@ -114,143 +145,8 @@ public class AplicacionPDF extends Aplicacion {
         return new DocumentoPDF();
     }
 }
-
-public class AplicacionWORD extends Aplicacion {
-    @Override
-    protected Documento crearDocumento() {
-        return new DocumentoWORD();
-    }
-}
-
-// Uso:
-Aplicacion app = new AplicacionPDF();
-app.abrirDocumento();  // Crea DocumentoPDF sin acoplamiento
 ```
 
----
+## resumen
 
-## Variantes
-
-### Factory Method Paramétrico
-
-```java
-/**
- * Factory method que acepta parámetro para decidir tipo.
- */
-public abstract class TransporteFactory {
-    public abstract Transporte crearTransporte();
-    
-    public void entregar() {
-        Transporte t = crearTransporte();
-        t.cargar();
-        t.entregar();
-    }
-}
-
-public interface Transporte {
-    void cargar();
-    void entregar();
-}
-
-/**
- * Factory method con parámetro en la clase base.
- */
-public class LogisticaFactory {
-    public Transporte crearTransporte(String tipo) {
-        switch (tipo) {
-            case "CAMION":
-                return new Camion();
-            case "BARCO":
-                return new Barco();
-            case "AVION":
-                return new Avion();
-            default:
-                throw new IllegalArgumentException("Tipo desconocido: " + tipo);
-        }
-    }
-}
-
-class Camion implements Transporte {
-    @Override
-    public void cargar() { System.out.println("Cargando en camión..."); }
-    
-    @Override
-    public void entregar() { System.out.println("Entregando por camión..."); }
-}
-
-// Uso:
-LogisticaFactory factory = new LogisticaFactory();
-Transporte transporte = factory.crearTransporte("CAMION");
-transporte.cargar();
-transporte.entregar();
-```
-
-### Factory Estática Simple
-
-Para casos simples sin necesidad de subclases:
-
-```java
-public class ConexionFactory {
-    public static Conexion crearConexion(String tipo) {
-        switch (tipo) {
-            case "MYSQL":
-                return new ConexionMySQL();
-            case "POSTGRESQL":
-                return new ConexionPostgreSQL();
-            case "SQLITE":
-                return new ConexionSQLite();
-            default:
-                throw new IllegalArgumentException("BD desconocida");
-        }
-    }
-}
-
-interface Conexion {
-    void conectar();
-    void desconectar();
-}
-
-class ConexionMySQL implements Conexion {
-    @Override
-    public void conectar() { System.out.println("MySQL conectada"); }
-    
-    @Override
-    public void desconectar() { System.out.println("MySQL desconectada"); }
-}
-
-// Uso:
-Conexion conn = ConexionFactory.crearConexion("MYSQL");
-conn.conectar();
-```
-
----
-
-## Ventajas y Desventajas
-
-### ✅ Ventajas
-
-- **Desacoplamiento**: No dependes de clases concretas
-- **Flexibilidad**: Agregar nuevos tipos solo requiere nuevas subclases
-- **Responsabilidad única**: Creación separada del uso
-- **Mantenibilidad**: Cambios centralizados en el factory
-
-### ❌ Desventajas
-
-- **Complejidad**: Introduce más clases que una creación directa
-- **Jerarquía de clases**: Requiere heredar para cambiar creación
-- **Overhead**: Pequeño costo de abstracción
-
----
-
-## Cuándo Usarlo
-
-✅ **Usa Factory Method cuando:**
-- No sabes en tiempo de compilación qué tipos necesitarás
-- Tipos dependen de configuración externa o usuario
-- Quieres agregar nuevos tipos fácilmente sin modificar código existente
-
-❌ **Evita cuando:**
-- Solo hay un tipo de objeto
-- La creación es simple y no va a cambiar
-
-
+El Factory Method es la herramienta definitiva para el desacoplamiento creacional. Su principal valor radica en permitir que un sistema evolucione permitiendo que nuevas subclases decidan cómo instanciar objetos existentes, manteniendo el código base limpio y enfocado en la lógica de alto nivel.
