@@ -1,0 +1,1 @@
+Esta parte del apunte, trata sobre estructuras de datos.
