@@ -667,9 +667,9 @@ void testDividir_ConDivisorNoNulo_RetornaCociente() {
 
 ### Casos especiales permitidos
 
-#### Setup compartido con `@BeforeEach`
+#### Setup compartido con `\@BeforeEach`
 
-Cuando múltiples tests requieren el mismo setup, usá `@BeforeEach`:
+Cuando múltiples tests requieren el mismo setup, usá `\@BeforeEach`:
 
 ```java
 public class GestorCuentasTest {
@@ -711,7 +711,7 @@ public class GestorCuentasTest {
 ```
 
 :::{important}
-Las llamadas en `@BeforeEach` no cuentan como llamadas "bajo prueba". Solo la llamada en la fase **Act** del test cuenta para esta regla.
+Las llamadas en `\@BeforeEach` no cuentan como llamadas "bajo prueba". Solo la llamada en la fase **Act** del test cuenta para esta regla.
 :::
 
 #### Llamadas auxiliares en Arrange
@@ -1523,7 +1523,7 @@ No debe existir:
 
 ### Ejemplos correctos
 
-#### Independencia con @BeforeEach
+#### Independencia con `\@BeforeEach`
 
 ```java
 public class CuentaBancariaTest {
@@ -1556,7 +1556,7 @@ public class CuentaBancariaTest {
 ```
 
 :::{note}
-Cada test inicia con una cuenta en el mismo estado (saldo 1000.0) gracias a `@BeforeEach`. Los tests pueden ejecutarse en cualquier orden.
+Cada test inicia con una cuenta en el mismo estado (saldo 1000.0) gracias a `\@BeforeEach`. Los tests pueden ejecutarse en cualquier orden.
 :::
 
 #### Independencia sin estado compartido
@@ -1837,9 +1837,9 @@ public class MatemáticasTest {
 }
 ```
 
-#### Setup pesado con @BeforeAll
+#### Setup pesado con `\@BeforeAll`
 
-Para recursos muy costosos de crear, `@BeforeAll` es aceptable si el recurso es **de solo lectura**:
+Para recursos muy costosos de crear, `\@BeforeAll` es aceptable si el recurso es **de solo lectura**:
 
 ```java
 public class AnalizadorTextoTest {
@@ -2011,7 +2011,7 @@ public class UsuarioRepositorioTest {
 
 ### Archivos temporales
 
-#### Con JUnit 5 @TempDir
+#### Con JUnit 5 \@TempDir
 
 ```java
 public class ProcesadorArchivosTest {
