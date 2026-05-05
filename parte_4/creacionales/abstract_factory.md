@@ -7,17 +7,17 @@ subject: Patrones de Diseño Creacionales
 (patron-abstract-factory)=
 # Abstract Factory
 
-## definicion
+## Definición
 
 El patrón **Abstract Factory** (Fábrica Abstracta) es un patrón de diseño creacional que proporciona una interfaz para crear familias de objetos relacionados o dependientes sin especificar sus clases concretas. 
 
 En lugar de instanciar productos directamente, el cliente interactúa con una interfaz de fábrica que declara métodos para crear cada uno de los productos abstractos.
 
-## origen e historia
+## Origen e Historia
 
 Este patrón fue formalizado por Erich Gamma, Richard Helm, Ralph Johnson y John Vlissides (el *Gang of Four* o GoF) en su libro seminal de 1994. Surgió de la necesidad de independizar a un sistema de cómo se crean, componen y representan sus productos, especialmente cuando un sistema debe configurarse con una de entre varias familias de productos.
 
-## motivacion
+## Motivacion
 
 La motivación principal surge cuando un sistema debe ser independiente de las plataformas o variantes de sus productos. Sin este patrón, el código cliente se llena de condicionales para instanciar clases específicas según el entorno (por ejemplo, diferentes sistemas operativos o temas visuales), lo que dificulta el mantenimiento y la extensión.
 
@@ -25,7 +25,7 @@ La motivación principal surge cuando un sistema debe ser independiente de las p
 Si creamos una ventana para Windows y un botón para Linux en la misma pantalla, la interfaz será visualmente incoherente. Abstract Factory previene esto forzando el uso de una misma "familia" de componentes.
 :::
 
-## contexto
+## Contexto
 
 Se aplica en sistemas donde:
 - El sistema debe ser independiente de cómo se crean sus productos.
@@ -33,38 +33,38 @@ Se aplica en sistemas donde:
 - Una familia de objetos relacionados está diseñada para ser usada en conjunto y es necesario asegurar esta restricción.
 - Querés proporcionar una biblioteca de clases de productos, pero solo revelar sus interfaces, no sus implementaciones.
 
-## casos en los que aplica
+### Cuando aplica
 
 - **Interfaces Multiplataforma (GUI):** Cuando una aplicación debe funcionar en Windows, macOS y Linux, manteniendo el *look and feel* nativo de cada uno.
 - **Sistemas de Temas/Skins:** Aplicaciones que permiten cambiar toda la estética (colores, fuentes, bordes) dinámicamente.
 - **Persistencia de Datos:** Cuando se necesita soportar múltiples motores de bases de datos (MySQL, Oracle, PostgreSQL) y cada uno requiere un conjunto de conectores y traductores específicos.
 
-## casos en los que no aplica
+### Cuando no aplica
 
 - **Familias de un solo producto:** Si solo hay un tipo de objeto que crear, un *Factory Method* o incluso un constructor simple es preferible.
 - **Sistemas con pocos cambios:** Si la familia de productos nunca va a cambiar o extenderse, la abstracción añade una complejidad innecesaria.
 - **Cuando los productos no están relacionados:** Si los objetos no dependen entre sí ni deben ser coherentes como grupo, no hay beneficio en agruparlos en una fábrica.
 
-## consecuencias de su uso
+## Consecuencias de su uso
 
-### positivas
+### Positivas
 
 - **Aislamiento de clases concretas:** El cliente solo manipula interfaces abstractas.
 - **Facilidad de intercambio de familias:** Cambiar la fábrica concreta en tiempo de ejecución cambia toda la familia de productos instantáneamente.
 - **Consistencia de productos:** Asegura que el cliente siempre obtenga objetos de la misma familia.
 
-### negativas
+### Negativas
 
 - **Dificultad para soportar nuevos tipos de productos:** Extender la fábrica para agregar un nuevo "producto abstracto" (ej. agregar `crearMenu()` a una fábrica que ya tiene `crearBoton()`) requiere modificar la interfaz `AbstractFactory` y todas sus subclases.
 - **Complejidad:** Introduce muchas interfaces y clases nuevas, lo que puede sobrecargar el diseño si no es estrictamente necesario.
 
-## alternativas
+## Alternativas
 
 - **Factory Method:** Si solo se necesita crear un tipo de objeto pero delegar la decisión a las subclases.
 - **Prototype:** Si los productos de la familia pueden crearse clonando objetos preconfigurados en lugar de usar fábricas concretas.
 - **Builder:** Si la creación de los objetos de la familia es muy compleja y requiere un proceso paso a paso.
 
-## estructura
+## Estructura
 
 ### Diagrama de Clases
 
@@ -120,7 +120,7 @@ Cliente -> ProductoB
 @enduml
 ```
 
-## ejemplos
+## Ejemplos
 
 ```java
 /**
@@ -210,6 +210,6 @@ public class Aplicacion {
 }
 ```
 
-## resumen
+## Resumen
 
 El Abstract Factory es el "patrón de las familias". Su fuerza reside en garantizar la coherencia entre objetos relacionados y en desacoplar totalmente al cliente de las implementaciones concretas. Sin embargo, su rigidez ante la adición de nuevos tipos de productos requiere un diseño previo cuidadoso de las interfaces.
