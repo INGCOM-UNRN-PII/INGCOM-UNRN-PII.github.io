@@ -52,13 +52,24 @@ project:
     - file: parte_2/06_excepciones.md
     - file: parte_2/07_colecciones_genericos.md
     - file: parte_2/08_genericos.md
-    - file: parte_2/14_oop_contratos.md
+    - file: parte_2/08_oop_refactoring.md
+    - file: parte_2/09_oop_solid.md
+    - file: parte_2/10_oop_patrones.md
+    - file: parte_2/11_oop_testing.md
+    - file: parte_2/12_oop_antipatrones.md
+    - file: parte_2/13_oop_contratos.md
     - file: parte_2/indice.md
   - title: Parte 3
     children:
     - file: parte_3/indice.md
     - file: parte_3/01_patrones_diseno.md
     - file: parte_3/02_patrones_estructurales.md
+    - file: parte_3/03_patrones_creacionales.md
+    - file: parte_3/04_patrones_comportamiento.md
+  - title: Parte 4
+    children:
+    - file: parte_4/09_oop_arquitectura.md
+    - file: parte_4/11_oop_concurrencia.md
   - title: Referencia
     children:
     - file: referencia/01_java_como_c.md
