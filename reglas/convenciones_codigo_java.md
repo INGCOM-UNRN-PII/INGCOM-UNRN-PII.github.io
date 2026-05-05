@@ -160,7 +160,7 @@ interfaz, en el orden en el que deberían aparecer. Vea
 
 |  #  | Parte                                                                              | Notas                                                                                                                                                         |
 | :-: | :--------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-|  1  | Comentario de documentación de la clase o interfaz (`/**...*/`)                    | Vea [Comentarios de documentación](#comentarios-de-documentación) para más información.                                                                       |
+|  1  | Comentario de documentación de la clase o interfaz (`/**...*/`)                    | Vea [Comentarios de documentación](#comentarios-de-documentacion) para más información.                                                                       |
 |  2  | Sentencia `class` o `interface`                                                    |                                                                                                                                                               |
 |  3  | Comentario de implementación de la clase o interfaz si fuera necesario (`/*...*/`) | Este comentario debe contener cualquier información aplicable a toda la clase o interfaz que no sea apropiada para estar en los comentarios de documentación. |
 |  4  | Variables de clase (`static`)                                                      | Primero las `public`, después las `protected`, después las de nivel de paquete (sin modificador), y después las `private`.                                    |
@@ -422,7 +422,7 @@ if (foo > 1) {
 //}
 ```
  
-(comentarios-de-documentación)=
+(comentarios-de-documentacion)=
 
 ### 5.2 Comentarios de documentación
 
@@ -555,6 +555,7 @@ miMetodo() {
 
 :::
 
+(64-declaraciones-de-clases-e-interfaces)=
 ### 6.4 Declaraciones de clases e interfaces
 
 Al programar clases e interfaces de Java, se siguen las siguientes reglas de
@@ -993,7 +994,7 @@ funciona. Use `FIXME` para indicar que algo tiene algún error y no funciona.
 El siguiente ejemplo muestra el formato de archivo Java con una sola clase
 pública. Las interfaces se formatean de modo similar. Vea
 [Declaraciones de clases e interfaces](#64-declaraciones-de-clases-e-interfaces)
-y [Comentarios de documentación](#comentarios-de-documentación).
+y [Comentarios de documentación](#comentarios-de-documentacion).
 
 ```java
 /*
@@ -1110,4 +1111,4 @@ siguientes líneas:
 
 Asimismo, aunque no se requiere, se agradecerá que incluya un enlace al sitio
 web de javaHispano: http://www.javaHispano.com
-
+[64-declaraciones-de-clases-e-interfaces]=
