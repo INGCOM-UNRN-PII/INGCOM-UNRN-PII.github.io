@@ -880,29 +880,804 @@ public class PruebaContenedor {
 
 ---
 
+(varianza-genericos)=
+## Varianza en Genéricos: Covarianza y Contravarianza
+
+### El Problema de Asignación
+
+Supongamos que tenemos una jerarquía:
+
+```java
+class Animal { }
+class Gato extends Animal { }
+class Siames extends Gato { }
+```
+
+¿Podemos asignar una `List<Gato>` a una variable `List<Animal>`?
+
+```java
+// ❌ Error de compilación: los genéricos son INVARIANTES
+List<Gato> gatos = new ArrayList<>();
+List<Animal> animales = gatos;  // ERROR: incompatible types
+```
+
+Esto sorprende porque en programación orientada a objetos esto es válido:
+
+```java
+// ✅ Esto funciona: polimorfismo normal
+Gato g = new Siames();
+Animal a = g;  // OK: Gato es un Animal
+```
+
+Los genéricos son **invariantes** por defecto. Esto se debe a que permitir asignación insegura podría causar errores:
+
+```java
+List<Animal> animales = new ArrayList<>();
+List<Gato> gatos = animales;  // Si esto fuera permitido...
+
+animales.add(new Perro());  // ¡Agregamos un Perro!
+Gato g = gatos.get(0);      // ClassCastException en tiempo de ejecución
+```
+
+### Covarianza: Lee, No Escribas
+
+La **covarianza** (`? extends T`) permite leer pero no escribir. Útil cuando solo extraes datos:
+
+```java
+/**
+ * Procesa una lista de animales (lee elementos).
+ * Acepta List<Gato>, List<Siames>, o List<Animal>
+ */
+public static void procesarAnimales(List<? extends Animal> animales) {
+    for (Animal a : animales) {
+        System.out.println(a);
+    }
+    
+    // ❌ No puedes escribir (excepto null)
+    // animales.add(new Gato());  // Error de compilación
+}
+
+// Uso:
+List<Gato> gatos = new ArrayList<>();
+gatos.add(new Gato());
+procesarAnimales(gatos);  // ✅ Funciona con covarianza
+
+List<Siames> siameses = new ArrayList<>();
+procesarAnimales(siameses);  // ✅ También funciona
+```
+
+**Por qué no puedes escribir:** El compilador no sabe cuál es el tipo exacto. Si fuera `List<Animal>`, ¿puedes agregar un `Perro`? No sabes.
+
+### Contravarianza: Escribe, No Leas
+
+La **contravarianza** (`? super T`) permite escribir pero leer solo como `Object`. Útil cuando solo agregas datos:
+
+```java
+/**
+ * Llena una lista de animales (escribe elementos).
+ * Acepta List<Animal>, List<Object>, pero no List<Gato>
+ */
+public static void llenarAnimales(List<? super Gato> animales) {
+    animales.add(new Gato());
+    animales.add(new Siames());
+    
+    // ❌ No puedes leer como Gato
+    // Gato g = animales.get(0);  // Error
+    
+    // Solo como Object
+    Object obj = animales.get(0);  // ✅ Pero esto es poco útil
+}
+
+// Uso:
+List<Animal> animales = new ArrayList<>();
+llenarAnimales(animales);  // ✅ Funciona: Animal es supertipo de Gato
+
+List<Gato> gatos = new ArrayList<>();
+// llenarAnimales(gatos);  // ❌ Error: Gato no es supertipo de Gato
+```
+
+### PECS: Producer Extends, Consumer Super
+
+Una regla mnemotécnica importante:
+
+- **Producer Extends** (`? extends T`): Si la colección **produce** (lee) datos de tipo T
+- **Consumer Super** (`? super T`): Si la colección **consume** (escribe) datos de tipo T
+
+```java
+public class Copiar {
+    /**
+     * Copia elementos de una lista fuente a una destino.
+     */
+    public static <T> void copiar(
+        List<? extends T> fuente,    // Produces T
+        List<? super T> destino) {   // Consumes T
+        
+        for (T elemento : fuente) {
+            destino.add(elemento);
+        }
+    }
+}
+
+// Uso:
+List<Siames> siameses = Arrays.asList(new Siames(), new Siames());
+List<Animal> animales = new ArrayList<>();
+
+Copiar.copiar(siameses, animales);  // ✅ Funciona perfectamente
+```
+
+---
+
+(herencia-genericos)=
+## Genéricos y Herencia
+
+### Herencia con Genéricos
+
+Puedes extender una clase genérica:
+
+```java
+/**
+ * Clase base genérica.
+ */
+public class Repositorio<T> {
+    private List<T> items = new ArrayList<>();
+    
+    public void agregar(T item) {
+        items.add(item);
+    }
+    
+    public T obtener(int indice) {
+        return items.get(indice);
+    }
+    
+    public int tamaño() {
+        return items.size();
+    }
+}
+
+/**
+ * Subclase que se especializa en un tipo específico.
+ */
+public class RepositorioUsuarios extends Repositorio<Usuario> {
+    public Usuario buscarPorEmail(String email) {
+        for (int i = 0; i < tamaño(); i++) {
+            Usuario u = obtener(i);
+            if (u.getEmail().equals(email)) {
+                return u;
+            }
+        }
+        return null;
+    }
+}
+
+// Uso:
+RepositorioUsuarios repo = new RepositorioUsuarios();
+repo.agregar(new Usuario("juan@example.com"));
+Usuario u = repo.buscarPorEmail("juan@example.com");
+```
+
+### Herencia Manteniendo Genéricos
+
+También puedes extender una clase genérica sin especificar el tipo:
+
+```java
+/**
+ * Subclase que mantiene el parámetro de tipo genérico.
+ */
+public class RepositorioConValidacion<T extends Validable> 
+    extends Repositorio<T> {
+    
+    /**
+     * Agrega solo si el elemento es válido.
+     */
+    @Override
+    public void agregar(T item) {
+        if (item.esValido()) {
+            super.agregar(item);
+        }
+    }
+}
+
+interface Validable {
+    boolean esValido();
+}
+
+class Email implements Validable {
+    private String valor;
+    
+    public Email(String valor) {
+        this.valor = valor;
+    }
+    
+    @Override
+    public boolean esValido() {
+        return valor.contains("@");
+    }
+}
+```
+
+---
+
+(genericos-recursivos)=
+## Parámetros de Tipo Recursivos
+
+A veces un parámetro de tipo hace referencia a sí mismo. Esto es útil para mantener tipo al clonar o copiar:
+
+```java
+/**
+ * Nodo genérico que permite construir estructuras recursivas.
+ * La recursión es en el tipo, no en tiempo de ejecución.
+ * @param <T> el tipo exacto del nodo (para mantener tipo al heredar)
+ */
+public abstract class Nodo<T extends Nodo<T>> {
+    private String valor;
+    
+    public Nodo(String valor) {
+        this.valor = valor;
+    }
+    
+    /**
+     * Retorna una copia de este nodo. El tipo exacto se mantiene.
+     */
+    public abstract T copiar();
+    
+    public String getValor() {
+        return valor;
+    }
+}
+
+/**
+ * Implementación concreta que mantiene tipo.
+ */
+public class NodoString extends Nodo<NodoString> {
+    public NodoString(String valor) {
+        super(valor);
+    }
+    
+    @Override
+    public NodoString copiar() {
+        return new NodoString(getValor());
+    }
+}
+
+// Uso:
+NodoString original = new NodoString("hola");
+NodoString copia = original.copiar();  // Tipo exacto preservado
+```
+
+---
+
+(genericos-anidados)=
+## Genéricos Anidados
+
+Puedes tener tipos genéricos dentro de tipos genéricos:
+
+```java
+/**
+ * Contenedor que almacena pares de listas.
+ */
+public class Contenedor<T, U> {
+    private List<T> lista1;
+    private List<U> lista2;
+    
+    public Contenedor() {
+        lista1 = new ArrayList<>();
+        lista2 = new ArrayList<>();
+    }
+    
+    public void agregarA(T item) {
+        lista1.add(item);
+    }
+    
+    public void agregarB(U item) {
+        lista2.add(item);
+    }
+    
+    public List<T> obtenerLista1() {
+        return lista1;
+    }
+    
+    public List<U> obtenerLista2() {
+        return lista2;
+    }
+}
+
+// Uso:
+Contenedor<String, Integer> contenedor = new Contenedor<>();
+contenedor.agregarA("Elemento 1");
+contenedor.agregarB(42);
+
+List<String> strings = contenedor.obtenerLista1();
+List<Integer> numeros = contenedor.obtenerLista2();
+```
+
+---
+
+(errores-comunes)=
+## Errores Comunes con Genéricos
+
+### Error 1: Acceso a Información de Tipo en Ejecución
+
+```java
+public <T> void procesarArray(T[] array) {
+    // ❌ INCORRECTO: la información de tipo se borra
+    if (array instanceof T[]) { }  // Error de compilación
+    
+    // ✅ CORRECTO: usa instanceof en el elemento
+    if (array.length > 0 && array[0] instanceof String) {
+        // Ahora sabes que es String
+    }
+}
+```
+
+### Error 2: Crear Arrays de Tipos Genéricos
+
+```java
+public class MalDiseñado<T> {
+    // ❌ INCORRECTO: no puedes crear arrays genéricos
+    // private T[] items = new T[10];
+    
+    // ✅ CORRECTO: usa List
+    private List<T> items = new ArrayList<>();
+    
+    public void agregar(T item) {
+        items.add(item);
+    }
+}
+```
+
+### Error 3: Pasar Tipo Concreto al Lugar de Wildcard
+
+```java
+public static void procesar(List<? extends Number> numeros) {
+    // ...
+}
+
+public static void main(String[] args) {
+    List<Integer> enteros = new ArrayList<>();
+    procesar(enteros);  // ✅ Funciona
+    
+    // Pero no es lo mismo que:
+    // List<Object> objetos = new ArrayList<>();
+    // procesar(objetos);  // ❌ Object no es subclase de Number
+}
+```
+
+### Error 4: Mezclar Tipos en Colecciones (sin genéricos)
+
+```java
+// ❌ VIEJO (sin genéricos): peligroso
+List lista = new ArrayList();
+lista.add("Texto");
+lista.add(42);
+String s = (String) lista.get(1);  // ClassCastException en ejecución
+
+// ✅ NUEVO (con genéricos): seguro
+List<String> lista = new ArrayList<>();
+lista.add("Texto");
+// lista.add(42);  // Error de compilación - previene el error
+String s = lista.get(0);  // Sin casting
+```
+
+---
+
+(patrones-avanzados)=
+## Patrones Avanzados con Genéricos
+
+### Builder Genérico Fluido
+
+```java
+/**
+ * Builder genérico que retorna su propio tipo.
+ * Permite mantener tipo en cadena de llamadas.
+ */
+public abstract class Builder<T extends Builder<T>> {
+    protected String nombre;
+    protected String descripcion;
+    
+    public T nombre(String nombre) {
+        this.nombre = nombre;
+        return self();
+    }
+    
+    public T descripcion(String descripcion) {
+        this.descripcion = descripcion;
+        return self();
+    }
+    
+    protected abstract T self();
+    public abstract Object construir();
+}
+
+public class PersonaBuilder extends Builder<PersonaBuilder> {
+    private int edad;
+    
+    public PersonaBuilder edad(int edad) {
+        this.edad = edad;
+        return this;
+    }
+    
+    @Override
+    protected PersonaBuilder self() {
+        return this;
+    }
+    
+    @Override
+    public Persona construir() {
+        return new Persona(nombre, descripcion, edad);
+    }
+}
+
+// Uso fluido manteniendo tipo:
+Persona p = new PersonaBuilder()
+    .nombre("Juan")
+    .descripcion("Desarrollador")
+    .edad(30)
+    .construir();
+```
+
+### Estrategia Genérica
+
+```java
+/**
+ * Interfaz estrategia genérica.
+ */
+@FunctionalInterface
+public interface Procesador<T, R> {
+    R procesar(T entrada);
+}
+
+public class Pipeline<T> {
+    private List<Procesador<T, T>> etapas = new ArrayList<>();
+    
+    public void agregarEtapa(Procesador<T, T> etapa) {
+        etapas.add(etapa);
+    }
+    
+    public T ejecutar(T entrada) {
+        T resultado = entrada;
+        for (Procesador<T, T> etapa : etapas) {
+            resultado = etapa.procesar(resultado);
+        }
+        return resultado;
+    }
+}
+
+// Uso:
+Pipeline<String> pipeline = new Pipeline<>();
+pipeline.agregarEtapa(s -> s.toUpperCase());
+pipeline.agregarEtapa(s -> s.replace(" ", "_"));
+pipeline.agregarEtapa(s -> "[" + s + "]");
+
+String resultado = pipeline.ejecutar("hola mundo");
+System.out.println(resultado);  // [HOLA_MUNDO]
+```
+
+### Factory Genérica
+
+```java
+/**
+ * Factory que crea instancias de cualquier clase.
+ */
+public class Factory<T> {
+    private Class<T> clase;
+    
+    public Factory(Class<T> clase) {
+        this.clase = clase;
+    }
+    
+    /**
+     * Crea una nueva instancia usando reflection.
+     */
+    public T crear() {
+        try {
+            return clase.getDeclaredConstructor().newInstance();
+        } catch (Exception e) {
+            throw new RuntimeException("No se pudo crear instancia de " + clase.getName(), e);
+        }
+    }
+}
+
+// Uso:
+Factory<String> fabrica = new Factory<>(String.class);
+String instancia = fabrica.crear();  // Nueva instancia
+
+class MiClase {
+    public MiClase() { }
+}
+
+Factory<MiClase> fabrica2 = new Factory<>(MiClase.class);
+MiClase obj = fabrica2.crear();
+```
+
+---
+
+(ejercicios-avanzados)=
+## Ejercicios Avanzados
+
+```{exercise}
+:label: ej-repositorio-generico
+
+Crea una clase genérica `Repositorio<T>` que:
+1. Almacene elementos en una `List<T>`
+2. Tenga métodos: `agregar(T)`, `obtener(int)`, `eliminar(int)`, `tamaño()`
+3. Tenga un método `buscar(Predicado<T>)` que retorne el primer elemento que cumpla una condición
+4. Tenga un método `transformar(Transformador<T, U>)` que retorne una `List<U>` transformada
+
+Define las interfaces `Predicado<T>` y `Transformador<T, U>`.
+
+Prueba con `List<Integer>` y `List<String>`.
+```
+
+```{solution} ej-repositorio-generico
+:class: dropdown
+
+```java
+@FunctionalInterface
+public interface Predicado<T> {
+    boolean cumple(T elemento);
+}
+
+@FunctionalInterface
+public interface Transformador<T, U> {
+    U transformar(T elemento);
+}
+
+public class Repositorio<T> {
+    private List<T> elementos = new ArrayList<>();
+    
+    public void agregar(T elemento) {
+        elementos.add(elemento);
+    }
+    
+    public T obtener(int indice) {
+        return elementos.get(indice);
+    }
+    
+    public void eliminar(int indice) {
+        elementos.remove(indice);
+    }
+    
+    public int tamaño() {
+        return elementos.size();
+    }
+    
+    public T buscar(Predicado<T> predicado) {
+        for (T elemento : elementos) {
+            if (predicado.cumple(elemento)) {
+                return elemento;
+            }
+        }
+        return null;
+    }
+    
+    public <U> List<U> transformar(Transformador<T, U> transformador) {
+        List<U> resultado = new ArrayList<>();
+        for (T elemento : elementos) {
+            resultado.add(transformador.transformar(elemento));
+        }
+        return resultado;
+    }
+}
+
+// Pruebas:
+public class PruebaRepositorio {
+    public static void main(String[] args) {
+        // Con Integer
+        Repositorio<Integer> repoNumeros = new Repositorio<>();
+        repoNumeros.agregar(5);
+        repoNumeros.agregar(10);
+        repoNumeros.agregar(15);
+        
+        Integer mayor = repoNumeros.buscar(n -> n > 7);
+        System.out.println("Número > 7: " + mayor);  // 10
+        
+        List<String> textos = repoNumeros.transformar(n -> "Número: " + n);
+        System.out.println(textos);  // [Número: 5, Número: 10, Número: 15]
+        
+        // Con String
+        Repositorio<String> repoTextos = new Repositorio<>();
+        repoTextos.agregar("Alice");
+        repoTextos.agregar("Bob");
+        repoTextos.agregar("Charlie");
+        
+        String conA = repoTextos.buscar(s -> s.contains("a"));
+        System.out.println("Contiene 'a': " + conA);  // Charlie
+        
+        List<Integer> largos = repoTextos.transformar(String::length);
+        System.out.println(largos);  // [5, 3, 7]
+    }
+}
+```
+```
+
+```{exercise}
+:label: ej-tuple-generico
+
+Crea una clase genérica `Tupla<T, U>` que almacene dos valores de tipos diferentes:
+1. Tenga constructor `Tupla(T primero, U segundo)`
+2. Métodos `getPrimero()` y `getSegundo()`
+3. Método `intercambiar()` que retorne `Tupla<U, T>`
+4. Método genérico estático `crear(T p, U s)` que cree tuplas sin especificar tipos
+5. Método `mapear(Transformador<T, V>)` que transforme el primer elemento
+```
+
+```{solution} ej-tuple-generico
+:class: dropdown
+
+```java
+public class Tupla<T, U> {
+    private T primero;
+    private U segundo;
+    
+    public Tupla(T primero, U segundo) {
+        this.primero = primero;
+        this.segundo = segundo;
+    }
+    
+    public T getPrimero() {
+        return primero;
+    }
+    
+    public U getSegundo() {
+        return segundo;
+    }
+    
+    public Tupla<U, T> intercambiar() {
+        return new Tupla<>(segundo, primero);
+    }
+    
+    public static <T, U> Tupla<T, U> crear(T primero, U segundo) {
+        return new Tupla<>(primero, segundo);
+    }
+    
+    public <V> Tupla<V, U> mapear(Transformador<T, V> transformador) {
+        return new Tupla<>(transformador.transformar(primero), segundo);
+    }
+    
+    @Override
+    public String toString() {
+        return "(" + primero + ", " + segundo + ")";
+    }
+}
+
+// Pruebas:
+public class PruebaTupla {
+    public static void main(String[] args) {
+        Tupla<String, Integer> tupla1 = new Tupla<>("edad", 25);
+        System.out.println(tupla1);  // (edad, 25)
+        
+        Tupla<Integer, String> invertida = tupla1.intercambiar();
+        System.out.println(invertida);  // (25, edad)
+        
+        Tupla<String, Integer> tupla2 = Tupla.crear("precio", 100);
+        System.out.println(tupla2);  // (precio, 100)
+        
+        Tupla<Integer, Integer> mapeada = tupla2.mapear(String::length);
+        System.out.println(mapeada);  // (6, 100)
+    }
+}
+```
+```
+
+```{exercise}
+:label: ej-colector-generico
+
+Crea una clase `Colector<T>` que coleccione elementos y aplique una acción final:
+1. Tenga método `agregar(T elemento)`
+2. Tenga método genérico `reducir(Reductor<T, R>)` que combine todos los elementos en un resultado
+3. Defina la interfaz `Reductor<T, R>` con método `reducir(T actual, T siguiente) -> T`
+4. Implémenta ejemplos que sumen números, concatenen strings, y encuentren máximo
+```
+
+```{solution} ej-colector-generico
+:class: dropdown
+
+```java
+@FunctionalInterface
+public interface Reductor<T> {
+    T reducir(T actual, T siguiente);
+}
+
+public class Colector<T> {
+    private List<T> elementos = new ArrayList<>();
+    
+    public void agregar(T elemento) {
+        elementos.add(elemento);
+    }
+    
+    public T reducir(Reductor<T> reductor) {
+        if (elementos.isEmpty()) {
+            return null;
+        }
+        
+        T resultado = elementos.get(0);
+        for (int i = 1; i < elementos.size(); i++) {
+            resultado = reductor.reducir(resultado, elementos.get(i));
+        }
+        return resultado;
+    }
+    
+    public int getCantidad() {
+        return elementos.size();
+    }
+}
+
+// Pruebas:
+public class PruebaColector {
+    public static void main(String[] args) {
+        // Sumar números
+        Colector<Integer> numeros = new Colector<>();
+        numeros.agregar(5);
+        numeros.agregar(10);
+        numeros.agregar(15);
+        
+        Integer suma = numeros.reducir((a, b) -> a + b);
+        System.out.println("Suma: " + suma);  // 30
+        
+        // Concatenar strings
+        Colector<String> textos = new Colector<>();
+        textos.agregar("Hola");
+        textos.agregar(" ");
+        textos.agregar("Mundo");
+        
+        String concatenado = textos.reducir((a, b) -> a + b);
+        System.out.println("Concatenado: " + concatenado);  // Hola Mundo
+        
+        // Encontrar máximo
+        Colector<Integer> nums2 = new Colector<>();
+        nums2.agregar(45);
+        nums2.agregar(12);
+        nums2.agregar(78);
+        nums2.agregar(23);
+        
+        Integer maximo = nums2.reducir((a, b) -> a > b ? a : b);
+        System.out.println("Máximo: " + maximo);  // 78
+    }
+}
+```
+```
+
+---
+
 (resumen)=
-## Resumen
+## Resumen Completo
 
-Los genéricos son un pilar fundamental de Java moderno:
+Los genéricos en Java son un tema profundo que permite escribir código flexible y seguro:
 
-- **Seguridad de tipos**: El compilador valida tipos en tiempo de compilación
-- **Reutilización**: Una clase genérica funciona con infinitos tipos
-- **Sin castings**: Código más limpio y sin errores de tipo en ejecución
-- **Documentación**: El código es autodescriptivo
+**Conceptos Básicos:**
+- Clases y métodos genéricos con parámetros de tipo (`<T>`)
+- Bounds para restringir qué tipos se aceptan (`extends`, `super`)
+- Wildcards para flexibilidad en colecciones (`?`, `? extends`, `? super`)
 
-```{table} Conceptos Clave de Genéricos
-:label: tbl-genericos-resumen
+**Conceptos Avanzados:**
+- Varianza: covarianza (produce/lee) vs contravarianza (consume/escribe)
+- PECS: regla mnemotécnica para usar extends/super correctamente
+- Herencia con genéricos y parámetros de tipo recursivos
+- Type erasure: limitaciones de los genéricos en tiempo de ejecución
+- Patrones: builder fluido, estrategias, factories genéricas
 
-| Concepto | Ejemplo | Uso |
+**Beneficios:**
+- ✅ Seguridad de tipos en compilación
+- ✅ Cero castings inseguros
+- ✅ Código autodescriptivo
+- ✅ Reutilización máxima
+- ✅ Errores detectados temprano
+
+```{table} Referencia Rápida de Genéricos
+:label: tbl-referencia-genericos
+
+| Patrón | Significado | Uso |
 | :--- | :--- | :--- |
-| **Clase genérica** | `class Caja<T>` | Almacenar cualquier tipo |
-| **Método genérico** | `<T> void imprimir(T obj)` | Lógica reutilizable |
-| **Upper bound** | `<T extends Number>` | Restringir a subtipo |
-| **Wildcard** | `List<?>` | Flexibilidad sin garantía |
-| **Upper wildcard** | `List<? extends Number>` | Leer cualquier Number |
-| **Lower wildcard** | `List<? super Integer>` | Escribir Integer o supertipo |
+| `<T>` | Tipo genérico simple | Almacenar/procesar un tipo |
+| `<T, U>` | Múltiples tipos | Pares, mapeos, tuplas |
+| `<T extends Number>` | Upper bound | Solo subclases de Number |
+| `<T extends A & B>` | Múltiples bounds | Tipo debe cumplir ambas |
+| `<T extends Comparable<T>>` | Self-bound | Para orden natural |
+| `<? extends T>` | Covarianza | Lee T, no escribe |
+| `<? super T>` | Contravarianza | Escribe T, no lee |
+| `<?>` | Wildcard puro | Máxima flexibilidad |
 ```
 
 Para profundizar, consultá:
-- {ref}`java-colecciones` para colecciones genéricas
+- {ref}`java-colecciones` para usar genéricos en colecciones
 - {ref}`oop3-herencia-polimorfismo` para entender polimorfismo (base de genéricos)
