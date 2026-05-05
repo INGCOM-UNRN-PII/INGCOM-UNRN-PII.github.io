@@ -1,20 +1,21 @@
 ---
-title: "7: Colecciones y Genéricos"
-subtitle: "Estructuras de Datos Flexibles y Tipado Seguro"
+title: "7: Colecciones en Java"
+subtitle: "Estructuras de Datos Eficientes para Almacenar Grupos de Objetos"
 subject: Programación Orientada a Objetos
 ---
 
-(java-colecciones-genericos)=
-# Java 4: Colecciones y Genéricos
+(java-colecciones)=
+# Java 4: Colecciones en Java
 
-En los capítulos anteriores aprendimos a crear clases, usar herencia y polimorfismo. Ahora abordamos un tema fundamental para cualquier programa real: **cómo almacenar y manipular grupos de objetos** de manera eficiente y segura.
+En los capítulos anteriores aprendimos a crear clases, usar herencia y polimorfismo. Ahora abordamos un tema fundamental para cualquier programa real: **cómo almacenar y manipular grupos de objetos** de manera eficiente.
 
 Este capítulo cubre:
 
 1. **El Framework de Colecciones**: Listas, conjuntos, mapas y colas
-2. **Genéricos**: Tipado seguro para colecciones y clases propias
-3. **Iteración**: Diferentes formas de recorrer colecciones
-4. **Comparación y Ordenamiento**: `Comparable` y `Comparator`
+2. **Iteración**: Diferentes formas de recorrer colecciones
+3. **Comparación y Ordenamiento**: `Comparable` y `Comparator`
+
+Para un tratamiento profundo de los **genéricos** (tipado seguro para colecciones y clases propias), consultá {ref}`java-genericos`.
 
 :::{admonition} Objetivos de Aprendizaje
 :class: tip
@@ -22,10 +23,9 @@ Este capítulo cubre:
 Al finalizar este capítulo, serás capaz de:
 
 1. Elegir la colección adecuada para cada problema
-2. Usar genéricos para escribir código reutilizable y seguro
-3. Iterar colecciones con diferentes técnicas
-4. Ordenar y comparar objetos correctamente
-5. Implementar tus propias clases genéricas
+2. Iterar colecciones con diferentes técnicas
+3. Ordenar y comparar objetos correctamente
+4. Implementar `Comparable` y `Comparator`
 :::
 
 :::{important}
@@ -33,6 +33,9 @@ Al finalizar este capítulo, serás capaz de:
 - Dominar la sintaxis de clases en Java ({ref}`java-sintaxis-clases`)
 - Comprender herencia e interfaces ({ref}`java-herencia-polimorfismo`)
 - Conocer arreglos básicos de Java
+
+**Nota sobre genéricos:** Este capítulo usa genéricos en los ejemplos (ej: `List<String>`). 
+Para comprender genéricos en profundidad, consultá el capítulo dedicado: {ref}`java-genericos`.
 :::
 
 ---
@@ -608,306 +611,6 @@ public class EjemploTreeMap {
     }
 }
 ```
-
----
-
-(genericos-java)=
-## Genéricos
-
-### ¿Qué son los Genéricos?
-
-Los **genéricos** permiten escribir código que trabaja con diferentes tipos de datos manteniendo la seguridad de tipos en tiempo de compilación.
-
-**Sin genéricos (Java antiguo):**
-
-```java
-List lista = new ArrayList();
-lista.add("Hola");
-lista.add(123);  // ¡Compila! Pero es un error lógico
-
-String s = (String) lista.get(0);  // Requiere cast
-String s2 = (String) lista.get(1); // ¡ClassCastException en runtime!
-```
-
-**Con genéricos (Java moderno):**
-
-```java
-List<String> lista = new ArrayList<>();
-lista.add("Hola");
-lista.add(123);  // ❌ Error de compilación: no es String
-
-String s = lista.get(0);  // No requiere cast
-```
-
-### Sintaxis Básica
-
-```java
-// Declarar variable con tipo genérico
-List<String> nombres = new ArrayList<>();
-Map<String, Integer> edades = new HashMap<>();
-Set<Persona> personas = new HashSet<>();
-
-// El operador diamante <> infiere el tipo
-List<String> lista = new ArrayList<>();  // No hace falta repetir <String>
-```
-
-(clases-genericas)=
-### Creando Clases Genéricas
-
-Podés crear tus propias clases genéricas:
-
-```java
-public class Caja<T> {
-    private T contenido;
-    
-    public Caja(T contenido) {
-        this.contenido = contenido;
-    }
-    
-    public T obtener() {
-        return contenido;
-    }
-    
-    public void guardar(T nuevo) {
-        this.contenido = nuevo;
-    }
-    
-    public boolean estaVacia() {
-        return contenido == null;
-    }
-}
-
-// Uso
-public class UsoCaja {
-    public static void main(String[] args) {
-        Caja<String> cajaTexto = new Caja<>("Hola");
-        String texto = cajaTexto.obtener();  // "Hola"
-        
-        Caja<Integer> cajaNumero = new Caja<>(42);
-        Integer numero = cajaNumero.obtener();  // 42
-        
-        Caja<Persona> cajaPersona = new Caja<>(new Persona("Ana"));
-        Persona p = cajaPersona.obtener();
-    }
-}
-```
-
-(multiples-parametros)=
-### Múltiples Parámetros de Tipo
-
-```java
-public class Par<K, V> {
-    private K clave;
-    private V valor;
-    
-    public Par(K clave, V valor) {
-        this.clave = clave;
-        this.valor = valor;
-    }
-    
-    public K getClave() { return clave; }
-    public V getValor() { return valor; }
-    
-    @Override
-    public String toString() {
-        return "(" + clave + ", " + valor + ")";
-    }
-}
-
-// Uso
-Par<String, Integer> par1 = new Par<>("edad", 25);
-Par<Integer, Boolean> par2 = new Par<>(1, true);
-```
-
-(metodos-genericos)=
-### Métodos Genéricos
-
-Los métodos pueden tener sus propios parámetros de tipo:
-
-```java
-public class Utilidades {
-    
-    // Método genérico: el tipo T se define antes del retorno
-    public static <T> void intercambiar(T[] arreglo, int i, int j) {
-        T temp = arreglo[i];
-        arreglo[i] = arreglo[j];
-        arreglo[j] = temp;
-    }
-    
-    // Método que retorna tipo genérico
-    public static <T> T primerElemento(List<T> lista) {
-        if (lista.isEmpty()) {
-            return null;
-        }
-        return lista.get(0);
-    }
-    
-    // Múltiples parámetros de tipo
-    public static <K, V> Map<V, K> invertirMapa(Map<K, V> mapa) {
-        Map<V, K> invertido = new HashMap<>();
-        for (Map.Entry<K, V> entry : mapa.entrySet()) {
-            invertido.put(entry.getValue(), entry.getKey());
-        }
-        return invertido;
-    }
-}
-
-// Uso
-String[] nombres = {"Ana", "Juan", "María"};
-Utilidades.intercambiar(nombres, 0, 2);  // ["María", "Juan", "Ana"]
-
-List<Integer> numeros = List.of(1, 2, 3);
-Integer primero = Utilidades.primerElemento(numeros);  // 1
-```
-
-(bounded-types)=
-### Tipos Acotados (Bounded Types)
-
-Podés restringir qué tipos se aceptan:
-
-```java
-// T debe ser Number o subclase de Number
-public class Calculadora<T extends Number> {
-    private List<T> numeros = new ArrayList<>();
-    
-    public void agregar(T numero) {
-        numeros.add(numero);
-    }
-    
-    public double sumar() {
-        double total = 0;
-        for (T n : numeros) {
-            total += n.doubleValue();  // Método de Number
-        }
-        return total;
-    }
-}
-
-// Uso válido
-Calculadora<Integer> calcInt = new Calculadora<>();
-Calculadora<Double> calcDouble = new Calculadora<>();
-
-// ❌ Error: String no extiende Number
-Calculadora<String> calcString = new Calculadora<>();
-```
-
-**Múltiples bounds:**
-
-```java
-// T debe extender Number Y implementar Comparable
-public class OrdenableNumerico<T extends Number & Comparable<T>> {
-    private List<T> elementos = new ArrayList<>();
-    
-    public void agregar(T elemento) {
-        elementos.add(elemento);
-    }
-    
-    public T maximo() {
-        if (elementos.isEmpty()) return null;
-        T max = elementos.get(0);
-        for (T e : elementos) {
-            if (e.compareTo(max) > 0) {
-                max = e;
-            }
-        }
-        return max;
-    }
-}
-```
-
-(wildcards)=
-### Wildcards (Comodines)
-
-Los wildcards permiten mayor flexibilidad:
-
-```java
-// ? = cualquier tipo
-public void imprimirLista(List<?> lista) {
-    for (Object elemento : lista) {
-        System.out.println(elemento);
-    }
-}
-
-// ? extends T = T o cualquier subtipo
-public double sumarNumeros(List<? extends Number> numeros) {
-    double total = 0;
-    for (Number n : numeros) {
-        total += n.doubleValue();
-    }
-    return total;
-}
-
-// ? super T = T o cualquier supertipo
-public void agregarIntegers(List<? super Integer> lista) {
-    lista.add(1);
-    lista.add(2);
-    lista.add(3);
-}
-```
-
-**Regla PECS: Producer Extends, Consumer Super**
-
-- **extends** cuando **lees** de la estructura (produce valores)
-- **super** cuando **escribes** en la estructura (consume valores)
-
-```java
-// Copiar elementos de src a dest
-public static <T> void copiar(List<? extends T> src, List<? super T> dest) {
-    for (T elemento : src) {
-        dest.add(elemento);
-    }
-}
-```
-
-(borrado-tipos)=
-### Borrado de Tipos (Type Erasure)
-
-Es fundamental entender que los genéricos en Java existen **únicamente en tiempo de compilación**. Para mantener la compatibilidad con versiones antiguas de Java, el compilador realiza un proceso llamado **Type Erasure**:
-
-1. Reemplaza todos los parámetros de tipo por sus límites (bounds) o por `Object` si no están acotados.
-2. Inserta los casts necesarios para asegurar la seguridad de tipos.
-3. Genera métodos puente (*bridge methods*) para preservar el polimorfismo.
-
-**Consecuencia:** En tiempo de ejecución (runtime), la JVM no sabe si una lista es `List<String>` o `List<Integer>`. Para la JVM, ambas son simplemente `List`.
-
-:::{warning} Implicancias del Borrado
-Debido al borrado de tipos, **no podés**:
-- Usar `instanceof` con tipos genéricos: `if (lista instanceof List<String>)` ❌
-- Saber el tipo de `T` en runtime: `T.class` ❌
-- Crear arreglos de tipos genéricos: `new T[10]` ❌
-:::
-
-(varianza-genericos)=
-### Varianza: ¿Por qué `List<Integer>` no es `List<Number>`?
-
-En Java, los arreglos son **covariantes**: si `Integer` es hijo de `Number`, entonces `Integer[]` es hijo de `Number[]`. Sin embargo, los genéricos son **invariantes**.
-
-```java
-List<Integer> enteros = new ArrayList<>();
-List<Number> numeros = enteros; // ❌ Error de compilación
-```
-
-**¿Por qué esta restricción?** Para proteger la integridad de la colección. Si Java permitiera lo anterior, podrías hacer esto:
-
-```java
-List<Integer> enteros = new ArrayList<>();
-List<Number> numeros = enteros; // Supongamos que compila
-numeros.add(3.14); // ¡Metimos un Double en una lista de Integers!
-Integer n = enteros.get(0); // 💥 ClassCastException en runtime
-```
-
-Los wildcards (`? extends` y `? super`) son la herramienta para introducir varianza de forma segura cuando la necesitamos:
-- `List<? extends T>` introduce **covarianza** (lectura segura).
-- `List<? super T>` introduce **contravarianza** (escritura segura).
-
-(limitaciones-genericos)=
-### Limitaciones Técnicas de los Genéricos
-
-Para trabajar correctamente con genéricos, debés conocer sus restricciones técnicas:
-
-1. **No tipos primitivos:** No podés usar `List<int>`. Debés usar las clases envolventes (*wrappers*) como `List<Integer>`. Java realiza *Autoboxing* para facilitar esto.
-2. **No instanciación de parámetros de tipo:** No podés hacer `new T()`. Si necesitás crear instancias, debés pasar una factoría o usar reflexión (aunque esto último excede el curso).
-3. **No campos estáticos de tipo T:** Dado que el tipo `T` depende de la instancia, no puede haber un atributo `static` de tipo `T` compartido por todas las versiones de la clase.
 4. **No excepciones genéricas:** Una clase que extiende `Exception` o `Throwable` no puede ser genérica.
 
 ---
@@ -1389,13 +1092,11 @@ public class Inventario {
 - **Set**: Sin duplicados (`HashSet`, `TreeSet`, `LinkedHashSet`)
 - **Map**: Pares clave-valor (`HashMap`, `TreeMap`)
 
-### Genéricos
+### Iteración
 
-- `<T>`: Parámetro de tipo
-- `<T extends X>`: Tipo acotado superiormente
-- `<?>`: Wildcard (cualquier tipo)
-- `<? extends T>`: Wildcard acotado (productor)
-- `<? super T>`: Wildcard acotado (consumidor)
+- **For-each**: Limpio y legible para lectura
+- **Iterator**: Cuando necesitás modificar durante iteración
+- **Streams**: Operaciones funcionales (Java 8+)
 
 ### Comparación
 
@@ -1406,6 +1107,8 @@ public class Inventario {
 
 - **Siempre** sobreescribir ambos juntos
 - Usar `Objects.equals()` y `Objects.hash()` para simplificar
+
+**Nota:** Para un estudio detallado de genéricos (tipado seguro, clases genéricas, bounded types, wildcards), consultá el capítulo dedicado {ref}`java-genericos`.
 
 ---
 
