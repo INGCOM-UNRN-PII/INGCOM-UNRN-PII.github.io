@@ -1168,7 +1168,7 @@ Analizá el siguiente escenario e identificá el tipo de relación (asociación,
 ¿Qué tipo de relación existe entre `Pedido` y `Producto`?
 ```
 
-```{solution} ej-identificar-relacion-1
+````{solution} ej-identificar-relacion-1
 :class: dropdown
 
 **Respuesta: Agregación (◊)**
@@ -1191,7 +1191,7 @@ Relación de agregación entre Pedido y Producto en el contexto de un catálogo.
 ```
 
 **Nota:** El pedido contiene **líneas de pedido** (cantidad + producto), pero la relación con el producto en sí es de agregación. Las líneas de pedido serían composición del pedido.
-```
+````
 
 ```{exercise}
 :label: ej-identificar-relacion-2
@@ -1242,7 +1242,7 @@ Dibujá el diagrama UML con cardinalidad correcta para:
 "Un estudiante puede estar inscripto en múltiples cursos. Un curso debe tener al menos 5 estudiantes y como máximo 40."
 ```
 
-```{solution} ej-cardinalidad-uml
+````{solution} ej-cardinalidad-uml
 :class: dropdown
 
 **Diagrama:**
@@ -1269,7 +1269,7 @@ Asociación con cardinalidad específica entre Estudiante y Curso.
 
 Clase de asociación 'Inscripción' para capturar datos adicionales de la relación entre Estudiante y Curso.
 ```
-```
+````
 
 ```{exercise}
 :label: ej-encapsulamiento-invariante
@@ -1280,7 +1280,7 @@ Diseñá una clase `Rectangulo` que debe mantener la siguiente invariante:
 ¿Qué atributos necesitás? ¿Qué métodos expondrías? ¿Cómo garantizarías la invariante?
 ```
 
-```{solution} ej-encapsulamiento-invariante
+````{solution} ej-encapsulamiento-invariante
 :class: dropdown
 
 **Diseño de la clase:**
@@ -1338,7 +1338,7 @@ Clase Rectangulo {
 2. El **constructor valida** → no se puede crear un rectángulo inválido
 3. Los **métodos de modificación validan** → no se puede violar la invariante después
 4. La lógica de validación está **centralizada** → fácil de mantener
-```
+````
 
 ```{exercise}
 :label: ej-asociacion-bidireccional
@@ -1349,7 +1349,7 @@ Analizá si necesitás asociación bidireccional o unidireccional en:
 ¿Es necesario que `Libro` conozca a `Editorial` **y** que `Editorial` conozca sus libros? ¿O hay una forma mejor de modelarlo?
 ```
 
-```{solution} ej-asociacion-bidireccional
+````{solution} ej-asociacion-bidireccional
 :class: dropdown
 
 **Análisis:**
@@ -1401,7 +1401,7 @@ RepositorioLibros {
 - El modelo es más simple
 
 **Recomendación:** Opción 2, especialmente si usás una base de datos donde las consultas inversas son eficientes.
-```
+````
 
 ### Ejercicio Integrador
 
@@ -1418,7 +1418,7 @@ Incluí:
 4. Justificación de las decisiones
 ```
 
-```{solution} ej-integrador-hospital
+````{solution} ej-integrador-hospital
 :class: dropdown
 
 **1. Clases identificadas:**
@@ -1486,4 +1486,4 @@ Modelo de clases completo para el sistema hospitalario, integrando diversos tipo
 - Las especialidades (Cardiología, Pediatría) preexisten
 - Un médico puede tener varias especialidades
 - Las especialidades no desaparecen si el médico deja el hospital
-```
+````
