@@ -2567,7 +2567,7 @@ Agregá:
 4. Setter para `horasTrabajadas` con validación (0-300 horas)
 ```
 
-```{solution} ej-encapsulamiento
+````{solution} ej-encapsulamiento
 :class: dropdown
 
 ```java
@@ -2616,7 +2616,7 @@ public class Empleado {
     }
 }
 ```
-```
+````
 
 ```{exercise}
 :label: ej-composicion-agregacion
@@ -2634,7 +2634,7 @@ d) Una `Universidad` tiene `Profesores`.
 e) Un `Cuerpo` tiene `Organos`.
 ```
 
-```{solution} ej-composicion-agregacion
+````{solution} ej-composicion-agregacion
 :class: dropdown
 
 **a) Factura - Items: COMPOSICIÓN ♦**
@@ -2666,7 +2666,7 @@ e) Un `Cuerpo` tiene `Organos`.
 - No funcionan independientemente del cuerpo
 - Si el cuerpo muere, los órganos dejan de funcionar
 - El cuerpo "crea" sus órganos (biológicamente)
-```
+````
 
 ```{exercise}
 :label: ej-sobrecarga-2
@@ -2681,7 +2681,7 @@ Implementá una clase `Mensaje` con constructores sobrecargados que permitan cre
 Usá delegación de constructores para evitar duplicación de código.
 ```
 
-```{solution} ej-sobrecarga-2
+````{solution} ej-sobrecarga-2
 :class: dropdown
 
 ```java
@@ -2740,4 +2740,4 @@ Mensaje m2 = new Mensaje("Hola", "juan@mail.com");
 Mensaje m3 = new Mensaje("Hola", "juan@mail.com", "Saludo");
 Mensaje m4 = new Mensaje("URGENTE", "juan@mail.com", "Alerta", "alta");
 ```
-```
+````
