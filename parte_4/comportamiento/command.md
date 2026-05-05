@@ -62,38 +62,66 @@ Encapsular una petición como un objeto, permitiendo así parametrizar a los cli
 
 ## Estructura
 
-### Diagrama de Clases
+### Diagramas
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+**Diagrama de Clases**
 
-interface Command {
-  + ejecutar()
-  + deshacer()
-}
+```mermaid
+classDiagram
+    class Invocador {
+        -comandos: List~Command~
+        +setComando(c: Command)
+        +ejecutarComando()
+    }
+    
+    class Command {
+        <<interface>>
+        +ejecutar()
+        +deshacer()
+    }
+    
+    class ComandoConcreto {
+        -receptor: Receptor
+        -estadoAnterior
+        +ejecutar()
+        +deshacer()
+    }
+    
+    class Receptor {
+        +accion()
+    }
+    
+    Invocador o--> Command
+    Command <|.. ComandoConcreto
+    ComandoConcreto --> Receptor : utiliza
+```
 
-class ComandoConcreto {
-  - receptor: Receptor
-  - estadoAnterior
-  + ejecutar()
-  + deshacer()
-}
+**Diagrama de Secuencia**
 
-class Invocador {
-  - comandos: List<Command>
-  + setComando(c: Command)
-  + ejecutarComando()
-}
-
-class Receptor {
-  + accion()
-}
-
-Command <|.. ComandoConcreto
-ComandoConcreto -> Receptor : utiliza
-Invocador o-- Command
-@enduml
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant I as Invocador
+    participant Cmd as ComandoConcreto
+    participant R as Receptor
+    
+    C->>Cmd: new ComandoConcreto(receptor)
+    C->>I: setComando(cmd)
+    
+    Note over C, I: En algún momento futuro...
+    C->>I: ejecutarComando()
+    activate I
+    I->>Cmd: ejecutar()
+    activate Cmd
+    Note over Cmd: Ejecuta la acción<br/>en el receptor
+    Cmd->>R: accion()
+    activate R
+    R-->>Cmd: OK
+    deactivate R
+    Cmd-->>I: OK
+    deactivate Cmd
+    I-->>C: OK
+    deactivate I
 ```
 
 ## Ejemplos
