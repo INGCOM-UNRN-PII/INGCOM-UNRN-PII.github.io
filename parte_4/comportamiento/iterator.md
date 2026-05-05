@@ -58,40 +58,83 @@ Proporcionar un modo de acceder secuencialmente a los elementos de un objeto agr
 
 ## Estructura
 
-### Diagrama de Clases
+### Diagramas
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+**Diagrama de Clases**
 
-interface Agregado {
-  + crearIterador(): Iterador
-}
+```mermaid
+classDiagram
+    class Agregado {
+        <<interface>>
+        +crearIterador() Iterador
+    }
+    
+    class Iterador {
+        <<interface>>
+        +primero()
+        +siguiente()
+        +hayMas() boolean
+        +elementoActual() Object
+    }
+    
+    class AgregadoConcreto {
+        +crearIterador() Iterador
+    }
+    
+    class IteradorConcreto {
+        -coleccion: AgregadoConcreto
+        -posicionActual: int
+        +primero()
+        +siguiente()
+        +hayMas() boolean
+        +elementoActual() Object
+    }
+    
+    Agregado <|.. AgregadoConcreto
+    Iterador <|.. IteradorConcreto
+    AgregadoConcreto --> IteradorConcreto : crea
+    IteradorConcreto --> AgregadoConcreto : referencia
+    Cliente --> Agregado : usa
+    Cliente --> Iterador : usa
+```
 
-interface Iterador {
-  + primero()
-  + siguiente()
-  + hayMas(): boolean
-  + elementoActual()
-}
+**Diagrama de Secuencia**
 
-class AgregadoConcreto {
-  + crearIterador(): Iterador
-}
-
-class IteradorConcreto {
-  - coleccion: AgregadoConcreto
-  - posicionActual
-  + primero()
-  + siguiente()
-  + hayMas(): boolean
-  + elementoActual()
-}
-
-Agregado <|.. AgregadoConcreto
-Iterador <|.. IteradorConcreto
-AgregadoConcreto <- IteradorConcreto
-@enduml
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant A as AgregadoConcreto
+    participant I as IteradorConcreto
+    
+    C->>A: crearIterador()
+    activate A
+    A-->>I: new IteradorConcreto(this)
+    A-->>C: iterador
+    deactivate A
+    
+    loop Mientras hayMas() == true
+        C->>I: hayMas()
+        activate I
+        I-->>C: true
+        deactivate I
+        
+        C->>I: elementoActual()
+        activate I
+        I-->>C: elemento
+        deactivate I
+        
+        Note over C: Procesa el elemento
+        
+        C->>I: siguiente()
+        activate I
+        I-->>C: OK
+        deactivate I
+    end
+    
+    C->>I: hayMas()
+    activate I
+    I-->>C: false
+    deactivate I
 ```
 
 ## Ejemplos

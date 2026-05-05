@@ -58,34 +58,60 @@ Dado un lenguaje, definir una representación para su gramática junto con un in
 
 ## Estructura
 
-### Diagrama de Clases
+### Diagramas
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+**Diagrama de Clases**
 
-abstract class Expresion {
-  + {abstract} interpretar(contexto: Contexto): int
-}
+```mermaid
+classDiagram
+    class Contexto {
+        -variables: Map
+    }
+    
+    class Expresion {
+        <<abstract>>
+        +interpretar(contexto: Contexto)* int
+    }
+    
+    class ExpresionTerminal {
+        +interpretar(contexto: Contexto) int
+    }
+    
+    class ExpresionNoTerminal {
+        -subExpresion1: Expresion
+        -subExpresion2: Expresion
+        +interpretar(contexto: Contexto) int
+    }
+    
+    Expresion <|-- ExpresionTerminal
+    Expresion <|-- ExpresionNoTerminal
+    ExpresionNoTerminal o--> Expresion : contiene
+    Expresion ..> Contexto : usa
+```
 
-class ExpresionTerminal {
-  + interpretar(contexto: Contexto): int
-}
+**Diagrama de Secuencia**
 
-class ExpresionNoTerminal {
-  - subExpresion1: Expresion
-  - subExpresion2: Expresion
-  + interpretar(contexto: Contexto): int
-}
-
-class Contexto {
-  - variables: Map
-}
-
-Expresion <|-- ExpresionTerminal
-Expresion <|-- ExpresionNoTerminal
-ExpresionNoTerminal o-- Expresion
-@enduml
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant NT as ExpresionNoTerminal (Suma)
+    participant T1 as ExpresionTerminal (Num1)
+    participant T2 as ExpresionTerminal (Num2)
+    participant Ctx as Contexto
+    
+    C->>NT: interpretar(ctx)
+    activate NT
+    NT->>T1: interpretar(ctx)
+    activate T1
+    T1-->>NT: valor1
+    deactivate T1
+    NT->>T2: interpretar(ctx)
+    activate T2
+    T2-->>NT: valor2
+    deactivate T2
+    Note over NT: Combina los resultados<br/>(valor1 + valor2)
+    NT-->>C: resultadoFinal
+    deactivate NT
 ```
 
 ## Ejemplos

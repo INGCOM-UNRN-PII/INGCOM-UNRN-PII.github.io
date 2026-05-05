@@ -59,41 +59,62 @@ Definir un objeto que encapsule cómo interactúa un conjunto de objetos. El Med
 
 ## Estructura
 
-### Diagrama de Clases
+### Diagramas
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+**Diagrama de Clases**
 
-interface Mediador {
-  + enviar(mensaje, colega)
-}
+```mermaid
+classDiagram
+    class Mediador {
+        <<interface>>
+        +enviar(mensaje, colega)
+    }
+    
+    class MediadorConcreto {
+        -colega1: Colega
+        -colega2: Colega
+        +enviar(mensaje, colega)
+    }
+    
+    class Colega {
+        <<abstract>>
+        #mediador: Mediador
+        +Colega(Mediador)
+    }
+    
+    class ColegaConcreto1 {
+        +operacion()
+    }
+    
+    class ColegaConcreto2 {
+        +operacion()
+    }
+    
+    Mediador <|.. MediadorConcreto
+    Colega <|-- ColegaConcreto1
+    Colega <|-- ColegaConcreto2
+    Colega --> Mediador : conoce
+    MediadorConcreto --> ColegaConcreto1 : coordina
+    MediadorConcreto --> ColegaConcreto2 : coordina
+```
 
-class MediadorConcreto {
-  - colega1: Colega
-  - colega2: Colega
-  + enviar(mensaje, colega)
-}
+**Diagrama de Secuencia**
 
-abstract class Colega {
-  - mediador: Mediador
-}
-
-class ColegaConcreto1 {
-  + operacion()
-}
-
-class ColegaConcreto2 {
-  + operacion()
-}
-
-Mediador <|-- MediadorConcreto
-Colega <|-- ColegaConcreto1
-Colega <|-- ColegaConcreto2
-MediadorConcreto --> ColegaConcreto1
-MediadorConcreto --> ColegaConcreto2
-Colega -> Mediador
-@enduml
+```mermaid
+sequenceDiagram
+    participant C1 as ColegaConcreto1
+    participant M as MediadorConcreto
+    participant C2 as ColegaConcreto2
+    
+    C1->>M: enviar("Hola", this)
+    activate M
+    Note over M: Determina a quién<br/>debe notificar
+    M->>C2: recibir("Hola")
+    activate C2
+    C2-->>M: OK
+    deactivate C2
+    M-->>C1: OK
+    deactivate M
 ```
 
 ## Ejemplos
