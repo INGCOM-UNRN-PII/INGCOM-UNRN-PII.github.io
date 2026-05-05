@@ -40,6 +40,8 @@ Un **patrón de diseño** nombra, abstrae e identifica los aspectos clave de una
 — Gang of Four (GoF), "Design Patterns: Elements of Reusable Object-Oriented Software", 1994
 :::
 
+Los patrones de diseño, establecen un lenguaje, y aunque no se utilice exactamente como se lo describe aquí, facilita la comunicación entre desarrolladores, introduciendo conceptos reutilizables de alto nivel.
+
 (origen-patrones)=
 ### Origen e Historia
 
@@ -76,8 +78,7 @@ Cada patrón se describe con:
 3. **Diseños flexibles**: Anticipan cambios futuros
 4. **Documentación implícita**: El nombre del patrón comunica la intención
 
-:::{warning}
-**Antipatrón: Patternitis**
+:::{warning} **Antipatrón: Patternitis**
 
 No todo necesita un patrón. Usar patrones donde no hacen falta agrega complejidad innecesaria. Un patrón es la respuesta a un problema específico; si no tenés ese problema, no necesitás ese patrón.
 :::
