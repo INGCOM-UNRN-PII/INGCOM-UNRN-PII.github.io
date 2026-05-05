@@ -71,36 +71,53 @@ Se aplica cuando:
 
 ## Estructura
 
-### Diagrama de Clases
+### Diagramas
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+**Diagrama de Clases**
 
-interface Prototipo {
-  + clonar(): Prototipo
-}
+```mermaid
+classDiagram
+    class Cliente {
+        -prototipo: Prototipo
+        +operacion()
+    }
+    
+    class Prototipo {
+        <<interface>>
+        +clonar() Prototipo
+    }
+    
+    class PrototipoConcreto1 {
+        -estado
+        +clonar() Prototipo
+    }
+    
+    class PrototipoConcreto2 {
+        -estado
+        +clonar() Prototipo
+    }
+    
+    Cliente --> Prototipo : usa
+    Prototipo <|.. PrototipoConcreto1
+    Prototipo <|.. PrototipoConcreto2
+```
 
-class PrototipoConcreto1 {
-  - estado
-  + clonar(): Prototipo
-}
+**Diagrama de Secuencia**
 
-class PrototipoConcreto2 {
-  - estado
-  + clonar(): Prototipo
-}
-
-class Cliente {
-  - prototipo: Prototipo
-  + operacion()
-}
-
-Prototipo <|.. PrototipoConcreto1
-Prototipo <|.. PrototipoConcreto2
-Cliente -> Prototipo
-
-@enduml
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant P as Prototipo (Original)
+    participant P2 as Prototipo (Copia)
+    
+    C->>P: clonar()
+    activate P
+    Note over P: Crea una copia exacta<br/>de su estado interno
+    P-->>P2: new()
+    P-->>C: copia retornada
+    deactivate P
+    Note over C: Modifica la copia<br/>sin afectar el original
+    C->>P2: configurar()
 ```
 
 ## Ejemplos

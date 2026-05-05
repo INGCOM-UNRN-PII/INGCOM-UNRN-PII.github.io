@@ -73,38 +73,44 @@ Se aplica en situaciones donde:
 
 ## Estructura
 
-### Diagrama de Clases
+### Diagramas
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+**Diagrama de Clases**
 
-class Singleton {
-  - {static} instancia: Singleton
-  - Singleton()
-  + {static} getInstancia(): Singleton
-  + operacion()
-}
-
-Singleton "1" -- Singleton : instancia
-@enduml
+```mermaid
+classDiagram
+    class Singleton {
+        -instancia: Singleton$
+        -Singleton()
+        +getInstancia()$ Singleton
+        +operacion()
+    }
+    
+    Singleton --> Singleton : contiene
 ```
 
-### Diagrama de Secuencia
+**Diagrama de Secuencia**
 
-```plantuml
-@startuml
-actor Cliente
-participant Singleton
-
-Cliente -> Singleton: getInstancia()
-activate Singleton
-alt instancia == null
-  Singleton -> Singleton: new Singleton()
-end
-Singleton --> Cliente: instancia
-deactivate Singleton
-@enduml
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant S as Singleton (Clase)
+    participant I as Instancia
+    
+    C->>S: getInstancia()
+    activate S
+    alt instancia == null
+        Note over S: Primera vez
+        S->>I: new Singleton()
+        activate I
+        I-->>S: objeto creado
+        deactivate I
+    else instancia != null
+        Note over S: Llamadas subsecuentes
+    end
+    S-->>C: retorna instancia
+    deactivate S
+    C->>I: operacion()
 ```
 
 ## Ejemplos
