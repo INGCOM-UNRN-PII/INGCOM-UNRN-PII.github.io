@@ -59,34 +59,56 @@ Definir una familia de algoritmos, encapsular cada uno de ellos y hacerlos inter
 
 ## Estructura
 
-### Diagrama de Clases
+### Diagramas
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+**Diagrama de Clases**
 
-class Contexto {
-  - estrategia: Estrategia
-  + setEstrategia(e: Estrategia)
-  + ejecutarOperacion()
-}
+```mermaid
+classDiagram
+    class Contexto {
+        -estrategia: Estrategia
+        +setEstrategia(e: Estrategia)
+        +ejecutarOperacion()
+    }
+    
+    class Estrategia {
+        <<interface>>
+        +algoritmo()
+    }
+    
+    class EstrategiaConcretaA {
+        +algoritmo()
+    }
+    
+    class EstrategiaConcretaB {
+        +algoritmo()
+    }
+    
+    Contexto o--> Estrategia : delega
+    Estrategia <|.. EstrategiaConcretaA
+    Estrategia <|.. EstrategiaConcretaB
+    Cliente --> Contexto : configura y usa
+    Cliente --> Estrategia : conoce/crea
+```
 
-interface Estrategia {
-  + algoritmo()
-}
+**Diagrama de Secuencia**
 
-class EstrategiaConcretaA {
-  + algoritmo()
-}
-
-class EstrategiaConcretaB {
-  + algoritmo()
-}
-
-Contexto o-- Estrategia
-Estrategia <|.. EstrategiaConcretaA
-Estrategia <|.. EstrategiaConcretaB
-@enduml
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant Ctx as Contexto
+    participant E as Estrategia (ConcretaA)
+    
+    C->>Ctx: setEstrategia(new EstrategiaConcretaA())
+    C->>Ctx: ejecutarOperacion()
+    activate Ctx
+    Note over Ctx: Delega a la<br/>estrategia inyectada
+    Ctx->>E: algoritmo()
+    activate E
+    E-->>Ctx: resultado
+    deactivate E
+    Ctx-->>C: resultado
+    deactivate Ctx
 ```
 
 ## Ejemplos

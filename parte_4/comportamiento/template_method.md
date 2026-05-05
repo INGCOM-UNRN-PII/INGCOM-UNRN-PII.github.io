@@ -60,32 +60,51 @@ Definir el esqueleto de un algoritmo en una operación, delegando algunos pasos 
 
 ## Estructura
 
-### Diagrama de Clases
+### Diagramas
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+**Diagrama de Clases**
 
-abstract class ClaseAbstracta {
-  + metodoPlantilla()
-  + {abstract} paso1()
-  + {abstract} paso2()
-  + operacionComun()
-}
+```mermaid
+classDiagram
+    class ClaseAbstracta {
+        <<abstract>>
+        +metodoPlantilla()*
+        #paso1()*
+        #paso2()*
+        #operacionComun()
+    }
+    
+    class ClaseConcretaA {
+        #paso1()
+        #paso2()
+    }
+    
+    class ClaseConcretaB {
+        #paso1()
+        #paso2()
+    }
+    
+    ClaseAbstracta <|-- ClaseConcretaA
+    ClaseAbstracta <|-- ClaseConcretaB
+    Cliente --> ClaseAbstracta : usa
+```
 
-class ClaseConcretaA {
-  + paso1()
-  + paso2()
-}
+**Diagrama de Secuencia**
 
-class ClaseConcretaB {
-  + paso1()
-  + paso2()
-}
-
-ClaseAbstracta <|-- ClaseConcretaA
-ClaseAbstracta <|-- ClaseConcretaB
-@enduml
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant TM as ClaseConcretaA (Superclase/Subclase)
+    
+    C->>TM: metodoPlantilla()
+    activate TM
+    Note over TM: Control de flujo en<br/>la clase base
+    TM->>TM: operacionComun()
+    Note over TM: Llama a implementación<br/>de la subclase
+    TM->>TM: paso1()
+    TM->>TM: paso2()
+    TM-->>C: OK
+    deactivate TM
 ```
 
 ## Ejemplos

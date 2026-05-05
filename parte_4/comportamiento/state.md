@@ -59,34 +59,59 @@ Permitir que un objeto altere su comportamiento cuando cambia su estado interno.
 
 ## Estructura
 
-### Diagrama de Clases
+### Diagramas
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+**Diagrama de Clases**
 
-class Contexto {
-  - estadoActual: Estado
-  + solicitud()
-  + cambiarEstado(e: Estado)
-}
+```mermaid
+classDiagram
+    class Contexto {
+        -estadoActual: Estado
+        +solicitud()
+        +cambiarEstado(e: Estado)
+    }
+    
+    class Estado {
+        <<interface>>
+        +manejar(contexto: Contexto)
+    }
+    
+    class EstadoConcretoA {
+        +manejar(contexto: Contexto)
+    }
+    
+    class EstadoConcretoB {
+        +manejar(contexto: Contexto)
+    }
+    
+    Contexto o--> Estado : delega
+    Estado <|.. EstadoConcretoA
+    Estado <|.. EstadoConcretoB
+    EstadoConcretoA --> Contexto : transiciona
+    EstadoConcretoB --> Contexto : transiciona
+```
 
-interface Estado {
-  + manejar()
-}
+**Diagrama de Secuencia**
 
-class EstadoConcretoA {
-  + manejar()
-}
-
-class EstadoConcretoB {
-  + manejar()
-}
-
-Contexto o-- Estado
-Estado <|.. EstadoConcretoA
-Estado <|.. EstadoConcretoB
-@enduml
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant Ctx as Contexto
+    participant E1 as Estado (Actual)
+    participant E2 as Estado (Nuevo)
+    
+    C->>Ctx: solicitud()
+    activate Ctx
+    Note over Ctx: Delega al estado actual
+    Ctx->>E1: manejar(this)
+    activate E1
+    Note over E1: Realiza su lógica y<br/>determina nuevo estado
+    E1->>Ctx: cambiarEstado(new E2())
+    Ctx-->>E1: OK
+    E1-->>Ctx: OK
+    deactivate E1
+    Ctx-->>C: OK
+    deactivate Ctx
 ```
 
 ## Ejemplos

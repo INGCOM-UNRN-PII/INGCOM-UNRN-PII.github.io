@@ -58,39 +58,67 @@ Definir una dependencia de uno-a-muchos entre objetos para que cuando un objeto 
 
 ## Estructura
 
-### Diagrama de Clases
+### Diagramas
 
-```plantuml
-@startuml
-skinparam classAttributeIconSize 0
+**Diagrama de Clases**
 
-interface Observador {
-  + actualizar(datos)
-}
+```mermaid
+classDiagram
+    class Observador {
+        <<interface>>
+        +actualizar(datos)
+    }
+    
+    class Sujeto {
+        <<abstract>>
+        -observadores: List~Observador~
+        +agregar(o: Observador)
+        +eliminar(o: Observador)
+        +notificar()
+    }
+    
+    class SujetoConcreto {
+        -estadoInterno
+        +getEstado()
+        +setEstado()
+    }
+    
+    class ObservadorConcreto {
+        -estadoSujeto
+        +actualizar(datos)
+    }
+    
+    Sujeto o--> Observador : mantiene
+    Sujeto <|-- SujetoConcreto
+    Observador <|.. ObservadorConcreto
+    ObservadorConcreto --> SujetoConcreto : observa
+```
 
-abstract class Sujeto {
-  - observadores: List<Observador>
-  + agregar(o: Observador)
-  + eliminar(o: Observador)
-  + notificar()
-}
+**Diagrama de Secuencia**
 
-class SujetoConcreto {
-  - estadoInterno
-  + getEstado()
-  + setEstado()
-}
-
-class ObservadorConcreto {
-  - estadoSujeto
-  + actualizar(datos)
-}
-
-Sujeto o-- Observador
-Observador <|.. ObservadorConcreto
-Sujeto <|-- SujetoConcreto
-ObservadorConcreto -> SujetoConcreto : observa
-@enduml
+```mermaid
+sequenceDiagram
+    participant C as Cliente
+    participant S as SujetoConcreto
+    participant O1 as ObservadorConcreto 1
+    participant O2 as ObservadorConcreto 2
+    
+    C->>S: setEstado(nuevoEstado)
+    activate S
+    Note over S: Actualiza estado y<br/>llama a notificar()
+    S->>S: notificar()
+    activate S
+    S->>O1: actualizar(estado)
+    activate O1
+    O1-->>S: OK
+    deactivate O1
+    S->>O2: actualizar(estado)
+    activate O2
+    O2-->>S: OK
+    deactivate O2
+    deactivate S
+    S-->>C: OK
+    deactivate S
 ```
 
 ## Ejemplos
