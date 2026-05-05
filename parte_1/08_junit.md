@@ -884,7 +884,7 @@ public class ProcesadorDatosTest {
 Tené cuidado con `\@BeforeAll`: si los datos compartidos son modificables, podés violar la {ref}`regla-0x4005` (independencia de tests). Usalo solo para datos inmutables o de solo lectura.
 :::
 
-#### `@AfterAll`
+#### `\@AfterAll`
 
 El método anotado se ejecuta **una vez después de todos los tests**:
 
@@ -1366,7 +1366,7 @@ public class MiTest {
 A menudo queremos probar el mismo comportamiento con múltiples conjuntos de datos. Los **tests parametrizados** permiten esto sin violar la {ref}`regla-0x4004` (sin lógica condicional).
 
 (anotacion-parameterizedtest)=
-### Anotación `@ParameterizedTest`
+### Anotación `\@ParameterizedTest`
 
 ```java
 import org.junit.jupiter.params.ParameterizedTest;
@@ -3181,12 +3181,12 @@ Este apunte cubrió la implementación práctica de testing con JUnit 5:
 
 1. **Configuración**: Gradle, estructura de proyecto, dependencias
 2. **JUnit 5**: Framework moderno para testing en Java
-3. **Anatomía de un test**: @Test, imports, estructura AAA
+3. **Anatomía de un test**: `\@Test`, imports, estructura AAA
 4. **Assertions**: assertEquals, assertTrue, assertNull, assertArrayEquals, etc.
 5. **Excepciones**: Verificación con try-catch
-6. **Ciclo de vida**: @BeforeEach, @AfterEach, @BeforeAll, @AfterAll
+6. **Ciclo de vida**: `\@BeforeEach`, `\@AfterEach`, `\@BeforeAll`, `\@AfterAll`
 7. **Convenciones**: Reglas {ref}`regla-0x4000` a {ref}`regla-0x4005`
-8. **Tests parametrizados**: @ParameterizedTest, @ValueSource, @CsvSource
+8. **Tests parametrizados**: `\@ParameterizedTest`, `\@ValueSource`, `\@CsvSource`
 9. **TDD en práctica**: Ejemplo completo con factorial
 10. **Estrategias con JUnit**: Implementación de valores límite y particiones
 11. **Test smells**: Ejemplos concretos con JUnit
