@@ -134,7 +134,7 @@ private String numeroCuenta;
 
 ### Uso de tags
 
-#### @param - Documentar parámetros
+#### `\@param` - Documentar parámetros
 
 ```java
 /**
@@ -164,7 +164,7 @@ public double calcularInteresCompuesto(double capitalInicial,
 ```
 :::
 
-#### @return - Documentar valor de retorno
+#### `\@return` - Documentar valor de retorno
 
 ```java
 /**
@@ -189,7 +189,7 @@ public double calcularPromedio(List<Double> numeros) {
 }
 ```
 
-#### @throws - Documentar excepciones
+#### `\@throws` - Documentar excepciones
 
 Ver también regla {ref}`regla-0x1002`:
 
@@ -276,7 +276,7 @@ public String buscar(String elemento) {
 
 ### Referencias cruzadas
 
-#### @see para vincular documentación
+#### `\@see` para vincular documentación
 
 ```java
 /**
@@ -1155,7 +1155,7 @@ private void validarPedido(Pedido pedido) throws PedidoInvalidoException {
 }
 ```
 
-### Orden de los tags @throws
+### Orden de los tags `\@throws`
 
 Listar en orden de probabilidad o importancia:
 
@@ -1859,7 +1859,7 @@ Las precondiciones (condiciones que deben cumplirse **antes** de llamar al méto
 
 ### Formas de documentar precondiciones
 
-#### Opción 1: En la descripción del @param
+#### Opción 1: En la descripción del `\@param`
 
 ```java
 /**
