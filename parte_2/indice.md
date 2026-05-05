@@ -1,5 +1,60 @@
 # Apunte de Cátedra
 
+## Cómo usar esta parte
+
+Esta parte marca el pasaje desde "programar en Java" a **pensar en objetos**. El foco ya no está solo en la sintaxis, sino en modelar dominios, distribuir responsabilidades y diseñar relaciones entre clases con criterio.
+
+:::{tip} Qué se aprende en esta parte
+
+Al recorrer esta parte, el estudiante debería poder:
+
+1. Comprender los conceptos fundamentales del paradigma orientado a objetos
+2. Modelar objetos, clases, atributos, métodos y relaciones
+3. Implementar encapsulamiento y asociaciones en Java
+4. Diseñar y programar jerarquías con herencia y polimorfismo
+5. Distinguir cuándo usar composición, agregación, clases abstractas e interfaces
+6. Empezar a trabajar con genéricos y colecciones desde una mirada orientada a objetos
+:::
+
+## Orden sugerido de lectura
+
+| Orden | Capítulo | Rol en la progresión |
+| :--- | :--- | :--- |
+| 1 | [01_oop_fundamentos](01_oop_fundamentos.md) | Base conceptual del paradigma |
+| 2 | [02_oop_relaciones](02_oop_relaciones.md) | Encapsulamiento y relaciones entre objetos |
+| 3 | [03_sintaxis_clases](03_sintaxis_clases.md) | Traducción del modelo conceptual a código Java |
+| 4 | [04_oop_herencia_polimorfismo](04_oop_herencia_polimorfismo.md) | Enfoque conceptual sobre jerarquías y sustitución |
+| 5 | [05_herencia_polimorfismo](05_herencia_polimorfismo.md) | Enfoque sintáctico y aplicado en Java |
+| 6 | [06_excepciones](06_excepciones.md) | Relectura de excepciones en clave OOP |
+| 7 | [07_colecciones_genericos](07_colecciones_genericos.md) | Colecciones desde una mirada de diseño y uso |
+| 8 | [08_genericos](08_genericos.md) | Profundización en tipos parametrizados |
+
+## Capítulos nucleares
+
+Estos capítulos forman el núcleo de la parte y conviene trabajarlos en secuencia:
+
+| Capítulo | Por qué es nuclear |
+| :--- | :--- |
+| [01_oop_fundamentos](01_oop_fundamentos.md) | Define el lenguaje conceptual del paradigma |
+| [02_oop_relaciones](02_oop_relaciones.md) | Introduce encapsulamiento y modelado de vínculos |
+| [03_sintaxis_clases](03_sintaxis_clases.md) | Convierte diseño en código Java concreto |
+| [04_oop_herencia_polimorfismo](04_oop_herencia_polimorfismo.md) | Da el marco conceptual de herencia, interfaces y LSP |
+| [05_herencia_polimorfismo](05_herencia_polimorfismo.md) | Consolida la implementación práctica en Java |
+
+## Repaso y ampliación
+
+Estos capítulos sirven mejor como consolidación, extensión o segunda lectura:
+
+| Capítulo | Tipo | Uso sugerido |
+| :--- | :--- | :--- |
+| [06_excepciones](06_excepciones.md) | Consolidación transversal | Leer después de dominar clases y responsabilidades |
+| [07_colecciones_genericos](07_colecciones_genericos.md) | Ampliación aplicada | Usar cuando ya se entienden objetos, interfaces y contratos |
+| [08_genericos](08_genericos.md) | Profundización técnica | Consultar después de trabajar colecciones y jerarquías |
+
+:::{note}
+Lo que sigue debajo es el **índice exhaustivo** del material. Sirve para navegar temas y subtemas puntuales una vez que ya tenés el mapa general de la parte.
+:::
+
 ## [01_oop_fundamentos](.\/01_oop_fundamentos.md)
   * [Introducción: La transición de paradigma](01_oop_fundamentos.md)
     * [El paradigma estructurado (Un pequeño flashback a Programación 1)](01_oop_fundamentos.md)

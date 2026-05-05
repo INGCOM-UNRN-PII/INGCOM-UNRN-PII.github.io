@@ -1,5 +1,71 @@
 # Apunte de Cátedra
 
+## Cómo usar esta parte
+
+Esta parte introduce Java desde una lógica **late objects**: primero se construyen las bases del lenguaje, de las herramientas y del modelo de ejecución; después se profundiza en testing, archivos y memoria.
+
+:::{tip} Qué se aprende en esta parte
+
+Al recorrer esta parte, el estudiante debería poder:
+
+1. Entender qué lugar ocupa Java en la historia y en la industria
+2. Leer y escribir programas simples en Java usando tipos, métodos y lazos
+3. Modelar datos con arreglos, entrada/salida y archivos
+4. Trabajar con excepciones y comprender errores frecuentes del runtime
+5. Usar Gradle y JUnit como herramientas básicas de trabajo
+6. Relacionar el código fuente con el modelo de memoria y ejecución
+:::
+
+## Orden sugerido de lectura
+
+| Orden | Capítulo | Rol en la cursada |
+| :--- | :--- | :--- |
+| 0 | [01_origenes](01_origenes.md) | Contexto histórico y motivación del lenguaje |
+| 1 | [02_lenguaje](02_lenguaje.md) | Punto de entrada al lenguaje y puente con C |
+| 2 | [03_tipos_de_datos](03_tipos_de_datos.md) | Núcleo sintáctico y semántico básico |
+| 3 | [04_metodos](04_metodos.md) | Descomposición del programa y llamadas |
+| 4 | [05_sintaxis_control](05_sintaxis_control.md) | Decisión e iteración |
+| 5 | [06_entrada_salida](06_entrada_salida.md) | Interacción con usuario y flujos simples |
+| 6 | [07_gradle](07_gradle.md) | Entorno de trabajo y automatización básica |
+| 7 | [08_junit](08_junit.md) | Base práctica para verificar código |
+| 8 | [09_arreglos](09_arreglos.md) | Trabajo con colecciones fijas |
+| 9 | [10_excepciones](10_excepciones.md) | Manejo de errores y robustez |
+| 10 | [11_testing](11_testing.md) | Consolidación de estrategia de pruebas |
+| 11 | [12_archivos](12_archivos.md) | Persistencia básica y lectura/escritura |
+| 12 | [13_memoria](13_memoria.md) | Modelo mental de ejecución y memoria |
+| Extra | [04b_varargs](04b_varargs.md) | Ampliación puntual sobre parámetros variables |
+
+## Capítulos nucleares
+
+Estos capítulos conviene dominarlos sí o sí antes de avanzar a orientación a objetos:
+
+| Capítulo | Por qué es nuclear |
+| :--- | :--- |
+| [02_lenguaje](02_lenguaje.md) | Fija el puente conceptual entre C y Java |
+| [03_tipos_de_datos](03_tipos_de_datos.md) | Introduce el sistema de tipos y operaciones básicas |
+| [04_metodos](04_metodos.md) | Organiza el código en unidades reutilizables |
+| [05_sintaxis_control](05_sintaxis_control.md) | Permite expresar lógica y lazos |
+| [07_gradle](07_gradle.md) | Ordena el flujo de trabajo real de la materia |
+| [08_junit](08_junit.md) | Instala la práctica de verificar código temprano |
+| [09_arreglos](09_arreglos.md) | Prepara el terreno para estructuras más complejas |
+| [10_excepciones](10_excepciones.md) | Introduce robustez y control de fallos |
+| [12_archivos](12_archivos.md) | Expande el alcance del programa más allá de memoria inmediata |
+
+## Repaso y ampliación
+
+Estos capítulos cumplen mejor un rol de contexto, consolidación o profundización:
+
+| Capítulo | Tipo | Uso sugerido |
+| :--- | :--- | :--- |
+| [01_origenes](01_origenes.md) | Contexto | Leer al inicio o en paralelo para entender decisiones de diseño |
+| [04b_varargs](04b_varargs.md) | Ampliación puntual | Consultar después de dominar métodos y sobrecarga |
+| [11_testing](11_testing.md) | Consolidación | Leer cuando ya se escriben programas con varias piezas |
+| [13_memoria](13_memoria.md) | Profundización | Usar para cerrar el modelo mental de stack, heap y runtime |
+
+:::{note}
+Lo que sigue debajo es el **índice exhaustivo** del material. Sirve como mapa detallado de temas, subtemas y secciones específicas.
+:::
+
 ## [01_origenes](.\/01_origenes.md)
   * [El Nacimiento de Java: El Green Project](01_origenes.md)
     * [El contexto: Sun Microsystems y los años 90](01_origenes.md)
