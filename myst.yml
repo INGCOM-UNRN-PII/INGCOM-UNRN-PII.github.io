@@ -100,6 +100,8 @@ project:
       - file: parte_4/comportamiento/template_method.md
       - file: parte_4/comportamiento/visitor.md
       - file: parte_4/comportamiento/ejercicios_integradores.md
+
+# No publicado - en desarrollo
 #  - title: 'Parte 5: Estructuras de Datos'
 #    children:
 #    - file: parte_5/indice.md
@@ -108,6 +110,7 @@ project:
 #      - file: parte_5/secuencias/pilas.md
 #      - file: parte_5/secuencias/colas.md
 #      - file: parte_5/secuencias/listas_enlazadas.md
+# No publicado - en desarrollo
 #  - title: 'Parte 6: Plataformas y Frameworks'
 #    children:
 #    - file: parte_6/indice.md
