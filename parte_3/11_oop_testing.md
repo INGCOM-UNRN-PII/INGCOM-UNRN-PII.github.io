@@ -11,8 +11,7 @@ En los capítulos anteriores diseñamos sistemas orientados a objetos aplicando 
 
 El **testing** es la disciplina que permite verificar el comportamiento del software de manera sistemática y repetible. En el contexto de la programación orientada a objetos, el testing presenta desafíos y oportunidades particulares debido a las características del paradigma: encapsulamiento, herencia, polimorfismo y la interacción entre objetos.
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 
@@ -162,12 +161,11 @@ Cuando testeamos una clase, nos enfocamos en su **comportamiento observable**, n
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-:::{admonition} Principio Fundamental
-:class: important
+:::{important} Principio Fundamental
 
 **Testear comportamiento, no implementación.**
 
-Si cambiás la implementación interna pero el comportamiento observable sigue igual, los tests no deberían romperse.
+Si cambiás la implementación interna, pero el comportamiento observable sigue igual, los tests no deberían romperse.
 :::
 
 (testing-sin-getters)=

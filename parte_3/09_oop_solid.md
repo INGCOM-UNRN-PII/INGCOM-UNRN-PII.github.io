@@ -11,8 +11,7 @@ En los capítulos anteriores construimos objetos, establecimos relaciones, explo
 
 Los **principios SOLID** son cinco directrices fundamentales que guían el diseño de software orientado a objetos hacia sistemas de alta calidad. Fueron recopilados y popularizados por **Robert C. Martin** (Uncle Bob) a principios de los 2000, aunque cada principio tiene raíces más antiguas. Estos principios también ayudan a identificar y corregir {ref}`code-smells` en el código.
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 
@@ -73,8 +72,7 @@ SOLID no es un conjunto de reglas rígidas sino **heurísticas de diseño**. Apl
 (srp-definicion)=
 ### Definición
 
-:::{admonition} Single Responsibility Principle (SRP)
-:class: important
+:::{important} Single Responsibility Principle (SRP)
 
 **Una clase debe tener una, y solo una, razón para cambiar.**
 
@@ -251,8 +249,7 @@ classDiagram
 
 El SRP no dice que cada clase debe tener un solo método. El criterio es **razones para cambiar**, no cantidad de código.
 
-:::{admonition} Heurística Práctica
-:class: tip
+:::{tip} Heurística Práctica
 
 Preguntate: "Si [actor X] pide un cambio, ¿qué clases necesito modificar?"
 
@@ -284,8 +281,7 @@ public class SistemaEmpresarial {
 (ocp-definicion)=
 ### Definición
 
-:::{admonition} Open/Closed Principle (OCP)
-:class: important
+:::{important} Open/Closed Principle (OCP)
 
 **Las entidades de software deben estar abiertas para extensión, pero cerradas para modificación.**
 
@@ -510,8 +506,7 @@ abstract class ProcesadorArchivo {
 
 OCP requiere **anticipar** qué partes del sistema cambiarán. Pero predecir el futuro es difícil.
 
-:::{admonition} Estrategia Práctica
-:class: tip
+:::{tip} Estrategia Práctica
 
 **Regla de los tres strikes:**
 
@@ -530,8 +525,7 @@ No generalices prematuramente. Esperá hasta tener evidencia de qué variaciones
 (lsp-definicion)=
 ### Definición
 
-:::{admonition} Liskov Substitution Principle (LSP)
-:class: important
+:::{important} Liskov Substitution Principle (LSP)
 
 **Los objetos de un programa deberían ser reemplazables por instancias de sus subtipos sin alterar la corrección del programa.**
 
@@ -793,8 +787,7 @@ LSP está íntimamente relacionado con el **Diseño por Contratos** (ver {ref}`o
 (isp-definicion)=
 ### Definición
 
-:::{admonition} Interface Segregation Principle (ISP)
-:class: important
+:::{important} Interface Segregation Principle (ISP)
 
 **Los clientes no deberían verse forzados a depender de interfaces que no usan.**
 
@@ -1013,8 +1006,7 @@ interface AdministradorUsuarios {
 (dip-definicion)=
 ### Definición
 
-:::{admonition} Dependency Inversion Principle (DIP)
-:class: important
+:::{important} Dependency Inversion Principle (DIP)
 
 **A. Los módulos de alto nivel no deben depender de módulos de bajo nivel. Ambos deben depender de abstracciones.**
 
@@ -1414,8 +1406,7 @@ No agregues abstracciones "por si acaso". Agregá complejidad cuando la necesit�
 (solid-balance)=
 ### Encontrar el Balance
 
-:::{admonition} Heurísticas de Balance
-:class: tip
+:::{tip} Heurísticas de Balance
 
 1. **Empezá simple**, refactorizá cuando duela
 2. **Tres strikes** antes de generalizar

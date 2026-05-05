@@ -11,8 +11,7 @@ En los capítulos anteriores aprendimos a diseñar sistemas orientados a objetos
 
 El **refactoring** es la disciplina de mejorar la estructura interna del código sin cambiar su comportamiento observable. Los **code smells** son indicadores que nos alertan sobre problemas de diseño que merecen atención.
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 
@@ -32,8 +31,7 @@ Al finalizar este capítulo, serás capaz de:
 (definicion-refactoring)=
 ### Definición
 
-:::{admonition} Definición Formal
-:class: important
+:::{important} Definición Formal
 
 **Refactoring** es el proceso de cambiar un sistema de software de manera que no altera el comportamiento externo del código, pero mejora su estructura interna.
 
@@ -85,8 +83,7 @@ Sin refactoring, el código se vuelve:
 (cuando-refactorizar)=
 ### ¿Cuándo Refactorizar?
 
-:::{admonition} La Regla de los Tres
-:class: tip
+:::{tip} La Regla de los Tres
 
 **Primera vez**: Hacelo funcionar
 **Segunda vez**: Notás la duplicación, pero seguís adelante
@@ -120,8 +117,7 @@ Momentos ideales para refactorizar:
 
 Un **code smell** (olor a código) es una indicación superficial de que probablemente hay un problema más profundo en el sistema. No es un bug — el código funciona — pero sugiere que el diseño podría mejorarse.
 
-:::{admonition} Analogía
-:class: note
+:::{note} Analogía
 
 El olor a gas no es un incendio, pero indica que hay una fuga que podría causar uno. Los code smells no son bugs, pero indican debilidades que podrían causar problemas futuros.
 :::
@@ -1363,8 +1359,7 @@ public class Logger {
 }
 ```
 
-:::{admonition} YAGNI
-:class: important
+:::{important} YAGNI
 
 **You Aren't Gonna Need It** (No lo vas a necesitar)
 
@@ -1654,8 +1649,7 @@ public class Direccion {
 String nombreCiudad = pedido.getCiudadEntrega();
 ```
 
-:::{admonition} Ley de Demeter
-:class: note
+:::{note} Ley de Demeter
 
 "Solo hablá con tus amigos inmediatos"
 

@@ -11,8 +11,7 @@ En los capítulos anteriores dominamos los fundamentos de OOP ({ref}`fundamentos
 
 Ahora aplicamos todo ese conocimiento en **patrones de diseño**: soluciones elegantes y probadas a problemas que aparecen una y otra vez en el desarrollo de software.
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 
@@ -34,8 +33,7 @@ Al finalizar este capítulo, serás capaz de:
 
 Un **patrón de diseño** es una solución general y reutilizable a un problema común en el diseño de software. No es código listo para usar, sino una **plantilla** o **receta** que describe cómo resolver un problema en diferentes contextos.
 
-:::{admonition} Definición Formal
-:class: note
+:::{note} Definición Formal
 
 Un **patrón de diseño** nombra, abstrae e identifica los aspectos clave de una estructura de diseño común que lo hacen útil para crear un diseño orientado a objetos reutilizable.
 
@@ -175,8 +173,7 @@ Para un análisis profundo de patrones de comportamiento, incluidos **Strategy, 
 - El patrón agrega complejidad sin beneficio claro
 - "Por si acaso lo necesite en el futuro"
 
-:::{admonition} Regla de Oro
-:class: tip
+:::{tip} Regla de Oro
 
 **No uses un patrón hasta que el problema que resuelve sea evidente.**
 

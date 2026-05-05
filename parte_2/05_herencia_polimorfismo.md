@@ -16,8 +16,7 @@ Este capítulo cubre:
 3. **Interfaces**: Establecer contratos de comportamiento
 4. **Polimorfismo**: Tratar objetos de diferentes tipos de manera uniforme
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 
@@ -45,8 +44,7 @@ Al finalizar este capítulo, serás capaz de:
 
 La **herencia** es un mecanismo que permite crear una nueva clase basada en una clase existente. La nueva clase **hereda** los atributos y métodos de la clase original, y puede agregar nuevos o modificar los existentes.
 
-:::{admonition} Definición Formal
-:class: note
+:::{note} Definición Formal
 
 **Herencia** es una relación "es-un" (*is-a*) entre clases donde una clase derivada (subclase o clase hija) extiende las capacidades de una clase base (superclase o clase padre), heredando su estado y comportamiento.
 :::
@@ -754,8 +752,7 @@ public interface Volador {
 }
 ```
 
-:::{admonition} Definición Formal
-:class: note
+:::{note} Definición Formal
 
 Una **interface** es un tipo de referencia que define un conjunto de métodos abstractos (y posiblemente constantes y métodos por defecto) que las clases implementadoras deben proporcionar.
 :::

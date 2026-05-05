@@ -18,8 +18,7 @@ Este capítulo cubre:
 5. **Excepciones en interfaces**: El principio de sustitución
 6. **Antipatrones y refactoring**: Mejorando código existente
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 

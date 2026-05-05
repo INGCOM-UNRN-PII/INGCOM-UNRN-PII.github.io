@@ -17,8 +17,7 @@ Este capítulo cubre:
 4. **Bounds (Límites de Tipo)**: Restricciones en parámetros de tipo
 5. **Comodines (_Wildcards_)**: Flexibilidad en colecciones genéricas
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 
@@ -102,8 +101,7 @@ String nombre = contactos.get(0);  // ✅ Ya es String
 
 **Genéricos** es un mecanismo que permite escribir código reutilizable que funciona con diferentes tipos, manteniendo **seguridad de tipos en tiempo de compilación**.
 
-:::{admonition} Definición
-:class: note
+:::{note} Definición
 
 Un **genérico** es una clase, interfaz o método que declara **parámetros de tipo** (type parameters) usando variables de tipo como `<T>`, `<K>`, `<V>`, etc. El compilador verifica que el tipo usado sea compatible antes de ejecutar el código.
 :::

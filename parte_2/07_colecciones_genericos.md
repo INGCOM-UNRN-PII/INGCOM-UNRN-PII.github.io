@@ -17,8 +17,7 @@ Este capítulo cubre:
 
 Para un tratamiento profundo de los **genéricos** (tipado seguro para colecciones y clases propias), consultá {ref}`java-genericos`.
 
-:::{admonition} Objetivos de Aprendizaje
-:class: tip
+:::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
 

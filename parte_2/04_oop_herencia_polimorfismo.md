@@ -297,7 +297,7 @@ Estas reglas aplican incluso en jerarquías. La herencia NO es una excusa para r
 Para verificar que una `Gerente` funciona correctamente, pruebas deben usar **métodos de dominio**:
 
 ```java
-\@Test
+@Test
 void testGerenciaCalculaSueldoConBonificacion() {
     Gerente g = new Gerente("Carlos", 3000, 1000);
     
@@ -305,7 +305,7 @@ void testGerenciaCalculaSueldoConBonificacion() {
     assertEquals(4000, g.calcularSueldoFinal(), 0.01);
 }
 
-\@Test
+@Test
 void testGerenciaTieneNombre() {
     Gerente g = new Gerente("Carlos", 3000, 1000);
     
@@ -702,8 +702,7 @@ public class Gerente extends Empleado {
 
 **Polimorfismo** (del griego: "muchas formas") es la capacidad de tratar objetos de diferentes tipos de manera uniforme a través de una interfaz común.
 
-:::{admonition} Definición Formal
-:class: note
+:::{note} Definición Formal
 
 **Polimorfismo** es el principio por el cual una referencia de un tipo base puede referirse a objetos de cualquier tipo derivado, y las operaciones sobre esa referencia invocarán el comportamiento específico del tipo real del objeto.
 :::
@@ -829,8 +828,7 @@ El **Principio de Sustitución de Liskov** (LSP) es uno de los principios SOLID 
 
 En otras palabras: si `S` es subclase de `T`, entonces cualquier código que funcione con `T` debe funcionar igual de bien con `S`.
 
-:::{admonition} Definición Formal
-:class: note
+:::{note} Definición Formal
 
 **LSP**: Sea `φ(x)` una propiedad demostrable sobre objetos `x` de tipo `T`. Entonces `φ(y)` debe ser verdadera para objetos `y` de tipo `S` donde `S` es un subtipo de `T`.
 :::
