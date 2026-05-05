@@ -1,11 +1,11 @@
 ---
-title: "4: Herencia y Polimorfismo Conceptual"
+title: "Herencia y Polimorfismo Conceptual"
 subtitle: "Jerarquías, Especialización y Flexibilidad en el Diseño"
 subject: Programación Orientada a Objetos
 ---
 
 (oop3-herencia-polimorfismo)=
-# OOP 3: Herencia y Polimorfismo Conceptual
+# Herencia y Polimorfismo Conceptual
 
 En los capítulos anteriores exploramos los fundamentos de OOP ({ref}`fundamentos-de-la-programacion-orientada-a-objetos`) y las relaciones entre objetos ({ref}`oop2-encapsulamiento-relaciones`). Ahora abordamos dos pilares fundamentales que permiten **reutilizar código** y **diseñar sistemas flexibles**: la **herencia** y el **polimorfismo**.
 

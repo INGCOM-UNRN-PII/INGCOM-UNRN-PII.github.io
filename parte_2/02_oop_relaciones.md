@@ -1,11 +1,11 @@
 ---
-title: "2: Encapsulamiento y Relaciones entre Objetos"
+title: "Encapsulamiento y Relaciones entre Objetos"
 subtitle: "Protegiendo el Estado y Modelando Colaboraciones"
 subject: Programación Orientada a Objetos
 ---
 
 (oop2-encapsulamiento-relaciones)=
-# OOP 2: Encapsulamiento y Relaciones entre Objetos
+# Encapsulamiento y Relaciones entre Objetos
 
 En el capítulo anterior ({ref}`fundamentos-de-la-programacion-orientada-a-objetos`) nos enfocamos en el **análisis conceptual** de un dominio: utilizamos {ref}`la-heuristica-linguistica` para identificar objetos a partir de sustantivos, definir su comportamiento a partir de verbos, y aplicar los {ref}`filtro-de-abstraccion` y {ref}`filtro-de-complejidad` para refinar el modelo.
 

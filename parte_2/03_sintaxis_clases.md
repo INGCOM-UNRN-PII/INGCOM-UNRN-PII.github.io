@@ -1,10 +1,10 @@
 ---
-title: "3: Sintaxis de Clases y Objetos"
+title: "Sintaxis de Clases y Objetos"
 subtitle: "De la Burbuja al Código"
 ---
 
 (java-sintaxis-clases)=
-# Java 1: Sintaxis de Clases y Objetos
+# Sintaxis de Clases y Objetos
 
 Este capítulo aborda la **sintaxis concreta de Java** para implementar los conceptos de Programación Orientada a Objetos que viste en los capítulos anteriores:
 

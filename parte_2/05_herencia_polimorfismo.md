@@ -1,11 +1,11 @@
 ---
-title: "5: Herencia y Polimorfismo"
+title: "Herencia y Polimorfismo"
 subtitle: "Reutilización y Flexibilidad en el Diseño"
 subject: Programación Orientada a Objetos
 ---
 
 (java-herencia-polimorfismo)=
-# Java 2: Herencia y Polimorfismo
+# Herencia y Polimorfismo
 
 En el capítulo anterior ({ref}`java-sintaxis-clases`) aprendimos a crear clases, definir atributos y métodos, y establecer relaciones entre objetos. Ahora damos el siguiente paso: aprender a **reutilizar código** y **crear diseños flexibles** mediante dos mecanismos fundamentales de la POO.
 

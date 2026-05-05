@@ -1,5 +1,5 @@
 ---
-title: "12: Anti-patrones y Code Smells"
+title: "Anti-patrones y Code Smells"
 subtitle: "Reconociendo y Evitando Errores de Diseño Comunes"
 subject: Programación Orientada a Objetos
 ---

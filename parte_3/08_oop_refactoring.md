@@ -1,5 +1,5 @@
 ---
-title: "8: Refactoring y Code Smells"
+title: "Refactoring y Code Smells"
 subtitle: "El Arte de Mejorar Código Existente"
 subject: Programación Orientada a Objetos
 ---

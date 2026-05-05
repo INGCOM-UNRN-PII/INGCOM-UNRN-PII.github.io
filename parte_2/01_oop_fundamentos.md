@@ -1,5 +1,5 @@
 ---
-title: "1: Fundamentos OOP"
+title: "Fundamentos OOP"
 description:
   Introducción conceptual al paradigma orientado a objetos. De la programación 
   estructurada a la fusión de datos y comportamiento. Principios fundamentales

@@ -1,11 +1,11 @@
 ---
-title: "13: Diseño por Contratos"
+title: "Diseño por Contratos"
 subtitle: "Especificaciones Formales para Software Confiable"
 subject: Programación Orientada a Objetos
 ---
 
 (oop-contratos)=
-# OOP 4: Diseño por Contratos
+# Diseño por Contratos
 
 En los capítulos anteriores construimos objetos con buena estructura ({ref}`fundamentos-de-la-programacion-orientada-a-objetos`), establecimos relaciones claras ({ref}`oop2-encapsulamiento-relaciones`), y aprendimos sobre herencia y polimorfismo ({ref}`oop3-herencia-polimorfismo` y {ref}`java-herencia-polimorfismo`). Pero, ¿cómo garantizamos que esos objetos se **comporten correctamente**? ¿Cómo especificamos qué espera un método y qué promete entregar?
 

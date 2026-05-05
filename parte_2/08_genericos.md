@@ -1,11 +1,11 @@
 ---
-title: "8: Genéricos en Java"
+title: "Genéricos en Java"
 subtitle: "Parámetros de Tipo, Tipado Seguro y Reutilización de Código"
 subject: Programación Orientada a Objetos
 ---
 
 (java-genericos)=
-# Java 8: Genéricos en Java
+# Genéricos en Java
 
 En los capítulos anteriores vimos cómo las colecciones facilitan almacenar grupos de objetos, pero hay un problema: **pérdida de tipo en tiempo de compilación**. Los genéricos resuelven esto permitiendo crear clases y métodos que funcionan con **cualquier tipo de dato mientras mantienen seguridad de tipos**.
 

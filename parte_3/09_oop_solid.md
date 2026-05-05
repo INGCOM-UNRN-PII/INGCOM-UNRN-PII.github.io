@@ -1,5 +1,5 @@
 ---
-title: "9: Principios SOLID"
+title: "SOLID"
 subtitle: "Fundamentos del Diseño Orientado a Objetos de Calidad"
 subject: Programación Orientada a Objetos
 ---

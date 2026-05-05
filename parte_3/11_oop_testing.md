@@ -1,5 +1,5 @@
 ---
-title: "11: Testing en Programación Orientada a Objetos"
+title: "Testing OOP"
 subtitle: "Verificación y Validación de Sistemas Orientados a Objetos"
 subject: Programación Orientada a Objetos
 ---

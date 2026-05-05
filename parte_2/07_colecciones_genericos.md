@@ -1,11 +1,11 @@
 ---
-title: "7: Colecciones en Java"
+title: "Colecciones en Java"
 subtitle: "Estructuras de Datos Eficientes para Almacenar Grupos de Objetos"
 subject: Programación Orientada a Objetos
 ---
 
 (java-colecciones)=
-# Java 4: Colecciones en Java
+# Colecciones en Java
 
 En los capítulos anteriores aprendimos a crear clases, usar herencia y polimorfismo. Ahora abordamos un tema fundamental para cualquier programa real: **cómo almacenar y manipular grupos de objetos** de manera eficiente.
 
