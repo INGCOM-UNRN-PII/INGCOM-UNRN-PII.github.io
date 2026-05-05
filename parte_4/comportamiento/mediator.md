@@ -5,298 +5,133 @@ subject: Patrones de Diseño de Comportamiento
 ---
 
 (patron-mediator)=
-# Mediator: Comunicación Centralizada
+# Mediator
 
-El patrón **Mediator** define un objeto que encapsula cómo una serie de objetos interactúan, promoviendo débil acoplamiento al evitar que los objetos se refieran explícitamente entre sí.
+## Definición
 
-:::{note} Propósito
+El patrón **Mediator** (Mediador) es un patrón de diseño de comportamiento que define un objeto que encapsula cómo interactúan un conjunto de objetos. 
 
-Centralizar comunicación entre múltiples objetos para reducir acoplamiento.
-:::
-
----
+El patrón promueve el desacoplamiento al evitar que los objetos se refieran entre sí explícitamente y permitiendo variar su interacción de forma independiente.
 
 ## Origen e Historia
 
-Gang of Four 1994. Surge de sistemas complejos donde objetos interactúan de forma complicada (ej: controladores MVC).
+Formalizado por el GoF en 1994, el Mediator surgió de la observación de que, a medida que los sistemas crecen, las conexiones entre objetos tienden a volverse densas e inmanejables (el efecto "código espagueti"). El patrón se inspiró en los controladores de tráfico aéreo: los aviones no hablan entre sí para evitar colisiones, sino que todos se comunican con una torre central (el mediador).
 
 ## Motivación
 
-Necesario cuando:
-- Múltiples objetos comunicándose de forma compleja
-- Relaciones de muchos-a-muchos
-- Necesitas reutilizar objetos en contextos diferentes
-- Cambios de interacciones frecuentes
+La motivación principal es evitar un sistema donde cada objeto necesite conocer a todos los demás para funcionar. Este "acoplamiento de muchos a muchos" dificulta la reutilización de objetos individuales, ya que están fuertemente ligados a sus pares.
+
+:::{note} Propósito
+Definir un objeto que encapsule cómo interactúa un conjunto de objetos. El Mediador promueve el bajo acoplamiento al evitar que los objetos se refieran entre sí explícitamente.
+:::
 
 ## Contexto
 
-**Patrón:** Colegas → Mediador ← Colegas
+### Cuando aplica
 
-**Anatomía:**
-- **Mediator**: Define interfaz de interacción
-- **ConcreteMediator**: Implementa coordinación
-- **Colleague**: Conoce al Mediador pero no a otros colegas
-- Todos los mensajes van al Mediador
+- Cuando un conjunto de objetos se comunica de formas bien definidas pero complejas.
+- Cuando la reutilización de un objeto es difícil porque se refiere y se comunica con muchos otros objetos.
+- Cuando un comportamiento que está distribuido entre varias clases debería ser personalizable sin mucha subclasificación.
+- Es muy común en el desarrollo de interfaces gráficas complejas (formularios donde el estado de un botón depende de varios campos de texto).
 
-**Ventaja:** N objetos acoplados → centralizados en Mediador
+### Cuando no aplica
 
----
+- Cuando la comunicación es simple o involucra solo a dos objetos.
+- Si el mediador se convierte en un "Objeto Todopoderoso" (God Object) que contiene toda la lógica del sistema, volviéndose inmanejable.
 
-## Problema
+## Consecuencias de su uso
 
-**Sin Mediator:** Objetos acoplados directamente
+### Positivas
+
+- **Reduce el acoplamiento:** Sustituye muchas conexiones de "muchos a muchos" por conexiones de "uno a muchos" entre el mediador y sus colegas.
+- **Simplifica el protocolo de los objetos:** Los objetos ya no necesitan saber quién más existe en el sistema.
+- **Centraliza el control:** La lógica de interacción se encuentra en un solo lugar, facilitando su modificación.
+
+### Negativas
+
+- **Complejidad del Mediador:** El mediador puede volverse excesivamente complejo al tener que gestionar todas las interacciones de un subsistema.
+- **Dificultad de mantenimiento:** Si no se diseña bien, el mediador puede ser un cuello de botella para la evolución del código.
+
+## Alternativas
+
+- **Observer:** Mientras que el Mediator centraliza la comunicación, el Observer la distribuye (el sujeto notifica y los observadores reaccionan). A menudo se usan juntos.
+- **Facade:** El Facade abstrae un subsistema para facilitar su uso desde fuera, mientras que el Mediator abstrae la comunicación interna entre los componentes del subsistema.
+
+## Estructura
+
+### Diagrama de Clases
+
+```plantuml
+@startuml
+skinparam classAttributeIconSize 0
+
+interface Mediador {
+  + enviar(mensaje, colega)
+}
+
+class MediadorConcreto {
+  - colega1: Colega
+  - colega2: Colega
+  + enviar(mensaje, colega)
+}
+
+abstract class Colega {
+  - mediador: Mediador
+}
+
+class ColegaConcreto1 {
+  + operacion()
+}
+
+class ColegaConcreto2 {
+  + operacion()
+}
+
+Mediador <|-- MediadorConcreto
+Colega <|-- ColegaConcreto1
+Colega <|-- ColegaConcreto2
+MediadorConcreto --> ColegaConcreto1
+MediadorConcreto --> ColegaConcreto2
+Colega -> Mediador
+@enduml
 ```
-Colega1 ←→ Colega2
-  ↕        ↕
-Colega3 ←→ Colega4
-```
 
-**Con Mediator:** Comunicación centralizada
-```
-Colega1  Colega2
-   ↑        ↑
-   └─→ Mediator ←─┘
-   ┌─────────────┐
-   ↓             ↓
-Colega3  Colega4
-```
-
----
-
-## Problema
+## Ejemplos
 
 ```java
-// ❌ Acoplamiento directo: cada botón conoce al otro
-class UsuarioUI {
-    private CampoTexto usuario;
-    private CampoTexto contraseña;
-    private Botón aceptar;
-    private Botón cancelar;
-    
-    void inicializar() {
-        aceptar.setOnClick(() -> {
-            if (usuario.esValido() && contraseña.esValido()) {
-                cancelar.desactivar();
-                aceptar.desactivar();
-            }
-        });
-    }
-}
-```
-
----
-
-## Solución: Mediator
-
-```java
 /**
- * Colega: componente de la UI.
+ * Interfaz Mediador.
  */
-public abstract class DialogoComponent {
-    protected DialogoMediator mediador;
-    
-    public void setMediator(DialogoMediator mediador) {
-        this.mediador = mediador;
-    }
-    
-    abstract boolean esValido();
+public interface TorreControl {
+    void enviar(String mensaje, Avion avion);
 }
 
 /**
- * Campo de texto.
+ * Clase base para los "Colegas".
  */
-public class CampoTexto extends DialogoComponent {
-    private String texto = "";
+public abstract class Avion {
+    protected TorreControl mediador;
+    public Avion(TorreControl m) { this.mediador = m; }
+    public abstract void recibir(String mensaje);
+}
+
+/**
+ * Mediador Concreto.
+ */
+public class TorreControlConcreta implements TorreControl {
+    private List<Avion> aviones = new ArrayList<>();
     
-    public void setText(String texto) {
-        this.texto = texto;
-        mediador.componenteCambió(this);  // Notificar al mediador
-    }
-    
-    public String getText() {
-        return texto;
-    }
+    public void registrar(Avion a) { aviones.add(a); }
     
     @Override
-    public boolean esValido() {
-        return !texto.isEmpty();
-    }
-}
-
-/**
- * Botón.
- */
-public class Botón extends DialogoComponent {
-    private boolean estaActivo = true;
-    
-    public void setActivo(boolean activo) {
-        this.estaActivo = activo;
-    }
-    
-    public boolean estaActivo() {
-        return estaActivo;
-    }
-    
-    @Override
-    public boolean esValido() {
-        return true;
-    }
-    
-    public void click() {
-        System.out.println("Botón clickeado");
-        mediador.botónPresionado(this);
-    }
-}
-
-/**
- * Mediador: coordina interacciones.
- */
-public abstract class DialogoMediator {
-    abstract void componenteCambió(DialogoComponent component);
-    abstract void botónPresionado(Botón botón);
-}
-
-/**
- * Mediador concreto: Diálogo de login.
- */
-public class DialogoLogin extends DialogoMediator {
-    private CampoTexto usuario;
-    private CampoTexto contraseña;
-    private Botón aceptar;
-    private Botón cancelar;
-    
-    public DialogoLogin() {
-        usuario = new CampoTexto();
-        contraseña = new CampoTexto();
-        aceptar = new Botón();
-        cancelar = new Botón();
-        
-        usuario.setMediator(this);
-        contraseña.setMediator(this);
-        aceptar.setMediator(this);
-        cancelar.setMediator(this);
-    }
-    
-    @Override
-    public void componenteCambió(DialogoComponent component) {
-        // Cuando cambia un campo, actualizar estado de botones
-        if (component == usuario || component == contraseña) {
-            aceptar.setActivo(usuario.esValido() && contraseña.esValido());
-        }
-    }
-    
-    @Override
-    public void botónPresionado(Botón botón) {
-        if (botón == aceptar) {
-            System.out.println("✅ Login con: " + usuario.getText());
-        } else if (botón == cancelar) {
-            System.out.println("❌ Cancelado");
+    public void enviar(String mensaje, Avion origen) {
+        for (Avion a : aviones) {
+            if (a != origen) a.recibir(mensaje);
         }
     }
 }
-
-// ✅ Uso: Los componentes no se conocen entre sí
-DialogoLogin dialogo = new DialogoLogin();
-dialogo.usuario.setText("admin");  // Notifica mediador → actualiza botones
-dialogo.contraseña.setText("1234");
-dialogo.aceptar.click();
 ```
 
----
+## Resumen
 
-## Ventajas y Desventajas
-
-### ✅ Ventajas
-
-- **Desacoplamiento**: Colegas no conocen entre sí
-- **Centralización**: Lógica de interacción en un lugar
-- **Reutilización**: Colegas reutilizables
-- **Mantenibilidad**: Cambios en interacciones sin modificar colegas
-
-### ❌ Desventajas
-
-- **Dios Mediador**: El mediador puede crecer demasiado
-- **Complejidad**: Más difícil de entender
-- **Testing**: Difícil testear mediador y colegas
-- **Performance**: Capas adicionales de indirección
-
----
-
-## Cuándo Usarlo
-
-✅ **Usa cuando:**
-- Múltiples objetos comunicándose de forma compleja
-- Necesitas evitar referencias directas
-- Necesitas reutilizar objetos en contextos diferentes
-- Ejemplos: Diálogos complejos, controladores MVC
-
----
-
-## Ejercicio
-
-```{exercise}
-:label: ej-mediator-chat
-
-Crea sala de chat con Mediator:
-1. `Colega`: Usuario
-2. `Mediador`: SalaChat que distribuye mensajes
-```
-
-```{solution} ej-mediator-chat
-:class: dropdown
-
-```java
-public abstract class Usuario {
-    protected SalaChat sala;
-    protected String nombre;
-    
-    public Usuario(String nombre) {
-        this.nombre = nombre;
-    }
-    
-    public void setSala(SalaChat sala) {
-        this.sala = sala;
-    }
-    
-    public void enviar(String mensaje) {
-        sala.distribuir(nombre, mensaje);
-    }
-    
-    public abstract void recibir(String de, String mensaje);
-}
-
-public class UsuarioConcreto extends Usuario {
-    @Override
-    public void recibir(String de, String mensaje) {
-        System.out.println(nombre + " recibió de " + de + ": " + mensaje);
-    }
-}
-
-public class SalaChat {
-    private List<Usuario> usuarios = new ArrayList<>();
-    
-    public void registrar(Usuario usuario) {
-        usuarios.add(usuario);
-        usuario.setSala(this);
-    }
-    
-    public void distribuir(String de, String mensaje) {
-        for (Usuario usuario : usuarios) {
-            if (!usuario.nombre.equals(de)) {
-                usuario.recibir(de, mensaje);
-            }
-        }
-    }
-}
-
-// Uso
-SalaChat sala = new SalaChat();
-Usuario alice = new UsuarioConcreto("Alice");
-Usuario bob = new UsuarioConcreto("Bob");
-sala.registrar(alice);
-sala.registrar(bob);
-
-alice.enviar("Hola Bob!");
-bob.enviar("Hola Alice!");
-```
-```
+El Mediator es el "coordinador central". Su valor reside en transformar una red caótica de dependencias en una estructura en estrella, donde la lógica de negocio sobre cómo colaboran los objetos queda aislada y protegida, permitiendo que los componentes individuales sigan siendo simples y reutilizables.

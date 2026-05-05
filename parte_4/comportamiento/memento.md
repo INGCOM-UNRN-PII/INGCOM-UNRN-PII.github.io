@@ -5,304 +5,122 @@ subject: Patrones de Diseño de Comportamiento
 ---
 
 (patron-memento)=
-# Memento: Capturar Estado
+# Memento
 
-El patrón **Memento** captura y externaliza el estado interno de un objeto sin violar su encapsulación, permitiendo restaurarlo posteriormente.
+## Definición
 
-:::{note} Propósito
+El patrón **Memento** (Recuerdo) es un patrón de diseño de comportamiento que permite capturar y externalizar el estado interno de un objeto sin violar su encapsulación, de forma que el objeto pueda ser restaurado a dicho estado posteriormente.
 
-Capturar estado de un objeto para poder restaurarlo sin revelar detalles internos.
-:::
-
----
+El patrón separa la responsabilidad de guardar el estado (Memento) de la lógica del objeto original (Originador) y de quien gestiona el historial (Cuidador).
 
 ## Origen e Historia
 
-Gang of Four 1994. Surge de necesidad de capturar "snapshots" de estado para deshacer/restaurar sin violar encapsulación.
+Formalizado por el GoF en 1994, el Memento resolvió el dilema de cómo hacer copias de seguridad del estado de un objeto sin exponer sus atributos privados. Antes de este patrón, para guardar el estado de un objeto a menudo se necesitaba que este expusiera sus campos internos, lo que rompía los principios de la programación orientada a objetos.
 
 ## Motivación
 
-Necesario cuando:
-- Necesitas deshacer operaciones
-- Necesitas guardar puntos de guardado (checkpoint)
-- Quieres capturar estado sin violar encapsulación
-- Restaurar estado debe ser transparente
+La motivación principal es el soporte para operaciones de "deshacer" (undo) o "puntos de control" (checkpoints). Necesitamos una forma de volver atrás en el tiempo sin que el sistema que gestiona el historial sepa cómo está construido el objeto por dentro.
+
+:::{note} Propósito
+Sin violar la encapsulación, capturar y externalizar el estado interno de un objeto para que dicho objeto pueda ser restaurado a este estado más tarde.
+:::
 
 ## Contexto
 
-**Patrón:** Originador → Memento → Cuidador
+### Cuando aplica
 
-**Anatomía:**
-- **Originator**: Objeto cuyo estado se captura (Documento)
-- **Memento**: Captura inmutable (MementoDocumento)
-- **Caretaker**: Almacena mementos (Historial)
-- Memento no expone internos del Originador
+- Cuando se necesita guardar una instantánea (snapshot) del estado de un objeto para poder restaurarlo después.
+- Cuando obtener el estado directamente a través de una interfaz pública rompería la encapsulación del objeto (exponiendo detalles de implementación).
+- En editores de texto, herramientas de diseño gráfico o videojuegos con sistemas de guardado.
 
-**Variantes:**
-- Historial amplio vs. snapshots
-- Compresión de mementos
-- Serialización para persistencia
+### Cuando no aplica
 
----
+- Cuando el estado del objeto es muy grande y guardarlo consume demasiada memoria RAM.
+- Cuando el estado es público y no hay riesgo en que otros objetos lo conozcan y lo copien directamente.
 
-## Problema
+## Consecuencias de su uso
 
+### Positivas
+
+- **Preserva la encapsulación:** El historial de estados no conoce los detalles internos del objeto original.
+- **Simplifica al Originador:** El objeto original no necesita gestionar su propio historial de versiones; solo necesita saber crear y leer un memento.
+- **Facilita el "Deshacer":** Proporciona un mecanismo natural para volver a estados anteriores.
+
+### Negativas
+
+- **Costo de memoria:** Si los estados son frecuentes o el objeto es grande, el consumo de memoria puede dispararse rápidamente.
+- **Costo de procesamiento:** Crear una copia completa del estado interno cada vez puede penalizar el rendimiento.
+- **Ciclo de vida de los mementos:** El Cuidador debe asegurarse de eliminar los mementos viejos para no agotar los recursos.
+
+## Alternativas
+
+- **Command:** El patrón Command puede implementar el deshacer guardando la *operación inversa* en lugar del *estado completo*. Esto ahorra memoria pero es más complejo de implementar.
+- **Prototype:** Se puede clonar el objeto completo, pero esto consume más recursos que guardar solo una parte del estado y expone más la estructura.
+
+## Estructura
+
+### Diagrama de Clases
+
+```plantuml
+@startuml
+skinparam classAttributeIconSize 0
+
+class Originador {
+  - estado
+  + crearMemento(): Memento
+  + restaurar(m: Memento)
+}
+
+class Memento {
+  - estado
+  - Memento(estado)
+  - getEstado()
+}
+
+class Cuidador {
+  - mementos: List<Memento>
+  + guardar()
+  + deshacer()
+}
+
+Cuidador o-- Memento
+Originador ..> Memento : crea
+@enduml
 ```
-Originador (Originator): objeto cuyo estado se desea capturar
-   ↓
-Memento: captura estado (inmutable)
-   ↓
-Cuidador (Caretaker): almacena mementos
-   ↓
-Restaurar: volver estado anterior
-```
 
----
-
-## Problema
+## Ejemplos
 
 ```java
-// ❌ Sin Memento: Violación de encapsulación
-class Documento {
+/**
+ * El Memento: Es inmutable y solo el Originador puede leerlo de verdad.
+ */
+public class Memento {
+    private final String estado;
+    public Memento(String e) { this.estado = e; }
+    public String getEstado() { return estado; }
+}
+
+/**
+ * El Originador: El objeto que cambia y queremos guardar.
+ */
+public class Editor {
     private String contenido;
+    public void escribir(String texto) { this.contenido = texto; }
     
-    // ¿Cómo hacer copia sin exponer contenido?
-    public String getContenido() {
-        return contenido;  // Violación de encapsulación
-    }
-}
-```
-
----
-
-## Solución: Memento
-
-```java
-/**
- * Memento: captura del estado (inmutable).
- */
-public class MementoDocumento {
-    private final String contenido;
-    private final long timestamp;
-    
-    public MementoDocumento(String contenido) {
-        this.contenido = contenido;
-        this.timestamp = System.currentTimeMillis();
-    }
-    
-    public String getContenido() {
-        return contenido;
-    }
-    
-    public long getTimestamp() {
-        return timestamp;
-    }
+    public Memento guardar() { return new Memento(contenido); }
+    public void restaurar(Memento m) { this.contenido = m.getEstado(); }
 }
 
 /**
- * Originador: objeto cuyo estado capturamos.
+ * El Cuidador: El que maneja la lista de mementos (el historial).
  */
-public class Documento {
-    private String contenido = "";
-    
-    public void escribir(String texto) {
-        contenido += texto;
-        System.out.println("Escribiendo: " + contenido);
-    }
-    
-    public void borrar() {
-        contenido = "";
-        System.out.println("Documento borrado");
-    }
-    
-    /**
-     * Crear memento: capturar estado.
-     */
-    public MementoDocumento crearMemento() {
-        return new MementoDocumento(contenido);
-    }
-    
-    /**
-     * Restaurar memento: sin exponer contenido interno.
-     */
-    public void restaurarMemento(MementoDocumento memento) {
-        this.contenido = memento.getContenido();
-        System.out.println("Documentorestaurado: " + contenido);
-    }
-    
-    public String getContenido() {
-        return contenido;
-    }
+public class Historial {
+    private Stack<Memento> estados = new Stack<>();
+    public void push(Memento m) { estados.push(m); }
+    public Memento pop() { return estados.pop(); }
 }
-
-/**
- * Cuidador: almacena mementos.
- */
-public class HistorialDocumento {
-    private List<MementoDocumento> historial = new ArrayList<>();
-    private Documento documento;
-    
-    public HistorialDocumento(Documento documento) {
-        this.documento = documento;
-    }
-    
-    public void guardarEstado() {
-        historial.add(documento.crearMemento());
-    }
-    
-    public void deshacer() {
-        if (historial.isEmpty()) {
-            System.out.println("No hay historial");
-            return;
-        }
-        MementoDocumento memento = historial.remove(historial.size() - 1);
-        documento.restaurarMemento(memento);
-    }
-    
-    public void listarHistorial() {
-        for (int i = 0; i < historial.size(); i++) {
-            MementoDocumento m = historial.get(i);
-            System.out.println((i+1) + ": '" + m.getContenido() + "' @ " + m.getTimestamp());
-        }
-    }
-}
-
-// ✅ Uso: Capturar y restaurar sin violación de encapsulación
-Documento doc = new Documento();
-HistorialDocumento historial = new HistorialDocumento(doc);
-
-doc.escribir("Hola");
-historial.guardarEstado();
-
-doc.escribir(" mundo");
-historial.guardarEstado();
-
-doc.escribir("!");
-historial.guardarEstado();
-
-System.out.println("Estado actual: " + doc.getContenido());  // Hola mundo!
-
-historial.deshacer();
-System.out.println("Después de deshacer: " + doc.getContenido()); // Hola mundo
 ```
 
----
+## Resumen
 
-## Diagrama UML
-
-```
-  ┌──────────────────┐
-  │    Documento     │ Originador
-  ├──────────────────┤
-  │- contenido       │
-  │+ escribir()      │
-  │+ crearMemento()  │◄─────────┐
-  │+ restaurar()     │◄──────┐  │
-  └──────────────────┘       │  │
-                             │  │
-  ┌──────────────────────┐   │  │
-  │ MementoDocumento     │   │  │
-  ├──────────────────────┤   │  │
-  │- contenido (final)   │   │  │
-  │- timestamp (final)   │   │  │
-  │+ getContenido()      │───┘  │
-  └──────────────────────┘      │
-                                │
-  ┌──────────────────────┐      │
-  │ HistorialDocumento   │──────┘
-  ├──────────────────────┤
-  │- historial: List     │
-  │+ guardarEstado()     │
-  │+ deshacer()          │
-  └──────────────────────┘
-```
-
----
-
-## Ventajas y Desventajas
-
-### ✅ Ventajas
-
-- **Encapsulación**: Estado capturado sin violarla
-- **Flexibilidad**: Múltiples puntos de restauración
-- **Historial**: Fácil implementar deshacer
-- **Seguridad**: Mementos inmutables
-
-### ❌ Desventajas
-
-- **Memoria**: Guardar muchos estados consume memoria
-- **Performance**: Copiar estado puede ser lento
-- **Clases**: Más clases Memento
-- **Complejidad**: Conceptualmente más difícil
-
----
-
-## Cuándo Usarlo
-
-✅ **Usa cuando:**
-- Necesitas capturar estado para deshacer
-- Necesitas guardar puntos de guardado
-- Snapshots periódicos son útiles
-- Ejemplos: Editores, videojuegos, transacciones BD
-
----
-
-## Ejercicio
-
-```{exercise}
-:label: ej-memento-configuración
-
-Crea sistema de configuración con Memento:
-1. `Configuración` con múltiples parámetros
-2. Guardar/restaurar estados
-```
-
-```{solution} ej-memento-configuración
-:class: dropdown
-
-```java
-public class MementoConfig {
-    private final Map<String, String> valores;
-    
-    public MementoConfig(Map<String, String> valores) {
-        this.valores = new HashMap<>(valores);
-    }
-    
-    public Map<String, String> getValores() {
-        return new HashMap<>(valores);
-    }
-}
-
-public class Configuración {
-    private Map<String, String> valores = new HashMap<>();
-    
-    public void set(String clave, String valor) {
-        valores.put(clave, valor);
-    }
-    
-    public String get(String clave) {
-        return valores.get(clave);
-    }
-    
-    public MementoConfig crearMemento() {
-        return new MementoConfig(valores);
-    }
-    
-    public void restaurar(MementoConfig memento) {
-        valores = memento.getValores();
-    }
-}
-
-// Uso
-Configuración config = new Configuración();
-config.set("idioma", "es");
-config.set("tema", "oscuro");
-MementoConfig snapshot1 = config.crearMemento();
-
-config.set("tema", "claro");
-config.set("tamaño_fuente", "14");
-
-config.restaurar(snapshot1);
-System.out.println(config.get("tema")); // oscuro
-```
-```
+El Memento es la "máquina del tiempo" de los objetos. Su gran valor es permitir que un sistema tenga memoria de sus estados pasados sin comprometer la integridad ni la privacidad de sus datos internos, logrando un equilibrio entre funcionalidad y diseño limpio.

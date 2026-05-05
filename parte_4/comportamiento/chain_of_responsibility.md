@@ -5,81 +5,94 @@ subject: Patrones de Diseño de Comportamiento
 ---
 
 (patron-chain-of-responsibility)=
-# Chain of Responsibility: Procesamiento Encadenado
+# Chain of Responsibility
 
-El patrón **Chain of Responsibility** evita acoplar el remitente de una solicitud con su receptor permitiendo que múltiples objetos tengan la oportunidad de procesar la solicitud. Encadena los receptores y pasa la solicitud por la cadena hasta que un objeto la procesa.
+## Definición
 
-:::{note} Propósito
+El patrón **Chain of Responsibility** (Cadena de Responsabilidad) es un patrón de diseño de comportamiento que evita acoplar al emisor de una solicitud con su receptor, permitiendo que múltiples objetos tengan la oportunidad de procesar la solicitud. 
 
-Permitir que múltiples objetos procesen una solicitud, pasándola por una cadena.
-:::
-
----
+El patrón encadena los objetos receptores y pasa la solicitud a lo largo de la cadena hasta que un objeto la maneja o se alcanza el final de la misma.
 
 ## Origen e Historia
 
-Gang of Four 1994. Surge del reconocimiento de que algunos sistemas necesitan una cadena de responsabilidad implícita (handlers) en lugar de a quién enviar directamente.
+Formalizado por el *Gang of Four* (GoF) en 1994, este patrón surgió de la necesidad de desacoplar los sistemas de manejo de eventos en interfaces gráficas. En estos sistemas, un evento (como un clic) puede ser manejado por el componente que lo recibe o pasar a su contenedor padre, y así sucesivamente, hasta que un elemento tome la responsabilidad de procesarlo.
 
 ## Motivación
 
-Necesario cuando:
-- Múltiples objetos podrían procesar solicitud
-- No sabes quién lo hará en compile time
-- Quieres agregar nuevos handlers sin cambiar código
-- Desacoplar remitente de receptores
+La motivación principal es reducir el acoplamiento entre el objeto que emite una petición y el conjunto de objetos que pueden resolverla. Sin este patrón, el emisor debería conocer exactamente qué objeto puede procesar su pedido, lo que genera un código rígido y difícil de extender con nuevos manejadores.
+
+:::{note} Propósito
+Permitir que más de un objeto maneje una petición sin que el emisor necesite conocer al receptor específico.
+:::
 
 ## Contexto
 
-**Patrón:** Solicitud → Handler1 → Handler2 → Handler3
+### Cuando aplica
 
-**Anatomía:**
-- **Handler**: Interfaz (procesar o pasar siguiente)
-- **ConcreteHandler**: Implementa o pasa
-- **chain**: Cada handler conoce al siguiente
-- Cada manejador es responsabilidad única
+- Cuando hay más de un objeto que puede manejar una petición y el manejador no se conoce a priori.
+- Cuando se desea enviar una petición a uno de varios objetos sin especificar explícitamente el receptor.
+- Cuando el conjunto de objetos que pueden manejar la petición debe ser definido dinámicamente o puede cambiar en tiempo de ejecución.
+- En sistemas de procesamiento de mensajes, validación de formularios o sistemas de soporte técnico por niveles.
 
-**Ejemplo:** Sistema de tickets por prioridad, validación en cascada
+### Cuando no aplica
 
----
+- Cuando la petición debe ser procesada por un receptor específico y único ya conocido.
+- Cuando el costo de recorrer la cadena es prohibitivo y se requiere una respuesta inmediata.
+- Cuando se necesita garantizar que la petición sea procesada (el patrón no asegura que algún eslabón tome la responsabilidad).
 
-## Problema
+## Consecuencias de su uso
 
-Cada manejador en la cadena puede:
-1. Procesar la solicitud → **Fin**
-2. Pasar al siguiente → **Continúa**
+### Positivas
 
-```
-Solicitud → [Manejador1] → [Manejador2] → [Manejador3]
-              (¿yo?)        (¿yo?)        (yo!)
-```
+- **Reducción del acoplamiento:** El emisor y el receptor no tienen conocimiento mutuo explícito.
+- **Flexibilidad en la asignación de responsabilidades:** Se pueden añadir o cambiar manejadores simplemente modificando la cadena.
+- **Cumplimiento del SRP:** Cada manejador se encarga de una lógica específica y decide si delega o no.
 
----
+### Negativas
 
-## Problema
+- **No se garantiza la recepción:** Una petición puede caer al final de la cadena sin ser procesada si ningún manejador la toma.
+- **Dificultad en el seguimiento (Debugging):** Puede ser complejo rastrear qué objeto procesó finalmente la petición en cadenas largas.
+- **Impacto en el rendimiento:** Si la cadena es muy extensa, el tiempo de recorrido puede afectar la latencia del sistema.
 
-```java
-// ❌ Sin Chain: condiciones anidadas
-class ProcesoSolicitud {
-    void procesar(SolicitudAyuda solicitud) {
-        if (solicitud.getPrioridad() == 1) {
-            // Despacho administrativo
-            System.out.println("Administrativo resuelve");
-        } else if (solicitud.getPrioridad() == 2) {
-            // Supervisor
-            System.out.println("Supervisor resuelve");
-        } else if (solicitud.getPrioridad() == 3) {
-            // Gerente
-            System.out.println("Gerente resuelve");
-        } else {
-            System.out.println("No se pudo resolver");
-        }
-    }
+## Alternativas
+
+- **Command:** Puede usarse para encapsular la petición, pero no gestiona la propagación entre múltiples receptores.
+- **Mediator:** Centraliza la comunicación, mientras que Chain of Responsibility la distribuye linealmente.
+- **Decorator:** Aunque estructuralmente similar, el Decorator añade responsabilidades al objeto, mientras que Chain of Responsibility busca un único responsable entre varios.
+
+## Estructura
+
+### Diagrama de Clases
+
+```plantuml
+@startuml
+skinparam classAttributeIconSize 0
+
+abstract class Handler {
+  - siguiente: Handler
+  + setSiguiente(sig: Handler)
+  + {abstract} manejar(solicitud: Solicitud)
 }
+
+class ManejadorConcretoA {
+  + manejar(solicitud: Solicitud)
+}
+
+class ManejadorConcretoB {
+  + manejar(solicitud: Solicitud)
+}
+
+class Cliente
+
+Handler o-- Handler : siguiente
+Handler <|-- ManejadorConcretoA
+Handler <|-- ManejadorConcretoB
+Cliente -> Handler : envia solicitud
+
+@enduml
 ```
 
----
-
-## Solución: Chain of Responsibility
+## Ejemplos
 
 ```java
 /**
@@ -87,243 +100,51 @@ class ProcesoSolicitud {
  */
 public class SolicitudAyuda {
     private String descripción;
-    private int prioridad;  // 1=baja, 2=media, 3=alta, 4=urgente
+    private int prioridad; // 1=baja, 2=media, 3=alta
     
     public SolicitudAyuda(String desc, int prior) {
         this.descripción = desc;
         this.prioridad = prior;
     }
     
-    public String getDescripción() { return descripción; }
     public int getPrioridad() { return prioridad; }
+    public String getDescripción() { return descripción; }
 }
 
 /**
- * Manejador base: cada manejador conoce al siguiente.
+ * Manejador base.
  */
-public abstract class ManejadorSolicitud {
-    protected ManejadorSolicitud siguiente;
+public abstract class Manejador {
+    protected Manejador siguiente;
     
-    public void setSiguiente(ManejadorSolicitud sig) {
-        this.siguiente = sig;
-    }
+    public void setSiguiente(Manejador sig) { this.siguiente = sig; }
     
     public final void procesar(SolicitudAyuda solicitud) {
-        if (puedeProcesar(solicitud)) {
-            manejar(solicitud);
+        if (puedeManejar(solicitud)) {
+            ejecutar(solicitud);
         } else if (siguiente != null) {
             siguiente.procesar(solicitud);
-        } else {
-            System.out.println("❌ Nadie pudo procesar la solicitud");
         }
     }
     
-    protected abstract boolean puedeProcesar(SolicitudAyuda solicitud);
-    protected abstract void manejar(SolicitudAyuda solicitud);
+    protected abstract boolean puedeManejar(SolicitudAyuda solicitud);
+    protected abstract void ejecutar(SolicitudAyuda solicitud);
 }
 
 /**
- * Manejador concreto: Staff administrativo.
+ * Manejador concreto: Soporte Nivel 1.
  */
-public class ManejadorAdministrativo extends ManejadorSolicitud {
+public class SoporteNivel1 extends Manejador {
     @Override
-    protected boolean puedeProcesar(SolicitudAyuda solicitud) {
-        return solicitud.getPrioridad() <= 1;
-    }
+    protected boolean puedeManejar(SolicitudAyuda s) { return s.getPrioridad() == 1; }
     
     @Override
-    protected void manejar(SolicitudAyuda solicitud) {
-        System.out.println("✅ [Administrativo] Procesando: " + solicitud.getDescripción());
+    protected void ejecutar(SolicitudAyuda s) {
+        System.out.println("Nivel 1 resuelve: " + s.getDescripción());
     }
 }
-
-/**
- * Manejador concreto: Supervisor.
- */
-public class ManejadorSupervisor extends ManejadorSolicitud {
-    @Override
-    protected boolean puedeProcesar(SolicitudAyuda solicitud) {
-        return solicitud.getPrioridad() <= 2;
-    }
-    
-    @Override
-    protected void manejar(SolicitudAyuda solicitud) {
-        System.out.println("✅ [Supervisor] Procesando: " + solicitud.getDescripción());
-    }
-}
-
-/**
- * Manejador concreto: Gerente.
- */
-public class ManejadorGerente extends ManejadorSolicitud {
-    @Override
-    protected boolean puedeProcesar(SolicitudAyuda solicitud) {
-        return solicitud.getPrioridad() <= 3;
-    }
-    
-    @Override
-    protected void manejar(SolicitudAyuda solicitud) {
-        System.out.println("✅ [Gerente] Procesando: " + solicitud.getDescripción());
-    }
-}
-
-/**
- * Manejador concreto: Director (última instancia).
- */
-public class ManejadorDirector extends ManejadorSolicitud {
-    @Override
-    protected boolean puedeProcesar(SolicitudAyuda solicitud) {
-        return true;  // Siempre puede procesar
-    }
-    
-    @Override
-    protected void manejar(SolicitudAyuda solicitud) {
-        System.out.println("✅ [Director] Resolviendo urgencia: " + solicitud.getDescripción());
-    }
-}
-
-// ✅ Uso: Encadenar manejadores
-ManejadorSolicitud admin = new ManejadorAdministrativo();
-ManejadorSolicitud supervisor = new ManejadorSupervisor();
-ManejadorSolicitud gerente = new ManejadorGerente();
-ManejadorSolicitud director = new ManejadorDirector();
-
-admin.setSiguiente(supervisor);
-supervisor.setSiguiente(gerente);
-gerente.setSiguiente(director);
-
-// Procesar solicitudes de diferentes prioridades
-admin.procesar(new SolicitudAyuda("Cambiar contraseña", 1));
-admin.procesar(new SolicitudAyuda("Problema con acceso", 2));
-admin.procesar(new SolicitudAyuda("Falla en sistema crítico", 4));
 ```
 
----
+## Resumen
 
-## Diagrama UML
-
-```
-     ┌─────────────────────────┐
-     │ ManejadorSolicitud      │
-     │    <<abstract>>          │
-     ├─────────────────────────┤
-     │- siguiente              │
-     │+ setSiguiente()         │
-     │+ procesar()             │
-     │# puedeProcesar() [abs]  │
-     │# manejar() [abs]        │
-     └─────────────┬───────────┘
-                   │
-        ┌──────────┼──────────┬──────────┐
-        │          │          │          │
-   ┌────▼──┐ ┌────▼──┐ ┌────▼──┐ ┌────▼──┐
-   │Admin  │→│Supervisor│→│Gerente│→│Director│
-   └───────┘ └────────┘ └───────┘ └────────┘
-```
-
----
-
-## Ventajas y Desventajas
-
-### ✅ Ventajas
-
-- **Desacoplamiento**: Remitente no conoce receptores
-- **Flexibilidad**: Reordenar/agregar manejadores fácilmente
-- **Responsabilidad única**: Cada manejador hace una cosa
-- **Dinámico**: Construir cadena en runtime
-
-### ❌ Desventajas
-
-- **Debugging**: Difícil rastrear quién procesa
-- **Garantía**: No garantiza que se procese la solicitud
-- **Performance**: Recorrer cadena puede ser lento
-- **Complejidad**: Más clases para casos simples
-
----
-
-## Cuándo Usarlo
-
-✅ **Usa cuando:**
-- Múltiples objetos pueden procesar solicitud
-- No conoces en compile time quién lo hará
-- Necesitas desacoplar remitente de receptores
-- Ejemplos: Sistemas de tickets, logging, validación
-
----
-
-## Ejercicio
-
-```{exercise}
-:label: ej-cor-validacion
-
-Crea cadena de validación para usuario:
-1. Validar email
-2. Validar contraseña
-3. Verificar disponibilidad
-4. Guardar en BD
-```
-
-```{solution} ej-cor-validacion
-:class: dropdown
-
-```java
-public class Usuario {
-    private String email;
-    private String contraseña;
-}
-
-public abstract class ValidadorRegistro {
-    protected ValidadorRegistro siguiente;
-    
-    public void setSiguiente(ValidadorRegistro sig) {
-        this.siguiente = sig;
-    }
-    
-    public final boolean validar(Usuario usuario) {
-        if (esValido(usuario)) {
-            if (siguiente != null) {
-                return siguiente.validar(usuario);
-            }
-            return true;
-        }
-        return false;
-    }
-    
-    protected abstract boolean esValido(Usuario usuario);
-}
-
-public class ValidadorEmail extends ValidadorRegistro {
-    @Override
-    protected boolean esValido(Usuario usuario) {
-        if (usuario.getEmail().contains("@")) {
-            System.out.println("✅ Email válido");
-            return true;
-        }
-        System.out.println("❌ Email inválido");
-        return false;
-    }
-}
-
-public class ValidadorContraseña extends ValidadorRegistro {
-    @Override
-    protected boolean esValido(Usuario usuario) {
-        if (usuario.getContraseña().length() >= 8) {
-            System.out.println("✅ Contraseña válida");
-            return true;
-        }
-        System.out.println("❌ Contraseña muy corta");
-        return false;
-    }
-}
-
-// Uso
-ValidadorEmail ve = new ValidadorEmail();
-ValidadorContraseña vc = new ValidadorContraseña();
-ve.setSiguiente(vc);
-
-Usuario usuario = new Usuario("test@mail.com", "pass1234");
-if (ve.validar(usuario)) {
-    System.out.println("✅ Usuario registrado");
-}
-```
-```
+El Chain of Responsibility es el patrón de los "niveles de atención". Su mayor ventaja es el desacoplamiento dinámico que permite construir tuberías de procesamiento donde cada eslabón decide su participación. Es ideal para sistemas extensibles de reglas de negocio o validaciones en cascada.

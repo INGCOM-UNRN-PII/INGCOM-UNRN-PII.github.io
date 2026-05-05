@@ -5,261 +5,122 @@ subject: Patrones de Diseño de Comportamiento
 ---
 
 (patron-template-method)=
-# Template Method: Estructura Fija
+# Template Method
 
-El patrón **Template Method** define la estructura de un algoritmo en una clase base, dejando detalles específicos para las subclases. Define el esqueleto del algoritmo pero deja algunos pasos para que las subclases los implementen.
+## Definición
 
-:::{note} Propósito
+El patrón **Template Method** (Método Plantilla) es un patrón de diseño de comportamiento que define el esqueleto de un algoritmo en una operación, delegando algunos pasos a las subclases. 
 
-Definir estructura de algoritmo, permitiendo que subclases implementen pasos específicos.
-:::
-
----
+Este patrón permite que las subclases redefinan ciertos pasos de un algoritmo sin cambiar su estructura básica.
 
 ## Origen e Historia
 
-Gang of Four 1994. Surge de frameworks que necesitan estructura fija pero pasos customizables (ej: Spring templates).
+Formalizado por el GoF en 1994, el Template Method es una técnica fundamental en el diseño de frameworks. Se basa en el **Principio de Hollywood**: "No nos llames, nosotros te llamaremos". En lugar de que la subclase controle el flujo, la superclase define el flujo y llama a los métodos de la subclase en los momentos adecuados.
 
 ## Motivación
 
-Necesario cuando:
-- Algoritmo tiene estructura similar, pasos diferentes
-- Múltiples clases con estructura parecida
-- Quieres reutilizar estructura, variar pasos
-- Evitar duplicación de código
+La motivación principal es evitar la duplicación de código en algoritmos que son estructuralmente idénticos pero difieren en detalles específicos. Al centralizar la estructura en la clase base, nos aseguramos de que todos los descendientes sigan el mismo proceso.
+
+:::{note} Propósito
+Definir el esqueleto de un algoritmo en una operación, delegando algunos pasos a las subclases. Permite que las subclases redefinan ciertos pasos de un algoritmo sin cambiar su estructura.
+:::
 
 ## Contexto
 
-**Patrón:** Superclase define estructura, subclases implementan pasos
+### Cuando aplica
 
-**Anatomía:**
-- **AbstractClass**: Define template method (final)
-- **AbstractClass**: Define pasos abstract
-- **ConcreteClass**: Implementa pasos
-- Inversión de control: framework llama tu código
+- Cuando se tiene un algoritmo con pasos que no cambian y otros que sí deben ser personalizados por las subclases.
+- Cuando varias clases tienen comportamientos casi idénticos y se desea evitar la duplicación de código moviendo la estructura común a una clase base.
+- Para controlar las extensiones de las subclases (usando métodos "gancho" o hooks).
 
-**Distinción de Strategy vs Template Method:**
-- **Template Method**: Herencia, estructura fija
-- **Strategy**: Composición, algoritmo intercambiable
+### Cuando no aplica
 
----
+- Cuando el algoritmo es muy simple y no hay duplicación real.
+- Cuando la estructura del algoritmo cambia radicalmente entre las subclases (en ese caso, el patrón Strategy sería más adecuado).
+- En sistemas donde se prefiere evitar la herencia profunda a favor de la composición.
 
-## Problema
+## Consecuencias de su uso
 
+### Positivas
+
+- **Reutilización de código:** La lógica común se escribe una sola vez en la superclase.
+- **Consistencia:** Asegura que todas las subclases respeten el orden y la lógica global del algoritmo.
+- **Inversión de control:** La clase base gestiona el ciclo de vida de la operación.
+
+### Negativas
+
+- **Rigidez:** La estructura del algoritmo es fija; si una subclase necesita saltarse un paso obligatorio o cambiar el orden, el patrón se rompe.
+- **Violación potencial de Liskov:** Si se abusa del patrón, las subclases pueden terminar implementando métodos que no necesitan o que contradicen la lógica de la base.
+- **Complejidad de depuración:** Seguir el flujo de ejecución entre la base y las subclases puede ser confuso.
+
+## Alternativas
+
+- **Strategy:** Provee una solución similar mediante composición. Es más flexible pero requiere más objetos.
+- **Factory Method:** A menudo los Template Methods utilizan métodos de fábrica para crear los objetos que necesitan durante el algoritmo.
+
+## Estructura
+
+### Diagrama de Clases
+
+```plantuml
+@startuml
+skinparam classAttributeIconSize 0
+
+abstract class ClaseAbstracta {
+  + metodoPlantilla()
+  + {abstract} paso1()
+  + {abstract} paso2()
+  + operacionComun()
+}
+
+class ClaseConcretaA {
+  + paso1()
+  + paso2()
+}
+
+class ClaseConcretaB {
+  + paso1()
+  + paso2()
+}
+
+ClaseAbstracta <|-- ClaseConcretaA
+ClaseAbstracta <|-- ClaseConcretaB
+@enduml
 ```
-Clase Base (Template)
-  ├─ paso1() [final]
-  ├─ paso2() [abstract] ← Para subclases
-  ├─ paso3() [final]
-  └─ algoritmo() { paso1(); paso2(); paso3(); }
 
-Subclase A implementa paso2()
-Subclase B implementa paso2() diferente
-```
-
----
-
-## Problema
+## Ejemplos
 
 ```java
-// ❌ Duplicación de estructura
-class TéGenerador {
-    void preparar() {
-        calentar agua();
-        poner té();
-        colar();
-        servir();
-    }
-}
-
-class CaféGenerador {
-    void preparar() {
-        calentar agua();
-        poner café();      // ← Diferente
-        colar();
-        servir();
-    }
-}
-// Estructura similar pero código duplicado
-```
-
----
-
-## Solución: Template Method
-
-```java
 /**
- * Template: define estructura, algunos pasos son abstract.
+ * Clase base con el método plantilla.
  */
-public abstract class BebidaGenerador {
-    /**
-     * Template method: estructura fija.
-     */
-    public final void preparar() {
-        calentar agua();
-        agregarIngrediente();  // ← Deja para subclases
-        colar();
-        servirEnTaza();
+public abstract class ProcesadorMensajes {
+    // El método plantilla es final para evitar que se cambie la estructura
+    public final void procesar(String msg) {
+        String limpio = limpiar(msg);
+        enviar(limpio);
+        registrar();
     }
     
-    protected void calienteAgua() {
-        System.out.println("1. Calentando agua a 100°C");
-    }
+    private String limpiar(String s) { return s.trim(); }
     
-    /**
-     * Método abstract: cada subclase implementa diferente.
-     */
-    protected abstract void agregarIngrediente();
+    // Paso delegado a las subclases
+    protected abstract void enviar(String s);
     
-    protected void colar() {
-        System.out.println("3. Colando bebida");
-    }
-    
-    protected void servirEnTaza() {
-        System.out.println("4. Sirviendo en taza");
-    }
+    private void registrar() { System.out.println("Mensaje procesado."); }
 }
 
 /**
- * Subclase concreta: Té.
+ * Subclase Concreta.
  */
-public class TéGenerador extends BebidaGenerador {
+public class ProcesadorEmail extends ProcesadorMensajes {
     @Override
-    protected void agregarIngrediente() {
-        System.out.println("2. Agregando bolsa de té");
+    protected void enviar(String s) {
+        System.out.println("Enviando email: " + s);
     }
 }
-
-/**
- * Subclase concreta: Café.
- */
-public class CaféGenerador extends BebidaGenerador {
-    @Override
-    protected void agregarIngrediente() {
-        System.out.println("2. Moliendo café fresco");
-        System.out.println("2. Agregando café molido");
-    }
-}
-
-/**
- * Subclase concreta: Chocolate.
- */
-public class ChocolateGenerador extends BebidaGenerador {
-    @Override
-    protected void agregarIngrediente() {
-        System.out.println("2. Agregando chocolate en polvo");
-        System.out.println("2. Agregando leche");
-    }
-}
-
-// ✅ Uso: Misma estructura, comportamiento diferente
-BebidaGenerador té = new TéGenerador();
-té.preparar();
-
-System.out.println();
-
-BebidaGenerador café = new CaféGenerador();
-café.preparar();
-
-System.out.println();
-
-BebidaGenerador chocolate = new ChocolateGenerador();
-chocolate.preparar();
 ```
 
----
+## Resumen
 
-## Ventajas y Desventajas
-
-### ✅ Ventajas
-
-- **Código reutilizable**: Estructura común en base
-- **Consistencia**: Todos siguen el mismo estructura
-- **Extensibilidad**: Agregar variantes sin modificar base
-- **Mantenibilidad**: Cambios en estructura solo en un lugar
-
-### ❌ Desventajas
-
-- **Herencia**: Usa herencia (puede ser rígido)
-- **Flexibilidad limitada**: Estructura fija
-- **Método virtual costoso**: Si muchas subclases
-- **Complejidad**: Puede ser overkill
-
----
-
-## Comparación: Template Method vs. Strategy
-
-| Aspecto | Template Method | Strategy |
-|--------|----------------|----------|
-| **Mecanismo** | Herencia | Composición |
-| **Flexibilidad** | Fija en tiempo de compilación | Cambiar en runtime |
-| **Testabilidad** | Testear subclases | Testear strategies |
-| **Acoplamiento** | Más acoplado | Desacoplado |
-
----
-
-## Cuándo Usarlo
-
-✅ **Usa cuando:**
-- Múltiples clases con estructura similar
-- Estructura común pero pasos variables
-- Quieres evitar duplicación
-- Ejemplos: Generadores, procesadores, frameworks
-
----
-
-## Ejercicio
-
-```{exercise}
-:label: ej-template-datos
-
-Crea procesador de datos con Template Method:
-1. Cargar datos
-2. Procesar (diferente según tipo)
-3. Guardar
-```
-
-```{solution} ej-template-datos
-:class: dropdown
-
-```java
-public abstract class ProcesadorDatos {
-    public final void procesar() {
-        cargarDatos();
-        procesarDatos();
-        guardarDatos();
-    }
-    
-    protected void cargarDatos() {
-        System.out.println("Cargando datos...");
-    }
-    
-    protected abstract void procesarDatos();
-    
-    protected void guardarDatos() {
-        System.out.println("Guardando resultados...");
-    }
-}
-
-public class ProcesadorCSV extends ProcesadorDatos {
-    @Override
-    protected void procesarDatos() {
-        System.out.println("Procesando CSV: parseando columnas");
-    }
-}
-
-public class ProcesadorJSON extends ProcesadorDatos {
-    @Override
-    protected void procesarDatos() {
-        System.out.println("Procesando JSON: parseando objetos");
-    }
-}
-
-// Uso
-ProcesadorDatos csv = new ProcesadorCSV();
-csv.procesar();
-
-ProcesadorDatos json = new ProcesadorJSON();
-json.procesar();
-```
-```
+El Template Method es el patrón de la "estructura compartida". Es una herramienta poderosa para construir sistemas coherentes donde la lógica de alto nivel está protegida en la base, mientras que la flexibilidad de los detalles queda en manos de las especializaciones, logrando un balance ideal entre control y extensibilidad.

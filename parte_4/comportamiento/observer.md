@@ -5,354 +5,134 @@ subject: Patrones de Diseño de Comportamiento
 ---
 
 (patron-observer)=
-# Observer: Notificación Automática
+# Observer
 
-El patrón **Observer** define una relación de uno-a-muchos entre objetos de tal forma que cuando uno cambia su estado, todos los demás son notificados automáticamente.
+## Definición
 
-:::{note} Propósito
+El patrón **Observer** (Observador) es un patrón de diseño de comportamiento que define una dependencia de uno-a-muchos entre objetos, de forma que cuando un objeto cambia de estado, todos sus dependientes son notificados y actualizados automáticamente.
 
-Notificar automáticamente a múltiples objetos sobre cambios.
-:::
-
----
+Se basa en el modelo de "Publicador-Suscriptor", donde el objeto observado (Sujeto) mantiene una lista de sus observadores y les comunica cualquier cambio relevante.
 
 ## Origen e Historia
 
-Gang of Four 1994. Surge de sistemas de eventos: necesidad de que múltiples objetos reaccionen a cambios sin acoplamiento directo.
+Formalizado por el GoF en 1994, el Observer es la base del famoso patrón de arquitectura **MVC (Modelo-Vista-Controlador)**. Se inspiró en los sistemas de eventos de Smalltalk, donde las vistas necesitaban actualizarse automáticamente cuando los datos del modelo cambiaban, sin que el modelo tuviera que conocer los detalles de la interfaz gráfica.
 
 ## Motivación
 
-Necesario cuando:
-- Cambio en un objeto afecta múltiples
-- No sabes cuántos observadores habrá
-- Quieres desacoplar publicador de suscriptores
-- Reacciones dinámicas (agregar/remover observadores)
+La motivación principal es mantener la consistencia entre objetos relacionados sin que estos estén fuertemente acoplados. Queremos que un objeto pueda notificar a otros sin saber cuántos son o qué clases específicas tienen.
+
+:::{note} Propósito
+Definir una dependencia de uno-a-muchos entre objetos para que cuando un objeto cambie de estado, todos sus dependientes sean notificados y actualizados automáticamente.
+:::
 
 ## Contexto
 
-**Patrón:** Subject (Observable) → Notifica → Observadores
+### Cuando aplica
 
-**Anatomía:**
-- **Subject**: Mantiene lista de observadores
-- **Observer**: Interfaz de actualización
-- **ConcreteObserver**: Reacciona a cambios
-- Modelo publicador-suscriptor
+- Cuando un cambio en un objeto requiere cambiar otros, y no sabemos cuántos objetos necesitan cambiar.
+- Cuando un objeto debería ser capaz de notificar a otros sin hacer suposiciones sobre quiénes son esos objetos.
+- En sistemas de interfaces gráficas, sistemas de noticias, monitoreo de sensores o aplicaciones de mensajería.
 
-**Variantes:**
-- Observer con eventos
-- Weak references (para no mantener vivos)
-- Filtros (observador solo si condición)
+### Cuando no aplica
 
----
+- Cuando el número de observadores es fijo y siempre el mismo (en ese caso, una llamada directa es más simple).
+- Cuando las notificaciones pueden causar ciclos de actualización infinitos (A notifica a B, B cambia y notifica a A).
 
-## Problema
+## Consecuencias de su uso
 
-```
-Sujeto (Subject)
-    ↓ notifica cuando cambia
-    └→ Observer1, Observer2, Observer3
-```
+### Positivas
 
----
+- **Acoplamiento abstracto:** El sujeto solo conoce una lista de objetos que implementan una interfaz `Observador`.
+- **Soporte para comunicación por difusión (Broadcast):** La notificación se envía a todos los interesados automáticamente.
+- **Registro dinámico:** Se pueden añadir o quitar observadores en tiempo de ejecución.
 
-## Problema
+### Negativas
 
-```java
-// ❌ Sin Observer: Acoplamiento directo
-class Temperatura {
-    private double valor;
-    private Pantalla pantalla;
-    private Alarma alarma;
-    private Registrador registrador;
-    
-    public void setValor(double v) {
-        valor = v;
-        pantalla.actualizar(valor);
-        alarma.chequear(valor);
-        registrador.registrar(valor);
-        // Cada nuevo observador requiere modificar esta clase!
-    }
+- **Actualizaciones inesperadas:** Como los observadores no se conocen entre sí, un cambio pequeño puede desencadenar una cascada de actualizaciones costosas en el sistema.
+- **Fugas de memoria (Memory Leaks):** Si un observador no se desregistra correctamente, el sujeto mantendrá una referencia a él, impidiendo que el recolector de basura lo libere.
+
+## Alternativas
+
+- **Mediator:** Centraliza la comunicación en un solo objeto. Observer es más distribuido.
+- **Pub-Sub (Publicador/Suscriptor):** Es una versión más evolucionada (a menudo asíncrona) que introduce un canal intermedio (event bus) para separar aún más a las partes.
+
+## Estructura
+
+### Diagrama de Clases
+
+```plantuml
+@startuml
+skinparam classAttributeIconSize 0
+
+interface Observador {
+  + actualizar(datos)
 }
+
+abstract class Sujeto {
+  - observadores: List<Observador>
+  + agregar(o: Observador)
+  + eliminar(o: Observador)
+  + notificar()
+}
+
+class SujetoConcreto {
+  - estadoInterno
+  + getEstado()
+  + setEstado()
+}
+
+class ObservadorConcreto {
+  - estadoSujeto
+  + actualizar(datos)
+}
+
+Sujeto o-- Observador
+Observador <|.. ObservadorConcreto
+Sujeto <|-- SujetoConcreto
+ObservadorConcreto -> SujetoConcreto : observa
+@enduml
 ```
 
----
-
-## Solución: Observer
+## Ejemplos
 
 ```java
 /**
- * Interfaz Observer.
+ * Interfaz para los interesados.
  */
 public interface Observador {
-    void actualizar(double temperatura);
+    void actualizar(float precio);
 }
 
 /**
- * Sujeto: la cosa observada.
+ * El Sujeto: Una acción de bolsa.
  */
-public class Temperatura {
-    private double valor = 0;
-    private List<Observador> observadores = new ArrayList<>();
+public class Accion {
+    private List<Observador> interesados = new ArrayList<>();
+    private float precio;
+
+    public void registrar(Observador o) { interesados.add(o); }
     
-    public void registrar(Observador obs) {
-        observadores.add(obs);
-    }
-    
-    public void desregistrar(Observador obs) {
-        observadores.remove(obs);
-    }
-    
-    /**
-     * Notificar a todos los observadores.
-     */
-    private void notificar() {
-        for (Observador obs : observadores) {
-            obs.actualizar(valor);
-        }
-    }
-    
-    public void setValor(double v) {
-        if (v != valor) {
-            valor = v;
-            notificar();  // Notificar automáticamente
-        }
-    }
-    
-    public double getValor() {
-        return valor;
-    }
-}
-
-/**
- * Observador concreto: Pantalla.
- */
-public class Pantalla implements Observador {
-    private String nombre;
-    
-    public Pantalla(String nombre) {
-        this.nombre = nombre;
-    }
-    
-    @Override
-    public void actualizar(double temperatura) {
-        System.out.println("📺 " + nombre + ": " + temperatura + "°C");
-    }
-}
-
-/**
- * Observador concreto: Alarma.
- */
-public class Alarma implements Observador {
-    private double umbral;
-    
-    public Alarma(double umbral) {
-        this.umbral = umbral;
-    }
-    
-    @Override
-    public void actualizar(double temperatura) {
-        if (temperatura > umbral) {
-            System.out.println("🚨 ¡ALARMA! Temperatura demasiada alta: " + temperatura);
-        }
-    }
-}
-
-/**
- * Observador concreto: Registrador.
- */
-public class Registrador implements Observador {
-    @Override
-    public void actualizar(double temperatura) {
-        System.out.println("📝 Log: Temperatura registrada = " + temperatura);
-    }
-}
-
-// ✅ Uso: Agregar observadores sin modificar Temperatura
-Temperatura temp = new Temperatura();
-
-// Registrar observadores
-Pantalla pantalla = new Pantalla("Sala");
-Alarma alarma = new Alarma(30.0);
-Registrador registro = new Registrador();
-
-temp.registrar(pantalla);
-temp.registrar(alarma);
-temp.registrar(registro);
-
-// Cambiar temperatura → automáticamente notifica a todos
-temp.setValor(25.0);  // Todos se actualizan
-temp.setValor(32.0);  // Alarma suena
-```
-
----
-
-## Diagrama UML
-
-```
-     ┌────────────────────┐
-     │   Observador       │
-     │  <<interface>>     │
-     ├────────────────────┤
-     │+ actualizar()      │
-     └────────────────────┘
-                ▲
-                │ implementa
-                │
-      ┌─────────┼─────────┐
-      │         │         │
-  ┌───▼──┐ ┌───▼──┐  ┌──▼───┐
-  │Pantalla│ │Alarma│ │Registrador│
-  └────────┘ └──────┘  └──────┘
-       ▲         ▲         ▲
-       │ registra│         │
-       └─────────┼─────────┘
-                 │
-         ┌───────▼────────┐
-         │  Temperatura   │ Sujeto
-         ├────────────────┤
-         │- observadores  │
-         │+ registrar()   │
-         │+ setValor()    │
-         │- notificar()   │
-         └────────────────┘
-```
-
----
-
-## Variantes
-
-**1. Observer con eventos:**
-```java
-public class Evento {
-    public Object origen;
-    public String tipo;
-    public Object datos;
-}
-
-public interface Observador {
-    void actualizar(Evento evento);
-}
-```
-
-**2. Subject con getters:**
-```java
-public interface SujetoObservable {
-    void registrar(Observador obs);
-    void desregistrar(Observador obs);
-    Object getEstado();
-}
-```
-
----
-
-## Ventajas y Desventajas
-
-### ✅ Ventajas
-
-- **Desacoplamiento**: Sujeto y observadores desacoplados
-- **Dinámico**: Agregar/remover observadores en runtime
-- **Reutilización**: Observadores reutilizables
-- **Broadcasting**: Notificación a múltiples sin conocerlos
-
-### ❌ Desventajas
-
-- **Orden impredecible**: No se garantiza orden de notificación
-- **Memory leaks**: Olvidar desregistrar causa problemas
-- **Performance**: Muchos observadores puede ser lento
-- **Debugging**: Difícil rastrear flujo
-
----
-
-## Cuándo Usarlo
-
-✅ **Usa cuando:**
-- Cambio en un objeto afecta múltiples
-- No conoces número de observadores
-- Necesitas desacoplamiento
-- Ejemplos: Eventos GUI, MVC, publicador-suscriptor
-
----
-
-## Ejercicio
-
-```{exercise}
-:label: ej-observer-acciones
-
-Crea monitor de acciones bursátiles:
-1. `Acción` (sujeto) con precio
-2. Observadores: `Inversor`, `Analista`
-3. Notificar cuando precio cambia
-```
-
-```{solution} ej-observer-acciones
-:class: dropdown
-
-```java
-public interface ObservadorAcción {
-    void precioActualizado(String símbolo, double precio);
-}
-
-public class Acción {
-    private String símbolo;
-    private double precio;
-    private List<ObservadorAcción> observadores = new ArrayList<>();
-    
-    public Acción(String símbolo, double precio) {
-        this.símbolo = símbolo;
-        this.precio = precio;
-    }
-    
-    public void registrar(ObservadorAcción obs) {
-        observadores.add(obs);
-    }
-    
-    public void setPrecio(double nuevoPrecio) {
-        if (nuevoPrecio != precio) {
-            precio = nuevoPrecio;
-            notificar();
-        }
+    public void setPrecio(float p) {
+        this.precio = p;
+        notificar();
     }
     
     private void notificar() {
-        for (ObservadorAcción obs : observadores) {
-            obs.precioActualizado(símbolo, precio);
-        }
+        for (Observador o : interesados) o.actualizar(precio);
     }
 }
 
-public class Inversor implements ObservadorAcción {
-    private String nombre;
-    
-    public Inversor(String nombre) {
-        this.nombre = nombre;
-    }
-    
+/**
+ * Observador concreto.
+ */
+public class Inversor implements Observador {
     @Override
-    public void precioActualizado(String símbolo, double precio) {
-        System.out.println("💰 " + nombre + " ve: " + símbolo + " = $" + precio);
+    public void actualizar(float p) {
+        System.out.println("El inversor ve el nuevo precio: " + p);
     }
 }
-
-public class Analista implements ObservadorAcción {
-    @Override
-    public void precioActualizado(String símbolo, double precio) {
-        if (precio > 100) {
-            System.out.println("📊 Analista: " + símbolo + " está caro!");
-        } else if (precio < 50) {
-            System.out.println("📊 Analista: " + símbolo + " está barato!");
-        }
-    }
-}
-
-// Uso
-Acción apple = new Acción("AAPL", 150.0);
-Inversor juan = new Inversor("Juan");
-Analista ana = new Analista();
-
-apple.registrar(juan);
-apple.registrar(ana);
-
-apple.setPrecio(155.0); // Notifica a ambos
-apple.setPrecio(45.0);  // Notifica a ambos
 ```
-```
+
+## Resumen
+
+El Observer es el patrón de la "reactividad". Permite construir sistemas donde el flujo de información es automático y dinámico, asegurando que todos los componentes interesados estén siempre sincronizados con la fuente de la verdad (el sujeto) sin sacrificar la independencia de las clases.

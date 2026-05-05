@@ -5,81 +5,102 @@ subject: Patrones de Diseño de Comportamiento
 ---
 
 (patron-command)=
-# Command: Solicitud como Objeto
+# Command
 
-El patrón **Command** encapsula una solicitud como un objeto, permitiendo parametrizar clientes con diferentes solicitudes, encolar solicitudes y soportar operaciones deshacibles.
+## Definición
 
-:::{note} Propósito
+El patrón **Command** (Orden) es un patrón de diseño de comportamiento que convierte una solicitud en un objeto independiente que contiene toda la información sobre la misma. 
 
-Encapsular solicitud como objeto para permitir deshacer, rehacer, encolar.
-:::
-
----
+Esta transformación permite parametrizar a los clientes con diferentes solicitudes, retrasar o poner en cola la ejecución de una solicitud y soportar operaciones que se pueden deshacer.
 
 ## Origen e Historia
 
-Gang of Four 1994. Surge de sistemas que necesitan operaciones reversibles (deshacer), transacciones, y macros.
+Formalizado por el GoF en 1994, el patrón Command se inspiró en la necesidad de implementar "callbacks" en lenguajes que no soportaban funciones como ciudadanos de primer orden. Al encapsular una función dentro de un objeto, se lograba la misma flexibilidad que un puntero a función pero con los beneficios de la orientación a objetos (estado, herencia y polimorfismo).
 
 ## Motivación
 
-Necesario cuando:
-- Necesitas deshacer/rehacer operaciones
-- Necesitas encolar operaciones
-- Necesitas registrar cambios
-- Encapsular operación como objeto
+La motivación principal es desacoplar al objeto que invoca una operación del objeto que sabe cómo realizarla. Esto permite que el invocador no necesite conocer los detalles internos del receptor ni la operación específica que se va a ejecutar.
+
+:::{note} Propósito
+Encapsular una petición como un objeto, permitiendo así parametrizar a los clientes con distintas peticiones, hacer cola o llevar un registro de las peticiones y poder deshacerlas.
+:::
 
 ## Contexto
 
-**Patrón:** Operación → Objeto → Ejecutar/Deshacer
+### Cuando aplica
 
-**Anatomía:**
-- **Command**: Interfaz (ejecutar, deshacer)
-- **ConcreteCommand**: Encapsula receptor + parámetros
-- **Receiver**: Objeto que ejecuta
-- **Invoker**: Ejecuta comando + historial
+- Cuando se necesita parametrizar objetos con una acción a realizar.
+- Cuando se desea especificar, encolar y ejecutar solicitudes en diferentes momentos.
+- Cuando se requiere soporte para operaciones reversibles (deshacer/rehacer).
+- Cuando se quieren registrar los cambios para poder volver a aplicarlos en caso de una caída del sistema (logging).
+- Para implementar macros o secuencias de comandos (Composite de Commands).
 
-**Variantes:**
-- MacroCommand: Composite de comandos
-- Comando con parámetros
-- Comando con transacciones
+### Cuando no aplica
 
----
+- Cuando las llamadas directas entre objetos son simples y no requieren ninguna de las capacidades adicionales del patrón (deshacer, encolar, etc.).
+- Cuando el número de comandos es excesivo y las operaciones son extremadamente triviales, lo que llevaría a una explosión de clases pequeñas sin beneficio real.
 
-## Problema
+## Consecuencias de su uso
 
-Command transforma método en objeto:
+### Positivas
 
-```
-Sin Command:  ejecutarAcción()        → Acción inmediata
+- **Desacoplamiento:** El objeto que invoca la operación está totalmente separado del que la realiza.
+- **Extensibilidad:** Es fácil añadir nuevos comandos sin cambiar el código existente (Principio Abierto/Cerrado).
+- **Composición de comandos:** Se pueden agrupar comandos simples para formar comandos complejos (Macros).
+- **Historial y Deshacer:** Facilita la implementación de mecanismos de reversión de estado.
 
-Con Command:  comando = crearCommand() → Guardar, ejecutar, deshacer
-                      → comando.ejecutar()
-```
+### Negativas
 
----
+- **Proliferación de clases:** Se crea una clase nueva por cada comando concreto, lo que puede aumentar la complejidad del proyecto.
+- **Uso de memoria:** Mantener un historial de comandos para el "deshacer" puede consumir recursos significativos si los comandos almacenan mucho estado.
 
-## Problema
+## Alternativas
 
-```java
-// ❌ Acoplamiento directo entre solicitante y receptor
-class Control {
-    private Luz luz;
-    
-    void presionarBoton() {
-        luz.encender();  // Acoplado directo
-    }
+- **Strategy:** Mientras que Command encapsula una *intención* o *acción*, Strategy encapsula un *algoritmo* intercambiable.
+- **Memento:** A menudo se usa junto con Command para guardar el estado del receptor antes de ejecutar la acción, facilitando un "deshacer" más robusto.
+- **Callbacks/Lambdas:** En lenguajes modernos (como Java 8+), muchas veces se pueden usar expresiones lambda para casos simples en lugar de clases Command formales.
+
+## Estructura
+
+### Diagrama de Clases
+
+```plantuml
+@startuml
+skinparam classAttributeIconSize 0
+
+interface Command {
+  + ejecutar()
+  + deshacer()
 }
 
-// ¿Y si quiero agregar deshacer? ¿O encolar? ¿O registrar?
+class ComandoConcreto {
+  - receptor: Receptor
+  - estadoAnterior
+  + ejecutar()
+  + deshacer()
+}
+
+class Invocador {
+  - comandos: List<Command>
+  + setComando(c: Command)
+  + ejecutarComando()
+}
+
+class Receptor {
+  + accion()
+}
+
+Command <|.. ComandoConcreto
+ComandoConcreto -> Receptor : utiliza
+Invocador o-- Command
+@enduml
 ```
 
----
-
-## Solución: Command
+## Ejemplos
 
 ```java
 /**
- * Interfaz Command: abstracción de solicitud.
+ * Interfaz Command.
  */
 public interface Comando {
     void ejecutar();
@@ -87,294 +108,47 @@ public interface Comando {
 }
 
 /**
- * Receptor: objeto que ejecuta la acción.
+ * Receptor: El objeto que sabe cómo realizar la acción.
  */
 public class Luz {
-    private boolean estaEncendida = false;
-    
-    public void encender() {
-        estaEncendida = true;
-        System.out.println("💡 Luz encendida");
-    }
-    
-    public void apagar() {
-        estaEncendida = false;
-        System.out.println("💡 Luz apagada");
-    }
-    
-    public boolean estaEncendida() {
-        return estaEncendida;
-    }
+    public void encender() { System.out.println("Luz encendida"); }
+    public void apagar() { System.out.println("Luz apagada"); }
 }
 
 /**
- * Comando concreto: Encender luz.
+ * Comando Concreto.
  */
 public class ComandoEncenderLuz implements Comando {
     private Luz luz;
     
-    public ComandoEncenderLuz(Luz luz) {
-        this.luz = luz;
-    }
+    public ComandoEncenderLuz(Luz luz) { this.luz = luz; }
     
     @Override
-    public void ejecutar() {
-        luz.encender();
-    }
+    public void ejecutar() { luz.encender(); }
     
     @Override
-    public void deshacer() {
-        luz.apagar();
-    }
+    public void deshacer() { luz.apagar(); }
 }
 
 /**
- * Comando concreto: Apagar luz.
+ * Invocador.
  */
-public class ComandoApagarLuz implements Comando {
-    private Luz luz;
+public class ControlRemoto {
+    private Stack<Comando> historial = new Stack<>();
     
-    public ComandoApagarLuz(Luz luz) {
-        this.luz = luz;
-    }
-    
-    @Override
-    public void ejecutar() {
-        luz.apagar();
-    }
-    
-    @Override
-    public void deshacer() {
-        luz.encender();
-    }
-}
-
-/**
- * Invocador: ejecuta comandos.
- */
-public class Control {
-    private List<Comando> historial = new ArrayList<>();
-    private int indiceActual = -1;
-    
-    public void presionarBoton(Comando comando) {
-        // Ejecutar comando
-        comando.ejecutar();
-        
-        // Agregar al historial
-        indiceActual++;
-        if (indiceActual < historial.size()) {
-            historial.subList(indiceActual, historial.size()).clear();
-        }
-        historial.add(comando);
-    }
-    
-    public void deshacer() {
-        if (indiceActual >= 0) {
-            historial.get(indiceActual).deshacer();
-            indiceActual--;
-        }
-    }
-    
-    public void rehacer() {
-        if (indiceActual < historial.size() - 1) {
-            indiceActual++;
-            historial.get(indiceActual).ejecutar();
-        }
-    }
-}
-
-// ✅ Uso: Desacoplado y flexible
-Luz luz = new Luz();
-Control control = new Control();
-
-control.presionarBoton(new ComandoEncenderLuz(luz));
-control.presionarBoton(new ComandoApagarLuz(luz));
-control.presionarBoton(new ComandoEncenderLuz(luz));
-
-control.deshacer();  // Apaga la luz
-control.deshacer();  // La enciende nuevamente
-control.rehacer();   // Vuelve a apagarla
-```
-
----
-
-## Diagram UML
-
-```
-        ┌──────────────┐
-        │   Comando    │
-        │ <<interface>>│
-        ├──────────────┤
-        │+ ejecutar()  │
-        │+ deshacer()  │
-        └────────┬─────┘
-                 │
-      ┌──────────┴──────────┐
-      │                     │
- ┌────▼──────────┐  ┌──────▼────────────┐
- │ComandoEncender│  │ComandoApagar      │
- ├────────────────┤  ├──────────────────┤
- │- luz: Luz     │  │- luz: Luz        │
- │+ ejecutar()   │  │+ ejecutar()      │
- │+ deshacer()   │  │+ deshacer()      │
- └────────────────┘  └──────────────────┘
-        ▲                      ▲
-        │ usa                  │ usa
-        └──────────────────────┘
-              │
-        ┌─────▼──────┐
-        │  Control   │
-        ├────────────┤
-        │- historial │
-        │+ presionar()
-        │+ deshacer()
-        └────────────┘
-```
-
----
-
-## Variantes
-
-**1. Macro Command (Composite):**
-```java
-public class MacroComando implements Comando {
-    private List<Comando> comandos = new ArrayList<>();
-    
-    public void agregar(Comando cmd) {
-        comandos.add(cmd);
-    }
-    
-    @Override
-    public void ejecutar() {
-        for (Comando cmd : comandos) {
-            cmd.ejecutar();
-        }
-    }
-}
-```
-
-**2. Command con parámetros:**
-```java
-public class ComandoLuz implements Comando {
-    private Luz luz;
-    private int brillo;  // Parámetro
-    
-    public ComandoLuz(Luz luz, int brillo) {
-        this.luz = luz;
-        this.brillo = brillo;
-    }
-}
-```
-
----
-
-## Ventajas y Desventajas
-
-### ✅ Ventajas
-
-- **Desacoplamiento**: Solicitante no conoce receptor
-- **Flexibilidad**: Parámetrizar comandos
-- **Historial**: Deshacer/rehacer fácilmente
-- **Encolar**: Guardar comandos para ejecución posterior
-
-### ❌ Desventajas
-
-- **Clases**: Muchas clases Command pequeñas
-- **Overhead**: Objeto por cada comando
-- **Memoria**: Historial grande consume recursos
-- **Complejidad**: Overkill para casos simples
-
----
-
-## Cuándo Usarlo
-
-✅ **Usa cuando:**
-- Necesitas deshacer/rehacer
-- Necesitas encolar operaciones
-- Necesitas registrar cambios
-- Ejemplos: Editores, IDEs, shells
-
----
-
-## Ejercicio
-
-```{exercise}
-:label: ej-command-editor
-
-Crea editor con Command:
-1. Comando: `InsertarTexto`, `BorrarTexto`
-2. Control: historial de deshacer/rehacer
-```
-
-```{solution} ej-command-editor
-:class: dropdown
-
-```java
-public interface ComandoEdición {
-    void ejecutar();
-    void deshacer();
-}
-
-public class Documento {
-    private StringBuilder contenido = new StringBuilder();
-    
-    public void insertar(String texto) {
-        contenido.append(texto);
-    }
-    
-    public void borrar(int inicio, int fin) {
-        contenido.delete(inicio, fin);
-    }
-    
-    public String getContenido() {
-        return contenido.toString();
-    }
-}
-
-public class ComandoInsertar implements ComandoEdición {
-    private Documento doc;
-    private String texto;
-    
-    public ComandoInsertar(Documento doc, String texto) {
-        this.doc = doc;
-        this.texto = texto;
-    }
-    
-    @Override
-    public void ejecutar() {
-        doc.insertar(texto);
-        System.out.println("Insertado: " + texto);
-    }
-    
-    @Override
-    public void deshacer() {
-        // Simplificado: realmente habría que guardar estado
-        System.out.println("Deshaciendo inserción");
-    }
-}
-
-public class Editor {
-    private List<ComandoEdición> historial = new ArrayList<>();
-    
-    public void ejecutar(ComandoEdición cmd) {
+    public void presionarBoton(Comando cmd) {
         cmd.ejecutar();
-        historial.add(cmd);
+        historial.push(cmd);
     }
     
-    public void deshacer() {
+    public void presionarDeshacer() {
         if (!historial.isEmpty()) {
-            ComandoEdición cmd = historial.remove(historial.size() - 1);
-            cmd.deshacer();
+            historial.pop().deshacer();
         }
     }
 }
+```
 
-// Uso
-Editor editor = new Editor();
-Documento doc = new Documento();
-editor.ejecutar(new ComandoInsertar(doc, "Hola"));
-editor.ejecutar(new ComandoInsertar(doc, " mundo"));
-System.out.println(doc.getContenido()); // Hola mundo
-editor.deshacer();
-```
-```
+## Resumen
+
+El patrón Command es la base de las aplicaciones interactivas modernas. Al transformar una acción en un objeto, nos otorga control sobre el flujo temporal de las operaciones, permitiéndonos pausar, revertir o agrupar intenciones de usuario de manera elegante y desacoplada.

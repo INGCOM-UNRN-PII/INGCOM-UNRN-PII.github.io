@@ -5,366 +5,135 @@ subject: Patrones de Diseño de Comportamiento
 ---
 
 (patron-iterator)=
-# Iterator: Recorrido Uniforme
+# Iterator
 
-El patrón **Iterator** proporciona una forma de acceder secuencialmente a los elementos de una colección sin exponer su estructura subyacente.
+## Definición
 
-:::{note} Propósito
+El patrón **Iterator** (Iterador) es un patrón de diseño de comportamiento que permite recorrer los elementos de una colección sin exponer su representación subyacente (listas, pilas, árboles, etc.). 
 
-Recorrer elementos de colección sin exponer su estructura interna.
-:::
-
----
+El patrón extrae el comportamiento de recorrido de la colección y lo coloca en un objeto independiente llamado iterador.
 
 ## Origen e Historia
 
-Gang of Four 1994. Surge de colecciones heterogéneas: necesidad de recorrer sin exponer estructura interna.
+Formalizado por el GoF en 1994, el concepto de iteración es fundamental en la informática. Antes de su formalización, cada estructura de datos solía proveer sus propios métodos de acceso (índices para arreglos, punteros para listas enlazadas), lo que obligaba al cliente a conocer la estructura interna para poder recorrerla. El Iterator estandarizó este proceso.
 
 ## Motivación
 
-Necesario cuando:
-- Múltiples estructuras (Lista, Árbol, Grafo)
-- Cliente no debe conocer estructura interna
-- Múltiples recorridos simultáneamente
-- Quieres encapsulación
+La motivación principal es la **encapsulación**. Queremos que el cliente pueda procesar todos los elementos de una colección (por ejemplo, para imprimirlos o sumarlos) sin que le importe si están guardados en un arreglo dinámico, un árbol balanceado o una tabla hash.
+
+:::{note} Propósito
+Proporcionar un modo de acceder secuencialmente a los elementos de un objeto agregado sin exponer su representación interna.
+:::
 
 ## Contexto
 
-**Patrón:** Estructura → Iterator → Recorrido
+### Cuando aplica
 
-**Anatomía:**
-- **Iterator**: Interfaz (tieneProximo, proximo)
-- **ConcreteIterator**: Implementación específica
-- **Collection**: Crea iterador
-- **Client**: Usa Iterator
+- Cuando se quiere acceder a los contenidos de un objeto agregado sin exponer su representación interna.
+- Cuando se desea soportar múltiples recorridos simultáneos de objetos agregados.
+- Cuando se necesita proporcionar una interfaz uniforme para recorrer diferentes estructuras de agregados (iteración polimórfica).
 
-**Variantes:**
-- Iterator bidireccional
-- Iterator con filtro
-- Deep iterator (recorrido profundo)
+### Cuando no aplica
 
----
+- Cuando la colección es muy simple (un arreglo fijo) y el acceso por índice es la norma del sistema.
+- En lenguajes que ya proveen mecanismos de iteración potentes y nativos (como los `Streams` de Java o los `Iterators` integrados), a menos que estemos implementando una estructura de datos personalizada.
 
-## Problema
+## Consecuencias de su uso
 
-Iterator desacopla el algoritmo de recorrido de la estructura de datos:
+### Positivas
 
-```
-Colección          Iterator
-┌─────────┐        ┌──────────┐
-│ [1,2,3] │──────→ │ actual=0 │ ← Cliente
-└─────────┘        │ siguiente│
-                   │ tieneNext│
-                   └──────────┘
-```
+- **Uniformidad:** El código del cliente es el mismo para cualquier tipo de colección.
+- **Simplificación de la interfaz de la colección:** La colección no necesita métodos de recorrido propios; solo necesita un método para crear un iterador.
+- **Múltiples recorridos:** Cada iterador mantiene su propio estado (posición actual), permitiendo varios recorridos al mismo tiempo sobre la misma colección.
 
----
+### Negativas
 
-## Problema
+- **Sobrecarga (Overhead):** Para colecciones pequeñas, usar un objeto iterador es menos eficiente que un simple bucle `for` con índices.
+- **Complejidad:** Introduce interfaces y clases adicionales para cada tipo de colección.
 
-```java
-// ❌ Cliente acoplado a estructura específica
-class Lista {
-    private int[] elementos;
-    
-    public void recorrer() {
-        for (int i = 0; i < elementos.length; i++) {
-            System.out.println(elementos[i]);
-        }
-    }
+## Alternativas
+
+- **Clonación de la colección:** Si la colección es pequeña, se puede devolver una copia en forma de arreglo, aunque esto rompe la eficiencia.
+- **Streams (Java 8+):** Proporcionan una abstracción de mayor nivel para el procesamiento de colecciones.
+
+## Estructura
+
+### Diagrama de Clases
+
+```plantuml
+@startuml
+skinparam classAttributeIconSize 0
+
+interface Agregado {
+  + crearIterador(): Iterador
 }
 
-class Árbol {
-    private Nodo raíz;
-    
-    public void recorrer() {
-        // Diferente lógica por cada estructura!
-    }
+interface Iterador {
+  + primero()
+  + siguiente()
+  + hayMas(): boolean
+  + elementoActual()
 }
 
-// No es uniforme
+class AgregadoConcreto {
+  + crearIterador(): Iterador
+}
+
+class IteradorConcreto {
+  - coleccion: AgregadoConcreto
+  - posicionActual
+  + primero()
+  + siguiente()
+  + hayMas(): boolean
+  + elementoActual()
+}
+
+Agregado <|.. AgregadoConcreto
+Iterador <|.. IteradorConcreto
+AgregadoConcreto <- IteradorConcreto
+@enduml
 ```
 
----
-
-## Solución: Iterator
+## Ejemplos
 
 ```java
 /**
- * Interfaz Iterator.
+ * Interfaz genérica para iteradores.
  */
 public interface Iterador<T> {
-    boolean tieneProximo();
-    T proximo();
+    boolean tieneSiguiente();
+    T siguiente();
 }
 
 /**
- * Interfaz Colección.
+ * Colección concreta: Una lista simple.
  */
-public interface Colección<T> {
-    Iterador<T> crear Iterador();
-}
-
-/**
- * Implementación concreta: Lista.
- */
-public class Lista<T> implements Colección<T> {
-    private List<T> elementos = new ArrayList<>();
+public class MiLista<T> {
+    private List<T> items = new ArrayList<>();
     
-    public void agregar(T elemento) {
-        elementos.add(elemento);
-    }
+    public void agregar(T item) { items.add(item); }
     
-    @Override
-    public Iterador<T> crearIterador() {
+    public Iterador<T> obtenerIterador() {
         return new IteradorLista();
     }
     
-    // Iterador interno (private)
+    // Clase interna que conoce la estructura de MiLista
     private class IteradorLista implements Iterador<T> {
         private int indice = 0;
         
         @Override
-        public boolean tieneProximo() {
-            return indice < elementos.size();
+        public boolean tieneSiguiente() {
+            return indice < items.size();
         }
         
         @Override
-        public T proximo() {
-            return elementos.get(indice++);
+        public T siguiente() {
+            return items.get(indice++);
         }
     }
 }
-
-/**
- * Implementación concreta: Pila.
- */
-public class Pila<T> implements Colección<T> {
-    private List<T> elementos = new ArrayList<>();
-    
-    public void apilar(T elemento) {
-        elementos.add(elemento);
-    }
-    
-    public T desapilar() {
-        if (!elementos.isEmpty()) {
-            return elementos.remove(elementos.size() - 1);
-        }
-        return null;
-    }
-    
-    @Override
-    public Iterador<T> crearIterador() {
-        return new IteradorPila();
-    }
-    
-    // Iterador LIFO (Last In First Out)
-    private class IteradorPila implements Iterador<T> {
-        private int indice;
-        
-        public IteradorPila() {
-            this.indice = elementos.size() - 1;
-        }
-        
-        @Override
-        public boolean tieneProximo() {
-            return indice >= 0;
-        }
-        
-        @Override
-        public T proximo() {
-            return elementos.get(indice--);
-        }
-    }
-}
-
-// ✅ Uso uniforme: El cliente no conoce la estructura
-Colección<Integer> lista = new Lista<>();
-lista.agregar(1);
-lista.agregar(2);
-lista.agregar(3);
-
-Colección<Integer> pila = new Pila<>();
-pila.apilar(10);
-pila.apilar(20);
-pila.apilar(30);
-
-// Mismo código para ambas!
-void recorrer(Colección<Integer> colección) {
-    Iterador<Integer> it = colección.crearIterador();
-    while (it.tieneProximo()) {
-        System.out.println(it.proximo());
-    }
-}
-
-recorrer(lista);  // 1, 2, 3
-recorrer(pila);   // 30, 20, 10 (LIFO)
 ```
 
----
+## Resumen
 
-## Diagrama UML
-
-```
-    ┌──────────────────┐
-    │   Iterador<T>    │
-    │  <<interface>>   │
-    ├──────────────────┤
-    │+ tieneProximo()  │
-    │+ proximo(): T    │
-    └────────┬─────────┘
-             ▲
-             │
-             │ implementa
-             │
-       ┌─────┴──────┐
-       │             │
- ┌─────▼──────┐  ┌──▼──────────┐
- │IteradorLista│  │IteradorPila │
- ├──────────────┤  ├─────────────┤
- │- indice      │  │- indice     │
- │+ tieneProx() │  │+ tieneProx()│
- │+ proximo()   │  │+ proximo()  │
- └──────────────┘  └─────────────┘
-        ▲                 ▲
-        │ crea             │ crea
-        │                  │
-    ┌───┴──────────────────┴────┐
-    │     Colección<T>           │
-    │    <<interface>>           │
-    ├───────────────────────────┤
-    │+ crearIterador(): Iter.   │
-    └─────────────┬─────────────┘
-                  │
-          ┌───────┴──────────┐
-          │                  │
-      ┌───▼──────┐      ┌───▼──────┐
-      │  Lista   │      │  Pila    │
-      ├──────────┤      ├──────────┤
-      │- elementos│      │- elementos│
-      │+ agregar()│      │+ apilar()│
-      └──────────┘      └──────────┘
-```
-
----
-
-## Variantes
-
-**1. Iterator bidireccional:**
-```java
-public interface IteradorBidireccional<T> extends Iterador<T> {
-    boolean tieneAnterior();
-    T anterior();
-}
-```
-
-**2. Iterator con filtro:**
-```java
-public class IteradorFiltrado<T> implements Iterador<T> {
-    private Iterador<T> iterador;
-    private Predicate<T> filtro;
-    // Implementar saltar elementos que no cumplen
-}
-```
-
----
-
-## Ventajas y Desventajas
-
-### ✅ Ventajas
-
-- **Uniformidad**: Mismo código para diferentes colecciones
-- **Encapsulación**: Estructura interna oculta
-- **Flexibilidad**: Múltiples iteradores simultáneamente
-- **Facilidad**: Cliente no maneja índices
-
-### ❌ Desventajas
-
-- **Clases**: Más clases por cada colección
-- **Performance**: Overhead vs. acceso directo
-- **Complejidad**: Más difícil de entender inicialmente
-- **Java built-in**: Ya existe Iterator en Java
-
----
-
-## Cuándo Usarlo
-
-✅ **Usa cuando:**
-- Múltiples estructuras de datos diferentes
-- Necesitas ocultar estructura interna
-- Quieres múltiples recorridos simultáneamente
-- Ejemplos: Bases de datos (cursores), colecciones personalizadas
-
-❌ **Evita cuando:**
-- Java Collections (ya implementa)
-- Acceso aleatorio es crítico
-
----
-
-## Ejercicio
-
-```{exercise}
-:label: ej-iterator-arbol
-
-Crea iteradores para un árbol binario:
-1. `IteradorInorden` (izq-raíz-der)
-2. `IteradorPreorden` (raíz-izq-der)
-3. `IteradorPostorden` (izq-der-raíz)
-```
-
-```{solution} ej-iterator-arbol
-:class: dropdown
-
-```java
-public class Nodo {
-    int valor;
-    Nodo izq, der;
-    
-    public Nodo(int valor) {
-        this.valor = valor;
-    }
-}
-
-public interface IteradorÁrbol {
-    boolean tieneProximo();
-    int proximo();
-}
-
-public class IteradorInorden implements IteradorÁrbol {
-    private Stack<Nodo> pila = new Stack<>();
-    
-    public IteradorInorden(Nodo raíz) {
-        empujar_izquierdo(raíz);
-    }
-    
-    private void empujar_izquierdo(Nodo nodo) {
-        while (nodo != null) {
-            pila.push(nodo);
-            nodo = nodo.izq;
-        }
-    }
-    
-    @Override
-    public boolean tieneProximo() {
-        return !pila.isEmpty();
-    }
-    
-    @Override
-    public int proximo() {
-        Nodo nodo = pila.pop();
-        empujar_izquierdo(nodo.der);
-        return nodo.valor;
-    }
-}
-
-// Uso
-Nodo raíz = new Nodo(5);
-raíz.izq = new Nodo(3);
-raíz.der = new Nodo(7);
-
-IteradorInorden it = new IteradorInorden(raíz);
-while (it.tieneProximo()) {
-    System.out.println(it.proximo()); // 3, 5, 7
-}
-```
-```
+El Iterator es el "traductor de recorridos". Es un patrón esencial que habilita el polimorfismo sobre estructuras de datos, permitiendo que el software sea agnóstico a la forma en que se almacenan los datos y se concentre en cómo se procesan.

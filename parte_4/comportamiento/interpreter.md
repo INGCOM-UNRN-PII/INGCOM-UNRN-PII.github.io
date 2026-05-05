@@ -1,294 +1,132 @@
 ---
 title: "Interpreter"
-subtitle: "Definir representación de gramática y interpretador"
+subtitle: "Definir representación de gramática e interpretador"
 subject: Patrones de Diseño de Comportamiento
 ---
 
 (patron-interpreter)=
-# Interpreter: Lenguaje Personalizado
+# Interpreter
 
-El patrón **Interpreter** define una representación de una gramática para un lenguaje simple y un interpretador para procesarlo. Útil para lenguajes o expresiones específicas del dominio.
+## Definición
 
-:::{note} Propósito
+El patrón **Interpreter** (Intérprete) es un patrón de diseño de comportamiento que define una representación de la gramática de un lenguaje junto con un intérprete que utiliza dicha representación para interpretar sentencias en el lenguaje.
 
-Definir gramática personalizada e interpretador para procesarla.
-:::
-
----
+Básicamente, este patrón propone modelar las reglas de una gramática simple como una jerarquía de clases, donde cada clase representa una regla o un símbolo del lenguaje.
 
 ## Origen e Historia
 
-Gang of Four 1994. Surge de lenguajes formales y compiladores: necesidad de parsear y ejecutar lenguajes específicos del dominio.
+Formalizado por el GoF en 1994, este patrón tiene sus raíces en la teoría de lenguajes formales y la construcción de compiladores. Se diseñó para situaciones donde un problema ocurre con la suficiente frecuencia como para que valga la pena expresar sus instancias como sentencias de un lenguaje sencillo (lenguajes específicos del dominio o DSL).
 
 ## Motivación
 
-Necesario cuando:
-- Necesitas procesar lenguaje/gramática simple
-- Quieres extender sintaxis frecuentemente
-- AST (Abstract Syntax Tree) es útil
+La motivación surge cuando tenemos un problema que puede ser resuelto mediante la interpretación de una serie de símbolos o reglas. En lugar de escribir un algoritmo monolítico y rígido, definimos un lenguaje que describe las soluciones y un motor que lo ejecuta.
+
+:::{note} Propósito
+Dado un lenguaje, definir una representación para su gramática junto con un intérprete que use la representación para interpretar sentencias del lenguaje.
+:::
 
 ## Contexto
 
-**Patrón:** Entrada → Parser → AST → Intérprete → Salida
+### Cuando aplica
 
-**Anatomía:**
-- **Expression**: Interfaz (interpretar)
-- **TerminalExpression**: Valor literal
-- **NonTerminalExpression**: Operación (suma, resta, etc)
-- **Context**: Información de ambiente
+- Cuando la gramática del lenguaje es simple. Para gramáticas complejas, las jerarquías de clases se vuelven inmanejables (en esos casos es mejor usar generadores de parsers como ANTLR o Lex/Yacc).
+- Cuando la eficiencia no es el factor crítico, ya que la interpretación suele ser más lenta que la ejecución de código compilado.
+- En motores de búsqueda de expresiones regulares simples.
+- En lenguajes de consulta de bases de datos personalizados o filtros de búsqueda avanzados.
 
-**Uso:** Calculadoras, filtros SQL personalizados, DSL
+### Cuando no aplica
 
----
+- Cuando la gramática es compleja o cambia frecuentemente de forma estructural.
+- En aplicaciones de alto rendimiento donde el costo de recorrer el árbol de sintaxis abstracta (AST) es inaceptable.
 
-## Problema
+## Consecuencias de su uso
 
-```
-Entrada: "a + b * c"
-         ↓
-    Analizador léxico
-         ↓
-    Árbol de expresión (AST)
-         ↓
-    Intérprete
-         ↓
-    Salida: valor o acción
-```
+### Positivas
 
----
+- **Fácil de cambiar y extender la gramática:** Al estar cada regla en una clase, se pueden añadir nuevas expresiones simplemente heredando de la clase base.
+- **Implementación directa:** Las clases del patrón corresponden casi uno a uno con las reglas de la gramática (Notación BNF).
 
-## Problema
+### Negativas
 
-```java
-// ❌ Sin Interpreter: evaluación manual con condiciones
-class Calculadora {
-    int evaluar(String expresión) {
-        if (expresión.contains("+")) {
-            String[] partes = expresión.split("\\+");
-            return Integer.parseInt(partes[0]) + Integer.parseInt(partes[1]);
-        } else if (expresión.contains("-")) {
-            // ... más condiciones
-        }
-        // No es escalable
-    }
+- **Gramáticas complejas son difíciles de mantener:** Una gramática con cientos de reglas requiere cientos de clases.
+- **Eficiencia:** El proceso de interpretación implica muchas llamadas polimórficas y creación de objetos, lo que puede ser costoso en memoria y CPU.
+
+## Alternativas
+
+- **Visitor:** A menudo se usa junto con Interpreter para recorrer el árbol de expresiones y realizar diferentes operaciones (como chequeo de tipos o generación de código) sin cambiar las clases de las expresiones.
+- **Parser Generators:** Herramientas externas que generan el código de interpretación a partir de una gramática formal.
+
+## Estructura
+
+### Diagrama de Clases
+
+```plantuml
+@startuml
+skinparam classAttributeIconSize 0
+
+abstract class Expresion {
+  + {abstract} interpretar(contexto: Contexto): int
 }
+
+class ExpresionTerminal {
+  + interpretar(contexto: Contexto): int
+}
+
+class ExpresionNoTerminal {
+  - subExpresion1: Expresion
+  - subExpresion2: Expresion
+  + interpretar(contexto: Contexto): int
+}
+
+class Contexto {
+  - variables: Map
+}
+
+Expresion <|-- ExpresionTerminal
+Expresion <|-- ExpresionNoTerminal
+ExpresionNoTerminal o-- Expresion
+@enduml
 ```
 
----
-
-## Solución: Interpreter
+## Ejemplos
 
 ```java
 /**
- * Interfaz abstracta para expresiones.
+ * Interfaz para todas las expresiones.
  */
-public interface Expresión {
-    int interpretar();
+public interface Expresion {
+    int interpretar(Map<String, Integer> contexto);
 }
 
 /**
- * Expresión terminal: número.
+ * Expresión Terminal: un número literal.
  */
-public class ExpresiónNúmero implements Expresión {
+public class Numero implements Expresion {
     private int valor;
-    
-    public ExpresiónNúmero(int valor) {
-        this.valor = valor;
-    }
+    public Numero(int v) { this.valor = v; }
     
     @Override
-    public int interpretar() {
-        return valor;
-    }
+    public int interpretar(Map<String, Integer> ctx) { return valor; }
 }
 
 /**
- * Expresión no-terminal: suma.
+ * Expresión No Terminal: Suma.
  */
-public class ExpresiónSuma implements Expresión {
-    private Expresión izquierda;
-    private Expresión derecha;
-    
-    public ExpresiónSuma(Expresión izq, Expresión der) {
-        this.izquierda = izq;
-        this.derecha = der;
-    }
+public class Suma implements Expresion {
+    private Expresion izq, der;
+    public Suma(Expresion i, Expresion d) { this.izq = i; this.der = d; }
     
     @Override
-    public int interpretar() {
-        return izquierda.interpretar() + derecha.interpretar();
+    public int interpretar(Map<String, Integer> ctx) {
+        return izq.interpretar(ctx) + der.interpretar(ctx);
     }
 }
 
-/**
- * Expresión no-terminal: resta.
- */
-public class ExpresiónResta implements Expresión {
-    private Expresión izquierda;
-    private Expresión derecha;
-    
-    public ExpresiónResta(Expresión izq, Expresión der) {
-        this.izquierda = izq;
-        this.derecha = der;
-    }
-    
-    @Override
-    public int interpretar() {
-        return izquierda.interpretar() - derecha.interpretar();
-    }
-}
-
-/**
- * Expresión no-terminal: multiplicación.
- */
-public class ExpresiónMultiplicación implements Expresión {
-    private Expresión izquierda;
-    private Expresión derecha;
-    
-    public ExpresiónMultiplicación(Expresión izq, Expresión der) {
-        this.izquierda = izq;
-        this.derecha = der;
-    }
-    
-    @Override
-    public int interpretar() {
-        return izquierda.interpretar() * derecha.interpretar();
-    }
-}
-
-// ✅ Uso: Construir árbol de expresión
-// Evaluar: (5 + 3) * 2
-
-Expresión cinco = new ExpresiónNúmero(5);
-Expresión tres = new ExpresiónNúmero(3);
-Expresión dos = new ExpresiónNúmero(2);
-
-// (5 + 3)
-Expresión suma = new ExpresiónSuma(cinco, tres);
-
-// (5 + 3) * 2
-Expresión resultado = new ExpresiónMultiplicación(suma, dos);
-
-System.out.println("Resultado: " + resultado.interpretar());  // 16
+// Uso: Evaluar (5 + 10)
+Expresion expr = new Suma(new Numero(5), new Numero(10));
+System.out.println("Resultado: " + expr.interpretar(null));
 ```
 
----
+## Resumen
 
-## Árbol de Expresión (AST)
-
-```
-        *
-       / \
-      +   2
-     / \
-    5   3
-
-Interpretación bottom-up:
-1. 5 → 5
-2. 3 → 3
-3. 5+3 → 8
-4. 8*2 → 16
-```
-
----
-
-## Ventajas y Desventajas
-
-### ✅ Ventajas
-
-- **Flexibilidad**: Agregar nuevas operaciones
-- **Extensible**: Nuevos tipos de expresiones
-- **Separación**: Gramática separada del interpretador
-- **Reutilizable**: AST puede procesarse múltiples veces
-
-### ❌ Desventajas
-
-- **Complejidad**: Muchas clases pequeñas
-- **Performance**: Interpretación es lenta vs. compilación
-- **Memoria**: AST puede ser grande
-- **Difícil de entender**: Requiere conocimiento de lenguajes formales
-
----
-
-## Cuándo Usarlo
-
-✅ **Usa cuando:**
-- Tienes lenguaje simple a interpretar
-- Necesitas extender sintaxis frecuentemente
-- Ejemplos: Calculadoras, DSL, filtros SQL personalizados
-
-❌ **Evita cuando:**
-- Performance crítica (compilar mejor)
-- Gramática muy compleja
-
----
-
-## Ejercicio
-
-```{exercise}
-:label: ej-interpreter-booleano
-
-Crea intérprete para expresiones booleanas:
-1. Expresiones: `Y`, `O`, `NO`
-2. Variables booleanas
-3. Evaluar expresión con valores dados
-```
-
-```{solution} ej-interpreter-booleano
-:class: dropdown
-
-```java
-public interface ExpresiónBool {
-    boolean evaluar(Map<String, Boolean> variables);
-}
-
-public class Variable implements ExpresiónBool {
-    private String nombre;
-    
-    public Variable(String nombre) {
-        this.nombre = nombre;
-    }
-    
-    @Override
-    public boolean evaluar(Map<String, Boolean> vars) {
-        return vars.getOrDefault(nombre, false);
-    }
-}
-
-public class Y implements ExpresiónBool {
-    private ExpresiónBool izq, der;
-    
-    public Y(ExpresiónBool izq, ExpresiónBool der) {
-        this.izq = izq;
-        this.der = der;
-    }
-    
-    @Override
-    public boolean evaluar(Map<String, Boolean> vars) {
-        return izq.evaluar(vars) && der.evaluar(vars);
-    }
-}
-
-public class O implements ExpresiónBool {
-    private ExpresiónBool izq, der;
-    
-    public O(ExpresiónBool izq, ExpresiónBool der) {
-        this.izq = izq;
-        this.der = der;
-    }
-    
-    @Override
-    public boolean evaluar(Map<String, Boolean> vars) {
-        return izq.evaluar(vars) || der.evaluar(vars);
-    }
-}
-
-// Uso: (a Y b) O NO c
-Map<String, Boolean> vars = Map.of("a", true, "b", false, "c", true);
-ExpresiónBool expr = new O(
-    new Y(new Variable("a"), new Variable("b")),
-    new Variable("c")
-);
-System.out.println(expr.evaluar(vars)); // true
-```
-```
+El patrón Interpreter es la forma más pura de transformar una gramática en código. Aunque su uso es limitado por cuestiones de rendimiento y escalabilidad, sigue siendo una herramienta fundamental para crear lenguajes de dominio específico (DSL) legibles y extensibles dentro de una aplicación.

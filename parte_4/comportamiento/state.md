@@ -5,312 +5,126 @@ subject: Patrones de Diseño de Comportamiento
 ---
 
 (patron-state)=
-# State: Comportamiento Dependiente del Estado
+# State
 
-El patrón **State** permite que un objeto altere su comportamiento cuando su estado interno cambia, aparentando cambiar su clase.
+## Definición
 
-:::{note} Propósito
+El patrón **State** (Estado) es un patrón de diseño de comportamiento que permite que un objeto altere su comportamiento cuando su estado interno cambia. El objeto parecerá haber cambiado su clase.
 
-Permitir que un objeto cambie comportamiento según su estado.
-:::
-
----
+Este patrón propone crear nuevas clases para cada estado posible de un objeto y extraer todos los comportamientos específicos de esos estados a dichas clases.
 
 ## Origen e Historia
 
-Gang of Four 1994. Surge de máquinas de estado complejas: necesidad de separar lógica de estado del contexto.
+Formalizado por el GoF en 1994, el patrón State es una aplicación de la orientación a objetos para implementar Máquinas de Estados Finitos (FSM). Antes de su formalización, la lógica de estados solía gestionarse mediante gigantescas estructuras `switch` o `if-else` que se volvían imposibles de mantener a medida que se añadían nuevos estados o transiciones.
 
 ## Motivación
 
-Necesario cuando:
-- Comportamiento depende del estado
-- Condicionales sobre estado son complejos
-- Estado cambia frecuentemente
-- Cada estado tiene responsabilidades únicas
+La motivación principal es la **cohesión**. Queremos evitar que una sola clase contenga la lógica de todos los estados posibles del sistema. Al separar cada estado en su propia clase, el código se vuelve más legible, fácil de testear y extensible.
+
+:::{note} Propósito
+Permitir que un objeto altere su comportamiento cuando cambia su estado interno. El objeto parecerá cambiar de clase.
+:::
 
 ## Contexto
 
-**Patrón:** Contexto delega a objeto State
+### Cuando aplica
 
-**Anatomía:**
-- **State**: Interfaz (operaciones)
-- **ConcreteState**: Implementa comportamiento
-- **Context**: Mantiene referencia al estado actual
-- Cambios de estado son transiciones
+- Cuando el comportamiento de un objeto depende de su estado y debe cambiar en tiempo de ejecución según ese estado.
+- Cuando las operaciones tienen grandes estructuras condicionales (switch/if) que dependen del estado del objeto.
+- En procesos con flujos definidos (ej. un pedido que pasa por: pendiente, pagado, enviado, entregado).
+- En controladores de dispositivos, protocolos de red o personajes de videojuegos.
 
-**Variantes:**
-- Estados con historial
-- Transiciones condicionales
-- Estados paralelos
+### Cuando no aplica
 
----
+- Cuando el objeto tiene solo dos o tres estados y la lógica es muy simple. El patrón añade una complejidad innecesaria en esos casos.
+- Cuando los estados casi nunca cambian o no afectan significativamente al comportamiento.
 
-## Problema
+## Consecuencias de su uso
 
+### Positivas
+
+- **Localización de comportamientos específicos:** Cada estado está en una sola clase, facilitando su mantenimiento.
+- **Transiciones explícitas:** El cambio de un objeto de estado a otro queda claramente definido mediante el cambio de la instancia de referencia.
+- **Elimina condicionales masivos:** Limpia el código de lógicas de control repetitivas.
+
+### Negativas
+
+- **Explosión de clases:** Si hay muchos estados, el número de archivos y clases puede crecer significativamente.
+- **Complejidad de las transiciones:** Si los estados necesitan conocerse entre sí para transicionar, se puede generar un acoplamiento entre las clases de estado.
+
+## Alternativas
+
+- **Strategy:** Tienen una estructura casi idéntica, pero la intención es diferente. Strategy es para algoritmos intercambiables (el cliente elige), mientras que State es para cambios automáticos basados en la lógica interna del objeto.
+- **Tablas de transición:** En sistemas muy simples, una matriz de estados y eventos puede ser suficiente.
+
+## Estructura
+
+### Diagrama de Clases
+
+```plantuml
+@startuml
+skinparam classAttributeIconSize 0
+
+class Contexto {
+  - estadoActual: Estado
+  + solicitud()
+  + cambiarEstado(e: Estado)
+}
+
+interface Estado {
+  + manejar()
+}
+
+class EstadoConcretoA {
+  + manejar()
+}
+
+class EstadoConcretoB {
+  + manejar()
+}
+
+Contexto o-- Estado
+Estado <|.. EstadoConcretoA
+Estado <|.. EstadoConcretoB
+@enduml
 ```
-Sin State: Condicionales complejos
-if (estado == PAUSADO)
-  ...
-else if (estado == REPRODUCIENDO)
-  ...
-else if (estado == DETENIDO)
-  ...
 
-Con State: Objetos que representan estados
-reproducir() → delegado al estado actual
-```
-
----
-
-## Problema
+## Ejemplos
 
 ```java
-// ❌ Condicionales esparcidos
-class ReproductorMúsica {
-    enum Estado { PAUSADO, REPRODUCIENDO, DETENIDO }
-    private Estado estado = Estado.DETENIDO;
-    
-    void reproducir() {
-        if (estado == DETENIDO) {
-            estado = REPRODUCIENDO;
-            System.out.println("Reproduciendo...");
-        } else if (estado == PAUSADO) {
-            estado = REPRODUCIENDO;
-        }
-        // Cada acción requiere condicionales
-    }
-}
-```
-
----
-
-## Solución: State
-
-```java
 /**
- * Estado: interfaz para cada estado.
+ * Interfaz para los estados.
  */
-public interface EstadoReproductor {
-    void reproducir(ReproductorMúsica reproductor);
-    void pausar(ReproductorMúsica reproductor);
-    void detener(ReproductorMúsica reproductor);
+public interface EstadoSemaforo {
+    void mostrar(Semaforo s);
 }
 
 /**
- * Estado concreto: Detenido.
+ * Estado concreto: Rojo.
  */
-public class EstadoDetenido implements EstadoReproductor {
+public class EstadoRojo implements EstadoSemaforo {
     @Override
-    public void reproducir(ReproductorMúsica reproductor) {
-        System.out.println("▶️ Reproduciendo desde el inicio");
-        reproductor.setState(new EstadoReproduciendo());
-    }
-    
-    @Override
-    public void pausar(ReproductorMúsica reproductor) {
-        System.out.println("⏸️ Ya está detenido");
-    }
-    
-    @Override
-    public void detener(ReproductorMúsica reproductor) {
-        System.out.println("⏹️ Ya está detenido");
+    public void mostrar(Semaforo s) {
+        System.out.println("🔴 ROJO: Pare");
+        // Lógica de transición
+        s.setEstado(new EstadoVerde());
     }
 }
 
 /**
- * Estado concreto: Reproduciendo.
+ * El Contexto.
  */
-public class EstadoReproduciendo implements EstadoReproductor {
-    @Override
-    public void reproducir(ReproductorMúsica reproductor) {
-        System.out.println("▶️ Ya está reproduciendo");
-    }
+public class Semaforo {
+    private EstadoSemaforo actual = new EstadoRojo();
     
-    @Override
-    public void pausar(ReproductorMúsica reproductor) {
-        System.out.println("⏸️ Pausado");
-        reproductor.setState(new EstadoPausado());
-    }
+    public void setEstado(EstadoSemaforo e) { this.actual = e; }
     
-    @Override
-    public void detener(ReproductorMúsica reproductor) {
-        System.out.println("⏹️ Detenido");
-        reproductor.setState(new EstadoDetenido());
+    public void cambiar() {
+        actual.mostrar(this);
     }
-}
-
-/**
- * Estado concreto: Pausado.
- */
-public class EstadoPausado implements EstadoReproductor {
-    @Override
-    public void reproducir(ReproductorMúsica reproductor) {
-        System.out.println("▶️ Reanudando");
-        reproductor.setState(new EstadoReproduciendo());
-    }
-    
-    @Override
-    public void pausar(ReproductorMúsica reproductor) {
-        System.out.println("⏸️ Ya está pausado");
-    }
-    
-    @Override
-    public void detener(ReproductorMúsica reproductor) {
-        System.out.println("⏹️ Detenido");
-        reproductor.setState(new EstadoDetenido());
-    }
-}
-
-/**
- * Contexto: objeto que cambia comportamiento.
- */
-public class ReproductorMúsica {
-    private EstadoReproductor estado = new EstadoDetenido();
-    
-    public void setState(EstadoReproductor nuevoEstado) {
-        this.estado = nuevoEstado;
-    }
-    
-    public void reproducir() {
-        estado.reproducir(this);
-    }
-    
-    public void pausar() {
-        estado.pausar(this);
-    }
-    
-    public void detener() {
-        estado.detener(this);
-    }
-}
-
-// ✅ Uso: Sin condicionales
-ReproductorMúsica reproductor = new ReproductorMúsica();
-reproductor.reproducir();   // ▶️ Reproduciendo
-reproductor.pausar();       // ⏸️ Pausado
-reproductor.reproducir();   // ▶️ Reanudando
-reproductor.detener();      // ⏹️ Detenido
-```
-
----
-
-## Ventajas y Desventajas
-
-### ✅ Ventajas
-
-- **Claridad**: Cada estado es una clase clara
-- **Localización**: Lógica del estado en un lugar
-- **Extensibilidad**: Agregar estados sin modificar existentes
-- **Testabilidad**: Testear cada estado independientemente
-
-### ❌ Desventajas
-
-- **Clases**: Muchas clases de estado
-- **Overhead**: Cambios de estado frecuentes pueden ser costosos
-- **Complejidad**: Más difícil que condicionales simples
-- **Memory**: Múltiples instancias de estados
-
----
-
-## Cuándo Usarlo
-
-✅ **Usa cuando:**
-- Comportamiento depende del estado
-- Condicionales complejos sobre estado
-- Estado cambia frecuentemente
-- Ejemplos: Máquinas de estado, reproductores, máquinas expendedoras
-
----
-
-## Ejercicio
-
-```{exercise}
-:label: ej-state-pedido
-
-Crea sistema de pedidos con State:
-1. Estados: Pendiente, Procesando, Enviado, Entregado
-2. Transiciones válidas entre estados
-```
-
-```{solution} ej-state-pedido
-:class: dropdown
-
-```java
-public interface EstadoPedido {
-    void procesar(Pedido pedido);
-    void enviar(Pedido pedido);
-    void entregar(Pedido pedido);
-}
-
-public class EstadoPendiente implements EstadoPedido {
-    @Override
-    public void procesar(Pedido pedido) {
-        pedido.setEstado(new EstadoProcesando());
-    }
-    
-    @Override
-    public void enviar(Pedido pedido) {
-        System.out.println("No se puede enviar, aún no procesado");
-    }
-    
-    @Override
-    public void entregar(Pedido pedido) {
-        System.out.println("No se puede entregar");
-    }
-}
-
-public class EstadoProcesando implements EstadoPedido {
-    @Override
-    public void procesar(Pedido pedido) {
-        System.out.println("Ya está procesando");
-    }
-    
-    @Override
-    public void enviar(Pedido pedido) {
-        pedido.setEstado(new EstadoEnviado());
-    }
-    
-    @Override
-    public void entregar(Pedido pedido) {
-        System.out.println("Aún no enviado");
-    }
-}
-
-public class EstadoEnviado implements EstadoPedido {
-    @Override
-    public void procesar(Pedido pedido) {
-        System.out.println("Ya está enviado");
-    }
-    
-    @Override
-    public void enviar(Pedido pedido) {
-        System.out.println("Ya está enviado");
-    }
-    
-    @Override
-    public void entregar(Pedido pedido) {
-        pedido.setEstado(new EstadoEntregado());
-    }
-}
-
-public class EstadoEntregado implements EstadoPedido {
-    @Override
-    public void procesar(Pedido pedido) { }
-    @Override
-    public void enviar(Pedido pedido) { }
-    @Override
-    public void entregar(Pedido pedido) {
-        System.out.println("Ya entregado");
-    }
-}
-
-public class Pedido {
-    private EstadoPedido estado = new EstadoPendiente();
-    
-    void setEstado(EstadoPedido e) { estado = e; }
-    void procesar() { estado.procesar(this); }
-    void enviar() { estado.enviar(this); }
-    void entregar() { estado.entregar(this); }
 }
 ```
-```
+
+## Resumen
+
+El patrón State es la solución elegante a la complejidad de las máquinas de estado. Al transformar los estados en objetos, logramos un diseño donde el comportamiento es una propiedad dinámica y polimórfica, permitiendo que los objetos evolucionen de forma fluida y organizada a lo largo de su ciclo de vida.
