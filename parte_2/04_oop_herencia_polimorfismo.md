@@ -200,6 +200,129 @@ classDiagram
 
 ---
 
+(encapsulamiento-jerarquias)=
+## Encapsulamiento en Jerarquías: Mantén tus Secretos
+
+Una confusión común es pensar que heredar de una clase significa "poder acceder a todos sus detalles internos". **Esto es incorrecto.** El encapsulamiento sigue siendo fundamental incluso en jerarquías de herencia.
+
+(herencia-no-rompe-encapsulamiento)=
+### Herencia NO Significa Exposición de Detalles
+
+Cuando una subclase hereda de una superclase:
+- ✅ Hereda los **métodos públicos** y acceso a su comportamiento
+- ✅ Las subclases pueden ser **probadas** y **extendidas**
+- ❌ NO significa que deba acceder directamente a atributos privados o `protected`
+- ❌ NO significa que deba usar getters/setters para quebrar el contrato de la clase
+
+:::{admonition} Principio Fundamental
+:class: important
+
+**Las subclases responden a través de métodos públicos de dominio**, no mediante exposición de detalles internos. Si la superclase define un contrato (sus métodos públicos), la subclase debe respetarlo.
+
+:::
+
+(ejemplo-encapsulamiento-jerarquias)=
+### Ejemplo: Empleado y Gerente (Forma Correcta)
+
+Considera una jerarquía donde `Gerente` extiende `Empleado`:
+
+**Incorrecto ❌:**
+```java
+public class Empleado {
+    private String nombre;
+    private double salario;  // ¿Acceso directo desde Gerente?
+    
+    public double getSalario() {  // ¿Usar getters para quitar encapsulamiento?
+        return salario;
+    }
+}
+
+public class Gerente extends Empleado {
+    private double bonificacion;
+    
+    public void calculaSueldoTotal() {
+        // ❌ Rompe encapsulamiento: expone detalles internos
+        return this.getSalario() + bonificacion;
+    }
+}
+```
+
+**Correcto ✅:**
+```java
+public class Empleado {
+    private String nombre;
+    private double salario;
+    
+    // Método de dominio, no getter
+    public double calcularSueldoFinal() {
+        return salario;  // Lógica encapsulada
+    }
+    
+    public boolean tieneNombre(String nombre) {
+        return this.nombre.equals(nombre);
+    }
+}
+
+public class Gerente extends Empleado {
+    private double bonificacion;
+    
+    // Override de método de dominio: especialización, no exposición
+    @Override
+    public double calcularSueldoFinal() {
+        return super.calcularSueldoFinal() + bonificacion;
+    }
+}
+```
+
+La clave: `Gerente` no accede a `salario`. En su lugar, llama a `calcularSueldoFinal()` (método de dominio) que la superclase define, especializándolo con `super.calcularSueldoFinal()`.
+
+(protected-para-que-sirve)=
+### El Rol de `protected`: Para Jerarquías, No para Exposición
+
+`protected` es un modificador diseñado para **métodos que subclases necesitan especializar**, no para **romper encapsulamiento**:
+
+- ✅ Métodos `protected` que subclases deben override (Template Method)
+- ✅ Métodos `protected` que implementan pasos de un algoritmo compartido
+- ❌ Atributos `protected` "para que subclases los usen directamente"
+- ❌ Getters/setters `protected` con la excusa de "es herencia"
+
+:::{admonition} Reglas de Cátedra
+:class: tip
+
+Ver {ref}`regla-0x200C` (No usar getters/setters si violan encapsulamiento) y {ref}`regla-0x2011` (No exponer detalles internos mediante getters).
+
+Estas reglas aplican incluso en jerarquías. La herencia NO es una excusa para romper encapsulamiento.
+
+:::
+
+(testing-encapsulamiento-herencia)=
+### Verificar sin Getters
+
+Para verificar que una `Gerente` funciona correctamente, pruebas deben usar **métodos de dominio**:
+
+```java
+@Test
+void testGerenciaCalculaSueldoConBonificacion() {
+    Gerente g = new Gerente("Carlos", 3000, 1000);
+    
+    // ✅ Prueba el comportamiento, no accede a internals
+    assertEquals(4000, g.calcularSueldoFinal(), 0.01);
+}
+
+@Test
+void testGerenciaTieneNombre() {
+    Gerente g = new Gerente("Carlos", 3000, 1000);
+    
+    // ✅ Usa método de dominio heredado
+    assertTrue(g.tieneNombre("Carlos"));
+    assertFalse(g.tieneNombre("Javier"));
+}
+```
+
+No necesitas getters para verificar correctitud. Necesitas métodos de dominio bien diseñados.
+
+---
+
 (herencia-vs-composicion)=
 ## Herencia vs Composición
 
