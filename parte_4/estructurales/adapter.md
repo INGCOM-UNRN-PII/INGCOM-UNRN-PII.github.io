@@ -5,26 +5,11 @@ subject: Patrones de Diseño Estructurales
 ---
 
 (patron-adapter)=
-# Adapter: Puente Incompatible
+# Adapter
 
-El patrón **Adapter** (también conocido como **Wrapper**) permite que clases con interfaces incompatibles trabajen juntas, convirtiendo la interfaz de una clase en otra que el cliente espera.
+## Definición
 
-:::{note} Propósito
-
-Permitir que objetos con interfaces incompatibles colaboren, adaptando una interfaz existente a otra que el cliente requiere.
-:::
-
----
-
-## Concepto
-
-El adapter actúa como un "traductor" entre dos interfaces:
-
-- **Cliente**: Espera una interfaz específica
-- **Adaptada**: Proporciona funcionalidad útil pero interfaz diferente
-- **Adapter**: Traduce llamadas del cliente a llamadas de la adaptada
-
----
+El patrón **Adapter** (también conocido como **Wrapper**) permite que clases con interfaces incompatibles trabajen juntas, convirtiendo la interfaz de una clase en otra que el cliente espera. Actúa como un "traductor" entre dos interfaces, permitiendo que objetos con interfaces incompatibles colaboren.
 
 ## Origen e Historia
 
@@ -51,9 +36,48 @@ Surge cuando:
 - **Adapter**: Clase que implementa Target y encapsula Adaptee
 - **Client**: Usa Target
 
----
+### Cuando aplica
 
-## Problema
+✅ **Usa Adapter cuando:**
+- Tienes código legacy que no puedes modificar
+- Necesitas integrar bibliotecas de terceros
+- Dos interfaces incompatibles necesitan trabajar juntas
+- Quieres mantener separación de concerns
+
+### Cuando no aplica
+
+❌ **Evita cuando:**
+- Puedes refactorizar la interfaz original
+- La adaptación es trivial
+- Hay múltiples niveles de adaptación
+
+## Consecuencias de su uso
+
+### Positivas
+
+- **Reutilización**: Usa código existente sin modificarlo
+- **Separación**: Desvincula cliente del código adaptado
+- **Flexibilidad**: Agregar nuevos adapters sin cambiar código existente
+- **Single Responsibility**: Adapter solo hace traducción
+
+### Negativas
+
+- **Complejidad**: Introduce clases adicionales
+- **Indirección**: Capa extra de llamadas
+- **Performance**: Overhead de traducción
+- **Confusión**: Muchos adapters pueden ser confusos
+
+## Alternativas
+
+| Patrón | Propósito | Cuando |
+| :--- | :--- | :--- |
+| **Bridge** | Desacoplar abstracción de implementación | Múltiples dimensiones |
+| **Decorator** | Agregar responsabilidades dinámicamente | Extender comportamiento |
+| **Facade** | Simplificar interfaz compleja | Sistemas complejos |
+
+## Estructura
+
+### Problema
 
 ```java
 // Cliente espera esta interfaz
@@ -77,9 +101,7 @@ public class DispositivoAntiguoEuropeo {
 TargetaConector conector = new DispositivoAntiguoEuropeo();  // Error de compilación!
 ```
 
----
-
-## Solución: Adapter
+### Solución
 
 ```java
 /**
@@ -95,7 +117,6 @@ public class AdaptadorEuropaAmerica implements TargetaConector {
     
     @Override
     public void conectar() {
-        // Traduce llamada del cliente a interfaz del adaptado
         dispositivo.enchufar();
     }
     
@@ -112,103 +133,43 @@ conector.conectar();      // Funciona como se esperaba
 conector.desconectar();
 ```
 
----
-
-## Diagrama UML
+### Diagrama de Clases
 
 ```
-┌─────────────────┐
-│    Cliente      │
-│      main()     │
-└────────┬────────┘
-         │ usa
-         │
-         ▼
-┌──────────────────────────┐
-│  TargetaConector         │────┐
-├──────────────────────────┤    │
-│ + conectar()             │    │ implementa
-│ + desconectar()          │    │
-└──────────────────────────┘    │
-         ▲                       │
-         │                       │
-         │ adapta a      ┌───────┴─────────────────────┐
-         │              │                              │
-         │              │                  ┌──────────────────┐
-         │              │                  │    Adapter       │
-         │              │     ┌────────────┤AdaptadorEuroAmer│
-         │              │     │            │─────────────────┤
-         │              │     │            │+ conectar()      │
-         │              └─────┤            │+ desconectar()   │
-    ┌────┴──────────────┐     │            │─────────────────┤
-    │ Interfaz esperada │     │            │- dispositivo    │
-    │ (TargetaConector) │     │            └──────────────────┘
-    └───────────────────┘     │                      │
-                              │ contiene            │
-                              │                      ▼
-                              │            ┌───────────────────────┐
-                              │            │ DispositivoAntiguo    │
-                              └───────────▶│ EuropeoLinea         │
-                                           ├───────────────────────┤
-                                           │ + enchufar()          │
-                                           │ + desenchufar()       │
-                                           └───────────────────────┘
-                                           Clase existente (no modificable)
+      ┌──────────────────┐
+      │  TargetaConector │
+      │   <<interface>>  │
+      ├──────────────────┤
+      │+ conectar()      │
+      │+ desconectar()   │
+      └────────┬─────────┘
+               │
+               │ implementa
+               │
+       ┌───────▼──────────────┐
+       │    Adapter           │
+       │ AdaptadorEuroAmer    │
+       ├──────────────────────┤
+       │+ conectar()          │
+       │+ desconectar()       │
+       ├──────────────────────┤
+       │- dispositivo:        │
+       │  DispositivoAntiguoE │
+       └───────────────────────┘
+               │
+               │ contiene
+               │
+       ┌───────▼──────────────────┐
+       │ DispositivoAntiguoEuropeo│
+       ├──────────────────────────┤
+       │+ enchufar()              │
+       │+ desenchufar()           │
+       └──────────────────────────┘
 ```
 
----
+## Ejemplos
 
-## Variantes
-
-### Adapter de Clase (Herencia)
-
-```java
-/**
- * En lugar de composición, usa herencia.
- * (Menos flexible que composición)
- */
-public class AdaptadorPorHerencia extends DispositivoAntiguoEuropeo 
-    implements TargetaConector {
-    
-    @Override
-    public void conectar() {
-        this.enchufar();
-    }
-    
-    @Override
-    public void desconectar() {
-        this.desenchufar();
-    }
-}
-```
-
-### Adapter Bidi (Bidireccional)
-
-```java
-/**
- * Permite adaptar en ambas direcciones.
- */
-public class AdaptadorBidireccional implements TargetaConector, 
-    InterfazAntigua {
-    private DispositivoAntiguoEuropeo antiguo;
-    private DispositivoNuevoAmericano nuevo;
-    
-    public AdaptadorBidireccional(DispositivoAntiguoEuropeo antiguo) {
-        this.antiguo = antiguo;
-    }
-    
-    @Override
-    public void conectar() {
-        antiguo.enchufar();
-    }
-    
-    // ... otros métodos
-}
-```
-
----
-
-## Ejemplo Completo: Integración de Sistemas
+### Ejemplo 1: Integración de Sistemas de Notificación
 
 ```java
 // Interfaz que espera el cliente (nuevo sistema)
@@ -236,7 +197,6 @@ public class AdaptadorNotificacionAFax implements SistemaNotificacionModerno {
     
     @Override
     public void enviarNotificacion(String mensaje) {
-        // Traduce la interfaz moderna a la antigua
         sistemaFax.enviarFax(numeroFaxPorDefecto, mensaje);
     }
 }
@@ -259,51 +219,29 @@ SistemaNotificacionAntiguoFax fax = new SistemaNotificacionAntiguoFax();
 SistemaNotificacionModerno adaptado = new AdaptadorNotificacionAFax(fax, "+549111234567");
 CentroNotificaciones centro = new CentroNotificaciones(adaptado);
 
-centro.notificar("Alerta de seguridad");  // Internamente usa fax
+centro.notificar("Alerta de seguridad");
 // Salida: Fax enviado a +549111234567: Alerta de seguridad
 ```
 
----
+### Variantes
 
-## Ventajas y Desventajas
+**Adapter de Clase (Herencia):**
+```java
+public class AdaptadorPorHerencia extends DispositivoAntiguoEuropeo 
+    implements TargetaConector {
+    
+    @Override
+    public void conectar() {
+        this.enchufar();
+    }
+    
+    @Override
+    public void desconectar() {
+        this.desenchufar();
+    }
+}
+```
 
-### ✅ Ventajas
+## Resumen
 
-- **Reutilización**: Usa código existente sin modificarlo
-- **Separación**: Desvincula cliente del código adaptado
-- **Flexibilidad**: Agregar nuevos adapters sin cambiar código existente
-- **Single Responsibility**: Adapter solo hace traducción
-
-### ❌ Desventajas
-
-- **Complejidad**: Introduce clases adicionales
-- **Indirección**: Capa extra de llamadas
-- **Performance**: Overhead de traducción
-- **Confusión**: Muchos adapters pueden ser confusos
-
----
-
-## Cuándo Usarlo
-
-✅ **Usa Adapter cuando:**
-- Tienes código legacy que no puedes modificar
-- Necesitas integrar bibliotecas de terceros
-- Dos interfaces incompatibles necesitan trabajar juntas
-- Quieres mantener separación de concerns
-
-❌ **Evita cuando:**
-- Puedes refactorizar la interfaz original
-- La adaptación es trivial
-- Hay múltiples niveles de adaptación
-
----
-
-## Comparación con Patrones Similares
-
-| Patrón | Propósito | Cuando |
-| :--- | :--- | :--- |
-| **Adapter** | Hacer compatibles interfaces incompatibles | Integrar existentes |
-| **Bridge** | Desacoplar abstracción de implementación | Múltiples dimensiones |
-| **Decorator** | Agregar responsabilidades dinámicamente | Extender comportamiento |
-| **Facade** | Simplificar interfaz compleja | Sistemas complejos |
-
+El patrón **Adapter** resuelve problemas de incompatibilidad entre interfaces proporcionando una clase intermediaria que traduce llamadas. Es fundamental en integración de sistemas heterogéneos y reutilización de código existente sin modificación. Aunque introduce indirección, su beneficio en separación de concerns y flexibilidad lo hacen invaluable en arquitecturas empresariales.

@@ -5,20 +5,15 @@ subject: Patrones de Diseño Estructurales
 ---
 
 (patron-bridge)=
-# Bridge: Separar Abstracción e Implementación
+# Bridge
 
-El patrón **Bridge** desacopla una abstracción de su implementación para que puedan variar independientemente.
+## Definición
 
-:::{note} Propósito
-
-Permitir que abstracción e implementación varíen de manera independiente, evitando explosión de subclases.
-:::
-
----
+El patrón **Bridge** desacopla una abstracción de su implementación para que puedan variar independientemente. Permite tener múltiples dimensiones de variación sin crear una explosión de subclases.
 
 ## Origen e Historia
 
-Documentado por Gang of Four en 1994. Bridge surge del reconocimiento de que herencia múltiple (combinar múltiples dimensiones de variación) crea explosión de clases. Fue popularizado especialmente en frameworks de gráficos.
+Documentado por Gang of Four en 1994. Bridge surge del reconocimiento de que herencia múltiple (combinar múltiples dimensiones de variación) crea explosión de clases. Fue popularizado especialmente en frameworks de gráficos y sistemas de renderización.
 
 ## Motivación
 
@@ -37,15 +32,49 @@ Necesario cuando:
 
 **Anatomía:** N formas × M renderizadores sin N×M clases
 
----
+### Cuando aplica
 
-## Problema
+✅ **Usa Bridge cuando:**
+- Tienes múltiples dimensiones de variación
+- Quieres evitar combinaciones explosivas
+- La abstracción e implementación deben cambiar independientemente
 
-Bridge resuelve el problema de tener múltiples dimensiones de variación:
+### Cuando no aplica
+
+❌ **Evita cuando:**
+- Solo una dimensión de variación
+- La herencia simple es suficiente
+
+## Consecuencias de su uso
+
+### Positivas
+
+- **Desacoplamiento**: Abstracción e implementación independientes
+- **Escalabilidad**: Agregar formas o renderizadores sin afectar otros
+- **Evita explosión de clases**: N*M en lugar de N+M clases
+- **Delegación**: Usa composición sobre herencia
+
+### Negativas
+
+- **Complejidad**: Más difícil de entender que herencia simple
+- **Indirección**: Extra de llamadas
+- **Overhead**: Capas adicionales de abstracción
+
+## Alternativas
+
+| Patrón | Propósito | Diferencia |
+| :--- | :--- | :--- |
+| **Adapter** | Hacer compatibles interfaces | Integra código existente |
+| **Decorator** | Agregar responsabilidades | Envuelve con comportamiento |
+| **Composite** | Componer objetos en árbol | Estructura jerárquica |
+
+## Estructura
+
+### Problema
 
 ```
 Sin Bridge: Explosión de clases
-┌─ Círculo
+├─ Círculo
 │  ├─ CirculoOpenGL
 │  └─ CirculoVulkan
 └─ Cuadrado
@@ -53,51 +82,7 @@ Sin Bridge: Explosión de clases
    └─ CuadradoVulkan
 ```
 
-```
-Con Bridge: Variación independiente
-Forma ─┬─ Círculo
-       └─ Cuadrado
-
-Renderizador ─┬─ OpenGL
-              └─ Vulkan
-```
-
----
-
-## Problema
-
-```java
-// ❌ Sin Bridge: explosión de clases
-abstract class Forma {
-    abstract void dibujar();
-}
-
-class CirculoOpenGL extends Forma {
-    @Override
-    void dibujar() { System.out.println("Círculo con OpenGL"); }
-}
-
-class CirculoVulkan extends Forma {
-    @Override
-    void dibujar() { System.out.println("Círculo con Vulkan"); }
-}
-
-class CuadradoOpenGL extends Forma {
-    @Override
-    void dibujar() { System.out.println("Cuadrado con OpenGL"); }
-}
-
-class CuadradoVulkan extends Forma {
-    @Override
-    void dibujar() { System.out.println("Cuadrado con Vulkan"); }
-}
-
-// Cada nueva combinación requiere nueva clase
-```
-
----
-
-## Solución: Bridge
+### Solución
 
 ```java
 /**
@@ -110,7 +95,7 @@ public interface Renderizador {
 }
 
 /**
- * Abstracción (Abstract) que usa Renderizador.
+ * Abstracción que usa Renderizador.
  */
 public abstract class Forma {
     protected Renderizador renderizador;
@@ -123,7 +108,7 @@ public abstract class Forma {
 }
 
 /**
- * Abstracción Refinada (Refined Abstraction).
+ * Abstracción Refinada.
  */
 public class Circulo extends Forma {
     private int x, y, radio;
@@ -138,22 +123,6 @@ public class Circulo extends Forma {
     @Override
     public void dibujar() {
         renderizador.dibujarCirculo(x, y, radio);
-    }
-}
-
-public class Cuadrado extends Forma {
-    private int x, y, lado;
-    
-    public Cuadrado(Renderizador renderizador, int x, int y, int lado) {
-        super(renderizador);
-        this.x = x;
-        this.y = y;
-        this.lado = lado;
-    }
-    
-    @Override
-    public void dibujar() {
-        renderizador.dibujarCuadrado(x, y, lado);
     }
 }
 
@@ -172,105 +141,106 @@ public class RenderizadorOpenGL implements Renderizador {
     }
 }
 
-/**
- * Implementador concreto: Vulkan.
- */
-public class RenderizadorVulkan implements Renderizador {
+// ✅ Uso: Sin explosión de clases
+Renderizador opengl = new RenderizadorOpenGL();
+Forma circuloGL = new Circulo(opengl, 50, 50, 20);
+circuloGL.dibujar();  // OpenGL: Dibujando círculo...
+```
+
+### Diagrama de Clases
+
+```
+       ┌─────────────────────┐
+       │      Forma          │
+       │    <<abstract>>     │
+       ├─────────────────────┤
+       │- renderizador       │
+       │+ Forma(rend)        │
+       │+ dibujar()          │
+       └──────────┬──────────┘
+                  │
+         ┌────────┴────────┐
+         │                 │
+    ┌────▼─────┐    ┌─────▼────┐
+    │ Circulo  │    │Cuadrado   │
+    └──────────┘    └───────────┘
+         │                 │
+         │                 │
+         └────────┬────────┘
+                  │ usa
+                  │
+       ┌──────────▼──────────┐
+       │ <<interface>>       │
+       │ Renderizador        │
+       ├─────────────────────┤
+       │+ dibujarCirculo()   │
+       │+ dibujarCuadrado()  │
+       └──────────┬──────────┘
+                  │
+         ┌────────┴────────┐
+         │                 │
+    ┌────▼──────┐     ┌────▼──────┐
+    │RenderGL   │     │RenderVulkan│
+    └───────────┘     └────────────┘
+```
+
+## Ejemplos
+
+### Ejemplo 1: Sistemas de Renderización
+
+```java
+// Interfaz implementación
+public interface Renderizador {
+    void renderizar(String contenido);
+}
+
+// Implementadores
+public class RenderizadorHTML implements Renderizador {
     @Override
-    public void dibujarCirculo(int x, int y, int radio) {
-        System.out.println("Vulkan: Círculo optimizado en (" + x + "," + y + "), radio=" + radio);
-    }
-    
-    @Override
-    public void dibujarCuadrado(int x, int y, int lado) {
-        System.out.println("Vulkan: Cuadrado optimizado en (" + x + "," + y + "), lado=" + lado);
+    public void renderizar(String contenido) {
+        System.out.println("<html>" + contenido + "</html>");
     }
 }
 
-// ✅ Uso: Sin explosión de clases
-Renderizador opengl = new RenderizadorOpenGL();
-Renderizador vulkan = new RenderizadorVulkan();
+public class RenderizadorPDF implements Renderizador {
+    @Override
+    public void renderizar(String contenido) {
+        System.out.println("[PDF] " + contenido);
+    }
+}
 
-Forma circuloGL = new Circulo(opengl, 50, 50, 20);
-Forma circuloVK = new Circulo(vulkan, 100, 100, 30);
-Forma cuadradoGL = new Cuadrado(opengl, 200, 200, 40);
+// Abstracción
+public abstract class Documento {
+    protected Renderizador renderizador;
+    
+    public Documento(Renderizador renderizador) {
+        this.renderizador = renderizador;
+    }
+    
+    abstract void mostrar();
+}
 
-circuloGL.dibujar();      // OpenGL: Dibujando círculo...
-circuloVK.dibujar();      // Vulkan: Círculo optimizado...
-cuadradoGL.dibujar();     // OpenGL: Dibujando cuadrado...
+// Refinadas
+public class Informe extends Documento {
+    private String contenido;
+    
+    public Informe(Renderizador renderizador, String contenido) {
+        super(renderizador);
+        this.contenido = contenido;
+    }
+    
+    @Override
+    public void mostrar() {
+        renderizador.renderizar("INFORME: " + contenido);
+    }
+}
+
+// Uso
+Renderizador html = new RenderizadorHTML();
+Documento doc = new Informe(html, "Datos de ventas");
+doc.mostrar();  // <html>INFORME: Datos de ventas</html>
 ```
 
----
+## Resumen
 
-## Diagrama UML
-
-```
-┌───────────────────────────────────────┐
-│      Abstracción                      │
-│     (Forma)                           │
-├───────────────────────────────────────┤
-│- renderizador: Renderizador           │
-│+ Forma(renderizador)                  │
-│+ dibujar(): void [abstract]           │
-└─────────────┬───────────────────────┬─┘
-              │ usa                   │
-              │                       │
-              │              ┌────────┴──────────────┐
-              │              │                       │
-              │     ┌────────▼─────────┐   ┌────────▼─────────┐
-              │     │ Circulo          │   │ Cuadrado         │
-              │     ├──────────────────┤   ├──────────────────┤
-              │     │ - x, y, radio    │   │ - x, y, lado     │
-              │     │+ dibujar()       │   │+ dibujar()       │
-              │     └──────────────────┘   └──────────────────┘
-              │
-              ▼
-     ┌─────────────────────────┐
-     │ <<interface>>           │
-     │ Renderizador            │
-     ├─────────────────────────┤
-     │+ dibujarCirculo()       │
-     │+ dibujarCuadrado()      │
-     └─────────────┬───────────┘
-                   │
-        ┌──────────┴──────────┐
-        │                     │
-  ┌─────▼────────────┐  ┌────▼────────────┐
-  │RenderizadorOpenGL│  │RenderizadorVulkan│
-  ├──────────────────┤  ├──────────────────┤
-  │+ dibujarCirculo()│  │+ dibujarCirculo()│
-  │+ dibujarCuadrado│  │+ dibujarCuadrado │
-  └──────────────────┘  └──────────────────┘
-```
-
----
-
-## Ventajas y Desventajas
-
-### ✅ Ventajas
-
-- **Desacoplamiento**: Abstracción e implementación independientes
-- **Escalabilidad**: Agregar formas o renderizadores sin afectar otros
-- **Evita explosión de clases**: N*M en lugar de N+M clases
-- **Delegación**: Usa composición sobre herencia
-
-### ❌ Desventajas
-
-- **Complejidad**: Más difícil de entender que herencia simple
-- **Indirección**: Extra de llamadas
-- **Overhead**: Capas adicionales de abstracción
-
----
-
-## Cuándo Usarlo
-
-✅ **Usa Bridge cuando:**
-- Tienes múltiples dimensiones de variación
-- Quieres evitar combinaciones explosivas
-- La abstracción e implementación deben cambiar independientemente
-
-❌ **Evita cuando:**
-- Solo una dimensión de variación
-- La herencia simple es suficiente
-
-
+El patrón **Bridge** es esencial para manejar múltiples dimensiones de variación sin explosión de clases. Mediante la separación de abstracción e implementación, permite evolucionar ambas de forma independiente. Aunque introduce complejidad adicional, su beneficio en escalabilidad y mantenibilidad lo hace fundamental en sistemas grandes.

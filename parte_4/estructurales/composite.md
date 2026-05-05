@@ -5,20 +5,15 @@ subject: Patrones de Diseño Estructurales
 ---
 
 (patron-composite)=
-# Composite: Jerarquía Uniforme
+# Composite
+
+## Definición
 
 El patrón **Composite** permite componer objetos en estructuras de árbol para representar jerarquías parte-todo, permitiendo que los clientes traten objetos individuales y composiciones de objetos de manera uniforme.
 
-:::{note} Propósito
-
-Componer objetos en estructuras de árbol y poder tratarlos como objetos individuales.
-:::
-
----
-
 ## Origen e Historia
 
-Gang of Four 1994. Surge de la necesidad de tratar uniformemente estructuras jerárquicas (árboles) sin que el cliente conozca si está trabajando con una hoja o un compuesto.
+Gang of Four 1994. Surge de la necesidad de tratar uniformemente estructuras jerárquicas (árboles) sin que el cliente conozca si está trabajando con una hoja o un compuesto. Se popularizó en sistemas de archivos, widgets de UI, y procesadores de documentos.
 
 ## Motivación
 
@@ -38,18 +33,46 @@ Necesario cuando:
 - **Composite**: Puede tener Component (carpeta, Menu)
 - Ambos responden a mismas operaciones
 
----
+### Cuando aplica
 
-## Problema
+✅ **Usa Composite cuando:**
+- Tienes estructuras jerárquicas parte-todo
+- Quieres tratar uniformemente hojas y compuestos
+- Ejemplos: Archivos/carpetas, widgets de UI, menús
 
-Composite permite crear estructuras donde:
-- **Hoja**: No tiene hijos (elemento terminal)
-- **Compuesto**: Puede contener hojas o compuestos
-- **Interfaz uniforme**: Ambos implementan la misma interfaz
+### Cuando no aplica
 
----
+❌ **Evita cuando:**
+- La estructura es plana
+- El costo de recursión es prohibitivo
 
-## Problema
+## Consecuencias de su uso
+
+### Positivas
+
+- **Uniformidad**: Interfaz única para individuales y composiciones
+- **Flexibilidad**: Agregar nuevos tipos sin cambiar código
+- **Recursión**: Navegar estructuras complejas fácilmente
+- **Simplicidad**: Cliente no necesita saber sobre estructura
+
+### Negativas
+
+- **Complejidad**: Más difícil de diseñar
+- **Overhead**: Comparaciones de tipos
+- **Confusión**: Diferencias semánticas entre hoja y compuesto
+- **Performance**: Recalcular valores puede ser costoso
+
+## Alternativas
+
+| Patrón | Propósito | Diferencia |
+| :--- | :--- | :--- |
+| **Decorator** | Agregar responsabilidades | Envuelve individual |
+| **Flyweight** | Compartir datos | Optimiza memoria |
+| **Iterator** | Recorrer colecciones | Patrón de comportamiento |
+
+## Estructura
+
+### Problema
 
 ```java
 // ❌ Sin Composite: Se debe diferenciar entre tipos
@@ -79,9 +102,7 @@ class Carpeta {
 // ¿Y si quiero un método que funcione con ambos?
 ```
 
----
-
-## Solución: Composite
+### Solución
 
 ```java
 /**
@@ -178,15 +199,7 @@ Archivo carta = new Archivo("carta.doc", 100);
 documentos.agregar(tesis);
 documentos.agregar(carta);
 
-Carpeta fotos = new Carpeta("Fotos");
-Archivo foto1 = new Archivo("vacaciones.jpg", 2000);
-Archivo foto2 = new Archivo("familia.jpg", 1500);
-
-fotos.agregar(foto1);
-fotos.agregar(foto2);
-
 raiz.agregar(documentos);
-raiz.agregar(fotos);
 raiz.agregar(new Archivo("readme.txt", 10));
 
 // Mismo método para todos
@@ -194,65 +207,90 @@ raiz.mostrar(0);
 System.out.println("Tamaño total: " + raiz.obtenerTamaño() + " KB");
 ```
 
----
-
-## Diagrama UML
+### Diagrama de Clases
 
 ```
-         ┌─────────────────────────────┐
-         │ ElementoSistemaArchivos     │
-         │     <<abstract>>             │
-         ├─────────────────────────────┤
-         │ # nombre: String            │
-         │+ mostrar()                  │
-         │+ obtenerTamaño()            │
-         └──────────────┬──────────────┘
-                        │
-             ┌──────────┴──────────┐
-             │                     │
-        ┌────▼──────────┐  ┌──────▼────────────┐
-        │   Archivo     │  │    Carpeta       │
-        ├───────────────┤  ├──────────────────┤
-        │ - tamaño      │  │ - elementos: []  │
-        │+ mostrar()    │  │+ agregar()       │
-        │+ obtenerTamaño│  │+ remover()       │
-        └───────────────┘  │+ mostrar()       │
-                           │+ obtenerTamaño()│
-                           └──────────────────┘
-                                   │
-                                   │ contiene
-                                   ▼
-                           ElementoSistemaArchivos
+          ┌─────────────────────────────┐
+          │ ElementoSistemaArchivos     │
+          │     <<abstract>>             │
+          ├─────────────────────────────┤
+          │# nombre: String             │
+          │+ mostrar()                  │
+          │+ obtenerTamaño()            │
+          └──────────────┬──────────────┘
+                         │
+              ┌──────────┴──────────┐
+              │                     │
+         ┌────▼──────────┐  ┌──────▼────────────┐
+         │   Archivo     │  │    Carpeta       │
+         ├───────────────┤  ├──────────────────┤
+         │ - tamaño      │  │ - elementos: []  │
+         │+ mostrar()    │  │+ agregar()       │
+         │+ obtenerTamaño│  │+ remover()       │
+         └───────────────┘  │+ mostrar()       │
+                            │+ obtenerTamaño()│
+                            └──────────────────┘
+                                    │
+                                    │ contiene
+                                    ▼
+                            ElementoSistemaArchivos
 ```
 
----
+## Ejemplos
 
-## Ventajas y Desventajas
+### Ejemplo 1: Estructura de Menú
 
-### ✅ Ventajas
+```java
+public abstract class Elemento {
+    protected String nombre;
+    
+    public Elemento(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    abstract void mostrar();
+}
 
-- **Uniformidad**: Interfaz única para individuales y composiciones
-- **Flexibilidad**: Agregar nuevos tipos sin cambiar código
-- **Recursión**: Navegar estructuras complejas fácilmente
-- **Simplicidad**: Cliente no necesita saber sobre estructura
+public class OpcionMenu extends Elemento {
+    @Override
+    public void mostrar() {
+        System.out.println("→ " + nombre);
+    }
+}
 
-### ❌ Desventajas
+public class SubmenuMenu extends Elemento {
+    private List<Elemento> items = new ArrayList<>();
+    
+    public SubmenuMenu(String nombre) {
+        super(nombre);
+    }
+    
+    public void agregar(Elemento item) {
+        items.add(item);
+    }
+    
+    @Override
+    public void mostrar() {
+        System.out.println("📋 " + nombre);
+        for (Elemento item : items) {
+            item.mostrar();
+        }
+    }
+}
 
-- **Complejidad**: Más difícil de diseñar
-- **Overhead**: Comparaciones de tipos
-- **Confusión**: Diferencias semánticas entre hoja y compuesto
-- **Performance**: Recalcular valores puede ser costoso
+// Uso
+SubmenuMenu menuPrincipal = new SubmenuMenu("Archivo");
+menuPrincipal.agregar(new OpcionMenu("Abrir"));
+menuPrincipal.agregar(new OpcionMenu("Guardar"));
 
----
+SubmenuMenu menuRecientes = new SubmenuMenu("Abiertos Recientemente");
+menuRecientes.agregar(new OpcionMenu("documento1.txt"));
+menuRecientes.agregar(new OpcionMenu("documento2.txt"));
 
-## Cuándo Usarlo
+menuPrincipal.agregar(menuRecientes);
+menuPrincipal.mostrar();
+```
 
-✅ **Usa Composite cuando:**
-- Tienes estructuras jerárquicas parte-todo
-- Quieres tratar uniformemente hojas y compuestos
-- Ejemplos: Archivos/carpetas, widgets de UI, menús
+## Resumen
 
-❌ **Evita cuando:**
-- La estructura es plana
-- El costo de recursión es prohibitivo
-
+El patrón **Composite** es fundamental para trabajar con estructuras jerárquicas. Al permitir tratar uniformemente hojas y compuestos, simplifica enormemente el código cliente y facilita la adición de nuevos tipos. Es ampliamente usado en sistemas que requieren representar relaciones padre-hijo de forma flexible.

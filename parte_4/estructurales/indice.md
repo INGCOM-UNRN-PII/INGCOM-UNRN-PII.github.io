@@ -7,26 +7,63 @@ subject: Patrones de Diseño
 (patrones-estructurales)=
 # Familia Estructural
 
-Los **patrones estructurales** se ocupan de cómo las clases y objetos se componen para formar estructuras más grandes, manteniendo flexibilidad y eficiencia.
+Los **patrones estructurales** se ocupan de cómo las clases y objetos se componen para formar estructuras más grandes, manteniendo flexibilidad y eficiencia. Estos patrones facilitan crear relaciones entre entidades de forma que permitan obtener nuevas funcionalidades.
 
 ## Patrones en Esta Familia
 
-| Patrón | Propósito |
-| :--- | :--- |
-| **Adapter** | Compatibilidad entre interfaces incompatibles |
-| **Bridge** | Desacoplar abstracción de implementación |
-| **Composite** | Componer objetos en estructuras de árbol |
-| **Decorator** | Agregar responsabilidades dinámicamente |
-| **Facade** | Proporcionar interfaz unificada simplificada |
-| **Flyweight** | Compartir objetos para ahorrar memoria |
-| **Proxy** | Control de acceso a otro objeto |
+| Patrón | Propósito | Uso Principal |
+| :--- | :--- | :--- |
+| {ref}`patron-adapter` | Compatibilidad entre interfaces incompatibles | Integración de código legacy |
+| {ref}`patron-bridge` | Desacoplar abstracción de implementación | Múltiples dimensiones de variación |
+| {ref}`patron-composite` | Componer objetos en estructuras de árbol | Estructuras jerárquicas |
+| {ref}`patron-decorator` | Agregar responsabilidades dinámicamente | Comportamiento dinámico sin subclases |
+| {ref}`patron-facade` | Proporcionar interfaz unificada simplificada | Simplificar sistemas complejos |
+| {ref}`patron-flyweight` | Compartir objetos para ahorrar memoria | Optimizar memoria con muchos objetos |
+| {ref}`patron-proxy` | Control de acceso a otro objeto | Autorización, lazy loading, logging |
 
 ## Cuándo Usarlos
 
-- **Adapter**: Integrar código legacy con código nuevo
-- **Bridge**: Múltiples dimensiones de variación
-- **Composite**: Estructuras jerárquicas (árboles, menús)
-- **Decorator**: Comportamiento dinámico sin subclases
-- **Facade**: Simplificar sistemas complejos
-- **Flyweight**: Optimizar memoria con muchos objetos
-- **Proxy**: Control de acceso, lazy loading, logging
+**Adapter**: Integrar código legacy con código nuevo
+- Dos interfaces incompatibles necesitan trabajar juntas
+- Quieres reutilizar clases existentes sin modificarlas
+
+**Bridge**: Múltiples dimensiones de variación independientes
+- Necesitas evitar explosión de subclases (N × M combinaciones)
+- Abstracciones e implementaciones varían independientemente
+
+**Composite**: Estructuras jerárquicas (árboles, menús, archivos)
+- Necesitas tratar uniformemente hojas y compuestos
+- Requieres recursión sobre estructuras arbitrariamente profundas
+
+**Decorator**: Comportamiento dinámico sin crear subclases
+- Necesitas agregar funcionalidad en tiempo de ejecución
+- Herencia sería explosiva (múltiples combinaciones de características)
+
+**Facade**: Simplificar sistemas complejos
+- Subsistema tiene múltiples componentes acoplados
+- Quieres proporcionar punto de entrada único y simple
+
+**Flyweight**: Optimizar memoria con muchos objetos similares
+- Millones de objetos consumirían mucha memoria
+- Puedes separar estado compartible del estado particular
+
+**Proxy**: Controlar acceso, lazy loading, auditoría
+- Necesitas interceder en acceso a objeto real
+- Objeto es costoso (remoto, BD, archivo grande)
+- Requieres autorización, caché, o logging
+
+## Decisión Rápida
+
+¿Dos interfaces incompatibles? → **Adapter**
+
+¿Múltiples dimensiones de variación? → **Bridge**
+
+¿Estructura jerárquica (árbol)? → **Composite**
+
+¿Agregar responsabilidades dinámicamente? → **Decorator**
+
+¿Simplificar acceso a subsistema? → **Facade**
+
+¿Muchos objetos idénticos (memoria)? → **Flyweight**
+
+¿Controlar acceso a objeto? → **Proxy**

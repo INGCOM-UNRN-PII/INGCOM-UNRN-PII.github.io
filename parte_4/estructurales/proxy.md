@@ -5,16 +5,11 @@ subject: Patrones de Diseño Estructurales
 ---
 
 (patron-proxy)=
-# Proxy: Control de Acceso
+# Proxy
+
+## Definición
 
 El patrón **Proxy** proporciona un sustituto (proxy) para otro objeto para controlar su acceso, permitiendo operaciones adicionales antes/después de acceder al objeto real.
-
-:::{note} Propósito
-
-Controlar acceso a un objeto proporcionando un sustituto.
-:::
-
----
 
 ## Origen e Historia
 
@@ -44,75 +39,82 @@ Necesario cuando:
 - Proxy remoto: llamada a servicio remoto
 - Proxy protector: autorización
 
----
+### Cuando aplica
 
-## Problema
+✅ **Usa Proxy cuando:**
+- Necesitas controlar acceso al objeto real
+- Lazy loading es importante
+- Auditoria o logging es necesario
+- Ejemplos: Conexiones BD, APIs remotas, imágenes grandes
 
-Proxy actúa como intermediario:
+### Cuando no aplica
 
-```
-Cliente → Proxy → RealSubject
+❌ **Evita cuando:**
+- El objeto es simple y rápido
+- El control de acceso es innecesario
 
-Proxy puede:
-- Aplazar creación del objeto real (lazy loading)
-- Controlar acceso (autorización)
-- Registrar accesos (logging)
-- Cachear resultados
-```
+## Consecuencias de su uso
 
----
+### Positivas
 
-## Problema
+- **Control**: Autorización, autenticación
+- **Performance**: Caché, lazy loading
+- **Auditoría**: Registrar accesos
+- **Protección**: El cliente no accede directo
+
+### Negativas
+
+- **Complejidad**: Indirección adicional
+- **Performance**: Overhead del proxy
+- **Confusión**: Similar a Decorator
+- **Sincronización**: Thread safety en caché
+
+## Alternativas
+
+| Aspecto | Proxy | Decorator | Facade |
+|--------|-------|-----------|--------|
+| **Intención** | Controlar acceso | Agregar responsabilidades | Simplificar |
+| **Creación** | Proxy crea real | Cliente inyecta | Internos |
+| **Relación** | Uno-a-uno | Múltiple | Coordinación |
+
+## Estructura
+
+### Problema
 
 ```java
 // ❌ Sin Proxy: cliente directo a recurso costoso
 class BaseDatos {
     public String query(String sql) {
-        // Operación costosa: acceso a disco, red, etc
         System.out.println("Ejecutando: " + sql);
         return "Resultado";
     }
 }
 
 // Cada cliente puede ejecutar cualquier query
-// Sin control, caché, o auditoria
+// Sin control, caché, o auditoría
 BaseDatos db = new BaseDatos();
 db.query("DELETE FROM usuarios"); // ¡Peligroso!
 ```
 
----
-
-## Solución: Proxy
+### Solución
 
 ```java
 /**
- * Sujeto real: operación costosa.
- */
-public class BaseDatos {
-    public String query(String sql) {
-        System.out.println("[BD] Ejecutando: " + sql);
-        // Simulación de operación costosa
-        try { Thread.sleep(1000); } catch (InterruptedException e) {}
-        return "Resultado de: " + sql;
-    }
-}
-
-/**
- * Interfaz común.
+ * Sujeto: interfaz común.
  */
 public interface AccesoBD {
     String query(String sql);
 }
 
 /**
- * Implementación real.
+ * Sujeto real: operación costosa.
  */
-public class AccesoBDReal implements AccesoBD {
-    private BaseDatos bd = new BaseDatos();
-    
+public class BaseDatosReal implements AccesoBD {
     @Override
     public String query(String sql) {
-        return bd.query(sql);
+        System.out.println("[BD] Ejecutando: " + sql);
+        try { Thread.sleep(1000); } catch (InterruptedException e) {}
+        return "Resultado de: " + sql;
     }
 }
 
@@ -126,11 +128,10 @@ public class ProxyAccesoBD implements AccesoBD {
     private boolean estaAutenticado = false;
     
     public ProxyAccesoBD(String usuario, String contraseña) {
-        // Simulación de autenticación
         if ("admin".equals(usuario) && "123".equals(contraseña)) {
             this.usuarioActual = usuario;
             this.estaAutenticado = true;
-            this.acceso = new AccesoBDReal();
+            this.acceso = new BaseDatosReal();
             System.out.println("[PROXY] Usuario " + usuario + " autenticado");
         } else {
             System.out.println("[PROXY] ¡Acceso denegado!");
@@ -176,45 +177,95 @@ System.out.println(proxy.query("SELECT * FROM usuarios")); // Del caché
 
 // Rechazado
 try {
-    proxy.query("DELETE FROM usuarios"); // Bloqueado por seguridad
+    proxy.query("DELETE FROM usuarios");
 } catch (SecurityException e) {
     System.out.println("[ERROR] " + e.getMessage());
 }
 ```
 
----
+### Diagrama de Clases
 
-## Variantes de Proxy
+```
+          ┌──────────────────┐
+          │   Sujeto         │
+          │  <<interface>>   │
+          ├──────────────────┤
+          │+ operación()     │
+          └────────┬─────────┘
+                   │
+          ┌────────┴────────┐
+          │                 │
+     ┌────▼────────┐  ┌────▼───────────┐
+     │ SujetoReal  │  │     Proxy      │
+     ├─────────────┤  ├────────────────┤
+     │+ operación()│  │- sujetoReal    │
+     └─────────────┘  │- caché         │
+                      │+ operación()   │
+                      └────────────────┘
+```
 
-**1. Proxy Virtual (Lazy Loading):**
+## Ejemplos
+
+### Ejemplo 1: Lazy Loading de Imagen
+
 ```java
-public class ProxyImagenVirtual implements Imagen {
+public interface Imagen {
+    void mostrar();
+}
+
+public class ImagenReal implements Imagen {
+    private String archivo;
+    
+    public ImagenReal(String archivo) {
+        cargarImagen(archivo);
+        this.archivo = archivo;
+    }
+    
+    private void cargarImagen(String archivo) {
+        System.out.println("[BD] Cargando imagen " + archivo);
+        try { Thread.sleep(2000); } catch (InterruptedException e) {}
+    }
+    
+    @Override
+    public void mostrar() {
+        System.out.println("Mostrando: " + archivo);
+    }
+}
+
+public class ProxyImagen implements Imagen {
     private String archivo;
     private ImagenReal imagenReal;
     
-    public ProxyImagenVirtual(String archivo) {
+    public ProxyImagen(String archivo) {
         this.archivo = archivo;
     }
     
     @Override
     public void mostrar() {
         if (imagenReal == null) {
-            System.out.println("[PROXY] Cargando imagen: " + archivo);
+            System.out.println("[PROXY] Cargando imagen por primera vez...");
             imagenReal = new ImagenReal(archivo);
         }
         imagenReal.mostrar();
     }
 }
+
+// Uso: Imagen no se carga hasta que se llama mostrar()
+Imagen img = new ProxyImagen("grande.jpg");
+System.out.println("Imagen creada");  // Sin cargar
+img.mostrar();  // Aquí se carga
+img.mostrar();  // Ya está en caché
 ```
 
-**2. Proxy Remoto (RPC):**
+### Variantes
+
+**Proxy Remoto (RPC):**
 ```java
 public class ProxyServidor implements ServicioRemoto {
     private String url;
     
     @Override
     public String llamada(String param) {
-        // Simulación de llamada HTTP
         System.out.println("[PROXY] Conectando a " + url);
         // ... ejecutar RPC ...
         return "Respuesta del servidor";
@@ -222,70 +273,6 @@ public class ProxyServidor implements ServicioRemoto {
 }
 ```
 
----
+## Resumen
 
-## Diagrama UML
-
-```
-         ┌──────────────────┐
-         │   Sujeto         │
-         │  <<interface>>   │
-         ├──────────────────┤
-         │+ operación()     │
-         └────────┬─────────┘
-                  │
-         ┌────────┴────────┐
-         │                 │
-    ┌────▼────────┐  ┌────▼───────────┐
-    │ SujetoReal  │  │     Proxy      │
-    ├─────────────┤  ├────────────────┤
-    │+ operación()│  │- sujetoReal    │
-    └─────────────┘  │- caché         │
-                     │+ operación()   │
-                     └────────────────┘
-```
-
----
-
-## Comparación: Proxy vs. Decorator
-
-| Aspecto | Proxy | Decorator |
-|--------|-------|-----------|
-| **Intención** | Controlar acceso | Agregar responsabilidades |
-| **Creación** | Proxy crea real | Cliente inyecta componente |
-| **Relación** | Uno-a-uno | Múltiple (stack) |
-| **Interfaz** | Igual | Igual |
-| **Propósito** | Protección | Extensión |
-
----
-
-## Ventajas y Desventajas
-
-### ✅ Ventajas
-
-- **Control**: Autorización, autenticación
-- **Performance**: Caché, lazy loading
-- **Auditoría**: Registrar accesos
-- **Protección**: El cliente no accede directo
-
-### ❌ Desventajas
-
-- **Complejidad**: Indirección adicional
-- **Performance**: Overhead del proxy
-- **Confusión**: Similar a Decorator
-- **Sincronización**: Thread safety en caché
-
----
-
-## Cuándo Usarlo
-
-✅ **Usa Proxy cuando:**
-- Necesitas controlar acceso al objeto real
-- Lazy loading es importante
-- Auditoria o logging es necesario
-- Ejemplos: Conexiones BD, APIs remotas, imágenes grandes
-
-❌ **Evita cuando:**
-- El objeto es simple y rápido
-- El control de acceso es innecesario
-
+El patrón **Proxy** es fundamental para controlar acceso a objetos costosos o protegidos. Su versatilidad permite múltiples variantes (virtual, remoto, protector) adaptándose a diferentes necesidades. Aunque introduce indirección, sus beneficios en seguridad, performance y auditoría lo hacen indispensable en arquitecturas empresariales.

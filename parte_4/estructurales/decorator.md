@@ -5,16 +5,11 @@ subject: Patrones de Diseño Estructurales
 ---
 
 (patron-decorator)=
-# Decorator: Extensión Dinámmica
+# Decorator
+
+## Definición
 
 El patrón **Decorator** permite agregar responsabilidades a un objeto dinámicamente, proporcionando una alternativa flexible a la herencia para extender funcionalidad.
-
-:::{note} Propósito
-
-Agregar responsabilidades a objetos de forma dinámica, en lugar de crear subclases.
-:::
-
----
 
 ## Origen e Historia
 
@@ -38,24 +33,47 @@ Necesario cuando:
 - **Decorator**: Encapsula Component, implementa interfaz igual
 - Permite stacking: `new D1(new D2(new D3(component)))`
 
----
+### Cuando aplica
 
-## Problema
+✅ **Usa Decorator cuando:**
+- Necesitas agregar funcionalidad dinámicamente
+- Herencia sería explosiva
+- Beneficio de responsabilidad única
+- Ejemplos: I/O streams (BufferedInputStream), UI widgets
 
-Decorator resuelve el problema de:
-- Herencia explosiva (múltiples combinaciones de características)
-- Extensión en tiempo de compilación vs. runtime
-- Añadir funcionalidad sin modificar la clase original
+### Cuando no aplica
 
-```
-Comparación:
-Herencia:     Café → CaféConLeche, CaféConLeche → CaféConLeche+Azúcar (combinatorial)
-Decorator:    Café → Decorator → Decorator → Decorator (lineal, componible)
-```
+❌ **Evita cuando:**
+- Solo una responsabilidad adicional (herencia es más simple)
+- El orden no importa y es uno-a-uno (Proxy es mejor)
 
----
+## Consecuencias de su uso
 
-## Problema
+### Positivas
+
+- **Flexibilidad**: Combinar comportamientos en runtime
+- **Principio Open/Closed**: Abierto a extensión, cerrado a modificación
+- **Alternativa a herencia**: Evita explosión de subclases
+- **Responsabilidad única**: Cada decorador hace una cosa
+
+### Negativas
+
+- **Complejidad**: Stack de decoradores es difícil de entender
+- **Debugging**: Difícil rastrear en debugger
+- **Orden importa**: El orden de decoradores puede afectar resultado
+- **Overhead**: Múltiples capas de indirección
+
+## Alternativas
+
+| Aspecto | Decorator | Proxy | Strategy |
+|--------|-----------|-------|----------|
+| **Intención** | Agregar responsabilidades | Controlar acceso | Encapsular algoritmo |
+| **Composición** | Múltiple | Uno-a-uno | Intercambiable |
+| **Timing** | Tiempo de objeto | Tiempo de objeto | Tiempo de uso |
+
+## Estructura
+
+### Problema
 
 ```java
 // ❌ Explosión de subclases
@@ -78,9 +96,7 @@ class CaféConLecheYAzúcar extends CaféConLeche {
 // Cada combinación es una clase nueva!
 ```
 
----
-
-## Solución: Decorator
+### Solución
 
 ```java
 /**
@@ -164,135 +180,121 @@ public class Azúcar extends AditamentoBebida {
     }
 }
 
-/**
- * Decorador concreto: Crema.
- */
-public class Crema extends AditamentoBebida {
-    public Crema(Bebida bebida) {
-        super(bebida);
-    }
-    
-    @Override
-    public String getDescripcion() {
-        return bebidaDecorada.getDescripcion() + ", crema";
-    }
-    
-    @Override
-    public double costo() {
-        return bebidaDecorada.costo() + 0.75;
-    }
-}
-
 // ✅ Composición flexible
 Bebida café = new Café();                              // 3.00
 Bebida caféConLeche = new Leche(café);                 // 3.50
 Bebida caféConLecheYAzúcar = new Azúcar(caféConLeche); // 3.60
-Bebida caféDeluxe = new Crema(caféConLecheYAzúcar);    // 4.35
 
-System.out.println(caféDeluxe.getDescripcion()); // Café, leche, azúcar, crema
-System.out.println("Costo: $" + caféDeluxe.costo()); // 4.35
+System.out.println(caféConLecheYAzúcar.getDescripcion()); // Café, leche, azúcar
+System.out.println("Costo: $" + caféConLecheYAzúcar.costo()); // 3.60
 ```
 
----
-
-## Diagrama UML
+### Diagrama de Clases
 
 ```
-         ┌──────────────┐
-         │   Bebida     │
-         │  <<abstract>>│
-         ├──────────────┤
-         │+ costo()     │
-         │+ descripción │
-         └──────┬───────┘
-                │
-      ┌─────────┴─────────┐
-      │                   │
- ┌────▼────────┐  ┌──────▼─────────────┐
- │   Café      │  │ AditamentoBebida  │
- ├─────────────┤  │   <<abstract>>     │
- │+ costo()    │  ├──────────────────┤
- │ return 3.00 │  │ - bebidaDecorada  │
- └─────────────┘  │+ costo()          │
-                  │+ getDescripción() │
-                  └────────┬──────────┘
-                           │
-              ┌────────────┼────────────┐
-              │            │            │
-         ┌────▼──┐     ┌───▼───┐   ┌──▼────┐
-         │ Leche │     │Azúcar │   │Crema  │
-         ├───────┤     ├───────┤   ├───────┤
-         │costo()│     │costo()│   │costo()│
-         └───────┘     └───────┘   └───────┘
+          ┌──────────────┐
+          │   Bebida     │
+          │  <<abstract>>│
+          ├──────────────┤
+          │+ costo()     │
+          │+ descripción │
+          └──────┬───────┘
+                 │
+       ┌─────────┴─────────┐
+       │                   │
+  ┌────▼────────┐  ┌──────▼─────────────┐
+  │   Café      │  │ AditamentoBebida  │
+  ├─────────────┤  │   <<abstract>>     │
+  │+ costo()    │  ├──────────────────┤
+  │ return 3.00 │  │ - bebidaDecorada  │
+  └─────────────┘  │+ costo()          │
+                   │+ getDescripción() │
+                   └────────┬──────────┘
+                            │
+               ┌────────────┼────────────┐
+               │            │            │
+          ┌────▼──┐     ┌───▼───┐   ┌──▼────┐
+          │ Leche │     │Azúcar │   │Crema  │
+          ├───────┤     ├───────┤   ├───────┤
+          │costo()│     │costo()│   │costo()│
+          └───────┘     └───────┘   └───────┘
 ```
 
----
+## Ejemplos
 
-## Variantes
+### Ejemplo 1: Streams de Entrada
 
-**1. Stack de Decoradores:**
 ```java
-// Apilar múltiples decoradores
-new Crema(new Azúcar(new Leche(new Café())));
-```
+public interface InputStream {
+    int read();
+    void close();
+}
 
-**2. Decoradores con estado:**
-```java
-public class LecheDescremada extends AditamentoBebida {
-    private boolean esOrgánica;
-    
-    public LecheDescremada(Bebida bebida, boolean esOrgánica) {
-        super(bebida);
-        this.esOrgánica = esOrgánica;
+public class FileInputStream implements InputStream {
+    @Override
+    public int read() {
+        System.out.println("Leyendo desde archivo");
+        return 42;
     }
     
     @Override
-    public double costo() {
-        return bebidaDecorada.costo() + (esOrgánica ? 1.00 : 0.50);
+    public void close() {
+        System.out.println("Archivo cerrado");
     }
 }
+
+public abstract class StreamDecorator implements InputStream {
+    protected InputStream stream;
+    
+    public StreamDecorator(InputStream stream) {
+        this.stream = stream;
+    }
+}
+
+public class BufferedStream extends StreamDecorator {
+    private byte[] buffer = new byte[1024];
+    
+    public BufferedStream(InputStream stream) {
+        super(stream);
+    }
+    
+    @Override
+    public int read() {
+        System.out.println("[Buffered] Leyendo con buffer");
+        return stream.read();
+    }
+    
+    @Override
+    public void close() {
+        stream.close();
+    }
+}
+
+public class CompressedStream extends StreamDecorator {
+    public CompressedStream(InputStream stream) {
+        super(stream);
+    }
+    
+    @Override
+    public int read() {
+        System.out.println("[Comprimido] Descomprimiendo");
+        return stream.read();
+    }
+    
+    @Override
+    public void close() {
+        stream.close();
+    }
+}
+
+// Uso
+InputStream file = new FileInputStream();
+InputStream buffered = new BufferedStream(file);
+InputStream final_stream = new CompressedStream(buffered);
+
+final_stream.read();  // Descomprimiendo -> Buffered -> archivo
 ```
 
----
+## Resumen
 
-## Ventajas y Desventajas
-
-### ✅ Ventajas
-
-- **Flexibilidad**: Combinar comportamientos en runtime
-- **Principio Open/Closed**: Abierto a extensión, cerrado a modificación
-- **Alternativa a herencia**: Evita explosión de subclases
-- **Responsabilidad única**: Cada decorador hace una cosa
-
-### ❌ Desventajas
-
-- **Complejidad**: Stack de decoradores es difícil de entender
-- **Debugging**: Difícil rastrear en debugger
-- **Orden importa**: El orden de decoradores puede afectar resultado
-- **Overhead**: Múltiples capas de indirección
-
----
-
-## Comparación con otros patrones
-
-| Aspecto | Decorator | Proxy | Strategy |
-|--------|-----------|-------|----------|
-| **Intención** | Agregar responsabilidades | Controlar acceso | Encapsular algoritmo |
-| **Composición** | Múltiple | Uno-a-uno | Intercambiable |
-| **Timing** | Tiempo de objeto | Tiempo de objeto | Tiempo de uso |
-| **Interfaz** | Igual que componente | Igual que sujeto | Diferente |
-
----
-
-## Cuándo Usarlo
-
-✅ **Usa Decorator cuando:**
-- Necesitas agregar funcionalidad dinámicamente
-- Herencia sería explosiva
-- Beneficio de responsabilidad única
-- Ejemplos: I/O streams (BufferedInputStream), UI widgets
-
-❌ **Evita cuando:**
-- Solo una responsabilidad adicional (herencia es más simple)
-- El orden no importa y es uno-a-uno (Proxy es mejor)
-
+El patrón **Decorator** es esencial para agregar comportamiento dinámicamente sin crear explosión de subclases. Su flexibilidad permite combinar múltiples características en tiempo de ejecución. Aunque introduce complejidad, su adherencia al principio Open/Closed y Single Responsibility lo hacen invaluable en arquitectura extensible.

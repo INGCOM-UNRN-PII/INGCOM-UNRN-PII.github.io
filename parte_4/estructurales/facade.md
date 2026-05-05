@@ -5,16 +5,11 @@ subject: Patrones de Diseño Estructurales
 ---
 
 (patron-facade)=
-# Facade: Interfaz Simplificada
+# Facade
 
-El patrón **Facade** proporciona una interfaz unificada y simplificada a un conjunto de interfaces de un subsistema, facilitando su uso.
+## Definición
 
-:::{note} Propósito
-
-Proporcionar interfaz simplificada a subsistema complejo.
-:::
-
----
+El patrón **Facade** proporciona una interfaz unificada y simplificada a un conjunto de interfaces de un subsistema, facilitando su uso sin exponer complejidad interna.
 
 ## Origen e Historia
 
@@ -37,31 +32,54 @@ Necesario cuando:
 - **Subsistema**: Clases complejas internas (generalmente private)
 - Facade delega a componentes internos coordinadamente
 
----
+### Cuando aplica
 
-## Problema
+✅ **Usa Facade cuando:**
+- Subsistema es complejo y difícil de usar
+- Necesitas simplificar interfaz
+- Quieres desacoplar cliente de subsistema
+- Ejemplo: librerías complejas (Spring, Apache Commons)
 
-Facade actúa como "puerta de entrada" a un sistema complejo:
+### Cuando no aplica
 
-```
-Cliente → Facade → [Subsistema interno]
-          │    
-          ├─→ ComponenteA
-          ├─→ ComponenteB
-          └─→ ComponenteC
-```
+❌ **Evita cuando:**
+- Subsistema es simple
+- Cliente necesita control detallado
 
----
+## Consecuencias de su uso
 
-## Problema
+### Positivas
+
+- **Simplificación**: Cliente no ve complejidad interna
+- **Desacoplamiento**: Cambios internos no afectan cliente
+- **Punto de entrada único**: Fácil de mantener
+- **Escalabilidad**: Agregar componentes sin afectar interfaz
+
+### Negativas
+
+- **Pérdida de control**: Cliente pierde flexibilidad
+- **Dios Facade**: Facade puede crecer demasiado
+- **Overhead**: Indirección adicional
+- **Testing**: Más difícil testear componentes individuales
+
+## Alternativas
+
+| Patrón | Propósito | Diferencia |
+| :--- | :--- | :--- |
+| **Adapter** | Hacer compatibles interfaces | Integra existentes |
+| **Decorator** | Agregar responsabilidades | Envuelve individual |
+| **Proxy** | Controlar acceso | Uno-a-uno |
+
+## Estructura
+
+### Problema
 
 ```java
 // ❌ Sin Facade: Cliente debe conocer muchas clases
 class Cliente {
     void reproducirPelícula(String nombre) {
-        // Configuración manual de todas las partes
         PopcornEra era = new PopcornEra();
-        era.iniestabilidadarApagadaLuz();
+        era.encender();
         
         Proyector proyector = new Proyector();
         proyector.encender();
@@ -71,22 +89,16 @@ class Cliente {
         dvd.cargarDVD(nombre);
         dvd.reproducir();
         
-        Amplificador amp = new Amplificador();
-        amp.encender();
-        amp.setVolumen(30);
-        
         // Demasiado acoplamiento!
     }
 }
 ```
 
----
-
-## Solución: Facade
+### Solución
 
 ```java
 /**
- * Componentes del subsistema (se asumen públicos para este ejemplo).
+ * Componentes del subsistema.
  */
 public class PopcornEra {
     public void encender() { System.out.println("Máquina de palomitas encendida"); }
@@ -112,7 +124,7 @@ public class Amplificador {
 }
 
 /**
- * Facade: interfaz simplificada al sistema de cine en casa.
+ * Facade: interfaz simplificada.
  */
 public class CineEnCasaFacade {
     private PopcornEra popcorn;
@@ -156,59 +168,69 @@ cine.verPelícula("The Matrix");
 cine.terminarPelícula();
 ```
 
----
-
-## Diagrama UML
+### Diagrama de Clases
 
 ```
-              ┌────────────────────┐
-              │ CineEnCasaFacade   │
-              ├────────────────────┤
-              │- popcorn           │
-              │- proyector         │
-              │- dvd               │
-              │- amplificador      │
-              ├────────────────────┤
-              │+ verPelícula()     │
-              │+ terminarPelícula()│
-              └──────────┬─────────┘
-                         │
-         ┌───────────┬───┼───┬────────────┐
-         │           │       │            │
-    ┌────▼──┐  ┌────▼──┐ ┌──▼──┐  ┌─────▼────┐
-    │ DVD   │  │Proyector│ │Popcorn│  │Amplificador│
-    └────────┘  └─────────┘ └──────┘  └──────────┘
+               ┌──────────────────┐
+               │ CineEnCasaFacade │
+               ├──────────────────┤
+               │- popcorn         │
+               │- proyector       │
+               │- dvd             │
+               │- amplificador    │
+               ├──────────────────┤
+               │+ verPelícula()   │
+               │+ terminarPelíc() │
+               └──────────┬───────┘
+                          │
+          ┌───────────┬───┼───┬────────────┐
+          │           │       │            │
+     ┌────▼──┐  ┌────▼──┐ ┌──▼──┐  ┌─────▼────┐
+     │ DVD   │  │Proyector│ │Popcorn│  │Amplificador│
+     └────────┘  └─────────┘ └──────┘  └──────────┘
 ```
 
----
+## Ejemplos
 
-## Ventajas y Desventajas
+### Ejemplo 1: Configuración de Base de Datos
 
-### ✅ Ventajas
+```java
+public class ConexionBD {
+    public void conectar(String url) {
+        System.out.println("Conectado a " + url);
+    }
+}
 
-- **Simplificación**: Cliente no ve complejidad interna
-- **Desacoplamiento**: Cambios internos no afectan cliente
-- **Punto de entrada único**: Fácil de mantener
-- **Escalabilidad**: Agregar componentes sin afectar interfaz
+public class PoolConexiones {
+    public void inicializar() {
+        System.out.println("Pool inicializado");
+    }
+}
 
-### ❌ Desventajas
+public class LoggerBD {
+    public void registrar(String evento) {
+        System.out.println("[LOG] " + evento);
+    }
+}
 
-- **Pérdida de control**: Cliente pierde flexibilidad
-- **Dios Facade**: Facade puede crecer demasiado
-- **Overhead**: Indirección adicional
-- **Testing**: Más difícil testear componentes individuales
+public class BaseDatosConfigFacade {
+    private ConexionBD conexion = new ConexionBD();
+    private PoolConexiones pool = new PoolConexiones();
+    private LoggerBD logger = new LoggerBD();
+    
+    public void inicializar(String url) {
+        logger.registrar("Iniciando configuración");
+        pool.inicializar();
+        conexion.conectar(url);
+        logger.registrar("Configuración completada");
+    }
+}
 
----
+// Uso
+BaseDatosConfigFacade bdConfig = new BaseDatosConfigFacade();
+bdConfig.inicializar("jdbc:mysql://localhost/midb");
+```
 
-## Cuándo Usarlo
+## Resumen
 
-✅ **Usa Facade cuando:**
-- Subsistema es complejo y difícil de usar
-- Necesitas simplificar interfaz
-- Quieres desacoplar cliente de subsistema
-- Ejemplo: librerías complejas (Spring, Apache Commons)
-
-❌ **Evita cuando:**
-- Subsistema es simple
-- Cliente necesita control detallado
-
+El patrón **Facade** es esencial para manejar subsistemas complejos. Al proporcionar una interfaz simplificada, reduce acoplamiento y mejora usabilidad. Aunque puede crecer excesivamente si no se controla, su beneficio en desacoplamiento y simplicidad lo hace fundamental en aplicaciones empresariales.

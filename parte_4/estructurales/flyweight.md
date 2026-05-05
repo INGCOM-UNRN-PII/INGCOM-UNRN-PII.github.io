@@ -5,20 +5,15 @@ subject: Patrones de Diseño Estructurales
 ---
 
 (patron-flyweight)=
-# Flyweight: Compartir Datos
+# Flyweight
+
+## Definición
 
 El patrón **Flyweight** usa compartición para soportar grandes cantidades de objetos granulares eficientemente, separando estado intrínseco (compartido) del extrínseco (particular).
 
-:::{note} Propósito
-
-Reducir uso de memoria compartiendo datos entre múltiples objetos.
-:::
-
----
-
 ## Origen e Historia
 
-Gang of Four 1994. Surge de optimización de memoria en juegos/gráficos. Inspirado en el concepto de "compartir" datos comunes.
+Gang of Four 1994. Surge de optimización de memoria en juegos/gráficos. Inspirado en el concepto de "compartir" datos comunes. Popularizado en motores de videojuegos y editores de texto donde miles/millones de objetos similares requieren memoria mínima.
 
 ## Motivación
 
@@ -40,24 +35,51 @@ Necesario cuando:
 
 **Ejemplo:** 1M árboles = 1 flyweight de "Pino" + 1M referencias
 
----
+### Cuando aplica
 
-## Problema
+✅ **Ideal para:**
+- Juegos (partículas, sprites)
+- Editores de texto (caracteres)
+- Navegadores web (bloques de caché)
+- Sistemas de bases de datos (conexiones compartidas)
 
-**Estado intrínseco**: Datos que se pueden compartir (ej: forma, color)
-**Estado extrínseco**: Datos únicos por instancia (ej: posición, ID)
+### Cuando no aplica
 
-```
-Sin Flyweight:   N objetos × tamaño completo = mucha memoria
-Con Flyweight:   1 flyweight × tamaño completo + N referencias extrínsecas = poca memoria
-```
+❌ **Evita cuando:**
+- Pocos objetos (overhead no compensa)
+- Estado muta frecuentemente
+- Sincronización es prohibitiva
 
----
+## Consecuencias de su uso
 
-## Problema
+### Positivas
+
+- **Economía de memoria**: Reducción dramática de memoria
+- **Performance**: Menos asignaciones y garbage collection
+- **Escalabilidad**: Soporta millones de objetos
+- **Simplicidad**: Cliente no ve complejidad
+
+### Negativas
+
+- **Complejidad**: Separar estado es difícil
+- **CPU vs. Memoria**: CPU extra en lookup de factory
+- **Thread safety**: Necesita sincronización en factory
+- **Debugging**: Difícil rastrear estado compartido
+
+## Alternativas
+
+| Patrón | Propósito | Diferencia |
+| :--- | :--- | :--- |
+| **Composite** | Componer en árbol | Estructura jerárquica |
+| **Proxy** | Controlar acceso | Uno-a-uno |
+| **Object Pool** | Reutilizar objetos | Patrón concurrencia |
+
+## Estructura
+
+### Problema
 
 ```java
-// ❌ Millones de árboles en un bosque virtual: cada uno copia su forma y textura
+// ❌ Millones de árboles: cada uno copia su forma y textura
 class Árbol {
     private String especie;        // "Pino", "Roble" - repetido!
     private String textura;        // Datos de imagen - repetido!
@@ -72,9 +94,7 @@ for (int i = 0; i < 1_000_000; i++) {
 }
 ```
 
----
-
-## Solución: Flyweight
+### Solución
 
 ```java
 /**
@@ -112,8 +132,8 @@ public class FábricaTipoÁrbol {
  */
 public class Árbol {
     private TipoÁrbol tipo;     // Compartido (Flyweight)
-    private double x, y, z;     // Extrínseco: posición
-    private double altura;      // Extrínseco: altura
+    private double x, y, z;     // Extrínseco
+    private double altura;      // Extrínseco
     
     public Árbol(TipoÁrbol tipo, double x, double y, double z, double altura) {
         this.tipo = tipo;
@@ -136,7 +156,6 @@ public class Bosque {
     private List<Árbol> árboles = new ArrayList<>();
     
     public void plantarÁrbol(String especie, double x, double y, double z, double altura) {
-        // Obtener tipo compartido
         TipoÁrbol tipo = FábricaTipoÁrbol.obtenerTipo(especie, obtenerTextura(especie));
         Árbol árbol = new Árbol(tipo, x, y, z, altura);
         árboles.add(árbol);
@@ -149,7 +168,6 @@ public class Bosque {
     }
     
     private byte[] obtenerTextura(String especie) {
-        // Simulación: cargar textura real desde disco
         return new byte[1024 * 10]; // 10 KB por tipo (compartido)
     }
 }
@@ -157,15 +175,12 @@ public class Bosque {
 // ✅ Uso eficiente
 Bosque bosque = new Bosque();
 for (int i = 0; i < 1_000_000; i++) {
-    // Solo la referencia al tipo compartido (8 bytes + posiciones)
     bosque.plantarÁrbol("Pino", Math.random() * 1000, Math.random() * 1000, 0, 20);
 }
 bosque.dibujarBosque();
 ```
 
----
-
-## Diagrama UML
+### Diagrama de Clases
 
 ```
      ┌─────────────────────────┐
@@ -180,8 +195,8 @@ bosque.dibujarBosque();
         │   TipoÁrbol        │
         │  (Flyweight)       │
         ├────────────────────┤
-        │- especie: String   │  <- Compartido
-        │- textura: byte[]   │  <- Compartido
+        │- especie: String   │  ← Compartido
+        │- textura: byte[]   │  ← Compartido
         └────────────────────┘
                   ▲
                   │ usa
@@ -190,42 +205,68 @@ bosque.dibujarBosque();
         │      Árbol         │
         ├────────────────────┤
         │- tipo: TipoÁrbol   │
-        │- x, y, z: double  │  <- Extrínseco
-        │- altura: double    │  <- Extrínseco
+        │- x, y, z: double  │  ← Extrínseco
+        │- altura: double    │  ← Extrínseco
         └────────────────────┘
 ```
 
----
+## Ejemplos
 
-## Ventajas y Desventajas
+### Ejemplo 1: Editor de Texto (Caracteres)
 
-### ✅ Ventajas
+```java
+public class Carácter {
+    private final char valor;
+    private final String fuente;
+    private final int tamaño;
+    
+    public Carácter(char valor, String fuente, int tamaño) {
+        this.valor = valor;
+        this.fuente = fuente;
+        this.tamaño = tamaño;
+    }
+    
+    public void renderizar(int x, int y) {
+        System.out.println("Renderizando '" + valor + "' en (" + x + "," + y + 
+                         ") con " + fuente);
+    }
+}
 
-- **Economía de memoria**: Reducción dramática de memoria
-- **Performance**: Menos asignaciones y garbage collection
-- **Escalabilidad**: Soporta millones de objetos
-- **Simplicidad**: Cliente no ve complejidad
+public class FábricaCarácter {
+    private static final Map<Character, Carácter> caracteres = new HashMap<>();
+    
+    public static Carácter obtener(char valor) {
+        if (!caracteres.containsKey(valor)) {
+            caracteres.put(valor, new Carácter(valor, "Arial", 12));
+        }
+        return caracteres.get(valor);
+    }
+}
 
-### ❌ Desventajas
+public class Documento {
+    private List<Carácter> contenido = new ArrayList<>();
+    
+    public void agregarCarácter(char c) {
+        contenido.add(FábricaCarácter.obtener(c));
+    }
+    
+    public void mostrar() {
+        int x = 0;
+        for (Carácter c : contenido) {
+            c.renderizar(x++, 0);
+        }
+    }
+}
 
-- **Complejidad**: Separar estado es difícil
-- **CPU vs. Memoria**: CPU extra en lookup de factory
-- **Thread safety**: Necesita sincronización en factory
-- **Debugging**: Difícil rastrear estado compartido
+// Uso: 1M caracteres pero solo 256 Flyweights máximo
+Documento doc = new Documento();
+doc.agregarCarácter('H');
+doc.agregarCarácter('o');
+doc.agregarCarácter('l');
+doc.agregarCarácter('a');
+doc.mostrar();
+```
 
----
+## Resumen
 
-## Casos de Uso
-
-✅ **Ideal para:**
-- Juegos (partículas, sprites)
-- Editores de texto (caracteres)
-- Navegadores web (bloques de caché)
-- Sistemas de bases de datos (conexiones compartidas)
-
-❌ **Evita cuando:**
-- Pocos objetos (overhead no compensa)
-- Estado muta frecuentemente
-- Sincronización es prohibitiva
-
-
+El patrón **Flyweight** es crítico para aplicaciones que manejan cantidades masivas de objetos similares. Al separar estado compartible del estado particular, logra reducir dramáticamente el consumo de memoria. Su uso requiere cuidadosa identificación de estado intrínseco vs. extrínseco, pero el ahorro resultante es significativo en sistemas a gran escala.
