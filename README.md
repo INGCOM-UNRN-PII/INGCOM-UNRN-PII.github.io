@@ -7,31 +7,40 @@ description: Sitio de la cátedra de Programación II de la Ingeniería en Compu
 
 Bienvenidos al sitio de la cátedra de **Programación II** [B6008] de la carrera de Ingeniería en Computación de la Universidad Nacional de Río Negro, Sede Andina.
 
-## Sobre este sitio
+## Sobre este espacio
 
-Este repositorio contiene el material didáctico de la materia, incluyendo apuntes teóricos, guías prácticas, reglas de estilo y recursos para el aprendizaje del lenguaje Java y los conceptos fundamentales de la programación orientada a objetos.
+Este sitio es el núcleo de consulta de la materia. Ha sido diseñado para acompañar el proceso de aprendizaje de forma progresiva, abarcando desde los fundamentos del lenguaje Java hasta el diseño avanzado de software orientado a objetos y el desarrollo de aplicaciones.
 
-### Estrategia pedagógica
+### Nuestra estrategia pedagógica
 
-La cátedra adopta un enfoque **"late objects"**: aprovechamos el conocimiento previo de C (de la correlativa Programación I) para introducir Java de manera gradual. Primero se trabajan los aspectos procedimentales del lenguaje (tipos, métodos, estructuras de control, arreglos, excepciones, archivos) antes de abordar la programación orientada a objetos en profundidad.
+La cátedra adopta un enfoque **"late objects"**: aprovechamos el conocimiento previo de programación en C (adquirido en Programación I) para introducir Java de manera más natural. Primero abordamos los aspectos procedimentales, de sintaxis y el entorno de ejecución (JVM), antes de sumergirnos por completo en el paradigma orientado a objetos.
 
-## Contenido
+## Organización del Material
 
-- **Apunte**: Material teórico que cubre desde los orígenes de Java hasta temas avanzados como manejo de archivos y memoria.
-- **Guías**: Tutoriales de instalación y uso de herramientas (JDK, IntelliJ IDEA, Git, Bash).
-- **Reglas de estilo**: Convenciones de código y buenas prácticas que se aplican en la cátedra.
-- **Glosario**: Definiciones de términos técnicos utilizados en el curso.
+El contenido está estructurado temáticamente para servir como guía y referencia sin ser un índice exhaustivo. Explorarás los siguientes grandes bloques:
 
-## Tecnologías
+- **Apuntes Teóricos**: Constituyen la columna vertebral de la materia, abarcando:
+  - Fundamentos del Lenguaje y la JVM.
+  - Programación Orientada a Objetos (Encapsulamiento, Relaciones, Herencia, Polimorfismo).
+  - Diseño de Software (Principios SOLID, Testing, Calidad, Refactoring).
+  - Patrones de Diseño (Creacionales, Estructurales y de Comportamiento).
+  - Estructuras de Datos y Algoritmos.
+  - Temas Avanzados (Interfaces Gráficas, Concurrencia, Networking, Android).
+- **Reglas y Convenciones**: Normativas vitales sobre estilos de código, herramientas de calidad y buenas prácticas obligatorias para los trabajos prácticos.
+- **Guías Prácticas**: Tutoriales para la configuración del entorno de desarrollo (JDK, IntelliJ IDEA, Git, etc.).
+- **Proyectos (TPI)**: Directivas, especificaciones y rúbricas de evaluación para el Trabajo Práctico Integrador.
+- **Referencia y Glosario**: Consultas rápidas y definiciones de términos técnicos clave utilizados durante la cursada.
 
-El sitio está construido con [MyST Markdown](https://mystmd.org/), que permite escribir documentación técnica con soporte para:
+## Tecnologías del Sitio
 
-- Bloques de código con resaltado de sintaxis
-- Fórmulas matemáticas (LaTeX)
-- Diagramas (Mermaid)
-- Ejercicios y soluciones desplegables
-- Referencias cruzadas entre documentos
+Este portal está construido utilizando [MyST Markdown](https://mystmd.org/), lo que nos permite ofrecer una experiencia técnica enriquecida con soporte nativo para:
+
+- Bloques de código con resaltado de sintaxis.
+- Renderizado de fórmulas matemáticas mediante LaTeX.
+- Generación de diagramas UML interactivos (PlantUML / Mermaid).
+- Bloques de ejercicios y soluciones desplegables.
+- Un robusto sistema de referencias cruzadas.
 
 ## Contribuciones
 
-Este es un proyecto en desarrollo activo. Si encontrás errores o tenés sugerencias, podés abrir un issue en el [repositorio de GitHub](https://github.com/INGCOM-UNRN-PII/INGCOM-UNRN-PII.github.io).
+Este repositorio se encuentra en desarrollo activo. Si encontrás algún error, enlace roto o tenés sugerencias para mejorar las explicaciones, te invitamos a colaborar abriendo un *issue* en nuestro [repositorio de GitHub](https://github.com/INGCOM-UNRN-PII/INGCOM-UNRN-PII.github.io).
