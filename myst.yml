@@ -68,6 +68,40 @@ project:
     - file: parte_3/04_patrones_comportamiento.md
   - title: Parte 4
     children:
+    - file: parte_4/indice.md
+    - file: parte_4/01_patrones_diseno.md
+    - title: Patrones Creacionales
+      children:
+      - file: parte_4/creacionales/indice.md
+      - file: parte_4/creacionales/singleton.md
+      - file: parte_4/creacionales/factory.md
+      - file: parte_4/creacionales/abstract_factory.md
+      - file: parte_4/creacionales/builder.md
+      - file: parte_4/creacionales/prototype.md
+    - title: Patrones Estructurales
+      children:
+      - file: parte_4/estructurales/indice.md
+      - file: parte_4/estructurales/adapter.md
+      - file: parte_4/estructurales/bridge.md
+      - file: parte_4/estructurales/composite.md
+      - file: parte_4/estructurales/decorator.md
+      - file: parte_4/estructurales/facade.md
+      - file: parte_4/estructurales/flyweight.md
+      - file: parte_4/estructurales/proxy.md
+    - title: Patrones Comportamiento
+      children:
+      - file: parte_4/comportamiento/indice.md
+      - file: parte_4/comportamiento/chain_of_responsibility.md
+      - file: parte_4/comportamiento/command.md
+      - file: parte_4/comportamiento/interpreter.md
+      - file: parte_4/comportamiento/iterator.md
+      - file: parte_4/comportamiento/mediator.md
+      - file: parte_4/comportamiento/memento.md
+      - file: parte_4/comportamiento/observer.md
+      - file: parte_4/comportamiento/state.md
+      - file: parte_4/comportamiento/strategy.md
+      - file: parte_4/comportamiento/template_method.md
+      - file: parte_4/comportamiento/visitor.md
     - file: parte_4/09_oop_arquitectura.md
     - file: parte_4/11_oop_concurrencia.md
   - title: Referencia
