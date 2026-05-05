@@ -458,7 +458,7 @@ Ambos implementan `Figura`, pero no hay herencia entre ellos.
 
 ---
 
-(encapsulamiento-jerarquias)=
+(encapsulamiento-jerarquias-herencia)=
 ## Encapsulamiento en Jerarquías: Mantén tus Secretos
 
 La herencia permite que una subclase reutilice y especialice el comportamiento de una superclase. Sin embargo, esto NO significa que las subclases deban tener acceso ilimitado a los detalles internos de su superclase. El **encapsulamiento debe mantenerse** incluso en jerarquías de herencia.

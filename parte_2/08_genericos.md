@@ -1190,7 +1190,7 @@ List<Integer> numeros = contenedor.obtenerLista2();
 
 ---
 
-(errores-comunes)=
+(errores-genericos)=
 ## Errores Comunes con Genéricos
 
 ### Error 1: Acceso a Información de Tipo en Ejecución

@@ -85,7 +85,7 @@ No todo necesita un patrón. Usar patrones donde no hacen falta agrega complejid
 
 ---
 
-(patrones-creacionales)=
+(maestro-patrones-creacionales)=
 ## Patrones Creacionales
 
 Los patrones creacionales abstraen el proceso de instanciación de objetos, haciendo el sistema independiente de cómo se crean, componen y representan los objetos.
@@ -104,7 +104,7 @@ Para un análisis profundo de patrones creacionales, incluidos **Singleton, Fact
 
 ---
 
-(patrones-estructurales)=
+(maestro-patrones-estructurales)=
 ## Patrones Estructurales
 
 Los patrones estructurales se ocupan de cómo se componen las clases y objetos para formar estructuras más grandes, facilitando la comunicación entre entidades.
@@ -125,7 +125,7 @@ Para un análisis profundo de patrones estructurales, incluidos **Adapter, Bridg
 
 ---
 
-(patrones-comportamiento)=
+(maestro-patrones-comportamiento)=
 ## Patrones de Comportamiento
 
 Los patrones de comportamiento se ocupan de algoritmos y la asignación de responsabilidades entre objetos.

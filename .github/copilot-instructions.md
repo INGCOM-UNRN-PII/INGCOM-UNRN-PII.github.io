@@ -55,10 +55,12 @@ The site uses MyST MD syntax. Key elements:
   Problem statement here
   ```
 
-  ```{solution} ex-label
+  :::{solution} ex-label
   :class: dropdown
   Solution details here
   ```
+  ```
+  :::
   ```
 - **Math**: Inline `$...$` or display `$$...$$` (LaTeX)
 - **Code blocks**: Use triple backticks with language syntax (java, python, bash)

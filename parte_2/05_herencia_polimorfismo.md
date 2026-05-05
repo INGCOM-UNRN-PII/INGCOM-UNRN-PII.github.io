@@ -1029,7 +1029,7 @@ for (Figura f : Arrays.asList(figura1, figura2, figura3)) {
 }
 ```
 
-(tipos-polimorfismo)=
+(polimorfismo-tipos-avanzados)=
 ### Tipos de Polimorfismo
 
 #### 1. Polimorfismo de Subtipo (Runtime)

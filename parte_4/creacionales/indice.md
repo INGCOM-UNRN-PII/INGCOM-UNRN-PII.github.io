@@ -11,58 +11,58 @@ Los **patrones creacionales** se ocupan de mecanismos de creación de objetos. P
 
 ## Patrones en Esta Familia
 
-### {ref}`patron-singleton`
+### [Singleton](singleton.md)
 **Una única instancia global controlada**
 
 - Garantiza exactamente una instancia de una clase
 - Proporciona acceso global a esa instancia
 - Útil para loggers, configuraciones, pools de conexiones
 
-{ref}`patron-singleton` | [Factory Method](factory.md) | [Abstract Factory](abstract_factory.md) | [Builder](builder.md) | [Prototype](prototype.md)
+[Singleton](singleton.md) | [Factory Method](factory.md) | [Abstract Factory](abstract_factory.md) | [Builder](builder.md) | [Prototype](prototype.md)
 
 ---
 
-### {ref}`patron-factory-method`
+### [Factory Method](factory.md)
 **Crear objetos sin especificar clases concretas**
 
 - Desacopla la creación del objeto del código cliente
 - Permite que subclases decidan qué clase instanciar
 - Ideal cuando tienes múltiples tipos relacionados
 
-{ref}`patron-singleton` | [Factory Method](factory.md) | [Abstract Factory](abstract_factory.md) | [Builder](builder.md) | [Prototype](prototype.md)
+[Singleton](singleton.md) | [Factory Method](factory.md) | [Abstract Factory](abstract_factory.md) | [Builder](builder.md) | [Prototype](prototype.md)
 
 ---
 
-### Abstract Factory
+### [Abstract Factory](abstract_factory.md)
 **Familias de objetos relacionados**
 
 - Crea grupos coherentes de objetos
 - Asegura que objetos relacionados se usen juntos
 - Útil para temas, estilos, plataformas
 
-{ref}`patron-singleton` | [Factory Method](factory.md) | [Abstract Factory](abstract_factory.md) | [Builder](builder.md) | [Prototype](prototype.md)
+[Singleton](singleton.md) | [Factory Method](factory.md) | [Abstract Factory](abstract_factory.md) | [Builder](builder.md) | [Prototype](prototype.md)
 
 ---
 
-### Builder
+### [Builder](builder.md)
 **Construir objetos complejos paso a paso**
 
 - Separar construcción de representación
 - Interfaces fluidas y legibles
 - Valores por defecto opcionales
 
-{ref}`patron-singleton` | [Factory Method](factory.md) | [Abstract Factory](abstract_factory.md) | [Builder](builder.md) | [Prototype](prototype.md)
+[Singleton](singleton.md) | [Factory Method](factory.md) | [Abstract Factory](abstract_factory.md) | [Builder](builder.md) | [Prototype](prototype.md)
 
 ---
 
-### Prototype
+### [Prototype](prototype.md)
 **Clonar objetos existentes**
 
 - Crear nuevas instancias copiando prototipos
 - Performance cuando creación es costosa
 - Registro de objetos reutilizables
 
-{ref}`patron-singleton` | [Factory Method](factory.md) | [Abstract Factory](abstract_factory.md) | [Builder](builder.md) | [Prototype](prototype.md)
+[Singleton](singleton.md) | [Factory Method](factory.md) | [Abstract Factory](abstract_factory.md) | [Builder](builder.md) | [Prototype](prototype.md)
 
 ---
 
