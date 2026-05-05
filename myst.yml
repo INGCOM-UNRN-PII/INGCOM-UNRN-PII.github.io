@@ -58,10 +58,9 @@ project:
     children:
     - file: parte_3/08_oop_refactoring.md
     - file: parte_3/09_oop_solid.md
-    - file: parte_3/10_oop_patrones.md
     - file: parte_3/11_oop_testing.md
     - file: parte_3/12_oop_antipatrones.md
-    - file: parte_2/13_oop_contratos.md
+    - file: parte_3/13_oop_contratos.md
   - title: 'Parte 4: Patrones de Diseño'
     children:
     - file: parte_4/indice.md
