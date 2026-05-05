@@ -1,5 +1,5 @@
 ---
-title: "Patrón Factory Method"
+title: "Factory Method"
 subtitle: "Crear objetos sin especificar clases concretas"
 subject: Patrones de Diseño Creacionales
 ---

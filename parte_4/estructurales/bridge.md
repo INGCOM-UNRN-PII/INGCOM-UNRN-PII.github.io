@@ -1,5 +1,5 @@
 ---
-title: "Patrón Bridge"
+title: "Bridge"
 subtitle: "Desacoplar abstracción de implementación"
 subject: Patrones de Diseño Estructurales
 ---

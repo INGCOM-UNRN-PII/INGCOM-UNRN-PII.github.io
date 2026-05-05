@@ -1,5 +1,5 @@
 ---
-title: "Patrón Abstract Factory"
+title: "Abstract Factory"
 subtitle: "Familias de objetos relacionados"
 subject: Patrones de Diseño Creacionales
 ---

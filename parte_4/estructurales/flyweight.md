@@ -1,5 +1,5 @@
 ---
-title: "Patrón Flyweight"
+title: "Flyweight"
 subtitle: "Compartir datos entre múltiples objetos"
 subject: Patrones de Diseño Estructurales
 ---

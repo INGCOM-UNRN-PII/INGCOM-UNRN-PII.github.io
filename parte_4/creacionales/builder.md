@@ -1,5 +1,5 @@
 ---
-title: "Patrón Builder"
+title: "Builder"
 subtitle: "Construir objetos complejos paso a paso"
 subject: Patrones de Diseño Creacionales
 ---

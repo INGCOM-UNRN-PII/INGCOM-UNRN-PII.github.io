@@ -1,5 +1,5 @@
 ---
-title: "Patrón Facade"
+title: "Facade"
 subtitle: "Proporcionar interfaz unificada a subsistemas complejos"
 subject: Patrones de Diseño Estructurales
 ---

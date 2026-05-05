@@ -1,5 +1,5 @@
 ---
-title: "Patrones Creacionales"
+title: "creacionales"
 subtitle: "Mecanismos para crear objetos de forma flexible"
 subject: Patrones de Diseño
 ---

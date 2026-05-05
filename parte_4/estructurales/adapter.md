@@ -1,5 +1,5 @@
 ---
-title: "Patrón Adapter"
+title: "Adapter"
 subtitle: "Compatibilidad entre interfaces incompatibles"
 subject: Patrones de Diseño Estructurales
 ---

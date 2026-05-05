@@ -1,5 +1,5 @@
 ---
-title: "Patrón Decorator"
+title: "Decorator"
 subtitle: "Agregar responsabilidades a objetos dinámicamente"
 subject: Patrones de Diseño Estructurales
 ---

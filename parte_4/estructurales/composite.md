@@ -1,5 +1,5 @@
 ---
-title: "Patrón Composite"
+title: "Composite"
 subtitle: "Componer objetos en estructuras de árbol"
 subject: Patrones de Diseño Estructurales
 ---
