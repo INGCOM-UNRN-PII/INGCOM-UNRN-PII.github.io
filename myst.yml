@@ -1,112 +1,84 @@
-# See docs at: https://mystmd.org/guide/frontmatter
 version: 1
 project:
   id: c9fd29ea-3d0c-4f30-9f8f-7420dd81a273
   title: Programación 2 [B6008] - Ingeniería en Computación
-  description: Material didactico para la cátedra de Programación 2 de Ingeniería en Computación en la UNRN Andina.
-  keywords: 
-    - Java
-    - programación
-    - OOP
-    - tutorial
-    - ingeniería
+  description: Material didactico para la cátedra de Programación 2 de Ingeniería
+    en Computación en la UNRN Andina.
+  keywords:
+  - Java
+  - programación
+  - OOP
+  - tutorial
+  - ingeniería
   authors:
-    - name: Martín René Vilugrón
-      github: martinvilu
-      email: mrvilugron@unrn.edu.ar
-      youtube: profemrtin
-      affiliations:
-        - id: unrn
-          institution: Universidad Nacional de Rio Negro - Sede Andina
-          ror: 048zgak80
+  - name: Martín René Vilugrón
+    github: martinvilu
+    email: mrvilugron@unrn.edu.ar
+    youtube: profemrtin
+    affiliations:
+    - id: unrn
+      institution: Universidad Nacional de Rio Negro - Sede Andina
+      ror: 048zgak80
   github: https://github.com/INGCOM-UNRN-PII/INGCOM-UNRN-PII.github.io
-    
   toc:
-    - file: README.md
-    - title: Cátedra
-      children:
-      - file: catedra/programa.md
-      - file: catedra/acuerdo_ia.md
-    - title: Parte 1
-      children:
-        - file: parte_1/01_origenes.md
-        - file: parte_1/02_lenguaje.md
-        - file: parte_1/03_tipos_de_datos.md
-        - file: parte_1/04_metodos.md
-        - file: parte_1/05_sintaxis_control.md
-        - file: parte_1/06_entrada_salida.md
-        - file: parte_1/07_gradle.md
-        - file: parte_1/08_junit.md
-        - file: parte_1/09_arreglos.md
-        - file: parte_1/10_excepciones.md
-        - file: parte_1/11_testing.md
-        - file: parte_1/12_archivos.md
-        - file: parte_1/13_memoria.md
-        - file: parte_1/indice.md
-    - title: Parte 2
-      children:
-        - file: parte_2/01_oop_fundamentos.md
-        - file: parte_2/02_oop_relaciones.md
-    - title: Parte 3
-      children:
-        - file: parte_3/indice.md
-        - file: parte_3/01_patrones_diseno.md
-    - title: Java
-      children:
-        - file: java/01_sintaxis_clases.md
-    - file: guias/indice.md
-      children:
-        - file: guias/instalacion_intellij.md
-        - file: guias/instalacion_jdk.md
-        - file: guias/guia_plantUML.md
-        - file: guias/bash.md
-        - file: guias/git.md
-        - file: guias/git_avanzado.md
-        - file: guias/markdown.md
-    - file: glosario.md
-    - file: reglas/indice.md
-      children:
-      - file: reglas/0_generales.md
-      - file: reglas/1_documentacion.md
-      - file: reglas/2_oop.md
-      - file: reglas/3_excepciones.md
-      - file: reglas/4_testing.md
-      - file: reglas/5_control.md
-      - file: reglas/6_restricciones.md
-      - file: reglas/E_errores.md
-      - file: reglas/convenciones_codigo_java.md
-
-    
-
-
-#    - title: Patrones
-#      children:
-#        - file: patrones/TP10-patrones-guia.md
-#        - title: Creacionales
-#          children:
-#            - file: patrones/creacionales/singleton.md
-#    - title: Practicas
-#      children:
-#        - file: practicas/2025/TP1-primeros_pasos.md
-#        - file: practicas/2025/TP2-java_d_c.md
-#        - file: practicas/2025/TP3-excepciones.md
-#        - file: practicas/2025/TP4-archivos.md
-#        - file: practicas/2025/TP6-objetos_hora.md
-#        - file: practicas/2025/TP6-objetos.md
-#        - file: practicas/2025/TP8-calculadora.md
-#        - file: practicas/2025/TP9-arreglos.md
-#        - file: practicas/2025/TP10-patrones-guia.md
-#        - file: practicas/2025/TP10-patrones.md
-#    - title: Proyectos
-#      children:
-#        - file: proyectos/TPI-2025.md
-#        - file: proyectos/TPI-2025-rubrica.md
-#        - file: proyectos/TPI-Agenda.md
-#        - file: proyectos/TPI-clinica.md
-#        - file: proyectos/TPI-logistica.md
-#        - file: proyectos/TPI-proyectos.md
-#        - file: proyectos/TPI-vuelos.md
-    
+  - file: README.md
+  - title: Cátedra
+    children:
+    - file: catedra/programa.md
+    - file: catedra/acuerdo_ia.md
+  - title: Parte 1
+    children:
+    - file: parte_1/01_origenes.md
+    - file: parte_1/02_lenguaje.md
+    - file: parte_1/03_tipos_de_datos.md
+    - file: parte_1/04_metodos.md
+    - file: parte_1/05_sintaxis_control.md
+    - file: parte_1/06_entrada_salida.md
+    - file: parte_1/07_gradle.md
+    - file: parte_1/08_junit.md
+    - file: parte_1/09_arreglos.md
+    - file: parte_1/10_excepciones.md
+    - file: parte_1/11_testing.md
+    - file: parte_1/12_archivos.md
+    - file: parte_1/13_memoria.md
+    - file: parte_1/indice.md
+  - title: Parte 2
+    children:
+    - file: parte_2/01_oop_fundamentos.md
+    - file: parte_2/02_oop_relaciones.md
+  - title: Parte 3
+    children:
+    - file: parte_3/indice.md
+    - file: parte_3/01_patrones_diseno.md
+    - file: parte_3/02_patrones_estructurales.md
+  - title: Java
+    children:
+    - file: java/01_sintaxis_clases.md
+  - title: Referencia
+    children:
+    - file: referencia/01_java_como_c.md
+    - file: referencia/02_java_full.md
+  - file: guias/indice.md
+    children:
+    - file: guias/instalacion_intellij.md
+    - file: guias/instalacion_jdk.md
+    - file: guias/guia_plantUML.md
+    - file: guias/bash.md
+    - file: guias/git.md
+    - file: guias/git_avanzado.md
+    - file: guias/markdown.md
+  - file: glosario.md
+  - file: reglas/indice.md
+    children:
+    - file: reglas/0_generales.md
+    - file: reglas/1_documentacion.md
+    - file: reglas/2_oop.md
+    - file: reglas/3_excepciones.md
+    - file: reglas/4_testing.md
+    - file: reglas/5_control.md
+    - file: reglas/6_restricciones.md
+    - file: reglas/E_errores.md
+    - file: reglas/convenciones_codigo_java.md
 site:
   template: book-theme
   options:
@@ -116,6 +88,3 @@ site:
     analytics_google: G-9RP507HWPW
   parts:
     footer: footer.md
-#  options:
-  #   favicon: favicon.ico
-  #   logo: site_logo.png
