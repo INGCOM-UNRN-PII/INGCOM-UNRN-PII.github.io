@@ -74,8 +74,7 @@ Se enfatizará el uso de la programación orientada a objetos (POO) para
 estructurar el software de manera modular y reutilizable. Los estudiantes
 aprenderán a diseñar y desarrollar sistemas complejos utilizando principios
 sólidos de POO, incluyendo encapsulamiento, herencia, polimorfismo y
-abstracción, siguiendo las {ref}`reglas de diseño <regla-0x2000>` establecidas
-por la cátedra.
+abstracción, siguiendo las reglas de diseño establecidas por la cátedra.
 
 ### Resolución de Problemas
 
@@ -89,9 +88,8 @@ problema.
 
 Se destacará la importancia de escribir código limpio, documentado y fácilmente
 mantenible. Los estudiantes aprenderán sobre pruebas unitarias, refactorización
-y otras prácticas que mejoran la calidad del software, aplicando las
-{ref}`reglas de documentación <regla-0x1000>` y las
-{ref}`convenciones de nomenclatura <regla-0x0001>` establecidas en la cátedra.
+y otras prácticas que mejoran la calidad del software, aplicando las reglas de 
+documentación y las convenciones de nomenclatura establecidas en la cátedra.
 
 ### Trabajo en Equipo y Herramientas de Desarrollo
 
