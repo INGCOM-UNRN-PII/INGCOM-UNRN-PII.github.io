@@ -1293,7 +1293,7 @@ Soluciones posibles:
 - Agrupar parámetros relacionados en una estructura (cuando se vean clases)
 - Usar patrones como Builder (tema avanzado)
 
-(referencias-bibliograficas)=
+(04-referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - **Bloch, J.** (2018). _Effective Java_ (3ra ed.). Addison-Wesley Professional.

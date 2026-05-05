@@ -639,7 +639,7 @@ Identificá las particiones de equivalencia y proponé un conjunto mínimo de te
 9. monto = 1500 (P5, representante)
 ```
 
-(referencias-bibliograficas)=
+(11-referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - **Beck, K.** (2003). _Test Driven Development: By Example_. Addison-Wesley.

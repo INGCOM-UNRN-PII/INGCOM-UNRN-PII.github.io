@@ -1222,7 +1222,7 @@ public static int contarMayusculas(String texto) {
 Siempre verificá que las referencias no sean `null` antes de usarlas, especialmente en parámetros de métodos públicos.
 ````
 
-(referencias-bibliograficas)=
+(13-referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - **Schildt, H.** (2022). *Java: A Beginner's Guide* (9na ed.). McGraw Hill.

@@ -1214,7 +1214,7 @@ Número válido: 42
 La clave es usar `hasNextInt()` para verificar si lo que sigue es un entero, y `scanner.next()` para descartar la entrada inválida cuando no lo es.
 ````
 
-(referencias-bibliograficas)=
+(06-referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - **Schildt, H.** (2022). _Java: A Beginner's Guide_ (9na ed.). McGraw Hill. (Capítulo 10: Enumerations, Autoboxing, and Annotations - sección sobre I/O).

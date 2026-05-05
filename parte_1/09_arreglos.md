@@ -1659,7 +1659,7 @@ Los arreglos en Java son estructuras fundamentales que todo programador debe dom
 | Valores iniciales | Basura | Valores por defecto (0, false, null) |
 | Retornar arreglos | Peligroso si es local | Seguro (siempre en heap) |
 
-(referencias-bibliograficas)=
+(09-referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - **Schildt, H.** (2022). *Java: A Beginner's Guide* (9na ed.). McGraw Hill. Capítulo 5: Arrays.

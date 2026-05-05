@@ -634,7 +634,7 @@ Java se caracteriza por ser:
 
 La estrategia pedagógica **"Late Objects"** que usamos en este curso permite dominar primero los fundamentos del lenguaje (tipos, operadores, estructuras de control, métodos) antes de abordar los conceptos de programación orientada a objetos. Esto aprovecha tu conocimiento previo de C mientras te prepara gradualmente para las características más avanzadas de Java.
 
-(referencias-bibliograficas)=
+(02-referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - Gosling, J., Joy, B., Steele, G., & Bracha, G. (2005). _The Java Language

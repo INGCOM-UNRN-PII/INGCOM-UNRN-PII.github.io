@@ -1957,7 +1957,7 @@ int i3 = (int) l1;
 **Lección:** Java no detecta overflow en tiempo de ejecución para tipos primitivos. Es responsabilidad del programador verificar que los valores estén dentro del rango esperado.
 ::::
 
-(referencias-bibliograficas)=
+(03-referencias-bibliograficas)=
 ## Referencias Bibliográficas
 
 - **Bloch, J.** (2018). _Effective Java_ (3ra ed.). Addison-Wesley Professional.
