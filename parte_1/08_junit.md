@@ -46,7 +46,7 @@ Si el resultado no es 1, JUnit falla y te muestra exactamente qué salió mal. A
 Un **framework de testing** es una librería que proporciona herramientas para escribir y ejecutar tests de forma organizada. En C no hay un framework estándar (existen librerías como CUnit, Unity, etc., pero no son parte del lenguaje). En Java, **JUnit** es el estándar de facto.
 
 JUnit te da:
-- **Anotaciones** para marcar métodos como tests (`@Test`)
+- **Anotaciones** para marcar métodos como tests (`\@Test`)
 - **Métodos de verificación** (assertions) para comparar resultados esperados con reales
 - **Un ejecutor** que encuentra y ejecuta todos los tests, reportando cuáles pasan y cuáles fallan
 - **Hooks** para setup y cleanup antes/después de cada test
@@ -55,11 +55,11 @@ JUnit te da:
 ### Historia breve
 
 - **JUnit 3** (2000): Primera versión ampliamente adoptada. Los tests se identificaban por herencia de clases y nombres de métodos.
-- **JUnit 4** (2006): Introdujo anotaciones (`@Test`, `@Before`, etc.), simplificando enormemente la escritura de tests.
+- **JUnit 4** (2006): Introdujo anotaciones (`\@Test`, `\@Before`, etc.), simplificando enormemente la escritura de tests.
 - **JUnit 5** (2017): Reescritura completa con arquitectura modular, nuevas features, y soporte para Java 8+.
 
 :::{tip}
-Utilizaremos **JUnit 5** en toda la cátedra. Si encontrás ejemplos de JUnit 4 en internet (muy comunes en Stack Overflow), tené en cuenta que algunas anotaciones cambiaron: `@Before` → `@BeforeEach`, `@BeforeClass` → `@BeforeAll`, etc.
+Utilizaremos **JUnit 5** en toda la cátedra. Si encontrás ejemplos de JUnit 4 en internet (muy comunes en Stack Overflow), tené en cuenta que algunas anotaciones cambiaron: `\@Before` → `\@BeforeEach`, `\@BeforeClass` → `\@BeforeAll`, etc.
 :::
 
 (configuracion-del-proyecto)=
@@ -251,17 +251,17 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 ```
 
-- `org.junit.jupiter.api.Test`: La anotación `@Test` que marca métodos como tests.
+- `org.junit.jupiter.api.Test`: La anotación `\@Test` que marca métodos como tests.
 - `static org.junit.jupiter.api.Assertions.*`: Importa **estáticamente** todos los métodos de verificación. El `static` permite escribir `assertEquals(...)` en lugar de `Assertions.assertEquals(...)`. El `*` importa todos los métodos (`assertEquals`, `assertTrue`, `assertNull`, etc.).
 
-#### 2. Anotación `@Test`
+#### 2. Anotación `\@Test`
 
 ```java
 @Test
 void testSumar_ConDosNumerosPositivos_RetornaSuma() {
 ```
 
-La anotación `@Test` le dice a JUnit: "este método es un test, ejecutalo cuando corras los tests". Sin esta anotación, el método sería un método normal que JUnit ignoraría.
+La anotación `\@Test` le dice a JUnit: "este método es un test, ejecutalo cuando corras los tests". Sin esta anotación, el método sería un método normal que JUnit ignoraría.
 
 **Características de los métodos de test:**
 
@@ -766,7 +766,7 @@ JUnit ofrece anotaciones para ejecutar código en diferentes momentos del ciclo 
 (anotaciones-de-ciclo-de-vida)=
 ### Anotaciones de ciclo de vida
 
-#### `@BeforeEach`
+#### `\@BeforeEach`
 
 El método anotado se ejecuta **antes de cada test**. Es útil para preparar datos de entrada comunes:
 
@@ -840,7 +840,7 @@ public class ArchivoTest {
 - Restaurar configuraciones globales
 - Liberar recursos del sistema
 
-#### `@BeforeAll`
+#### `\@BeforeAll`
 
 El método anotado se ejecuta **una vez antes de todos los tests** de la clase:
 
@@ -881,7 +881,7 @@ public class ProcesadorDatosTest {
 - Solo usar con datos de **solo lectura** para mantener independencia de tests
 
 :::{warning}
-Tené cuidado con `@BeforeAll`: si los datos compartidos son modificables, podés violar la {ref}`regla-0x4005` (independencia de tests). Usalo solo para datos inmutables o de solo lectura.
+Tené cuidado con `\@BeforeAll`: si los datos compartidos son modificables, podés violar la {ref}`regla-0x4005` (independencia de tests). Usalo solo para datos inmutables o de solo lectura.
 :::
 
 #### `@AfterAll`
@@ -1346,7 +1346,7 @@ public class CalculadoraTest {
 
 **Cómo lograr independencia:**
 
-1. Usar `@BeforeEach` para preparar datos comunes
+1. Usar `\@BeforeEach` para preparar datos comunes
 2. Evitar variables `static` mutables
 3. Cada test prepara sus propios datos de entrada
 4. Limpiar recursos en `@AfterEach`
@@ -1381,12 +1381,12 @@ public class CalculadoraTest {
 }
 ```
 
-Este test se ejecuta 5 veces, una por cada valor en `@ValueSource`.
+Este test se ejecuta 5 veces, una por cada valor en `\@ValueSource`.
 
 (fuentes-de-parametros)=
 ### Fuentes de parámetros
 
-#### `@ValueSource`
+#### `\@ValueSource`
 
 Para un solo parámetro de tipos primitivos o String:
 
@@ -1410,7 +1410,7 @@ void testEsEspecial_ConValoresEspeciales_RetornaTrue(double valor) {
 }
 ```
 
-#### `@CsvSource`
+#### `\@CsvSource`
 
 Para múltiples parámetros en formato CSV:
 
@@ -1447,7 +1447,7 @@ void testValidarEmail_ConDiferentesFormatos_RetornaResultadoCorrecto(
 
 #### Tests parametrizados con múltiples valores
 
-Para casos con múltiples valores, podés usar `@CsvSource`:
+Para casos con múltiples valores, podés usar `\@CsvSource`:
 
 ```java
 public class CalculadoraDescuentosTest {
@@ -1465,7 +1465,7 @@ public class CalculadoraDescuentosTest {
 }
 ```
 
-#### `@CsvFileSource`
+#### `\@CsvFileSource`
 
 Para datasets grandes, cargá datos desde un archivo CSV:
 
@@ -2040,7 +2040,7 @@ public class CalculadoraTest {
 Ventajas de `@Nested`:
 
 - Agrupación lógica visible en reportes
-- Cada grupo puede tener su propio `@BeforeEach` para preparar datos
+- Cada grupo puede tener su propio `\@BeforeEach` para preparar datos
 - Mejora la organización en tests grandes
 
 (cobertura-de-tests)=
@@ -2410,7 +2410,7 @@ En esta sección nos enfocamos en aspectos prácticos específicos de JUnit para
 
 Cuando aplicás TDD con JUnit, seguís este flujo:
 
-1. **Escribir el test primero** usando `@Test`
+1. **Escribir el test primero** usando `\@Test`
 2. **Ver que falla** (compilación o assertion)
 3. **Implementar el mínimo código** para pasar
 4. **Refactorizar** con confianza
@@ -2476,7 +2476,7 @@ Cada ciclo debe ser mínimo:
 @Test void testValidar_SinArroba_RetornaFalse() { }
 ```
 
-**Usar `@BeforeEach` para evitar duplicación**
+**Usar `\@BeforeEach` para evitar duplicación**
 
 ```java
 private Calculadora calculadora;
@@ -3223,7 +3223,7 @@ Implementá una clase `Arreglos` con métodos estáticos para manipular arreglos
 1. Verifiquen cada operación individualmente
 2. Prueben casos límite (arreglo vacío, un elemento)
 3. Verifiquen excepciones en operaciones inválidas (arreglo null, vacío)
-4. Usen `@BeforeEach` para preparar datos de entrada comunes
+4. Usen `\@BeforeEach` para preparar datos de entrada comunes
 5. Sean independientes entre sí
 
 Incluí al menos 15 tests diferentes.
@@ -3238,7 +3238,7 @@ Creá una clase `ValidadorContrasena` con un método estático `esValida(String 
 - Al menos un número
 - Al menos un carácter especial (@, #, $, etc.)
 
-Escribí tests parametrizados que verifiquen múltiples contraseñas válidas e inválidas. Usá `@CsvSource` con al menos 10 casos de prueba.
+Escribí tests parametrizados que verifiquen múltiples contraseñas válidas e inválidas. Usá `\@CsvSource` con al menos 10 casos de prueba.
 ```
 
 ```{exercise}
@@ -3303,7 +3303,7 @@ Identificá las particiones de equivalencia y escribí tests que cubran:
 3. Casos especiales (0 horas, valores negativos)
 4. Valores decimales (ej: 2.5 horas)
 
-Usá `@CsvSource` para organizar los casos de prueba.
+Usá `\@CsvSource` para organizar los casos de prueba.
 ```
 
 ````{exercise}
