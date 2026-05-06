@@ -1,13 +1,15 @@
 ---
-title: "Herencia y Polimorfismo"
-subtitle: "Reutilización y Flexibilidad en el Diseño"
+title: "Herencia y Polimorfismo en Java"
+subtitle: "Implementación en Java con herencia, clases abstractas, interfaces y polimorfismo"
 subject: Programación Orientada a Objetos
 ---
 
 (java-herencia-polimorfismo)=
-# Herencia y Polimorfismo
+# Herencia y Polimorfismo en Java
 
 En el capítulo anterior ({ref}`java-sintaxis-clases`) aprendimos a crear clases, definir atributos y métodos, y establecer relaciones entre objetos. Ahora damos el siguiente paso: aprender a **reutilizar código** y **crear diseños flexibles** mediante dos mecanismos fundamentales de la POO.
+
+A diferencia de [la base conceptual del capítulo anterior](04_oop_herencia_polimorfismo.md), acá el foco está en **cómo implementar estas ideas en Java**.
 
 Este capítulo cubre:
 
@@ -1653,8 +1655,10 @@ Implementá validaciones apropiadas en cada método de pago.
 
 ## Resumen
 
-Este capítulo presentó las ideas centrales de **Herencia y Polimorfismo** y dejó un marco de referencia para relacionarlas con el resto del recorrido.
+Este capítulo mostró **cómo implementar en Java** las ideas de herencia, clases abstractas, interfaces y polimorfismo apoyándose en el marco conceptual del capítulo anterior.
 
 ## Próximo paso
+
+Si hace falta repasar el porqué de estas decisiones de diseño antes de seguir, conviene volver a [Herencia y Polimorfismo Conceptual](04_oop_herencia_polimorfismo.md).
 
 Para seguir, conviene pasar a [el material siguiente](06_excepciones.md), donde el recorrido continúa sobre esta base.

@@ -11,6 +11,8 @@ En los capítulos anteriores exploramos los fundamentos de OOP ({ref}`fundamento
 
 Este capítulo se enfoca en los **conceptos y el modelado**, no en la sintaxis de implementación. Para la sintaxis específica de Java, consultá {ref}`java-herencia-polimorfismo`.
 
+La pregunta central acá es **cuándo y por qué conviene diseñar una jerarquía**; la implementación concreta aparece en el capítulo siguiente.
+
 :::{tip} Objetivos de Aprendizaje
 
 Al finalizar este capítulo, serás capaz de:
@@ -1302,4 +1304,4 @@ Diseñá un sistema de notificaciones:
 
 ## Próximo paso
 
-Para seguir, conviene pasar a [el material siguiente](05_herencia_polimorfismo.md), donde el recorrido continúa sobre esta base.
+Para seguir, conviene pasar a [Herencia y Polimorfismo en Java](05_herencia_polimorfismo.md), donde estas mismas ideas se llevan a sintaxis, mecanismos y ejemplos concretos de implementación.

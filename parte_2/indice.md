@@ -23,8 +23,8 @@ Al recorrer esta parte, el estudiante debería poder:
 | 1 | [01_oop_fundamentos](01_oop_fundamentos.md) | Base conceptual del paradigma |
 | 2 | [02_oop_relaciones](02_oop_relaciones.md) | Encapsulamiento y relaciones entre objetos |
 | 3 | [03_sintaxis_clases](03_sintaxis_clases.md) | Traducción del modelo conceptual a código Java |
-| 4 | [04_oop_herencia_polimorfismo](04_oop_herencia_polimorfismo.md) | Enfoque conceptual sobre jerarquías y sustitución |
-| 5 | [05_herencia_polimorfismo](05_herencia_polimorfismo.md) | Enfoque sintáctico y aplicado en Java |
+| 4 | [Herencia y Polimorfismo Conceptual](04_oop_herencia_polimorfismo.md) | Marco conceptual sobre jerarquías, sustitución y criterios de diseño |
+| 5 | [Herencia y Polimorfismo en Java](05_herencia_polimorfismo.md) | Implementación en Java con `extends`, `super`, abstractas e interfaces |
 | 6 | [06_excepciones](06_excepciones.md) | Relectura de excepciones en clave OOP |
 | 7 | [07_colecciones_genericos](07_colecciones_genericos.md) | Colecciones desde una mirada de diseño y uso |
 | 8 | [08_genericos](08_genericos.md) | Profundización en tipos parametrizados |
@@ -38,8 +38,8 @@ Estos capítulos forman el núcleo de la parte y conviene trabajarlos en secuenc
 | [01_oop_fundamentos](01_oop_fundamentos.md) | Define el lenguaje conceptual del paradigma |
 | [02_oop_relaciones](02_oop_relaciones.md) | Introduce encapsulamiento y modelado de vínculos |
 | [03_sintaxis_clases](03_sintaxis_clases.md) | Convierte diseño en código Java concreto |
-| [04_oop_herencia_polimorfismo](04_oop_herencia_polimorfismo.md) | Da el marco conceptual de herencia, interfaces y LSP |
-| [05_herencia_polimorfismo](05_herencia_polimorfismo.md) | Consolida la implementación práctica en Java |
+| [Herencia y Polimorfismo Conceptual](04_oop_herencia_polimorfismo.md) | Da el marco conceptual de herencia, polimorfismo, interfaces y LSP |
+| [Herencia y Polimorfismo en Java](05_herencia_polimorfismo.md) | Consolida la implementación práctica en Java de esas decisiones de diseño |
 
 ## Repaso y ampliación
 
@@ -164,7 +164,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve para navega
   * [Próximos Pasos](03_sintaxis_clases.md)
   * [Ejercicios](03_sintaxis_clases.md)
 
-## [04_oop_herencia_polimorfismo](.\/04_oop_herencia_polimorfismo.md)
+## [Herencia y Polimorfismo Conceptual](.\/04_oop_herencia_polimorfismo.md)
   * [Herencia: Especialización y Generalización](04_oop_herencia_polimorfismo.md)
     * [¿Qué es la Herencia?](04_oop_herencia_polimorfismo.md)
     * [Analogía: La Taxonomía Biológica](04_oop_herencia_polimorfismo.md)
@@ -210,7 +210,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve para navega
     * [Principios SOLID](04_oop_herencia_polimorfismo.md)
   * [Ejercicios](04_oop_herencia_polimorfismo.md)
 
-## [05_herencia_polimorfismo](.\/05_herencia_polimorfismo.md)
+## [Herencia y Polimorfismo en Java](.\/05_herencia_polimorfismo.md)
   * [Herencia: Extendiendo Clases](05_herencia_polimorfismo.md)
     * [¿Qué es la Herencia?](05_herencia_polimorfismo.md)
     * [¿Por Qué Usar Herencia?](05_herencia_polimorfismo.md)
