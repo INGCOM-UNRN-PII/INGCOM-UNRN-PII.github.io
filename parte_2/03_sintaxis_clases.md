@@ -2494,7 +2494,7 @@ El Trabajo Práctico 6 consiste en tomar el diagrama de clases producido en el T
 (ejercicios-oop2)=
 ## Ejercicios
 
-```{exercise}
+````{exercise}
 :label: ej-sintaxis-clase
 
 Dado el siguiente fragmento de código, identificá y corregí todos los errores de sintaxis:
@@ -2514,9 +2514,9 @@ public Class Producto {
     }
 }
 ```
-```
+````
 
-```{solution} ej-sintaxis-clase
+````{solution} ej-sintaxis-clase
 :class: dropdown
 
 Errores identificados y correcciones:
@@ -2548,9 +2548,9 @@ public class Producto {
     }
 }
 ```
-```
+````
 
-```{exercise}
+````{exercise}
 :label: ej-encapsulamiento
 
 Refactorizá la siguiente clase para aplicar correctamente el encapsulamiento:
@@ -2572,7 +2572,7 @@ Agregá:
 2. Constructor con validaciones
 3. Getters necesarios
 4. Setter para `horasTrabajadas` con validación (0-300 horas)
-```
+````
 
 ````{solution} ej-encapsulamiento
 :class: dropdown

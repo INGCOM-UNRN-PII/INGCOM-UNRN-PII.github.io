@@ -1264,7 +1264,7 @@ c) `Empleado` con `trabajar()` que lanza excepción si está de vacaciones
 Proponé soluciones.
 ```
 
-```{exercise}
+````{exercise}
 :label: ej-solid-refactoring
 Refactorizá la siguiente clase para que cumpla con los principios SOLID:
 
@@ -1278,7 +1278,7 @@ class GestorPedidos {
     void imprimirFactura(pedido) { ... }
 }
 ```
-```
+````
 
 ```{exercise}
 :label: ej-composicion-vs-herencia

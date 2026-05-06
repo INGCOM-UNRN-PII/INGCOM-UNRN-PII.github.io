@@ -1619,7 +1619,7 @@ Implementá un sistema de figuras geométricas:
 Creá un método que reciba una lista de `Figura` y calcule el área total.
 ```
 
-```{exercise}
+````{exercise}
 :label: ej-lsp-violacion
 Analizá el siguiente código e identificá la violación del Principio de Sustitución de Liskov:
 
@@ -1639,7 +1639,7 @@ public class Pinguino extends Ave {
 ```
 
 ¿Cómo rediseñarías esta jerarquía para cumplir con LSP?
-```
+````
 
 ```{exercise}
 :label: ej-sistema-pagos
