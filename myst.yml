@@ -20,6 +20,8 @@ project:
       institution: Universidad Nacional de Rio Negro - Sede Andina
       ror: 048zgak80
   github: https://github.com/INGCOM-UNRN-PII/INGCOM-UNRN-PII.github.io
+  exports:
+    - format: pdf
   toc:
   - file: README.md
   - title: Cátedra
@@ -100,26 +102,6 @@ project:
       - file: parte_4/comportamiento/template_method.md
       - file: parte_4/comportamiento/visitor.md
       - file: parte_4/comportamiento/ejercicios_integradores.md
-
-# No publicado - en desarrollo
-#  - title: 'Parte 5: Estructuras de Datos'
-#    children:
-#    - file: parte_5/indice.md
-#    - title: Secuencias
-#      children:
-#      - file: parte_5/secuencias/pilas.md
-#      - file: parte_5/secuencias/colas.md
-#      - file: parte_5/secuencias/listas_enlazadas.md
-# No publicado - en desarrollo
-#  - title: 'Parte 6: Plataformas y Frameworks'
-#    children:
-#    - file: parte_6/indice.md
-#    - file: parte_6/oop_arquitectura.md
-#    - file: parte_6/oop_concurrencia.md
-#    - file: parte_6/swing.md
-#    - file: parte_6/javafx.md
-#    - file: parte_6/networking.md
-#    - file: parte_6/android.md
   - title: Proyectos
     children:
     - file: proyectos/TPI-proyectos.md
@@ -143,6 +125,7 @@ project:
     - file: guias/guia_plantUML.md
     - file: guias/bash.md
     - file: guias/git.md
+    - file: guias/git_avanzado.md
     - file: guias/markdown.md
   - file: reglas/indice.md
     title: Reglas y Convenciones
