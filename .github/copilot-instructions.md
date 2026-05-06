@@ -32,85 +32,38 @@ All scripts use Python stdlib only (Python 3.9+). Initialize environment with: `
 
 ## Project Structure
 
-- **`parte_1/` and `parte_2/`** - Main course notes (Notes 1 and 2). Organized by topic with corresponding SVG diagrams in numbered subdirectories (e.g., `parte_1/13/` for `parte_1/13_tad.md`)
+- **`parte_1/` to `parte_4/`** - Published course notes currently integrated in the main TOC
+- **`parte_5/` and `parte_6/`** - Material not currently published in the main TOC; treat according to `editorial/estado_y_mantenimiento.md`
 - **`guias/`** - Installation and tool tutorials (JDK, IntelliJ, Git, Bash, PlantUML)
 - **`reglas/`** - Coding style rules and conventions (Java code standards, testing, documentation, exceptions)
+- **`editorial/`** - Editorial source of truth for chapter structure, style, format, and publication criteria
 - **`catedra/`** - Course policies and agreements
 - **`glosario.md`** - Technical glossary for the course
 - **`resources/`** - Shared CSS for SVG diagrams (`svg.css`) and images
 - **`scripts/`** - Python automation scripts for generating indices and adding MyST anchors
 - **`myst.yml`** - MyST project configuration with table of contents and site settings
 
-## Key Conventions
+## Editorial Source of Truth
 
-### MyST Markdown Features
+For editorial decisions, use these files as the authoritative source:
 
-The site uses MyST MD syntax. Key elements:
+- `editorial/plantilla_capitulos.md`
+- `editorial/estilo_y_formato.md`
+- `editorial/estado_y_mantenimiento.md`
 
-- **Admonitions**: `:::{note}` / `:::{important}` / `:::{warning}` / `:::{tip}`
-- **Exercises & Solutions**:
-  ```myst
-  ```{exercise}
-  :label: ex-label
-  Problem statement here
-  ```
+If this file or `GEMINI.md` conflicts with `editorial/`, **`editorial/` wins**.
 
-  :::{solution} ex-label
-  :class: dropdown
-  Solution details here
-  ```
-  ```
-  :::
-  ```
-- **Math**: Inline `$...$` or display `$$...$$` (LaTeX)
-- **Code blocks**: Use triple backticks with language syntax (java, python, bash)
-- **Cross-references**: Use `{ref}` role: `{ref}`rule-0x0000`` points to anchors like `(rule-0x0000)=`
-- **Figures**: `{figure} path/to/image.svg` with `:label:`, `:align: center`, `:width: %`
+Critical reminders that remain repository-specific:
 
-### SVG Diagram Conventions
-
-SVG diagrams are **stored in numbered subdirectories** matching the markdown file:
-- For `parte_1/13_tad.md`, diagrams go in `parte_1/13/`
-- Use descriptive names: `pila_arreglo.svg`, `cola_circular.svg`
-
-**SVG guidelines:**
-- Import shared CSS: `<?xml-stylesheet href="../../resources/svg.css" type="text/css"?>`
-- Use semantic SVG classes from `resources/svg.css`:
-  - Stacks: `.stack-node`, `.stack-data`, `.stack-arrow`
-  - Queues: `.queue-node`, `.queue-data`, `.queue-arrow`
-  - Trees: `.tree-node`, `.tree-data`
-  - Lists: `.list-node`, `.list-data`
-  - Typical dimensions: 600-800px width, appropriate viewBox
-- UNRN colors: `#eb2141` (red, primary), `#192437` (dark blue, secondary)
-- Use institutional fonts: Fabrikat (titles), Lato (text), Share Tech Mono (code)
-
-### Content & Language
-
-**Tone & Style:**
-- Spanish (Argentine Spanish with "voseo")
-- Academic but approachable; university-level rigor without over-simplification
-- No emoji unless explicitly requested
-- Use "lazos" for loops (specific course terminology)
-
-**Pedagogy:**
-- "Late Objects" approach: build on C knowledge from the prerequisite course (Programación I)
-- Gradually introduce Java concepts, starting with procedural aspects before deep OOP
-
-**Code Style Rules:**
-The course maintains extensive style guides in `reglas/`:
-- `0_generales.md` - Nomenclature and format (no spelling errors, markdown where applicable)
-- `1_documentacion.md` - Documentation standards
-- `2_oop.md` - OOP-specific conventions
-- `3_excepciones.md` - Exception handling
-- `4_testing.md` - Testing practices (JUnit focus)
-- `5_control.md` - Control flow
-- `convenciones_codigo_java.md` - Java naming conventions (UpperCamelCase for classes, lowerCamelCase for variables/methods, UPPER_SNAKE_CASE for constants)
-
-**When writing content**, link to relevant rules using the `{ref}` role to guide students to official guidelines.
+- Keep the course’s **late objects** approach.
+- Write in Spanish rioplatense with **voseo** and use **lazos** for loops.
+- When writing content, link to relevant rules in `reglas/` using `{ref}` where it helps students connect explanation with the official criterion.
+- Keep indices, `myst.yml`, and page status aligned.
 
 ### Important References
 
-- **GEMINI.md** - Detailed directives for AI tools (MyST syntax, SVG creation, code style references)
+- **`editorial/`** - Source of truth for chapter structure, style, format, and maintenance
+- **GEMINI.md** - Companion instruction file that should defer to `editorial/` for editorial rules
 - **reglas/** directory - Authoritative style and coding rules (students are held to these standards)
 - **myst.yml** - Table of contents and build configuration; update when adding new pages
 
@@ -128,17 +81,19 @@ These maintain consistency in index structure; review before modifying TOC struc
 
 **Adding a new lesson:**
 1. Create markdown file in appropriate directory (e.g., `parte_1/14_nuevotema.md`)
-2. Add entry to `myst.yml` table of contents
-3. If adding diagrams, create `parte_1/14/` directory with SVG files
-4. Reference style rules where applicable using `{ref}`
-5. Run build locally to test
-6. Commit and push to `main` (auto-deploys)
+2. Apply the structure defined in `editorial/plantilla_capitulos.md`
+3. Update the corresponding part index and `myst.yml` if the lesson is published
+4. If adding diagrams, create `parte_1/14/` directory with SVG files
+5. Reference style rules where applicable using `{ref}`
+6. Run build locally to test
+7. Commit and push to `main` (auto-deploys)
 
 **Creating SVG diagrams:**
-1. Create in appropriate numbered subdirectory (e.g., `parte_1/13/pila_dinamica.svg`)
-2. Include CSS stylesheet reference with correct relative path
-3. Use shared classes from `resources/svg.css` for consistency
-4. Reference in markdown with `{figure}` directive including `:label:` and `:width:`
+1. Follow `editorial/estilo_y_formato.md`
+2. Create in appropriate numbered subdirectory (e.g., `parte_1/13/pila_dinamica.svg`)
+3. Include CSS stylesheet reference with correct relative path
+4. Use shared classes from `resources/svg.css` for consistency
+5. Reference in markdown with `{figure}` directive including `:label:` and `:width:`
 
 **Updating rules or guidelines:**
 1. Edit relevant file in `reglas/`
