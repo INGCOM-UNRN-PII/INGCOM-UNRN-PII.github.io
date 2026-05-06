@@ -456,7 +456,7 @@ git reflog                        # encontrar SHA anterior
 git reset --hard HEAD@{1}        # volver al estado anterior
 ```
 
-(ejercicios-avanzados)=
+(ejercicios-git-avanzados)=
 ## Ejercicios prácticos avanzados
 
 :::{exercise} ejercicio-rebase-interactivo

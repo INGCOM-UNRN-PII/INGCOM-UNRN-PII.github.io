@@ -1396,7 +1396,7 @@ MiClase obj = fabrica2.crear();
 
 ---
 
-(ejercicios-avanzados)=
+(genericos-ejercicios-avanzados)=
 ## Ejercicios Avanzados
 
 ```{exercise}
