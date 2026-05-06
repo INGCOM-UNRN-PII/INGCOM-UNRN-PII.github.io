@@ -42,19 +42,25 @@ El árbol B no intenta ser una variante "más rara" del BST. Responde a otra rea
 
 Un árbol B no es binario. Cada nodo interno puede almacenar varias claves y abrir varios subárboles.
 
-Una intuición útil es pensar que cada nodo representa una **página** o un **bloque**:
+Una intuición útil es pensar que cada nodo representa una **página** o un **bloque** de almacenamiento:
 
 - las claves dentro del nodo separan rangos,
 - cada hijo apunta al subárbol que contiene uno de esos rangos,
 - y una sola lectura trae muchas decisiones juntas.
 
-```text
-[ 15 | 28 | 42 ]
-   /    |    |   \
- <15  15-28 28-42 >42
+```{mermaid}
+graph TD
+    A[15 | 28 | 42]
+    A -->|"< 15"| B[7 | 10 | 12]
+    A -->|"15 a 27"| C[16 | 20 | 25]
+    A -->|"28 a 41"| D[30 | 35 | 39]
+    A -->|">= 42"| E[45 | 50 | 55]
+    
+    classDef nodo fill:#f8f9fa,stroke:#333,stroke-width:2px;
+    class A,B,C,D,E nodo;
 ```
 
-La idea no es que el nodo "guarde de más", sino al revés: que amortice el costo de haber leído esa página.
+La idea no es que el nodo "guarde de más", sino al revés: que amortice el costo de haber leído esa página entera desde un disco o red.
 
 ## Propiedades estructurales importantes
 
@@ -173,15 +179,44 @@ Hasta acá hablamos de árbol B en sentido general. En la práctica aparecen dos
 
 En un B+Tree:
 
-- los nodos internos funcionan casi como índice,
-- las hojas suelen quedar enlazadas entre sí,
-- y recorrer un rango ordenado se vuelve especialmente natural.
+- los nodos internos funcionan estrictamente como **índice de enrutamiento**,
+- los datos reales (o punteros a los registros en disco) viven **solo en las hojas**,
+- y las hojas suelen quedar **enlazadas entre sí**, formando una lista secuencial.
 
-Por eso los B+Tree aparecen mucho en índices de bases de datos y sistemas que necesitan:
+```{mermaid}
+graph TD
+    Raiz[40]
+    Raiz -->|"< 40"| I1[15 | 25]
+    Raiz -->|">= 40"| I2[60 | 80]
+    
+    I1 --> H1[10 | 12]
+    I1 --> H2[15 | 20]
+    I1 --> H3[25 | 30]
+    
+    I2 --> H4[40 | 50]
+    I2 --> H5[60 | 70]
+    I2 --> H6[80 | 90]
+    
+    H1 -.->|next| H2
+    H2 -.->|next| H3
+    H3 -.->|next| H4
+    H4 -.->|next| H5
+    H5 -.->|next| H6
+    
+    classDef indice fill:#e3f2fd,stroke:#0277bd,stroke-width:2px;
+    classDef hoja fill:#fff3e0,stroke:#f57c00,stroke-width:2px;
+    
+    class Raiz,I1,I2 indice;
+    class H1,H2,H3,H4,H5,H6 hoja;
+```
 
-1. búsquedas por clave,
+Esta estructura enlazada hace que resolver una consulta por rango (ej. "todos los sueldos entre 20.000 y 70.000") sea trivial: el árbol busca el inicio del rango bajando por la raíz (muy rápido) y, una vez en la hoja correcta, avanza secuencialmente por los enlaces hasta pasarse del límite, sin tener que volver a navegar el árbol por cada elemento.
+
+Por eso los B+Tree aparecen casi universalmente en índices de bases de datos relacionales y sistemas que necesitan:
+
+1. búsquedas por clave exactas,
 2. consultas por rango,
-3. recorrido ordenado eficiente.
+3. recorrido ordenado secuencial eficiente.
 
 ## Por qué no usar un árbol binario balanceado
 

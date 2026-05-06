@@ -1,77 +1,85 @@
 ---
 title: "Parte 5: Estructuras de Datos"
-subtitle: "Esqueleto temático en revisión"
+subtitle: "Mapa de aprendizaje en revisión"
 subject: Estructuras de Datos
-description: Mapa editorial de la parte 5 en desarrollo.
+description: Recorrido sugerido y mapa estructural de la parte 5, con foco en TAD, costo, implementaciones y algoritmos sobre estructuras.
 ---
 
 (parte-5-estructuras-de-datos)=
 # Parte 5: Estructuras de Datos
 
-Esta parte todavía no está publicada en el TOC principal. Su función actual es fijar una estructura exhaustiva y coherente para el tramo de estructuras de datos, de modo que después se pueda redactar sin volver a discutir el mapa general.
+Esta parte sigue fuera del TOC principal, pero ya no funciona solo como un esquema tentativo. Hoy reúne un mapa de aprendizaje bastante estable para el tramo de estructuras de datos: primero fija el lenguaje de TAD y costo, después recorre familias concretas y finalmente cierra con algoritmos sobre grafos.
 
 :::{important}
-**Estado.** Material en revisión. El objetivo de estas páginas no es cerrar el contenido final, sino definir alcance, secuencia y separación entre teoría abstracta e implementaciones concretas.
+**Estado.** Material en revisión. El núcleo transversal, las familias de secuencias, diccionarios y árboles ya tienen desarrollo base suficiente para orientar lectura real. La familia de grafos todavía está cerrando sus capítulos de optimización y partición.
 :::
 
 ## Propósito de la parte
 
-La parte 5 debería consolidar tres capas que en el programa aparecen fuertemente relacionadas y conviene distinguir con claridad:
+La parte 5 consolida cuatro preguntas que conviene aprender a separar:
 
-1. **TAD y contratos**: qué problema modela cada estructura y qué operaciones promete,
-2. **análisis algorítmico**: cuánto cuestan las operaciones y qué trade-offs aparecen,
-3. **implementaciones concretas**: cómo cambian costo, memoria, invariantes y casos de uso según la representación elegida.
+1. **qué problema abstracto modela la estructura**;
+2. **qué operaciones promete y qué invariantes sostiene**;
+3. **cuánto cuestan esas operaciones**;
+4. **cómo cambia todo eso según la representación elegida**.
 
-## Orden sugerido de desarrollo
+Dicho más directo: no alcanza con saber “qué estructura usar”. Esta parte busca que puedas justificar por qué una implementación conviene más que otra según acceso, memoria, altura, prioridad, colisiones o costo por bloque.
+
+## Estado editorial actual
+
+| Bloque | Estado actual | Qué ya aporta |
+| :--- | :--- | :--- |
+| Núcleo transversal | Desarrollo base disponible | Lenguaje común sobre TAD, contratos y complejidad |
+| Secuencias | Desarrollo base disponible | Contraste entre memoria contigua, nodos y restricciones de acceso |
+| Diccionarios y conjuntos | Desarrollo base disponible | Acceso por clave, hashing, orden, prefijos y partición |
+| Árboles | Desarrollo base disponible | Jerarquía, búsqueda, balance, prioridad y almacenamiento externo |
+| Grafos | En revisión avanzada | Vocabulario, representación y recorridos ya cerrados; faltan cierres de optimización |
+
+## Orden sugerido de lectura
 
 | Orden | Página | Rol |
 | :--- | :--- | :--- |
 | 1 | [Tipos abstractos de datos](adt.md) | Fijar vocabulario sobre interfaz, representación e invariantes |
 | 2 | [Análisis de algoritmos](algoritmos.md) | Instalar el criterio de comparación entre implementaciones |
-| 3 | [Hardware y Localidad de Memoria](localidad_memoria.md) | Entender el impacto de la caché en el rendimiento real |
-| 4 | [Benchmark y Profiling](profiling.md) | Medir el rendimiento en la práctica aislando el ruido |
-| 5 | [Secuencias](secuencias/indice.md) | Empezar por las estructuras lineales |
-| 6 | [Diccionarios y conjuntos](diccionarios/indice.md) | Pasar a acceso por clave, hashing y orden |
-| 7 | [Árboles](arboles/indice.md) | Trabajar jerarquía, búsqueda y prioridad |
-| 8 | [Grafos](grafos/indice.md) | Cerrar con relaciones generales y algoritmos clásicos |
+| 3 | [Secuencias](secuencias/indice.md) | Entrar por las estructuras lineales y sus restricciones |
+| 4 | [Diccionarios y conjuntos](diccionarios/indice.md) | Pasar del acceso posicional al acceso por clave |
+| 5 | [Árboles](arboles/indice.md) | Trabajar jerarquía, búsqueda, balance y prioridad |
+| 6 | [Grafos](grafos/indice.md) | Cerrar con relaciones generales y algoritmos clásicos |
+
+Si querés una versión todavía más corta del recorrido, el hilo principal hoy es:
+
+1. [ADT](adt.md),
+2. [algoritmos](algoritmos.md),
+3. [fundamentos de secuencias](secuencias/fundamentos.md),
+4. [tablas hash](diccionarios/tablas_hash.md),
+5. [BST](arboles/arboles_busqueda.md),
+6. [recorridos de grafos](grafos/recorridos.md).
 
 ## Capítulos nucleares
 
-Estos capítulos conviene dominarlos sí o sí porque fijan el lenguaje y las comparaciones que el resto de la parte reutiliza:
+Estos capítulos conviene dominarlos sí o sí porque fijan ideas que después reaparecen en toda la parte:
 
 | Capítulo | Por qué es nuclear |
 | :--- | :--- |
-| [Tipos abstractos de datos](adt.md) | Define qué se abstrae y qué pertenece a la implementación |
-| [Análisis de algoritmos](algoritmos.md) | Fija el modelo de costo de toda la parte |
-| [Fundamentos de secuencias](secuencias/fundamentos.md) | Introduce la familia lineal que reaparece en casi todas las implementaciones |
-| [Tablas hash](diccionarios/tablas_hash.md) | Instala el trade-off más fuerte entre acceso promedio y peor caso |
-| [Árboles binarios de búsqueda](arboles/arboles_busqueda.md) | Une jerarquía, orden y eficiencia |
+| [Tipos abstractos de datos](adt.md) | Separa contrato abstracto de representación concreta |
+| [Análisis de algoritmos](algoritmos.md) | Fija el modelo de costo reutilizado por toda la parte |
+| [Fundamentos de secuencias](secuencias/fundamentos.md) | Instala el lenguaje base de operaciones lineales |
+| [Tablas hash](diccionarios/tablas_hash.md) | Muestra el trade-off más fuerte entre promedio, colisiones y peor caso |
+| [Árboles binarios de búsqueda](arboles/arboles_busqueda.md) | Une forma jerárquica, orden y dependencia de la altura |
 | [Recorridos](grafos/recorridos.md) | Conecta pilas, colas, árboles y grafos desde algoritmos concretos |
 
 ## Repaso y ampliación
 
-Estas páginas sirven mejor como profundización o segunda lectura una vez que ya está claro el mapa general:
+Estas páginas funcionan mejor como profundización o segunda lectura:
 
 | Página | Tipo | Uso sugerido |
 | :--- | :--- | :--- |
-| [Deques](secuencias/deques.md) | Ampliación | Releer cuando aparezcan operaciones eficientes en ambos extremos |
-| [Colas de prioridad](secuencias/colas_prioridad.md) | Puente | Usar para enlazar secuencias con heaps |
+| [Deques](secuencias/deques.md) | Ampliación | Releer cuando ambos extremos pasan a ser relevantes |
+| [Colas de prioridad](secuencias/colas_prioridad.md) | Puente | Usar para enlazar secuencias con heaps y algoritmos voraces |
 | [Tries](diccionarios/tries.md) | Ampliación | Consultar cuando el dominio esté guiado por prefijos |
-| [Árboles balanceados](arboles/arboles_balanceados.md) | Profundización | Releer cuando la garantía de altura sea central |
-| [Árboles B](arboles/arboles_b.md) | Profundización | Consultar al hablar de almacenamiento externo |
-| [Orden topológico](grafos/orden_topologico.md) y [Conectividad](grafos/conectividad.md) | Ampliación | Releer frente a dependencias y partición de grafos |
-
-## Criterio de organización
-
-Cada subdirectorio mezcla dos planos:
-
-1. un capítulo de **fundamentos** para la teoría general del TAD o familia,
-2. capítulos de **estructuras específicas** donde aparezcan sus variantes e implementaciones.
-
-Eso evita dos errores frecuentes:
-
-- explicar la abstracción sin bajar nunca a código,
-- o listar implementaciones sueltas sin una idea unificadora del TAD.
+| [Árboles balanceados](arboles/arboles_balanceados.md) | Profundización | Releer cuando la garantía de altura sea una exigencia real |
+| [Árboles B](arboles/arboles_b.md) | Profundización | Consultar cuando el costo dominante sea leer páginas o bloques |
+| [Orden topológico](grafos/orden_topologico.md) y [Conectividad](grafos/conectividad.md) | Ampliación | Releer frente a dependencias, componentes y partición del grafo |
 
 ## Índice estructural exhaustivo
 
@@ -79,8 +87,6 @@ Eso evita dos errores frecuentes:
 
 - [Tipos abstractos de datos](adt.md)
 - [Análisis de algoritmos](algoritmos.md)
-- [Hardware y Localidad de Memoria](localidad_memoria.md)
-- [Benchmark y Profiling](profiling.md)
 
 ### Secuencias
 
@@ -123,19 +129,19 @@ Eso evita dos errores frecuentes:
 - [Orden topológico](grafos/orden_topologico.md)
 - [Conectividad](grafos/conectividad.md)
 
-## Criterios de exhaustividad
+## Criterio de organización
 
-Para considerar cerrada esta parte, cada familia debería cubrir como mínimo:
+La parte quedó organizada para evitar dos errores frecuentes:
 
-1. definición abstracta,
-2. operaciones básicas,
-3. invariantes,
-4. implementaciones alternativas,
-5. complejidad temporal y espacial,
-6. ventajas y desventajas,
-7. aplicaciones típicas,
-8. errores frecuentes de implementación.
+1. enseñar solo la abstracción y nunca bajar a representación;
+2. listar implementaciones sueltas sin un problema abstracto que las unifique.
+
+Por eso cada familia intenta sostener este patrón:
+
+- una página de **fundamentos**,
+- varias páginas de **estructuras específicas**,
+- y un índice de familia que funcione como mapa comparativo.
 
 ## Próximo paso
 
-Una vez fijado este mapa, conviene completar primero los capítulos transversales ([ADT](adt.md) y [algoritmos](algoritmos.md)) y después avanzar familia por familia.
+Si ya tenés claro el marco transversal, el siguiente paso natural es entrar por [Secuencias](secuencias/indice.md). Si lo que querés es revisar toda la progresión de la parte antes de publicar, conviene pasar después por los índices de [diccionarios](diccionarios/indice.md), [árboles](arboles/indice.md) y [grafos](grafos/indice.md).

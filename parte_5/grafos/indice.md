@@ -23,8 +23,8 @@ La familia sigue **en revisión**, pero ya no está toda en el mismo estado.
 | [Fundamentos de grafos](fundamentos.md) | Desarrollo base disponible | Fija el vocabulario mínimo de vértices, aristas, caminos y conectividad |
 | [Representación de grafos](representacion.md) | Desarrollo base disponible | Compara matrices, listas y aristas |
 | [Recorridos](recorridos.md) | Desarrollo base disponible | Instala DFS y BFS |
-| [Caminos mínimos](caminos_minimos.md) | Esqueleto editorial | Introduce optimización sobre caminos |
-| [Árboles de expansión](arboles_de_expansion.md) | Esqueleto editorial | Trabaja conectividad con costo mínimo |
+| [Caminos mínimos](caminos_minimos.md) | Desarrollo base disponible | Introduce optimización sobre caminos |
+| [Árboles de expansión](arboles_de_expansion.md) | Desarrollo base disponible | Trabaja conectividad con costo mínimo |
 | [Orden topológico](orden_topologico.md) y [Conectividad](conectividad.md) | Esqueleto editorial | Cierra con dependencias, componentes y particiones |
 
 ## Recorrido sugerido
@@ -53,8 +53,8 @@ La familia sigue **en revisión**, pero ya no está toda en el mismo estado.
 
 Hoy la lectura más útil de esta familia es:
 
-1. leer en bloque [Fundamentos de grafos](fundamentos.md), [Representación de grafos](representacion.md) y [Recorridos](recorridos.md), porque ya fijan el núcleo conceptual y algorítmico de la familia;
-2. usar el resto del índice como hoja de ruta para optimización, expansión y partición;
+1. leer en bloque [Fundamentos de grafos](fundamentos.md), [Representación de grafos](representacion.md), [Recorridos](recorridos.md), [Caminos mínimos](caminos_minimos.md) y [Árboles de expansión](arboles_de_expansion.md), porque ya fijan el núcleo conceptual, de representación y de optimización básica de la familia;
+2. usar el resto del índice como hoja de ruta para dependencias y partición;
 3. volver a este mapa a medida que cada capítulo deje de ser esqueleto y pase a contenido pleno.
 
 ## Criterios de uso
