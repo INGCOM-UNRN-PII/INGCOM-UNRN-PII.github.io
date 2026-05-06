@@ -26,6 +26,12 @@ project:
     children:
     - file: catedra/programa.md
     - file: catedra/acuerdo_ia.md
+  - title: Editorial
+    children:
+    - file: editorial/indice.md
+    - file: editorial/plantilla_capitulos.md
+    - file: editorial/estilo_y_formato.md
+    - file: editorial/estado_y_mantenimiento.md
   - title: 'Parte 1: Fundamentos'
     children:
     - file: parte_1/indice.md
