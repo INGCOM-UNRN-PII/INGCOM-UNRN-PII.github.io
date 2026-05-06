@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../../resources/svg.css" type="text/css"?><svg
+   width="720"
+   height="360"
+   viewBox="0 0 720 360"
+   role="img"
+   aria-labelledby="title desc"
+   version="1.1"
+   id="svg7"
+   sodipodi:docname="precondicion_metodo.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs7" />
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.3152778"
+     inkscape:cx="360"
+     inkscape:cy="180.19007"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg7" />
+  <title
+     id="title">Precondición de un método</title>
+  <desc
+     id="desc">Panel que resume la idea de precondición como responsabilidad del cliente antes de invocar un método.</desc>
+  <style
+     id="style1"><![CDATA[
+    .panel-frame { fill: #ffffff; stroke: var(--unrn-dark-blue); stroke-width: 2.5; rx: 16; }
+    .header-band { fill: var(--unrn-dark-blue); }
+    .header-text { font-family: 'Fabrikat', Arial, sans-serif; font-size: 18px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+    .accent-box { fill: var(--red-lightest); stroke: var(--unrn-red); stroke-width: 1.5; rx: 12; }
+    .accent-title { font-family: 'Lato', Arial, sans-serif; font-size: 15px; font-weight: 700; fill: var(--unrn-dark-blue); text-anchor: middle; }
+    .accent-subtitle { font-family: 'Lato', Arial, sans-serif; font-size: 12px; font-weight: 700; fill: var(--unrn-red); text-anchor: middle; }
+    .quote-box { fill: var(--blue-lightest); stroke: var(--blue-light); stroke-width: 1.5; rx: 12; }
+    .quote-text { font-family: 'Lato', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: var(--unrn-dark-blue); text-anchor: middle; }
+    .bullet-dot { fill: var(--unrn-red); }
+  ]]></style>
+  <rect
+     x="24"
+     y="24"
+     width="672"
+     height="312"
+     rx="16"
+     class="panel-frame"
+     id="rect1" />
+  <path
+     d="M 40 24 H 680 Q 696 24 696 40 V 92 H 24 V 40 Q 24 24 40 24 Z"
+     class="header-band"
+     id="path1" />
+  <text
+     x="360"
+     y="65.928986"
+     class="header-text"
+     id="text1">MÉTODO</text>
+  <rect
+     x="112"
+     y="118"
+     width="496"
+     height="62"
+     rx="12"
+     class="accent-box"
+     id="rect2"
+     style="fill:#e5ff80" />
+  <text
+     x="360"
+     y="144"
+     class="accent-title"
+     id="text2">PRECONDICIÓN</text>
+  <text
+     x="360"
+     y="164"
+     class="accent-subtitle"
+     id="text3">responsabilidad del cliente</text>
+  <rect
+     x="92"
+     y="202"
+     width="536"
+     height="54"
+     rx="12"
+     class="quote-box"
+     id="rect3"
+     style="fill:#87de87" />
+  <text
+     x="360"
+     y="236"
+     class="quote-text"
+     id="text4">“Si me llamás, asegurate de que...”</text>
+  <circle
+     cx="124"
+     cy="286"
+     r="5"
+     class="bullet-dot"
+     id="circle4" />
+  <text
+     x="144"
+     y="291"
+     class="label-bold"
+     id="text5">Parámetros válidos</text>
+  <circle
+     cx="124"
+     cy="312"
+     r="5"
+     class="bullet-dot"
+     id="circle5" />
+  <text
+     x="144"
+     y="317"
+     class="label-bold"
+     id="text6">Estado del objeto apropiado</text>
+  <circle
+     cx="420"
+     cy="286"
+     r="5"
+     class="bullet-dot"
+     id="circle6" />
+  <text
+     x="440"
+     y="291"
+     class="label-bold"
+     id="text7">Recursos disponibles</text>
+</svg>

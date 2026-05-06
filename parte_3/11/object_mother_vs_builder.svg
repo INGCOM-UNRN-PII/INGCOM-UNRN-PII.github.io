@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../../resources/svg.css" type="text/css"?><svg
+   width="860"
+   height="520"
+   viewBox="0 0 860 520"
+   role="img"
+   aria-labelledby="title desc"
+   version="1.1"
+   id="svg14"
+   sodipodi:docname="object_mother_vs_builder.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs14" />
+  <sodipodi:namedview
+     id="namedview14"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.1011628"
+     inkscape:cx="433.63252"
+     inkscape:cy="330.55966"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg14" />
+  <title
+     id="title">Object Mother vs Test Data Builder</title>
+  <desc
+     id="desc">Comparación entre Object Mother, Test Data Builder y una combinación de ambos patrones para crear datos de prueba.</desc>
+  <style
+     id="style1"><![CDATA[
+    .panel-frame { fill: #ffffff; stroke: var(--unrn-dark-blue); stroke-width: 2.5; }
+    .header-band { fill: var(--unrn-dark-blue); }
+    .header-text { font-family: 'Fabrikat', Arial, sans-serif; font-size: 23px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+    .card { stroke-width: 2; }
+    .mother { fill: var(--red-lightest); stroke: var(--unrn-red); }
+    .builder { fill: var(--blue-lightest); stroke: var(--blue-light); }
+    .combo { fill: #f4eefc; stroke: #6a1b9a; }
+    .card-title { font-family: 'Fabrikat', Arial, sans-serif; font-size: 18px; font-weight: 700; fill: var(--unrn-dark-blue); text-anchor: middle; }
+    .bullet-dot { fill: var(--unrn-red); }
+    .combo-dot { fill: #6a1b9a; }
+    .item-text { font-family: 'Lato', Arial, sans-serif; font-size: 13px; font-weight: 700; fill: var(--unrn-dark-blue); }
+    .support-text { font-family: 'Lato', Arial, sans-serif; font-size: 13px; font-weight: 400; fill: var(--gray-700); text-anchor: middle; }
+  ]]></style>
+  <rect
+     x="24"
+     y="24"
+     width="812"
+     height="472"
+     rx="18"
+     class="panel-frame"
+     id="rect1" />
+  <path
+     d="M 42 24 H 818 Q 836 24 836 42 V 96 H 24 V 42 Q 24 24 42 24 Z"
+     class="header-band"
+     id="path1" />
+  <text
+     x="430"
+     y="68"
+     class="header-text"
+     id="text1">OBJECT MOTHER vs TEST DATA BUILDER</text>
+  <text
+     x="430"
+     y="124"
+     class="support-text"
+     id="text2">Elegí según complejidad del objeto, variaciones necesarias y claridad del setup.</text>
+  <rect
+     x="52"
+     y="160"
+     width="236"
+     height="290"
+     rx="16"
+     class="card mother"
+     id="rect2"
+     style="fill:#ffdd55;fill-opacity:1;stroke:#757018;stroke-opacity:1" />
+  <text
+     x="170"
+     y="198"
+     class="card-title"
+     id="text3">OBJECT MOTHER</text>
+  <circle
+     cx="78"
+     cy="236"
+     r="4"
+     class="bullet-dot"
+     id="circle3" />
+  <text
+     x="96"
+     y="241"
+     class="item-text"
+     id="text4"><tspan
+       sodipodi:role="line"
+       id="tspan14"
+       x="96"
+       y="241">Objetos simples con pocas</tspan><tspan
+       sodipodi:role="line"
+       id="tspan15"
+       x="96"
+       y="257.25">variaciones</tspan></text>
+  <circle
+     cx="78"
+     cy="278"
+     r="4"
+     class="bullet-dot"
+     id="circle4" />
+  <text
+     x="96"
+     y="283"
+     class="item-text"
+     id="text5"><tspan
+       x="96"
+       dy="0"
+       id="tspan4">Escenarios nombrados:</tspan><tspan
+       x="96"
+       dy="18"
+       id="tspan5">cuentaVacia(), cuentaPremium()</tspan></text>
+  <circle
+     cx="78"
+     cy="336"
+     r="4"
+     class="bullet-dot"
+     id="circle5" />
+  <text
+     x="96"
+     y="341"
+     class="item-text"
+     id="text6"><tspan
+       sodipodi:role="line"
+       id="tspan16"
+       x="96"
+       y="341">Reduce código repetido de</tspan><tspan
+       sodipodi:role="line"
+       id="tspan17"
+       x="96"
+       y="357.25">setup</tspan></text>
+  <rect
+     x="312"
+     y="160"
+     width="236"
+     height="290"
+     rx="16"
+     class="card builder"
+     id="rect6"
+     style="fill:#87de87;stroke:#0d9d00;stroke-opacity:1" />
+  <text
+     x="430"
+     y="198"
+     class="card-title"
+     id="text7">TEST DATA BUILDER</text>
+  <circle
+     cx="338"
+     cy="236"
+     r="4"
+     class="bullet-dot"
+     id="circle7" />
+  <text
+     x="356"
+     y="241"
+     class="item-text"
+     id="text8"><tspan
+       sodipodi:role="line"
+       id="tspan18"
+       x="356"
+       y="241">Objetos complejos con</tspan><tspan
+       sodipodi:role="line"
+       id="tspan19"
+       x="356"
+       y="257.25">muchos atributos</tspan></text>
+  <circle
+     cx="338"
+     cy="278"
+     r="4"
+     class="bullet-dot"
+     id="circle8" />
+  <text
+     x="356"
+     y="283"
+     class="item-text"
+     id="text9"><tspan
+       sodipodi:role="line"
+       id="tspan20"
+       x="356"
+       y="283"><tspan
+         x="356"
+         dy="0"
+         id="tspan8">Permite variar campos</tspan></tspan><tspan
+       sodipodi:role="line"
+       id="tspan21"
+       x="356"
+       y="299.25"><tspan
+         x="356"
+         id="tspan22"
+         dy="0 0 0 0 0 0 0 0 0 0 0 0">específicos sin romper el</tspan></tspan><tspan
+       sodipodi:role="line"
+       x="356"
+       y="315.5"
+       id="tspan23"><tspan
+         x="356"
+         id="tspan24">resto del setup</tspan></tspan></text>
+  <circle
+     cx="338"
+     cy="336"
+     r="4"
+     class="bullet-dot"
+     id="circle9" />
+  <text
+     x="356"
+     y="341"
+     class="item-text"
+     id="text10">Fluent API para mayor claridad</text>
+  <rect
+     x="572"
+     y="160"
+     width="236"
+     height="290"
+     rx="16"
+     class="card combo"
+     id="rect10" />
+  <text
+     x="690"
+     y="198"
+     class="card-title"
+     id="text11">COMBINACIÓN</text>
+  <circle
+     cx="598"
+     cy="236"
+     r="4"
+     class="combo-dot"
+     id="circle11" />
+  <text
+     x="616"
+     y="241"
+     class="item-text"
+     id="text12"><tspan
+       x="616"
+       dy="0"
+       id="tspan11">Builder como implementación</tspan><tspan
+       x="616"
+       dy="18"
+       id="tspan12">interna del Object Mother</tspan></text>
+  <circle
+     cx="598"
+     cy="294"
+     r="4"
+     class="combo-dot"
+     id="circle12" />
+  <text
+     x="616"
+     y="299"
+     class="item-text"
+     id="text13"><tspan
+       sodipodi:role="line"
+       id="tspan25"
+       x="616"
+       y="299">Combina escenarios listos</tspan><tspan
+       sodipodi:role="line"
+       id="tspan26"
+       x="616"
+       y="315.25">y flexibilidad</tspan></text>
+  <circle
+     cx="598"
+     cy="336"
+     r="4"
+     class="combo-dot"
+     id="circle13" />
+  <text
+     x="616"
+     y="341"
+     class="item-text"
+     id="text14"><tspan
+       sodipodi:role="line"
+       id="tspan27"
+       x="616"
+       y="341">Útil cuando crece la</tspan><tspan
+       sodipodi:role="line"
+       id="tspan28"
+       x="616"
+       y="357.25">variedad de casos</tspan></text>
+</svg>

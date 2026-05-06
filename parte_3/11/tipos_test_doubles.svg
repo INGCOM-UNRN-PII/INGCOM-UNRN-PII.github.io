@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../../resources/svg.css" type="text/css"?><svg
+   width="860"
+   height="700"
+   viewBox="0 0 860 700"
+   role="img"
+   aria-labelledby="title desc"
+   version="1.1"
+   id="svg19"
+   sodipodi:docname="tipos_test_doubles.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs19" />
+  <sodipodi:namedview
+     id="namedview19"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.1011628"
+     inkscape:cx="430"
+     inkscape:cy="349.63041"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg19" />
+  <title
+     id="title">Tipos de test doubles</title>
+  <desc
+     id="desc">Resumen visual de dummy, stub, spy, mock y fake con su definición breve.</desc>
+  <style
+     id="style1"><![CDATA[
+    .panel-frame { fill: #ffffff; stroke: var(--unrn-dark-blue); stroke-width: 2.5; }
+    .header-band { fill: var(--unrn-dark-blue); }
+    .header-text { font-family: 'Fabrikat', Arial, sans-serif; font-size: 24px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+    .support-text { font-family: 'Lato', Arial, sans-serif; font-size: 13px; font-weight: 400; fill: var(--gray-700); text-anchor: middle; }
+    .card { stroke-width: 2; }
+    .card-title { font-family: 'Fabrikat', Arial, sans-serif; font-size: 18px; font-weight: 700; fill: var(--unrn-dark-blue); text-anchor: middle; }
+    .card-copy { font-family: 'Lato', Arial, sans-serif; font-size: 13px; font-weight: 400; fill: var(--gray-700); text-anchor: middle; }
+    .dummy { fill: var(--gray-100); stroke: var(--gray-500); }
+    .stub { fill: var(--blue-lightest); stroke: var(--blue-light); }
+    .spy { fill: #fff4d6; stroke: #d18b00; }
+    .mock { fill: var(--red-lightest); stroke: var(--unrn-red); }
+    .fake { fill: #edf7ed; stroke: #2e7d32; }
+  ]]></style>
+  <rect
+     x="24"
+     y="24"
+     width="812"
+     height="652"
+     rx="18"
+     class="panel-frame"
+     id="rect1" />
+  <path
+     d="M 42 24 H 818 Q 836 24 836 42 V 96 H 24 V 42 Q 24 24 42 24 Z"
+     class="header-band"
+     id="path1" />
+  <text
+     x="430"
+     y="68"
+     class="header-text"
+     id="text1">TIPOS DE TEST DOUBLES</text>
+  <text
+     x="430"
+     y="124"
+     class="support-text"
+     id="text2">Cada doble reemplaza una dependencia real con un objetivo distinto.</text>
+  <rect
+     x="56"
+     y="156"
+     width="230"
+     height="180"
+     rx="16"
+     class="card dummy"
+     id="rect2"
+     style="fill:#e9ddaf;stroke:#eea905;stroke-opacity:1" />
+  <text
+     x="171"
+     y="196"
+     class="card-title"
+     id="text3">DUMMY</text>
+  <text
+     x="171"
+     y="232"
+     class="card-copy"
+     id="text5"><tspan
+       x="171"
+       dy="0"
+       id="tspan3">Objeto que se pasa pero</tspan><tspan
+       x="171"
+       dy="18"
+       id="tspan4">no se usa realmente.</tspan><tspan
+       x="171"
+       dy="18"
+       id="tspan5">Solo completa parámetros.</tspan></text>
+  <rect
+     x="315"
+     y="156"
+     width="230"
+     height="180"
+     rx="16"
+     class="card stub"
+     id="rect5"
+     style="fill:#ffd5d5;stroke:#cb4b4b;stroke-opacity:1" />
+  <text
+     x="430"
+     y="196"
+     class="card-title"
+     id="text6">STUB</text>
+  <text
+     x="430"
+     y="232"
+     class="card-copy"
+     id="text8"><tspan
+       x="430"
+       dy="0"
+       id="tspan6">Devuelve respuestas</tspan><tspan
+       x="430"
+       dy="18"
+       id="tspan7">predefinidas a llamadas.</tspan><tspan
+       x="430"
+       dy="18"
+       id="tspan8">No verifica interacciones.</tspan></text>
+  <rect
+     x="574"
+     y="156"
+     width="230"
+     height="180"
+     rx="16"
+     class="card spy"
+     id="rect8" />
+  <text
+     x="689"
+     y="196"
+     class="card-title"
+     id="text9">SPY</text>
+  <text
+     x="689"
+     y="232"
+     class="card-copy"
+     id="text11"><tspan
+       x="689"
+       dy="0"
+       id="tspan9">Stub que además registra</tspan><tspan
+       x="689"
+       dy="18"
+       id="tspan10">cómo fue llamado.</tspan><tspan
+       x="689"
+       dy="18"
+       id="tspan11">Sirve para inspeccionar uso.</tspan></text>
+  <rect
+     x="108"
+     y="380"
+     width="290"
+     height="220"
+     rx="16"
+     class="card mock"
+     id="rect11"
+     style="fill:#afc3e9;stroke:#1c4fed;stroke-opacity:1;fill-opacity:1" />
+  <text
+     x="253"
+     y="420"
+     class="card-title"
+     id="text12">MOCK</text>
+  <text
+     x="253"
+     y="458"
+     class="card-copy"
+     id="text15"><tspan
+       x="253"
+       dy="0"
+       id="tspan12">Tiene expectativas</tspan><tspan
+       x="253"
+       dy="18"
+       id="tspan13">preprogramadas sobre llamadas.</tspan><tspan
+       x="253"
+       dy="18"
+       id="tspan14">Falla si el comportamiento</tspan><tspan
+       x="253"
+       dy="18"
+       id="tspan15">esperado no ocurre.</tspan></text>
+  <rect
+     x="462"
+     y="380"
+     width="290"
+     height="220"
+     rx="16"
+     class="card fake"
+     id="rect15" />
+  <text
+     x="607"
+     y="420"
+     class="card-title"
+     id="text16">FAKE</text>
+  <text
+     x="607"
+     y="458"
+     class="card-copy"
+     id="text19"><tspan
+       x="607"
+       dy="0"
+       id="tspan16">Implementación funcional</tspan><tspan
+       x="607"
+       dy="18"
+       id="tspan17">simplificada para testing.</tspan><tspan
+       x="607"
+       dy="18"
+       id="tspan18">Ejemplo: base de datos</tspan><tspan
+       x="607"
+       dy="18"
+       id="tspan19">en memoria.</tspan></text>
+</svg>

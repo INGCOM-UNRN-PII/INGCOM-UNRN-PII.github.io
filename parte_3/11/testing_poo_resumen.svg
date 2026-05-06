@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../../resources/svg.css" type="text/css"?><svg
+   width="860"
+   height="660"
+   viewBox="0 0 860 660"
+   role="img"
+   aria-labelledby="title desc"
+   version="1.1"
+   id="svg20"
+   sodipodi:docname="testing_poo_resumen.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs20" />
+  <sodipodi:namedview
+     id="namedview20"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.055814"
+     inkscape:cx="399.69163"
+     inkscape:cy="309.71366"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg20" />
+  <title
+     id="title">Testing en POO - resumen</title>
+  <desc
+     id="desc">Resumen visual de fundamentos, TDD, dobles de prueba, diseño testeable y buenas prácticas para testing en programación orientada a objetos.</desc>
+  <style
+     id="style1"><![CDATA[
+    .panel-frame { fill: #ffffff; stroke: var(--unrn-dark-blue); stroke-width: 2.5; }
+    .header-band { fill: var(--unrn-dark-blue); }
+    .header-text { font-family: 'Fabrikat', Arial, sans-serif; font-size: 24px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+    .card { stroke-width: 2; }
+    .card-blue { fill: var(--blue-lightest); stroke: var(--blue-light); }
+    .card-red { fill: var(--red-lightest); stroke: var(--unrn-red); }
+    .card-amber { fill: #fff4d6; stroke: #d18b00; }
+    .card-green { fill: #edf7ed; stroke: #2e7d32; }
+    .card-violet { fill: #f4eefc; stroke: #6a1b9a; }
+    .card-title { font-family: 'Fabrikat', Arial, sans-serif; font-size: 17px; font-weight: 700; fill: var(--unrn-dark-blue); text-anchor: middle; }
+    .bullet-dot { fill: var(--unrn-red); }
+    .item-text { font-family: 'Lato', Arial, sans-serif; font-size: 13px; font-weight: 700; fill: var(--unrn-dark-blue); }
+    .support-text { font-family: 'Lato', Arial, sans-serif; font-size: 13px; font-weight: 400; fill: var(--gray-700); text-anchor: middle; }
+  ]]></style>
+  <rect
+     x="24"
+     y="24"
+     width="812"
+     height="612"
+     rx="18"
+     class="panel-frame"
+     id="rect1" />
+  <path
+     d="M 42 24 H 818 Q 836 24 836 42 V 96 H 24 V 42 Q 24 24 42 24 Z"
+     class="header-band"
+     id="path1" />
+  <text
+     x="430"
+     y="68"
+     class="header-text"
+     id="text1">TESTING EN POO - RESUMEN</text>
+  <text
+     x="430"
+     y="124"
+     class="support-text"
+     id="text2">Un mapa rápido de conceptos, técnicas y criterios de diseño.</text>
+  <rect
+     x="52"
+     y="156"
+     width="360"
+     height="176"
+     rx="16"
+     class="card card-blue"
+     id="rect2"
+     style="fill:#e5ff80;stroke:#bdfa0b;stroke-opacity:1" />
+  <text
+     x="232"
+     y="190"
+     class="card-title"
+     id="text3">FUNDAMENTOS</text>
+  <circle
+     cx="78"
+     cy="224"
+     r="4"
+     class="bullet-dot"
+     id="circle3" />
+  <text
+     x="96"
+     y="229"
+     class="item-text"
+     id="text4">Red de seguridad y documentación viva</text>
+  <circle
+     cx="78"
+     cy="258"
+     r="4"
+     class="bullet-dot"
+     id="circle4" />
+  <text
+     x="96"
+     y="263"
+     class="item-text"
+     id="text5">Pirámide: unitarios &gt; integración &gt; E2E</text>
+  <circle
+     cx="78"
+     cy="292"
+     r="4"
+     class="bullet-dot"
+     id="circle5" />
+  <text
+     x="96"
+     y="297"
+     class="item-text"
+     id="text6">Patrón AAA: Arrange, Act, Assert</text>
+  <rect
+     x="448"
+     y="156"
+     width="360"
+     height="176"
+     rx="16"
+     class="card card-red"
+     id="rect6"
+     style="fill:#eef4d7;stroke:#3eff1f;stroke-opacity:1" />
+  <text
+     x="628"
+     y="190"
+     class="card-title"
+     id="text7">TDD</text>
+  <circle
+     cx="474"
+     cy="224"
+     r="4"
+     class="bullet-dot"
+     id="circle7" />
+  <text
+     x="492"
+     y="229"
+     class="item-text"
+     id="text8">Ciclo RED - GREEN - REFACTOR</text>
+  <circle
+     cx="474"
+     cy="258"
+     r="4"
+     class="bullet-dot"
+     id="circle8" />
+  <text
+     x="492"
+     y="263"
+     class="item-text"
+     id="text9">Los tests guían el diseño de objetos</text>
+  <circle
+     cx="474"
+     cy="292"
+     r="4"
+     class="bullet-dot"
+     id="circle9" />
+  <text
+     x="492"
+     y="297"
+     class="item-text"
+     id="text10">El código nace testeable desde el inicio</text>
+  <rect
+     x="52"
+     y="356"
+     width="360"
+     height="176"
+     rx="16"
+     class="card card-amber"
+     id="rect10" />
+  <text
+     x="232"
+     y="390"
+     class="card-title"
+     id="text11">DOBLES DE PRUEBA</text>
+  <circle
+     cx="78"
+     cy="424"
+     r="4"
+     class="bullet-dot"
+     id="circle11" />
+  <text
+     x="96"
+     y="429"
+     class="item-text"
+     id="text12">Stub: respuestas predefinidas</text>
+  <circle
+     cx="78"
+     cy="458"
+     r="4"
+     class="bullet-dot"
+     id="circle12" />
+  <text
+     x="96"
+     y="463"
+     class="item-text"
+     id="text13">Spy: registra llamadas</text>
+  <circle
+     cx="78"
+     cy="492"
+     r="4"
+     class="bullet-dot"
+     id="circle13" />
+  <text
+     x="96"
+     y="497"
+     class="item-text"
+     id="text14">Mock y frameworks como Mockito</text>
+  <rect
+     x="448"
+     y="356"
+     width="360"
+     height="176"
+     rx="16"
+     class="card card-green"
+     id="rect14" />
+  <text
+     x="628"
+     y="390"
+     class="card-title"
+     id="text15">DISEÑO TESTEABLE</text>
+  <circle
+     cx="474"
+     cy="424"
+     r="4"
+     class="bullet-dot"
+     id="circle15" />
+  <text
+     x="492"
+     y="429"
+     class="item-text"
+     id="text16">Inyección de dependencias e interfaces</text>
+  <circle
+     cx="474"
+     cy="458"
+     r="4"
+     class="bullet-dot"
+     id="circle16" />
+  <text
+     x="492"
+     y="463"
+     class="item-text"
+     id="text17">Evitar estado global y singletons</text>
+  <circle
+     cx="474"
+     cy="492"
+     r="4"
+     class="bullet-dot"
+     id="circle17" />
+  <text
+     x="492"
+     y="497"
+     class="item-text"
+     id="text18">SOLID favorece aislamiento y prueba</text>
+  <rect
+     x="170"
+     y="548"
+     width="520"
+     height="62"
+     rx="16"
+     class="card card-violet"
+     id="rect18" />
+  <text
+     x="430"
+     y="576"
+     class="card-title"
+     id="text19">BUENAS PRÁCTICAS</text>
+  <circle
+     cx="214"
+     cy="596"
+     r="4"
+     class="bullet-dot"
+     id="circle19" />
+  <text
+     x="232"
+     y="601"
+     class="item-text"
+     id="text20">FIRST, nombres descriptivos, un concepto por test, Object Mother y Builder</text>
+</svg>

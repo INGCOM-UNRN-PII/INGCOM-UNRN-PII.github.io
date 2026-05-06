@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../../resources/svg.css" type="text/css"?><svg
+   width="860"
+   height="620"
+   viewBox="0 0 860 620"
+   role="img"
+   aria-labelledby="title desc"
+   version="1.1"
+   id="svg14"
+   sodipodi:docname="niveles_testing.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview14"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.77863968"
+     inkscape:cx="383.36089"
+     inkscape:cy="337.76856"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg14" />
+  <title
+     id="title">Niveles de testing</title>
+  <desc
+     id="desc">Pirámide de testing con tests unitarios en la base, tests de integración en el medio, E2E en la cima y un eje que indica frecuencia de ejecución.</desc>
+  <defs
+     id="defs1">
+    <marker
+       id="arrowhead"
+       markerWidth="10"
+       markerHeight="10"
+       refX="8"
+       refY="5"
+       orient="auto-start-reverse">
+      <path
+         d="M 0 0 L 10 5 L 0 10 z"
+         fill="var(--gray-600)"
+         id="path1" />
+    </marker>
+    <style
+       id="style1"><![CDATA[
+      .panel-frame { fill: #ffffff; stroke: var(--unrn-dark-blue); stroke-width: 2.5; }
+      .header-band { fill: var(--unrn-dark-blue); }
+      .header-text { font-family: 'Fabrikat', Arial, sans-serif; font-size: 24px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+      .support-text { font-family: 'Lato', Arial, sans-serif; font-size: 13px; font-weight: 700; fill: var(--blue-light); text-anchor: middle; }
+      .layer-unit { fill: var(--blue-lightest); stroke: var(--blue-light); stroke-width: 2; }
+      .layer-integration { fill: var(--red-lightest); stroke: var(--unrn-red); stroke-width: 2; }
+      .layer-e2e { fill: #fff4d6; stroke: #d18b00; stroke-width: 2; }
+      .layer-title { font-family: 'Fabrikat', Arial, sans-serif; font-size: 17px; font-weight: 700; fill: var(--unrn-dark-blue); text-anchor: middle; }
+      .layer-copy { font-family: 'Lato', Arial, sans-serif; font-size: 13px; font-weight: 400; fill: var(--gray-700); text-anchor: middle; }
+      .axis-line { stroke: var(--gray-600); stroke-width: 2.5; marker-start: url(#arrowhead); marker-end: url(#arrowhead); }
+      .axis-label { font-family: 'Lato', Arial, sans-serif; font-size: 13px; font-weight: 700; fill: var(--unrn-dark-blue); }
+      .axis-copy { font-family: 'Lato', Arial, sans-serif; font-size: 12px; font-weight: 400; fill: var(--gray-700); }
+    ]]></style>
+  </defs>
+  <rect
+     x="24"
+     y="24"
+     width="812"
+     height="572"
+     rx="18"
+     class="panel-frame"
+     id="rect1" />
+  <path
+     d="M 42 24 H 818 Q 836 24 836 42 V 96 H 24 V 42 Q 24 24 42 24 Z"
+     class="header-band"
+     id="path2" />
+  <text
+     x="430"
+     y="68"
+     class="header-text"
+     id="text2">PIRÁMIDE DE TESTING</text>
+  <text
+     x="430"
+     y="124"
+     class="support-text"
+     id="text3">Más cobertura en la base. Más costo y fragilidad cerca de la punta.</text>
+  <g
+     id="g14"
+     transform="translate(-9.750049)">
+    <polygon
+       points="186,386 132,472 548,472 494,386 "
+       class="layer-unit"
+       id="polygon3"
+       style="fill:#80ff80;stroke:#0cd100;stroke-opacity:1"
+       transform="matrix(1.1535055,0,0,1.1535055,47.558179,-50.775164)" />
+    <polygon
+       points="242,294 186,386 494,386 438,294 "
+       class="layer-integration"
+       id="polygon4"
+       style="fill:#ff80e5;stroke:#d100bf;stroke-opacity:1"
+       transform="matrix(1.1535055,0,0,1.1535055,47.558179,-50.775164)" />
+    <polygon
+       points="242,294 438,294 340,190 "
+       class="layer-e2e"
+       id="polygon5"
+       style="stroke:#d18b00;stroke-opacity:1"
+       transform="matrix(1.1535055,0,0,1.1535055,47.558179,-50.775164)" />
+    <text
+       x="439.75006"
+       y="440.61819"
+       class="layer-title"
+       id="text5"
+       style="stroke-width:1.15351">UNIT TESTS</text>
+    <text
+       x="439.75006"
+       y="465.9953"
+       class="layer-copy"
+       id="text6"
+       style="stroke-width:1.15351">muchos, rápidos, estables</text>
+    <text
+       x="439.75006"
+       y="346.03073"
+       class="layer-title"
+       id="text7"
+       style="stroke-width:1.15351">INTEGRATION TESTS</text>
+    <text
+       x="439.75006"
+       y="369.10086"
+       class="layer-copy"
+       id="text8"
+       style="stroke-width:1.15351">algunos, moderados</text>
+    <text
+       x="439.75006"
+       y="232.9872"
+       class="layer-title"
+       id="text9"
+       style="stroke-width:1.15351">E2E / UI TESTS</text>
+    <text
+       x="439.75006"
+       y="256.05731"
+       class="layer-copy"
+       id="text10"
+       style="stroke-width:1.15351">pocos, lentos, frágiles</text>
+  </g>
+  <g
+     id="g15"
+     transform="translate(90,20)">
+    <line
+       x1="132"
+       y1="532"
+       x2="548"
+       y2="532"
+       class="axis-line"
+       id="line10" />
+    <text
+       x="132"
+       y="510"
+       class="axis-label"
+       id="text11">Ejecutar frecuentemente</text>
+    <text
+       x="132"
+       y="557"
+       class="axis-copy"
+       id="text12">rápidos, aislados</text>
+    <text
+       x="443"
+       y="510"
+       class="axis-label"
+       id="text13">Ejecutar menos</text>
+    <text
+       x="443"
+       y="557"
+       class="axis-copy"
+       id="text14">lentos, reales</text>
+  </g>
+</svg>

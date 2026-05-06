@@ -81,15 +81,18 @@ Necesario cuando:
 
 ### Problema
 
-```
-Sin Bridge: Explosión de clases
-├─ Círculo
-│  ├─ CirculoOpenGL
-│  └─ CirculoVulkan
-└─ Cuadrado
-   ├─ CuadradoOpenGL
-   └─ CuadradoVulkan
-```
+````{mermaid}
+
+flowchart TD
+    raiz["Sin Bridge: explosion de clases"]
+    raiz --> circulo["Circulo"]
+    raiz --> cuadrado["Cuadrado"]
+    circulo --> circuloOpenGL["CirculoOpenGL"]
+    circulo --> circuloVulkan["CirculoVulkan"]
+    cuadrado --> cuadradoOpenGL["CuadradoOpenGL"]
+    cuadrado --> cuadradoVulkan["CuadradoVulkan"]
+
+````
 
 ### Solución
 

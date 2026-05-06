@@ -84,26 +84,38 @@ Los **patrones creacionales** se ocupan de mecanismos de creación de objetos. P
 
 ## Flujo de Decisión
 
-```
-¿Necesitas crear un objeto?
-│
-├─ ¿Una única instancia global?
-│  └─ Usa Singleton
-│
-├─ ¿Múltiples tipos relacionados?
-│  ├─ ¿Familias coherentes?
-│  │  └─ Usa Abstract Factory
-│  └─ ¿Un tipo a la vez?
-│     └─ Usa Factory Method
-│
-├─ ¿Objeto muy complejo?
-│  ├─ ¿Construcción paso a paso?
-│  │  └─ Usa Builder
-│  └─ ¿Copia de existente?
-│     └─ Usa Prototype
-│
-└─ Usa constructor directo (simple)
-```
+````{mermaid}
+
+flowchart TD
+    inicio{"Necesitas crear un objeto?"}
+    unica{"Una unica instancia global?"}
+    relacionados{"Multiples tipos relacionados?"}
+    familias{"Familias coherentes?"}
+    unTipo{"Un tipo a la vez?"}
+    complejo{"Objeto muy complejo?"}
+    pasoAPaso{"Construccion paso a paso?"}
+    copia{"Copia de existente?"}
+
+    inicio --> unica
+    unica -->|Si| singleton["Usa Singleton"]
+    unica -->|No| relacionados
+
+    relacionados -->|Si| familias
+    familias -->|Si| abstractFactory["Usa Abstract Factory"]
+    familias -->|No| unTipo
+    unTipo -->|Si| factory["Usa Factory Method"]
+    unTipo -->|No| complejo
+
+    relacionados -->|No| complejo
+    complejo -->|Si| pasoAPaso
+    pasoAPaso -->|Si| builder["Usa Builder"]
+    pasoAPaso -->|No| copia
+    copia -->|Si| prototype["Usa Prototype"]
+    copia -->|No| directo["Usa constructor directo"]
+
+    complejo -->|No| directo
+
+````
 
 ---
 

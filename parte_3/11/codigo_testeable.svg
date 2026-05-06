@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../../resources/svg.css" type="text/css"?><svg
+   width="860"
+   height="620"
+   viewBox="0 0 860 620"
+   role="img"
+   aria-labelledby="title desc"
+   version="1.1"
+   id="svg17"
+   sodipodi:docname="codigo_testeable.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs17" />
+  <sodipodi:namedview
+     id="namedview17"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="1.1011628"
+     inkscape:cx="430"
+     inkscape:cy="309.67265"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg17" />
+  <title
+     id="title">Características del código testeable</title>
+  <desc
+     id="desc">Panel con cinco características del código testeable: dependencias inyectadas, bajo acoplamiento, responsabilidad única, sin estado global y determinismo.</desc>
+  <style
+     id="style1"><![CDATA[
+    .panel-frame { fill: #ffffff; stroke: var(--unrn-dark-blue); stroke-width: 2.5; }
+    .header-band { fill: var(--unrn-dark-blue); }
+    .header-text { font-family: 'Fabrikat', Arial, sans-serif; font-size: 24px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+    .feature-card { fill: var(--blue-lightest); stroke: var(--blue-light); stroke-width: 2; }
+    .feature-card-accent { fill: var(--red-lightest); stroke: var(--unrn-red); stroke-width: 2; }
+    .feature-title { font-family: 'Fabrikat', Arial, sans-serif; font-size: 17px; font-weight: 700; fill: var(--unrn-dark-blue); }
+    .feature-copy { font-family: 'Lato', Arial, sans-serif; font-size: 13px; font-weight: 400; fill: var(--gray-700); }
+    .check-circle { fill: #2e7d32; }
+    .check-mark { font-family: 'Lato', Arial, sans-serif; font-size: 16px; font-weight: 700; fill: #ffffff; text-anchor: middle; dominant-baseline: middle; }
+    .support-text { font-family: 'Lato', Arial, sans-serif; font-size: 13px; font-weight: 400; fill: var(--gray-700); text-anchor: middle; }
+  ]]></style>
+  <rect
+     x="24"
+     y="24"
+     width="812"
+     height="572"
+     rx="18"
+     class="panel-frame"
+     id="rect1" />
+  <path
+     d="M 42 24 H 818 Q 836 24 836 42 V 96 H 24 V 42 Q 24 24 42 24 Z"
+     class="header-band"
+     id="path1" />
+  <text
+     x="430"
+     y="68"
+     class="header-text"
+     id="text1">CÓDIGO TESTEABLE</text>
+  <text
+     x="430"
+     y="124"
+     class="support-text"
+     id="text2">Diseño orientado a dependencias reemplazables, reglas claras y estados previsibles.</text>
+  <rect
+     x="56"
+     y="156"
+     width="352"
+     height="112"
+     rx="16"
+     class="feature-card-accent"
+     id="rect2"
+     style="fill:#eeffaa" />
+  <circle
+     cx="92"
+     cy="196"
+     r="14"
+     class="check-circle"
+     id="circle2" />
+  <text
+     x="92"
+     y="197"
+     class="check-mark"
+     id="text3">✓</text>
+  <text
+     x="118"
+     y="188"
+     class="feature-title"
+     id="text4">DEPENDENCIAS INYECTADAS</text>
+  <text
+     x="118"
+     y="210"
+     class="feature-copy"
+     id="text5"><tspan
+       x="118"
+       dy="0"
+       id="tspan4">Las dependencias entran por constructor o método.</tspan><tspan
+       x="118"
+       dy="18"
+       id="tspan5">No se fijan adentro con new.</tspan></text>
+  <rect
+     x="452"
+     y="156"
+     width="352"
+     height="112"
+     rx="16"
+     class="feature-card"
+     id="rect5"
+     style="fill:#ccffaa" />
+  <circle
+     cx="488"
+     cy="196"
+     r="14"
+     class="check-circle"
+     id="circle5" />
+  <text
+     x="488"
+     y="197"
+     class="check-mark"
+     id="text6">✓</text>
+  <text
+     x="514"
+     y="188"
+     class="feature-title"
+     id="text7">BAJO ACOPLAMIENTO</text>
+  <text
+     x="514"
+     y="210"
+     class="feature-copy"
+     id="text8"><tspan
+       x="514"
+       dy="0"
+       id="tspan7">La clase depende de interfaces o abstracciones.</tspan><tspan
+       x="514"
+       dy="18"
+       id="tspan8">No queda atada a implementaciones concretas.</tspan></text>
+  <rect
+     x="56"
+     y="302"
+     width="352"
+     height="112"
+     rx="16"
+     class="feature-card"
+     id="rect8"
+     style="fill:#ddff55" />
+  <circle
+     cx="92"
+     cy="342"
+     r="14"
+     class="check-circle"
+     id="circle8" />
+  <text
+     x="92"
+     y="343"
+     class="check-mark"
+     id="text9">✓</text>
+  <text
+     x="118"
+     y="334"
+     class="feature-title"
+     id="text10">RESPONSABILIDAD ÚNICA</text>
+  <text
+     x="118"
+     y="356"
+     class="feature-copy"
+     id="text11"><tspan
+       x="118"
+       dy="0"
+       id="tspan10">Menos responsabilidades implican menos</tspan><tspan
+       x="118"
+       dy="18"
+       id="tspan11">escenarios y menos combinaciones a cubrir.</tspan></text>
+  <rect
+     x="452"
+     y="302"
+     width="352"
+     height="112"
+     rx="16"
+     class="feature-card-accent"
+     id="rect11"
+     style="fill:#99ff55" />
+  <circle
+     cx="488"
+     cy="342"
+     r="14"
+     class="check-circle"
+     id="circle11" />
+  <text
+     x="488"
+     y="343"
+     class="check-mark"
+     id="text12">✓</text>
+  <text
+     x="514"
+     y="334"
+     class="feature-title"
+     id="text13">SIN ESTADO GLOBAL</text>
+  <text
+     x="514"
+     y="356"
+     class="feature-copy"
+     id="text14"><tspan
+       x="514"
+       dy="0"
+       id="tspan13">Evita singletons, estáticos mutables y</tspan><tspan
+       x="514"
+       dy="18"
+       id="tspan14">estado compartido difícil de aislar.</tspan></text>
+  <rect
+     x="160"
+     y="448"
+     width="540"
+     height="112"
+     rx="16"
+     class="feature-card"
+     id="rect14"
+     style="fill:#aaffcc" />
+  <circle
+     cx="196"
+     cy="488"
+     r="14"
+     class="check-circle"
+     id="circle14" />
+  <text
+     x="196"
+     y="489"
+     class="check-mark"
+     id="text15">✓</text>
+  <text
+     x="222"
+     y="480"
+     class="feature-title"
+     id="text16">DETERMINÍSTICO</text>
+  <text
+     x="222"
+     y="502"
+     class="feature-copy"
+     id="text17"><tspan
+       x="222"
+       dy="0"
+       id="tspan16">Con el mismo input produce el mismo output.</tspan><tspan
+       x="222"
+       dy="18"
+       id="tspan17">No depende de hora actual, azar ni recursos externos impredecibles.</tspan></text>
+</svg>

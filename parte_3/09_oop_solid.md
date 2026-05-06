@@ -1184,37 +1184,35 @@ ServicioNotificaciones servicioTest = new ServicioNotificaciones(mock);
 
 Un punto sutil pero importante: la **abstracción debe pertenecer al módulo de alto nivel**, no al de bajo nivel.
 
-```
-INCORRECTO:
-┌─────────────────────────────────────────────┐
-│ paquete: servicios.email                    │
-│                                             │
-│   interface Notificador  ← definida aquí    │
-│   class NotificadorEmail                    │
-└─────────────────────────────────────────────┘
-             ▲
-             │ depende
-┌────────────┴────────────────────────────────┐
-│ paquete: negocio                            │
-│                                             │
-│   class ServicioNotificaciones              │
-└─────────────────────────────────────────────┘
+````{mermaid}
 
-CORRECTO:
-┌─────────────────────────────────────────────┐
-│ paquete: negocio                            │
-│                                             │
-│   interface Notificador  ← definida aquí    │
-│   class ServicioNotificaciones              │
-└─────────────────────────────────────────────┘
-             ▲
-             │ implementa
-┌────────────┴────────────────────────────────┐
-│ paquete: servicios.email                    │
-│                                             │
-│   class NotificadorEmail implements Notif.  │
-└─────────────────────────────────────────────┘
-```
+flowchart TD
+    subgraph incorrecto["INCORRECTO"]
+        direction TB
+        subgraph emailBad["paquete: servicios.email"]
+            notifBad["interface Notificador"]
+            emailImplBad["class NotificadorEmail"]
+        end
+        subgraph negocioBad["paquete: negocio"]
+            servicioBad["class ServicioNotificaciones"]
+        end
+        servicioBad -.depende de.-> notifBad
+    end
+
+    subgraph correcto["CORRECTO"]
+        direction TB
+        subgraph negocioOk["paquete: negocio"]
+            notifOk["interface Notificador"]
+            servicioOk["class ServicioNotificaciones"]
+        end
+        subgraph emailOk["paquete: servicios.email"]
+            emailImplOk["class NotificadorEmail"]
+        end
+        emailImplOk -.implementa.-> notifOk
+        servicioOk -.usa abstraccion.-> notifOk
+    end
+
+````
 
 ---
 
@@ -1223,36 +1221,26 @@ CORRECTO:
 
 Los cinco principios no son independientes; se refuerzan mutuamente:
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    INTERRELACIONES SOLID                        │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│              ┌─────┐                                            │
-│              │ SRP │ ← Base de todo: responsabilidades claras  │
-│              └──┬──┘                                            │
-│                 │                                               │
-│         ┌───────┴───────┐                                       │
-│         ▼               ▼                                       │
-│     ┌─────┐         ┌─────┐                                     │
-│     │ OCP │ ←──────→│ LSP │ ← Extensión segura                 │
-│     └──┬──┘         └──┬──┘                                     │
-│        │               │                                        │
-│        └───────┬───────┘                                        │
-│                │                                                │
-│         ┌──────┴──────┐                                         │
-│         ▼             ▼                                         │
-│     ┌─────┐       ┌─────┐                                       │
-│     │ ISP │       │ DIP │ ← Interfaces limpias + dependencias  │
-│     └─────┘       └─────┘   bien direccionadas                 │
-│                                                                 │
-│  SRP → Clases pequeñas → más fácil cumplir OCP                 │
-│  OCP → Usa polimorfismo → LSP define reglas de polimorfismo    │
-│  LSP → Subtipos correctos → requiere interfaces cohesivas (ISP)│
-│  ISP → Interfaces pequeñas → facilitan DIP                     │
-│  DIP → Abstracciones → habilitan OCP                           │
-└─────────────────────────────────────────────────────────────────┘
-```
+````{mermaid}
+
+flowchart LR
+    SRP["SRP<br/>Responsabilidades claras"]
+    OCP["OCP"]
+    LSP["LSP"]
+    ISP["ISP"]
+    DIP["DIP"]
+
+    SRP -->|"clases pequenas"| OCP
+    SRP -->|"base de todo"| LSP
+    OCP <-->|"extension segura"| LSP
+    OCP -->|"usa polimorfismo"| ISP
+    OCP -->|"depende de abstracciones"| DIP
+    LSP -->|"subtipos correctos"| ISP
+    LSP -->|"sustitucion segura"| DIP
+    ISP -->|"interfaces pequenas facilitan"| DIP
+    DIP -->|"habilita"| OCP
+
+````
 
 (solid-ejemplo-integrado)=
 ### Ejemplo Integrado: Sistema de Pagos
@@ -1427,40 +1415,24 @@ No agregues abstracciones "por si acaso". Agregá complejidad cuando la necesit�
 (solid-resumen)=
 ## Resumen: Los Cinco Principios
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                         SOLID                                   │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  S - Single Responsibility                                      │
-│      Una clase, una razón para cambiar                         │
-│      → Evita clases "todoterreno"                              │
-│                                                                 │
-│  O - Open/Closed                                                │
-│      Abierto para extensión, cerrado para modificación         │
-│      → Usá polimorfismo para agregar comportamiento            │
-│                                                                 │
-│  L - Liskov Substitution                                        │
-│      Subtipos deben ser sustituibles por sus supertipos        │
-│      → Respetá los contratos al heredar                        │
-│                                                                 │
-│  I - Interface Segregation                                      │
-│      Interfaces pequeñas y específicas                         │
-│      → No fuerces a implementar lo que no se usa               │
-│                                                                 │
-│  D - Dependency Inversion                                       │
-│      Dependé de abstracciones, no de implementaciones          │
-│      → Inyectá dependencias, no las creés internamente         │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+````{mermaid}
+
+flowchart TD
+    solid["SOLID"]
+    solid --> s["S - Single Responsibility<br/>Una clase, una razón para cambiar<br/>Evita clases todoterreno"]
+    solid --> o["O - Open/Closed<br/>Abierto para extensión, cerrado para modificación<br/>Usá polimorfismo para agregar comportamiento"]
+    solid --> l["L - Liskov Substitution<br/>Los subtipos deben ser sustituibles por sus supertipos<br/>Respetá los contratos al heredar"]
+    solid --> i["I - Interface Segregation<br/>Interfaces pequeñas y específicas<br/>No fuerces a implementar lo que no se usa"]
+    solid --> d["D - Dependency Inversion<br/>Dependé de abstracciones, no de implementaciones<br/>Inyectá dependencias, no las creés internamente"]
+
+````
 
 ---
 
 (solid-ejercicios)=
 ## Ejercicios
 
-```{exercise}
+````{exercise}
 :label: solid-ex-srp
 
 **Identificar Violaciones de SRP**
@@ -1481,9 +1453,9 @@ public class Usuario {
     public void importarDesdeJSON(String json) { ... }
 }
 ```
-```
+````
 
-```{solution} solid-ex-srp
+````{solution} solid-ex-srp
 :class: dropdown
 
 La clase tiene al menos **5 responsabilidades**:
@@ -1527,9 +1499,9 @@ public class UsuarioSerializer {
     public Usuario fromJSON(String json) { ... }
 }
 ```
-```
+````
 
-```{exercise}
+````{exercise}
 :label: solid-ex-ocp
 
 **Aplicar OCP**
@@ -1555,9 +1527,9 @@ public class CalculadorPrecio {
     }
 }
 ```
-```
+````
 
-```{solution} solid-ex-ocp
+````{solution} solid-ex-ocp
 :class: dropdown
 
 ```java
@@ -1615,9 +1587,9 @@ public class DescuentoBlackFriday implements Descuento {
     }
 }
 ```
-```
+````
 
-```{exercise}
+````{exercise}
 :label: solid-ex-lsp
 
 **Detectar Violación de LSP**
@@ -1638,9 +1610,9 @@ public class Pinguino extends Ave {
     }
 }
 ```
-```
+````
 
-```{solution} solid-ex-lsp
+````{solution} solid-ex-lsp
 :class: dropdown
 
 **Violación de LSP:**
@@ -1700,9 +1672,9 @@ void hacerVolarVoladores(List<Volador> voladores) {
     }
 }
 ```
-```
+````
 
-```{exercise}
+````{exercise}
 :label: solid-ex-isp
 
 **Aplicar ISP**
@@ -1722,9 +1694,9 @@ public interface Trabajador {
     void despedirPersonal();
 }
 ```
-```
+````
 
-```{solution} solid-ex-isp
+````{solution} solid-ex-isp
 :class: dropdown
 
 ```java
@@ -1783,9 +1755,9 @@ public class RobotTrabajador implements Trabajador {
     // Solo trabaja, no come ni duerme
 }
 ```
-```
+````
 
-```{exercise}
+````{exercise}
 :label: solid-ex-dip
 
 **Refactorizar con DIP**
@@ -1805,9 +1777,9 @@ public class GeneradorReportes {
     }
 }
 ```
-```
+````
 
-```{solution} solid-ex-dip
+````{solution} solid-ex-dip
 :class: dropdown
 
 ```java
@@ -1883,7 +1855,7 @@ GeneradorReportes reportesTest = new GeneradorReportes(
     mockEnviador
 );
 ```
-```
+````
 
 ---
 

@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../../resources/svg.css" type="text/css"?><svg
+   width="860"
+   height="620"
+   viewBox="0 0 860 620"
+   version="1.1"
+   id="svg22"
+   sodipodi:docname="senales_alerta_smells.svg"
+   inkscape:version="1.4.3 (0d15f75042, 2025-12-25)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview22"
+     pagecolor="#ffffff"
+     bordercolor="#999999"
+     borderopacity="1"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:zoom="0.77863968"
+     inkscape:cx="429.59537"
+     inkscape:cy="226.03523"
+     inkscape:window-width="1920"
+     inkscape:window-height="1017"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg22" />
+  <title
+     id="title1">Señales de alerta para detectar code smells</title>
+  <desc
+     id="desc1">Panel con cuatro grupos de heurísticas de detección: nombres, tamaños, estructura y dependencias.</desc>
+  <defs
+     id="defs1">
+    <style
+       type="text/css"
+       id="style1"><![CDATA[
+      .panel-header {
+        fill: var(--unrn-red);
+      }
+      .panel-title {
+        font-family: 'Fabrikat', Arial, sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        fill: #ffffff;
+        text-anchor: middle;
+      }
+      .section-heading {
+        font-family: 'Fabrikat', Arial, sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        fill: var(--unrn-dark-blue);
+      }
+      .section-rule {
+        stroke: var(--unrn-red);
+        stroke-width: 3;
+        stroke-linecap: round;
+      }
+      .bullet-dot {
+        fill: var(--unrn-red);
+      }
+      .bullet-line {
+        font-family: 'Lato', Arial, sans-serif;
+        font-size: 12px;
+        font-weight: 400;
+        fill: var(--gray-700);
+      }
+    ]]></style>
+  </defs>
+  <rect
+     x="30"
+     y="30"
+     width="800"
+     height="560"
+     class="highlight-box"
+     rx="16"
+     id="rect1"
+     style="fill:#f9f9f9" />
+  <rect
+     x="30"
+     y="30"
+     width="800"
+     height="70"
+     class="panel-header"
+     rx="16"
+     id="rect2" />
+  <text
+     x="430"
+     y="73"
+     class="panel-title"
+     id="text2">SEÑALES DE ALERTA</text>
+  <rect
+     width="345"
+     height="205"
+     class="info-box"
+     rx="12"
+     id="rect3"
+     x="60"
+     y="120"
+     style="fill:#ffaaaa" />
+  <text
+     x="80"
+     y="152"
+     class="section-heading"
+     id="text3">NOMBRES</text>
+  <line
+     x1="80"
+     y1="162"
+     x2="180"
+     y2="162"
+     class="section-rule"
+     id="line3" />
+  <circle
+     cx="86"
+     cy="190"
+     r="4"
+     class="bullet-dot"
+     id="circle3" />
+  <text
+     x="100"
+     y="194"
+     class="bullet-line"
+     id="text4"><tspan
+       x="100"
+       dy="0"
+       id="tspan3">Clases con &quot;Manager&quot;, &quot;Processor&quot;,</tspan><tspan
+       x="100"
+       dy="16"
+       id="tspan4">&quot;Handler&quot; o &quot;Helper&quot;</tspan></text>
+  <circle
+     cx="86"
+     cy="230"
+     r="4"
+     class="bullet-dot"
+     id="circle4" />
+  <text
+     x="100"
+     y="234"
+     class="bullet-line"
+     id="text6"><tspan
+       x="100"
+       dy="0"
+       id="tspan5">Métodos con &quot;And&quot; en el nombre</tspan><tspan
+       x="100"
+       dy="16"
+       id="tspan6">(hacen más de una cosa)</tspan></text>
+  <circle
+     cx="86"
+     cy="270"
+     r="4"
+     class="bullet-dot"
+     id="circle6" />
+  <text
+     x="100"
+     y="274"
+     class="bullet-line"
+     id="text7">Variables de una letra (excepto en lazos cortos)</text>
+  <circle
+     cx="86"
+     cy="302"
+     r="4"
+     class="bullet-dot"
+     id="circle7" />
+  <text
+     x="100"
+     y="306"
+     class="bullet-line"
+     id="text8">Nombres que no explican el propósito</text>
+  <rect
+     width="345"
+     height="205"
+     class="info-box"
+     rx="12"
+     id="rect8"
+     x="455"
+     y="120"
+     style="fill:#ff9955" />
+  <text
+     x="475"
+     y="152"
+     class="section-heading"
+     id="text9">TAMAÑOS</text>
+  <line
+     x1="475"
+     y1="162"
+     x2="575"
+     y2="162"
+     class="section-rule"
+     id="line9" />
+  <circle
+     cx="481"
+     cy="190"
+     r="4"
+     class="bullet-dot"
+     id="circle9" />
+  <text
+     x="495"
+     y="194"
+     class="bullet-line"
+     id="text10">Clases &gt; 300-500 líneas</text>
+  <circle
+     cx="481"
+     cy="222"
+     r="4"
+     class="bullet-dot"
+     id="circle10" />
+  <text
+     x="495"
+     y="226"
+     class="bullet-line"
+     id="text11">Métodos &gt; 20-30 líneas</text>
+  <circle
+     cx="481"
+     cy="254"
+     r="4"
+     class="bullet-dot"
+     id="circle11" />
+  <text
+     x="495"
+     y="258"
+     class="bullet-line"
+     id="text12">Más de 3-4 niveles de indentación</text>
+  <circle
+     cx="481"
+     cy="286"
+     r="4"
+     class="bullet-dot"
+     id="circle12" />
+  <text
+     x="495"
+     y="290"
+     class="bullet-line"
+     id="text13">Más de 3-4 parámetros en un método</text>
+  <rect
+     width="345"
+     height="205"
+     class="info-box"
+     rx="12"
+     id="rect13"
+     x="60"
+     y="345"
+     style="fill:#ffd42a" />
+  <text
+     x="80"
+     y="377"
+     class="section-heading"
+     id="text14">ESTRUCTURA</text>
+  <line
+     x1="80"
+     y1="387"
+     x2="205"
+     y2="387"
+     class="section-rule"
+     id="line14" />
+  <circle
+     cx="86"
+     cy="415"
+     r="4"
+     class="bullet-dot"
+     id="circle14" />
+  <text
+     x="100"
+     y="419"
+     class="bullet-line"
+     id="text15">Muchos if/else anidados o en cascada</text>
+  <circle
+     cx="86"
+     cy="449"
+     r="4"
+     class="bullet-dot"
+     id="circle15" />
+  <text
+     x="100"
+     y="453"
+     class="bullet-line"
+     id="text16"><tspan
+       x="100"
+       dy="0"
+       id="tspan15">Switch/case que se repiten en varios</tspan><tspan
+       x="100"
+       dy="16"
+       id="tspan16">lugares</tspan></text>
+  <circle
+     cx="86"
+     cy="491"
+     r="4"
+     class="bullet-dot"
+     id="circle16" />
+  <text
+     x="100"
+     y="495"
+     class="bullet-line"
+     id="text17">Try/catch muy grandes</text>
+  <circle
+     cx="86"
+     cy="523"
+     r="4"
+     class="bullet-dot"
+     id="circle17" />
+  <text
+     x="100"
+     y="527"
+     class="bullet-line"
+     id="text18">Código comentado</text>
+  <rect
+     width="345"
+     height="205"
+     class="info-box"
+     rx="12"
+     id="rect18"
+     x="455"
+     y="345"
+     style="fill:#deaa87" />
+  <text
+     x="475"
+     y="377"
+     class="section-heading"
+     id="text19">DEPENDENCIAS</text>
+  <line
+     x1="475"
+     y1="387"
+     x2="620"
+     y2="387"
+     class="section-rule"
+     id="line19" />
+  <circle
+     cx="481"
+     cy="415"
+     r="4"
+     class="bullet-dot"
+     id="circle19" />
+  <text
+     x="495"
+     y="419"
+     class="bullet-line"
+     id="text20">Muchos imports</text>
+  <circle
+     cx="481"
+     cy="449"
+     r="4"
+     class="bullet-dot"
+     id="circle20" />
+  <text
+     x="495"
+     y="453"
+     class="bullet-line"
+     id="text21"><tspan
+       x="495"
+       dy="0"
+       id="tspan20">Acceso frecuente a campos de otros</tspan><tspan
+       x="495"
+       dy="16"
+       id="tspan21">objetos</tspan></text>
+  <circle
+     cx="481"
+     cy="491"
+     r="4"
+     class="bullet-dot"
+     id="circle21" />
+  <text
+     x="495"
+     y="495"
+     class="bullet-line"
+     id="text22">Dependencias circulares entre clases</text>
+</svg>

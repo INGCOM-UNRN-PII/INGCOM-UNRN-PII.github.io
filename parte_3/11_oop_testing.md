@@ -40,28 +40,34 @@ Al finalizar este capítulo, serás capaz de:
 
 El software sin tests es como un puente sin inspección estructural: puede funcionar hoy, pero no tenemos garantías sobre mañana.
 
+**Código SIN Tests**
+
 ```{mermaid}
-graph TB
-    subgraph "Código SIN Tests"
+graph LR
         A1[Funciona en mi máquina] --> B1[Cambio en el código]
         B1 --> C1{¿Sigue funcionando?}
         C1 --> D1[??? Nadie sabe]
         D1 --> E1[Miedo a cambiar<br/>Código congelado<br/>Bugs ocultos]
-    end
+   
+    style A1 fill:#faa,stroke:#333
+    style D1 fill:#faa,stroke:#333
+    style E1 fill:#faa,stroke:#333
+
+```
+
+**Código CON Tests**
+
+```{mermaid}
+graph LR
     
-    subgraph "Código CON Tests"
+    
         A2[Tests automatizados] --> B2[Cambio en el código]
         B2 --> C2[Ejecutar tests]
         C2 --> D2{Resultado}
         D2 -->|Verde ✓| E2[Confianza para cambiar]
         D2 -->|Rojo ✗| F2[Detecta problema]
         E2 --> G2[Refactoring seguro<br/>Documentación viva]
-    end
-    
-    style A1 fill:#faa,stroke:#333
-    style D1 fill:#faa,stroke:#333
-    style E1 fill:#faa,stroke:#333
-    
+
     style A2 fill:#afa,stroke:#333
     style E2 fill:#afa,stroke:#333
     style G2 fill:#afa,stroke:#333
@@ -78,29 +84,12 @@ graph TB
 (niveles-testing)=
 ### Niveles de Testing
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                   PIRÁMIDE DE TESTING                           │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│                         /\                                      │
-│                        /  \       E2E / UI Tests               │
-│                       /    \      (pocos, lentos, frágiles)    │
-│                      /──────\                                   │
-│                     /        \                                  │
-│                    /  Tests   \   Integration Tests            │
-│                   /   de       \  (algunos, moderados)         │
-│                  / Integración  \                               │
-│                 /────────────────\                              │
-│                /                  \                             │
-│               /   Tests Unitarios  \  Unit Tests               │
-│              /                      \ (muchos, rápidos,        │
-│             /________________________\  estables)               │
-│                                                                 │
-│   Ejecutar frecuentemente ◀──────────────────▶ Ejecutar menos  │
-│   Rápidos, aislados                            Lentos, reales  │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```{figure} 11/niveles_testing.svg
+:label: fig-niveles-testing
+:align: center
+:width: 95%
+
+Pirámide de testing: base amplia de tests unitarios, integración en el medio y E2E en la punta.
 ```
 
 | Nivel | Qué prueba | Características |
@@ -152,20 +141,12 @@ Otra nomenclatura común es **Given-When-Then** (Dado-Cuando-Entonces), más leg
 
 Cuando testeamos una clase, nos enfocamos en su **comportamiento observable**, no en sus detalles de implementación.
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    ¿QUÉ TESTEAR?                                │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   ✓ TESTEAR                        ✗ NO TESTEAR                │
-│   ──────────────────────           ─────────────────────       │
-│   • Métodos públicos               • Métodos privados          │
-│   • Comportamiento observable      • Detalles internos         │
-│   • Contratos (pre/post)           • Implementación            │
-│   • Casos límite                   • Getters/setters triviales │
-│   • Manejo de errores              • Código de terceros        │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```{figure} 11/que_testear_clase.svg
+:label: fig-que-testear-clase
+:align: center
+:width: 95%
+
+Qué conviene testear en una clase: contratos y comportamiento observable, no detalles internos.
 ```
 
 :::{important} Principio Fundamental
@@ -635,32 +616,31 @@ Los tests anteriores muestran varias buenas prácticas:
 3. **Setup compartido (`@BeforeEach`)**: Evita duplicación
 4. **Un assert por test** (idealmente): Cada test verifica una cosa
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    ESTRUCTURA DE TESTS                          │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   CuentaBancariaTest                                            │
-│   ├── CreacionCuenta                                            │
-│   │   ├── crearCuentaConDatosValidos()                         │
-│   │   ├── crearCuentaConSaldoCero()                            │
-│   │   ├── rechazaTitularNulo()                                 │
-│   │   ├── rechazaTitularVacio()                                │
-│   │   └── rechazaSaldoNegativo()                               │
-│   ├── Depositos                                                 │
-│   │   ├── depositoAumentaSaldo()                               │
-│   │   ├── multiplesDepositos()                                 │
-│   │   ├── rechazaDepositoCero()                                │
-│   │   └── rechazaDepositoNegativo()                            │
-│   └── Extracciones                                              │
-│       ├── extraccionDisminuyeSaldo()                           │
-│       ├── extraerTodoElSaldo()                                 │
-│       ├── rechazaExtraccionExcesiva()                          │
-│       ├── rechazaExtraccionCero()                              │
-│       └── saldoNoCambiaSiFalla()                               │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+````{mermaid}
+
+flowchart TD
+    root["CuentaBancariaTest"]
+    root --> creacion["CreacionCuenta"]
+    creacion --> cc1["crearCuentaConDatosValidos()"]
+    creacion --> cc2["crearCuentaConSaldoCero()"]
+    creacion --> cc3["rechazaTitularNulo()"]
+    creacion --> cc4["rechazaTitularVacio()"]
+    creacion --> cc5["rechazaSaldoNegativo()"]
+
+    root --> depositos["Depositos"]
+    depositos --> d1["depositoAumentaSaldo()"]
+    depositos --> d2["multiplesDepositos()"]
+    depositos --> d3["rechazaDepositoCero()"]
+    depositos --> d4["rechazaDepositoNegativo()"]
+
+    root --> extracciones["Extracciones"]
+    extracciones --> e1["extraccionDisminuyeSaldo()"]
+    extracciones --> e2["extraerTodoElSaldo()"]
+    extracciones --> e3["rechazaExtraccionExcesiva()"]
+    extracciones --> e4["rechazaExtraccionCero()"]
+    extracciones --> e5["saldoNoCambiaSiFalla()"]
+
+````
 
 ---
 
@@ -672,35 +652,16 @@ Los tests anteriores muestran varias buenas prácticas:
 
 **Test-Driven Development** es una técnica donde los tests se escriben **antes** que el código de producción. No es solo una técnica de testing, sino una **técnica de diseño**.
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    CICLO TDD: RED-GREEN-REFACTOR                │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│              ┌─────────────┐                                    │
-│              │   🔴 RED    │                                    │
-│              │  Escribir   │                                    │
-│              │  test que   │                                    │
-│              │  falle      │                                    │
-│              └──────┬──────┘                                    │
-│                     │                                           │
-│                     ▼                                           │
-│   ┌─────────────────────────────────────┐                       │
-│   │                                     │                       │
-│   ▼                                     │                       │
-│  ┌─────────────┐                 ┌──────┴──────┐                │
-│  │ 🔵 REFACTOR │                 │  🟢 GREEN   │                │
-│  │  Mejorar    │ ◀───────────── │  Escribir   │                │
-│  │  diseño     │                 │  código     │                │
-│  │  sin romper │                 │  mínimo     │                │
-│  │  tests      │                 │  para pasar │                │
-│  └─────────────┘                 └─────────────┘                │
-│         │                                                       │
-│         └───────────────────────────────────────────────────▶   │
-│                            Repetir                              │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+````{mermaid}
+
+flowchart LR
+    red["RED<br/>Escribir test que falle"]
+    green["GREEN<br/>Escribir codigo minimo para pasar"]
+    refactor["REFACTOR<br/>Mejorar diseno sin romper tests"]
+
+    red --> green --> refactor --> red
+
+````
 
 **Las tres reglas de TDD (Uncle Bob)**:
 
@@ -887,33 +848,17 @@ void peekRetornaTopesinRemover() {
 (beneficios-tdd)=
 ### Beneficios de TDD
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    BENEFICIOS DE TDD                            │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   1. DISEÑO EMERGENTE                                           │
-│      El código se diseña desde la perspectiva del usuario       │
-│      (el test), lo que produce APIs más usables.                │
-│                                                                 │
-│   2. CÓDIGO TESTEABLE                                           │
-│      Si escribís tests primero, el código DEBE ser testeable.   │
-│      Esto promueve bajo acoplamiento y alta cohesión.           │
-│                                                                 │
-│   3. DOCUMENTACIÓN VIVA                                         │
-│      Los tests documentan cómo usar el código y qué esperar.    │
-│      Esta documentación siempre está actualizada.               │
-│                                                                 │
-│   4. CONFIANZA                                                  │
-│      Cada línea de código tiene al menos un test.               │
-│      Refactorizar es seguro.                                    │
-│                                                                 │
-│   5. FOCO                                                       │
-│      Trabajás en una cosa a la vez.                             │
-│      Pequeños pasos manejables.                                 │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+````{mermaid}
+
+flowchart TD
+    tdd["Beneficios de TDD"]
+    tdd --> emergente["Diseño emergente<br/>La API se diseña desde la perspectiva del test"]
+    tdd --> testeable["Código testeable<br/>Promueve bajo acoplamiento y alta cohesión"]
+    tdd --> doc["Documentación viva<br/>Los tests muestran cómo se usa el código"]
+    tdd --> confianza["Confianza<br/>Refactorizar es seguro porque cada cambio tiene cobertura"]
+    tdd --> foco["Foco<br/>Se avanza de a pequeños pasos manejables"]
+
+````
 
 ---
 
@@ -955,37 +900,12 @@ Si queremos testear `ServicioNotificaciones`:
 (tipos-dobles)=
 ### Tipos de Dobles de Prueba
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    TIPOS DE TEST DOUBLES                        │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   DUMMY                                                         │
-│   ──────                                                        │
-│   Objeto que se pasa pero nunca se usa realmente.               │
-│   Solo para satisfacer parámetros.                              │
-│                                                                 │
-│   STUB                                                          │
-│   ────                                                          │
-│   Provee respuestas predefinidas a llamadas.                    │
-│   No verifica cómo se lo llamó.                                 │
-│                                                                 │
-│   SPY                                                           │
-│   ───                                                           │
-│   Stub que además registra información sobre                    │
-│   cómo fue llamado.                                             │
-│                                                                 │
-│   MOCK                                                          │
-│   ────                                                          │
-│   Objeto con expectativas preprogramadas.                       │
-│   Falla si no se cumple el comportamiento esperado.             │
-│                                                                 │
-│   FAKE                                                          │
-│   ────                                                          │
-│   Implementación funcional simplificada.                        │
-│   Ej: base de datos en memoria.                                 │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```{figure} 11/tipos_test_doubles.svg
+:label: fig-tipos-test-doubles
+:align: center
+:width: 95%
+
+Tipos de test doubles y el rol que cumplen al aislar dependencias reales.
 ```
 
 (ejemplo-stubs)=
@@ -1161,31 +1081,12 @@ class ServicioNotificacionesTestConMockito {
 
 No todo código es fácil de testear. Un código **testeable** tiene ciertas características:
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    CÓDIGO TESTEABLE                             │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   ✓ DEPENDENCIAS INYECTADAS                                     │
-│     Las dependencias se pasan por constructor o método,         │
-│     no se crean internamente con "new".                         │
-│                                                                 │
-│   ✓ BAJO ACOPLAMIENTO                                           │
-│     La clase depende de abstracciones (interfaces),             │
-│     no de implementaciones concretas.                           │
-│                                                                 │
-│   ✓ RESPONSABILIDAD ÚNICA                                       │
-│     Menos responsabilidades = menos casos a testear.            │
-│                                                                 │
-│   ✓ SIN ESTADO GLOBAL                                           │
-│     No depende de singletons, variables estáticas mutables,     │
-│     ni estado compartido.                                       │
-│                                                                 │
-│   ✓ DETERMINÍSTICO                                              │
-│     Dado el mismo input, siempre produce el mismo output.       │
-│     No depende de fecha/hora actual, aleatorios, etc.           │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```{figure} 11/codigo_testeable.svg
+:label: fig-codigo-testeable
+:align: center
+:width: 95%
+
+Rasgos de un diseño testeable: dependencias reemplazables, bajo acoplamiento y comportamiento predecible.
 ```
 
 (codigo-dificil-testear)=
@@ -1310,38 +1211,16 @@ public class Servicio {
 
 Los principios SOLID (ver {ref}`oop-solid`) facilitan el testing:
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    SOLID Y TESTING                              │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   SRP (Responsabilidad Única)                                   │
-│   ────────────────────────────                                  │
-│   → Menos responsabilidades = menos tests necesarios            │
-│   → Tests más enfocados y claros                                │
-│                                                                 │
-│   OCP (Abierto/Cerrado)                                         │
-│   ─────────────────────                                         │
-│   → Nuevas funcionalidades = nuevos tests, no modificar viejos  │
-│   → Los tests existentes siguen pasando                         │
-│                                                                 │
-│   LSP (Sustitución de Liskov)                                   │
-│   ──────────────────────────                                    │
-│   → Podemos usar mocks que implementen la interfaz              │
-│   → Tests parametrizados para todas las implementaciones        │
-│                                                                 │
-│   ISP (Segregación de Interfaces)                               │
-│   ────────────────────────────────                              │
-│   → Interfaces pequeñas = mocks más simples                     │
-│   → Menos métodos que mockear                                   │
-│                                                                 │
-│   DIP (Inversión de Dependencias)                               │
-│   ────────────────────────────────                              │
-│   → Dependencias inyectables = reemplazables por dobles         │
-│   → Tests aislados del mundo exterior                           │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+````{mermaid}
+
+flowchart LR
+    srp["SRP"] --> srpFx["Menos responsabilidades<br/>menos tests necesarios<br/>tests mas enfocados"]
+    ocp["OCP"] --> ocpFx["Nuevas funcionalidades<br/>nuevos tests<br/>sin tocar los viejos"]
+    lsp["LSP"] --> lspFx["Mocks que implementan la interfaz<br/>tests parametrizados por implementacion"]
+    isp["ISP"] --> ispFx["Interfaces pequenas<br/>mocks mas simples<br/>menos metodos que mockear"]
+    dip["DIP"] --> dipFx["Dependencias inyectables<br/>dobles reemplazables<br/>tests aislados del exterior"]
+
+````
 
 ---
 
@@ -1568,34 +1447,17 @@ class CalculadoraGeometricaTest {
 
 Los buenos tests siguen el acrónimo **FIRST**:
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    PRINCIPIOS FIRST                             │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   F - FAST (Rápidos)                                            │
-│       Los tests deben ejecutarse en milisegundos.               │
-│       Si son lentos, no los vas a correr frecuentemente.        │
-│                                                                 │
-│   I - INDEPENDENT (Independientes)                              │
-│       Cada test debe poder ejecutarse solo.                     │
-│       No depender del orden de ejecución.                       │
-│       No compartir estado entre tests.                          │
-│                                                                 │
-│   R - REPEATABLE (Repetibles)                                   │
-│       El mismo test siempre da el mismo resultado.              │
-│       No depender del entorno, hora, red, etc.                  │
-│                                                                 │
-│   S - SELF-VALIDATING (Auto-validantes)                         │
-│       El test determina si pasó o falló automáticamente.        │
-│       No requerir inspección manual del output.                 │
-│                                                                 │
-│   T - TIMELY (Oportunos)                                        │
-│       Escritos junto con (o antes de) el código de producción.  │
-│       No postergar los tests.                                   │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+````{mermaid}
+
+flowchart TD
+    first["Principios FIRST"]
+    first --> fast["F - FAST<br/>Los tests deben ejecutarse rápido"]
+    first --> independent["I - INDEPENDENT<br/>Cada test corre solo y no depende del orden"]
+    first --> repeatable["R - REPEATABLE<br/>El resultado no depende del entorno ni del momento"]
+    first --> selfValidating["S - SELF-VALIDATING<br/>El test decide automáticamente si pasó o falló"]
+    first --> timely["T - TIMELY<br/>Se escriben junto con el código de producción"]
+
+````
 
 (nombres-descriptivos)=
 ### Nombres Descriptivos
@@ -1810,29 +1672,12 @@ void pedidoConMultiplesItemsCalculaTotalCorrectamente() {
 (test-data-builder-vs-object-mother)=
 ### Cuándo usar cada patrón
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│              OBJECT MOTHER vs TEST DATA BUILDER                 │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   OBJECT MOTHER                                                 │
-│   ──────────────                                                │
-│   • Objetos simples con pocas variaciones                       │
-│   • Escenarios nombrados: cuentaVacia(), cuentaPremium()       │
-│   • Menos código de setup                                       │
-│                                                                 │
-│   TEST DATA BUILDER                                             │
-│   ─────────────────                                             │
-│   • Objetos complejos con muchos atributos                     │
-│   • Necesidad de variar atributos específicos                  │
-│   • Fluent API para claridad                                   │
-│                                                                 │
-│   COMBINACIÓN                                                   │
-│   ───────────                                                   │
-│   • Builder como implementación interna de Object Mother        │
-│   • Lo mejor de ambos mundos                                   │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```{figure} 11/object_mother_vs_builder.svg
+:label: fig-object-mother-builder
+:align: center
+:width: 95%
+
+Comparación entre Object Mother, Test Data Builder y una combinación de ambos para crear datos de prueba.
 ```
 
 ---
@@ -1840,40 +1685,12 @@ void pedidoConMultiplesItemsCalculaTotalCorrectamente() {
 (resumen-testing)=
 ## Resumen
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                TESTING EN POO - RESUMEN                         │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  FUNDAMENTOS                                                    │
-│    • Tests como red de seguridad y documentación               │
-│    • Pirámide de testing: unitarios > integración > E2E        │
-│    • Patrón AAA: Arrange, Act, Assert                          │
-│                                                                 │
-│  TEST-DRIVEN DEVELOPMENT                                        │
-│    • Ciclo RED-GREEN-REFACTOR                                  │
-│    • Tests guían el diseño                                     │
-│    • Código testeable por construcción                         │
-│                                                                 │
-│  DOBLES DE PRUEBA                                               │
-│    • Stubs: respuestas predefinidas                            │
-│    • Spies: registran llamadas                                 │
-│    • Mocks: verifican expectativas                             │
-│    • Frameworks: Mockito                                       │
-│                                                                 │
-│  DISEÑO TESTEABLE                                               │
-│    • Inyección de dependencias                                 │
-│    • Dependencias como interfaces                              │
-│    • Evitar estado global y singletons                         │
-│    • SOLID facilita testing                                    │
-│                                                                 │
-│  BUENAS PRÁCTICAS                                               │
-│    • Principios FIRST                                          │
-│    • Nombres descriptivos                                      │
-│    • Un concepto por test                                      │
-│    • Object Mother y Builder para crear datos                  │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```{figure} 11/testing_poo_resumen.svg
+:label: fig-testing-poo-resumen
+:align: center
+:width: 95%
+
+Resumen de fundamentos, TDD, dobles de prueba, diseño testeable y buenas prácticas de testing en POO.
 ```
 
 ---
@@ -1881,7 +1698,7 @@ void pedidoConMultiplesItemsCalculaTotalCorrectamente() {
 (ejercicios-testing)=
 ## Ejercicios
 
-```{exercise}
+````{exercise}
 :label: testing-ex-carrito
 
 **Testing de un Carrito de Compras**
@@ -1910,7 +1727,7 @@ Escribí tests que cubran:
 3. Calcular subtotal
 4. Aplicar descuentos
 5. Casos límite (carrito vacío, descuento 100%, etc.)
-```
+````
 
 ````{solution} testing-ex-carrito
 :class: dropdown
@@ -2078,7 +1895,7 @@ Requisitos:
 Mostrá el ciclo TDD escribiendo primero los tests.
 ```
 
-```{solution} testing-ex-tdd-calculadora
+````{solution} testing-ex-tdd-calculadora
 :class: dropdown
 
 **Ciclo TDD paso a paso:**
@@ -2265,9 +2082,9 @@ public class Calculadora {
     }
 }
 ```
-```
+````
 
-```{exercise}
+````{exercise}
 :label: testing-ex-mocks
 
 **Usando Mocks: Sistema de Notificaciones**
@@ -2308,9 +2125,9 @@ Escribí tests usando Mockito que verifiquen:
 2. No envía por notificadores no disponibles
 3. Siempre registra la alerta aunque ningún notificador esté disponible
 4. Retorna la cantidad correcta de envíos
-```
+````
 
-```{solution} testing-ex-mocks
+````{solution} testing-ex-mocks
 :class: dropdown
 
 ```java
@@ -2430,7 +2247,7 @@ class SistemaAlertasTest {
     }
 }
 ```
-```
+````
 
 ---
 

@@ -131,32 +131,18 @@ El olor a gas no es un incendio, pero indica que hay una fuga que podría causar
 
 Kent Beck y Martin Fowler catalogaron los code smells más comunes. Los organizamos en categorías:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    CATEGORÍAS DE CODE SMELLS                │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  ┌─────────────────┐  ┌─────────────────┐                  │
-│  │   BLOATERS      │  │   COUPLERS      │                  │
-│  │ Código inflado  │  │ Acoplamiento    │                  │
-│  │                 │  │ excesivo        │                  │
-│  └─────────────────┘  └─────────────────┘                  │
-│                                                             │
-│  ┌─────────────────┐  ┌─────────────────┐                  │
-│  │ OBJECT-ORIENTED │  │  DISPENSABLES   │                  │
-│  │    ABUSERS      │  │ Código          │                  │
-│  │ Mal uso de OOP  │  │ innecesario     │                  │
-│  └─────────────────┘  └─────────────────┘                  │
-│                                                             │
-│  ┌─────────────────┐                                       │
-│  │ CHANGE          │                                       │
-│  │ PREVENTERS      │                                       │
-│  │ Dificultan      │                                       │
-│  │ cambios         │                                       │
-│  └─────────────────┘                                       │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+````{mermaid}
+
+flowchart TB
+    root["Categorías de Code Smells"]
+
+    root --> blo["Bloaters<br/>Código inflado"]
+    root --> cou["Couplers<br/>Acoplamiento excesivo"]
+    root --> oo["Object-Oriented Abusers<br/>Mal uso de OOP"]
+    root --> dis["Dispensables<br/>Código innecesario"]
+    root --> cha["Change Preventers<br/>Dificultan cambios"]
+
+````
 
 ---
 
@@ -1675,37 +1661,17 @@ Un método solo debería llamar a:
 (refactoring-seguro)=
 ### Refactoring Seguro
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                 CICLO DE REFACTORING                        │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│    ┌─────────────┐                                         │
-│    │ 1. TESTS    │ Verificar que todos pasan              │
-│    │    VERDES   │                                         │
-│    └──────┬──────┘                                         │
-│           │                                                 │
-│           ▼                                                 │
-│    ┌─────────────┐                                         │
-│    │ 2. PEQUEÑO  │ Un solo cambio estructural              │
-│    │    CAMBIO   │                                         │
-│    └──────┬──────┘                                         │
-│           │                                                 │
-│           ▼                                                 │
-│    ┌─────────────┐                                         │
-│    │ 3. EJECUTAR │ Si fallan, deshacer y analizar         │
-│    │    TESTS    │                                         │
-│    └──────┬──────┘                                         │
-│           │                                                 │
-│           ▼                                                 │
-│    ┌─────────────┐                                         │
-│    │ 4. COMMIT   │ Punto de control                        │
-│    └──────┬──────┘                                         │
-│           │                                                 │
-│           └──────────────▶ Repetir                          │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+````{mermaid}
+
+flowchart TD
+    tests["1. TESTS VERDES<br/>Verificar que todos pasan"]
+    cambio["2. PEQUENO CAMBIO<br/>Un solo cambio estructural"]
+    ejecutar["3. EJECUTAR TESTS<br/>Si fallan, deshacer y analizar"]
+    commit["4. COMMIT<br/>Punto de control"]
+
+    tests --> cambio --> ejecutar --> commit --> tests
+
+````
 
 **Reglas fundamentales**:
 
@@ -1771,71 +1737,51 @@ public String clasificar(int valor) {    // +1 base
 
 Los code smells frecuentemente indican violaciones de principios SOLID (ver {ref}`oop-solid`):
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│           CODE SMELL → PRINCIPIO VIOLADO                        │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  Long Method          ───▶  SRP (hace demasiadas cosas)        │
-│  Large Class          ───▶  SRP (múltiples responsabilidades)  │
-│  Divergent Change     ───▶  SRP (cambia por múltiples razones) │
-│                                                                 │
-│  Switch Statements    ───▶  OCP (agregar caso = modificar)     │
-│  Parallel Hierarchies ───▶  OCP (extensión requiere cambios)   │
-│                                                                 │
-│  Refused Bequest      ───▶  LSP (subtipo no sustituible)       │
-│                                                                 │
-│  Inappropriate Intimacy ──▶  ISP + DIP (acoplamiento)          │
-│  Feature Envy         ───▶  SRP + DIP (lógica en lugar errado) │
-│                                                                 │
-│  Message Chains       ───▶  DIP (dependencia de estructura)    │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+````{mermaid}
+
+flowchart LR
+    longMethod["Long Method"] --> srp["SRP"]
+    largeClass["Large Class"] --> srp
+    divergent["Divergent Change"] --> srp
+
+    switchStmt["Switch Statements"] --> ocp["OCP"]
+    hierarchies["Parallel Hierarchies"] --> ocp
+
+    refused["Refused Bequest"] --> lsp["LSP"]
+
+    intimacy["Inappropriate Intimacy"] --> isp["ISP"]
+    intimacy --> dip["DIP"]
+
+    envy["Feature Envy"] --> srp
+    envy --> dip
+
+    chains["Message Chains"] --> dip
+
+````
 
 ---
 
 (resumen-refactoring)=
 ## Resumen
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│                    REFACTORING Y CODE SMELLS                    │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│  REFACTORING                                                    │
-│    • Mejorar estructura sin cambiar comportamiento              │
-│    • Siempre con tests como red de seguridad                   │
-│    • Cambios pequeños e incrementales                          │
-│    • Commit después de cada paso exitoso                       │
-│                                                                 │
-│  CODE SMELLS                                                    │
-│    • Indicadores de problemas potenciales                      │
-│    • No son bugs, pero merecen atención                        │
-│    • Guían hacia dónde refactorizar                            │
-│                                                                 │
-│  CATEGORÍAS PRINCIPALES                                         │
-│    • Bloaters: código inflado (Long Method, Large Class)       │
-│    • OO Abusers: mal uso de OOP (Switch, Refused Bequest)      │
-│    • Change Preventers: dificultan cambios (Shotgun Surgery)   │
-│    • Dispensables: código innecesario (Dead Code, Comments)    │
-│    • Couplers: acoplamiento excesivo (Feature Envy, Chains)    │
-│                                                                 │
-│  REFACTORIZACIONES CLAVE                                        │
-│    • Extract Method/Class: dividir código grande               │
-│    • Move Method/Field: ubicar lógica correctamente            │
-│    • Replace Conditional with Polymorphism: eliminar switches  │
-│    • Introduce Parameter Object: simplificar parámetros        │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+````{mermaid}
+
+flowchart TD
+    root["Refactoring y Code Smells"]
+
+    root --> ref["Refactoring<br/>Mejora la estructura sin cambiar comportamiento<br/>Se apoya en tests<br/>Avanza con pasos pequeños y commits frecuentes"]
+    root --> smells["Code Smells<br/>Indican problemas potenciales<br/>No son bugs<br/>Señalan dónde conviene refactorizar"]
+    root --> categories["Categorías principales<br/>Bloaters<br/>OO Abusers<br/>Change Preventers<br/>Dispensables<br/>Couplers"]
+    root --> actions["Refactorizaciones clave<br/>Extract Method/Class<br/>Move Method/Field<br/>Replace Conditional with Polymorphism<br/>Introduce Parameter Object"]
+
+````
 
 ---
 
 (ejercicios-refactoring)=
 ## Ejercicios
 
-```{exercise}
+````{exercise}
 :label: refactor-ex-long-method
 
 **Refactorizar Método Largo**
@@ -1875,9 +1821,9 @@ public void procesarTransaccion(Transaccion tx) {
     emailService.enviar(tx.getCuenta().getEmail(), mensaje);
 }
 ```
-```
+````
 
-```{solution} refactor-ex-long-method
+````{solution} refactor-ex-long-method
 :class: dropdown
 
 ```java
@@ -1937,9 +1883,9 @@ private void notificar(Transaccion tx) {
     emailService.enviar(tx.getCuenta().getEmail(), mensaje);
 }
 ```
-```
+````
 
-```{exercise}
+````{exercise}
 :label: refactor-ex-primitive
 
 **Eliminar Obsesión con Primitivos**
@@ -1972,9 +1918,9 @@ public class Producto {
     }
 }
 ```
-```
+````
 
-```{solution} refactor-ex-primitive
+````{solution} refactor-ex-primitive
 :class: dropdown
 
 ```java
@@ -2130,9 +2076,9 @@ public class Producto {
     public Stock getStock() { return stock; }
 }
 ```
-```
+````
 
-```{exercise}
+````{exercise}
 :label: refactor-ex-switch
 
 **Reemplazar Switch con Polimorfismo**
@@ -2175,9 +2121,9 @@ public class CalculadorEnvio {
     }
 }
 ```
-```
+````
 
-```{solution} refactor-ex-switch
+````{solution} refactor-ex-switch
 :class: dropdown
 
 ```java
@@ -2306,9 +2252,9 @@ public class EnvioInternacional implements TipoEnvio {
     }
 }
 ```
-```
+````
 
-```{exercise}
+````{exercise}
 :label: refactor-ex-feature-envy
 
 **Corregir Feature Envy**
@@ -2357,9 +2303,9 @@ public class ReporteCliente {
     }
 }
 ```
-```
+`````
 
-```{solution} refactor-ex-feature-envy
+````{solution} refactor-ex-feature-envy
 :class: dropdown
 
 ```java
@@ -2476,7 +2422,7 @@ public class ReporteCliente {
     }
 }
 ```
-```
+````
 
 ---
 

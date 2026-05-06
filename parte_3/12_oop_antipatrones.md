@@ -1257,39 +1257,12 @@ public class Circulo implements Forma {
 (heuristicas-deteccion)=
 ### Heurísticas de Detección
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│               SEÑALES DE ALERTA                                 │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   NOMBRES                                                       │
-│   ─────────                                                     │
-│   • Clases con "Manager", "Processor", "Handler", "Helper"      │
-│   • Métodos con "And" en el nombre (hacen más de una cosa)      │
-│   • Variables de una letra (excepto en lazos cortos)            │
-│   • Nombres que no explican el propósito                        │
-│                                                                 │
-│   TAMAÑOS                                                       │
-│   ───────                                                       │
-│   • Clases > 300-500 líneas                                     │
-│   • Métodos > 20-30 líneas                                      │
-│   • Más de 3-4 niveles de indentación                           │
-│   • Más de 3-4 parámetros en un método                          │
-│                                                                 │
-│   ESTRUCTURA                                                    │
-│   ──────────                                                    │
-│   • Muchos if/else anidados o en cascada                        │
-│   • Switch/case que se repiten en varios lugares                │
-│   • Try/catch muy grandes                                       │
-│   • Código comentado                                            │
-│                                                                 │
-│   DEPENDENCIAS                                                  │
-│   ─────────────                                                 │
-│   • Muchos imports                                              │
-│   • Acceso frecuente a campos de otros objetos                  │
-│   • Dependencias circulares entre clases                        │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+```{figure} 12/senales_alerta_smells.svg
+:label: fig-senales-alerta-smells
+:align: center
+:width: 95%
+
+Heurísticas de detección: señales de alerta en nombres, tamaños, estructura y dependencias.
 ```
 
 (herramientas)=
@@ -1348,26 +1321,21 @@ Cada vez que tocás un archivo, hacé una pequeña mejora: renombrá una variabl
 8. **Refactorizar continuamente** evita la acumulación de problemas
 :::
 
-```
-┌─────────────────────────────────────────────────────────────────┐
-│          TAXONOMÍA DE SMELLS Y SOLUCIONES                       │
-├─────────────────────────────────────────────────────────────────┤
-│                                                                 │
-│   SMELL                    │  SOLUCIÓN                          │
-│   ────────────────────────────────────────────────────          │
-│   God Class                │  Extract Class, SRP                │
-│   Data Class               │  Move Method, encapsular           │
-│   Long Method              │  Extract Method                    │
-│   Long Parameter List      │  Introduce Parameter Object        │
-│   Feature Envy             │  Move Method                       │
-│   Duplicate Code           │  Extract Method/Class, Template    │
-│   Magic Numbers            │  Extract Constant                  │
-│   Comments                 │  Rename, Extract Method            │
-│   Primitive Obsession      │  Replace with Object               │
-│   Switch Statements        │  Replace with Polymorphism         │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
-```
+````{mermaid}
+
+flowchart LR
+    god["God Class"] --> godFix["Extract Class<br/>SRP"]
+    data["Data Class"] --> dataFix["Move Method<br/>Encapsular"]
+    longMethod["Long Method"] --> longFix["Extract Method"]
+    params["Long Parameter List"] --> paramsFix["Introduce Parameter Object"]
+    envy["Feature Envy"] --> envyFix["Move Method"]
+    duplicate["Duplicate Code"] --> duplicateFix["Extract Method/Class<br/>Template"]
+    magic["Magic Numbers"] --> magicFix["Extract Constant"]
+    comments["Comments"] --> commentsFix["Rename<br/>Extract Method"]
+    primitive["Primitive Obsession"] --> primitiveFix["Replace with Object"]
+    switchStmt["Switch Statements"] --> switchFix["Replace with Polymorphism"]
+
+````
 
 ---
 

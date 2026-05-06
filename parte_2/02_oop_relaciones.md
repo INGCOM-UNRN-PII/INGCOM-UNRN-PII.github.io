@@ -455,9 +455,12 @@ classDiagram
 (notacion-uml-asociacion)=
 #### Notación UML
 
-```
-ClaseA ──────── ClaseB
-```
+````{mermaid}
+classDiagram
+    class ClaseA
+    class ClaseB
+    ClaseA -- ClaseB
+````
 
 Línea simple sin decoración especial.
 

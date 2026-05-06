@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet href="../../resources/svg.css" type="text/css"?>
+<svg width="860" height="520" viewBox="0 0 860 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">Qué testear en una clase</title>
+  <desc id="desc">Panel comparativo con criterios para decidir qué aspectos de una clase conviene testear y cuáles no.</desc>
+  <style><![CDATA[
+    .panel-frame { fill: #ffffff; stroke: var(--unrn-dark-blue); stroke-width: 2.5; }
+    .header-band { fill: var(--unrn-dark-blue); }
+    .header-text { font-family: 'Fabrikat', Arial, sans-serif; font-size: 24px; font-weight: 700; fill: #ffffff; text-anchor: middle; }
+    .section-card { stroke-width: 2; }
+    .testear-card { fill: #edf7ed; stroke: #2e7d32; }
+    .no-testear-card { fill: #fdecec; stroke: #c62828; }
+    .section-title { font-family: 'Fabrikat', Arial, sans-serif; font-size: 20px; font-weight: 700; text-anchor: middle; }
+    .testear-title { fill: #2e7d32; }
+    .no-testear-title { fill: #c62828; }
+    .rule-line { stroke-width: 3; stroke-linecap: round; }
+    .testear-line { stroke: #2e7d32; }
+    .no-testear-line { stroke: #c62828; }
+    .bullet-dot { r: 4; }
+    .testear-dot { fill: #2e7d32; }
+    .no-testear-dot { fill: #c62828; }
+    .item-text { font-family: 'Lato', Arial, sans-serif; font-size: 14px; font-weight: 700; fill: var(--unrn-dark-blue); }
+    .support-text { font-family: 'Lato', Arial, sans-serif; font-size: 13px; font-weight: 400; fill: var(--gray-700); text-anchor: middle; }
+  ]]></style>
+
+  <rect x="24" y="24" width="812" height="472" rx="18" class="panel-frame"/>
+  <path d="M 42 24 H 818 Q 836 24 836 42 V 96 H 24 V 42 Q 24 24 42 24 Z" class="header-band"/>
+  <text x="430" y="68" class="header-text">¿QUÉ TESTEAR EN UNA CLASE?</text>
+  <text x="430" y="124" class="support-text">El foco está en el comportamiento observable y en los contratos públicos.</text>
+
+  <rect x="60" y="156" width="332" height="300" rx="18" class="section-card testear-card"/>
+  <text x="226" y="194" class="section-title testear-title">TESTEAR</text>
+  <line x1="150" y1="208" x2="302" y2="208" class="rule-line testear-line"/>
+
+  <circle cx="90" cy="246" r="4" class="testear-dot"/>
+  <text x="110" y="251" class="item-text">Métodos públicos</text>
+  <circle cx="90" cy="286" r="4" class="testear-dot"/>
+  <text x="110" y="291" class="item-text">Comportamiento observable</text>
+  <circle cx="90" cy="326" r="4" class="testear-dot"/>
+  <text x="110" y="331" class="item-text">Contratos: pre y postcondiciones</text>
+  <circle cx="90" cy="366" r="4" class="testear-dot"/>
+  <text x="110" y="371" class="item-text">Casos límite</text>
+  <circle cx="90" cy="406" r="4" class="testear-dot"/>
+  <text x="110" y="411" class="item-text">Manejo de errores</text>
+
+  <rect x="468" y="156" width="332" height="300" rx="18" class="section-card no-testear-card"/>
+  <text x="634" y="194" class="section-title no-testear-title">NO TESTEAR</text>
+  <line x1="551" y1="208" x2="717" y2="208" class="rule-line no-testear-line"/>
+
+  <circle cx="498" cy="246" r="4" class="no-testear-dot"/>
+  <text x="518" y="251" class="item-text">Métodos privados</text>
+  <circle cx="498" cy="286" r="4" class="no-testear-dot"/>
+  <text x="518" y="291" class="item-text">Detalles internos</text>
+  <circle cx="498" cy="326" r="4" class="no-testear-dot"/>
+  <text x="518" y="331" class="item-text">Implementación</text>
+  <circle cx="498" cy="366" r="4" class="no-testear-dot"/>
+  <text x="518" y="371" class="item-text">Getters/setters triviales</text>
+  <circle cx="498" cy="406" r="4" class="no-testear-dot"/>
+  <text x="518" y="411" class="item-text">Código de terceros</text>
+</svg>

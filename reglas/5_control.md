@@ -674,22 +674,16 @@ Los métodos de lógica de negocio no deben mezclar cálculos o procesamiento co
 
 ### Principio: Separación de Capas
 
-```
-ARQUITECTURA CORRECTA:
-┌────────────────────┐
-│  Capa de           │  ← System.out, Scanner
-│  Presentación/UI   │  ← printf, readLine
-└────────────────────┘
-         ↓
-┌────────────────────┐
-│  Capa de           │  ← NO debe tener I/O
-│  Lógica de Negocio │  ← Solo cálculos y procesamiento
-└────────────────────┘
-         ↓
-┌────────────────────┐
-│  Capa de Datos     │  ← Archivos, BD
-└────────────────────┘
-```
+````{mermaid}
+
+flowchart TD
+    ui["Capa de Presentacion / UI<br/>System.out, Scanner, printf, readLine"]
+    negocio["Capa de Logica de Negocio<br/>Sin I/O<br/>Solo calculos y procesamiento"]
+    datos["Capa de Datos<br/>Archivos, BD"]
+
+    ui --> negocio --> datos
+
+````
 
 ### Anti-patrón: I/O mezclado con lógica ❌
 

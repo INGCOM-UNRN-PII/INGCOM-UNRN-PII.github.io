@@ -99,20 +99,11 @@ El Diseño por Contratos fue formalizado por **Bertrand Meyer** en los años 80,
 
 Una **precondición** es una condición que **debe ser verdadera antes** de que se ejecute un método. Es la **obligación del cliente** (quien llama al método) garantizar que se cumple.
 
-```
-┌─────────────────────────────────────────┐
-│              MÉTODO                     │
-│─────────────────────────────────────────│
-│                                         │
-│  PRECONDICIÓN (responsabilidad cliente) │
-│  ════════════════════════════════════   │
-│  "Si me llamás, asegurate de que..."    │
-│                                         │
-│  • Parámetros válidos                   │
-│  • Estado del objeto apropiado          │
-│  • Recursos disponibles                 │
-│                                         │
-└─────────────────────────────────────────┘
+```{figure} 13/precondicion_metodo.svg
+:label: fig-precondicion-metodo
+:width: 90%
+
+Precondición de un método: qué debe garantizar el cliente antes de invocarlo.
 ```
 
 (ejemplos-precondiciones)=
@@ -148,8 +139,8 @@ Elemento obtener(int indice) {
 
 #### Transferencia Bancaria
 
-```
-/**java
+```java
+/**
  * Transfiere dinero a otra cuenta.
  * 
  * @precondition monto > 0
@@ -362,24 +353,11 @@ String leerArchivo(String ruta) throws ArchivoNoEncontradoException,
 
 Un **invariante de clase** es una condición que **siempre debe ser verdadera** para todas las instancias de una clase, en todo momento observable (entre llamadas a métodos públicos).
 
-```
-┌─────────────────────────────────────────────────────────┐
-│                     CLASE                               │
-│─────────────────────────────────────────────────────────│
-│                                                         │
-│  INVARIANTE DE CLASE                                    │
-│  ═══════════════════                                    │
-│  "En todo momento, estas condiciones son verdaderas..." │
-│                                                         │
-│  • Relaciones entre atributos                          │
-│  • Restricciones de dominio                            │
-│  • Consistencia interna                                │
-│                                                         │
-│  Se verifica:                                           │
-│  ✓ Después del constructor                              │
-│  ✓ Antes y después de cada método público               │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+```{figure} 13/invariante_clase.svg
+:label: fig-invariante-clase
+:width: 90%
+
+Invariante de clase: condiciones que toda instancia debe preservar en cada estado observable.
 ```
 
 (ejemplos-invariantes)=
@@ -670,24 +648,14 @@ class Pila<T> {
 (modelo-cliente-proveedor)=
 ### El Modelo Cliente-Proveedor
 
-```
-┌─────────────┐                    ┌─────────────┐
-│   CLIENTE   │                    │  PROVEEDOR  │
-│  (quien     │─────llamada───────▶│  (método    │
-│   llama)    │                    │   llamado)  │
-└─────────────┘                    └─────────────┘
-      │                                   │
-      │ Responsabilidad:                  │ Responsabilidad:
-      │ PRECONDICIONES                    │ POSTCONDICIONES
-      │                                   │
-      ▼                                   ▼
-┌─────────────────┐              ┌─────────────────┐
-│ "Debo asegurar  │              │ "Si el cliente  │
-│ que las         │              │ cumplió, yo     │
-│ precondiciones  │              │ garantizo las   │
-│ se cumplan"     │              │ postcondiciones"│
-└─────────────────┘              └─────────────────┘
-```
+````{mermaid}
+
+flowchart LR
+    cliente["CLIENTE<br/>(quien llama)"] -->|llamada| proveedor["PROVEEDOR<br/>(metodo llamado)"]
+    cliente --> pre["Responsabilidad:<br/>PRECONDICIONES<br/>Debo asegurar que se cumplan"]
+    proveedor --> post["Responsabilidad:<br/>POSTCONDICIONES<br/>Si el cliente cumplio,<br/>yo garantizo el resultado"]
+
+````
 
 (violacion-contrato)=
 ### ¿Qué Pasa Cuando se Viola el Contrato?
@@ -729,7 +697,7 @@ double dividir(double a, double b) {
 Hay dos filosofías diferentes:
 
 **Programación Defensiva**: "No confío en nadie"
-```
+```java
 void procesar(String dato) {
     if (dato == null) {
         dato = "";  // "Corrijo" silenciosamente
@@ -742,7 +710,7 @@ void procesar(String dato) {
 ```
 
 **Diseño por Contratos**: "Cumplí tu parte"
-```
+```java
 /**
  * @precondition dato != null
  * @precondition !dato.isEmpty()
@@ -772,33 +740,21 @@ Depende del contexto:
 
 Cuando una subclase sobrescribe un método, debe respetar ciertas reglas para mantener la sustituibilidad:
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│              REGLAS DE CONTRATOS EN HERENCIA                │
-│═════════════════════════════════════════════════════════════│
-│                                                             │
-│  PRECONDICIONES: Pueden ser IGUALES o MÁS DÉBILES           │
-│  ─────────────────────────────────────────────────          │
-│  La subclase puede aceptar MÁS casos que la superclase      │
-│  (pero nunca rechazar casos que la superclase acepta)       │
-│                                                             │
-│  POSTCONDICIONES: Pueden ser IGUALES o MÁS FUERTES          │
-│  ──────────────────────────────────────────────────         │
-│  La subclase puede garantizar MÁS que la superclase         │
-│  (pero nunca menos de lo que la superclase garantiza)       │
-│                                                             │
-│  INVARIANTES: Deben PRESERVARSE y pueden AGREGARSE          │
-│  ────────────────────────────────────────────────           │
-│  La subclase hereda los invariantes de la superclase        │
-│  y puede agregar los suyos propios                          │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+````{mermaid}
+
+flowchart TD
+    pre["PRECONDICIONES<br/>Iguales o mas debiles<br/>La subclase acepta mas casos<br/>Nunca rechaza lo que la superclase acepta"]
+    post["POSTCONDICIONES<br/>Iguales o mas fuertes<br/>La subclase garantiza mas<br/>Nunca menos que la superclase"]
+    inv["INVARIANTES<br/>Deben preservarse y pueden agregarse<br/>La subclase hereda invariantes<br/>y suma los propios"]
+
+    pre --> post --> inv
+
+````
 
 (ejemplo-precondiciones-debiles)=
 ### Ejemplo: Precondiciones Más Débiles (Correcto)
 
-```
+```java
 class Calculadora {
     /**
      * @precondition numero >= 0
@@ -976,7 +932,7 @@ long factorial(int n) {
 
 Java provee `assert` para verificar condiciones:
 
-```
+```java
 void metodo(int valor) {
     // Precondición
     assert valor > 0 : "valor debe ser positivo";
@@ -1007,7 +963,7 @@ No uses assertions para validar entrada de usuario o APIs públicas.
 Existen bibliotecas que facilitan la verificación de contratos:
 
 **Google Guava (Preconditions)**
-```
+```java
 import static com.google.common.base.Preconditions.*;
 
 void transferir(double monto, Cuenta destino) {
@@ -1020,7 +976,7 @@ void transferir(double monto, Cuenta destino) {
 ```
 
 **Apache Commons (Validate)**
-```
+```java
 import org.apache.commons.lang3.Validate;
 
 void transferir(double monto, Cuenta destino) {
@@ -1037,7 +993,7 @@ void transferir(double monto, Cuenta destino) {
 
 Los contratos guían la escritura de tests:
 
-```
+```java
 // Test de precondiciones (casos límite inválidos)
 @Test(expected = IllegalArgumentException.class)
 void dividir_divisorCero_lanzaExcepcion() {
@@ -1078,7 +1034,7 @@ void pila_operacionesVarias_invariantesPreservados() {
 
 `null` es una fuente constante de violaciones de contrato:
 
-```
+```java
 // ¿Qué significa retornar null?
 Usuario buscar(String id) {
     // ¿null significa "no encontrado"?
@@ -1097,7 +1053,7 @@ void procesar(Usuario usuario) {
 
 #### 1. Prohibir null explícitamente
 
-```
+```java
 /**
  * @precondition usuario != null
  * @postcondition resultado != null
@@ -1110,7 +1066,7 @@ String formatear(Usuario usuario) {
 
 #### 2. Usar Optional
 
-```
+```java
 /**
  * @postcondition resultado.isPresent() si el usuario existe
  * @postcondition resultado.isEmpty() si no existe
@@ -1128,7 +1084,7 @@ String nombre = usuario.map(Usuario::getNombre).orElse("Anónimo");
 
 #### 3. Patrón Null Object
 
-```
+```java
 interface Usuario {
     String getNombre();
     boolean esReal();

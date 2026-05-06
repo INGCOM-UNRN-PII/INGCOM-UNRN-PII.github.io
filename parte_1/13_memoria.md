@@ -104,25 +104,12 @@ public static void ejemplo() {
 
 Imaginá que el Stack es tu escritorio y el Heap es un depósito grande. En tu escritorio (Stack) tenés notas con direcciones (referencias) que te dicen dónde están las cosas en el depósito (Heap).
 
-```
-┌─────────────────────────┐     ┌─────────────────────────────────┐
-│         STACK           │     │             HEAP                │
-│   (tu escritorio)       │     │        (el depósito)            │
-├─────────────────────────┤     ├─────────────────────────────────┤
-│                         │     │                                 │
-│  edad: 25               │     │   ┌─────────────────────┐       │
-│  (valor directo)        │     │   │ Arreglo int[]       │       │
-│                         │     │   │ [1] [2] [3]         │       │
-│  precio: 19.99          │     │   │ (dirección: 0x1234) │       │
-│  (valor directo)        │     │   └─────────────────────┘       │
-│                         │     │            ▲                    │
-│  numeros: 0x1234 ───────────────────────────┘                   │
-│  (referencia/dirección) │     │                                 │
-│                         │     │   ┌─────────────────────┐       │
-│  texto: 0x5678 ─────────────────► │ String "Hola"       │       │
-│  (referencia/dirección) │     │   │ (dirección: 0x5678) │       │
-│                         │     │   └─────────────────────┘       │
-└─────────────────────────┘     └─────────────────────────────────┘
+```{figure} 13/memoria_escritorio_deposito.svg
+:label: fig-memoria-escritorio-deposito
+:align: center
+:width: 95%
+
+Stack como escritorio y Heap como depósito: los primitivos guardan su valor y las referencias guardan direcciones hacia objetos del Heap.
 ```
 
 (que-pasa-cuando-termina-un-metodo)=
@@ -203,16 +190,12 @@ System.out.println(arr1[0]);  // Imprime: 999 (¡arr1 también ve el cambio!)
 
 **Visualización:**
 
-```
-PRIMITIVOS (copian valor):           REFERENCIAS (copian dirección):
-                                     
-Stack:                               Stack:           Heap:
-┌────────┐                           ┌────────┐      ┌─────────────┐
-│ a: 10  │ (valor propio)            │arr1:0x1234──►│ [1] [2] [3] │
-├────────┤                           ├────────┤      │ (un solo    │
-│ b: 20  │ (valor propio)            │arr2:0x1234──►│  arreglo)   │
-└────────┘                           └────────┘      └─────────────┘
-(independientes)                     (apuntan al mismo lugar)
+```{figure} 13/primitivos_vs_referencias.svg
+:label: fig-primitivos-vs-referencias
+:align: center
+:width: 95%
+
+Asignar primitivos copia el valor; asignar referencias copia la dirección y deja un único arreglo compartido.
 ```
 
 (el-valor-null)=
@@ -339,17 +322,12 @@ System.out.println(a == c);  // true — misma dirección
 
 **Visualización:**
 
-```
-Stack:              Heap:
-                    
-a: 0x1234 ──────► [1][2][3]  (objeto en 0x1234)
-                    
-b: 0x5678 ──────► [1][2][3]  (objeto diferente en 0x5678)
-                    
-c: 0x1234 ──────────────────► (apunta al mismo que 'a')
+```{figure} 13/comparacion_referencias_igualdad.svg
+:label: fig-comparacion-referencias-igualdad
+:align: center
+:width: 95%
 
-a == b → ¿0x1234 == 0x5678? → NO
-a == c → ¿0x1234 == 0x1234? → SÍ
+Con referencias, `==` compara direcciones: `a` y `c` coinciden; `a` y `b` no.
 ```
 
 (comparar-contenido-de-arreglos)=
@@ -490,44 +468,20 @@ public static void main(String[] args) {
 (visualizacion-del-pasaje-de-referencias)=
 ### Visualización del Pasaje de Referencias
 
-```
-ANTES de llamar a modificarContenido(numeros):
+```{figure} 13/pasaje_referencias_contenido.svg
+:label: fig-pasaje-referencias-contenido
+:align: center
+:width: 95%
 
-Stack (main)              Heap
-┌──────────────┐         ┌─────────────┐
-│ numeros: ─────────────►│ [1] [2] [3] │
-└──────────────┘         └─────────────┘
-
-DURANTE modificarContenido(arr):
-
-Stack (main)              Heap
-┌──────────────┐         ┌─────────────┐
-│ numeros: ─────────────►│ [1] [2] [3] │ ← ambos apuntan aquí
-└──────────────┘         └─────────────┘
-                               ▲
-Stack (método)                 │
-┌──────────────┐               │
-│ arr: ────────────────────────┘  (copia de la dirección)
-└──────────────┘
-
-Cuando hacemos arr[0] = 999, modificamos el arreglo compartido.
+Antes y durante `modificarContenido(numeros)`: el método recibe una copia de la dirección y ambos nombres apuntan al mismo arreglo.
 ```
 
-```
-Si intentamos reasignar arr = new int[]{100, 200, 300}:
+```{figure} 13/pasaje_referencias_reasignacion.svg
+:label: fig-pasaje-referencias-reasignacion
+:align: center
+:width: 95%
 
-Stack (main)              Heap
-┌──────────────┐         ┌─────────────┐
-│ numeros: ─────────────►│ [1] [2] [3] │ ← numeros sigue aquí
-└──────────────┘         └─────────────┘
-                         
-Stack (método)           ┌─────────────────┐
-┌──────────────┐         │ [100] [200] [300] │
-│ arr: ─────────────────►│ (nuevo arreglo)   │
-└──────────────┘         └─────────────────┘
-
-'arr' apunta a un nuevo arreglo, pero 'numeros' sigue apuntando al viejo.
-Cuando el método termina, el nuevo arreglo queda sin referencias y será eliminado.
+Reasignar `arr` cambia solo la copia local: `numeros` sigue con el arreglo viejo y el arreglo nuevo puede quedar sin referencias al terminar el método.
 ```
 
 (13-comparacion-con-c)=
@@ -792,17 +746,12 @@ System.out.println(s1.equals(s3));  // true (mismo contenido)
 
 **Visualización:**
 
-```
-Stack:                    Heap:
-                          
-s1: 0x1234 ─────┐         ┌──────────────────────┐
-               ├────────► │ String Pool          │
-s2: 0x1234 ─────┘         │ ┌─────────────────┐  │
-                          │ │ "Hola" (0x1234) │  │
-                          │ └─────────────────┘  │
-                          └──────────────────────┘
-                          
-s3: 0x5678 ──────────────► "Hola" (0x5678) ← objeto separado, fuera del pool
+```{figure} 13/string_pool_referencias.svg
+:label: fig-string-pool-referencias
+:align: center
+:width: 95%
+
+En el String Pool, `s1` y `s2` comparten la referencia al mismo literal; `s3` apunta a un objeto separado creado con `new String(...)`.
 ```
 
 **¿Cuándo usar `new String()`?**
