@@ -32,7 +32,9 @@ Esta sección no reemplaza a las [reglas de estilo](../reglas/indice.md) para el
 | :--- | :--- |
 | [plantilla_capitulos](plantilla_capitulos.md) | Estructura mínima obligatoria por tipo de página |
 | [estilo_y_formato](estilo_y_formato.md) | Voz, terminología, MyST, referencias, ejemplos y convenciones de escritura |
+| [infografias_svg](infografias_svg.md) | Reglas específicas para diagramas técnicos e infografías SVG |
 | [estado_y_mantenimiento](estado_y_mantenimiento.md) | Estados del contenido, criterios de publicación y checklist de mantenimiento |
+| [contribuciones_externas](contribuciones_externas.md) | Canales y criterios para recibir aportes de terceros |
 
 ## Regla corta
 

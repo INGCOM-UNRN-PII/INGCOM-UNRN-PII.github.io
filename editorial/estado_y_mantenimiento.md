@@ -100,6 +100,12 @@ La sección editorial no sirve si solo se crea una vez. Debería revisarse cada 
 - se mueve contenido entre partes,
 - o se cambia el criterio de publicación.
 
+## Aportes de terceros
+
+Los aportes externos conviene recibirlos por canales trazables y revisarlos con el mismo criterio que cualquier cambio interno.
+
+Los canales admitidos y el flujo recomendado están documentados en [contribuciones_externas](contribuciones_externas.md).
+
 ## Sincronización con archivos de instrucciones
 
 Los archivos auxiliares de instrucciones del repositorio no deberían duplicar reglas editoriales extensas.

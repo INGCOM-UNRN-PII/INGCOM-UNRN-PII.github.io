@@ -161,6 +161,8 @@ Las tipografías esperadas son:
 - **Lato** para texto,
 - **Share Tech Mono** para código.
 
+Para reglas detalladas de clases CSS, paleta, marcadores y checklist de diagramas, usar [infografias_svg](infografias_svg.md).
+
 ## Referencias y enlaces
 
 ### Referencias internas

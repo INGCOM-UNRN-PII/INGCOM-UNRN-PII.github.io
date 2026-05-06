@@ -5,6 +5,12 @@ description: Guía de uso del archivo svg.css para diagramas técnicos UNRN.
 
 # CSS Compartido para Diagramas SVG
 
+:::{important}
+La guía editorial vigente para infografías SVG ahora está integrada en `editorial/infografias_svg.md`.
+
+Este archivo puede seguir funcionando como referencia técnica del CSS compartido, pero las decisiones editoriales de publicación, estilo y mantenimiento deberían tomarse desde la sección `editorial/`.
+:::
+
 Este documento explica cómo usar el archivo `svg.css` para crear diagramas técnicos consistentes con la identidad visual de la UNRN.
 
 ## Tabla de Contenidos
