@@ -1227,11 +1227,11 @@ Jerarquía completa de un sistema de medios de pago.
 
 ### Principios SOLID
 
-- **S**ingle Responsibility: Una razón para cambiar (ver [Principio de Responsabilidad Única (S)](../parte_3/09_oop_solid.md))
-- **O**pen/Closed: Extensible, no modificable (ver [Principio Abierto/Cerrado (O)](../parte_3/09_oop_solid.md))
-- **L**iskov Substitution: Subclases sustituibles (ver [Principio de Sustitución de Liskov (L)](../parte_3/09_oop_solid.md))
-- **I**nterface Segregation: Interfaces pequeñas (ver [Principio de Segregación de Interfaces (I)](../parte_3/09_oop_solid.md))
-- **D**ependency Inversion: Depender de abstracciones (ver [Principio de Inversión de Dependencias (D)](../parte_3/09_oop_solid.md))
+- **S** (Single Responsibility): Una razón para cambiar (ver [Principio de Responsabilidad Única (S)](../parte_3/09_oop_solid.md))
+- **O** (Open/Closed): Extensible, no modificable (ver [Principio Abierto/Cerrado (O)](../parte_3/09_oop_solid.md))
+- **L** (Liskov Substitution): Subclases sustituibles (ver [Principio de Sustitución de Liskov (L)](../parte_3/09_oop_solid.md))
+- **I** (Interface Segregation): Interfaces pequeñas (ver [Principio de Segregación de Interfaces (I)](../parte_3/09_oop_solid.md))
+- **D** (Dependency Inversion): Depender de abstracciones (ver [Principio de Inversión de Dependencias (D)](../parte_3/09_oop_solid.md))
 
 ---
 

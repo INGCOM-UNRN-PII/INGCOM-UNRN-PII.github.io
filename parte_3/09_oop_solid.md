@@ -61,11 +61,11 @@ Los principios SOLID atacan directamente estos síntomas:
 
 | Principio | Combate |
 |-----------|---------|
-| **S**ingle Responsibility | Rigidez |
-| **O**pen/Closed | Fragilidad |
-| **L**iskov Substitution | Fragilidad, Inmovilidad |
-| **I**nterface Segregation | Rigidez, Inmovilidad |
-| **D**ependency Inversion | Rigidez, Inmovilidad |
+| **S** (Single Responsibility) | Rigidez |
+| **O** (Open/Closed) | Fragilidad |
+| **L** (Liskov Substitution) | Fragilidad, Inmovilidad |
+| **I** (Interface Segregation) | Rigidez, Inmovilidad |
+| **D** (Dependency Inversion) | Rigidez, Inmovilidad |
 
 :::{important}
 SOLID no es un conjunto de reglas rígidas sino **heurísticas de diseño**. Aplicarlas ciegamente puede llevar a sobre-ingeniería. El objetivo es entender el **espíritu** de cada principio y aplicarlo con criterio.

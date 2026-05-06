@@ -36,7 +36,7 @@
   <text x="350" y="25" class="title" text-anchor="middle">Evaluación en Cortocircuito</text>
   
   <!-- Sección AND (&&) -->
-  <text x="175" y="55" class="subtitle" text-anchor="middle">Operador AND (&&)</text>
+  <text x="175" y="55" class="subtitle" text-anchor="middle">Operador AND (&amp;&amp;)</text>
   
   <!-- Caso 1: a es false -->
   <text x="175" y="80" class="label" text-anchor="middle">Caso: a = false</text>
