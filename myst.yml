@@ -20,8 +20,30 @@ project:
       institution: Universidad Nacional de Rio Negro - Sede Andina
       ror: 048zgak80
   github: https://github.com/INGCOM-UNRN-PII/INGCOM-UNRN-PII.github.io
+  plugins:
+    - https://github.com/TUD-JB-Templates/JB2_plugins/releases/download/exercise/pdf_exercise.mjs
   exports:
-    - format: pdf
+    - format: typst
+      template: https://github.com/myst-templates/plain_typst_book.git
+      output: exports/apunte.pdf
+      id: output-pdf
+      # portada
+      cover: ./images/portada.svg
+      coverposition: 5  #in cm from title
+      cover_width: 12 #in cm
+      # Tabla de contenido
+      show_ToC: true
+      # Logo en cáda página
+      logo: ./images/unrn-p2_big.svg
+      logo_width: 30%
+      # Configuración de las páginas
+      papersize: a4
+      margin_top: 2 #cm
+      margin_bottom: 2 #cm
+      margin_left: 10 #%
+      margin_right: 10 #%
+      show_pagenumber: true
+
   toc:
   - file: README.md
   - title: Cátedra
