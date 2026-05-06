@@ -43,4 +43,12 @@ Este portal está construido utilizando [MyST Markdown](https://mystmd.org/), lo
 
 ## Contribuciones
 
-Este repositorio se encuentra en desarrollo activo. Si encontrás algún error, enlace roto o tenés sugerencias para mejorar las explicaciones, te invitamos a colaborar abriendo un *issue* en nuestro [repositorio de GitHub](https://github.com/INGCOM-UNRN-PII/INGCOM-UNRN-PII.github.io).
+Este repositorio se encuentra en desarrollo activo y admite aportes externos.
+
+Canales de contribución:
+
+- abrí un [issue](https://github.com/INGCOM-UNRN-PII/INGCOM-UNRN-PII.github.io/issues) si querés reportar un error, una referencia rota o proponer una mejora,
+- abrí un [pull request](https://github.com/INGCOM-UNRN-PII/INGCOM-UNRN-PII.github.io/pulls) si ya tenés una corrección concreta lista para revisar,
+- escribí a `mrvilugron@unrn.edu.ar` si el aporte no debería discutirse en público o necesita coordinación institucional.
+
+Para el criterio editorial completo de revisión e integración, ver [contribuciones_externas](editorial/contribuciones_externas.md).
