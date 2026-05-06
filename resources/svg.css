@@ -5,8 +5,9 @@
  * Paleta de colores basada en identidad institucional UNRN
  * Colores primarios: #eb2141 (rojo institucional), #192437 (azul oscuro)
  * 
- * Para usar este CSS en un SVG, incluir:
- * <?xml-stylesheet href="../resources/svg.css" type="text/css"?>
+ * Usar este archivo como fuente de verdad para copiar reglas dentro de cada SVG.
+ * No depender de <?xml-stylesheet ...?> en producción: el SVG publicado debería
+ * quedar autocontenido con un bloque <style> incrustado.
  */
 
 /* ============================================

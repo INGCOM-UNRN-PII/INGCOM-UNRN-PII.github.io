@@ -78,31 +78,47 @@ La figura debería incluir:
 
 ## Regla principal de estilo
 
-Siempre que sea posible, usar `resources/svg.css` y sus clases semánticas en lugar de estilos inline dispersos.
+Tomar `resources/svg.css` como fuente de verdad para paleta, tipografía y clases semánticas, pero **copiar dentro de cada SVG** el CSS que ese archivo necesita.
 
-## CSS compartido
+## CSS base de referencia
 
 El archivo base es:
 
 - `resources/svg.css`
 
-No requiere instalación adicional.
+No requiere instalación adicional, pero **no debería enlazarse desde producción** con `xml-stylesheet`.
 
-### Ruta relativa
+### Regla de incrustación
 
-La referencia depende de la ubicación del SVG:
+Cada SVG publicado debería ser autocontenido. La forma esperada es:
 
 ```xml
-<?xml-stylesheet href="../../resources/svg.css" type="text/css"?>
+<svg width="600" height="450" viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style><![CDATA[
+      /* Copiar desde resources/svg.css las variables y clases necesarias */
+      :root {
+        --unrn-red: #eb2141;
+        --unrn-dark-blue: #192437;
+        --gray-700: #404040;
+      }
+
+      .title {
+        font-family: 'Fabrikat', Arial, sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        fill: var(--unrn-dark-blue);
+        text-anchor: middle;
+      }
+    ]]></style>
+  </defs>
+</svg>
 ```
 
-Ejemplos:
-
-- desde `parte_1/13/diagrama.svg` → `../../resources/svg.css`
-- desde `parte_1/diagrama.svg` → `../resources/svg.css`
+Si el diagrama usa pocas clases, conviene incrustar solo las necesarias. Si usa muchas, conviene copiar y ajustar un bloque más grande tomado de `resources/svg.css`.
 
 :::{warning}
-Si la ruta al CSS está mal, el SVG puede verse distinto entre desarrollo y producción.
+No usar `<?xml-stylesheet ...?>` para publicar SVG del sitio. La ruta al CSS externo no se resuelve de forma consistente entre la versión local y el despliegue.
 :::
 
 ## Estructura base recomendada
@@ -111,9 +127,11 @@ Si la ruta al CSS está mal, el SVG puede verse distinto entre desarrollo y prod
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet href="../../resources/svg.css" type="text/css"?>
 <svg width="600" height="450" viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
   <defs>
+    <style><![CDATA[
+      /* Copiar desde resources/svg.css las reglas necesarias para este SVG */
+    ]]></style>
     <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
       <polygon points="0 0, 10 3, 0 6" fill="var(--unrn-red)"/>
     </marker>
@@ -289,16 +307,17 @@ Un buen SVG del apunte debería cumplir estas funciones:
 ## Buenas prácticas
 
 1. usar clases CSS semánticas en lugar de estilos inline,
-2. respetar la jerarquía tipográfica (`title` → `subtitle` → `label`),
-3. mantener dimensiones proporcionadas,
-4. incluir títulos descriptivos y etiquetas legibles,
-5. sostener consistencia con diagramas similares ya existentes.
+2. incrustar el CSS necesario dentro del propio SVG,
+3. respetar la jerarquía tipográfica (`title` → `subtitle` → `label`),
+4. mantener dimensiones proporcionadas,
+5. incluir títulos descriptivos y etiquetas legibles,
+6. sostener consistencia con diagramas similares ya existentes.
 
 ## Checklist antes de dar por listo un SVG
 
 | Pregunta | Sí / No |
 | :--- | :--- |
-| ¿La ruta a `resources/svg.css` es correcta? | |
+| ¿El CSS necesario está incrustado dentro del SVG? | |
 | ¿El `viewBox` está bien definido? | |
 | ¿Las dimensiones son razonables? | |
 | ¿El color corresponde a la familia de estructura? | |

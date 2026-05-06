@@ -1,9 +1,9 @@
 ---
-title: "CSS Compartido para Diagramas SVG"
-description: Guía de uso del archivo svg.css para diagramas técnicos UNRN.
+title: "CSS base para diagramas SVG"
+description: Guía técnica para usar resources/svg.css como base e incrustar estilos en cada SVG publicado.
 ---
 
-# CSS Compartido para Diagramas SVG
+# CSS base para diagramas SVG
 
 :::{important}
 La guía editorial vigente para infografías SVG ahora está integrada en `editorial/infografias_svg.md`.
@@ -11,7 +11,7 @@ La guía editorial vigente para infografías SVG ahora está integrada en `edito
 Este archivo puede seguir funcionando como referencia técnica del CSS compartido, pero las decisiones editoriales de publicación, estilo y mantenimiento deberían tomarse desde la sección `editorial/`.
 :::
 
-Este documento explica cómo usar el archivo `svg.css` para crear diagramas técnicos consistentes con la identidad visual de la UNRN.
+Este documento explica cómo usar `resources/svg.css` como base para crear diagramas técnicos consistentes con la identidad visual de la UNRN, **incrustando** en cada SVG las reglas necesarias.
 
 ## Tabla de Contenidos
 
@@ -22,20 +22,43 @@ Este documento explica cómo usar el archivo `svg.css` para crear diagramas téc
 - [Ejemplos](#ejemplos)
 - [Tipografías](#tipografías)
 
-## Instalación
+## Uso base
 
-El archivo `svg.css` ya está ubicado en `resources/svg.css`. No requiere instalación adicional.
+El archivo `svg.css` ya está ubicado en `resources/svg.css`. No requiere instalación adicional y funciona como **fuente de copia** para los estilos de los diagramas.
 
-### Embeber el CSS en tu SVG 
+### Incrustar el CSS en tu SVG
 
-Embed the css within the svg file as the static files routes are different in development and production.
-Embed the css within the svg file as the static files routes are different in development and production.
+El SVG publicado no debería depender de `<?xml-stylesheet ...?>`, porque las rutas de archivos estáticos no se resuelven de forma consistente entre desarrollo y producción.
 
-:::{note}
-Ajustá la ruta `../resources/svg.css` según la ubicación de tu SVG:
-- Desde `parte_1/13/diagrama.svg` → `../../resources/svg.css`
-- Desde `parte_1/diagrama.svg` → `../resources/svg.css`
-:::
+La regla práctica es:
+
+1. tomar `resources/svg.css` como base,
+2. copiar dentro del SVG las variables y clases necesarias,
+3. dejar el archivo autocontenido.
+
+Ejemplo mínimo:
+
+```xml
+<svg width="600" height="450" viewBox="0 0 600 450" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style><![CDATA[
+      /* Copiar desde resources/svg.css las reglas necesarias */
+      :root {
+        --unrn-red: #eb2141;
+        --unrn-dark-blue: #192437;
+      }
+
+      .title {
+        font-family: 'Fabrikat', Arial, sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        fill: var(--unrn-dark-blue);
+        text-anchor: middle;
+      }
+    ]]></style>
+  </defs>
+</svg>
+```
 
 ### Definir Marcadores de Flechas
 
@@ -192,9 +215,11 @@ Ajustá la ruta `../resources/svg.css` según la ubicación de tu SVG:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet href="../../resources/svg.css" type="text/css"?>
 <svg width="400" height="300" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
   <defs>
+    <style><![CDATA[
+      /* Pegar aquí el subconjunto de rules tomado de resources/svg.css */
+    ]]></style>
     <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
       <polygon points="0 0, 10 3, 0 6" fill="#eb2141"/>
     </marker>
@@ -227,9 +252,11 @@ Ajustá la ruta `../resources/svg.css` según la ubicación de tu SVG:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet href="../../resources/svg.css" type="text/css"?>
 <svg width="500" height="400" viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
   <defs>
+    <style><![CDATA[
+      /* Pegar aquí el subconjunto de rules tomado de resources/svg.css */
+    ]]></style>
     <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
       <polygon points="0 0, 10 3, 0 6" fill="#2e7d32"/>
     </marker>
@@ -273,16 +300,17 @@ El CSS incluye tres familias tipográficas:
 ## Mejores Prácticas
 
 :::{tip}
-1. **Consistencia:** Usá siempre las clases CSS en lugar de estilos inline
-2. **Colores semánticos:** Elegí el esquema de color apropiado para cada estructura
-3. **Tipografía:** Respetá la jerarquía tipográfica (title → subtitle → label)
-4. **Dimensiones:** Mantené proporciones consistentes (viewBox recomendado: 600-800px ancho)
-5. **Accesibilidad:** Incluí títulos descriptivos y etiquetas claras
+1. **Consistencia:** Usá siempre clases CSS semánticas en lugar de estilos inline dispersos
+2. **Autocontención:** Incrustá el CSS dentro de cada SVG publicado
+3. **Colores semánticos:** Elegí el esquema de color apropiado para cada estructura
+4. **Tipografía:** Respetá la jerarquía tipográfica (title → subtitle → label)
+5. **Dimensiones:** Mantené proporciones consistentes (viewBox recomendado: 600-800px ancho)
+6. **Accesibilidad:** Incluí títulos descriptivos y etiquetas claras
 :::
 
 ## Notas Adicionales
 
-- Las variables CSS (`:root`) permiten personalización sin modificar todo el archivo
+- Las variables CSS (`:root`) permiten personalización sin reescribir todas las clases
 - Los marcadores de flechas deben definirse en `<defs>` de cada SVG
 - Para más ejemplos, consultá `svg_example.svg`
 

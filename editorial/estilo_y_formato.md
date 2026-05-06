@@ -144,13 +144,13 @@ Cuando una página necesita figura:
 
 - usar `figure`,
 - ubicar SVG en el subdirectorio correspondiente al número de apunte,
-- mantener consistencia con `resources/svg.css`,
+- mantener consistencia con la paleta, las clases y la tipografía definidas en `resources/svg.css`,
 - evitar diagramas aislados sin texto que los introduzca o cierre.
 
 #### Convenciones concretas para SVG
 
 - usar nombres descriptivos (`pila_arreglo.svg`, `cola_circular.svg`),
-- incluir dentro del archivo la hoja compartida con la ruta relativa correcta,
+- incrustar dentro del propio SVG el CSS necesario en un bloque `<style>`,
 - preferir clases semánticas de `resources/svg.css`,
 - trabajar con dimensiones razonables (típicamente 600–800 px de ancho),
 - sostener la paleta institucional (`#eb2141`, `#192437`) cuando corresponda.
