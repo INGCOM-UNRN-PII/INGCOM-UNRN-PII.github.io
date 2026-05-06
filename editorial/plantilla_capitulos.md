@@ -7,6 +7,10 @@ subtitle: Estructura obligatoria para mantener consistencia entre partes.
 
 La plantilla mínima no define el contenido conceptual de un capítulo. Define su **contrato editorial**.
 
+Además, fija una exigencia de base: **todo lo que se incluye en la página debe quedar explicado**.
+
+No alcanza con nombrar un concepto, pegar un bloque de código, mostrar una tabla o insertar un diagrama si el texto no aclara qué se tiene que mirar, por qué importa y cómo se conecta con el punto que se está enseñando.
+
 La regla es simple: un capítulo no debería quedar publicado si obliga al lector a adivinar:
 
 - qué va a aprender,
@@ -58,6 +62,13 @@ No hace falta forzar una sola forma visual si el capítulo ya tiene una variante
 El desarrollo debe aparecer en secciones y subsecciones legibles, con progresión clara.
 
 No es obligatorio que exista un encabezado literal `## Desarrollo`, pero sí que el capítulo tenga un cuerpo identificable y ordenado.
+
+Ese cuerpo también tiene que **explicar** lo que introduce:
+
+- si aparece un concepto nuevo, hay que desarrollarlo;
+- si aparece un ejemplo, hay que decir qué muestra;
+- si aparece una tabla o figura, hay que interpretar qué debería leer el estudiante;
+- si aparece código, hay que vincularlo con la decisión conceptual del capítulo.
 
 ### 4. Resumen
 
@@ -164,6 +175,7 @@ Eso no reemplaza la plantilla mínima; la expande, sin embargo, si es _demasiado
 | Objetivo | Obligatorio |
 | Prerrequisitos | Obligatorio |
 | Desarrollo | Obligatorio |
+| Explicación de conceptos, ejemplos y recursos | Obligatorio |
 | Resumen | Obligatorio |
 | Ejercicios | Obligatorio |
 | Próximo paso | Obligatorio |
@@ -174,7 +186,8 @@ Eso no reemplaza la plantilla mínima; la expande, sin embargo, si es _demasiado
 2. capítulo con ejercicios pero sin cierre conceptual,
 3. capítulo correcto pero sin conexión con el siguiente,
 4. capítulo breve agregado “al pasar” y sin plantilla,
-5. índice o TOC que no se actualiza junto con la nueva página.
+5. índice o TOC que no se actualiza junto con la nueva página,
+6. página que enumera, muestra o incrusta recursos sin explicarlos.
 
 ## Próximo paso
 

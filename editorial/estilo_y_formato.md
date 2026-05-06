@@ -18,6 +18,31 @@ El sitio debería sostener estas reglas:
 - sin emojis salvo pedido explícito,
 - explicación docente antes que definición enciclopédica.
 
+## Regla de explicitud
+
+En este sitio, **todo debe estar explicado**.
+
+Eso vale para:
+
+- conceptos,
+- decisiones de diseño,
+- ejemplos,
+- fragmentos de código,
+- tablas,
+- figuras,
+- comparaciones,
+- y referencias a reglas o material previo.
+
+La regla práctica es esta: si un bloque obliga al lector a adivinar qué debería entender, todavía no está editorialmente terminado.
+
+No alcanza con:
+
+1. nombrar un término sin desarrollarlo,
+2. pegar código sin decir qué demuestra,
+3. mostrar una figura sin lectura guiada,
+4. listar diferencias sin interpretar por qué importan,
+5. mandar a otra página para suplir una explicación que esta página debería dar.
+
 ## Pedagogía base
 
 La estrategia de la cátedra es **late objects**:
@@ -213,7 +238,8 @@ Los ejemplos deberían:
 1. responder a una decisión conceptual del capítulo,
 2. tener nombres comprensibles,
 3. no introducir ruido innecesario,
-4. poder reutilizarse en ejercicios, comparación o resumen.
+4. poder reutilizarse en ejercicios, comparación o resumen,
+5. quedar acompañados por una explicación de qué se observa y por qué ese ejemplo fue elegido.
 
 ## Qué evitar
 
@@ -221,7 +247,8 @@ Los ejemplos deberían:
 2. alternar tono formal e informal sin criterio,
 3. meter contenido planificado como si ya estuviera consolidado,
 4. usar bloques de código sin lenguaje cuando eso afecta el parsing,
-5. dejar referencias, imágenes o etiquetas “para después”.
+5. dejar referencias, imágenes o etiquetas “para después”,
+6. dejar conceptos, ejemplos o diagramas sin explicación visible.
 
 ## Próximo paso
 

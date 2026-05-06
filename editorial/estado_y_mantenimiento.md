@@ -34,6 +34,7 @@ Un capítulo se considera listo para publicación cuando cumple estas condicione
 | :--- | :--- |
 | Plantilla mínima | Sí |
 | Estilo y tono del sitio | Sí |
+| Todo lo incluido queda explicado | Sí |
 | Índice de su parte actualizado | Sí |
 | `myst.yml` alineado si corresponde | Sí |
 | Navegación de cierre (`Próximo paso`) | Sí |
@@ -76,6 +77,7 @@ Un capítulo se considera listo para publicación cuando cumple estas condicione
 | Pregunta | Sí / No |
 | :--- | :--- |
 | ¿La página tiene estructura mínima? | |
+| ¿Todo lo que muestra la página queda explicado? | |
 | ¿El índice de su parte la incluye correctamente? | |
 | ¿`myst.yml` refleja el estado real del contenido? | |
 | ¿El tono coincide con el resto del sitio? | |
