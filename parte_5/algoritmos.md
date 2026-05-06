@@ -58,7 +58,7 @@ Si `n` es la longitud del arreglo:
 
 ## Notación O, Theta y Omega
 
-Estas tres notaciones permiten hablar de cotas asintóticas.
+Estas tres notaciones permiten hablar de cotas asintóticas (límites de crecimiento cuando `n` tiende a infinito).
 
 | Notación | Idea informal | Qué comunica |
 | :--- | :--- | :--- |
@@ -66,11 +66,28 @@ Estas tres notaciones permiten hablar de cotas asintóticas.
 | `Theta(f(n))` | cota ajustada | el crecimiento es de ese orden |
 | `Omega(f(n))` | cota inferior | el algoritmo no crece más lento que eso |
 
-En esta parte, la notación que más se usa en comparaciones rápidas suele ser `O(...)`, pero conviene no olvidar que:
+En esta parte, la notación que más se usa en comparaciones rápidas suele ser `O(...)`.
+
+### Catálogo de Complejidades Comunes
+
+Para tener intuición sobre qué significa cada cota en la práctica, conviene conocer las familias más frecuentes:
+
+1. **`O(1)` (Constante):** El costo no depende del tamaño de los datos. 
+   - *Ejemplo:* Acceder a `arreglo[5]`. Así el arreglo tenga 10 elementos o 10 millones, el tiempo es el mismo.
+2. **`O(log n)` (Logarítmica):** El costo crece muy lento. Típicamente ocurre cuando el algoritmo descarta la mitad de los datos en cada paso.
+   - *Ejemplo:* Búsqueda binaria en un arreglo ordenado. Si el tamaño se duplica, solo hace falta un paso más.
+3. **`O(n)` (Lineal):** El costo crece proporcionalmente al tamaño de los datos. Hay que mirar, al menos, cada elemento una vez.
+   - *Ejemplo:* Encontrar el máximo en un arreglo desordenado.
+4. **`O(n log n)` (Lineal-Logarítmica):** Típica de los mejores algoritmos de ordenamiento basados en comparaciones. 
+   - *Ejemplo:* MergeSort o QuickSort (en caso promedio).
+5. **`O(n^2)` (Cuadrática):** El costo crece con el cuadrado del tamaño. Suele aparecer cuando hay bucles anidados procesando la misma colección.
+   - *Ejemplo:* Comparar todos contra todos para encontrar pares duplicados. Si la entrada se multiplica por 10, el tiempo se multiplica por 100.
+
+Conviene no olvidar que:
 
 - `O(n)` no significa “siempre hace exactamente `n` operaciones”,
-- `O(1)` no significa “gratis”,
-- y `O(log n)` no siempre es mejor en la práctica si la constante oculta o la implementación son demasiado costosas.
+- `O(1)` no significa “gratis” (podría ser constante pero lentísimo),
+- y `O(log n)` no siempre es mejor en la práctica si la constante oculta o la implementación (como seguir punteros dispersos en memoria) son demasiado costosas.
 
 :::{note}
 En clase conviene leer estas notaciones como una herramienta de comparación de crecimiento, no como una promesa exacta de tiempo real.
@@ -131,31 +148,42 @@ Esto importa mucho en comparaciones como:
 
 ## Análisis amortizado
 
-Algunas operaciones son raramente caras, pero la mayoría de las veces son baratas. En esos casos conviene mirar el costo **amortizado**.
+Algunas operaciones son raramente caras, pero la mayoría de las veces son baratas. En esos casos conviene mirar el costo **amortizado**, que promedia el tiempo de ejecución sobre una secuencia de operaciones.
 
-### Ejemplo: arreglo dinámico
+### La Analogía del Ahorro (Método del Banquero o Monedas)
 
-Supongamos un vector que duplica su capacidad cuando se llena:
+Para entender el costo amortizado, pensá en **ahorrar monedas (tokens) para pagar el costo futuro**:
 
-- la mayoría de los `append` agregan un elemento al final con costo bajo,
-- de vez en cuando aparece un redimensionamiento,
-- y ese redimensionamiento copia muchos elementos de golpe.
+1. Supongamos que cada operación básica cuesta "1 moneda" de tiempo de procesador.
+2. Cada vez que hacés una operación rápida, le cobrás al usuario "3 monedas". Gastás 1 para hacer la operación y guardás las 2 restantes en una "alcancía".
+3. Cuando llega la operación costosa, usás las monedas ahorradas para "pagarla" sin pedir tiempo extra, porque en promedio, el presupuesto de 3 monedas por operación cubrió todo el trabajo.
 
-Una inserción puntual puede costar `O(n)`, pero una larga secuencia de inserciones al final tiene costo amortizado `O(1)` por operación.
+### Ejemplo: Arreglo Dinámico (ArrayList)
+
+Supongamos un vector que arranca vacío, se llena y entonces **duplica su capacidad**:
+
+- El primer elemento cuesta 1 moneda insertarlo.
+- Cuando se llena (tamaño $N$), el siguiente `append` requiere copiar $N$ elementos viejos y agregar el nuevo. Costo real: $N + 1$ monedas.
+- Pero durante las $N$ inserciones rápidas previas, ahorramos suficientes "monedas" para pagar la copia costosa.
+
+Una inserción puntual puede costar `O(n)` en tiempo real, pero una secuencia larga de inserciones al final tiene un **costo amortizado `O(1)` por operación**, porque las inserciones constantes pagan el redimensionamiento esporádico.
 
 ```{code} java
 :caption: Inserción al final con redimensionamiento ocasional
 
 public void agregar(int valor) {
     if (this.cantidad == this.datos.length) {
+        // Operación rara y costosa O(N)
+        // Está "pagada" por los ahorros previos.
         redimensionar();
     }
+    // Operación frecuente y rápida O(1)
     this.datos[this.cantidad] = valor;
     this.cantidad++;
 }
 ```
 
-El análisis amortizado no niega el costo caro. Lo ubica correctamente dentro de una secuencia larga de operaciones.
+El análisis amortizado no niega el costo caro. Lo ubica correctamente dentro de una secuencia larga de operaciones para demostrar que, a la larga, el sistema no se degrada.
 
 ## Cómo comparar implementaciones de una misma estructura
 

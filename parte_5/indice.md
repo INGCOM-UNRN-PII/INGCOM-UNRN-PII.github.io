@@ -28,10 +28,12 @@ La parte 5 debería consolidar tres capas que en el programa aparecen fuertement
 | :--- | :--- | :--- |
 | 1 | [Tipos abstractos de datos](adt.md) | Fijar vocabulario sobre interfaz, representación e invariantes |
 | 2 | [Análisis de algoritmos](algoritmos.md) | Instalar el criterio de comparación entre implementaciones |
-| 3 | [Secuencias](secuencias/indice.md) | Empezar por las estructuras lineales |
-| 4 | [Diccionarios y conjuntos](diccionarios/indice.md) | Pasar a acceso por clave, hashing y orden |
-| 5 | [Árboles](arboles/indice.md) | Trabajar jerarquía, búsqueda y prioridad |
-| 6 | [Grafos](grafos/indice.md) | Cerrar con relaciones generales y algoritmos clásicos |
+| 3 | [Hardware y Localidad de Memoria](localidad_memoria.md) | Entender el impacto de la caché en el rendimiento real |
+| 4 | [Benchmark y Profiling](profiling.md) | Medir el rendimiento en la práctica aislando el ruido |
+| 5 | [Secuencias](secuencias/indice.md) | Empezar por las estructuras lineales |
+| 6 | [Diccionarios y conjuntos](diccionarios/indice.md) | Pasar a acceso por clave, hashing y orden |
+| 7 | [Árboles](arboles/indice.md) | Trabajar jerarquía, búsqueda y prioridad |
+| 8 | [Grafos](grafos/indice.md) | Cerrar con relaciones generales y algoritmos clásicos |
 
 ## Capítulos nucleares
 
@@ -77,6 +79,8 @@ Eso evita dos errores frecuentes:
 
 - [Tipos abstractos de datos](adt.md)
 - [Análisis de algoritmos](algoritmos.md)
+- [Hardware y Localidad de Memoria](localidad_memoria.md)
+- [Benchmark y Profiling](profiling.md)
 
 ### Secuencias
 
