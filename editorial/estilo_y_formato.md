@@ -12,6 +12,7 @@ Esta guía reúne las convenciones editoriales que afectan la forma visible del 
 El sitio debería sostener estas reglas:
 
 - español rioplatense con **voseo**,
+- preferencia por tercera persona o formulaciones impersonales de cátedra,
 - tono académico pero cercano,
 - rigor universitario sin simplificar en exceso,
 - sin emojis salvo pedido explícito,
@@ -112,6 +113,31 @@ Resolución
 :::
 ````
 
+### Expresiones matemáticas
+
+Usar:
+
+- `$...$` para fórmulas inline,
+- `$$...$$` para bloques matemáticos.
+
+Las fórmulas deberían aparecer cuando aportan precisión conceptual, no como ornamento.
+
+### Tablas
+
+Se puede usar:
+
+- tabla Markdown simple,
+- o directivas como `table` / `list-table` cuando haga falta título, etiqueta o control extra.
+
+Conviene preferir tablas cuando mejoran lectura comparativa real; no para reemplazar texto que se entiende mejor como lista o párrafo.
+
+### Citas y bibliografía
+
+Cuando haga falta citar bibliografía, usar la sintaxis de MyST/BibTeX correspondiente, por ejemplo:
+
+- `[@clave]` para cita parentética,
+- `{cite:t}`clave`` para cita narrativa.
+
 ### Figuras y SVG
 
 Cuando una página necesita figura:
@@ -121,6 +147,20 @@ Cuando una página necesita figura:
 - mantener consistencia con `resources/svg.css`,
 - evitar diagramas aislados sin texto que los introduzca o cierre.
 
+#### Convenciones concretas para SVG
+
+- usar nombres descriptivos (`pila_arreglo.svg`, `cola_circular.svg`),
+- incluir dentro del archivo la hoja compartida con la ruta relativa correcta,
+- preferir clases semánticas de `resources/svg.css`,
+- trabajar con dimensiones razonables (típicamente 600–800 px de ancho),
+- sostener la paleta institucional (`#eb2141`, `#192437`) cuando corresponda.
+
+Las tipografías esperadas son:
+
+- **Fabrikat** para títulos,
+- **Lato** para texto,
+- **Share Tech Mono** para código.
+
 ## Referencias y enlaces
 
 ### Referencias internas
@@ -128,6 +168,18 @@ Cuando una página necesita figura:
 Si una sección se va a citar más de una vez, conviene darle etiqueta explícita.
 
 Usar `{ref}` cuando la relación sea conceptual y estable. Usar enlace relativo cuando la navegación sea simplemente de página a página.
+
+### Referencias a reglas de la cátedra
+
+Cuando un contenido ejemplifica una convención importante, conviene enlazar la regla relevante de `reglas/` usando `{ref}`.
+
+Eso sirve para:
+
+- conectar el capítulo con la norma oficial,
+- evitar que la explicación quede desacoplada del criterio de corrección,
+- y reutilizar mejor las reglas ya publicadas.
+
+Si se agregan reglas nuevas en `reglas/`, deberían mantener etiquetas explícitas y aparecer en `reglas/indice.md`.
 
 ### Enlaces de recorrido
 

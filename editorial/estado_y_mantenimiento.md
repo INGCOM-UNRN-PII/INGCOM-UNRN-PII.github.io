@@ -100,6 +100,27 @@ La sección editorial no sirve si solo se crea una vez. Debería revisarse cada 
 - se mueve contenido entre partes,
 - o se cambia el criterio de publicación.
 
+## Sincronización con archivos de instrucciones
+
+Los archivos auxiliares de instrucciones del repositorio no deberían duplicar reglas editoriales extensas.
+
+En particular:
+
+- `.github/copilot-instructions.md`
+- `GEMINI.md`
+
+deberían **apuntar a `editorial/` como fuente de verdad** para:
+
+- estructura mínima de páginas,
+- estilo y formato,
+- convenciones MyST,
+- criterios de publicación y mantenimiento.
+
+Si cambia una regla editorial de fondo, conviene actualizar:
+
+1. la documentación en `editorial/`,
+2. y solo después los archivos de instrucciones que la referencian.
+
 ## Próximo paso
 
 Si hay que escribir una página nueva, conviene volver a la [sección editorial](indice.md) y elegir el tipo de página correspondiente antes de empezar.
