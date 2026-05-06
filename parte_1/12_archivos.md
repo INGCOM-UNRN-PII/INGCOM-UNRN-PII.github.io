@@ -732,7 +732,7 @@ Por eso, casi todas las operaciones de I/O en Java pueden lanzar excepciones. En
 
 ```
 IOException (excepción base para errores de entrada/salida)
-├── FileNotFoundException        // El archivo no existe (API clásica)
+├── FileNotFoundException       // El archivo no existe (API clásica)
 ├── NoSuchFileException         // El archivo no existe (NIO.2)
 ├── AccessDeniedException       // Sin permisos de lectura/escritura
 ├── FileAlreadyExistsException  // El archivo ya existe (al crear)
