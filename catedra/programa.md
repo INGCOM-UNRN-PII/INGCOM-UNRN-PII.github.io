@@ -239,7 +239,7 @@ a Java, aprovechando el conocimiento previo de los estudiantes y
 familiarizándolos con el entorno de desarrollo y las herramientas que se
 utilizarán durante todo el cuatrimestre.
 
-##### TP1-2024 - Puesta en marcha
+ - TP1-2024 - Puesta en marcha
 
 El objetivo de esta práctica es garantizar que todos estemos en la misma página
 con respecto a las herramientas que utilizaremos en el cuatrimestre, así como
@@ -250,7 +250,7 @@ IDEA Community Edition como entorno de desarrollo integrado, y los proyectos
 individuales están basados en Gradle con una amplia gama de herramientas de verificación
 integradas.
 
-##### TP2-2024 - Java desde C
+ - TP2-2024 - Java desde C
 
 El objetivo de esta práctica es aprovechar que la sintaxis del lenguaje que
 utilizaremos es prácticamente la misma para familiarizarnos con las diferencias
@@ -304,14 +304,14 @@ primero con arreglos (que lanzan excepciones _unchecked_) y luego con archivos
 (que requieren manejo de excepciones _checked_), permitiendo a los estudiantes
 comprender ambas familias de excepciones de forma progresiva.
 
-##### TP3-2024 - Arreglos y excepciones
+- TP3-2024 - Arreglos y excepciones
 
 El objetivo de esta práctica es familiarizarnos con los arreglos en Java, viendo
 las diferencias con los de C y también tener el primer contacto con excepciones,
 siendo que las operaciones con arreglos naturalmente lanzan excepciones sin tipo
 (`ArrayIndexOutOfBoundsException`, `NullPointerException`).
 
-##### TP4-2024 - Archivos y excepciones
+- TP4-2024 - Archivos y excepciones
 
 El objetivo de esta práctica es comenzar a utilizar más clases y trabajar con
 archivos empleando la API `java.nio` y seguir trabajando con excepciones, ya que
@@ -364,35 +364,35 @@ Las prácticas de esta unidad alternan entre análisis conceptual y implementaci
 práctica, permitiendo a los estudiantes desarrollar tanto la capacidad de
 modelado como las habilidades de codificación orientada a objetos.
 
-##### TP5-2024 - Análisis Orientado a Objetos I
+ - TP5-2024 - Análisis Orientado a Objetos I
 
 El objetivo de esta práctica es ir introduciéndonos en los conceptos de clases y
 objetos a través del análisis de diferentes contextos, pero también para ir
 viendo cómo otras personas ven la misma cosa, al requerir de la revisión entre
 pares.
 
-##### TP6-2024 - Arreglos III
+ - TP6-2024 - Arreglos III
 
 El objetivo de esta práctica es tomar las funciones de los prácticos 3 y 4 en
 clases que encapsulen un arreglo en uno propio, incluyendo funcionalidad para
 guardar en archivos a partir del mismo, aplicando los principios de
 {ref}`encapsulamiento <regla-0x2001>`.
 
-##### TP7-2024 - Análisis Orientado a Objetos II
+ - TP7-2024 - Análisis Orientado a Objetos II
 
 En este trabajo, le daremos una nueva vuelta de tuerca a los contextos
 analizados en el TP5, incorporando lo visto de Orientación a Objetos. Esta
 práctica también se desarrolló con revisión de pares en el Campus, promoviendo
 el aprendizaje colaborativo y la discusión de diferentes enfoques de diseño.
 
-##### TP8-2024 - Calculadora
+ - TP8-2024 - Calculadora
 
 El objetivo de esta práctica es implementar una calculadora orientada a objetos
 aplicando polimorfismo, una de las técnicas más importantes del paradigma. Se
 trabajará con jerarquías de clases y el patrón Composite para construir
 expresiones matemáticas complejas.
 
-##### TP9-2024 - Arreglos Genéricos
+ - TP9-2024 - Arreglos Genéricos
 
 El objetivo de esta práctica es continuar desarrollando el arreglo desarrollado
 en el TP6, haciendo que el mismo emplee genéricos, para que pueda almacenar
@@ -438,7 +438,7 @@ Interacción entre objetos y distribución de responsabilidades.
 La práctica de esta unidad consolida todos los conceptos de POO vistos hasta el
 momento, aplicándolos en el contexto de patrones de diseño reconocidos.
 
-##### TP10-2024 - Patrones de Diseño
+ - TP10-2024 - Patrones de Diseño
 
 En esta práctica, extenderemos el arreglo del Trabajo Práctico anterior para que
 el mismo emplee patrones de diseño como Decorator, Strategy, Observer e
@@ -483,7 +483,7 @@ técnica.
 Esta práctica enfoca en el análisis crítico del código producido durante el
 cuatrimestre, aplicando los principios SOLID como marco de evaluación.
 
-##### TP11-2024 - SOLIDificación de las prácticas
+ - TP11-2024 - SOLIDificación de las prácticas
 
 En esta práctica analizaremos el código que hemos desarrollado antes, indicando
 si cumple o no con los criterios SOLID, así como el planteo de las
@@ -532,13 +532,13 @@ implementaciones.
 Las prácticas de esta unidad se centran en la implementación de estructuras de
 datos desde cero, aplicando todos los conceptos vistos durante el cuatrimestre.
 
-##### TP12-2024 - Estructuras basadas en Nodos
+ - TP12-2024 - Estructuras basadas en Nodos
 
 En esta práctica implementaremos estructuras de datos basadas en nodos (listas
 enlazadas, pilas y colas) y les daremos uso en aplicaciones simples,
 comprendiendo las ventajas de las estructuras dinámicas sobre las estáticas.
 
-##### TP13-2024 - Árboles
+ - TP13-2024 - Árboles
 
 Aquí implementaremos un árbol binario de búsqueda, incluyendo operaciones de
 inserción, búsqueda, eliminación y recorridos (inorden, preorden, postorden),
