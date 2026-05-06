@@ -49,7 +49,26 @@ En una secuencia basada en arreglo conviene separar dos ideas:
 | **Capacidad** | Cuántas posiciones físicas tiene el arreglo |
 | **Tamaño lógico** | Cuántos elementos válidos hay realmente cargados |
 
-Un error muy común es tratarlos como si fueran lo mismo. Si reservás un arreglo de 100 posiciones para guardar 23 elementos, la capacidad es 100, pero el tamaño lógico es 23. Las posiciones restantes no forman parte de la secuencia todavía.
+Un error muy común es tratarlos como si fueran lo mismo. Si reservás un arreglo de 10 posiciones para guardar 4 elementos, la capacidad es 10, pero el tamaño lógico es 4. Las posiciones restantes no forman parte de la secuencia todavía.
+
+```{mermaid}
+block-beta
+  columns 10
+  A["A"] B["B"] C["C"] D["D"] E["(libre)"] F["(libre)"] G["(libre)"] H["(libre)"] I["(libre)"] J["(libre)"]
+  
+  style A fill:#e3f2fd,stroke:#0277bd
+  style B fill:#e3f2fd,stroke:#0277bd
+  style C fill:#e3f2fd,stroke:#0277bd
+  style D fill:#e3f2fd,stroke:#0277bd
+  
+  style E fill:#f5f5f5,stroke:#9e9e9e,stroke-dasharray: 5 5
+  style F fill:#f5f5f5,stroke:#9e9e9e,stroke-dasharray: 5 5
+  style G fill:#f5f5f5,stroke:#9e9e9e,stroke-dasharray: 5 5
+  style H fill:#f5f5f5,stroke:#9e9e9e,stroke-dasharray: 5 5
+  style I fill:#f5f5f5,stroke:#9e9e9e,stroke-dasharray: 5 5
+  style J fill:#f5f5f5,stroke:#9e9e9e,stroke-dasharray: 5 5
+```
+*(Nota: Las posiciones ocupadas conforman el **tamaño lógico** (4); el total de bloques es la **capacidad** (10).)*
 
 :::{important} Invariante de representación típica
 En una secuencia implementada con arreglo suele cumplirse:

@@ -212,4 +212,4 @@ Explicá por qué en un grafo dirigido puede pasar que dos vértices pertenezcan
 
 ## Próximo paso
 
-Para seguir, conviene volver a [la portada de la parte](../indice.md) y revisar qué familias ya tienen un esqueleto editorial suficientemente claro como para avanzar hacia contenido pleno.
+Para seguir, conviene volver a [la portada de la parte](../indice.md) y contrastar esta familia con [árboles](../arboles/indice.md) y [diccionarios](../diccionarios/indice.md), donde la organización deja de ser general y vuelve a estar guiada por jerarquía o clave.

@@ -1,8 +1,8 @@
 ---
 title: "Secuencias"
-subtitle: "Índice de familia en revisión"
+subtitle: "Índice de familia"
 subject: Estructuras de Datos
-description: Mapa de la familia de secuencias, con estado editorial actual y recorrido sugerido de la parte 5.
+description: Mapa de la familia de secuencias, con recorrido sugerido y criterios de comparación dentro de la parte 5.
 ---
 
 (parte5-secuencias)=
@@ -16,16 +16,16 @@ Conviene usar este índice como mapa comparativo. Primero se fija el TAD general
 
 ## Estado editorial actual
 
-La familia sigue **en revisión**, pero ya no está toda en el mismo estado.
+La familia ya tiene un recorrido completo y puede leerse como bloque estable dentro de la parte.
 
 | Página | Estado actual | Rol |
 | :--- | :--- | :--- |
-| [Fundamentos de secuencias](fundamentos.md) | Desarrollo base disponible | Fija el TAD general, operaciones y trade-offs |
-| [Arreglos](arreglos.md) | Esqueleto editorial | Primera implementación contigua |
-| [Listas enlazadas](listas_enlazadas.md) | Esqueleto editorial | Contraste enlazado |
-| [Pilas](pilas.md) y [Colas](colas.md) | Desarrollo base disponible | Restricciones clásicas de acceso |
-| [Deques](deques.md) | Esqueleto editorial | Generalización sobre ambos extremos |
-| [Colas de prioridad](colas_prioridad.md) | Esqueleto editorial | Puente hacia heaps |
+| [Fundamentos de secuencias](fundamentos.md) | Desarrollo completo | Fija el TAD general, operaciones y trade-offs |
+| [Arreglos](arreglos.md) | Desarrollo completo | Primera implementación contigua |
+| [Listas enlazadas](listas_enlazadas.md) | Desarrollo completo | Contraste enlazado |
+| [Pilas](pilas.md) y [Colas](colas.md) | Desarrollo completo | Restricciones clásicas de acceso |
+| [Deques](deques.md) | Desarrollo completo | Generalización sobre ambos extremos |
+| [Colas de prioridad](colas_prioridad.md) | Desarrollo completo | Puente hacia heaps |
 
 ## Recorrido sugerido
 
@@ -49,17 +49,17 @@ La familia sigue **en revisión**, pero ya no está toda en el mismo estado.
 | [Deques](deques.md) | Dos extremos | Gestión de ambos bordes | Cuando se necesita flexibilidad en frente y fondo |
 | [Colas de prioridad](colas_prioridad.md) | Prioridad | Mantener orden parcial | Cuando el siguiente elemento no depende del tiempo de llegada |
 
-## Qué ya conviene leer y qué todavía funciona como mapa
+## Cómo conviene leer esta familia
 
-Hoy la lectura más útil de esta familia es:
+Hoy conviene leer esta familia así:
 
 1. leer completo [Fundamentos de secuencias](fundamentos.md), porque ya fija el marco conceptual;
-2. usar el resto del índice como **hoja de desarrollo** para las implementaciones que faltan profundizar;
-3. volver a este mapa a medida que cada capítulo pase de esqueleto a contenido pleno.
+2. contrastar enseguida [Arreglos](arreglos.md) y [Listas enlazadas](listas_enlazadas.md), porque ahí aparece el trade-off central entre memoria contigua y nodos;
+3. cerrar con [Pilas](pilas.md), [Colas](colas.md), [Deques](deques.md) y [Colas de prioridad](colas_prioridad.md), donde el foco pasa de la representación general a restricciones de acceso.
 
 ## Criterios de uso
 
-Esta familia debería ayudar a distinguir:
+Esta familia ayuda a distinguir:
 
 1. acceso por índice vs acceso secuencial,
 2. representación contigua vs enlazada,

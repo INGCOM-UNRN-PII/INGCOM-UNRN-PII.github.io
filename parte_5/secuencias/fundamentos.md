@@ -50,6 +50,33 @@ Eso distingue a una secuencia de otros TAD:
 
 En otras palabras: una secuencia no pregunta primero “¿está el elemento?”, sino “¿dónde está, cómo se recorre y cuánto cuesta moverlo?”.
 
+```{mermaid}
+flowchart LR
+    subgraph Secuencia
+        direction LR
+        S1[A] --> S2[B] --> S3[C] --> S4[A]
+    end
+    
+    subgraph Conjunto
+        direction LR
+        C1((A)) ~~~ C2((B)) ~~~ C3((C))
+    end
+    
+    subgraph Diccionario
+        direction LR
+        D1[Clave 1] -.-> V1(A)
+        D2[Clave 2] -.-> V2(B)
+    end
+    
+    classDef seq fill:#e3f2fd,stroke:#0277bd,stroke-width:2px;
+    classDef set fill:#f1f8e9,stroke:#33691e,stroke-width:2px;
+    classDef map fill:#fff3e0,stroke:#e65100,stroke-width:2px;
+    
+    class S1,S2,S3,S4 seq;
+    class C1,C2,C3 set;
+    class D1,V1,D2,V2 map;
+```
+
 ## Operaciones y contrato observable
 
 Si una secuencia se trata como TAD, lo que el cliente debería ver no es el arreglo interno ni los nodos, sino un **conjunto de operaciones con significado claro**.
@@ -70,18 +97,52 @@ Un contrato mínimo razonable para esta familia suele incluir:
 Un ejemplo posible de interfaz es este:
 
 ```java
+/**
+ * TAD Secuencia (Lista abstracta).
+ * @param <T> el tipo de elementos en la secuencia.
+ */
 public interface Secuencia<T> {
+    /** @return la cantidad de elementos, siempre >= 0. */
     int size();
+    
     boolean isEmpty();
+    
+    /**
+     * @param indice posición a consultar.
+     * @return el elemento en la posición dada.
+     * @throws IndexOutOfBoundsException si indice < 0 o indice >= size().
+     */
     T get(int indice);
+    
+    /**
+     * Reemplaza el elemento en la posición, sin cambiar el tamaño.
+     * @throws IndexOutOfBoundsException si indice es inválido.
+     */
     void set(int indice, T elemento);
+    
+    /**
+     * Inserta un elemento desplazando los siguientes a la derecha.
+     * Postcondición: size() aumenta en 1.
+     * @throws IndexOutOfBoundsException si indice < 0 o indice > size().
+     */
     void insert(int indice, T elemento);
+    
+    /**
+     * Elimina el elemento y desplaza los siguientes a la izquierda.
+     * Postcondición: size() disminuye en 1.
+     * @throws IndexOutOfBoundsException si indice < 0 o indice >= size().
+     */
     T remove(int indice);
+    
+    /**
+     * Agrega el elemento al final de la secuencia.
+     * Es semánticamente equivalente a insert(size(), elemento).
+     */
     void append(T elemento);
 }
 ```
 
-Ese código no resuelve la implementación, pero sí muestra qué parte pertenece al problema abstracto. El cliente necesita saber que `get(3)` devuelve el cuarto elemento y que `insert(0, e)` lo agrega al principio. No necesita saber si por detrás hay un arreglo o una cadena de nodos.
+Ese código no resuelve la implementación, pero sí muestra qué parte pertenece al problema abstracto. El cliente necesita saber que `get(3)` devuelve el cuarto elemento y que `insert(0, e)` lo agrega al principio. No necesita saber si por detrás hay un arreglo contiguo o una cadena de nodos dispersos.
 
 Acá vuelve a aparecer la idea de **contrato** trabajada en [Diseño por Contratos](../../parte_3/13_oop_contratos.md): cada operación necesita precondiciones, postcondiciones y una semántica estable.
 
@@ -141,7 +202,31 @@ La misma secuencia puede implementarse con estrategias muy distintas. Las dos fa
 | Memoria contigua | Acceso por índice, buena localidad de memoria, recorrido cache-friendly | Corrimientos al insertar o borrar en posiciones internas |
 | Nodos enlazados | Inserciones y borrados locales, crecimiento flexible | Recorrido más costoso, peor localidad, acceso posicional indirecto |
 
-Eso explica por qué no existe “la mejor secuencia” en abstracto. Lo que existe es una mejor decisión para cierto patrón de uso.
+```{mermaid}
+flowchart TD
+    subgraph Memoria Contigua (Ej. Arreglo)
+        direction LR
+        A1[0: A] -.- A2[1: B] -.- A3[2: C] -.- A4[3: D]
+        style A1 fill:#e3f2fd,stroke:#0277bd,stroke-width:2px;
+        style A2 fill:#e3f2fd,stroke:#0277bd,stroke-width:2px;
+        style A3 fill:#e3f2fd,stroke:#0277bd,stroke-width:2px;
+        style A4 fill:#e3f2fd,stroke:#0277bd,stroke-width:2px;
+    end
+    
+    subgraph Memoria Enlazada (Ej. Nodos)
+        direction LR
+        N1(A) --> N2(B)
+        N2 --> N3(C)
+        N3 --> N4(D)
+        
+        style N1 fill:#f1f8e9,stroke:#33691e,stroke-width:2px;
+        style N2 fill:#f1f8e9,stroke:#33691e,stroke-width:2px;
+        style N3 fill:#f1f8e9,stroke:#33691e,stroke-width:2px;
+        style N4 fill:#f1f8e9,stroke:#33691e,stroke-width:2px;
+    end
+```
+
+Eso explica por qué no existe “la mejor secuencia” en abstracto. Lo que existe es una mejor decisión para cierto patrón de uso (ver {ref}`parte5-localidad-memoria`).
 
 ### Cuando domina el acceso
 

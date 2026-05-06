@@ -1,8 +1,8 @@
 ---
 title: "Grafos"
-subtitle: "Índice de familia en revisión"
+subtitle: "Índice de familia"
 subject: Estructuras de Datos
-description: Mapa de la familia de grafos, con estado editorial actual y recorrido sugerido dentro de la parte 5.
+description: Mapa de la familia de grafos, con recorrido sugerido y criterios de comparación dentro de la parte 5.
 ---
 
 (parte5-grafos)=
@@ -16,16 +16,16 @@ Conviene entrar a esta familia después de árboles, porque reutiliza recorridos
 
 ## Estado editorial actual
 
-La familia sigue **en revisión**, pero ya no está toda en el mismo estado.
+La familia ya quedó cerrada como recorrido completo dentro de la parte.
 
 | Página | Estado actual | Rol |
 | :--- | :--- | :--- |
-| [Fundamentos de grafos](fundamentos.md) | Desarrollo base disponible | Fija el vocabulario mínimo de vértices, aristas, caminos y conectividad |
-| [Representación de grafos](representacion.md) | Desarrollo base disponible | Compara matrices, listas y aristas |
-| [Recorridos](recorridos.md) | Desarrollo base disponible | Instala DFS y BFS |
-| [Caminos mínimos](caminos_minimos.md) | Desarrollo base disponible | Introduce optimización sobre caminos |
-| [Árboles de expansión](arboles_de_expansion.md) | Desarrollo base disponible | Trabaja conectividad con costo mínimo |
-| [Orden topológico](orden_topologico.md) y [Conectividad](conectividad.md) | Esqueleto editorial | Cierra con dependencias, componentes y particiones |
+| [Fundamentos de grafos](fundamentos.md) | Desarrollo completo | Fija el vocabulario mínimo de vértices, aristas, caminos y conectividad |
+| [Representación de grafos](representacion.md) | Desarrollo completo | Compara matrices, listas y aristas |
+| [Recorridos](recorridos.md) | Desarrollo completo | Instala DFS y BFS |
+| [Caminos mínimos](caminos_minimos.md) | Desarrollo completo | Introduce optimización sobre caminos |
+| [Árboles de expansión](arboles_de_expansion.md) | Desarrollo completo | Trabaja conectividad con costo mínimo |
+| [Orden topológico](orden_topologico.md) y [Conectividad](conectividad.md) | Desarrollo completo | Cierra con dependencias, componentes y particiones |
 
 ## Recorrido sugerido
 
@@ -49,17 +49,17 @@ La familia sigue **en revisión**, pero ya no está toda en el mismo estado.
 | [Orden topológico](orden_topologico.md) | ¿Qué dependencia va antes? | DFS o Kahn | En DAG y planificación |
 | [Conectividad](conectividad.md) | ¿Cómo se parte el grafo? | DFS, BFS, SCC | En análisis de componentes |
 
-## Qué ya conviene leer y qué todavía funciona como mapa
+## Cómo conviene leer esta familia
 
-Hoy la lectura más útil de esta familia es:
+Hoy conviene leer esta familia así:
 
 1. leer en bloque [Fundamentos de grafos](fundamentos.md), [Representación de grafos](representacion.md), [Recorridos](recorridos.md), [Caminos mínimos](caminos_minimos.md) y [Árboles de expansión](arboles_de_expansion.md), porque ya fijan el núcleo conceptual, de representación y de optimización básica de la familia;
-2. usar el resto del índice como hoja de ruta para dependencias y partición;
-3. volver a este mapa a medida que cada capítulo deje de ser esqueleto y pase a contenido pleno.
+2. cerrar después con [Orden topológico](orden_topologico.md) y [Conectividad](conectividad.md), donde el problema deja de ser solo recorrer u optimizar y pasa a ordenar dependencias o partir el grafo en componentes;
+3. volver a este mapa cuando haga falta decidir qué pregunta de grafos domina en un problema concreto.
 
 ## Criterios de uso
 
-Esta familia debería ayudar a distinguir:
+Esta familia ayuda a distinguir:
 
 1. problema de representación vs problema algorítmico,
 2. recorridos generales vs algoritmos de optimización,

@@ -1,17 +1,17 @@
 ---
 title: "Parte 5: Estructuras de Datos"
-subtitle: "Mapa de aprendizaje en revisión"
+subtitle: "Mapa de aprendizaje"
 subject: Estructuras de Datos
-description: Recorrido sugerido y mapa estructural de la parte 5, con foco en TAD, costo, implementaciones y algoritmos sobre estructuras.
+description: Recorrido sugerido y mapa estructural de la parte 5, con foco en TAD, costo, implementaciones y algoritmos sobre estructuras ya consolidadas.
 ---
 
 (parte-5-estructuras-de-datos)=
 # Parte 5: Estructuras de Datos
 
-Esta parte sigue fuera del TOC principal, pero ya no funciona solo como un esquema tentativo. Hoy reúne un mapa de aprendizaje bastante estable para el tramo de estructuras de datos: primero fija el lenguaje de TAD y costo, después recorre familias concretas y finalmente cierra con algoritmos sobre grafos.
+Esta parte sigue fuera del TOC principal, pero ya no funciona como un esquema tentativo. Hoy reúne un mapa de aprendizaje estable para el tramo de estructuras de datos: primero fija el lenguaje de TAD y costo, después recorre familias concretas y finalmente cierra con algoritmos sobre grafos.
 
 :::{important}
-**Estado.** Material en revisión. El núcleo transversal, las familias de secuencias, diccionarios y árboles ya tienen desarrollo base suficiente para orientar lectura real. La familia de grafos todavía está cerrando sus capítulos de optimización y partición.
+**Estado.** Material en revisión final. El recorrido completo ya quedó desarrollado en las cuatro familias; lo pendiente ya no es de contenido, sino la decisión de cuándo publicarlo en el TOC principal.
 :::
 
 ## Propósito de la parte
@@ -29,11 +29,11 @@ Dicho más directo: no alcanza con saber “qué estructura usar”. Esta parte 
 
 | Bloque | Estado actual | Qué ya aporta |
 | :--- | :--- | :--- |
-| Núcleo transversal | Desarrollo base disponible | Lenguaje común sobre TAD, contratos y complejidad |
-| Secuencias | Desarrollo base disponible | Contraste entre memoria contigua, nodos y restricciones de acceso |
-| Diccionarios y conjuntos | Desarrollo base disponible | Acceso por clave, hashing, orden, prefijos y partición |
-| Árboles | Desarrollo base disponible | Jerarquía, búsqueda, balance, prioridad y almacenamiento externo |
-| Grafos | En revisión avanzada | Vocabulario, representación y recorridos ya cerrados; faltan cierres de optimización |
+| Núcleo transversal | Desarrollo completo | Lenguaje común sobre TAD, contratos y complejidad |
+| Secuencias | Desarrollo completo | Contraste entre memoria contigua, nodos y restricciones de acceso |
+| Diccionarios y conjuntos | Desarrollo completo | Acceso por clave, hashing, orden, prefijos y partición |
+| Árboles | Desarrollo completo | Jerarquía, búsqueda, balance, prioridad y almacenamiento externo |
+| Grafos | Desarrollo completo | Representación, recorridos, optimización, precedencias y partición |
 
 ## Orden sugerido de lectura
 
@@ -144,4 +144,4 @@ Por eso cada familia intenta sostener este patrón:
 
 ## Próximo paso
 
-Si ya tenés claro el marco transversal, el siguiente paso natural es entrar por [Secuencias](secuencias/indice.md). Si lo que querés es revisar toda la progresión de la parte antes de publicar, conviene pasar después por los índices de [diccionarios](diccionarios/indice.md), [árboles](arboles/indice.md) y [grafos](grafos/indice.md).
+Si ya tenés claro el marco transversal, el siguiente paso natural es entrar por [Secuencias](secuencias/indice.md). Si lo que querés es revisar toda la progresión de la parte antes de decidir su publicación, conviene pasar después por los índices de [diccionarios](diccionarios/indice.md), [árboles](arboles/indice.md) y [grafos](grafos/indice.md).

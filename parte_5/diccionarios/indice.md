@@ -1,6 +1,6 @@
 ---
 title: "Diccionarios y conjuntos"
-subtitle: "Índice de familia en revisión"
+subtitle: "Índice de familia"
 subject: Estructuras de Datos
 description: Mapa de la familia de diccionarios y conjuntos para la parte 5.
 ---

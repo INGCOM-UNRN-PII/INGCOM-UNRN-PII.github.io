@@ -1,6 +1,6 @@
 ---
 title: "Árboles"
-subtitle: "Índice de familia en revisión"
+subtitle: "Índice de familia"
 subject: Estructuras de Datos
 description: Mapa de la familia de árboles para la parte 5.
 ---
