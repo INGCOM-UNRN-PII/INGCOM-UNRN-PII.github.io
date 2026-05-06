@@ -62,6 +62,22 @@ Además del deque completo, aparecen dos variantes parciales que ayudan a pensar
 | **Input-restricted deque** | Solo por un extremo | Por ambos extremos | El ingreso es controlado; la salida es flexible |
 | **Output-restricted deque** | Por ambos extremos | Solo por un extremo | La extracción queda centralizada |
 
+```{mermaid}
+flowchart TD
+    subgraph Input-Restricted
+        direction LR
+        I1((In)) --> F1[Frente] --- B1[Fondo]
+        F1 --> O1((Out))
+        B1 --> O2((Out))
+    end
+    
+    subgraph Output-Restricted
+        direction LR
+        I2((In)) --> F2[Frente] --- B2[Fondo] <-- I3((In))
+        F2 --> O3((Out))
+    end
+```
+
 Estas variantes no suelen enseñarse tanto en bibliotecas estándar, pero sirven para razonar qué permisos necesita realmente el problema.
 
 Por ejemplo:
@@ -228,6 +244,31 @@ En un arreglo circular o en una lista doblemente enlazada, un pequeño error en 
 El deque es una secuencia restringida que habilita operaciones eficientes en ambos extremos. Su valor no está en ser "más general" que una pila o una cola, sino en capturar problemas donde el trabajo natural ocurre tanto al frente como al fondo.
 
 Las implementaciones más razonables son el arreglo circular y la lista doblemente enlazada. La primera privilegia compacidad y localidad; la segunda, flexibilidad estructural. En ambos casos, el diseño correcto consiste en mantener bien los extremos sin convertir al medio en protagonista.
+
+## Ejercicios
+
+```{exercise}
+:label: ex-parte5-deques-mini
+
+Pensá un problema donde a veces convenga insertar al frente y otras al fondo. Explicá por qué una cola simple o una pila simple volverían incómodo ese diseño.
+```
+
+```{exercise}
+:label: ex-parte5-deques-restringidos
+
+Inventá un caso donde alcance un deque restringido de entrada y otro donde alcance un deque restringido de salida. En cada uno, indicá qué operaciones deberían quedar prohibidas.
+```
+
+```{exercise}
+:label: ex-parte5-deques-implementacion
+
+Compará un deque implementado con arreglo circular y otro con lista doblemente enlazada para un buffer de tareas urgentes y normales. Indicá qué representación elegirías si el tamaño máximo es conocido y cuál si cambia mucho durante la ejecución.
+```
+
+## Próximo paso
+
+Para seguir, conviene pasar a [Colas de prioridad](colas_prioridad.md), donde el siguiente elemento ya no depende del orden de llegada ni del extremo activo, sino de una relación de prioridad.
+ertir al medio en protagonista.
 
 ## Ejercicios
 

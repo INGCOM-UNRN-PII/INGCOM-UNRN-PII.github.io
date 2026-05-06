@@ -264,9 +264,22 @@ public final class ColaDeTurnos {
 
 La mejora conceptual es fuerte: el arreglo sigue siendo contiguo, pero la secuencia lógica ya no coincide siempre con el tramo `0 .. cantidad - 1`. Ahora importa:
 
-- dónde está el frente,
-- cuántos elementos hay,
-- y cómo se calcula el fondo con aritmética modular.
+- dónde está el frente (`frente`),
+- cuántos elementos hay (`cantidad`),
+- y cómo se calcula el fondo con aritmética modular: `(frente + cantidad) % capacidad`.
+
+```{mermaid}
+flowchart LR
+    subgraph Buffer Circular
+        direction LR
+        0(libre) --- 1(frente: A) --- 2(B) --- 3(fondo: C) --- 4(libre) --- 5(libre)
+        
+        style 1 fill:#c8e6c9,stroke:#388e3c
+        style 2 fill:#c8e6c9,stroke:#388e3c
+        style 3 fill:#c8e6c9,stroke:#388e3c
+    end
+```
+*Si seguimos encolando hasta el final físico, el módulo `% capacidad` hace que el índice "pegue la vuelta" y el próximo elemento se encole en la posición `0`, siempre que esté libre.*
 
 Este patrón aparece mucho en colas, buffers de entrada/salida y estructuras donde ambos extremos son relevantes. Más adelante vuelve en [Colas](colas.md) y [Deques](deques.md).
 

@@ -42,6 +42,42 @@ Las operaciones típicas son estas:
 | `isEmpty()` | Indica si no hay elementos | Suele ser O(1) |
 | `size()` | Informa cuántos elementos hay | Suele ser O(1) |
 
+## Traza visual: qué cambia en cada operación
+
+La política LIFO conviene verla en una secuencia chica de operaciones. La estructura no ordena por valor ni por antigüedad global: solo mantiene un extremo activo, el tope.
+
+```{mermaid}
+flowchart LR
+    subgraph P1["push(A)"]
+        direction TB
+        A1["tope -> A"]
+    end
+
+    subgraph P2["push(B)"]
+        direction TB
+        B2["tope -> B"] --> B1["A"]
+    end
+
+    subgraph P3["push(C)"]
+        direction TB
+        C3["tope -> C"] --> C2["B"] --> C1["A"]
+    end
+
+    subgraph P4["pop() devuelve C"]
+        direction TB
+        D2["tope -> B"] --> D1["A"]
+    end
+```
+
+La lectura correcta es esta:
+
+1. `A` queda abajo porque fue el primer elemento;
+2. `B` tapa a `A`;
+3. `C` pasa a ser el nuevo tope;
+4. `pop()` no busca el más viejo ni el más chico: saca lo último que se apiló.
+
+Esa traza sirve para detectar rápido si un problema realmente necesita una pila o si solo se está usando una colección cualquiera por costumbre.
+
 Una interfaz posible sería:
 
 ```java
@@ -61,6 +97,23 @@ Fijate qué queda fuera del contrato:
 - no hay inserción en posiciones arbitrarias.
 
 Eso no es una carencia. Es una forma de decir con precisión qué operaciones tienen sentido en el dominio.
+
+## Cómo reconocer un problema LIFO
+
+No todo problema con elementos pendientes necesita una pila. Conviene mirar si el dominio realmente privilegia al último elemento agregado.
+
+| Si el problema dice... | La intuición natural suele ser... |
+| :--- | :--- |
+| "deshacer la última acción" | pila |
+| "cerrar el último paréntesis abierto" | pila |
+| "volver al último punto de decisión" | pila |
+| "atender al primero que llegó" | cola, no pila |
+| "elegir el candidato más urgente" | cola de prioridad, no pila |
+
+Una regla práctica:
+
+- si el problema se entiende en términos de anidamiento, retroceso o deshacer, conviene sospechar LIFO;
+- si se entiende en términos de espera, turnos o prioridad, probablemente la pila no sea la abstracción correcta.
 
 ## Contrato, errores e invariantes
 
@@ -82,6 +135,16 @@ En una pila aparecen dos errores clásicos:
 | **Desbordamiento** (*overflow*) | Se intenta hacer `push()` en una pila acotada ya llena |
 
 No todas las pilas tienen overflow: una implementación enlazada suele crecer mientras haya memoria disponible. En cambio, una pila basada en arreglo fijo sí necesita decidir qué hacer cuando se llena.
+
+### Qué pasa con valores inválidos
+
+Según el dominio, una pila también puede necesitar reglas extra sobre qué valores admite:
+
+- algunas implementaciones aceptan cualquier referencia;
+- otras prohíben `null` para evitar ambigüedades;
+- otras restringen el tipo de elemento por contrato del dominio.
+
+Eso no cambia la idea LIFO, pero sí forma parte del contrato observable cuando el cliente necesita saber qué entradas son válidas.
 
 ### Invariante de una pila con arreglo
 
@@ -229,6 +292,46 @@ Acá desaparece el problema de capacidad fija, pero aparece otro trade-off:
 
 La decisión no depende de la palabra "pila", sino del patrón de uso real.
 
+## Comparación operativa entre implementaciones
+
+Conviene mirar la misma pila desde dos planos a la vez:
+
+| Pregunta | Pila con arreglo | Pila enlazada |
+| :--- | :--- | :--- |
+| ¿Dónde vive el tope? | en `datos[cantidad - 1]` | en la referencia `tope` |
+| ¿Qué cambia en `push`? | se escribe al final lógico | se crea un nodo nuevo al frente |
+| ¿Qué cambia en `pop`? | baja `cantidad` | avanza `tope` al siguiente nodo |
+| ¿Qué riesgo interno aparece? | overflow o redimensionamiento | sobrecosto por nodos y referencias |
+
+Esta tabla ayuda a separar dos preguntas:
+
+1. si el TAD correcto es una pila;
+2. si la representación correcta de esa pila es contigua o enlazada.
+
+```{mermaid}
+block-beta
+    columns 2
+    block:Arr:1
+        A1["tope (índice 2)"]
+        A2["dato 2"]
+        A3["dato 1"]
+        A4["[0] (base)"]
+    end
+    block:List:1
+        L1["tope (nodo)"]
+        L2["nodo"]
+        L3["nodo"]
+        L4["null (base)"]
+    end
+    
+    L1 --> L2
+    L2 --> L3
+    L3 --> L4
+    
+    style Arr fill:#e3f2fd,stroke:#1e88e5
+    style List fill:#fff3e0,stroke:#fb8c00
+```
+
 ## Aplicaciones típicas
 
 Una pila aparece cuando el trabajo pendiente respeta una lógica de anidamiento o deshacer.
@@ -237,13 +340,66 @@ Una pila aparece cuando el trabajo pendiente respeta una lógica de anidamiento 
 
 En un editor, cada acción nueva se apila arriba de la anterior. La última acción es la primera que debería revertirse.
 
+```java
+public class Editor {
+    private Pila<Accion> historialDeshacer = new PilaEnlazada<>();
+    private Pila<Accion> historialRehacer = new PilaEnlazada<>();
+
+    public void ejecutar(Accion accion) {
+        accion.aplicar();
+        this.historialDeshacer.push(accion);
+        // Al ejecutar una nueva acción, se pierde la historia de rehacer
+        this.historialRehacer.vaciar(); 
+    }
+
+    public void deshacer() {
+        if (!this.historialDeshacer.isEmpty()) {
+            Accion accion = this.historialDeshacer.pop();
+            accion.revertir();
+            this.historialRehacer.push(accion);
+        }
+    }
+}
+```
+
 ### Llamadas recursivas
 
 Cada llamada deja contexto pendiente: parámetros, variables locales y punto de retorno. Por eso se habla de **call stack**.
 
+```{mermaid}
+flowchart TB
+    F3["tope -> factorial(3)"] --> F2["factorial(2)"] --> F1["factorial(1)"] --> F0["caso base / retorno"]
+```
+
+La idea del diagrama no es describir todos los detalles de ejecución de Java, sino mostrar qué queda pendiente:
+
+- la llamada más reciente queda arriba;
+- cuando termina, se retoma la inmediatamente anterior;
+- el desapilado ocurre en orden inverso al apilado.
+
+Por eso recursión y pila están tan cerca conceptualmente: una recursión profunda no es magia, es una pila de contextos de ejecución.
+
 ### Backtracking
 
 En problemas donde se prueba una decisión y, si falla, se vuelve al último punto de elección, la pila modela exactamente ese retroceso.
+
+```{mermaid}
+flowchart TD
+    Inicio --> OpcionA
+    Inicio --> OpcionB
+    OpcionA --> Falla((Falla))
+    OpcionA -.->|backtrack| Inicio
+    Inicio --> OpcionC
+    
+    style Falla fill:#ffcdd2,stroke:#d32f2f
+```
+
+Ejemplos típicos:
+
+- resolver un laberinto;
+- explorar combinaciones;
+- evaluar movimientos posibles en un juego;
+- volver al último nodo pendiente en un recorrido DFS iterativo.
 
 ### Balanceo y parsing
 
@@ -281,6 +437,10 @@ Hay dos errores de diseño frecuentes:
 1. modelar una pila y después agregarle getters o acceso por índice "por comodidad";
 2. usar una secuencia general cuando el dominio claramente necesita LIFO.
 
+También conviene evitar un tercer error:
+
+3. confundir la pila del problema con una colección cualquiera y perder la semántica del tope.
+
 En ambos casos se rompe la ventaja de la abstracción. Si el problema es una pila, el contrato debería decirlo sin ambigüedades.
 
 ## Resumen
@@ -311,6 +471,20 @@ Especificá el contrato de una pila acotada de enteros. Indicá precondiciones, 
 :label: ex-parte5-pilas-implementacion
 
 Querés implementar el historial de deshacer de un editor. Compará una pila basada en arreglo dinámico y una pila enlazada. Explicá qué gana y qué pierde cada una si el historial suele crecer mucho, pero también vaciarse seguido.
+```
+
+```{exercise}
+:label: ex-parte5-pilas-traza
+
+Mostrá el estado de una pila después de esta secuencia:
+
+1. `push(10)`
+2. `push(20)`
+3. `push(30)`
+4. `pop()`
+5. `push(40)`
+
+Indicá cuál es el tope final y en qué orden saldrían los elementos si después desapilaras hasta vaciarla.
 ```
 
 ## Próximo paso

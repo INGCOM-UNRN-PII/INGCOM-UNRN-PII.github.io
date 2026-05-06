@@ -33,6 +33,22 @@ Eso implica dos extremos lógicos:
 - **frente**: próximo elemento a salir;
 - **fondo**: posición donde entra el siguiente elemento.
 
+```{mermaid}
+flowchart LR
+    Entrada((Nuevo)) -.->|enqueue| Fondo[Fondo]
+    
+    subgraph Cola FIFO
+        direction LR
+        Fondo --> N2[Medio] --> Frente[Frente]
+    end
+    
+    Frente -.->|dequeue| Salida((Sale))
+    
+    style Entrada fill:#e8f5e9,stroke:#2e7d32
+    style Salida fill:#ffebee,stroke:#c62828
+    style Cola FIFO fill:#e3f2fd,stroke:#1565c0,stroke-width:2px
+```
+
 El contrato típico incluye:
 
 | Operación | Qué hace | Observación |
@@ -46,10 +62,32 @@ El contrato típico incluye:
 Una interfaz posible sería:
 
 ```java
+/**
+ * TAD Cola (Queue). Política FIFO (First In, First Out).
+ * @param <T> el tipo de elementos.
+ */
 public interface Cola<T> {
+    /**
+     * Agrega un elemento al fondo de la cola.
+     * Postcondición: size() aumenta en 1 y 'elemento' será el último en salir.
+     */
     void enqueue(T elemento);
+    
+    /**
+     * Quita y devuelve el elemento en el frente de la cola.
+     * Precondición: !isEmpty().
+     * Postcondición: size() disminuye en 1.
+     * @throws IllegalStateException si la cola está vacía.
+     */
     T dequeue();
+    
+    /**
+     * Devuelve el elemento en el frente sin modificar la cola.
+     * Precondición: !isEmpty().
+     * @throws IllegalStateException si la cola está vacía.
+     */
     T front();
+    
     boolean isEmpty();
     int size();
 }

@@ -54,6 +54,28 @@ En una cola común, el siguiente elemento depende del tiempo de llegada. En una 
 | Pila LIFO | Sale primero quien entró último |
 | Cola de prioridad | Sale primero quien tenga mejor prioridad |
 
+```{mermaid}
+flowchart TD
+    subgraph Cola FIFO Normal
+        direction LR
+        In1((1)) --> In2((5)) --> In3((2)) --> Out1((Sale: 1))
+        style In1 fill:#e0e0e0
+        style In2 fill:#e0e0e0
+        style In3 fill:#e0e0e0
+    end
+    
+    subgraph Cola de Prioridad (Min)
+        direction LR
+        P1((1)) ~~~ P2((5)) ~~~ P3((2))
+        P1 -.-> Out2((Sale: 1))
+        P3 -.-> Out3((Sale: 2))
+        P2 -.-> Out4((Sale: 5))
+        style P1 fill:#ffcdd2,stroke:#d32f2f
+        style P3 fill:#ffe0b2,stroke:#f57c00
+        style P2 fill:#c8e6c9,stroke:#388e3c
+    end
+```
+
 Eso tiene una consecuencia importante: el orden de inserción puede quedar completamente alterado por la prioridad.
 
 Por ejemplo, si entran tareas con prioridades `5`, `1`, `8` y trabajás con una min-priority queue, la próxima en salir será la `1`, aunque no haya llegado primera.
@@ -141,6 +163,20 @@ En un **min-heap** se cumple:
 - por lo tanto, la raíz contiene el mínimo.
 
 En un **max-heap**, la desigualdad se invierte.
+
+```{mermaid}
+graph TD
+    subgraph Min-Heap Binario
+        N1((1)) --> N2((5))
+        N1 --> N3((2))
+        N2 --> N4((10))
+        N2 --> N5((6))
+        N3 --> N6((8))
+        N3 --> N7((4))
+    end
+    
+    style N1 fill:#ffcdd2,stroke:#d32f2f
+```
 
 La clave es notar qué **no** garantiza:
 

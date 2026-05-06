@@ -20,6 +20,15 @@ La consecuencia es directa. Se gana flexibilidad estructural y edición local, p
 **Desarrollo.** Primero se fija la idea general de nodo y acceso secuencial. Después se comparan listas simples, dobles y circulares, y se cierra con nodos centinela como técnica para simplificar casos borde.
 :::
 
+```{figure} listas_enlazadas_variantes.svg
+:label: fig-parte5-listas-variantes
+:width: 100%
+
+Resumen visual de cuatro decisiones de representación sobre listas enlazadas: simple, doble, circular y con centinela.
+```
+
+La figura sirve como mapa rápido del capítulo. No reemplaza la explicación: lo importante no es memorizar dibujitos, sino entender qué cambia en los enlaces, qué casos borde desaparecen y qué invariantes nuevas aparecen cuando la estructura deja de ser la forma mínima.
+
 ## Qué resuelven bien las listas enlazadas
 
 Una lista enlazada representa la secuencia como una cadena de nodos. Cada nodo guarda:
@@ -43,9 +52,25 @@ final class Nodo {
 
 La estructura mínima ya no es "un arreglo y una cantidad", sino:
 
-- una referencia al primer nodo,
-- opcionalmente una referencia al último,
+- una referencia al primer nodo (`cabeza`),
+- opcionalmente una referencia al último (`cola`),
 - y una invariante que describa cómo están enlazados.
+
+```{mermaid}
+flowchart LR
+    Cabeza([cabeza]) --> N1
+    
+    subgraph Nodos
+        direction LR
+        N1[A] --> N2[B] --> N3[C] --> Null([null])
+    end
+    
+    Cola([cola]) -.-> N3
+    
+    style Cabeza fill:#bbdefb,stroke:#0288d1
+    style Cola fill:#bbdefb,stroke:#0288d1
+    style Null fill:#eeeeee,stroke:#9e9e9e
+```
 
 :::{important} Invariante típica de una lista simplemente enlazada
 Si la lista mantiene `cabeza`, `cola` y `cantidad`, suele cumplirse:
@@ -169,6 +194,45 @@ El contraste con el arreglo es fuerte:
 
 La frase importante es "después de un nodo conocido". Si no sabés dónde insertar y primero tenés que buscar la posición, el costo total vuelve a ser lineal.
 
+## El costo real depende de qué referencia ya tenés
+
+En listas enlazadas hay una trampa conceptual muy común: afirmar que "insertar en el medio es O(1)" sin decir **qué recibe exactamente la operación**.
+
+No es lo mismo:
+
+1. insertar después de un nodo del que ya tenés referencia;
+2. insertar en la posición `i`, empezando solo con `cabeza`;
+3. insertar después del primer nodo cuyo valor cumple cierta condición.
+
+En el primer caso, el reenlace sí es local:
+
+```java
+private void insertarDespuesDe(Nodo anterior, String cancion) {
+    Nodo nuevo = new Nodo(cancion);
+    nuevo.siguiente = anterior.siguiente;
+    anterior.siguiente = nuevo;
+
+    if (this.cola == anterior) {
+        this.cola = nuevo;
+    }
+
+    this.cantidad++;
+}
+```
+
+La operación toca una cantidad constante de referencias. No corre elementos y no recorre desde el comienzo.
+
+Pero si el problema te pide "insertar en la posición 200" y solo conservás `cabeza`, antes del reenlace tenés que caminar 199 enlaces. Entonces el costo total ya no lo domina la edición local, sino la búsqueda previa.
+
+| Situación | Búsqueda previa | Reenlace | Costo total típico |
+| :--- | :--- | :--- | :--- |
+| Insertar después de un nodo ya conocido | No | Sí | O(1) |
+| Insertar en posición `i` | Sí | Sí | O(n) |
+| Eliminar un nodo del que conocés el anterior | No | Sí | O(1) |
+| Eliminar por valor | Sí | Sí | O(n) |
+
+Eso explica por qué las listas enlazadas funcionan especialmente bien en algoritmos que ya vienen "parados" sobre el nodo correcto: iteradores, fusiones de secuencias ordenadas, colas de trabajo o deques. En cambio, si cada operación empieza preguntando "¿dónde está la posición `i`?", la ventaja se diluye muy rápido.
+
 ## Qué se gana y qué se pierde frente al arreglo
 
 Las listas enlazadas no son una mejora general. Son una respuesta distinta a otra prioridad.
@@ -184,11 +248,53 @@ Las listas enlazadas no son una mejora general. Son una respuesta distinta a otr
 
 Por eso el patrón de decisión no es "lista para todo". De hecho, en la práctica general suele seguir conviniendo una lista basada en arreglo, como `ArrayList`. En {ref}`java-colecciones` ya apareció esa comparación con `LinkedList`.
 
+## Localidad de memoria: por qué la teoría no alcanza
+
+Hasta acá el contraste fue asintótico: corrimientos contra reenlaces. Pero en una máquina real también importa **cómo queda distribuida la memoria**.
+
+```{mermaid}
+block-beta
+    columns 8
+    block:Arr:8
+        A1["[0]"] A2["[1]"] A3["[2]"] A4["[3]"] space:4
+    end
+    space:8
+    block:List:8
+        L1["Nodo 1"] space:2 L3["Nodo 3"] space:1 L2["Nodo 2"] space:1 L4["Nodo 4"]
+    end
+    L1 --> L2
+    L2 --> L3
+    L3 --> L4
+    style Arr fill:#e3f2fd,stroke:#1e88e5
+    style List fill:#fff3e0,stroke:#fb8c00
+```
+
+En un arreglo (arriba), los elementos se ubican en posiciones contiguas. Si ya accediste a una posición, la siguiente suele quedar físicamente cerca, lo que el hardware aprovecha muy bien (caché). En una lista enlazada (abajo), en cambio, cada salto depende de seguir una referencia hacia un nodo que puede estar en cualquier otra zona del heap. Eso vuelve menos predecible el recorrido y agrega overhead por nodo.
+
+Esa diferencia no contradice el análisis de complejidad. Lo complementa:
+
+- el análisis asintótico te dice que un acceso por índice en lista es lineal;
+- la representación física te recuerda que además cada paso puede ser menos amigable para caché que en un arreglo;
+- por eso una lista no debería elegirse "porque O(1) en insertar suena mejor", sino porque el patrón real de uso justifica pagar ese costo físico.
+
+En bibliotecas estándar esto se nota enseguida. `LinkedList` existe y tiene nichos válidos, pero para muchos usos generales sigue conviniendo `ArrayList`: menos referencias, mejor recorrido secuencial y mejor acceso posicional. La conclusión correcta no es "las listas enlazadas son malas", sino "solo convienen cuando el problema realmente explota la edición local".
+
 ## Lista doblemente enlazada: moverse en ambos sentidos
 
 La lista simplemente enlazada alcanza para muchos problemas, pero tiene una limitación dura: desde un nodo no podés volver al anterior sin empezar otra vez desde la cabeza.
 
 La lista doblemente enlazada agrega una segunda referencia:
+
+```{mermaid}
+flowchart LR
+    Null1([null]) <--> N1[A]
+    N1 <--> N2[B]
+    N2 <--> N3[C]
+    N3 <--> Null2([null])
+    
+    style Null1 fill:#eeeeee,stroke:#9e9e9e
+    style Null2 fill:#eeeeee,stroke:#9e9e9e
+```
 
 ```java
 final class Nodo {
@@ -232,7 +338,18 @@ final class Nodo {
 
 La variante circular es útil cuando el recorrido natural del problema no tiene un corte fuerte entre último y primero:
 
-- rondas de turnos,
+```{mermaid}
+flowchart LR
+    N1[Turno 1] --> N2[Turno 2] --> N3[Turno 3] --> N4[Turno 4]
+    N4 -.->|siguiente| N1
+    
+    style N1 fill:#fff9c4,stroke:#388e3c
+    style N2 fill:#fff9c4,stroke:#388e3c
+    style N3 fill:#fff9c4,stroke:#388e3c
+    style N4 fill:#fff9c4,stroke:#388e3c
+```
+
+- rondas de turnos (juegos de mesa, planificador de procesos del SO),
 - reproductores en modo repetición,
 - planificadores cíclicos,
 - buffers que rotan.
@@ -286,6 +403,42 @@ Con este patrón:
 
 En listas doblemente enlazadas y circulares, los centinelas pueden simplificar todavía más la implementación. La ventaja no es de complejidad asintótica, sino de claridad y reducción de casos especiales.
 
+### Centinela circular: una representación muy pareja
+
+Una variante muy usada combina las tres ideas fuertes del capítulo:
+
+1. lista doblemente enlazada,
+2. recorrido circular,
+3. nodo centinela permanente.
+
+```{mermaid}
+flowchart LR
+    Centinela((Centi)) <--> N1[A]
+    N1 <--> N2[B]
+    N2 <--> N3[C]
+    N3 <--> Centinela
+    
+    style Centinela fill:#ffcc80,stroke:#ef6c00,stroke-dasharray: 5 5
+```
+
+```java
+public ListaDobleConCentinela() {
+    this.centinela = new Nodo();
+    this.centinela.siguiente = this.centinela;
+    this.centinela.anterior = this.centinela;
+    this.cantidad = 0;
+}
+```
+
+Con esa representación:
+
+- la lista vacía se reconoce porque `centinela.siguiente == centinela`;
+- el primer nodo real es `centinela.siguiente`;
+- el último nodo real es `centinela.anterior`;
+- no hace falta usar `null` para marcar extremos.
+
+La estructura paga un nodo extra y una invariante más rica, pero gana mucha simetría. Insertar antes del primero o después del último deja de ser un caso especial: en ambos casos solo reenlazás alrededor del centinela. Esa idea reaparece mucho en implementaciones robustas de deques y listas editables.
+
 ## Comparación rápida de variantes
 
 | Variante | Qué simplifica | Qué complica | Cuándo conviene |
@@ -334,6 +487,12 @@ Tenés que modelar un historial de navegación con operaciones "atrás" y "adela
 ```
 
 ```{exercise}
+:label: ex-parte5-listas-referencia-conocida
+
+Una especificación dice: "insertar un elemento en el medio de la lista es O(1)". Explicá por qué esa afirmación es incompleta y reformulala de manera técnicamente correcta.
+```
+
+```{exercise}
 :label: ex-parte5-listas-centinela
 
 Mostrá un caso borde de inserción o borrado donde usar un nodo centinela simplifique la implementación. No hace falta escribir código completo, pero sí describir qué condición especial desaparece.
@@ -342,3 +501,4 @@ Mostrá un caso borde de inserción o borrado donde usar un nodo centinela simpl
 ## Próximo paso
 
 Ahora conviene pasar a [Pilas](pilas.md), donde una secuencia general se restringe para resolver un patrón de acceso específico y varias de estas decisiones de representación vuelven a aparecer.
+ estas decisiones de representación vuelven a aparecer.

@@ -8,10 +8,10 @@ description: Recorrido sugerido y mapa estructural de la parte 5, con foco en TA
 (parte-5-estructuras-de-datos)=
 # Parte 5: Estructuras de Datos
 
-Esta parte sigue fuera del TOC principal, pero ya no funciona como un esquema tentativo. Hoy reúne un mapa de aprendizaje estable para el tramo de estructuras de datos: primero fija el lenguaje de TAD y costo, después recorre familias concretas y finalmente cierra con algoritmos sobre grafos.
+Esta parte ya integra el TOC principal y reúne un mapa de aprendizaje estable para el tramo de estructuras de datos: primero fija el lenguaje de TAD y costo, después recorre familias concretas y finalmente cierra con algoritmos sobre grafos.
 
 :::{important}
-**Estado.** Material en revisión final. El recorrido completo ya quedó desarrollado en las cuatro familias; lo pendiente ya no es de contenido, sino la decisión de cuándo publicarlo en el TOC principal.
+**Estado.** Parte publicada. El recorrido completo ya quedó desarrollado en las cuatro familias y puede leerse como tramo estable de la cursada.
 :::
 
 ## Propósito de la parte
