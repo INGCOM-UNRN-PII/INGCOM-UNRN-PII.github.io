@@ -30,6 +30,16 @@ La intuición es:
 2. calcular un número a partir de esa clave,
 3. usar ese número para ubicar la entrada en una tabla.
 
+```{mermaid}
+flowchart LR
+    Clave["Clave (ej: 'Ana')"] --> Hash[Función Hash]
+    Hash -->|int: 21345| Compresión[Módulo o Compresión]
+    Compresión -->|índice: 3| Bucket["Bucket [3]"]
+    
+    style Hash fill:#ffecb3,stroke:#ef6c00
+    style Compresión fill:#ffecb3,stroke:#ef6c00
+```
+
 ```{code} java
 :caption: Esquema conceptual de acceso por hash
 
@@ -69,6 +79,29 @@ Cada bucket guarda una colección de entradas:
 
 Si dos claves caen en el mismo bucket, conviven en esa colección.
 
+```{mermaid}
+flowchart LR
+    subgraph Tabla Hash
+        direction TB
+        B0["[0]"]
+        B1["[1]"]
+        B2["[2]"]
+        B3["[3]"]
+    end
+    
+    L1_1["Clave: A"]
+    L1_2["Clave: X"]
+    L3_1["Clave: C"]
+    
+    B1 --> L1_1 --> L1_2
+    B3 --> L3_1
+    
+    style B0 fill:#eeeeee,stroke:#9e9e9e
+    style B2 fill:#eeeeee,stroke:#9e9e9e
+    style B1 fill:#bbdefb,stroke:#0288d1
+    style B3 fill:#bbdefb,stroke:#0288d1
+```
+
 Ventajas:
 
 - implementación conceptualmente simple,
@@ -82,7 +115,22 @@ Desventajas:
 
 ### Direccionamiento abierto
 
-La tabla guarda todo dentro del arreglo principal. Si la posición esperada está ocupada, se busca otra según una estrategia de exploración.
+La tabla guarda todo dentro del arreglo principal. Si la posición esperada está ocupada, se busca otra según una estrategia de exploración (probing).
+
+```{mermaid}
+flowchart LR
+    subgraph Tabla Hash Lineal
+        direction TB
+        B0["[0]"]
+        B1["[1] Ocupado por A (Hash=1)"]
+        B2["[2] Ocupado por B (Hash=1, colisiona, baja 1)"]
+        B3["[3] Libre"]
+    end
+    
+    style B1 fill:#ffcdd2,stroke:#d32f2f
+    style B2 fill:#fff9c4,stroke:#fbc02d
+    style B3 fill:#c8e6c9,stroke:#388e3c
+```
 
 Estrategias típicas:
 

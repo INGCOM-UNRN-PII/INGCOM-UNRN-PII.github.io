@@ -26,6 +26,28 @@ Un árbol es una estructura jerárquica compuesta por nodos conectados por relac
 
 El vocabulario mínimo incluye:
 
+```{mermaid}
+flowchart TD
+    R((Raíz)) --> N1((Padre/Hijo))
+    R --> N2((Hoja))
+    R --> N3((Padre))
+    N1 --> H1((Hoja))
+    N1 --> H2((Hoja))
+    N3 --> H3((Hoja))
+    
+    subgraph Subárbol
+        N1
+        H1
+        H2
+    end
+    
+    style R fill:#bbdefb,stroke:#0288d1
+    style N2 fill:#e1bee7,stroke:#512da8
+    style H1 fill:#e1bee7,stroke:#512da8
+    style H2 fill:#e1bee7,stroke:#512da8
+    style H3 fill:#e1bee7,stroke:#512da8
+```
+
 | Término | Idea básica |
 | :--- | :--- |
 | raíz | nodo inicial del árbol |

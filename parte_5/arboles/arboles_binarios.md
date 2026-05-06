@@ -43,6 +43,35 @@ Eso instala varias preguntas nuevas:
 
 No todos los árboles binarios tienen la misma forma. Conviene distinguir al menos:
 
+```{mermaid}
+flowchart TD
+    subgraph Lleno
+        direction TB
+        L1((A)) --> L2((B))
+        L1 --> L3((C))
+        L2 --> L4((D))
+        L2 --> L5((E))
+        L3 --> L6((F))
+        L3 --> L7((G))
+    end
+    
+    subgraph Completo
+        direction TB
+        C1((A)) --> C2((B))
+        C1 --> C3((C))
+        C2 --> C4((D))
+        C2 --> C5((E))
+        C3 --> C6((F))
+    end
+    
+    subgraph Degenerado
+        direction TB
+        D1((A)) --> D2((B))
+        D2 --> D3((C))
+        D3 --> D4((D))
+    end
+```
+
 | Forma | Idea básica |
 | :--- | :--- |
 | completo | todos los niveles salvo quizá el último están llenos |
@@ -112,6 +141,16 @@ La idea típica es:
 - si un nodo está en la posición `i`,
 - su hijo izquierdo está en `2i + 1`,
 - y su hijo derecho en `2i + 2`.
+
+```{mermaid}
+block-beta
+    columns 7
+    block:Arr:7
+        A0["[0]\nA"] A1["[1]\nB"] A2["[2]\nC"] A3["[3]\nD"] A4["[4]\nE"] A5["[5]\nF"] A6["[6]\n-"]
+    end
+    style Arr fill:#e3f2fd,stroke:#1e88e5
+```
+*(Si A está en `0`, su hijo izquierdo B está en `2(0)+1 = 1`, y su derecho C en `2(0)+2 = 2`)*.
 
 Esto vuelve muy natural:
 

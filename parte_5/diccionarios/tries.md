@@ -27,21 +27,34 @@ Un trie, en cambio, la trata como una **secuencia de decisiones**.
 
 ## La idea central
 
-En un trie:
+En un trie (del inglés *retrieval*):
 
-- cada arista o cada paso representa un símbolo,
-- cada camino representa una clave,
+- cada arista o cada paso representa un símbolo (ej. una letra),
+- cada camino desde la raíz hasta un nodo marcado representa una clave válida,
 - y los nodos intermedios comparten prefijos comunes.
 
 ### Ejemplo conceptual
 
-Si se almacenan estas palabras:
+Si se almacenan estas palabras: `casa`, `caso`, `canto`, el prefijo `ca` no se duplica tres veces en memoria. Queda compartido estructuralmente en el árbol.
 
-- `casa`
-- `caso`
-- `canto`
-
-entonces el prefijo `ca` no se duplica tres veces como texto separado. Queda compartido en la estructura.
+```{mermaid}
+flowchart TD
+    Raiz(( )) -->|c| N1(( ))
+    N1 -->|a| N2(( ))
+    
+    N2 -->|s| N3(( ))
+    N3 -->|a| N4(((casa)))
+    N3 -->|o| N5(((caso)))
+    
+    N2 -->|n| N6(( ))
+    N6 -->|t| N7(( ))
+    N7 -->|o| N8(((canto)))
+    
+    style N4 fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style N5 fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style N8 fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+```
+*(Los nodos con borde verde doble indican el final de una palabra válida).*
 
 Esa propiedad vuelve muy natural responder preguntas como:
 
@@ -84,13 +97,51 @@ class NodoTrie {
 }
 ```
 
-La estructura concreta puede variar, pero la idea sigue siendo la misma: avanzar símbolo por símbolo.
+La estructura concreta puede variar, pero la idea sigue siendo la misma: avanzar símbolo por símbolo. Si el alfabeto es muy grande (ej. Unicode entero), guardar los hijos en un `Map` es razonable; si el alfabeto es pequeño (ej. 26 letras de a-z), un arreglo estático es mucho más veloz.
+
+```{code} java
+:caption: Implementación de un nodo para un Trie de letras minúsculas (alfabeto de tamaño fijo).
+
+class NodoTrie {
+    /** Arreglo donde el índice 0 es 'a', el 1 es 'b', etc. */
+    private final NodoTrie[] hijos = new NodoTrie[26];
+    
+    /** True si el camino desde la raíz hasta este nodo forma una palabra ingresada. */
+    private boolean esFinDePalabra = false;
+
+    /**
+     * @param c un caracter entre 'a' y 'z'.
+     * @return el nodo hijo correspondiente, o null si no existe.
+     */
+    public NodoTrie obtenerHijo(char c) {
+        return this.hijos[c - 'a'];
+    }
+    
+    /**
+     * Crea un hijo si no existe y lo devuelve.
+     */
+    public NodoTrie crearHijoSiFalta(char c) {
+        int indice = c - 'a';
+        if (this.hijos[indice] == null) {
+            this.hijos[indice] = new NodoTrie();
+        }
+        return this.hijos[indice];
+    }
+    
+    public void marcarComoFin() {
+        this.esFinDePalabra = true;
+    }
+}
+```
 
 ## Qué costo tienen
 
-El costo típico de búsqueda o inserción en un trie se relaciona con la **longitud de la clave**, no con la cantidad total de claves del diccionario del mismo modo que en otras estructuras.
+El costo temporal típico de búsqueda o inserción en un trie **no depende de N** (la cantidad total de palabras guardadas en el diccionario) como ocurre en los árboles binarios de búsqueda. Depende exclusivamente de **L** (la longitud de la clave).
 
-Eso puede ser una gran ventaja cuando:
+- Insertar `"casa"` cuesta exactamente 4 pasos, sin importar si el diccionario tiene 10 palabras o 10 millones. Es `O(L)`.
+- Buscar `"casa"` cuesta exactamente 4 pasos. Es `O(L)`.
+
+Eso puede ser una ventaja gigante cuando:
 
 - las claves no son demasiado largas,
 - hay muchos prefijos compartidos,
@@ -115,15 +166,40 @@ Es la versión más directa:
 
 ### Trie comprimido o radix tree
 
-Reduce nodos intermedios innecesarios agrupando segmentos de camino.
+Reduce nodos intermedios innecesarios agrupando segmentos de camino que no tienen ramificaciones.
+
+```{mermaid}
+flowchart LR
+    subgraph Trie Basico
+        direction TB
+        R1(( )) -->|r| N1(( ))
+        N1 -->|o| N2(( ))
+        N2 -->|m| N3(( ))
+        N3 -->|a| N4(((roma)))
+        N3 -->|e| N5(( ))
+        N5 -->|o| N6(((romeo)))
+    end
+
+    subgraph Trie Comprimido
+        direction TB
+        R2(( )) -->|rom| N7(( ))
+        N7 -->|a| N8(((roma)))
+        N7 -->|eo| N9(((romeo)))
+    end
+    
+    style N4 fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style N6 fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style N8 fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+    style N9 fill:#c8e6c9,stroke:#388e3c,stroke-width:2px
+```
 
 Ventaja:
 
-- menor costo de memoria en ciertos casos.
+- menor costo de memoria y menos saltos de punteros para caminos largos sin desvíos.
 
 Desventaja:
 
-- implementación más compleja.
+- implementación más compleja (hay que partir y fusionar aristas al insertar nuevas palabras).
 
 ## Trie vs hash vs diccionario ordenado
 

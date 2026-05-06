@@ -125,24 +125,25 @@ Es el caso de los **conjuntos disjuntos**:
 
 ## Igualdad, clave y comparador
 
-Para que esta familia funcione bien, hace falta tener muy claro qué significa que dos claves sean “la misma clave”.
+Para que esta familia funcione bien, hace falta tener muy claro qué significa que dos claves sean “la misma clave”. En una secuencia, la identidad la da la posición (índice 3). En diccionarios y conjuntos, la identidad la da el contenido de la clave.
 
-Ese criterio puede apoyarse en:
+Ese criterio puede apoyarse en distintas reglas, que en Java se traducen a contratos específicos (ver {ref}`java-colecciones`):
 
-- igualdad,
-- función hash,
-- orden total,
-- o descomposición por símbolos.
+| Estructura | Qué necesita de la clave | Contrato en Java |
+| :--- | :--- | :--- |
+| Tabla Hash | Función hash coherente con la igualdad | `equals(Object)` y `hashCode()` |
+| Diccionario Ordenado | Comparación total consistente | `Comparable<T>` o `Comparator<T>` |
+| Trie | Posibilidad de recorrer la clave por símbolos | Iteración de caracteres o bytes |
 
-No todas las implementaciones usan la misma noción:
+Este punto es **crítico**: una misma noción de “clave” puede comportarse bien en una estructura y romper otra. 
 
-| Estructura | Qué necesita de la clave |
-| :--- | :--- |
-| tabla hash | función hash coherente con igualdad |
-| diccionario ordenado | comparación total consistente |
-| trie | posibilidad de recorrer la clave por símbolos |
+### El peligro de romper el contrato de igualdad
 
-Este punto es importante porque una misma noción de “clave” puede comportarse bien en una estructura y mal en otra.
+Si redefinís cómo se comparan dos objetos, pero te olvidás de ajustar su identificador numérico, las estructuras basadas en *hashing* van a fallar silenciosamente.
+
+:::{warning} Contrato `equals` y `hashCode`
+Si dos claves son iguales según `equals()`, **deben obligatoriamente** devolver el mismo `hashCode()`. Si rompés esta regla, podés insertar un valor en un diccionario y luego ser incapaz de encontrarlo, porque la tabla lo va a ir a buscar al "balde" equivocado.
+:::
 
 ## Cómo se comparan con secuencias
 

@@ -77,14 +77,33 @@ La estructura concreta suele guardarse en arreglos:
 
 ## Optimización 1: union by rank
 
-Cuando se unen dos árboles, no conviene hacerlo arbitrariamente. Si siempre se cuelga un árbol grande debajo de uno chico, la estructura puede degradarse.
+Cuando se unen dos árboles, no conviene hacerlo arbitrariamente. Si siempre se cuelga un árbol grande debajo de uno chico, la estructura puede degradarse (transformarse en una lista enlazada).
 
 La idea de **union by rank** es:
 
-- mantener una medida aproximada de altura o tamaño,
-- y colgar el árbol “menos importante” debajo del “más importante”.
+- mantener una medida aproximada de altura o tamaño (el *rango*),
+- y colgar el árbol “menos profundo” debajo de la raíz del “más profundo”.
 
-Eso ayuda a que los caminos no crezcan demasiado.
+```{mermaid}
+flowchart TD
+    subgraph Mal
+        direction TB
+        R1((A)) --> R2((B))
+        R2 --> N1((C))
+        R2 --> N2((D))
+    end
+    
+    subgraph Bien
+        direction TB
+        R3((B)) --> N3((C))
+        R3 --> N4((D))
+        R3 --> R4((A))
+    end
+    style R1 fill:#ffcdd2,stroke:#d32f2f
+    style R3 fill:#c8e6c9,stroke:#388e3c
+```
+
+*(En la opción "Bien", colgar A debajo de B no aumenta la altura total del árbol, manteniendo búsquedas rápidas).*
 
 ## Optimización 2: path compression
 
@@ -93,7 +112,36 @@ Cada vez que se hace `find(x)`, se recorre una cadena de padres hasta la raíz. 
 La idea es:
 
 - si ya descubrí quién es la raíz de `x`,
-- entonces puedo hacer que `x` y varios nodos intermedios apunten más directo a esa raíz.
+- entonces puedo hacer que `x` y todos los nodos intermedios que visité apunten directo a esa raíz.
+
+```{mermaid}
+flowchart TD
+    subgraph Antes de find E
+        direction TB
+        A1((A)) --> B1((B))
+        B1 --> C1((C))
+        C1 --> D1((D))
+        D1 --> E1((E))
+    end
+    
+    subgraph Despues de find E
+        direction TB
+        A2((A)) --> B2((B))
+        A2 --> C2((C))
+        A2 --> D2((D))
+        A2 --> E2((E))
+    end
+```
+
+```java
+public int find(int x) {
+    if (this.padre[x] != x) {
+        // Asignación recursiva: comprime el camino
+        this.padre[x] = find(this.padre[x]);
+    }
+    return this.padre[x];
+}
+```
 
 Resultado:
 

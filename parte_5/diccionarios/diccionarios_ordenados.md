@@ -79,13 +79,33 @@ Las implementaciones típicas de diccionarios ordenados aparecen sobre árboles 
 
 ### BST
 
-El caso más directo es el **árbol binario de búsqueda**:
+El caso más directo es el **árbol binario de búsqueda** (BST):
 
 - mantiene la relación de orden entre subárbol izquierdo y derecho,
-- permite recorrido inorden,
+- permite recorrido inorden (visita las claves de menor a mayor),
 - y soporta búsqueda, inserción y borrado.
 
-El problema es conocido: si la altura se degrada, también se degrada el costo.
+```{mermaid}
+flowchart TD
+    N50["50: (A)"] --> N30["30: (B)"]
+    N50 --> N70["70: (C)"]
+    N30 --> N20["20: (D)"]
+    N30 --> N40["40: (E)"]
+    N70 --> N60["60: (F)"]
+    N70 --> N80["80: (G)"]
+    
+    style N50 fill:#bbdefb,stroke:#0288d1
+    style N30 fill:#c8e6c9,stroke:#388e3c
+    style N70 fill:#c8e6c9,stroke:#388e3c
+    style N20 fill:#e1bee7,stroke:#512da8
+    style N40 fill:#e1bee7,stroke:#512da8
+    style N60 fill:#e1bee7,stroke:#512da8
+    style N80 fill:#e1bee7,stroke:#512da8
+```
+
+En este diagrama, cada nodo asocia una clave numérica (el criterio de orden) con un valor (A, B, C...). Buscar la clave `60` es caminar según si es mayor o menor que el nodo actual.
+
+El problema es conocido: si la altura se degrada, también se degrada el costo de todas las operaciones (pasan de `O(log n)` a `O(n)`).
 
 ### Árboles balanceados
 
@@ -130,6 +150,20 @@ Supongamos un sistema que guarda ventas por fecha:
   - recorrer cronológicamente,
 
 entonces un diccionario ordenado modela mejor el problema.
+
+```java
+NavigableMap<LocalDate, Venta> historial = new TreeMap<>();
+// ... (inserciones)
+
+// Obtener todas las ventas de un mes en particular
+SortedMap<LocalDate, Venta> ventasAgosto = historial.subMap(
+    LocalDate.of(2024, 8, 1), 
+    LocalDate.of(2024, 9, 1) // exclusivo
+);
+
+// Encontrar la última venta registrada antes de una fecha
+Map.Entry<LocalDate, Venta> ultimaVentaAnterior = historial.lowerEntry(LocalDate.of(2024, 8, 15));
+```
 
 ## Qué errores conviene evitar
 

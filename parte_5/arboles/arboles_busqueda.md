@@ -227,19 +227,24 @@ Si insertás:
 
 y siempre agregás como mayor, el árbol queda parecido a esto:
 
-```text
-1
- \
-  2
-   \
-    3
-     \
-      4
-       \
-        5
+```{mermaid}
+flowchart TD
+    N1((1)) --> Null1([null])
+    N1 --> N2((2))
+    N2 --> Null2([null])
+    N2 --> N3((3))
+    N3 --> Null3([null])
+    N3 --> N4((4))
+    N4 --> Null4([null])
+    N4 --> N5((5))
+    
+    style Null1 fill:#eeeeee,stroke:#9e9e9e
+    style Null2 fill:#eeeeee,stroke:#9e9e9e
+    style Null3 fill:#eeeeee,stroke:#9e9e9e
+    style Null4 fill:#eeeeee,stroke:#9e9e9e
 ```
 
-La estructura sigue siendo un BST correcto, pero su altura ya no se parece a la de un árbol compacto. Se volvió casi una lista enlazada.
+La estructura sigue siendo un BST correcto, pero su altura ya no se parece a la de un árbol compacto. Se volvió casi una lista enlazada (O(n)).
 
 Ese ejemplo muestra el límite central del BST simple:
 
@@ -304,3 +309,4 @@ Tomá un problema que necesite mantener elementos ordenados por clave y justific
 ## Próximo paso
 
 Para seguir, conviene pasar a [Árboles balanceados](arboles_balanceados.md), donde aparece la respuesta al problema de altura.
+s.md), donde aparece la respuesta al problema de altura.
