@@ -26,12 +26,6 @@ project:
     children:
     - file: catedra/programa.md
     - file: catedra/acuerdo_ia.md
-  - title: Editorial
-    children:
-    - file: editorial/indice.md
-    - file: editorial/plantilla_capitulos.md
-    - file: editorial/estilo_y_formato.md
-    - file: editorial/estado_y_mantenimiento.md
   - title: 'Parte 1: Fundamentos'
     children:
     - file: parte_1/indice.md
@@ -164,6 +158,14 @@ project:
     - file: reglas/apuntes_2025.md
     - file: reglas/convenciones_codigo_java.md
     - file: reglas/E_errores.md
+  - title: Editorial
+    children:
+    - file: editorial/indice.md
+    - file: editorial/plantilla_capitulos.md
+    - file: editorial/estilo_y_formato.md
+    - file: editorial/infografias_svg.md
+    - file: editorial/estado_y_mantenimiento.md
+    - file: editorial/contribuciones_externas.md
 site:
   template: book-theme
   options:
