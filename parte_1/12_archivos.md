@@ -1301,7 +1301,7 @@ Este ejemplo asume que los datos no contienen comas. Si un valor puede contener 
 :::
 
 (resumen-mejores-practicas)=
-## Resumen: Mejores Prácticas
+## Resumen
 
 Después de todo lo visto, estas son las reglas que deberías seguir:
 
@@ -1332,7 +1332,7 @@ Después de todo lo visto, estas son las reglas que deberías seguir:
 | Verificar existencia | `access(ruta, F_OK)` | `Files.exists(path)` |
 
 (ejercicios-de-aplicacion-12)=
-## Ejercicios de Aplicación
+## Ejercicios
 
 ```{exercise}
 :label: ej-contar-lineas

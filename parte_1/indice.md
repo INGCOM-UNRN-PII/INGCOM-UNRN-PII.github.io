@@ -1,4 +1,9 @@
-# Apunte de Cátedra
+---
+title: "Parte 1: Fundamentos"
+description: Recorrido de la primera parte del curso, con orden sugerido, capítulos nucleares y mapa exhaustivo de contenidos.
+---
+
+# Parte 1: Fundamentos
 
 ## Cómo usar esta parte
 
@@ -20,20 +25,20 @@ Al recorrer esta parte, el estudiante debería poder:
 
 | Orden | Capítulo | Rol en la cursada |
 | :--- | :--- | :--- |
-| 0 | [01_origenes](01_origenes.md) | Contexto histórico y motivación del lenguaje |
-| 1 | [02_lenguaje](02_lenguaje.md) | Punto de entrada al lenguaje y puente con C |
-| 2 | [03_tipos_de_datos](03_tipos_de_datos.md) | Núcleo sintáctico y semántico básico |
-| 3 | [04_metodos](04_metodos.md) | Descomposición del programa y llamadas |
-| 4 | [05_sintaxis_control](05_sintaxis_control.md) | Decisión e iteración |
-| 5 | [06_entrada_salida](06_entrada_salida.md) | Interacción con usuario y flujos simples |
-| 6 | [07_gradle](07_gradle.md) | Entorno de trabajo y automatización básica |
-| 7 | [08_junit](08_junit.md) | Base práctica para verificar código |
-| 8 | [09_arreglos](09_arreglos.md) | Trabajo con colecciones fijas |
-| 9 | [10_excepciones](10_excepciones.md) | Manejo de errores y robustez |
-| 10 | [11_testing](11_testing.md) | Consolidación de estrategia de pruebas |
-| 11 | [12_archivos](12_archivos.md) | Persistencia básica y lectura/escritura |
-| 12 | [13_memoria](13_memoria.md) | Modelo mental de ejecución y memoria |
-| Extra | [04b_varargs](04b_varargs.md) | Ampliación puntual sobre parámetros variables |
+| 0 | [Orígenes e Historia de Java](01_origenes.md) | Contexto histórico y motivación del lenguaje |
+| 1 | [Características del Lenguaje Java](02_lenguaje.md) | Punto de entrada al lenguaje y puente con C |
+| 2 | [Tipos de Datos en Java](03_tipos_de_datos.md) | Núcleo sintáctico y semántico básico |
+| 3 | [Métodos en Java](04_metodos.md) | Descomposición del programa y llamadas |
+| 4 | [Sintaxis de Java: Control de Flujo](05_sintaxis_control.md) | Decisión e iteración |
+| 5 | [Entrada y Salida de Datos](06_entrada_salida.md) | Interacción con usuario y flujos simples |
+| 6 | [Guía Práctica de Gradle](07_gradle.md) | Entorno de trabajo y automatización básica |
+| 7 | [Testing con JUnit 5](08_junit.md) | Base práctica para verificar código |
+| 8 | [Arreglos en Java](09_arreglos.md) | Trabajo con colecciones fijas |
+| 9 | [Excepciones en Java](10_excepciones.md) | Manejo de errores y robustez |
+| 10 | [Fundamentos del Testing de Software](11_testing.md) | Consolidación de estrategia de pruebas |
+| 11 | [Manejo de Archivos en Java](12_archivos.md) | Persistencia básica y lectura/escritura |
+| 12 | [Memoria, Referencias y Mutabilidad](13_memoria.md) | Modelo mental de ejecución y memoria |
+| Extra | [Varargs: Cantidad Variable de Argumentos](04b_varargs.md) | Ampliación puntual sobre parámetros variables |
 
 ## Capítulos nucleares
 
@@ -41,15 +46,15 @@ Estos capítulos conviene dominarlos sí o sí antes de avanzar a orientación a
 
 | Capítulo | Por qué es nuclear |
 | :--- | :--- |
-| [02_lenguaje](02_lenguaje.md) | Fija el puente conceptual entre C y Java |
-| [03_tipos_de_datos](03_tipos_de_datos.md) | Introduce el sistema de tipos y operaciones básicas |
-| [04_metodos](04_metodos.md) | Organiza el código en unidades reutilizables |
-| [05_sintaxis_control](05_sintaxis_control.md) | Permite expresar lógica y lazos |
-| [07_gradle](07_gradle.md) | Ordena el flujo de trabajo real de la materia |
-| [08_junit](08_junit.md) | Instala la práctica de verificar código temprano |
-| [09_arreglos](09_arreglos.md) | Prepara el terreno para estructuras más complejas |
-| [10_excepciones](10_excepciones.md) | Introduce robustez y control de fallos |
-| [12_archivos](12_archivos.md) | Expande el alcance del programa más allá de memoria inmediata |
+| [Características del Lenguaje Java](02_lenguaje.md) | Fija el puente conceptual entre C y Java |
+| [Tipos de Datos en Java](03_tipos_de_datos.md) | Introduce el sistema de tipos y operaciones básicas |
+| [Métodos en Java](04_metodos.md) | Organiza el código en unidades reutilizables |
+| [Sintaxis de Java: Control de Flujo](05_sintaxis_control.md) | Permite expresar lógica y lazos |
+| [Guía Práctica de Gradle](07_gradle.md) | Ordena el flujo de trabajo real de la materia |
+| [Testing con JUnit 5](08_junit.md) | Instala la práctica de verificar código temprano |
+| [Arreglos en Java](09_arreglos.md) | Prepara el terreno para estructuras más complejas |
+| [Excepciones en Java](10_excepciones.md) | Introduce robustez y control de fallos |
+| [Manejo de Archivos en Java](12_archivos.md) | Expande el alcance del programa más allá de memoria inmediata |
 
 ## Repaso y ampliación
 
@@ -57,16 +62,16 @@ Estos capítulos cumplen mejor un rol de contexto, consolidación o profundizaci
 
 | Capítulo | Tipo | Uso sugerido |
 | :--- | :--- | :--- |
-| [01_origenes](01_origenes.md) | Contexto | Leer al inicio o en paralelo para entender decisiones de diseño |
-| [04b_varargs](04b_varargs.md) | Ampliación puntual | Consultar después de dominar métodos y sobrecarga |
-| [11_testing](11_testing.md) | Consolidación | Leer cuando ya se escriben programas con varias piezas |
-| [13_memoria](13_memoria.md) | Profundización | Usar para cerrar el modelo mental de stack, heap y runtime |
+| [Orígenes e Historia de Java](01_origenes.md) | Contexto | Leer al inicio o en paralelo para entender decisiones de diseño |
+| [Varargs: Cantidad Variable de Argumentos](04b_varargs.md) | Ampliación puntual | Consultar después de dominar métodos y sobrecarga |
+| [Fundamentos del Testing de Software](11_testing.md) | Consolidación | Leer cuando ya se escriben programas con varias piezas |
+| [Memoria, Referencias y Mutabilidad](13_memoria.md) | Profundización | Usar para cerrar el modelo mental de stack, heap y runtime |
 
 :::{note}
 Lo que sigue debajo es el **índice exhaustivo** del material. Sirve como mapa detallado de temas, subtemas y secciones específicas.
 :::
 
-## [01_origenes](.\/01_origenes.md)
+## [Orígenes e Historia de Java](.\/01_origenes.md)
   * [El Nacimiento de Java: El Green Project](01_origenes.md)
     * [El contexto: Sun Microsystems y los años 90](01_origenes.md)
     * [El Green Team y el proyecto secreto](01_origenes.md)
@@ -103,7 +108,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve como mapa d
   * [Referencias Bibliográficas](01_origenes.md)
   * [Ejercicios](01_origenes.md)
 
-## [02_lenguaje](.\/02_lenguaje.md)
+## [Características del Lenguaje Java](.\/02_lenguaje.md)
   * [Lenguaje de Propósito General](02_lenguaje.md)
     * [¿Qué significa "propósito general"?](02_lenguaje.md)
     * [Aplicaciones donde Java es utilizado](02_lenguaje.md)
@@ -128,7 +133,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve como mapa d
   * [Referencias Bibliográficas](02_lenguaje.md)
   * [Ejercicios](02_lenguaje.md)
 
-## [03_tipos_de_datos](.\/03_tipos_de_datos.md)
+## [Tipos de Datos en Java](.\/03_tipos_de_datos.md)
   * [Declaración de Variables](03_tipos_de_datos.md)
     * [Ejemplos de Declaración](03_tipos_de_datos.md)
     * [Convención de Nombres](03_tipos_de_datos.md)
@@ -188,7 +193,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve como mapa d
   * [Ejercicios de Aplicación](03_tipos_de_datos.md)
   * [Referencias Bibliográficas](03_tipos_de_datos.md)
 
-## [04_metodos](.\/04_metodos.md)
+## [Métodos en Java](.\/04_metodos.md)
   * [¿Por qué usar métodos?](04_metodos.md)
   * [Anatomía de un Método](04_metodos.md)
     * [Sintaxis General](04_metodos.md)
@@ -234,13 +239,13 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve como mapa d
     * [Limitar la Cantidad de Parámetros](04_metodos.md)
   * [Referencias Bibliográficas](04_metodos.md)
 
-## [04b_varargs](.\/04b_varargs.md)
+## [Varargs: Cantidad Variable de Argumentos](.\/04b_varargs.md)
   * [Varargs: Cantidad Variable de Argumentos](04b_varargs.md)
     * [Sintaxis y Uso](04b_varargs.md)
     * [Implementación Interna](04b_varargs.md)
     * [Restricciones](04b_varargs.md)
 
-## [05_sintaxis_control](.\/05_sintaxis_control.md)
+## [Sintaxis de Java: Control de Flujo](.\/05_sintaxis_control.md)
   * [Lógica Booleana y Cortocircuito](05_sintaxis_control.md)
     * [Operadores Relacionales](05_sintaxis_control.md)
     * [Operadores Lógicos](05_sintaxis_control.md)
@@ -272,7 +277,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve como mapa d
   * [Ejercicios de Nivel Universitario](05_sintaxis_control.md)
   * [Referencias Bibliográficas](05_sintaxis_control.md)
 
-## [06_entrada_salida](.\/06_entrada_salida.md)
+## [Entrada y Salida de Datos](.\/06_entrada_salida.md)
   * [¿Qué es un Stream?](06_entrada_salida.md)
   * [Arquitectura de los Flujos de Sistema](06_entrada_salida.md)
     * [Los Tres Flujos Estándar](06_entrada_salida.md)
@@ -313,7 +318,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve como mapa d
   * [Ejercicios](06_entrada_salida.md)
   * [Referencias Bibliográficas](06_entrada_salida.md)
 
-## [07_gradle](.\/07_gradle.md)
+## [Guía Práctica de Gradle](.\/07_gradle.md)
   * [Introducción](07_gradle.md)
   * [¿Qué es Gradle?](07_gradle.md)
     * [Comparación con Make (de C)](07_gradle.md)
@@ -412,7 +417,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve como mapa d
   * [Resumen](07_gradle.md)
   * [Ejercicios de Práctica](07_gradle.md)
 
-## [08_junit](.\/08_junit.md)
+## [Testing con JUnit 5](.\/08_junit.md)
   * [Del Testing Manual en C al Automatizado en Java](08_junit.md)
   * [JUnit: Framework de Testing para Java](08_junit.md)
     * [Historia breve](08_junit.md)
@@ -502,7 +507,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve como mapa d
   * [Resumen](08_junit.md)
   * [Ejercicios](08_junit.md)
 
-## [09_arreglos](.\/09_arreglos.md)
+## [Arreglos en Java](.\/09_arreglos.md)
   * [¿Qué es un Arreglo?](09_arreglos.md)
   * [Características Fundamentales](09_arreglos.md)
   * [Declaración de Arreglos](09_arreglos.md)
@@ -555,7 +560,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve como mapa d
     * [Comparación Java vs C](09_arreglos.md)
   * [Referencias Bibliográficas](09_arreglos.md)
 
-## [10_excepciones](.\/10_excepciones.md)
+## [Excepciones en Java](.\/10_excepciones.md)
   * [¿Qué es una excepción?](10_excepciones.md)
   * [El Problema del Manejo de Errores en C](10_excepciones.md)
     * [Valores de retorno especiales](10_excepciones.md)
@@ -616,7 +621,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve como mapa d
   * [Comparativa Final: C vs Java](10_excepciones.md)
   * [Ejercicios de Aplicación](10_excepciones.md)
 
-## [11_testing](.\/11_testing.md)
+## [Fundamentos del Testing de Software](.\/11_testing.md)
   * [Del Testing Manual al Automatizado](11_testing.md)
     * [El Problema con el Testing Manual](11_testing.md)
     * [La Solución: Testing Automatizado](11_testing.md)
@@ -658,7 +663,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve como mapa d
   * [Ejercicios Conceptuales](11_testing.md)
   * [Referencias Bibliográficas](11_testing.md)
 
-## [12_archivos](.\/12_archivos.md)
+## [Manejo de Archivos en Java](.\/12_archivos.md)
   * [¿Por qué necesitamos archivos?](12_archivos.md)
     * [Memoria RAM vs. Disco](12_archivos.md)
   * [Conceptos Fundamentales: Cómo funcionan los archivos](12_archivos.md)
@@ -715,7 +720,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve como mapa d
     * [Patrón Arrange-Act-Assert con Archivos](12_archivos.md)
   * [Referencias Bibliográficas](12_archivos.md)
 
-## [13_memoria](.\/13_memoria.md)
+## [Memoria, Referencias y Mutabilidad](.\/13_memoria.md)
   * [Modelo de Memoria de la JVM](13_memoria.md)
     * [Stack (Pila de Ejecución)](13_memoria.md)
     * [Heap (Montículo)](13_memoria.md)

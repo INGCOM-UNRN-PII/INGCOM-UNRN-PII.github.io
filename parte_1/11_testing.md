@@ -574,7 +574,7 @@ Tests que ejecutan código pero no verifican nada. Siempre pasan, incluso si el 
 **Solución:** Todo test debe tener al menos una verificación explícita del resultado esperado.
 
 (11-testing-ejercicios-conceptuales)=
-## Ejercicios Conceptuales
+## Ejercicios
 
 ```{exercise}
 :label: ej-tdd-validador

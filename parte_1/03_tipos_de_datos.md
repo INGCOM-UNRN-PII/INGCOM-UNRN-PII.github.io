@@ -1648,7 +1648,7 @@ Java te obliga a ser explícito sobre los tipos desde el principio. Esto puede p
 :::
 
 (03-tipos-de-datos-ejercicios-de-aplicacion)=
-## Ejercicios de Aplicación
+## Ejercicios
 
 ::::{exercise}
 :label: ej-tipos-c-java

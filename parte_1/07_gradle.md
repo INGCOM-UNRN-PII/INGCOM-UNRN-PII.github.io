@@ -1855,7 +1855,7 @@ Guardá esta guía en favoritos. La vas a consultar frecuentemente durante la cu
 :::
 
 (ejercicios-de-practica)=
-## Ejercicios de Práctica
+## Ejercicios
 
 ````{exercise}
 :label: ej-gradle-1

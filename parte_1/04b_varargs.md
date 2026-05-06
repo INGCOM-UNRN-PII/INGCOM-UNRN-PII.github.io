@@ -1,5 +1,10 @@
+---
+title: "Varargs: Cantidad Variable de Argumentos"
+description: Cómo definir y usar métodos con cantidad variable de argumentos en Java.
+---
+
 (varargs-cantidad-variable-de-argumentos)=
-## Varargs: Cantidad Variable de Argumentos
+# Varargs: Cantidad Variable de Argumentos
 
 A veces es útil escribir un método que pueda recibir cualquier cantidad de argumentos del mismo tipo. Java proporciona una sintaxis especial para esto llamada **varargs** (del inglés _variable arguments_).
 

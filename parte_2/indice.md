@@ -1,4 +1,11 @@
-# Apunte de Cátedra
+---
+title: "Programación Orientada a Objetos"
+subtitle: "Objetos, relaciones, jerarquías y genéricos en Java"
+subject: Programación Orientada a Objetos
+---
+
+(parte-2-programacion-orientada-a-objetos)=
+# Programación Orientada a Objetos
 
 ## Cómo usar esta parte
 
@@ -20,14 +27,14 @@ Al recorrer esta parte, el estudiante debería poder:
 
 | Orden | Capítulo | Rol en la progresión |
 | :--- | :--- | :--- |
-| 1 | [01_oop_fundamentos](01_oop_fundamentos.md) | Base conceptual del paradigma |
-| 2 | [02_oop_relaciones](02_oop_relaciones.md) | Encapsulamiento y relaciones entre objetos |
-| 3 | [03_sintaxis_clases](03_sintaxis_clases.md) | Traducción del modelo conceptual a código Java |
+| 1 | [Fundamentos de la Programación Orientada a Objetos](01_oop_fundamentos.md) | Base conceptual del paradigma |
+| 2 | [Encapsulamiento y Relaciones entre Objetos](02_oop_relaciones.md) | Encapsulamiento y relaciones entre objetos |
+| 3 | [Sintaxis de Clases y Objetos](03_sintaxis_clases.md) | Traducción del modelo conceptual a código Java |
 | 4 | [Herencia y Polimorfismo Conceptual](04_oop_herencia_polimorfismo.md) | Marco conceptual sobre jerarquías, sustitución y criterios de diseño |
 | 5 | [Herencia y Polimorfismo en Java](05_herencia_polimorfismo.md) | Implementación en Java con `extends`, `super`, abstractas e interfaces |
-| 6 | [06_excepciones](06_excepciones.md) | Relectura de excepciones en clave OOP |
-| 7 | [07_colecciones_genericos](07_colecciones_genericos.md) | Colecciones desde una mirada de diseño y uso |
-| 8 | [08_genericos](08_genericos.md) | Profundización en tipos parametrizados |
+| 6 | [Excepciones Orientadas a Objetos](06_excepciones.md) | Relectura de excepciones en clave OOP |
+| 7 | [Colecciones en Java](07_colecciones_genericos.md) | Colecciones desde una mirada de diseño y uso |
+| 8 | [Genéricos en Java](08_genericos.md) | Profundización en tipos parametrizados |
 
 ## Capítulos nucleares
 
@@ -35,9 +42,9 @@ Estos capítulos forman el núcleo de la parte y conviene trabajarlos en secuenc
 
 | Capítulo | Por qué es nuclear |
 | :--- | :--- |
-| [01_oop_fundamentos](01_oop_fundamentos.md) | Define el lenguaje conceptual del paradigma |
-| [02_oop_relaciones](02_oop_relaciones.md) | Introduce encapsulamiento y modelado de vínculos |
-| [03_sintaxis_clases](03_sintaxis_clases.md) | Convierte diseño en código Java concreto |
+| [Fundamentos de la Programación Orientada a Objetos](01_oop_fundamentos.md) | Define el lenguaje conceptual del paradigma |
+| [Encapsulamiento y Relaciones entre Objetos](02_oop_relaciones.md) | Introduce encapsulamiento y modelado de vínculos |
+| [Sintaxis de Clases y Objetos](03_sintaxis_clases.md) | Convierte diseño en código Java concreto |
 | [Herencia y Polimorfismo Conceptual](04_oop_herencia_polimorfismo.md) | Da el marco conceptual de herencia, polimorfismo, interfaces y LSP |
 | [Herencia y Polimorfismo en Java](05_herencia_polimorfismo.md) | Consolida la implementación práctica en Java de esas decisiones de diseño |
 
@@ -47,15 +54,15 @@ Estos capítulos sirven mejor como consolidación, extensión o segunda lectura:
 
 | Capítulo | Tipo | Uso sugerido |
 | :--- | :--- | :--- |
-| [06_excepciones](06_excepciones.md) | Consolidación transversal | Leer después de dominar clases y responsabilidades |
-| [07_colecciones_genericos](07_colecciones_genericos.md) | Ampliación aplicada | Usar cuando ya se entienden objetos, interfaces y contratos |
-| [08_genericos](08_genericos.md) | Profundización técnica | Consultar después de trabajar colecciones y jerarquías |
+| [Excepciones Orientadas a Objetos](06_excepciones.md) | Consolidación transversal | Leer después de dominar clases y responsabilidades |
+| [Colecciones en Java](07_colecciones_genericos.md) | Ampliación aplicada | Usar cuando ya se entienden objetos, interfaces y contratos |
+| [Genéricos en Java](08_genericos.md) | Profundización técnica | Consultar después de trabajar colecciones y jerarquías |
 
 :::{note}
 Lo que sigue debajo es el **índice exhaustivo** del material. Sirve para navegar temas y subtemas puntuales una vez que ya tenés el mapa general de la parte.
 :::
 
-## [01_oop_fundamentos](.\/01_oop_fundamentos.md)
+## [Fundamentos de la Programación Orientada a Objetos](.\/01_oop_fundamentos.md)
   * [Introducción: La transición de paradigma](01_oop_fundamentos.md)
     * [El paradigma estructurado (Un pequeño flashback a Programación 1)](01_oop_fundamentos.md)
     * [Los límites del paradigma estructurado](01_oop_fundamentos.md)
@@ -99,7 +106,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve para navega
   * [Lecturas Recomendadas](01_oop_fundamentos.md)
   * [Ejercicios](01_oop_fundamentos.md)
 
-## [02_oop_relaciones](.\/02_oop_relaciones.md)
+## [Encapsulamiento y Relaciones entre Objetos](.\/02_oop_relaciones.md)
   * [Encapsulamiento: Protegiendo el Estado](02_oop_relaciones.md)
     * [¿Qué es el Encapsulamiento?](02_oop_relaciones.md)
     * [Fusión de Datos y Comportamiento](02_oop_relaciones.md)
@@ -134,7 +141,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve para navega
     * [Cardinalidad y UML](02_oop_relaciones.md)
     * [Ejercicio Integrador](02_oop_relaciones.md)
 
-## [03_sintaxis_clases](.\/03_sintaxis_clases.md)
+## [Sintaxis de Clases y Objetos](.\/03_sintaxis_clases.md)
   * [Bloque 1: De la "Burbuja" al Código](03_sintaxis_clases.md)
     * [La Estructura de una Clase en Java](03_sintaxis_clases.md)
     * [Componentes de una Clase](03_sintaxis_clases.md)
@@ -246,7 +253,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve para navega
     * [Polimorfismo](05_herencia_polimorfismo.md)
   * [Ejercicios](05_herencia_polimorfismo.md)
 
-## [06_excepciones](.\/06_excepciones.md)
+## [Excepciones Orientadas a Objetos](.\/06_excepciones.md)
   * [Las Excepciones son Objetos](06_excepciones.md)
     * [Throwable: La Raíz de la Jerarquía](06_excepciones.md)
     * [Herencia en Excepciones](06_excepciones.md)
@@ -293,7 +300,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve para navega
     * [Buenas Prácticas](06_excepciones.md)
   * [Ejercicios](06_excepciones.md)
 
-## [07_colecciones_genericos](.\/07_colecciones_genericos.md)
+## [Colecciones en Java](.\/07_colecciones_genericos.md)
   * [El Problema con los Arreglos](07_colecciones_genericos.md)
     * [Limitaciones de los Arreglos](07_colecciones_genericos.md)
     * [La Solución: El Framework de Colecciones](07_colecciones_genericos.md)
@@ -339,7 +346,7 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve para navega
     * [equals() y hashCode()](07_colecciones_genericos.md)
   * [Ejercicios](07_colecciones_genericos.md)
 
-## [08_genericos](./08_genericos.md)
+## [Genéricos en Java](./08_genericos.md)
   * [El Problema: Pérdida de Tipo sin Genéricos](08_genericos.md)
     * [Antes de los Genéricos](08_genericos.md)
     * [Problemas Específicos](08_genericos.md)
@@ -386,5 +393,5 @@ Lo que sigue debajo es el **índice exhaustivo** del material. Sirve para navega
     * [Estrategia Genérica](08_genericos.md)
     * [Factory Genérica](08_genericos.md)
   * [Ejercicios Avanzados](08_genericos.md)
-  * [Resumen Completo](08_genericos.md)
+  * [Resumen](08_genericos.md)
   * [Próximo paso](08_genericos.md)

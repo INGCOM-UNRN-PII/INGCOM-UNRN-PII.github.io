@@ -638,7 +638,7 @@ System.out.println(strings.getClass() == numeros.getClass());  // true!
 
 ### Limitaciones que Resultan
 
-1. **No puedes usar tipos primitivos**:
+1. **No se pueden usar tipos primitivos**:
 ```java
 // ❌ Error: los genéricos requieren tipos de referencia
 // List<int> numeros = new ArrayList<>();
@@ -647,19 +647,19 @@ System.out.println(strings.getClass() == numeros.getClass());  // true!
 List<Integer> numeros = new ArrayList<>();
 ```
 
-2. **No puedes crear arrays genéricos**:
+2. **No se pueden crear arrays genéricos**:
 ```java
-// ❌ Error: no puedes hacer esto
+// ❌ Error: no se puede hacer esto
 // Caja<String>[] cajas = new Caja<String>[10];
 
 // ✅ Usa List en su lugar
 List<Caja<String>> cajas = new ArrayList<>();
 ```
 
-3. **No puedes acceder a información de tipo en tiempo de ejecución**:
+3. **No se puede acceder a información de tipo en tiempo de ejecución**:
 ```java
 public <T> void procesar(T objeto) {
-    // ❌ Error: no puedes hacer esto
+    // ❌ Error: no se puede hacer esto
     // if (T instanceof String) { ... }
     
     // ✅ Usa el objeto mismo
@@ -938,7 +938,7 @@ public static void procesarAnimales(List<? extends Animal> animales) {
         System.out.println(a);
     }
     
-    // ❌ No puedes escribir (excepto null)
+    // ❌ No se puede escribir (excepto null)
     // animales.add(new Gato());  // Error de compilación
 }
 
@@ -951,7 +951,7 @@ List<Siames> siameses = new ArrayList<>();
 procesarAnimales(siameses);  // ✅ También funciona
 ```
 
-**Por qué no puedes escribir:** El compilador no sabe cuál es el tipo exacto. Si fuera `List<Animal>`, ¿puedes agregar un `Perro`? No sabes.
+**Por qué no se puede escribir:** El compilador no sabe cuál es el tipo exacto. Si fuera `List<Animal>`, ¿se puede agregar un `Perro`? No se sabe.
 
 ### Contravarianza: Escribe, No Leas
 
@@ -966,7 +966,7 @@ public static void llenarAnimales(List<? super Gato> animales) {
     animales.add(new Gato());
     animales.add(new Siames());
     
-    // ❌ No puedes leer como Gato
+    // ❌ No se puede leer como Gato
     // Gato g = animales.get(0);  // Error
     
     // Solo como Object
@@ -1062,7 +1062,7 @@ Usuario u = repo.buscarPorEmail("juan@example.com");
 
 ### Herencia Manteniendo Genéricos
 
-También puedes extender una clase genérica sin especificar el tipo:
+También se puede extender una clase genérica sin especificar el tipo:
 
 ```java
 /**
@@ -1218,7 +1218,7 @@ public <T> void procesarArray(T[] array) {
 
 ```java
 public class MalDiseñado<T> {
-    // ❌ INCORRECTO: no puedes crear arrays genéricos
+    // ❌ INCORRECTO: no se pueden crear arrays genéricos
     // private T[] items = new T[10];
     
     // ✅ CORRECTO: usa List
@@ -1645,7 +1645,7 @@ public class PruebaColector {
 ---
 
 (resumen-genericos)=
-## Resumen Completo
+## Resumen
 
 Los genéricos en Java son un tema profundo que permite escribir código flexible y seguro:
 

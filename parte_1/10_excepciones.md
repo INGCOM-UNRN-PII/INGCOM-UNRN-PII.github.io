@@ -1211,7 +1211,7 @@ Para cerrar, una comparación completa de cómo manejan los errores ambos lengua
 | Separación de flujos | Mezclados (if después de cada llamada) | Separados (try tiene el código normal, catch el de error) |
 
 (ejercicios-de-aplicacion-10)=
-## Ejercicios de Aplicación
+## Ejercicios
 
 Los siguientes ejercicios te ayudarán a practicar los conceptos de manejo de excepciones.
 

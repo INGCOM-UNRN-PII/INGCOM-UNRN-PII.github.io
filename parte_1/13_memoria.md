@@ -997,7 +997,7 @@ System.out.println(sb.toString());  // "odnuM aloh"
 | Clave de diccionario/mapa | `String` |
 
 (resumen-reglas-clave)=
-## Resumen: Reglas Clave
+## Resumen
 
 Para cerrar, estas son las reglas fundamentales que debés recordar:
 
@@ -1022,7 +1022,7 @@ Para cerrar, estas son las reglas fundamentales que debés recordar:
 10. **`final` no es inmutabilidad**: `final` previene reasignación, no modificación de contenido.
 
 (ejercicios-de-aplicacion-13)=
-## Ejercicios de Aplicación
+## Ejercicios
 
 ````{exercise}
 :label: ej-memoria-que-imprime
