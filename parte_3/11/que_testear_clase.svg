@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet href="../../resources/svg.css" type="text/css"?>
 <svg width="860" height="520" viewBox="0 0 860 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
   <title id="title">Qué testear en una clase</title>
   <desc id="desc">Panel comparativo con criterios para decidir qué aspectos de una clase conviene testear y cuáles no.</desc>

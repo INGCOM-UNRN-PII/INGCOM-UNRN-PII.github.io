@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<?xml-stylesheet href="../../resources/svg.css" type="text/css"?>
 <svg width="940" height="500" viewBox="0 0 940 500" xmlns="http://www.w3.org/2000/svg">
 
   <defs>
@@ -11,8 +10,6 @@
  * Paleta de colores basada en identidad institucional UNRN
  * Colores primarios: #eb2141 (rojo institucional), #192437 (azul oscuro)
  * 
- * Para usar este CSS en un SVG, incluir:
- * <?xml-stylesheet href="../resources/svg.css" type="text/css"?>
  */
 
 /* ============================================
