@@ -27,10 +27,10 @@ El Adapter fue documentado por Gang of Four en 1994. Tiene raíces en el concept
 ## Motivación
 
 Surge cuando:
-- Necesitas integrar código legado con interfaces antiguas
-- Trabajas con librerías externas de terceros que no puedes modificar
-- Quieres reutilizar clases existentes pero sus interfaces no coinciden
-- Necesitas que objetos con interfaces diferentes colaboren
+- Necesitás integrar código legado con interfaces antiguas
+- Trabajás con librerías externas de terceros que no podés modificar
+- Querés reutilizar clases existentes pero sus interfaces no coinciden
+- Necesitás que objetos con interfaces diferentes colaboren
 
 ## Contexto
 
@@ -43,20 +43,20 @@ Surge cuando:
 - **Target**: Interfaz que espera el cliente
 - **Adaptee**: Clase existente con interfaz diferente
 - **Adapter**: Clase que implementa Target y encapsula Adaptee
-- **Client**: Usa Target
+- **Client**: Trabaja contra Target
 
 ### Cuando aplica
 
-✅ **Usa Adapter cuando:**
-- Tienes código legacy que no puedes modificar
-- Necesitas integrar bibliotecas de terceros
+✅ **Usá Adapter cuando:**
+- Tenés código legacy que no podés modificar
+- Necesitás integrar bibliotecas de terceros
 - Dos interfaces incompatibles necesitan trabajar juntas
-- Quieres mantener separación de concerns
+- Querés mantener separación de concerns
 
 ### Cuando no aplica
 
-❌ **Evita cuando:**
-- Puedes refactorizar la interfaz original
+❌ **Evitá Adapter cuando:**
+- Podés refactorizar la interfaz original
 - La adaptación es trivial
 - Hay múltiples niveles de adaptación
 

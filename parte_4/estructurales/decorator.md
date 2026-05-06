@@ -27,7 +27,7 @@ Gang of Four 1994. Proviene de la necesidad de evitar "explosión de subclases" 
 ## Motivación
 
 Necesario cuando:
-- Necesitas agregar responsabilidades dinámicamente
+- Necesitás agregar responsabilidades dinámicamente
 - Herencia sería explosiva (N características × M tipos = N×M clases)
 - Combinar comportamientos en diferentes órdenes
 - Cada decorador es responsabilidad única
@@ -44,15 +44,15 @@ Necesario cuando:
 
 ### Cuando aplica
 
-✅ **Usa Decorator cuando:**
-- Necesitas agregar funcionalidad dinámicamente
+✅ **Usá Decorator cuando:**
+- Necesitás agregar funcionalidad dinámicamente
 - Herencia sería explosiva
 - Beneficio de responsabilidad única
 - Ejemplos: I/O streams (BufferedInputStream), UI widgets
 
 ### Cuando no aplica
 
-❌ **Evita cuando:**
+❌ **Evitá Decorator cuando:**
 - Solo una responsabilidad adicional (herencia es más simple)
 - El orden no importa y es uno-a-uno (Proxy es mejor)
 

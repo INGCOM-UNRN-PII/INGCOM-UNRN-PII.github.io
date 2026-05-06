@@ -27,7 +27,7 @@ Los **patrones creacionales** se ocupan de mecanismos de creación de objetos. P
 
 - Desacopla la creación del objeto del código cliente
 - Permite que subclases decidan qué clase instanciar
-- Ideal cuando tienes múltiples tipos relacionados
+- Ideal cuando tenés múltiples tipos relacionados
 
 [Singleton](singleton.md) | [Factory Method](factory.md) | [Abstract Factory](abstract_factory.md) | [Builder](builder.md) | [Prototype](prototype.md)
 
@@ -87,7 +87,7 @@ Los **patrones creacionales** se ocupan de mecanismos de creación de objetos. P
 ````{mermaid}
 
 flowchart TD
-    inicio{"Necesitas crear un objeto?"}
+    inicio{"Necesitás crear un objeto?"}
     unica{"Una unica instancia global?"}
     relacionados{"Multiples tipos relacionados?"}
     familias{"Familias coherentes?"}
@@ -97,20 +97,20 @@ flowchart TD
     copia{"Copia de existente?"}
 
     inicio --> unica
-    unica -->|Si| singleton["Usa Singleton"]
+    unica -->|Si| singleton["Usá Singleton"]
     unica -->|No| relacionados
 
     relacionados -->|Si| familias
-    familias -->|Si| abstractFactory["Usa Abstract Factory"]
+    familias -->|Si| abstractFactory["Usá Abstract Factory"]
     familias -->|No| unTipo
-    unTipo -->|Si| factory["Usa Factory Method"]
+    unTipo -->|Si| factory["Usá Factory Method"]
     unTipo -->|No| complejo
 
     relacionados -->|No| complejo
     complejo -->|Si| pasoAPaso
-    pasoAPaso -->|Si| builder["Usa Builder"]
+    pasoAPaso -->|Si| builder["Usá Builder"]
     pasoAPaso -->|No| copia
-    copia -->|Si| prototype["Usa Prototype"]
+    copia -->|Si| prototype["Usá Prototype"]
     copia -->|No| directo["Usa constructor directo"]
 
     complejo -->|No| directo

@@ -27,9 +27,9 @@ Gang of Four 1994. Surge de sistemas distribuidos: necesidad de interceder antes
 ## Motivación
 
 Necesario cuando:
-- Necesitas control sobre acceso a objeto (autorización)
+- Necesitás control sobre acceso a objeto (autorización)
 - Objeto es costoso (remoto, BD, archivo grande)
-- Necesitas ejecutar lógica pre/post-acceso
+- Necesitás ejecutar lógica pre/post-acceso
 - Lazy loading: crear cuando se necesita
 - Ejemplo: proxy remoto = RPC, proxy de caché = BD
 
@@ -50,15 +50,15 @@ Necesario cuando:
 
 ### Cuando aplica
 
-✅ **Usa Proxy cuando:**
-- Necesitas controlar acceso al objeto real
+✅ **Usá Proxy cuando:**
+- Necesitás controlar acceso al objeto real
 - Lazy loading es importante
 - Auditoria o logging es necesario
 - Ejemplos: Conexiones BD, APIs remotas, imágenes grandes
 
 ### Cuando no aplica
 
-❌ **Evita cuando:**
+❌ **Evitá Proxy cuando:**
 - El objeto es simple y rápido
 - El control de acceso es innecesario
 

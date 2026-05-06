@@ -54,7 +54,7 @@ Necesario cuando:
 
 ### Cuando no aplica
 
-❌ **Evita cuando:**
+❌ **Evitá Flyweight cuando:**
 - Pocos objetos (overhead no compensa)
 - Estado muta frecuentemente
 - Sincronización es prohibitiva

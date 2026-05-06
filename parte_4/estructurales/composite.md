@@ -27,9 +27,9 @@ Gang of Four 1994. Surge de la necesidad de tratar uniformemente estructuras jer
 ## Motivación
 
 Necesario cuando:
-- Tienes estructuras jerárquicas parte-todo
-- Quieres que cliente trate uniformemente hojas y compuestos
-- Necesitas recursión sobre estructuras arbitrariamente profundas
+- Tenés estructuras jerárquicas parte-todo
+- Querés que cliente trate uniformemente hojas y compuestos
+- Necesitás recursión sobre estructuras arbitrariamente profundas
 - Implementar sin Composite requiere condicionales constantes
 
 ## Contexto
@@ -44,14 +44,14 @@ Necesario cuando:
 
 ### Cuando aplica
 
-✅ **Usa Composite cuando:**
-- Tienes estructuras jerárquicas parte-todo
-- Quieres tratar uniformemente hojas y compuestos
+✅ **Usá Composite cuando:**
+- Tenés estructuras jerárquicas parte-todo
+- Querés tratar uniformemente hojas y compuestos
 - Ejemplos: Archivos/carpetas, widgets de UI, menús
 
 ### Cuando no aplica
 
-❌ **Evita cuando:**
+❌ **Evitá Composite cuando:**
 - La estructura es plana
 - El costo de recursión es prohibitivo
 

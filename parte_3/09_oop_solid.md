@@ -1413,7 +1413,7 @@ No agregues abstracciones "por si acaso". Agreg√° complejidad cuando la necesit√
 ---
 
 (solid-resumen)=
-## Resumen: Los Cinco Principios
+## Resumen
 
 ````{mermaid}
 

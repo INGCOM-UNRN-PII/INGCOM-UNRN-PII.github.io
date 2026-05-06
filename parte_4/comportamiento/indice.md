@@ -39,6 +39,31 @@ Los **patrones de comportamiento** se ocupan de cómo distribuir responsabilidad
 - **Template Method**: Algoritmo con pasos customizables
 - **Visitor**: Operaciones sobre estructuras complejas
 
+## Comparación rápida
+
+| Si el problema dominante es... | Conviene mirar primero |
+| :--- | :--- |
+| Pasar una solicitud por múltiples pasos o filtros | **Chain of Responsibility** |
+| Encapsular acciones para ejecutarlas, deshacerlas o encolarlas | **Command** |
+| Cambiar entre algoritmos equivalentes | **Strategy** |
+| Cambiar comportamiento según el estado actual | **State** |
+| Notificar cambios a varios interesados | **Observer** |
+| Fijar la secuencia general de un algoritmo con pasos variables | **Template Method** |
+| Recorrer una estructura sin exponer su representación interna | **Iterator** |
+| Centralizar la comunicación entre muchos objetos | **Mediator** |
+| Guardar y restaurar snapshots de estado | **Memento** |
+| Agregar operaciones nuevas sobre una estructura estable | **Visitor** |
+| Interpretar expresiones o un mini lenguaje | **Interpreter** |
+
+## Decisión rápida
+
+- ¿Cambia el **algoritmo** y el resto del contexto queda igual? → **Strategy**
+- ¿Cambia el **estado** del objeto y con eso cambia su comportamiento? → **State**
+- ¿La duda principal es la **comunicación entre objetos**? → **Observer** o **Mediator**
+- ¿Hace falta **deshacer**, registrar o encolar acciones? → **Command**
+- ¿El problema es **recorrer** una estructura? → **Iterator**
+- ¿El problema es una **secuencia fija con pasos redefinibles**? → **Template Method**
+
 ## Práctica integradora
 
 Después de los mini ejercicios por patrón, conviene cerrar con los [ejercicios integradores de comportamiento](ejercicios_integradores.md).

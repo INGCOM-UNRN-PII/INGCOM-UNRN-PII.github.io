@@ -1,11 +1,11 @@
 ---
-title: "Patrones de Diseño"
+title: "Parte 4: Patrones de Diseño"
 subtitle: "Soluciones Probadas a Problemas Recurrentes"
 subject: Programación Orientada a Objetos
 ---
 
 (oop5-patrones-diseno)=
-# Patrones de Diseño
+# Parte 4: Patrones de Diseño
 
 En los capítulos anteriores dominamos los fundamentos de OOP ({ref}`fundamentos-de-la-programacion-orientada-a-objetos`), las relaciones entre objetos ({ref}`oop2-encapsulamiento-relaciones`), herencia y polimorfismo ({ref}`oop3-herencia-polimorfismo` y {ref}`java-herencia-polimorfismo`), y el diseño por contratos ({ref}`oop-contratos`).
 
@@ -13,7 +13,7 @@ Ahora aplicamos todo ese conocimiento en **patrones de diseño**: soluciones ele
 
 :::{tip} Objetivos de Aprendizaje
 
-Al finalizar este capítulo, serás capaz de:
+Al finalizar esta parte, vas a poder:
 
 1. Entender qué son los patrones de diseño y por qué existen
 2. Reconocer problemas comunes y sus soluciones
@@ -50,6 +50,92 @@ Parte 4 ya funciona como referencia. Para usarla como tramo de cursada, conviene
 | Familia creacional | Cerrar con [ejercicios integradores de creacionales](creacionales/ejercicios_integradores.md) |
 | Familia estructural | Cerrar con [ejercicios integradores de estructurales](estructurales/ejercicios_integradores.md) |
 | Familia de comportamiento | Cerrar con [ejercicios integradores de comportamiento](comportamiento/ejercicios_integradores.md) |
+
+## Orden sugerido de lectura
+
+| Orden | Página | Rol en el recorrido |
+| :--- | :--- | :--- |
+| 0 | Esta portada | Mapa general de la parte y criterios de uso |
+| 1 | [Familia Creacional](creacionales/indice.md) | Comparar estrategias de creación |
+| 2 | [Singleton](creacionales/singleton.md), [Factory Method](creacionales/factory.md), [Abstract Factory](creacionales/abstract_factory.md), [Builder](creacionales/builder.md), [Prototype](creacionales/prototype.md) | Recorrer los patrones creacionales |
+| 3 | [Ejercicios integradores de patrones creacionales](creacionales/ejercicios_integradores.md) | Cerrar la familia con práctica comparativa |
+| 4 | [Familia Estructural](estructurales/indice.md) | Entender composición, adaptación y desacoplamiento |
+| 5 | [Adapter](estructurales/adapter.md), [Bridge](estructurales/bridge.md), [Composite](estructurales/composite.md), [Decorator](estructurales/decorator.md), [Facade](estructurales/facade.md), [Flyweight](estructurales/flyweight.md), [Proxy](estructurales/proxy.md) | Recorrer los patrones estructurales |
+| 6 | [Ejercicios integradores de patrones estructurales](estructurales/ejercicios_integradores.md) | Cerrar la familia con decisiones de arquitectura |
+| 7 | [Familia de Comportamiento](comportamiento/indice.md) | Ordenar responsabilidades, algoritmos e interacciones |
+| 8 | [Chain of Responsibility](comportamiento/chain_of_responsibility.md), [Command](comportamiento/command.md), [Interpreter](comportamiento/interpreter.md), [Iterator](comportamiento/iterator.md), [Mediator](comportamiento/mediator.md), [Memento](comportamiento/memento.md), [Observer](comportamiento/observer.md), [State](comportamiento/state.md), [Strategy](comportamiento/strategy.md), [Template Method](comportamiento/template_method.md), [Visitor](comportamiento/visitor.md) | Recorrer los patrones de comportamiento |
+| 9 | [Ejercicios integradores de patrones de comportamiento](comportamiento/ejercicios_integradores.md) | Cerrar la familia con comparación entre patrones |
+
+## Capítulos nucleares
+
+Estos capítulos conviene dominarlos sí o sí para construir un criterio de diseño reutilizable:
+
+| Capítulo | Por qué es nuclear |
+| :--- | :--- |
+| [Factory Method](creacionales/factory.md) | Fija la lógica de desacoplar creación y uso |
+| [Builder](creacionales/builder.md) | Introduce construcción paso a paso y objetos complejos |
+| [Adapter](estructurales/adapter.md) | Instala el problema de compatibilidad entre interfaces |
+| [Decorator](estructurales/decorator.md) | Muestra cómo extender comportamiento sin herencia explosiva |
+| [Strategy](comportamiento/strategy.md) | Fija la idea de algoritmos intercambiables |
+| [Observer](comportamiento/observer.md) | Introduce coordinación entre objetos con bajo acoplamiento |
+
+## Repaso y ampliación
+
+Estas páginas cumplen mejor un rol de navegación, consolidación o profundización:
+
+| Página | Tipo | Uso sugerido |
+| :--- | :--- | :--- |
+| [Familia Creacional](creacionales/indice.md) | Índice de familia | Usar como mapa comparativo antes o después de los patrones individuales |
+| [Familia Estructural](estructurales/indice.md) | Índice de familia | Releer al decidir entre composición, adaptación y control de acceso |
+| [Familia de Comportamiento](comportamiento/indice.md) | Índice de familia | Usar como tabla de decisión para algoritmos, estados e interacciones |
+| [Singleton](creacionales/singleton.md) | Profundización | Revisar con cautela por sus trade-offs de diseño |
+| [Abstract Factory](creacionales/abstract_factory.md) | Profundización | Releer cuando haga falta coherencia entre familias de objetos |
+| [Prototype](creacionales/prototype.md) | Profundización | Volver cuando el costo de creación o clonado sea central |
+| [Bridge](estructurales/bridge.md) | Profundización | Releer si aparecen jerarquías combinatorias |
+| [Composite](estructurales/composite.md) | Profundización | Releer frente a árboles o estructuras recursivas |
+| [Facade](estructurales/facade.md), [Flyweight](estructurales/flyweight.md), [Proxy](estructurales/proxy.md) | Ampliación | Consultar según problemas concretos de simplificación, memoria o acceso |
+| [Chain of Responsibility](comportamiento/chain_of_responsibility.md), [Command](comportamiento/command.md), [Interpreter](comportamiento/interpreter.md), [Iterator](comportamiento/iterator.md), [Mediator](comportamiento/mediator.md), [Memento](comportamiento/memento.md), [State](comportamiento/state.md), [Template Method](comportamiento/template_method.md), [Visitor](comportamiento/visitor.md) | Ampliación | Consultar según el problema dominante de control de flujo o interacción |
+| [Ejercicios integradores creacionales](creacionales/ejercicios_integradores.md), [estructurales](estructurales/ejercicios_integradores.md) y [de comportamiento](comportamiento/ejercicios_integradores.md) | Consolidación | Usar para cerrar cada familia con comparación y justificación |
+
+## Índice exhaustivo
+
+### Creacionales
+
+- [Familia Creacional](creacionales/indice.md)
+- [Singleton](creacionales/singleton.md)
+- [Factory Method](creacionales/factory.md)
+- [Abstract Factory](creacionales/abstract_factory.md)
+- [Builder](creacionales/builder.md)
+- [Prototype](creacionales/prototype.md)
+- [Ejercicios integradores de patrones creacionales](creacionales/ejercicios_integradores.md)
+
+### Estructurales
+
+- [Familia Estructural](estructurales/indice.md)
+- [Adapter](estructurales/adapter.md)
+- [Bridge](estructurales/bridge.md)
+- [Composite](estructurales/composite.md)
+- [Decorator](estructurales/decorator.md)
+- [Facade](estructurales/facade.md)
+- [Flyweight](estructurales/flyweight.md)
+- [Proxy](estructurales/proxy.md)
+- [Ejercicios integradores de patrones estructurales](estructurales/ejercicios_integradores.md)
+
+### Comportamiento
+
+- [Familia de Comportamiento](comportamiento/indice.md)
+- [Chain of Responsibility](comportamiento/chain_of_responsibility.md)
+- [Command](comportamiento/command.md)
+- [Interpreter](comportamiento/interpreter.md)
+- [Iterator](comportamiento/iterator.md)
+- [Mediator](comportamiento/mediator.md)
+- [Memento](comportamiento/memento.md)
+- [Observer](comportamiento/observer.md)
+- [State](comportamiento/state.md)
+- [Strategy](comportamiento/strategy.md)
+- [Template Method](comportamiento/template_method.md)
+- [Visitor](comportamiento/visitor.md)
+- [Ejercicios integradores de patrones de comportamiento](comportamiento/ejercicios_integradores.md)
 
 ---
 
@@ -272,3 +358,7 @@ proc.procesar(archivo);
 2. **Preferí composición sobre herencia**: Más flexible
 3. **Programá hacia interfaces**: Más desacoplado
 4. **Evitá la complejidad innecesaria**: YAGNI (You Aren't Gonna Need It)
+
+## Próximo paso
+
+Para seguir, conviene entrar a una familia concreta de patrones: [creacionales](creacionales/indice.md), [estructurales](estructurales/indice.md) o [de comportamiento](comportamiento/indice.md).

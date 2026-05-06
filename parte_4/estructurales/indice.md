@@ -25,32 +25,32 @@ Los **patrones estructurales** se ocupan de cómo las clases y objetos se compon
 
 **Adapter**: Integrar código legacy con código nuevo
 - Dos interfaces incompatibles necesitan trabajar juntas
-- Quieres reutilizar clases existentes sin modificarlas
+- Querés reutilizar clases existentes sin modificarlas
 
 **Bridge**: Múltiples dimensiones de variación independientes
-- Necesitas evitar explosión de subclases (N × M combinaciones)
+- Necesitás evitar explosión de subclases (N × M combinaciones)
 - Abstracciones e implementaciones varían independientemente
 
 **Composite**: Estructuras jerárquicas (árboles, menús, archivos)
-- Necesitas tratar uniformemente hojas y compuestos
-- Requieres recursión sobre estructuras arbitrariamente profundas
+- Necesitás tratar uniformemente hojas y compuestos
+- Hace falta recursión sobre estructuras arbitrariamente profundas
 
 **Decorator**: Comportamiento dinámico sin crear subclases
-- Necesitas agregar funcionalidad en tiempo de ejecución
+- Necesitás agregar funcionalidad en tiempo de ejecución
 - Herencia sería explosiva (múltiples combinaciones de características)
 
 **Facade**: Simplificar sistemas complejos
 - Subsistema tiene múltiples componentes acoplados
-- Quieres proporcionar punto de entrada único y simple
+- Querés proporcionar punto de entrada único y simple
 
 **Flyweight**: Optimizar memoria con muchos objetos similares
 - Millones de objetos consumirían mucha memoria
-- Puedes separar estado compartible del estado particular
+- Podés separar estado compartible del estado particular
 
 **Proxy**: Controlar acceso, lazy loading, auditoría
-- Necesitas interceder en acceso a objeto real
+- Necesitás interceder en acceso a objeto real
 - Objeto es costoso (remoto, BD, archivo grande)
-- Requieres autorización, caché, o logging
+- Hace falta autorización, caché o logging
 
 ## Decisión Rápida
 

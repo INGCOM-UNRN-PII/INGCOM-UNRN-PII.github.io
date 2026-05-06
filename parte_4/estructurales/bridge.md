@@ -27,10 +27,10 @@ Documentado por Gang of Four en 1994. Bridge surge del reconocimiento de que her
 ## Motivación
 
 Necesario cuando:
-- Tienes múltiples dimensiones de variación independientes
-- Quieres evitar jerarquías de herencia explosivas
+- Tenés múltiples dimensiones de variación independientes
+- Querés evitar jerarquías de herencia explosivas
 - Abstracciones e implementaciones varían independientemente
-- Necesitas compartir implementaciones entre abstracciones
+- Necesitás compartir implementaciones entre abstracciones
 
 ## Contexto
 
@@ -43,14 +43,14 @@ Necesario cuando:
 
 ### Cuando aplica
 
-✅ **Usa Bridge cuando:**
-- Tienes múltiples dimensiones de variación
-- Quieres evitar combinaciones explosivas
+✅ **Usá Bridge cuando:**
+- Tenés múltiples dimensiones de variación
+- Querés evitar combinaciones explosivas
 - La abstracción e implementación deben cambiar independientemente
 
 ### Cuando no aplica
 
-❌ **Evita cuando:**
+❌ **Evitá Bridge cuando:**
 - Solo una dimensión de variación
 - La herencia simple es suficiente
 

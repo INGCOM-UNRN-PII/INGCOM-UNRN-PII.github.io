@@ -29,8 +29,8 @@ Gang of Four 1994. Surge de la necesidad de simplificar sistemas complejos. Popu
 Necesario cuando:
 - Subsistema es complejo con múltiples componentes
 - Cliente solo quiere hacer operaciones simples
-- Necesitas desacoplar cliente del subsistema
-- Quieres punto de entrada único
+- Necesitás desacoplar cliente del subsistema
+- Querés punto de entrada único
 
 ## Contexto
 
@@ -43,15 +43,15 @@ Necesario cuando:
 
 ### Cuando aplica
 
-✅ **Usa Facade cuando:**
+✅ **Usá Facade cuando:**
 - Subsistema es complejo y difícil de usar
-- Necesitas simplificar interfaz
-- Quieres desacoplar cliente de subsistema
+- Necesitás simplificar interfaz
+- Querés desacoplar cliente de subsistema
 - Ejemplo: librerías complejas (Spring, Apache Commons)
 
 ### Cuando no aplica
 
-❌ **Evita cuando:**
+❌ **Evitá Facade cuando:**
 - Subsistema es simple
 - Cliente necesita control detallado
 
