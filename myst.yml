@@ -124,6 +124,50 @@ project:
       - file: parte_4/comportamiento/template_method.md
       - file: parte_4/comportamiento/visitor.md
       - file: parte_4/comportamiento/ejercicios_integradores.md
+  - title: 'Parte 5: Estructuras de Datos'
+    children:
+    - file: parte_5/indice.md
+    - file: parte_5/adt.md
+    - file: parte_5/algoritmos.md
+    - file: parte_5/localidad_memoria.md
+    - file: parte_5/profiling.md
+    - title: Secuencias
+      children:
+      - file: parte_5/secuencias/indice.md
+      - file: parte_5/secuencias/fundamentos.md
+      - file: parte_5/secuencias/arreglos.md
+      - file: parte_5/secuencias/listas_enlazadas.md
+      - file: parte_5/secuencias/pilas.md
+      - file: parte_5/secuencias/colas.md
+      - file: parte_5/secuencias/deques.md
+      - file: parte_5/secuencias/colas_prioridad.md
+    - title: Diccionarios y conjuntos
+      children:
+      - file: parte_5/diccionarios/indice.md
+      - file: parte_5/diccionarios/fundamentos.md
+      - file: parte_5/diccionarios/tablas_hash.md
+      - file: parte_5/diccionarios/diccionarios_ordenados.md
+      - file: parte_5/diccionarios/tries.md
+      - file: parte_5/diccionarios/conjuntos_disjuntos.md
+    - title: Árboles
+      children:
+      - file: parte_5/arboles/indice.md
+      - file: parte_5/arboles/fundamentos.md
+      - file: parte_5/arboles/arboles_binarios.md
+      - file: parte_5/arboles/arboles_busqueda.md
+      - file: parte_5/arboles/arboles_balanceados.md
+      - file: parte_5/arboles/heaps.md
+      - file: parte_5/arboles/arboles_b.md
+    - title: Grafos
+      children:
+      - file: parte_5/grafos/indice.md
+      - file: parte_5/grafos/fundamentos.md
+      - file: parte_5/grafos/representacion.md
+      - file: parte_5/grafos/recorridos.md
+      - file: parte_5/grafos/caminos_minimos.md
+      - file: parte_5/grafos/arboles_de_expansion.md
+      - file: parte_5/grafos/orden_topologico.md
+      - file: parte_5/grafos/conectividad.md
   - title: Proyectos
     children:
     - file: proyectos/TPI-proyectos.md
@@ -159,8 +203,6 @@ project:
     - file: reglas/4_testing.md
     - file: reglas/5_control.md
     - file: reglas/6_restricciones.md
-    - file: reglas/A_herramientas_calidad.md
-    - file: reglas/apuntes_2025.md
     - file: reglas/convenciones_codigo_java.md
     - file: reglas/E_errores.md
   - title: Editorial
