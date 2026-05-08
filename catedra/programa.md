@@ -121,6 +121,21 @@ Estructuras de datos. Tipos de datos definidos por el usuario (TAD: Tipo
 Abstracto de Dato). Listas, pilas, colas, tablas de hash, árboles, colas
 priorizadas, conjuntos y grafos.
 
+### Mapa de correspondencia curricular
+
+La siguiente tabla vincula los contenidos mínimos exigidos por el plan de
+estudios con la organización temática de la cátedra, sus actividades prácticas
+y las instancias de evaluación.
+
+| Contenido Mínimo (Plan 2021) | Unidad | Trabajos Prácticos | Evaluación |
+| :--- | :--- | :--- | :--- |
+| Entrada/salida y archivos. | {ref}`U2 <unidad-2>` | TP3, TP4 | Parcial 1 |
+| Memoria dinámica y ciclo de vida. | {ref}`U3 <unidad-3>` | TP5, TP6 | Parcial 2 |
+| Puntero a función (Polimorfismo). | {ref}`U3 <unidad-3>`, {ref}`U4 <unidad-4>` | TP8, TP10 | Parcial 2 |
+| Patrones de diseño. | {ref}`U4 <unidad-4>` | TP10 | Parcial 2 |
+| Refactorización y Deuda Técnica. | {ref}`U5 <unidad-5>` | TP11 | Parcial 2 |
+| Estructuras de datos y TAD. | {ref}`U6 <unidad-6>` | TP12, TP13 | TPI |
+
 (metodologia)=
 ## Propuesta metodológica
 
@@ -201,11 +216,27 @@ metodologías según las necesidades específicas identificadas.
 (unidades)=
 ## Unidades
 
-El programa se estructura en seis unidades temáticas que progresan desde los
-conceptos fundamentales de Java hasta temas avanzados de estructuras de datos y
-patrones de diseño, siguiendo la estrategia _Late-Objects_ que permite una
-transición natural desde la programación estructurada hacia la orientación a
-objetos.
+El programa se estructura en seis unidades temáticas que siguen un hilo
+conductor de complejidad creciente y refinamiento del diseño. La secuencia
+adoptada responde a una lógica pedagógica de **construcción, aplicación y
+crítica**:
+
+1.  **Transición (U1-U2)**: Se parte de la base conocida (C) para introducir la
+    sintaxis de Java y el manejo de errores robusto antes de entrar en objetos.
+2.  **Construcción (U3)**: Se establecen los pilares de la Orientación a Objetos
+    (abstracción, encapsulamiento, herencia y polimorfismo).
+3.  **Aplicación de Patrones (U4)**: Se introducen los Patrones de Diseño como
+    "soluciones tipo" a problemas recurrentes. Se enseñan *antes* que los
+    principios abstractos para que el estudiante tenga ejemplos concretos de
+    diseños exitosos y complejos antes de intentar teorizar sobre ellos.
+4.  **Refinamiento y Crítica (U5)**: Una vez que el estudiante sabe aplicar
+    objetos y patrones, se introducen los principios **SOLID** y la
+    **Refactorización** como herramientas de crítica y mejora. Esto permite
+    evaluar la calidad del código producido anteriormente y entender *por qué*
+    ciertos patrones funcionan o cuándo un diseño se vuelve rígido.
+5.  **Estructuras de Datos (U6)**: Se cierra el ciclo aplicando todo el bagaje
+    de diseño (objetos, polimorfismo, genéricos y patrones) en la implementación
+    y análisis de estructuras dinámicas complejas.
 
 (unidad-1)=
 ### Unidad 1: Java desde C
@@ -245,11 +276,6 @@ El objetivo de esta práctica es garantizar que todos estemos en la misma págin
 con respecto a las herramientas que utilizaremos en el cuatrimestre, así como
 familiarizarnos con el ciclo de trabajo.
 
-Durante la cursada, utilizaremos la última versión vigente del JDK LTS e IntelliJ 
-IDEA Community Edition como entorno de desarrollo integrado, y los proyectos
-individuales están basados en Gradle con una amplia gama de herramientas de verificación
-integradas.
-
  - TP2-2024 - Java desde C
 
 El objetivo de esta práctica es aprovechar que la sintaxis del lenguaje que
@@ -259,15 +285,6 @@ del lenguaje con respecto a C, reutilizando consignas de Programación I.
 En esta práctica, no está permitido el uso de la librería estándar de Java, más
 allá del `java.util.Scanner`, forzando a los estudiantes a implementar
 soluciones algorítmicas sin depender de abstracciones de alto nivel.
-
-#### Bibliografía obligatoria
-
-Schildt, H. (2022). _Java: A Beginner's Guide_ (Ninth edition). McGraw Hill.
-
-#### Bibliografía complementaria
-
-Lopez Roman, L. (2011). _Programación Estructurada y Orientada a Objetos: Un
-Enfoque Algorítmico_. Alfaomega Grupo Editor.
 
 (unidad-2)=
 ### Unidad 2: Excepciones, arreglos y archivos
@@ -317,15 +334,6 @@ El objetivo de esta práctica es comenzar a utilizar más clases y trabajar con
 archivos empleando la API `java.nio` y seguir trabajando con excepciones, ya que
 los mismos lanzan excepciones con tipo (`IOException`, `NoSuchFileException`),
 introduciendo el manejo obligatorio de excepciones _checked_.
-
-#### Bibliografía obligatoria
-
-Schildt, H. (2022). _Java: A Beginner's Guide_ (Ninth edition). McGraw Hill.
-
-#### Bibliografía complementaria
-
-Lopez Roman, L. (2011). _Programación Estructurada y Orientada a Objetos: Un
-Enfoque Algorítmico_. Alfaomega Grupo Editor.
 
 (unidad-3)=
 ### Unidad 3: Orientación a Objetos
@@ -398,15 +406,6 @@ El objetivo de esta práctica es continuar desarrollando el arreglo desarrollado
 en el TP6, haciendo que el mismo emplee genéricos, para que pueda almacenar
 cualquier tipo de referencia, aplicando el polimorfismo paramétrico.
 
-#### Bibliografía obligatoria
-
-Schildt, H. (2022). _Java: A Beginner's Guide_ (Ninth edition). McGraw Hill.
-
-#### Bibliografía complementaria
-
-Lopez Roman, L. (2011). _Programación Estructurada y Orientada a Objetos: Un
-Enfoque Algorítmico_. Alfaomega Grupo Editor.
-
 (unidad-4)=
 ### Unidad 4: Patrones de diseño
 
@@ -445,15 +444,6 @@ el mismo emplee patrones de diseño como Decorator, Strategy, Observer e
 Iterator, demostrando cómo los patrones mejoran la extensibilidad y
 mantenibilidad del código.
 
-#### Bibliografía obligatoria
-
-Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1995). _Design Patterns:
-Elements of Reusable Object-Oriented Software_. Addison-Wesley.
-
-#### Bibliografía complementaria
-
-Sin bibliografía complementaria.
-
 (unidad-5)=
 ### Unidad 5: Principios SOLID y Refactorización
 
@@ -490,15 +480,6 @@ si cumple o no con los criterios SOLID, así como el planteo de las
 refactorizaciones necesarias para que lo haga. Se espera que los estudiantes
 identifiquen violaciones de principios y propongan soluciones concretas mediante
 refactorización.
-
-#### Bibliografía obligatoria
-
-Martin, R. C. (2009). _Clean Code: A Handbook of Agile Software Craftsmanship_.
-Prentice Hall.
-
-#### Bibliografía complementaria
-
-Sin bibliografía complementaria.
 
 (unidad-6)=
 ### Unidad 6: Estructuras de datos
@@ -544,14 +525,19 @@ Aquí implementaremos un árbol binario de búsqueda, incluyendo operaciones de
 inserción, búsqueda, eliminación y recorridos (inorden, preorden, postorden),
 analizando la complejidad de cada operación.
 
-#### Bibliografía obligatoria
+(bibliografia)=
+## Bibliografía
 
-Liang, Y. D. (2017). _Introduction to Java Programming and Data Structures_
-(11th edition). Pearson.
+### General y de referencia
 
-#### Bibliografía complementaria
+- Schildt, H. (2022). _Java: A Beginner's Guide_ (Ninth edition). McGraw Hill. (Unidades 1, 2 y 3)
+- Lopez Roman, L. (2011). _Programación Estructurada y Orientada a Objetos: Un Enfoque Algorítmico_. Alfaomega Grupo Editor. (Unidades 1, 2 y 3)
 
-Sin bibliografía complementaria.
+### Específica por temas
+
+- **Patrones de Diseño**: Gamma, E., Helm, R., Johnson, R., & Vlissides, J. (1995). _Design Patterns: Elements of Reusable Object-Oriented Software_. Addison-Wesley. (Unidad 4)
+- **Calidad y Refactorización**: Martin, R. C. (2009). _Clean Code: A Handbook of Agile Software Craftsmanship_. Prentice Hall. (Unidad 5)
+- **Estructuras de Datos**: Liang, Y. D. (2017). _Introduction to Java Programming and Data Structures_ (11th edition). Pearson. (Unidad 6)
 
 (evaluacion)=
 ## Propuesta de evaluación
