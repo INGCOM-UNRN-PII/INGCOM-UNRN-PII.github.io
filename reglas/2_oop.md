@@ -18,7 +18,7 @@ Ejemplo: `CalculadoraAvanzada`, `GestorDeUsuarios`
 
 ### Explicación
 
-Los atributos (variables de instancia) de una clase deben nombrarse en `dromedarioCase` y declararse con visibilidad `private`. El acceso externo debe realizarse exclusivamente a través de métodos públicos (getters/setters). Este es el principio fundamental del **encapsulamiento** en POO.
+Los atributos (variables de instancia) de una clase deben nombrarse en `dromedarioCase` y declararse con visibilidad `private`. El acceso externo a datos estructurales puede realizarse a través de métodos públicos (getters/setters), **solo si la semántica de la clase lo justifica**. No se deben generar getters/setters automáticamente si estos exponen detalles internos o rompen el encapsulamiento de la clase (ver reglas 0x2008 y 0x200C). Este es el principio fundamental del **encapsulamiento** en POO.
 
 ### Justificación
 
@@ -498,7 +498,7 @@ Si la inicialización de un atributo es compleja (más de 2-3 líneas), extraé 
 
 ### Explicación
 
-Los paquetes deben seguir la convención de Java: todo en minúsculas, sin guiones bajos ni caracteres especiales. Para este curso, todos los paquetes deben comenzar con `ar.unrn` (dominio de la universidad).
+Los paquetes en Java deben estar en minúsculas y sin caracteres especiales (Convención de Java). Además, como **Convención Institucional del Curso**, exigimos que todos los paquetes comiencen con el prefijo `ar.unrn` para identificar el origen del código.
 
 ### Justificación
 
@@ -1260,7 +1260,7 @@ public class Contador {
 ```
 
 (regla-0x200A)=
-## `0x200A` - Los métodos deben tener máximo 20-30 líneas de código
+## `0x200A` - [Recomendación] Los métodos deben tener idealmente máximo 20-30 líneas de código
 
 ### Explicación
 
@@ -1421,7 +1421,7 @@ public boolean equals(Object obj) {  // ✅ Override de Object
 :::
 
 (regla-0x2010)=
-## `0x2010` - La implementación de `hashCode` debe emplear la librería
+## `0x2010` - La implementación de `hashCode` debe emplear la librería estándar
 
 ### Explicación
 
@@ -1437,6 +1437,8 @@ public int hashCode() {
 
 (regla-0x2011)=
 ## `0x2011` - No exponer detalles internos mediante getters (TP9 - Agenda)
+
+DUPLICADA
 
 ### Explicación
 
@@ -1468,7 +1470,7 @@ for (Contacto c : contactos) {
 ```
 
 (regla-0x2012)=
-## `0x2012` - Usar Factory Methods para construcción compleja (TP9 - Agenda)
+## `0x2012` - Usar Factory Methods para construcción compleja (TP - Agenda)
 
 ### Explicación
 

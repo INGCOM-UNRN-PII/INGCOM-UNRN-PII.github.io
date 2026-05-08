@@ -293,7 +293,7 @@ public double calcularArea(double ancho, double alto) {
 }
 ```
 
-### Precondiciones, Postcondiciones e Invariantes
+### [Avanzado] Contratos formales: Precondiciones, Postcondiciones e Invariantes
 
 Para documentación rigurosa, incluir contratos:
 
@@ -396,33 +396,29 @@ public int calcular(int valor) { ... }
 ```
 
 (regla-0x1001)=
-## `0x1001` - Las clases, atributos y métodos llevan documentación Javadoc
+## `0x1001` - Las clases, métodos y atributos llevan documentación Javadoc
 
 ### Explicación
 
-Todo elemento del código (clases, interfaces, métodos, atributos) debe estar documentado con Javadoc, incluyendo miembros privados. La documentación no es opcional ni está limitada a APIs públicas.
+La documentación Javadoc es el contrato público de tu código. Todo elemento público (clases, interfaces, métodos) y los atributos críticos (para explicar invariantes) deben estar documentados. Para los miembros privados, la documentación Javadoc es requerida solo cuando agreguen valor explicativo sobre lógica compleja; documentar getters/setters privados obvios no es necesario.
 
 ### Justificación
 
-1. **Comprensión futura**: Documentar privados ayuda a entender el razonamiento detrás de decisiones de diseño.
+1. **Comprensión futura**: Documentar la interfaz pública permite a otros usar tu código sin leer su implementación.
 2. **Mantenimiento**: Facilita modificaciones por otros (o por vos mismo meses después).
-3. **Revisión de código**: Permite validar que la implementación coincide con la intención.
+3. **Reducción de ruido**: Omitir Javadoc en privados triviales evita mantener comentarios redundantes.
 4. **Transferencia de conocimiento**: Documenta el "por qué", no solo el "qué".
-5. **Disciplina profesional**: Refleja rigor y atención al detalle.
 
 ### Elementos que requieren documentación
 
 | Elemento | Requiere Javadoc | Excepción |
 |----------|------------------|-----------|
-| Clases públicas | ✅ Siempre | Ninguna |
-| Clases privadas/internas | ✅ Siempre | Ninguna |
-| Interfaces | ✅ Siempre | Ninguna |
+| Clases públicas e interfaces | ✅ Siempre | Ninguna |
 | Métodos públicos | ✅ Siempre | Ninguna |
-| Métodos privados | ✅ Siempre | Ninguna |
-| Atributos públicos | ✅ Siempre | Ninguna |
-| Atributos privados | ✅ Siempre | Solo si triviales (ej: `i` en bucle) |
 | Constructores | ✅ Siempre | Ninguna |
 | Constantes | ✅ Siempre | Ninguna |
+| Atributos | ⚠️ Según valor | Solo si documentan un estado o invariante crítico |
+| Métodos privados | ⚠️ Según valor | Solo si tienen lógica compleja que amerita explicación |
 
 ### Ejemplos
 
@@ -1249,9 +1245,9 @@ Usá criterio: documentá excepciones **razonables** y **relevantes**. No docume
 :::
 
 (regla-0x1003)=
-## `0x1003` - Las excepciones de tiempo de ejecución deben documentar cómo evitar su lanzamiento
+### `0x1003`[Avanzado] Documentación de prevención de excepciones
 
-### Explicación
+Además de indicar cuándo se lanzan,
 
 Las excepciones no controladas (*unchecked exceptions*) - subclases de `RuntimeException` - indican errores de programación que pueden evitarse. La documentación debe explicar **cómo prevenir** que se lancen, no solo cuándo ocurren.
 
@@ -1530,9 +1526,9 @@ La documentación preventiva transforma excepciones runtime en **precondiciones 
 :::
 
 (regla-0x1004)=
-## `0x1004` - Documenten el lanzamiento indirecto de excepciones propias
+### `0x1004` - [Avanzado] Documentación de excepciones indirectas
 
-### Explicación
+Además,
 
 Cuando un método llama internamente a otros métodos que lanzan excepciones, y esas excepciones se propagan al llamador, deben documentarse indicando el origen. Esto es especialmente importante para métodos de validación internos.
 
@@ -1844,7 +1840,9 @@ public class GestorTransacciones {
 ```
 
 (regla-0x1006)=
-## `0x1006` - Las precondiciones deben documentarse con `@param` o comentarios
+## `0x1006` - [Avanzado] Las precondiciones deben documentarse con `@param` o comentarios
+
+TODO: convertir la documentacion de precondiciones a las custom tags de los repositorios.
 
 ### Explicación
 

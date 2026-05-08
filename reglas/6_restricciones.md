@@ -5,46 +5,19 @@ title: 0x6 - Restricciones sobre Programación Funcional
 # Serie 0x6 - Restricciones sobre Programación Funcional
 
 :::{note}
-**Nota pedagógica**: Estas reglas están diseñadas para el aprendizaje de POO imperativa clásica. La programación funcional es valiosa, pero se enseñará en contextos apropiados más adelante.
+**Nota pedagógica**: Estas reglas están diseñadas para asegurar el dominio de la POO imperativa clásica, los algoritmos fundamentales y el control de flujo manual. No son una condena a la programación funcional, que es extremadamente valiosa y el estándar de la industria. Estas restricciones aplican exclusivamente a la etapa inicial de la carrera: una vez consolidadas las bases de la orientación a objetos, estos recursos funcionales se reintroducirán en materias posteriores para el diseño avanzado, procesamiento de datos masivos y programación concurrente.
 :::
 
 (regla-0x6000)=
-## `0x6000` - No usar expresiones lambda
+## `0x6000` - No usar expresiones lambda ni referencias a métodos
 
 ### Explicación
 
-Las expresiones lambda (`->`) no están permitidas en este curso.
+Las expresiones lambda (`->`) y las referencias a métodos (`::`) no están permitidas en esta materia. Esta restricción te obliga a internalizar la sintaxis y el control de flujo explícito de Java.
 
 **Incorrecto** ❌:
 ```java
 lista.forEach(elemento -> System.out.println(elemento));
-numeros.stream().filter(n -> n > 10).collect(Collectors.toList());
-```
-
-**Correcto** ✅:
-```java
-for (String elemento : lista) {
-    System.out.println(elemento);
-}
-
-List<Integer> mayoresADiez = new ArrayList<>();
-for (Integer n : numeros) {
-    if (n > 10) {
-        mayoresADiez.add(n);
-    }
-}
-```
-
-(regla-0x6001)=
-## `0x6001` - No usar referencias a métodos (method references)
-
-### Explicación
-
-Las referencias a métodos (`::`) no están permitidas.
-
-**Incorrecto** ❌:
-```java
-lista.forEach(System.out::println);
 nombres.stream().map(String::toUpperCase).collect(Collectors.toList());
 ```
 
@@ -60,12 +33,16 @@ for (String nombre : nombres) {
 }
 ```
 
-(regla-0x6002)=
-## `0x6002` - No usar la API de Streams
+:::{importan} En tests
+Esta regla no aplica a los tests, ya que `assertThrows` es sumamente mas compacta y expresiva.
+:::
+
+(regla-0x6001)=
+## `0x6001` - No usar la API de Streams ni `Collectors`
 
 ### Explicación
 
-La API `java.util.stream` no está permitida en este curso. Usar bucles explícitos.
+La API `java.util.stream` y sus operaciones de reducción (`Collectors`, `.sum()`, etc.) abstraen los bucles. En esta etapa, es necesario usar bucles explícitos (`for`, `while`, `for-each`) para manejar el estado de las variables y comprender algorítmicamente las transformaciones de datos.
 
 **Incorrecto** ❌:
 ```java
@@ -85,12 +62,17 @@ for (Integer numero : numeros) {
 }
 ```
 
-(regla-0x6004)=
-## `0x6004` - No usar métodos funcionales de colecciones
+(regla-0x6002)=
+## `0x6002` - No usar métodos funcionales de colecciones ni encadenamiento
 
 ### Explicación
 
-Métodos como `forEach()`, `removeIf()`, `replaceAll()` no están permitidos. Usar iteradores o bucles.
+Se agrupan aquí restricciones sobre métodos funcionales preexistentes en las colecciones de Java, tales como `forEach()`, `removeIf()`, `replaceAll()`, y el patrón de composición funcional o encadenamiento. Se deben usar iteradores explícitos o bucles tradicionales. Esto asegura la comprensión de cómo y en qué momento muta el estado.
+
+**Incorrecto** ❌:
+```java
+nombres.removeIf(n -> n.startsWith("A"));
+```
 
 **Correcto** ✅:
 ```java
@@ -101,24 +83,3 @@ while (it.hasNext()) {
     }
 }
 ```
-
-(regla-0x6005)=
-## `0x6005` - No usar `Collectors` ni operaciones de reducción
-
-### Explicación
-
-Usar bucles explícitos para agregaciones y transformaciones.
-
-(regla-0x6006)=
-## `0x6006` - Preferir bucles `for` tradicionales o enhanced sobre operaciones funcionales
-
-### Explicación
-
-Los bucles son más explícitos y pedagógicos para entender el flujo de control.
-
-(regla-0x6007)=
-## `0x6007` - No usar el patrón de composición funcional
-
-### Explicación
-
-Evitar encadenar operaciones funcionales. Usar métodos y asignaciones explícitas.

@@ -4,8 +4,12 @@ title: 0x5 - Estructuras de Control y Flujo
 
 # Serie 0x5 - Estructuras de Control y Flujo
 
+:::{important} Aclaración sobre Evaluación y Legibilidad
+El objetivo último de estas reglas es producir código **legible y mantenible**. La combinación de prohibiciones (por ejemplo, evitar `break` y retornos múltiples simultáneamente) no debe interpretarse como una rúbrica automática e inflexible si el resultado final atenta flagrantemente contra la claridad del código. Algunas reglas están marcadas explícitamente como **[Restricción Didáctica]** (pensadas para forzar el entrenamiento en un concepto particular en esta etapa) y otras como **[Criterio de Diseño]** (aplicables permanentemente en entornos profesionales). Frente a un conflicto entre restricciones didácticas que degrade severamente la legibilidad, siempre se priorizará el sentido común y la separación de responsabilidades.
+:::
+
 (regla-0x5000)=
-## `0x5000` - Un solo `return` por método
+## `0x5000` - Un solo `return` por método [Restricción Didáctica]
 
 ### Explicación
 
@@ -38,7 +42,7 @@ public int calcular(int x) {
 ```
 
 (regla-0x5001)=
-## `0x5001` - Sin usar la asignación compuesta (`+=`, `-=`, `*=`, etc)
+## `0x5001` - Sin usar la asignación compuesta (`+=`, `-=`, `*=`, etc) [Restricción Didáctica]
 
 ### Explicación
 
@@ -108,7 +112,7 @@ Esta regla aplica a **todo el código del curso**. El uso de operadores compuest
 :::
 
 (regla-0x5002)=
-## `0x5002` - Sin `break` y `continue`, en su lugar usen banderas
+## `0x5002` - Sin `break` y `continue`, en su lugar usen banderas [Restricción Didáctica]
 
 ### Explicación
 
@@ -342,18 +346,18 @@ while (continuar) {  // Condición visible
 }
 ```
 
-### Comparación: Curso vs. Industria
+### El Costo de las Banderas y el Entorno Profesional
+
+Es importante reconocer el **costo de usar banderas**: introducen variables adicionales de estado, aumentan la verbosidad y a veces pueden volver el código menos directo o menos legible si la lógica es simple. 
+
+Sin embargo, la prohibición de `break` y `continue` en esta instancia se usa **solo como entrenamiento didáctico**. Su objetivo es forzar la capacidad de modelar mentalmente la condición de terminación real (el invariante y la condición de corte completa) antes de escribir el cuerpo del lazo, evitando que se usen saltos implícitos como "parches" para salir de lazos mal diseñados. Una vez internalizado este razonamiento, en código profesional el uso de retornos tempranos y `break`/`continue` es considerado estándar y a menudo preferible por ser menos verboso.
 
 | Aspecto | `break`/`continue` | Banderas |
 |---------|-------------------|----------|
-| **Claridad de condición** | ⚠️ Oculta | ✅ Explícita |
-| **Facilidad de lectura** | ⚠️ Requiere análisis | ✅ Visible arriba |
-| **Código profesional** | ✅ Estándar | ⚠️ Verboso |
-| **En este curso** | ❌ Prohibido | ✅ Requerido |
-
-:::{note}
-En código profesional, `break` y `continue` son herramientas estándar y aceptadas. Esta restricción es exclusivamente educativa.
-:::
+| **Claridad de condición** | ⚠️ Oculta (en el cuerpo) | ✅ Explícita (en la firma) |
+| **Facilidad de lectura** | ⚠️ Requiere análisis línea a línea | ✅ Visible arriba |
+| **Código profesional** | ✅ Estándar y aceptado | ⚠️ Verboso (costo de estado adicional) |
+| **En este curso (Entrenamiento)** | ❌ Prohibido | ✅ Requerido |
 
 ### Patrón común: Búsqueda con terminación anticipada
 
@@ -397,7 +401,7 @@ Si te encontrás escribiendo `break` o `continue`, preguntate: "¿Qué bandera b
 :::
 
 (regla-0x5003)=
-## `0x5003` - Usar parámetros como variables solo si no cambia su significado
+## `0x5003` - Usar parámetros como variables solo si no cambia su significado [Criterio de Diseño]
 
 ### Explicación
 
@@ -658,11 +662,11 @@ public int metodo(int valor) {
 :::
 
 (regla-0x5004)=
-## `0x5004` - Los métodos no deben usar `printf` o `Scanner` a no ser que sea explícitamente su propósito
+## `0x5004` - Separación de Responsabilidades: No mezclar I/O (`printf`, `Scanner`) con Lógica de Negocio [Criterio de Diseño]
 
 ### Explicación
 
-Los métodos de lógica de negocio no deben mezclar cálculos o procesamiento con operaciones de entrada/salida (I/O). El uso de `System.out.println()`, `printf()`, `Scanner`, o cualquier otra forma de I/O debe estar restringido a métodos cuyo propósito explícito sea interactuar con el usuario o manejar I/O.
+Esta regla no es una prohibición puramente formal del uso de bibliotecas de consola, sino un criterio arquitectónico fundamental de separación de responsabilidades (Separation of Concerns). Los métodos de lógica de negocio no deben mezclar cálculos o procesamiento con operaciones de entrada/salida (I/O). El uso de `System.out.println()`, `printf()`, `Scanner`, o cualquier otra forma de I/O debe estar restringido a métodos cuyo propósito explícito sea la capa de presentación o de interacción.
 
 ### Justificación
 
@@ -1216,7 +1220,7 @@ public class UI {
 :::
 
 (regla-0x5005)=
-## `0x5005` - Evitar anidamiento profundo de condicionales (máximo 3 niveles)
+## `0x5005` - Evitar anidamiento profundo de condicionales (máximo 3 niveles) [Criterio de Diseño]
 
 ### Explicación
 
@@ -1586,7 +1590,7 @@ Cuando te encuentres anidando más de 3 niveles, es señal de que el método est
 :::
 
 (regla-0x5006)=
-## `0x5006` - Los bucles deben tener condiciones de terminación claras
+## `0x5006` - Los lazos deben tener condiciones de terminación claras [Criterio de Diseño]
 
 ### Explicación
 

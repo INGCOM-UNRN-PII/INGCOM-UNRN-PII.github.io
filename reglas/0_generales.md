@@ -4,70 +4,30 @@ title: 0x0 - Nomenclatura y Formato
 
 # Serie 0x0 - Nomenclatura y Formato
 
-Muchas de las reglas de nomenclatura que están aquí descritas, salen del estándar de
-código oficial de Java, la idea de seguirlas es hacer que nuestro código no solo sea,
-indistinguible del código de la plataforma. Sino que también nos ayude al leerlo,
+Este documento incluye dos tipos de lineamientos:
+1. **Estándares de la industria**: Prácticas universales del ecosistema Java (ej. `CamelloCase` para clases, uso de `SNAKE_CASE` para constantes).
+2. **Convenciones de la cátedra**: Acuerdos específicos para unificar el estilo en el curso y facilitar la lectura compartida (ej. latinización de caracteres, formato obligatorio de entregas).
+
+Muchas de las reglas de nomenclatura que están aquí descritas salen del estándar de
+código oficial de Java. La idea de seguirlas es hacer que nuestro código no solo sea
+indistinguible del código de la plataforma, sino que también nos ayude al leerlo,
 estableciendo expectativas claras.
 
 (regla-0x0000)=
-## `0x0000` - Sin errores de ortografía y apliquen formato markdown donde sea posible
+## `0x0000` - El código y la documentación deben estar libres de errores ortográficos y usar formato Markdown
 
 ### Explicación
 
-La ortografía correcta en el código no es un lujo, es una necesidad profesional.
-Los identificadores, comentarios y documentación forman parte de la comunicación
-técnica del proyecto. Un error ortográfico no solo es poco profesional, sino que
-puede generar confusión y dificultar el mantenimiento del código.
+El código no debe presentar advertencias de errores ortográficos según el corrector del IDE. En documentación extensa (archivos `.md` y bloques largos de Javadoc), es obligatorio el uso de sintaxis Markdown para listas, negritas y bloques de código.
 
 ### Justificación
 
-1. **Profesionalismo**: El código es un producto técnico que refleja la calidad
-   del desarrollador y del equipo.
-2. **Mantenibilidad**: Errores ortográficos dificultan la búsqueda de símbolos y
-   pueden llevar a inconsistencias.
-3. **Colaboración**: Otros desarrolladores (o vos mismo en el futuro) deben
-   poder leer y entender el código sin ambigüedades.
-4. **Herramientas disponibles**: Los IDEs modernos incluyen correctores ortográficos
-   integrados.
-5. **Estandar de la industria**: Markdown se usa por todos lados para dar formato.
-
-### Herramientas
-
-Consultá el [Apunte Markdown](../guias/markdown.md) para las cuestiones de formato
-en documentación.
-
-:::{important} No hay excusas.
-
-Los IDEs modernos tienen corrector ortográfico integrado, por lo que los errores
-tipográficos (_typos_) en identificadores y documentación **no serán aceptados**
-en las entregas.
-
-:::
-
-
-### Casos Especiales
-
-- **Acrónimos conocidos**: Siguen siendo válidos (HTTP, URL, JSON), pero deben
-  usarse de forma consistente.
-- **Términos técnicos en inglés**: Son aceptables cuando son estándar de la
-  industria (`callback`, `buffer`, `thread`).
-- **Nombres propios**: Si usás nombres de dominio específicos, asegurate de que
-  estén bien escritos.
-
-### Verificación en el IDE
-
-La mayoría de los IDEs modernos incluyen corrector ortográfico, en particular 
-**IntelliJ IDEA** que pueden configurar en `Settings > Editor > Spelling`
-:::{tip}
-
-Configurá tu entorno para que marque errores ortográficos en comentarios
-e identificadores. Esto te ayudará a detectar problemas antes de hacer commit.
-
-:::
-
+1. **Profesionalismo**: Refleja atención al detalle.
+2. **Lectura**: Markdown estructura visualmente textos largos.
+3. **Herramientas**: Los IDEs modernos detectan *typos* automáticamente.
 
 (regla-0x0001)=
-## `0x0001` - Los nombres de las clases van en `CamelloCase`
+## `0x0001` - Los nombres de las clases van en `CamelloCase` [Estándar Java]
 
 ### Explicación
 
@@ -82,6 +42,11 @@ bajos.
 NombreDeClase = PalabraInicial + Palabra2 + Palabra3 + ...
 donde cada palabra comienza con Mayúscula
 ```
+
+:::{note} Acrónimos y Abreviaturas Estándar
+Aunque se prefieren palabras completas, son aceptables acrónimos universalmente reconocidos (ej. `HTTP`, `URL`, `ID`) y abreviaturas matemáticas comunes (ej. `max`, `min`). No inventes abreviaturas nuevas (ej. `usr` por `usuario`).
+:::
+
 
 ### Ejemplos
 
@@ -182,6 +147,8 @@ una "joroba" al principio: calcular**P**romedio.
 
 (regla-0x0002)=
 ## `0x0002` - Los identificadores válidos son solo con alfabéticos `[a-zA-Z]`
+
+_Convención especifica de la materia_.
 
 ### Explicación
 
@@ -350,7 +317,7 @@ profesional.
 | **Consistencia** | Fuerza un estándar uniforme en todo el proyecto                |
 
 (regla-0x0003)=
-## `0x0003` - Variables, parámetros y variables locales van en `dromedarioCase`
+## `0x0003` - Variables, parámetros y variables locales van en `dromedarioCase` [Convención del Curso]
 
 ### Explicación
 
@@ -559,7 +526,7 @@ información almacena esto?" sin necesidad de leer el resto del código.
 
 
 (regla-0x0004)=
-## `0x0004` - Los nombres de los métodos van en `dromedarioCase`
+## `0x0004` - Los nombres de los métodos van en `dromedarioCase` [Estándar Java]
 
 ### Explicación
 
@@ -777,7 +744,7 @@ demasiadas cosas. Considerá dividirlo en métodos más pequeños y específicos
 
 
 (regla-0x0005)=
-## `0x0005` - Las constantes van en mayúsculas con `SNAKE_CASE`
+## `0x0005` - Las constantes van en mayúsculas con `SNAKE_CASE` [Convención del Curso]
 
 ### Explicación
 
@@ -1024,7 +991,7 @@ debería ser una constante. Esto facilita el mantenimiento y reduce errores.
 
 
 (regla-0x0006)=
-## `0x0006` - Los identificadores DEBEN ser descriptivos
+## `0x0006` - Los identificadores deben ser descriptivos
 
 ### Explicación
 
@@ -1050,7 +1017,7 @@ la brevedad.
 
 Un identificador es descriptivo si cumple:
 
-1. **Usa palabras completas**, no abreviaciones crípticas
+1. **Usa palabras completas** como norma general, reservando el uso de acrónimos o abreviaciones solo para términos técnicos de la industria universalmente aceptados (ej. `HTTP`, `JSON`, `ID`, `URL`).
 2. **Revela intención**, no solo tipo de dato
 3. **Aporta contexto** dentro de su ámbito
 4. **Es pronunciable** y fácil de discutir con el equipo
@@ -1312,14 +1279,14 @@ en lugar de agregar comentarios.
 
 
 (regla-0x0006A)=
-## `0x0006A` - Nomenclatura de interfaces según su propósito
+## `0x0006A` - [Recomendación Avanzada] [Recomendación] Nomenclatura de interfaces según su propósito
 
 ### Explicación
 
-Las interfaces en Java deben nombrarse según el tipo de comportamiento que
-describen. Esta regla establece una distinción semántica entre interfaces que
+Las interfaces en Java **suelen** nombrarse según el tipo de comportamiento que
+describen. Esta recomendación de diseño avanzado establece una distinción semántica útil entre interfaces que
 representan **capacidades de instancia** (sufijo `-able`) y las que representan
-**operaciones funcionales** (sufijo `-or`/`-er`).
+**operaciones funcionales** (sufijo `-or`/`-er`). En proyectos complejos, aplicar este patrón facilita mucho la extensibilidad, aunque no es una exigencia inicial estricta.
 
 ### Justificación
 
@@ -2383,7 +2350,7 @@ nombre no es suficientemente descriptivo.
 :::
 
 (regla-0x0009)=
-## `0x0009` - Un espacio antes y después de los operadores
+## `0x0009` - Un espacio antes y después de los operadores [Estándar Java]
 
 ### Explicación
 
@@ -2607,6 +2574,8 @@ largas, la diferencia es dramática.
 
 (regla-0x000A)=
 ## `0x000A` - No apilen líneas
+
+_Convención especifica de la materia_.
 
 ### Explicación
 

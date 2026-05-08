@@ -4,6 +4,26 @@ title: 0x4 - Testing
 
 # Serie 0x4 - Testing
 
+## Ámbito de Aplicación y Criterios de Evaluación
+
+Las siguientes reglas están diseñadas principalmente para **tests unitarios** y se dividen en dos categorías para su evaluación:
+
+**1. Reglas Estructurales Obligatorias**
+Afectan directamente la validez y confiabilidad del test (el incumplimiento de estas invalida el test):
+- **`0x4001`**: Respetar la estructura AAA (incluyendo la restricción de **un solo llamado al método bajo prueba**).
+- **`0x4003`** (ex 4004): Evitar lógica condicional.
+- **`0x4004`** (ex 4005): Garantizar la independencia y aislamiento de cada test.
+
+**2. Convenciones de Estilo Recomendadas**
+Buscan homogeneizar el código del curso para facilitar la corrección y lectura:
+- **`0x4000`**: Nombres de clases de test.
+- **`0x4002`** (ex 4003): Nomenclatura descriptiva de métodos de test.
+
+**Excepciones para otros tipos de tests:**
+- **Tests de Integración**: Pueden usar sufijos como `IntegrationTest`, manejar múltiples componentes en la fase Act (ya que no prueban una unidad aislada), y relajar ciertas independencias estructurales si el setup es muy costoso.
+- **Tests Parametrizados**: Omiten la restricción de "un solo llamado", ya que la parametrización ejecuta el Act múltiples veces implícitamente, y utilizan nombres de métodos más abarcativos.
+
+
 (regla-0x4000)=
 ## `0x4000` - El test debe tener el mismo nombre que la clase con `Test` al final
 
@@ -484,7 +504,9 @@ Si tu test tiene múltiples llamadas al código bajo prueba, probablemente debas
 :::
 
 (regla-0x4002)=
-## `0x4002` - Una llamada a método en cada caso de prueba
+### `0x4002` - Un único Act: Una llamada a método por cada caso de prueba
+
+Esta sub-regla es fundamental dentro de la fase Act de AAA:
 
 ### Explicación
 
@@ -803,8 +825,8 @@ void testMultiplicar_ConDosNumeros_RetornaProducto() {
 // Cada test falla independientemente, diagnóstico preciso
 ```
 
-(regla-0x4003)=
-## `0x4003` - Los nombres de tests deben ser descriptivos y usar convención `test<Accion><Condicion><ResultadoEsperado>`
+(regla-0x4002)=
+## `0x4002` - Los nombres de tests deben ser descriptivos y usar convención `test<Accion><Condicion><ResultadoEsperado>`
 
 ### Explicación
 
@@ -1400,8 +1422,8 @@ Al ver el reporte, inmediatamente sabés que la división por cero no está func
 El nombre del test debe ser tan descriptivo que alguien pueda entender qué funcionalidad está rota **sin leer el código del test**.
 :::
 
-(regla-0x4004)=
-## `0x4004` - Los tests no deben tener lógica condicional
+(regla-0x4003)=
+## `0x4003` - Los tests no deben tener lógica condicional
 
 ### Explicación
 
@@ -1495,8 +1517,8 @@ void testSumar_ConNumerosSumadosASiMismos_RetornaElDoble(
 Si te encontrás escribiendo un `if` o `for` en un test, considerá usar tests parametrizados o dividir en múltiples tests independientes.
 :::
 
-(regla-0x4005)=
-## `0x4005` - Cada test debe ser independiente y poder ejecutarse en cualquier orden
+(regla-0x4004)=
+## `0x4004` - Cada test debe ser independiente y poder ejecutarse en cualquier orden
 
 ### Explicación
 

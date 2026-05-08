@@ -5,81 +5,11 @@ title: 0x3 - Manejo de Excepciones
 # Serie 0x3 - Manejo de Excepciones
 
 (regla-0x3000)=
-## `0x3000` - No atajar la excepción si no es posible tomar una decisión
+## `0x3000` - Validación previa (Look Before You Leap) antes que excepciones
 
 ### Explicación
 
-Si solo vas a loggear o relanzar sin agregar valor, dejá que la excepción se propague naturalmente.
-
-**Incorrecto** ❌:
-```java
-try {
-    procesarArchivo();
-} catch (IOException e) {
-    // Solo loggear y relanzar
-    logger.error("Error: " + e.getMessage());
-    throw e;  // ❌ No agrega valor
-}
-```
-
-**Correcto** ✅:
-```java
-// ✅ Dejar propagar - agregar throws en firma
-public void procesar() throws IOException {
-    procesarArchivo();  // Propaga naturalmente
-}
-```
-
-(regla-0x3001)=
-## `0x3001` - El main de un programa no debe dejar pasar excepciones checked
-
-### Explicación
-
-El `main` debe manejar todas las excepciones checked y proporcionar mensajes de error apropiados al usuario final.
-
-**Incorrecto** ❌:
-```java
-public static void main(String[] args) throws Exception {  // ❌
-    // código
-}
-```
-
-**Correcto** ✅:
-```java
-public static void main(String[] args) {
-    try {
-        ejecutarPrograma();
-    } catch (IOException e) {
-        System.err.println("Error de archivo: " + e.getMessage());
-        System.exit(1);
-    }
-}
-```
-
-(regla-0x3002)=
-## `0x3002` - Qué familia de excepciones se eligió debe estar documentada
-
-### Explicación
-
-Documentar en el paquete o clase base por qué se usa checked vs unchecked para las excepciones del dominio.
-
-```java
-/**
- * Excepciones del dominio de Facturación.
- * <p>
- * Se usan excepciones UNCHECKED porque:
- * - Los errores son de programación (precondiciones violadas)
- * - No se espera recuperación en tiempo de ejecución
- */
-package ar.unrn.facturacion.excepciones;
-```
-
-(regla-0x3003)=
-## `0x3003` - No atajar una excepción lanzada en el mismo bloque
-
-### Explicación
-
-Si lanzás una excepción dentro de un try y la atajás en el mismo catch, usá `if-else` en su lugar.
+Siempre que sea posible, validá las condiciones antes de realizar una operación (LBYL) en lugar de intentar la operación y atajar la excepción. Si una excepción se lanza y se ataja dentro del mismo bloque o método que podría haberla prevenido, debés usar un `if-else`.
 
 **Incorrecto** ❌:
 ```java
@@ -87,7 +17,10 @@ try {
     if (invalido) {
         throw new IllegalArgumentException();
     }
+    int resultado = dividir(a, b);
 } catch (IllegalArgumentException e) {
+    // manejar
+} catch (ArithmeticException e) {
     // manejar
 }
 ```
@@ -96,69 +29,137 @@ try {
 ```java
 if (invalido) {
     // manejar directamente
+} else if (b != 0) {
+    int resultado = dividir(a, b);
 } else {
-    // flujo normal
+    // manejar división por cero
+}
+```
+
+(regla-0x3001)=
+## `0x3001` - Propagación natural: No atajar si no podés tomar una decisión útil
+
+### Explicación
+
+Si solo vas a logguear el error, silenciarlo con un catch vacío, imprimir el stack trace o envolver y relanzar la excepción sin agregar contexto, dejá que la excepción se propague naturalmente hacia arriba en la pila de llamadas. 
+
+**Incorrecto** ❌ (Silenciar, print, relanzar sin valor):
+```java
+try {
+    procesarArchivo();
+} catch (IOException e) {
+    // ❌ Solo logguear y relanzar
+    logger.error("Error: " + e.getMessage());
+    throw e;  
+}
+
+try {
+    operacion();
+} catch (Exception e) {
+    e.printStackTrace();  // ❌ Solo imprime
+}
+```
+
+**Correcto** ✅ (Propagar o manejar con decisión):
+```java
+// ✅ Dejar propagar - agregar throws en firma
+public void procesar() throws IOException {
+    procesarArchivo();  // Propaga naturalmente
+}
+
+// ✅ Atajar tomando una decisión
+try {
+    operacionRiesgosa();
+} catch (IOException e) {
+    logger.error("Error leyendo, usando valor por defecto", e);
+    // Y tomar decisión (ej. usar configuración default)
+}
+```
+
+(regla-0x3002)=
+## `0x3002` - Traducción con contexto
+
+### Explicación
+
+Cuando necesites atrapar una excepción para relanzarla, debe ser para agregar contexto útil al error o para traducirla a una excepción del dominio de tu aplicación. Nunca conviertas excepciones checked a unchecked genéricas sin justificación ni pérdida de la causa original.
+
+**Incorrecto** ❌:
+```java
+try {
+    leerArchivo();
+} catch (IOException e) {
+    throw new RuntimeException("Error");  // ❌ Pérdida del error original (cause) e información
+}
+```
+
+**Correcto** ✅:
+```java
+try {
+    leerArchivo();
+} catch (IOException e) {
+    throw new ArchivoNoDisponibleException("No se pudo leer la configuración de: " + archivo, e);
+}
+```
+
+(regla-0x3003)=
+## `0x3003` - Captura terminal en el main (Convención del Curso)
+
+### Explicación
+
+Como convención en nuestros proyectos, el método `main` (o el punto de entrada superior de la aplicación) actúa como captura terminal. No debe dejar pasar excepciones (checked o unchecked) hacia la máquina virtual. Debe proveer un mensaje de error limpio al usuario.
+
+**Incorrecto** ❌:
+```java
+public static void main(String[] args) throws Exception {  // ❌
+    ejecutarPrograma();
+}
+```
+
+**Correcto** ✅:
+```java
+public static void main(String[] args) {
+    try {
+        ejecutarPrograma();
+    } catch (Exception e) {
+        System.err.println("Error fatal de la aplicación: " + e.getMessage());
+        System.exit(1);
+    }
 }
 ```
 
 (regla-0x3004)=
-## `0x3004` - No convertir excepciones checked a unchecked sin justificación
+## `0x3004` - Lanzar y atajar excepciones específicas, no las clases base
 
 ### Explicación
 
-No atajar una excepción checked (IOException, SQLException) y relanzar una excepción unchecked genérica perdiendo información del tipo original.
+No está permitido lanzar o atajar las clases genéricas `Exception` o `RuntimeException`. Usá siempre clases de excepciones específicas (estándar de Java o del dominio) para poder dar a cada situación un manejo diferenciado y correcto.
 
 **Incorrecto** ❌:
 ```java
 try {
-    leerArchivo();
-} catch (IOException e) {
-    throw new RuntimeException("Error");  // ❌ Pérdida de información
+    if (error) throw new RuntimeException("error"); // ❌ Lanza base
+} catch (Exception e) {  // ❌ Ataja base
+    // manejar todo igual
 }
 ```
 
 **Correcto** ✅:
 ```java
 try {
-    leerArchivo();
+    if (error) throw new IllegalArgumentException("parámetro inválido"); // ✅ Lanza específica
 } catch (IOException e) {
-    throw new ArchivoNoDisponibleException("No se pudo leer: " + archivo, e);
+    // manejar IO
+} catch (IllegalArgumentException e) {
+    // manejar parámetros
 }
 ```
 
 (regla-0x3005)=
-## `0x3005` - Sean específicos con lo que atajan, no está permitido atajar `Exception` o `RuntimeException`
+## `0x3005` - Distinguir 'null' de 'vacío' al validar parámetros (Convención del Curso)
 
 ### Explicación
 
-Atajar excepciones específicas, no genéricas. Esto permite manejar cada caso apropiadamente.
-
-**Incorrecto** ❌:
-```java
-try {
-    // código
-} catch (Exception e) {  // ❌ Demasiado genérico
-    // manejar
-}
-```
-
-**Correcto** ✅:
-```java
-try {
-    // código
-} catch (IOException e) {
-    // manejar IO
-} catch (SQLException e) {
-    // manejar BD
-}
-```
-
-(regla-0x3006)=
-## `0x3006` - Situaciones diferentes requieren excepciones diferentes
-
-### Explicación
-
-Situaciones como "arreglo vacío" y "arreglo null" son casos diferentes que ameritan mensajes y tipos de excepciones distintos.
+Situaciones como "arreglo vacío" y "arreglo null" (o strings vacíos vs null) representan fallos diferentes y deben recibir excepciones diferentes. Como convención del curso, usaremos `NullPointerException` explícitamente para el caso de que la referencia sea null, y `IllegalArgumentException` u otra específica para colecciones vacías.
 
 **Incorrecto** ❌:
 ```java
@@ -177,37 +178,12 @@ if (arreglo.length == 0) {
 }
 ```
 
-**Ejemplo reutilizable** (TP3 - Arreglos):
-```java
-/**
- * Verifica que un arreglo no sea null ni esté vacío.
- * @param arreglo el arreglo a verificar
- * @throws NullPointerException si el arreglo es null
- * @throws IllegalArgumentException si el arreglo está vacío
- */
-private static void validarArreglo(int[] arreglo) {
-    if (arreglo == null) {
-        throw new NullPointerException("El arreglo no puede ser null");
-    }
-    if (arreglo.length == 0) {
-        throw new IllegalArgumentException("El arreglo no puede estar vacío");
-    }
-}
-```
-
-(regla-0x3007)=
-## `0x3007` - 'Largo cero' y `null` son dos situaciones bastante diferentes
+(regla-0x3006)=
+## `0x3006` - Documentación y declaración correcta de Excepciones
 
 ### Explicación
 
-Que requieren de excepciones distintas para que su tratamiento pueda ser más específico. Ver {ref}`regla-0x3006`.
-
-(regla-0x3008)=
-## `0x3008` - Declarar el lanzamiento de una excepción no controlada es un error
-
-### Explicación
-
-No es correcto (ni necesario) declarar `throws` para RuntimeException y sus subclases.
+No debés declarar (`throws`) excepciones no controladas (`RuntimeException` y derivadas) en la firma del método, ya que es redundante y confuso. Sin embargo, sí debés documentar qué familia de excepciones elegís usar en el Javadoc de la clase o paquete.
 
 **Incorrecto** ❌:
 ```java
@@ -218,7 +194,11 @@ public void metodo() throws RuntimeException {  // ❌ Innecesario
 
 **Correcto** ✅:
 ```java
-public void metodo() {  // ✅ RuntimeException no se declara
+/**
+ * Realiza una operación.
+ * @throws IllegalArgumentException si los argumentos son inválidos
+ */
+public void metodo() {  // RuntimeException no se declara
     // código
 }
 ```
@@ -242,34 +222,10 @@ throw new MiExcepcionEspecifica("error");
 throw new IllegalArgumentException("parámetro inválido");
 ```
 
-(regla-0x300A)=
-## `0x300A` - Mejor prevenir que atajar
-
-### Explicación
-
-Siempre que sea posible, prevenir la excepción en lugar de esperar a que falle (LBYL - Look Before You Leap).
-
-**Menos óptimo** ⚠️:
-```java
-try {
-    int resultado = dividir(a, b);
-} catch (ArithmeticException e) {
-    // manejar división por cero
-}
-```
-
-**Mejor** ✅:
-```java
-if (b != 0) {
-    int resultado = dividir(a, b);
-} else {
-    // manejar caso especial
-}
-```
-
 (regla-0x300B)=
 ## `0x300B` - Silenciar una excepción no es la forma de gestionarla
 
+Esto incluye atajar para hacer únicamente algún tipo de `print`.
 ### Explicación
 
 No dejar bloques catch vacíos. Como mínimo, loggear el error.
@@ -292,6 +248,7 @@ try {
     // Y tomar decisión: reintentar, valor por defecto, etc.
 }
 ```
+
 
 (regla-0x300C)=
 ## `0x300C` - No está permitido atajar para relanzar sin agregar información útil
@@ -316,31 +273,5 @@ try {
 } catch (IOException e) {
     throw new ArchivoConfiguracionException(
         "No se pudo leer configuración de: " + archivo, e);
-}
-```
-
-(regla-0x300D)=
-## `0x300D` - Atajar para hacer algún tipo de `print` no es gestionar la excepción
-
-### Explicación
-
-Imprimir el stack trace no es manejar la excepción. Usar logging apropiado y tomar decisión sobre cómo continuar.
-
-**Incorrecto** ❌:
-```java
-try {
-    operacion();
-} catch (Exception e) {
-    e.printStackTrace();  // ❌ Solo imprime, no maneja
-}
-```
-
-**Correcto** ✅:
-```java
-try {
-    operacion();
-} catch (OperacionException e) {
-    logger.error("Error en operación", e);
-    // Reintentar, usar valor por defecto, o relanzar
 }
 ```
