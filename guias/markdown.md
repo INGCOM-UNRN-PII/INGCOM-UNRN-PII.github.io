@@ -5,294 +5,105 @@ description:
   Guía completa de sintaxis Markdown para documentación técnica y académica
 ---
 
-# Guía de Markdown (GitHub Flavored)
-
-## Introducción
+# Guía de Markdown
 
 Markdown es un lenguaje de marcado ligero diseñado para ser **fácil de leer y
-escribir**, incluso en su forma sin procesar. Fue creado por John Gruber en 2004
-con el objetivo de permitir que las personas escriban documentos formateados
-usando una sintaxis simple basada en texto plano.
+escribir**. Los archivos `.md` son puro texto, funcionan en cualquier editor y
+son el estándar absoluto en GitHub para la documentación.
 
-### ¿Por qué Markdown?
+Esta guía se divide en dos partes: lo **imprescindible** que vas a usar todos los días, y los **extras avanzados** que dependen del renderizador de GitHub (GFM).
 
-- **Simplicidad**: La sintaxis es intuitiva y se aprende rápidamente
-- **Portabilidad**: Los archivos `.md` son texto plano, funcionan en cualquier
-  editor
-- **Versionable**: Al ser texto plano, funciona perfectamente con Git y permite
-  trackear cambios de forma muy simple
-- **Conversión**: Se puede exportar a HTML, PDF, y otros formatos
-- **Enfoque en el contenido**: Te permite concentrarte en escribir sin
-  preocuparte por el formato visual
-- **Ubicuidad**: La sintaxis se usa en múltiples plataformas, incluso WhatsApp
-  soporta algunas funciones de formato con esta sintaxis
+---
 
-### GitHub Flavored Markdown (GFM)
+## Parte 1: Lo Mínimo para Empezar
 
-Esta guía cubre específicamente **GitHub Flavored Markdown (GFM)**, una variante
-extendida de Markdown que:
+Con estos seis elementos podés resolver el 90% de tus necesidades de documentación. Esta sintaxis es universal y funcionará en cualquier visualizador de Markdown.
 
-- Agrega características útiles como tablas, listas de tareas y resaltado de
-  sintaxis
-- Es el estándar utilizado en GitHub para README, issues, pull requests y
-  documentación
-- Es compatible con MyST (Markedly Structured Text), usado en esta documentación
-- Permite embeber HTML limitado para casos especiales
+### 1. Encabezados
 
-### Estructura del documento
-
-Los documentos Markdown bien estructurados facilitan la lectura y la navegación.
-Usá encabezados para organizar jerárquicamente el contenido, lo que además
-genera automáticamente una tabla de contenido navegable.
-
-## Encabezados
-
-Los encabezados estructuran el documento y crean la **tabla de contenido**
-automáticamente. Usá un único `#` para el título principal del documento, y
-luego jerarquizá las secciones con `##`, `###`, etc.
-
-Los encabezados se crean con el símbolo `#`. Cuantos más `#`, menor el nivel del
-encabezado.
+Los encabezados estructuran el documento y crean jerarquía. Usá el símbolo `#`.
+**Regla de oro:** Solo un `#` por archivo para el título principal.
 
 ```markdown
-# Encabezado de nivel 1
-
-## Encabezado de nivel 2
-
-### Encabezado de nivel 3
-
-#### Encabezado de nivel 4
-
-##### Encabezado de nivel 5
-
-###### Encabezado de nivel 6
+# Título del documento (H1)
+## Sección principal (H2)
+### Subsección (H3)
+#### Detalle (H4)
 ```
 
-**Uso recomendado:**
+### 2. Énfasis de Texto
 
-- `#` para el título del documento (solo uno por archivo)
-- `##` para secciones principales
-- `###` para subsecciones
-- `####` en adelante para divisiones menores
-
-Los encabezados también permiten navegación directa mediante anclas automáticas:
-`#encabezado-de-nivel-1`
-
-## Énfasis de Texto
-
-El énfasis sirve para **destacar conceptos importantes** o _enfatizar términos
-técnicos_. Usá negrita para conceptos clave y cursiva para términos extranjeros,
-variables o énfasis suave.
-
-Podés enfatizar texto usando asteriscos o guiones bajos.
+Usá negrita para destacar conceptos importantes y cursiva para énfasis suave o términos técnicos.
 
 ```markdown
-_Texto en cursiva_ o _también en cursiva_
-
-**Texto en negrita** o **también en negrita**
-
-**_Texto en negrita y cursiva_** o **_también en negrita y cursiva_**
-
+**Texto en negrita**
+_Texto en cursiva_
 ~~Texto tachado~~
 ```
 
-**Resultado:**
+### 3. Listas
 
-_Texto en cursiva_ o _también en cursiva_
-
-**Texto en negrita** o **también en negrita**
-
-**_Texto en negrita y cursiva_** o **_también en negrita y cursiva_**
-
-~~Texto tachado~~
-
-## Listas
-
-Las listas organizan información en puntos o pasos. Usá **listas no ordenadas**
-cuando el orden no importa (características, requisitos, opciones) y **listas
-ordenadas** para secuencias, pasos o rankings.
-
-### Listas no ordenadas
-
-Ideales para enumerar elementos sin jerarquía o prioridad específica. Usá `*`,
-`-` o `+` para crear listas no ordenadas.
+Ideales para enumerar pasos o características.
 
 ```markdown
+**Lista con viñetas:**
 - Primer elemento
 - Segundo elemento
-- Tercer elemento
-  - Sub-elemento
-  - Otro sub-elemento
+  - Sub-elemento (con indentación)
+
+**Lista numerada:**
+1. Primer paso
+2. Segundo paso
 ```
 
-### Listas ordenadas
+### 4. Enlaces
 
-Perfectas para instrucciones paso a paso, algoritmos o cualquier secuencia donde
-el orden sea importante. Usá números seguidos de un punto.
+Conectan tu documento con recursos externos o archivos locales.
 
 ```markdown
-1. Primer elemento
-2. Segundo elemento
-3. Tercer elemento
-   1. Sub-elemento
-   2. Otro sub-elemento
+[Documentación de Java](https://docs.oracle.com/en/java/)
+[Ir a la guía de Git](./git.md)
 ```
 
-## Enlaces
+### 5. Imágenes
 
-Los enlaces conectan tu documento con recursos externos o internos. Usá enlaces
-para referenciar documentación oficial, otros archivos del proyecto, o recursos
-web relevantes.
+Sintaxis idéntica a los enlaces, pero precedida por un signo de exclamación `!`. El texto entre corchetes es el texto alternativo (importante si la imagen no carga).
 
 ```markdown
-[Texto del enlace](https://ejemplo.com)
-
-[Enlace con título](https://ejemplo.com "Título opcional")
-
-[Enlace a archivo local](./archivo.md)
-
-<https://ejemplo.com>
+![Logo de la cátedra](../images/logo.png)
 ```
 
-**Casos de uso:**
+### 6. Código
 
-- Enlaces a documentación oficial o referencias externas
-- Navegación entre archivos del proyecto
-- Enlaces a secciones específicas usando anclas: `[Ver sección](#encabezados)`
+Esencial para la documentación técnica. Usá comillas simples invertidas para código integrado en el párrafo, y triple comilla invertida para bloques multilínea.
 
-## Imágenes
-
-Las imágenes ilustran conceptos, muestran capturas de pantalla de interfaces,
-diagramas o resultados esperados. El texto alternativo es crucial para
-accesibilidad y cuando la imagen no puede cargarse.
+**Código en línea:**
+El método `printf()` imprime en consola.
 
 ```markdown
-![Texto alternativo](ruta/a/imagen.png)
-
-![Texto alternativo](ruta/a/imagen.png "Título opcional")
+El método `printf()` imprime en consola.
 ```
 
-**Casos de uso:**
-
-- Capturas de pantalla de interfaces o configuraciones
-- Diagramas que complementan explicaciones textuales
-- Resultados esperados de ejecución de programas
-- Gráficos o visualizaciones de datos
-
-## Código
-
-El código es fundamental en documentación técnica. Usá **código en línea** para
-mencionar funciones, variables o comandos dentro de un párrafo, y **bloques de
-código** para ejemplos completos que se puedan copiar y ejecutar.
-
-### Código en línea
-
-Ideal para mencionar funciones, variables, comandos o fragmentos pequeños dentro
-de un texto. Usá comillas invertidas simples.
-
-```markdown
-Usá la función `printf()` para imprimir.
-```
-
-**Casos de uso:**
-
-- Nombres de funciones: `malloc()`, `free()`
-- Variables: `int contador`
-- Comandos: `gcc -Wall`
-- Valores literales: `NULL`, `0`
-
-### Bloques de código
-
-Esenciales para mostrar ejemplos completos de código fuente. Especificá el
-lenguaje para habilitar el resaltado de sintaxis, lo que mejora
-significativamente la legibilidad.
+**Bloques de código:**
+Añadí el nombre del lenguaje después de las comillas triples para activar los colores de sintaxis.
 
 ````markdown
-```c
-#include <stdio.h>
-
-int main() {
-    printf("Hola Mundo\n");
-    return 0;
+```java
+public static void main(String[] args) {
+    System.out.println("Hola");
 }
 ```
 ````
 
-Lenguajes comunes: `c`, `python`, `java`, `javascript`, `bash`, `sql`, `html`,
-`css`, etc.
-
-**Casos de uso:**
-
-- Ejemplos de código completos y ejecutables
-- Snippets de configuración
-- Comandos de terminal (usando `bash` o `sh`)
-- Salida de programas (usando `text` o sin especificar)
-
-## Citas
-
-Las citas destacan fragmentos de texto importantes, referencias textuales de
-documentación oficial, o notas importantes que deben diferenciarse del texto
-principal.
-
-Usá el símbolo `>` para crear citas.
-
-```markdown
-> Esta es una cita. Puede tener múltiples líneas.
->
-> Y múltiples párrafos.
-```
-
-**Resultado:**
-
-> Esta es una cita. Puede tener múltiples líneas.
->
-> Y múltiples párrafos.
-
-**Casos de uso:**
-
-- Citar especificaciones o estándares oficiales
-- Destacar advertencias o notas importantes
-- Referencias textuales de documentación
-- Resaltar mensajes de error o salidas importantes
-
-## Líneas horizontales
-
-Las líneas horizontales separan secciones temáticas diferentes dentro del
-documento. Usálas con moderación para indicar cambios de tema importantes, no
-entre cada sección.
-
-```markdown
 ---
 
----
+## Parte 2: GitHub Flavored Markdown (Avanzado)
 
----
-```
+Estas características son extensiones que no están en el estándar original de Markdown, pero que **GitHub (GFM)** y nuestro motor de documentación (MyST) soportan perfectamente.
 
-**Casos de uso:**
+### Tablas
 
-- Separar secciones conceptualmente diferentes
-- Delimitar ejemplos largos del texto principal
-- Separar contenido principal de apéndices o notas finales
-
-## Tablas
-
-Las tablas organizan información estructurada de forma comparativa. Son ideales
-para mostrar opciones, comparar características, listar parámetros de funciones,
-o presentar datos relacionados.
-
-Las tablas se crean con barras verticales `|` y guiones `-`.
-
-```markdown
-| Encabezado 1 | Encabezado 2 | Encabezado 3 |
-| ------------ | ------------ | ------------ |
-| Celda 1      | Celda 2      | Celda 3      |
-| Celda 4      | Celda 5      | Celda 6      |
-```
-
-### Alineación en tablas
-
-Controlá la alineación del contenido usando `:` en la línea separadora.
+Útiles para comparar datos. Usá barras verticales `|` y guiones `-`. Podés alinear con dos puntos `:`.
 
 ```markdown
 | Izquierda | Centro | Derecha |
@@ -301,26 +112,9 @@ Controlá la alineación del contenido usando `:` en la línea separadora.
 | Más texto |  Más   |     Más |
 ```
 
-**Casos de uso:**
+### Listas de tareas
 
-- Comparar características entre opciones
-- Documentar parámetros de funciones (nombre, tipo, descripción)
-- Mostrar resultados de benchmarks o mediciones
-- Listar tipos de datos y sus rangos
-- Comparar operadores o modificadores
-
-**Resultado:**
-
-| Izquierda | Centro | Derecha |
-| :-------- | :----: | ------: |
-| Texto     | Texto  |   Texto |
-| Más texto |  Más   |     Más |
-
-## Listas de tareas
-
-Las listas de tareas permiten trackear progreso en documentos de planificación,
-guías de ejercicios, o checklists de verificación. Son especialmente útiles en
-issues de GitHub y documentos colaborativos.
+Permiten hacer checklists interactivos en los Issues o PRs de GitHub.
 
 ```markdown
 - [x] Tarea completada
@@ -328,105 +122,46 @@ issues de GitHub y documentos colaborativos.
 - [ ] Otra tarea pendiente
 ```
 
-**Resultado:**
+### Citas (Blockquotes)
 
-- [x] Tarea completada
-- [ ] Tarea pendiente
-- [ ] Otra tarea pendiente
-
-**Casos de uso:**
-
-- Checklists de instalación o configuración
-- Seguimiento de ejercicios completados
-- Lista de requisitos o criterios de aceptación
-- Planificación de tareas en issues de GitHub
-
-## Escapar caracteres especiales
-
-Para mostrar literalmente caracteres que Markdown interpreta, usá la barra
-invertida `\`.
+Se usan para destacar advertencias, notas importantes o referencias textuales.
 
 ```markdown
-\* No será una viñeta \# No será un encabezado \[No será un
-enlace](https://ejemplo.com)
+> Esta es una cita importante.
+> Múltiples líneas requieren un `>` al inicio de cada una.
 ```
 
-## HTML en Markdown
+### HTML embebido
 
-GitHub Flavored Markdown permite HTML limitado para casos donde la sintaxis
-Markdown no es suficiente. Usá HTML con moderación y solo cuando sea necesario.
+Si Markdown no te alcanza (ej. para forzar el tamaño de una imagen o hacer una sección desplegable), GitHub permite HTML básico.
 
 ```markdown
 <details>
-<summary>Haz clic para expandir</summary>
-
-Contenido oculto que se muestra al expandir.
-
+<summary>Haz clic para expandir la respuesta</summary>
+Acá va el texto oculto.
 </details>
 ```
 
-**Resultado:**
+### Emojis
 
-<details>
-<summary>Haz clic para expandir</summary>
-
-Contenido oculto que se muestra al expandir.
-
-</details>
-
-**Casos de uso:**
-
-- Secciones colapsables para contenido opcional o avanzado
-- Soluciones de ejercicios que querés ocultar inicialmente
-- Contenido complementario que no querés que interrumpa el flujo
-- Detalles técnicos adicionales para lectores interesados
-
-## Comentarios
-
-Los comentarios son invisibles en el documento renderizado. Usálos para notas
-internas, recordatorios para revisiones futuras, o para desactivar temporalmente
-contenido sin borrarlo.
+Podés usar códigos de emoji directamente en GitHub.
 
 ```markdown
-<!-- Este es un comentario que no se verá -->
-<!-- TODO: Agregar más ejemplos aquí -->
-<!-- Sección desactivada temporalmente:
-## Contenido en desarrollo
-...
--->
+:smile: :heart: :rocket:
 ```
 
-**Casos de uso:**
+### Comentarios invisibles
 
-- Notas para otros colaboradores
-- TODOs y recordatorios de contenido pendiente
-- Desactivar secciones temporalmente sin perder el contenido
-- Metadatos o anotaciones que no deben publicarse
-
-## Emojis
-
-En GitHub Flavored Markdown, podés usar códigos de emoji.
+Si querés dejar una nota que no se vea en el documento final, usá sintaxis de comentario HTML.
 
 ```markdown
-:smile: :heart: :thumbsup: :rocket:
+<!-- TODO: Actualizar esta sección la semana que viene -->
 ```
 
-Podés encontrar una lista de estos códigos en
-[rxaviers/emoji-markup](https://gist.github.com/rxaviers/7360908)
+---
 
-## Referencias
+## Consejos Prácticos
 
-Para más información sobre Markdown:
-
-- [Guía oficial de GitHub Flavored Markdown](https://github.github.com/gfm/)
-- [Markdown Guide](https://www.markdownguide.org/)
-
-## Consejos prácticos
-
-1. **Legibilidad**: Escribí Markdown pensando en que sea legible incluso en su
-   forma sin procesar.
-2. **Consistencia**: Mantené un estilo consistente en todo el documento.
-3. **Espaciado**: Dejá líneas en blanco entre bloques para mejor legibilidad.
-4. **Anidación**: Usá espacios o tabs para anidar listas correctamente (4
-   espacios o 1 tab).
-5. **Previsualización**: Siempre previsualizá el documento antes de compartirlo.
+1. **Legibilidad:** Dejá siempre una línea en blanco entre diferentes bloques (ej. entre un párrafo y una lista).
+2. **Consistencia:** Elegí un estilo (por ejemplo, siempre usar `-` en lugar de `*` para listas) y mantenelo en todo el documento.
+3. **Escapar caracteres:** Si necesitás mostrar un símbolo literal como `*` o `#`, usá una barra invertida antes: `\*`.
