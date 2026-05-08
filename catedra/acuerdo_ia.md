@@ -1,75 +1,70 @@
 ---
-title: Acuerdo IA
-description: Los terminos y condiciones especificas de uso de la IA en clase.
+title: Acuerdo de Uso de IA
+description: Marco normativo para el uso de Inteligencia Artificial en Programación II.
 ---
 
-# Acuerdo de Cátedra: La Inteligencia Artificial y Vos (Edición Supervivencia Estudiantil)
+# Acuerdo de Uso de Inteligencia Artificial
 
-En esta cátedra entendemos que estamos en la era de los LLMs (_Large Language
-Models_) y los asistentes de código. Ignorar su existencia sería como intentar
-compilar sin dependencias. Por lo tanto, establecemos las siguientes normativas
-de uso para mantener la integridad académica y evitar que terminen delegando su
-propio procesamiento cognitivo a un servidor remoto.
+Este documento establece el marco normativo y pedagógico para el uso de herramientas de Inteligencia Artificial Generativa (IA) en la asignatura Programación II. El objetivo es integrar estas tecnologías de manera ética y productiva, priorizando siempre el desarrollo de la autonomía cognitiva y la responsabilidad profesional del estudiante.
 
-## 1. Uso Permitido: El _Buff_ de Inteligencia
+## 1. Fundamento Pedagógico
 
-**Autorización:** Está permitido utilizar herramientas de IA para refactorizar,
-asistir en el _debugging_ o desglosar conceptos complejos de los lenguajes
-abordados (C, Java, Python, etc.).
+La cátedra reconoce que los asistentes de código y los modelos de lenguaje (LLM) son parte integral del ecosistema profesional actual. Sin embargo, su uso prematuro o excesivo puede atrofiar el aprendizaje de conceptos fundamentales. La meta es que aprendas a programar con estas herramientas, no que delegues el proceso de pensamiento en ellas. El conocimiento debe residir en el estudiante, quien es el único responsable final por la calidad y corrección del software entregado.
 
-**Trazabilidad obligatoria:** Todo uso debe estar explícitamente documentado.
-Deben incluir un anexo o comentarios en el código detallando el _prompt_
-utilizado, la herramienta, y cómo analizaron e integraron el _output_ a su
-solución.
+## 2. Reglas Operativas
 
-## 2. Responsabilidad y _Skill Checks_
+### 2.1. Trabajos Prácticos y Entregas Semanales
+El uso de IA está permitido bajo un esquema de **trazabilidad obligatoria**. 
 
-- Ustedes son los únicos responsables de la arquitectura y el funcionamiento de
-  lo que entregan. La IA es un copiloto, no el desarrollador _senior_ que les va
-  a salvar las papas.
+*   **Autonomía:** El estudiante debe ser capaz de explicar y defender cada línea de código entregada.
+*   **Trazabilidad:** Cualquier fragmento de código generado, sugerido o refactorizado por una IA debe declararse siguiendo el formato establecido en la sección 3.
+*   **Validación:** Es responsabilidad del estudiante verificar la exactitud técnica del código generado. Las alucinaciones de la IA no se aceptan como justificativo de errores.
 
-- Si presentan una solución, deben poder defender su lógica de principio a fin.
-  Si al ser consultados sobre el funcionamiento de un bloque de código o un
-  concepto sus mentes entran en _Error 404_ o se quedan mirando a la nada como
-  el meme de _Loading..._, la entrega será calificada automáticamente como
-  **INCOMPLETO**. El "_This is fine_" no es una defensa válida en la corrección.
+### 2.2. Evaluaciones Parciales
+Durante las instancias de examen parcial y final, el uso de cualquier herramienta de IA generativa está **estrictamente prohibido**. Estas instancias buscan evaluar el desempeño individual del estudiante en un entorno controlado para garantizar la adquisición de las competencias mínimas.
 
-## 3. Evaluaciones Parciales: _You Shall Not Pass_
+## 3. Formato de Declaración de Uso (Registro de IA)
 
-:::{important} **Prohibición Absoluta:** 
+Toda entrega que haya contado con asistencia de IA debe incluir un archivo llamado `IA_LOG.md` en la raíz del repositorio o una sección específica en el encabezado del archivo fuente, con el siguiente detalle:
 
-Durante los exámenes parciales, el entorno está aislado. El uso de cualquier 
-herramienta de IA generativa está **TERMINANTEMENTE PROHIBIDO**. Las evaluaciones
-son estrictamente en modo _Hardcore_. 
+| Campo | Descripción |
+| :--- | :--- |
+| **Herramienta** | Nombre y versión del modelo (ej: ChatGPT 4o, GitHub Copilot). |
+| **Objetivo** | Qué se intentó resolver (ej: refactorización de bucle, debugging de excepción). |
+| **Prompt** | El texto exacto de la instrucción enviada a la IA. |
+| **Análisis Crítico** | Explicación de qué se modificó de la sugerencia de la IA y por qué. |
 
-:::
+*El incumplimiento en la entrega de este registro ante la detección de uso de IA invalidará la entrega.*
 
-:::{warning} **Penalidad (_Permaban_):** 
+## 4. Ejemplos de Uso
 
-Quien sea detectado utilizando IA, eludiendo restricciones de red o copiando código 
-generado durante un parcial, recibirá _Insta-Kill_: **expulsión inmediata de la cátedra**,
-sin _respawn_ ni derecho a recuperatorio. Presionaremos "F" por su cursada, pero la
-decisión es inapelable.
+### 4.1. Uso Permitido con Trazabilidad
+*   **Consulta de documentación:** Pedir a la IA que explique el funcionamiento de una clase de la API de Java (ej: `java.nio.file.Files`).
+*   **Refactorización:** Solicitar sugerencias para simplificar un método que ya funciona pero es difícil de leer.
+*   **Debugging:** Pegar un error de compilación y el código relacionado para identificar un olvido sintáctico.
 
-:::
+### 4.2. Uso No Permitido
+*   **Uso en exámenes:** Cualquier consulta a una IA durante el horario de parcial.
+
+## 5. Sanciones y Procedimientos
+
+La detección de uso de cualquier tipo en exámenes parciales, activará el siguiente protocolo:
+
+1.  **Detección:** Si el docente identifica patrones de código ajenos al nivel de la cursada o el estudiante no puede explicar la lógica de su entrega.
+2.  **Entrevista:** Se citará al estudiante a una defensa oral técnica.
+3.  **Sanción en exámenes parciales:** La calificación será 0 (cero) sin posibilidad de recuperar.
+
+## 6. Declaración del Estudiante
+
+Al realizar sus entregas en esta cátedra, el estudiante declara:
+*   Haber leído y comprendido este acuerdo.
+*   Ser el autor de la arquitectura lógica de sus entregas.
+*   Asumir que el uso de IA es un complemento y no un reemplazo del estudio.
+*   Aceptar que la incapacidad de explicar el código propio es prueba suficiente de un uso indebido de las herramientas.
 
 ---
 
-**Declaración del Alumno/a:** Al firmar este acuerdo, confirmo que he leído y
-aceptado las reglas del juego. Comprendo que mi objetivo principal es consolidar
-el conocimiento en mi propio disco rígido biológico y asumo total
-responsabilidad por mis entregas.
-
-Firma: ************\_\_\_************
-
-Aclaración: ************\_\_\_************
-
-Fecha: **_/_**/\_\_\_
-
-
-## Lo más importante
-
-Reglas claras conservan el meme
-
-La cátedra está abierta a conversar en [Discussions](https://github.com/orgs/INGCOM-UNRN-PII/discussions)
-cualquier cosa que vean, e incluso este acuerdo.
+### Resumen Ejecutivo de Cumplimiento
+*   **¿Puedo usar IA en TPs?** Sí, si lo documentás en el `IA_LOG.md` y sabés explicarlo.
+*   **¿Puedo usar IA en parciales?** No, bajo ninguna circunstancia.
+*   **¿Qué pasa si no declaro el uso?** Te arriesgás a la anulación de la entrega y sanciones académicas.
