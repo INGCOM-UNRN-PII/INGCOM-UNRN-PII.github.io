@@ -12,7 +12,7 @@ Complementario al JDK (que **debe estar instalado antes** que el IDE), utilizare
 ## 1. Descarga
 
 :::{tip} Versión Recomendada
-Descargá la **Community Edition** desde [este enlace](https://download.jetbrains.com/idea/ideaIC-2024.3.3.exe). No recomendamos usar versiones de pago (Ultimate) aunque estén disponibles gratis para estudiantes: consumen muchos más recursos en funciones web/empresariales que no utilizaremos.
+Descargá IntelliJ desde [este enlace](https://download.jetbrains.com/idea/ideaIC-2024). No recomendamos usar versiones de pago (Ultimate) aunque estén disponibles gratis para estudiantes: consumen muchos más recursos en funciones que no utilizaremos.
 :::
 
 ---
