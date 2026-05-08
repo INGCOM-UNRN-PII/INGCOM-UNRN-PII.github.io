@@ -6,51 +6,47 @@ subtitle: Dominio completo del control de versiones.
 (intro-git-avanzado)=
 ## ¿Por qué aprender Git avanzado?
 
-Esta guía asume que ya manejás los conceptos fundamentales de Git (de la guía
-básica) y podés trabajar cómodamente con comandos esenciales del día a día.
-Ahora es momento de subir el nivel y aprender las técnicas que usan los
-desarrolladores senior para gestionar proyectos complejos, colaborar
-eficientemente en equipos grandes, y resolver problemas sofisticados de control
-de versiones.
+Esta guía asume que **ya manejás con soltura** los conceptos fundamentales de Git (add, commit, push, pull, status, clone) y que entendés la diferencia entre el directorio de trabajo y el área de preparación (staging). Aquí **no repetiremos** las bases del ciclo diario ni configuraciones iniciales.
 
-### Lo que vas a aprender
+Si todavía tenés dudas sobre esos puntos, consultá primero la [Guía de Git para principiantes](git.md).
 
-- **Branching y merging**: Estrategias de ramificación profesionales
-- **Rebase y rewriting history**: Manipulación avanzada del historial
-- **Resolución de conflictos**: Técnicas para manejar fusiones complejas
-- **Git workflows**: Flujos de trabajo para equipos y proyectos grandes
-- **Hooks y automatización**: Automatizar tareas y validaciones
-- **Debugging avanzado**: Técnicas para encontrar y corregir problemas
-- **Performance y optimización**: Mantener repositorios grandes eficientes
-- **Integración con herramientas**: CI/CD, IDEs, y servicios externos
+Ahora es momento de subir el nivel y aprender las técnicas que usan los desarrolladores profesionales para gestionar proyectos complejos, colaborar eficientemente en equipos grandes y resolver problemas de control de versiones.
 
-:::{important} Prerequisitos Esta guía asume que ya dominás:
+### Recorridos recomendados
 
-- Comandos básicos de Git (add, commit, push, pull)
-- Trabajo con repositorios remotos
-- GitHub básico
-- Conceptos de staging area y working directory
+Dado que esta guía aborda múltiples temas complejos, te sugerimos no leerla linealmente, sino según tu necesidad actual:
 
-Si necesitás repasar estos conceptos, consultá primero la
-[Guía de Git para principiantes](./git.md). 
+1.  **Si querés entender cómo funciona Git por dentro:** Empezá por [Conceptos avanzados fundamentales](#conceptos-avanzados) (referencias e índice).
+2.  **Si vas a trabajar en equipo:** Leé primero [Branching y estrategias](#branching-estrategias) y [Git Workflows](#git-workflows).
+3.  **Si tenés problemas fusionando ramas:** Saltá directo a [Resolución de conflictos](#resolucion-conflictos).
+4.  **Si querés limpiar tu historial antes de compartir:** Revisá [Rebase: Reescribiendo la historia](#rebase-avanzado).
+5.  **Si metiste la pata y perdiste código:** Andá directo a [Git Reflog](#git-reflog).
 
+:::{warning} Advertencia sobre ejemplos
+Muchos comandos en esta guía incluyen **ejemplos plantilla** con hashes inventados (ej: `1a2b3c4`) o nombres de ramas genéricos (ej: `feature/nueva-funcionalidad`). **No los copies y pegues directamente.** Deberás adaptarlos con los hashes y nombres reales de tu repositorio.
 :::
 
+(parte-internals)=
+## Parte 1: Mecánicas Internas y Fundamentos
+
+Esta sección explora cómo Git funciona por debajo. Estos comandos son seguros porque la mayoría son de solo lectura, pero entenderlos es clave para manipular el historial más adelante.
+
 (conceptos-avanzados)=
-## Conceptos avanzados fundamentales
+### Conceptos avanzados fundamentales
 
 Antes de sumergirnos en técnicas específicas, es crucial entender algunos
 conceptos avanzados que aparecerán constantemente.
 
 (referencias-git)=
-### Referencias en Git
+#### Referencias en Git
 
 Git usa un sistema de referencias para identificar commits, ramas, y otros
 objetos. Entender estas referencias es fundamental para el trabajo avanzado.
 
-#### Tipos de referencias
+##### Tipos de referencias
 
 ```bash
+# NOTA: Los hashes como '1a2b3c4d5e6f' son plantillas. Reemplazalos por tus propios hashes.
 # Referencias absolutas
 git show 1a2b3c4d5e6f                    # Hash completo del commit
 git show 1a2b3c4                         # Hash corto (mínimo 4 caracteres)
@@ -74,14 +70,15 @@ git show HEAD@{5}                        # HEAD hace 5 cambios en reflog
 ```
 
 (objetos-git)=
-### Objetos internos de Git
+#### Objetos internos de Git
 
 Git almacena todo como objetos inmutables. Entender estos objetos te ayuda a
 comprender cómo funciona Git internamente.
 
-#### Los cuatro tipos de objetos
+##### Los cuatro tipos de objetos
 
 ```bash
+# NOTA: Reemplazar '1a2b3c4d' y 'v1.0.0' por referencias reales de tu repositorio.
 # 1. Blob - contenido de archivos
 git cat-file -t 1a2b3c4d    # muestra el tipo: "blob"
 git cat-file -p 1a2b3c4d    # muestra el contenido
@@ -100,7 +97,7 @@ git cat-file -p v1.0.0       # información del tag
 ```
 
 (indice-staging-avanzado)=
-### Índice y staging avanzado
+#### Índice y staging avanzado
 
 El índice de Git es más poderoso que un simple "área de preparación". Entender
 sus capacidades avanzadas te permite workflows más sofisticados.
@@ -126,8 +123,13 @@ git stash push --keep-index         # stash excepto lo que está en staging
 git stash push --include-untracked  # incluir archivos untracked
 ```
 
+(parte-colaboracion)=
+## Parte 2: Colaboración Segura y Uso Cotidiano
+
+Aquí veremos comandos y estrategias que podés usar todos los días para interactuar con tu equipo de forma segura, sin reescribir el historial público.
+
 (branching-estrategias)=
-## Branching y estrategias de ramificación
+### Branching y estrategias de ramificación
 
 Las ramas son la funcionalidad más poderosa de Git. Dominar el branching te
 permite trabajar en múltiples features simultáneamente, experimentar sin riesgo,
@@ -203,89 +205,6 @@ git merge -X theirs feature/branch            # preferir "su" versión en confli
 git merge -s ours feature/branch              # ignorar completamente los cambios de la otra rama
 git merge -s subtree feature/branch           # para proyectos con subárboles
 ```
-
-(rebase-avanzado)=
-### Rebase: Reescribiendo la historia
-
-`git rebase` es una herramienta poderosa para mantener un historial limpio y
-lineal. Sin embargo, requiere cuidado porque reescribe la historia.
-
-#### Rebase básico vs merge
-
-```bash
-# Situación inicial:
-# A - B - C (main)
-#     \
-#      D - E (feature)
-
-# Con merge:
-git checkout main
-git merge feature
-# Resultado: A - B - C - F (main)
-#                \     /
-#                 D - E
-
-# Con rebase:
-git checkout feature
-git rebase main
-git checkout main
-git merge feature  # fast-forward
-# Resultado: A - B - C - D' - E' (main, feature)
-```
-
-#### Rebase interactivo
-
-El rebase interactivo te permite editar, reordenar, combinar o eliminar commits.
-
-```bash
-# Rebase interactivo de los últimos 3 commits
-git rebase -i HEAD~3
-
-# En el editor se abre algo así:
-# pick 1a2b3c4 Add feature X
-# pick 5d6e7f8 Fix bug in feature X
-# pick 9g0h1i2 Update documentation
-#
-# Comandos disponibles:
-# pick = usar el commit tal como está
-# reword = usar el commit pero editar el mensaje
-# edit = usar el commit pero parar para hacer amends
-# squash = fusionar este commit con el anterior
-# fixup = como squash pero descartar el mensaje de este commit
-# drop = eliminar el commit
-```
-
-#### Casos de uso avanzados de rebase
-
-```bash
-# Rebase sobre otra rama
-git rebase upstream/main                    # rebase sobre upstream
-git rebase main feature                     # rebase feature sobre main
-
-# Rebase con rango específico
-git rebase --onto main feature~3 feature   # rebase últimos 3 commits de feature sobre main
-
-# Rebase preservando merges
-git rebase --preserve-merges main           # mantener estructura de merge commits
-
-# Rebase con estrategia específica
-git rebase -X theirs main                   # en conflictos, preferir la otra rama
-
-# Continuar/abortar rebase
-git rebase --continue                       # continuar después de resolver conflictos
-git rebase --abort                         # cancelar rebase y volver al estado original
-git rebase --skip                          # saltar el commit actual
-```
-
-:::{warning} Regla de oro del rebase 
-
-**Nunca hagas rebase de commits que ya
-fueron pusheados y compartidos con otros**. El rebase reescribe la historia, y
-si otros ya tienen esos commits, crearás problemas de sincronización.
-
-Rebase solo commits locales o en ramas que solo vos usás. 
-
-:::
 
 (resolucion-conflictos)=
 ## Resolución avanzada de conflictos
@@ -411,8 +330,96 @@ git pull origin main
 git branch -d feature/nueva-funcionalidad
 ```
 
+(parte-manipulacion)=
+## Parte 3: Manipulación del Historial y Herramientas Destructivas
+
+Aquí agrupamos comandos que reescriben la historia o permiten acciones avanzadas de recuperación. ¡Usalos con precaución!
+
+(rebase-avanzado)=
+### Rebase: Reescribiendo la historia
+
+`git rebase` es una herramienta poderosa para mantener un historial limpio y
+lineal. Sin embargo, requiere cuidado porque reescribe la historia.
+
+#### Rebase básico vs merge
+
+```bash
+# Situación inicial:
+# A - B - C (main)
+#     \
+#      D - E (feature)
+
+# Con merge:
+git checkout main
+git merge feature
+# Resultado: A - B - C - F (main)
+#                \     /
+#                 D - E
+
+# Con rebase:
+git checkout feature
+git rebase main
+git checkout main
+git merge feature  # fast-forward
+# Resultado: A - B - C - D' - E' (main, feature)
+```
+
+#### Rebase interactivo
+
+El rebase interactivo te permite editar, reordenar, combinar o eliminar commits.
+
+```bash
+# Rebase interactivo de los últimos 3 commits
+git rebase -i HEAD~3
+
+# En el editor se abre algo así:
+# pick 1a2b3c4 Add feature X
+# pick 5d6e7f8 Fix bug in feature X
+# pick 9g0h1i2 Update documentation
+#
+# Comandos disponibles:
+# pick = usar el commit tal como está
+# reword = usar el commit pero editar el mensaje
+# edit = usar el commit pero parar para hacer amends
+# squash = fusionar este commit con el anterior
+# fixup = como squash pero descartar el mensaje de este commit
+# drop = eliminar el commit
+```
+
+#### Casos de uso avanzados de rebase
+
+```bash
+# Rebase sobre otra rama
+git rebase upstream/main                    # rebase sobre upstream
+git rebase main feature                     # rebase feature sobre main
+
+# Rebase con rango específico
+git rebase --onto main feature~3 feature   # rebase últimos 3 commits de feature sobre main
+
+# Rebase preservando merges
+git rebase --preserve-merges main           # mantener estructura de merge commits
+
+# Rebase con estrategia específica
+git rebase -X theirs main                   # en conflictos, preferir la otra rama
+
+# Continuar/abortar rebase
+git rebase --continue                       # continuar después de resolver conflictos
+git rebase --abort                         # cancelar rebase y volver al estado original
+git rebase --skip                          # saltar el commit actual
+```
+
+:::{warning} Regla de oro del rebase 
+
+**Nunca hagas rebase de commits que ya
+fueron pusheados y compartidos con otros**. El rebase reescribe la historia, y
+si otros ya tienen esos commits, crearás problemas de sincronización.
+
+Rebase solo commits locales o en ramas que solo vos usás. 
+
+:::
+
 (herramientas-avanzadas)=
-## Herramientas avanzadas de Git
+### Herramientas avanzadas de Git
 
 (git-bisect)=
 ### Git Bisect: Búsqueda binaria de bugs

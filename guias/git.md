@@ -11,17 +11,19 @@ registro detallado de los cambios en tu código. Es como tener un "historial de
 cambios" súper poderoso que no solo guarda qué cambió, sino también quién lo
 cambió, cuándo y por qué.
 
-Esta guía te llevará desde la {ref}`instalacion-git` hasta dominar los
-{ref}`comandos-esenciales` para uso diario, incluyendo cómo trabajar con
-{ref}`repositorios-remotos` como GitHub. Al final entenderás perfectamente el
-{ref}`flujo-trabajo-basico` que usan los desarrolladores profesionales.
+Esta guía te llevará desde la instalación inicial hasta conocer los
+comandos esenciales para el uso diario personal, incluyendo cómo conectar tu
+código con repositorios remotos como GitHub. Al final, tendrás las
+herramientas suficientes para versionar tus propios proyectos de manera segura.
+El trabajo colaborativo avanzado y la manipulación profunda del historial 
+quedarán para guías posteriores.
 
 ### Ventajas del control de versiones
 
 - **Historial completo**: Podés ver cada cambio que hiciste en tu proyecto
 - **Respaldo automático**: Tu código está seguro, nunca más vas a perder trabajo
 - **Experimentación segura**: Probá cambios sin miedo a romper lo que funciona
-- **Colaboración**: Trabajá con otros sin pisar el código del compañero
+- **Colaboración base**: Compartí tu código fácilmente
 - **Portabilidad**: Llevá tu proyecto completo a cualquier computadora
 
 :::{note} Un poco de historia
@@ -36,10 +38,9 @@ software.
 ## Conceptos fundamentales
 
 Antes de empezar a usar Git, es importante entender algunos conceptos clave.
-Estos conceptos aparecerán constantemente cuando uses los
-{ref}`comandos-esenciales` y entender bien la diferencia entre el
-{ref}`working-directory`, {ref}`staging-area` y los {ref}`commit-concepto` es
-fundamental para dominar Git.
+Estos conceptos aparecerán constantemente en el uso diario. Entender la
+diferencia entre tu directorio de trabajo, el área de preparación (staging)
+y los commits es fundamental para dar los primeros pasos.
 
 (repositorio-concepto)=
 ### Repositorio (repo)
@@ -70,6 +71,10 @@ un commit.
 
 (estados-archivos)=
 ### Estados de los archivos
+
+:::{note} Simplificación Pedagógica
+El siguiente diagrama es un modelo simplificado para entender el ciclo de vida básico de un archivo en Git. En la práctica, Git gestiona estados más complejos (como conflictos durante fusiones o estados intermedios en el índice), los cuales se exploran en guías más avanzadas.
+:::
 
 ```mermaid
 graph LR
@@ -2292,6 +2297,17 @@ Recordá que Git es una herramienta poderosa que te va a acompañar durante toda
 tu carrera como programador. Entender bien los {ref}`conceptos-fundamentales` y
 practicar constantemente el {ref}`flujo-diario` te dará una base sólida para
 eventualmente aprender técnicas más avanzadas.
+
+### ¿Qué sigue ahora?
+
+Si bien con esta guía podés trabajar perfectamente por tu cuenta, el trabajo en equipos requiere otras habilidades. Quedan fuera de este recorrido básico:
+
+*   **Ramas (Branching) y Fusiones (Merging):** Trabajar en funcionalidades aisladas sin romper el código principal.
+*   **Resolución de conflictos:** Qué hacer cuando dos personas editan la misma línea de código.
+*   **Manipulación avanzada del historial:** Limpiar y organizar commits con *rebase*.
+*   **Flujos de trabajo en equipo:** Git Flow, GitHub Flow, etc.
+
+Cuando te sientas cómodo con el ciclo básico, te recomendamos continuar con la **[Guía de Git Avanzado](git_avanzado.md)** para dominar estas herramientas profesionales.
 
 ¡Felicitaciones! Ya tenés todo lo necesario para usar Git de forma efectiva en
 tu trabajo diario.
