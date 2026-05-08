@@ -309,4 +309,3 @@ Tomá un problema que necesite mantener elementos ordenados por clave y justific
 ## Próximo paso
 
 Para seguir, conviene pasar a [Árboles balanceados](arboles_balanceados.md), donde aparece la respuesta al problema de altura.
-s.md), donde aparece la respuesta al problema de altura.

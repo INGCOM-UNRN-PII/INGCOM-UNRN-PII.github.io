@@ -268,28 +268,3 @@ Compará un deque implementado con arreglo circular y otro con lista doblemente 
 ## Próximo paso
 
 Para seguir, conviene pasar a [Colas de prioridad](colas_prioridad.md), donde el siguiente elemento ya no depende del orden de llegada ni del extremo activo, sino de una relación de prioridad.
-ertir al medio en protagonista.
-
-## Ejercicios
-
-```{exercise}
-:label: ex-parte5-deques-mini
-
-Pensá un problema donde a veces convenga insertar al frente y otras al fondo. Explicá por qué una cola simple o una pila simple volverían incómodo ese diseño.
-```
-
-```{exercise}
-:label: ex-parte5-deques-restringidos
-
-Inventá un caso donde alcance un deque restringido de entrada y otro donde alcance un deque restringido de salida. En cada uno, indicá qué operaciones deberían quedar prohibidas.
-```
-
-```{exercise}
-:label: ex-parte5-deques-implementacion
-
-Compará un deque implementado con arreglo circular y otro con lista doblemente enlazada para un buffer de tareas urgentes y normales. Indicá qué representación elegirías si el tamaño máximo es conocido y cuál si cambia mucho durante la ejecución.
-```
-
-## Próximo paso
-
-Para seguir, conviene pasar a [Colas de prioridad](colas_prioridad.md), donde el siguiente elemento ya no depende del orden de llegada ni del extremo activo, sino de una relación de prioridad.
