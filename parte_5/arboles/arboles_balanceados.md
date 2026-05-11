@@ -8,186 +8,153 @@ description: Cómo controlar la altura de un árbol de búsqueda para que las op
 (parte5-arboles-balanceados)=
 # Árboles balanceados
 
-Los árboles balanceados aparecen cuando ya no alcanza con “esperar” que un BST quede razonablemente bien formado. Si el problema requiere garantías más fuertes, el balance pasa a ser parte explícita del diseño.
+Los árboles balanceados aparecen cuando ya no alcanza con “esperar” que un BST quede razonablemente bien formado. Si el problema requiere garantías de rendimiento, el balance pasa a ser parte explícita y activa del diseño.
 
 :::{note} Hoja de ruta del capítulo
 **Objetivo.** Entender por qué el balance no es un detalle estético, sino una condición para sostener la eficiencia de operaciones sobre árboles de búsqueda.
 
-**Prerrequisitos.** Conviene haber leído [Árboles binarios de búsqueda](arboles_busqueda.md), porque este capítulo responde directamente a sus limitaciones.
+**Prerrequisitos.** Conviene haber leído [Árboles binarios de búsqueda](arboles_busqueda.md), porque este capítulo resuelve el problema de la degradación de altura.
 
-**Desarrollo.** El capítulo muestra cómo la altura degrada un BST simple, introduce rotaciones como operación estructural y compara estrategias como AVL y Red-Black para sostener búsquedas, inserciones y borrados en tiempo logarítmico.
+**Desarrollo.** Se introducen las rotaciones como mecanismo de cambio de forma, se explican las estrategias AVL y Red-Black, y se comparan sus trade-offs en sistemas reales.
 :::
 
-## Por qué hace falta balance
+## El mecanismo de las rotaciones
 
-Un BST simple puede funcionar muy bien o muy mal según el orden de inserción. Si las claves llegan en un patrón favorable, la altura queda baja y las operaciones son rápidas. Si llegan en orden creciente o decreciente, el árbol se puede degenerar y terminar comportándose casi como una lista.
+Las rotaciones son el "átomo" del rebalanceo. Permiten cambiar la forma del árbol sin alterar la invariante de orden. 
 
-Ese problema importa porque en un árbol de búsqueda el costo de:
+Imaginá un desbalance simple (tres nodos en línea):
 
-- buscar,
-- insertar,
-- borrar,
+```{mermaid}
+flowchart TD
+    subgraph Antes [Antes de Rotar]
+        direction TB
+        A1((3)) --> A2((2))
+        A1 --> Null1([null])
+        A2 --> A3((1))
+        A2 --> Null2([null])
+        style A1 fill:#ffcdd2,stroke:#d32f2f
+    end
 
-depende fuertemente de la altura.
+    subgraph Operacion [Rotación Simple Derecha]
+        direction LR
+        Op{{"3 baja a la derecha\n2 sube a la raíz"}}
+    end
 
-Si la altura se acerca a `n`, las operaciones dejan de ser razonables para entradas grandes. Los árboles balanceados aparecen para evitar esa degradación.
+    subgraph Despues [Después de Rotar]
+        direction TB
+        B2((2)) --> B1((1))
+        B2 --> B3((3))
+        style B2 fill:#c8e6c9,stroke:#388e3c
+    end
 
-```{code} java
-:caption: Inserciones adversas en un BST simple
-
-for (int clave = 1; clave <= n; clave++) {
-    arbol.insertar(clave);
-}
+    Antes --- Operacion --- Despues
+    
+    style Null1 fill:#eeeeee,stroke:#9e9e9e
+    style Null2 fill:#eeeeee,stroke:#9e9e9e
 ```
 
-Si el árbol no corrige su forma, este patrón puede construir una cadena sesgada en lugar de una estructura casi logarítmica.
+Para balancear esto, realizamos una **rotación simple a la derecha** sobre el nodo 3:
+1. El nodo 2 "sube" a la posición de la raíz.
+2. El nodo 3 se convierte en su hijo derecho.
+3. El orden se preserva: si hacés un recorrido inorden antes y después, el resultado sigue siendo `[1, 2, 3]`.
+4. La altura se reduce: pasamos de 3 niveles a solo 2.
 
-## Qué significa “balanceado”
+Existen cuatro casos de desbalance (Simple Derecha, Simple Izquierda y las rotaciones dobles correspondientes) que permiten corregir cualquier deformación local tras una inserción o borrado.
 
-Balancear no significa que todo quede perfectamente simétrico. Significa imponer invariantes suficientes para que la altura no crezca de forma patológica.
+## AVL: El rigor de la altura
 
-Hay dos ideas útiles:
+Un árbol **AVL** (Adelson-Velsky y Landis) es un BST que impone una restricción de altura muy estricta:
 
-1. **balance estricto**, donde la diferencia de alturas se controla muy de cerca;
-2. **balance relajado**, donde se permite más desvío local, pero igual se mantiene altura logarítmica.
+> Para cada nodo, la diferencia de altura entre sus subárboles izquierdo y derecho (llamada **Factor de Balance**) debe ser como máximo 1.
 
-Lo central no es la estética del dibujo. Lo central es esta consecuencia:
+$$FB = \text{altura}(izquierdo) - \text{altura}(derecho)$$
 
-- la estructura paga trabajo extra al actualizarse,
-- para no pagar costos peores en cada búsqueda futura.
+```{mermaid}
+flowchart TD
+    N20((20)) --> N10((10))
+    N20 --> N30((30))
+    N30 --> N25((25))
+    N30 --> N35((35))
+    
+    subgraph Legend [Factor de Balance]
+        N20 --- L20["FB: -1"]
+        N10 --- L10["FB: 0"]
+        N30 --- L30["FB: 0"]
+    end
+    
+    style N20 fill:#e3f2fd,stroke:#1565c0
+    style N10 fill:#e3f2fd,stroke:#1565c0
+    style N30 fill:#e3f2fd,stroke:#1565c0
+    style N25 fill:#e3f2fd,stroke:#1565c0
+    style N35 fill:#e3f2fd,stroke:#1565c0
+```
 
-## Rotaciones: la operación estructural clave
+Si tras una operación el $|FB| > 1$, se aplica una rotación. Esta vigilancia constante garantiza que el árbol esté siempre "muy apretado", logrando búsquedas extremadamente veloces.
 
-Los árboles balanceados no suelen reconstruirse desde cero ante cada inserción. Corrigen desequilibrios con operaciones locales llamadas **rotaciones**.
+**Costo:** Cada inserción o borrado puede requerir recalcular alturas y realizar rotaciones hacia arriba hasta la raíz.
 
-Una rotación:
+## Red-Black Tree: Balance relajado para alto rendimiento
 
-- cambia relaciones padre-hijo,
-- preserva el orden relativo de las claves,
-- y modifica la forma del árbol para bajar la altura de una zona conflictiva.
+Los **Red-Black Trees** (Árboles Rojo-Negro) usan una estrategia distinta. En lugar de medir alturas exactas, pintan los nodos de dos colores y siguen un conjunto de reglas (como: "un nodo rojo no puede tener un hijo rojo").
 
-Las variantes típicas son:
+```{mermaid}
+flowchart TD
+    N20((20)) --> N10((10))
+    N20 --> N30((30))
+    N10 --> N5((5))
+    N10 --> N15((15))
+    
+    classDef black fill:#192437,color:#fff,stroke:#000
+    classDef red fill:#eb2141,color:#fff,stroke:#000
+    
+    class N20,N5,N15,N30 black;
+    class N10 red;
+```
 
-- rotación simple a izquierda,
-- rotación simple a derecha,
-- rotación doble izquierda-derecha,
-- rotación doble derecha-izquierda.
+Estas reglas garantizan que el camino más largo desde la raíz hasta una hoja no sea más del doble de largo que el camino más corto.
 
-La idea importante no es memorizar dibujos aislados, sino entender por qué sirven: reacomodan subárboles sin romper la invariante de búsqueda.
+- **Ventaja:** Son "menos estrictos" que los AVL. Al permitir un poco más de holgura en la altura, realizan menos rotaciones durante las inserciones y borrados.
+- **Uso real:** Es la estructura que usan `TreeMap` y `TreeSet` en Java. Se prefiere para bibliotecas de propósito general porque ofrece el mejor compromiso entre velocidad de búsqueda y velocidad de actualización.
 
-## AVL: balance más estricto
+## Comparativa: ¿Cuál elegir?
 
-En un árbol **AVL**, para cada nodo se controla que la diferencia entre altura del subárbol izquierdo y del derecho quede acotada.
+| Criterio | AVL | Red-Black |
+| :--- | :--- | :--- |
+| **Búsqueda** | Más rápida (árbol más compacto). | Muy rápida, pero un poco menos que AVL. |
+| **Inserción/Borrado** | Más lenta (más rotaciones). | Más rápida (menos rotaciones). |
+| **Memoria** | Necesita guardar alturas (un `int`). | Necesita guardar el color (un `boolean`). |
+| **Uso ideal** | Bases de datos con pocas escrituras. | Estructuras en memoria con cambios frecuentes. |
 
-La ventaja es fuerte:
+## Conexión con Java y el mundo real
 
-- la altura queda muy controlada,
-- las búsquedas son muy buenas,
-- el árbol tiende a mantenerse “prolijo”.
+Como vimos en {ref}`java-colecciones`, Java nos abstrae de estas implementaciones. Cuando creás un `TreeMap`, el lenguaje gestiona internamente los colores y las rotaciones para que tus búsquedas siempre sean $O(\log N)$. 
 
-El costo también es claro:
-
-- hay que guardar o recomputar información de altura o factor de balance,
-- inserciones y borrados pueden disparar rotaciones,
-- la implementación es más delicada que en un BST simple.
-
-AVL suele ser una muy buena elección cuando dominan las consultas y se quiere una estructura ordenada con comportamiento muy estable.
-
-## Red-Black Tree: balance más relajado
-
-Los **Red-Black Trees** usan una estrategia menos agresiva. En lugar de exigir diferencias de altura tan pequeñas, sostienen un conjunto de reglas de coloración y estructura que impide degradaciones severas.
-
-La intuición útil es:
-
-- permiten un árbol algo menos rígido que AVL,
-- hacen menos trabajo correctivo en promedio,
-- siguen ofreciendo altura logarítmica.
-
-Por eso aparecen con frecuencia en implementaciones reales de:
-
-- mapas ordenados,
-- sets ordenados,
-- bibliotecas estándar.
-
-No son “más simples” conceptualmente. Solo hacen otro intercambio entre:
-
-- rigor estructural,
-- frecuencia de rebalanceo,
-- y complejidad operativa.
-
-## AVL vs Red-Black
-
-Conviene compararlos por criterio, no por eslogan:
-
-| Variante | Qué controla | Ventaja típica | Costo típico |
-| :--- | :--- | :--- | :--- |
-| AVL | diferencia de alturas muy acotada | búsquedas muy consistentes | más rotaciones y más mantenimiento |
-| Red-Black | invariantes más relajadas | actualizaciones más suaves en promedio | peor altura constante que AVL |
-
-Las dos familias comparten una promesa importante:
-
-- las operaciones fundamentales siguen siendo O(log n) respecto de la cantidad de claves.
-
-La elección concreta depende de qué importa más:
-
-- minimizar altura,
-- simplificar ciertas actualizaciones,
-- o reutilizar una implementación disponible.
-
-## Dónde aparecen en la práctica
-
-Los árboles balanceados suelen sostener problemas donde hace falta:
-
-- buscar por clave,
-- insertar y borrar muchas veces,
-- recorrer en orden,
-- consultar mínimos, máximos, predecesores y sucesores,
-- evitar que entradas adversas degraden la estructura.
-
-Por eso encajan bien detrás de:
-
-- diccionarios ordenados,
-- conjuntos ordenados,
-- índices en memoria,
-- estructuras de soporte para algoritmos que necesitan orden dinámico.
-
-## Qué errores conviene evitar
-
-1. **Pensar que un BST “más o menos equilibrado” alcanza siempre.** Si el problema exige garantías, el balance no puede quedar librado a la suerte.
-2. **Confundir balance con simetría perfecta.** La meta es controlar altura, no dibujar árboles bonitos.
-3. **Olvidar el costo de mantener invariantes.** La mejora en búsquedas se paga durante actualizaciones.
-4. **Suponer que AVL y Red-Black resuelven exactamente el mismo problema con la misma estrategia.**
-
-:::{warning}
-Un árbol balanceado no gana porque “busca distinto”, sino porque evita que la altura se dispare.
-:::
+Entender el balanceo te permite saber por qué un `TreeMap` no se vuelve lento de repente (a diferencia de lo que podría pasar con un BST manual) y por qué las operaciones de ordenamiento dinámico son tan potentes.
 
 ## Resumen
 
-Los árboles balanceados corrigen el defecto central del BST simple: su dependencia extrema de la forma.
-
-Lo hacen imponiendo invariantes adicionales que:
-
-- controlan la altura,
-- conservan el orden de búsqueda,
-- y mantienen operaciones fundamentales en O(log n).
-
-Ese beneficio no es gratis. Se paga con rotaciones, información extra e implementaciones más cargadas de casos.
+Los árboles balanceados son la respuesta de la ingeniería al caos de los datos. No confían en que los datos lleguen en un orden amigable; toman el control de su propia forma mediante rotaciones para garantizar que la altura se mantenga siempre bajo control logarítmico.
 
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-arboles-balanceados-mini
+:label: ex-parte5-balanceado-fb
 
-Explicá por qué puede valer la pena asumir más complejidad de implementación en un árbol balanceado si la estructura debe soportar muchas operaciones de búsqueda en producción.
+Dada una raíz con un subárbol izquierdo de altura 5 y un derecho de altura 3, calculá el Factor de Balance. ¿Es un árbol AVL válido? ¿Hacia qué lado está desbalanceado?
 ```
 
 ```{exercise}
-:label: ex-parte5-arboles-balanceados-avl-vs-rb
+:label: ex-parte5-balanceado-java
 
-Un equipo necesita un diccionario ordenado que reciba muchas inserciones y borrados durante el día, pero también muchas búsquedas. Explicá qué preguntas harías antes de inclinarte por AVL o por Red-Black.
+Investigá por qué Java eligió Red-Black Trees para sus colecciones en lugar de AVL. ¿Qué característica del Red-Black lo vuelve más atractivo para una biblioteca estándar?
+```
+
+```{exercise}
+:label: ex-parte5-balanceado-rotacion
+
+Dibujá una rotación simple a la izquierda sobre tres nodos `[10, 20, 30]` que están insertados en orden creciente. Mostrá el estado antes y después.
 ```
 
 ## Próximo paso
 
-Para seguir, conviene pasar a [Heaps](heaps.md), donde el árbol deja de optimizar búsqueda general y pasa a optimizar prioridad.
+Con la búsqueda controlada, podemos pasar a una estructura que se olvida del orden total para enfocarse en la prioridad máxima: los [Heaps](heaps.md).

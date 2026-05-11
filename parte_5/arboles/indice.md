@@ -8,74 +8,58 @@ description: Mapa de la familia de árboles para la parte 5.
 (parte5-arboles)=
 # Árboles
 
-Esta familia reúne estructuras jerárquicas donde la recursión estructural, el orden implícito y la altura condicionan la eficiencia de las operaciones. Si en secuencias dominaba la posición y en diccionarios dominaba la clave, acá aparece otra idea: **la forma de la estructura también importa**.
+Esta familia reúne estructuras jerárquicas donde la **recursión estructural**, el **orden implícito** y la **altura** condicionan la eficiencia de las operaciones. Si en secuencias dominaba la posición y en diccionarios dominaba la clave, acá aparece otra idea: **la forma de la estructura determina el rendimiento**.
 
-Los árboles sirven como puente entre varios problemas:
+Los árboles son, quizás, la estructura no lineal más versátil de la computación. Actúan como puente entre el modelado de jerarquías naturales (archivos, organizaciones, expresiones) y la optimización de algoritmos de búsqueda y prioridad.
 
-- jerarquía pura,
-- búsqueda ordenada,
-- extracción por prioridad,
-- almacenamiento eficiente por bloques.
+## La potencia del crecimiento logarítmico
 
-:::{note}
-Conviene leer esta familia como una progresión: primero la idea general de árbol, después el caso binario, luego búsqueda, balance, prioridad y finalmente almacenamiento externo.
+La razón principal por la que estudiamos árboles es la **altura**. Un árbol bien balanceado nos permite "navegar" entre millones de elementos en apenas una decena de pasos. 
+
+- En una secuencia lineal de $N$ elementos, encontrar uno puede costar $O(N)$.
+- En un árbol balanceado de $N$ elementos, la altura es $O(\log N)$.
+- **Intuición**: Con una altura de 30, un árbol binario puede direccionar más de mil millones de nodos.
+
+:::{important}
+El gran desafío de esta familia no es solo insertar o buscar, sino **mantener el árbol "corto"** (balanceado) para que la promesa del $O(\log N)$ se cumpla.
 :::
 
-## Recorrido sugerido
+## Mapa de la familia
 
-| Orden | Página | Rol en la familia |
-| :--- | :--- | :--- |
-| 1 | [Fundamentos de árboles](fundamentos.md) | Define jerarquía, altura y recorridos |
-| 2 | [Árboles binarios](arboles_binarios.md) | Presenta el caso estructural más simple |
-| 3 | [Árboles binarios de búsqueda](arboles_busqueda.md) | Instala búsqueda ordenada |
-| 4 | [Árboles balanceados](arboles_balanceados.md) | Muestra cómo sostener eficiencia |
-| 5 | [Heaps](heaps.md) | Cambia foco desde orden total a prioridad |
-| 6 | [Árboles B](arboles_b.md) | Extiende el problema a almacenamiento externo |
-
-## Comparación rápida
-
-| Estructura | Fuerte principal | Trade-off central | Cuándo conviene |
+| Orden | Página | Concepto central | Aplicación típica |
 | :--- | :--- | :--- | :--- |
-| [Árboles binarios](arboles_binarios.md) | Modelo recursivo claro | No garantizan orden ni balance | Cuando importa la forma jerárquica |
-| [BST](arboles_busqueda.md) | Búsqueda ordenada | Dependen de la altura | Cuando se necesitan consultas ordenadas |
-| [Árboles balanceados](arboles_balanceados.md) | Garantías de altura | Mayor complejidad de implementación | Cuando no se puede tolerar degradación |
-| [Heaps](heaps.md) | Acceso al mínimo o máximo | No sirven para búsquedas generales eficientes | Cuando domina la prioridad |
-| [Árboles B](arboles_b.md) | Buen desempeño por bloques | Mayor complejidad estructural | Cuando los datos viven fuera de memoria principal |
+| 1 | [Fundamentos](fundamentos.md) | Jerarquía, altura y recorridos | Modelado de dominios jerárquicos |
+| 2 | [Árboles binarios](arboles_binarios.md) | Estructura base (izq/der) | Árboles de sintaxis, expresiones |
+| 3 | [BST](arboles_busqueda.md) | El orden como invariante | Índices de búsqueda en memoria |
+| 4 | [Árboles balanceados](arboles_balanceados.md) | Autocorrección de altura | Sistemas de alto rendimiento (AVL, RB) |
+| 5 | [Heaps](heaps.md) | Prioridad sobre orden total | Colas de prioridad, algoritmos de grafos |
+| 6 | [Árboles B](arboles_b.md) | Estructuras para disco | Bases de datos y sistemas de archivos |
 
-## Qué preguntas debería ayudar a responder esta familia
+## Criterios de elección
 
-Al terminar esta familia, conviene poder responder con criterio:
+¿Cuándo conviene saltar de una estructura lineal a un árbol?
 
-1. cuándo el problema es jerárquico y no lineal,
-2. cuándo un árbol sirve para representar forma y cuándo sirve para buscar,
-3. cuándo la altura pasa a ser el cuello de botella,
-4. cuándo hace falta balance,
-5. cuándo una cola de prioridad pide heap y no BST,
-6. cuándo el almacenamiento externo cambia la estructura adecuada.
+| Si tu problema es... | Probablemente necesites... | Porque... |
+| :--- | :--- | :--- |
+| Representar una jerarquía (ej: carpetas) | [Árboles generales/binarios](fundamentos.md) | Reflejan la relación padre-hijo naturalmente. |
+| Buscar elementos en un conjunto dinámico | [Árboles balanceados](arboles_balanceados.md) | Mantienen el costo $O(\log N)$ pase lo que pase. |
+| Extraer siempre "el más importante" | [Heaps](heaps.md) | Son extremadamente eficientes para el acceso a la raíz. |
+| Manejar volúmenes masivos de datos | [Árboles B](arboles_b.md) | Minimizan el acceso a disco leyendo bloques grandes. |
 
-## Decisiones rápidas
+## Árboles y recursión
 
-Si el problema dominante es:
+A diferencia de las secuencias, donde el lazo (`for`/`while`) es el rey, en los árboles la **recursión** es la herramienta natural. Un árbol se define como un nodo raíz conectado a otros *subárboles*. Esta definición fractal impregna todos los algoritmos que vamos a ver: desde los recorridos (in-order, pre-order, post-order) hasta las inserciones y rotaciones de balance.
 
-- **modelar jerarquía o recursión estructural**, conviene empezar por [árboles binarios](arboles_binarios.md),
-- **buscar y recorrer ordenado**, conviene mirar [BST](arboles_busqueda.md),
-- **garantizar altura razonable**, conviene mirar [árboles balanceados](arboles_balanceados.md),
-- **extraer el mínimo o máximo repetidamente**, conviene mirar [heaps](heaps.md),
-- **trabajar por bloques o páginas**, conviene mirar [árboles B](arboles_b.md).
+## Qué deberías dominar al finalizar
 
-## Conexiones con el resto de la parte
+Un estudiante que recorrió esta familia con éxito debería poder:
 
-Esta familia conecta varias piezas ya instaladas:
+1. Identificar la altura y el grado de un árbol.
+2. Realizar recorridos manuales sobre cualquier estructura arbórea.
+3. Explicar la diferencia entre orden total (BST) y orden parcial (Heap).
+4. Justificar por qué un BST puede degradarse a una lista y cómo lo evita un AVL.
+5. Seleccionar la variante de árbol adecuada para un problema de almacenamiento persistente vs. volátil.
 
-- reutiliza el lenguaje de [análisis de algoritmos](../algoritmos.md),
-- sirve de soporte para [diccionarios ordenados](../diccionarios/diccionarios_ordenados.md),
-- y prepara intuiciones para algoritmos sobre grafos donde reaparecen recorridos, prioridades y estructuras jerárquicas.
+## Próximo paso
 
-## Cierre integrador sugerido
-
-Un buen cierre para esta familia sería justificar qué árbol usar para:
-
-- un índice ordenado en memoria,
-- una cola de prioridad,
-- un índice persistente en disco,
-- una estructura que no debe degradarse con inserciones adversas.
+Empezamos por los conceptos base: [Fundamentos de árboles](fundamentos.md), donde definimos qué es un padre, qué es una hoja y por qué la altura es la métrica que nos quita el sueño.

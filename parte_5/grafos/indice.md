@@ -8,82 +8,63 @@ description: Mapa de la familia de grafos, con recorrido sugerido y criterios de
 (parte5-grafos)=
 # Grafos
 
-Esta familia cubre estructuras donde las relaciones ya no son lineales ni jerárquicas, sino arbitrarias. El foco pasa a representación, recorridos, conectividad y optimización sobre caminos.
+Esta familia representa la frontera final de las estructuras de datos clásicas. Aquí, las relaciones ya no son lineales (como en las secuencias) ni jerárquicas (como en los árboles), sino **arbitrarias**. Un grafo permite modelar cualquier sistema de entidades interconectadas: desde neuronas y mapas de ciudades hasta redes sociales y dependencias de software.
 
 :::{note}
-Conviene entrar a esta familia después de árboles, porque reutiliza recorridos, colas, pilas y prioridades, pero ya en un escenario más general.
+Conviene entrar a esta familia después de estudiar árboles, ya que los árboles son, técnicamente, un tipo especial de grafo (conexo y acíclico). Muchos algoritmos que ya conocés, como DFS o BFS, reaparecen aquí en su forma más general.
 :::
 
-## Estado editorial actual
+## El cambio de paradigma: Relaciones arbitrarias
 
-La familia ya quedó cerrada como recorrido completo dentro de la parte.
+Pasar a grafos implica aceptar que un elemento puede estar conectado con cualquier otro, incluso consigo mismo. Esto introduce nuevos desafíos:
 
-| Página | Estado actual | Rol |
-| :--- | :--- | :--- |
-| [Fundamentos de grafos](fundamentos.md) | Desarrollo completo | Fija el vocabulario mínimo de vértices, aristas, caminos y conectividad |
-| [Representación de grafos](representacion.md) | Desarrollo completo | Compara matrices, listas y aristas |
-| [Recorridos](recorridos.md) | Desarrollo completo | Instala DFS y BFS |
-| [Caminos mínimos](caminos_minimos.md) | Desarrollo completo | Introduce optimización sobre caminos |
-| [Árboles de expansión](arboles_de_expansion.md) | Desarrollo completo | Trabaja conectividad con costo mínimo |
-| [Orden topológico](orden_topologico.md) y [Conectividad](conectividad.md) | Desarrollo completo | Cierra con dependencias, componentes y particiones |
+1. **Ciclos**: Podemos volver al punto de partida, lo que obliga a marcar qué nodos ya visitamos para no entrar en lazos infinitos.
+2. **Representación**: Ya no hay un "siguiente" o un "padre" único. ¿Cómo guardamos eficientemente quién es vecino de quién?
+3. **Optimización**: El problema ya no es solo encontrar algo, sino encontrar el **mejor camino** o la **conexión más barata**.
 
-## Recorrido sugerido
+## Mapa de aprendizaje de la familia
 
-| Orden | Página | Rol en la familia |
-| :--- | :--- | :--- |
-| 1 | [Fundamentos de grafos](fundamentos.md) | Define vértices, aristas y tipos de grafo |
-| 2 | [Representación de grafos](representacion.md) | Compara matrices, listas y costo de acceso |
-| 3 | [Recorridos](recorridos.md) | Instala DFS y BFS como base algorítmica |
-| 4 | [Caminos mínimos](caminos_minimos.md) | Introduce optimización sobre caminos |
-| 5 | [Árboles de expansión](arboles_de_expansion.md) | Trabaja conectividad óptima |
-| 6 | [Orden topológico](orden_topologico.md) y [Conectividad](conectividad.md) | Cierra con dependencias y componentes |
-
-## Comparación rápida
-
-| Tema | Pregunta central | Herramienta dominante | Cuándo aparece |
+| Orden | Página | Concepto central | Aplicación típica |
 | :--- | :--- | :--- | :--- |
-| [Representación](representacion.md) | ¿Cómo guardar el grafo? | Matriz o lista de adyacencia | Antes de programar cualquier algoritmo |
-| [Recorridos](recorridos.md) | ¿Qué vértices son alcanzables? | DFS y BFS | En exploración y conectividad básica |
-| [Caminos mínimos](caminos_minimos.md) | ¿Cuál es la mejor ruta? | BFS, Dijkstra, Bellman-Ford | En navegación y ruteo |
-| [Árboles de expansión](arboles_de_expansion.md) | ¿Cómo conectar con costo mínimo? | Prim o Kruskal | En diseño de redes |
-| [Orden topológico](orden_topologico.md) | ¿Qué dependencia va antes? | DFS o Kahn | En DAG y planificación |
-| [Conectividad](conectividad.md) | ¿Cómo se parte el grafo? | DFS, BFS, SCC | En análisis de componentes |
+| 1 | [Fundamentos](fundamentos.md) | Vértices, aristas y tipos | Vocabulario base y modelado |
+| 2 | [Representación](representacion.md) | Matrices vs. Listas | Decisiones de memoria y eficiencia |
+| 3 | [Recorridos](recorridos.md) | DFS y BFS | Exploración y alcanzabilidad |
+| 4 | [Caminos mínimos](caminos_minimos.md) | Dijkstra y Bellman-Ford | GPS, ruteo de paquetes, logística |
+| 5 | [Árboles de expansión](arboles_de_expansion.md) | Prim y Kruskal | Diseño de redes de bajo costo |
+| 6 | [Orden topológico](orden_topologico.md) | Dependencias y DAGs | Compiladores, gestión de proyectos |
+| 7 | [Conectividad](conectividad.md) | Componentes y SCC | Análisis de comunidades, robustez de redes |
 
-## Cómo conviene leer esta familia
+## Criterios de decisión: ¿Qué algoritmo necesito?
 
-Hoy conviene leer esta familia así:
+El éxito en esta familia depende de saber "traducir" un problema del mundo real al algoritmo correcto.
 
-1. leer en bloque [Fundamentos de grafos](fundamentos.md), [Representación de grafos](representacion.md), [Recorridos](recorridos.md), [Caminos mínimos](caminos_minimos.md) y [Árboles de expansión](arboles_de_expansion.md), porque ya fijan el núcleo conceptual, de representación y de optimización básica de la familia;
-2. cerrar después con [Orden topológico](orden_topologico.md) y [Conectividad](conectividad.md), donde el problema deja de ser solo recorrer u optimizar y pasa a ordenar dependencias o partir el grafo en componentes;
-3. volver a este mapa cuando haga falta decidir qué pregunta de grafos domina en un problema concreto.
+| Si el problema es... | Probablemente necesites... | ¿Por qué? |
+| :--- | :--- | :--- |
+| **¿Puedo llegar de A a B?** | [Recorridos (DFS/BFS)](recorridos.md) | Verifican conectividad simple. |
+| **¿Cuál es la ruta más corta (sin pesos)?** | [BFS](recorridos.md) | BFS encuentra el camino con menos aristas. |
+| **¿Cuál es la ruta más barata?** | [Caminos mínimos](caminos_minimos.md) | Dijkstra optimiza sobre aristas con peso. |
+| **¿Cómo conecto todo al menor costo?** | [Árboles de expansión](arboles_de_expansion.md) | MST (Minimum Spanning Tree) evita ciclos y minimiza el peso total. |
+| **¿En qué orden debo hacer estas tareas?** | [Orden topológico](orden_topologico.md) | Resuelve dependencias en grafos dirigidos acíclicos (DAG). |
+| **¿Qué grupos están fuertemente unidos?** | [Conectividad (SCC)](conectividad.md) | Identifica sub-grafos donde todos llegan a todos. |
 
-## Criterios de uso
+## Grafos en Java y el mundo real
 
-Esta familia ayuda a distinguir:
+A diferencia de las secuencias o los diccionarios, Java no provee una interfaz `Graph` estándar en su SDK básico. Esto se debe a que la implementación óptima depende demasiado del problema. En esta parte, aprenderemos a:
 
-1. problema de representación vs problema algorítmico,
-2. recorridos generales vs algoritmos de optimización,
-3. grafos dirigidos vs no dirigidos,
-4. pesos uniformes vs pesos arbitrarios.
+- Construir nuestras propias representaciones usando las colecciones que ya conocemos (`Map`, `List`, `Set`).
+- Entender por qué a veces una simple matriz de enteros es mejor que una red de objetos complejos.
+- Conectar la teoría con bibliotecas de producción (como JGraphT o Google Guava).
 
-## Decisión rápida
+## Qué deberías dominar al finalizar
 
-Si el problema todavía está mal encuadrado, conviene decidir en este orden:
+Un estudiante que recorrió esta familia con éxito debería poder:
 
-1. si el dominio realmente necesita un **grafo** o si alcanza con una secuencia o un árbol;
-2. si las relaciones son **dirigidas** o **no dirigidas**;
-3. si el costo importante está en **representar**, **recorrer** u **optimizar**;
-4. si el siguiente capítulo a leer debería ser [Representación de grafos](representacion.md) o [Recorridos](recorridos.md).
-
-## Cierre integrador sugerido
-
-Un buen cierre para esta familia sería justificar qué algoritmo usar para:
-
-- recorrer una red social,
-- encontrar la ruta más barata,
-- planificar materias con correlatividades,
-- detectar componentes aisladas.
+1. Elegir entre matriz y lista de adyacencia según la densidad del grafo.
+2. Ejecutar manualmente DFS y BFS sobre grafos dirigidos y no dirigidos.
+3. Explicar por qué Dijkstra no funciona con pesos negativos y cuándo usar Bellman-Ford.
+4. Identificar si un problema admite una solución topológica (presencia de ciclos).
+5. Modelar un problema complejo (ej: ruteo de fibra óptica) como un problema de grafos.
 
 ## Próximo paso
 
-El siguiente paso natural es [Representación de grafos](representacion.md): ahí el lenguaje abstracto de vértices y aristas se convierte en decisiones concretas sobre memoria, adyacencia y recorrido.
+Empezamos por los cimientos: [Fundamentos de grafos](fundamentos.md), donde definimos qué es un vértice, qué es una arista y por qué un grafo "dirigido" cambia todas las reglas del juego.

@@ -10,304 +10,144 @@ description: Cómo comparar matrices, listas de adyacencia y listas de aristas s
 
 En grafos, la representación influye tanto como el algoritmo. Antes de correr BFS, Dijkstra o Prim, hace falta decidir cómo se almacenan vértices y aristas y qué consultas conviene optimizar.
 
-Ese punto importa más que en otras familias porque, en un grafo, muchas operaciones pueden formularse de maneras muy distintas:
-
-- consultar si dos vértices son adyacentes,
-- iterar todos los vecinos de un vértice,
-- recorrer todas las aristas,
-- agregar o borrar conexiones,
-- guardar pesos y direcciones.
-
-No existe una representación universalmente mejor. Existe una representación mejor **para cierto patrón de consultas y cierto tipo de grafo**.
-
 :::{note} Hoja de ruta del capítulo
 **Objetivo.** Comparar las representaciones más comunes de grafos y entender cómo afectan memoria, consulta de adyacencia e iteración de vecinos.
 
-**Prerrequisitos.** Conviene haber leído [Fundamentos de grafos](fundamentos.md), porque este capítulo transforma el lenguaje conceptual en decisiones de estructura.
+**Prerrequisitos.** Conviene haber leído [Fundamentos de grafos](fundamentos.md).
 
 **Desarrollo.** El capítulo contrasta matriz de adyacencia, lista de adyacencia y lista de aristas, explica cómo codificar dirección y peso, y cierra comparando sus costos según densidad del grafo y tipo de algoritmo.
 :::
 
-:::{tip} Idea guía
-En grafos, elegir representación es decidir **qué consulta querés volver barata** y cuál aceptás pagar más cara.
+## 1. Matriz de Adyacencia
+
+La **matriz de adyacencia** es la forma más directa: una tabla cuadrada de $V \times V$ donde el valor en la celda $(i, j)$ indica si hay una arista entre el vértice $i$ y el $j$.
+
+### Implementación en Java
+Si los vértices se identifican con enteros de $0$ a $n-1$:
+
+```java
+public class GrafoMatriz {
+    private final double[][] matriz;
+    private final boolean dirigido;
+
+    public GrafoMatriz(int n, boolean dirigido) {
+        this.matriz = new double[n][n];
+        this.dirigido = dirigido;
+        // Inicializar con infinito para denotar "sin conexión"
+        for(int i=0; i<n; i++) Arrays.fill(matriz[i], Double.POSITIVE_INFINITY);
+    }
+
+    public void conectar(int u, int v, double peso) {
+        matriz[u][v] = peso;
+        if (!dirigido) matriz[v][u] = peso;
+    }
+
+    public boolean sonAdyacentes(int u, int v) {
+        return matriz[u][v] != Double.POSITIVE_INFINITY;
+    }
+}
+```
+
+- **Fortaleza:** Consultar si $A$ y $B$ están conectados es instantáneo ($O(1)$).
+- **Debilidad:** Consume $O(V^2)$ de memoria siempre, incluso si no hay aristas. Además, listar los vecinos de un nodo exige recorrer toda su fila, costando $O(V)$.
+
+## 2. Lista de Adyacencia
+
+Es la representación estándar para la mayoría de los algoritmos. Para cada vértice, guardamos una lista de sus vecinos.
+
+### Implementación en Java
+Es común usar un `Map` para asociar nombres de vértices con sus listas de vecinos, lo que nos da flexibilidad si los IDs no son enteros contiguos.
+
+```java
+public class GrafoLista<V> {
+    private final Map<V, List<Arista<V>>> adj = new HashMap<>();
+
+    public void conectar(V u, V v, double peso) {
+        adj.computeIfAbsent(u, k -> new ArrayList<>()).add(new Arista<>(v, peso));
+    }
+
+    public List<Arista<V>> vecinosDe(V u) {
+        return adj.getOrDefault(u, Collections.emptyList());
+    }
+}
+
+record Arista<V>(V destino, double peso) {}
+```
+
+- **Fortaleza:** Muy eficiente en memoria para grafos dispersos ($O(V + E)$). Iterar sobre los vecinos es muy rápido: solo recorremos los que realmente existen.
+- **Debilidad:** Consultar si $A$ y $B$ son adyacentes requiere buscar en la lista de $A$, lo que puede costar $O(\text{grado}(A))$.
+
+## 3. Lista de Aristas
+
+Simplemente una colección (arreglo o lista) de todas las conexiones. Es útil cuando el algoritmo no necesita navegar de nodo en nodo, sino procesar todos los vínculos globalmente.
+
+- **Uso típico:** Algoritmo de Kruskal (para Árboles de Expansión Mínima), donde necesitamos ordenar todas las aristas por peso al principio.
+
+## 4. El enfoque "Orientado a Objetos" (Red de Nodos)
+
+A veces, por inercia de OOP, se intenta representar el grafo como una red de objetos `Nodo` que contienen punteros a otros `Nodo`.
+
+```java
+class Nodo {
+    String nombre;
+    List<Nodo> vecinos;
+}
+```
+
+**Cuidado:** Aunque parece intuitivo, este enfoque suele ser **problemático**:
+1. **Dificultad de gestión:** ¿Quién es el dueño del grafo? ¿Cómo iteramos sobre "todos los nodos" si alguno quedó desconectado?
+2. **Algoritmos:** La mayoría de los algoritmos de grafos (DFS, BFS, Dijkstra) necesitan marcar nodos como "visitados". Si el estado de visitado vive dentro del objeto `Nodo`, no podemos correr dos algoritmos en paralelo sin limpiarlos.
+3. **Persistencia:** Es mucho más difícil de serializar y depurar que una simple lista o matriz.
+
+:::{tip} Recomendación de la cátedra
+Preferí siempre separar los **datos** de la **estructura**. El grafo debería ser un objeto que gestiona las conexiones, y los algoritmos deberían mantener su propio estado (como un `Set<V> visitados`) por fuera de los nodos.
 :::
 
-## Qué preguntas manda la representación
+## Cuadro Comparativo de Complejidad
 
-Antes de mirar variantes conviene identificar qué necesita hacer el programa.
+| Operación | Matriz de Adyacencia | Lista de Adyacencia |
+| :--- | :--- | :--- |
+| **Espacio en Memoria** | $O(V^2)$ | $O(V + E)$ |
+| **Consultar Adyacencia $(u, v)$** | $O(1)$ | $O(\text{grado}(u))$ |
+| **Listar Vecinos de $u$** | $O(V)$ | $O(\text{grado}(u))$ |
+| **Insertar Arista** | $O(1)$ | $O(1)$ |
+| **Insertar Vértice** | $O(V^2)$ (copia de matriz) | $O(1)$ |
 
-Las preguntas típicas son estas:
+## Grafos Implícitos
 
-- **¿Existen aristas entre `u` y `v`?**
-- **¿Cuáles son todos los vecinos de `u`?**
-- **¿Cuántas aristas hay?**
-- **¿El grafo es denso o disperso?**
-- **¿Necesito recorrer todas las aristas o consultar adyacencia puntual?**
+No siempre hace falta "guardar" el grafo en memoria. A veces el grafo está definido por las reglas de un problema. 
 
-Eso obliga a distinguir una noción central.
+- **Ejemplo:** Un tablero de ajedrez. No guardamos un millón de aristas entre casilleros. La función `obtenerVecinos(casillero)` simplemente calcula los movimientos legales del caballo en ese instante.
 
-### Grafos densos y dispersos
-
-Un grafo con `|V|` vértices puede tener, en el caso simple no dirigido, hasta `|V| * (|V| - 1) / 2` aristas.
-
-Conviene hablar de:
-
-- **grafo denso**: la cantidad de aristas está relativamente cerca del máximo posible;
-- **grafo disperso**: hay muchas menos aristas que las que podrían existir.
-
-La diferencia es decisiva:
-
-- en densos, una matriz puede ser razonable;
-- en dispersos, guardar todas las posibles conexiones suele desperdiciar memoria.
-
-## Matriz de adyacencia
-
-La **matriz de adyacencia** organiza el grafo como una tabla cuadrada `n x n`, donde `n` es la cantidad de vértices.
-
-La idea es simple:
-
-- fila `i`, columna `j` representa la relación entre el vértice `i` y el vértice `j`;
-- el contenido puede ser booleano, entero, peso o una marca especial.
-
-### Qué guarda
-
-| Tipo de grafo | Qué podría guardarse en `matriz[i][j]` |
-| :--- | :--- |
-| No ponderado | `true` / `false` |
-| Ponderado | peso de la arista o un valor centinela |
-| Dirigido | arista de `i` hacia `j` |
-| No dirigido | relación simétrica entre `i` y `j` |
-
-Ejemplo:
-
-```java
-public final class GrafoMatriz {
-    private final boolean[][] adyacencia;
-
-    public GrafoMatriz(int cantidadVertices) {
-        this.adyacencia = new boolean[cantidadVertices][cantidadVertices];
-    }
-
-    public void agregarArista(int origen, int destino) {
-        this.adyacencia[origen][destino] = true;
-    }
-
-    public boolean sonAdyacentes(int origen, int destino) {
-        return this.adyacencia[origen][destino];
-    }
-}
-```
-
-### Qué gana
-
-- consulta de adyacencia directa;
-- implementación conceptual simple;
-- buena opción si el grafo es denso;
-- útil cuando los vértices ya se indexan naturalmente.
-
-### Qué paga
-
-- memoria `O(V^2)` aunque casi no haya aristas;
-- iterar vecinos de un vértice exige revisar toda la fila;
-- agregar vértices suele ser incómodo porque cambia el tamaño de la matriz.
-
-### Invariantes típicos
-
-- la matriz debe ser cuadrada;
-- si el grafo es no dirigido, debería cumplirse `matriz[i][j] == matriz[j][i]`;
-- si no se permiten lazos, `matriz[i][i]` debería quedar en falso o sin peso válido.
-
-## Lista de adyacencia
-
-La **lista de adyacencia** guarda, para cada vértice, la colección de sus vecinos salientes.
-
-Es la representación más habitual cuando el grafo es disperso y los algoritmos recorren vecinos.
-
-```java
-public final class GrafoLista {
-    private final Map<String, List<String>> vecinos;
-
-    public GrafoLista() {
-        this.vecinos = new HashMap<>();
-    }
-
-    public void agregarVertice(String vertice) {
-        this.vecinos.putIfAbsent(vertice, new ArrayList<>());
-    }
-
-    public void agregarArista(String origen, String destino) {
-        this.agregarVertice(origen);
-        this.agregarVertice(destino);
-        this.vecinos.get(origen).add(destino);
-    }
-
-    public Iterable<String> vecinosDe(String vertice) {
-        return this.vecinos.getOrDefault(vertice, List.of());
-    }
-}
-```
-
-### Qué gana
-
-- memoria más cercana a `O(V + E)`;
-- iterar vecinos de un vértice es natural;
-- encaja muy bien con DFS, BFS, Dijkstra y casi todos los algoritmos clásicos;
-- agregar vértices nuevos suele ser más flexible que en matriz.
-
-### Qué paga
-
-- consultar si `u` y `v` son adyacentes ya no es inmediato si la lista no tiene estructura extra;
-- la implementación necesita más objetos o nodos;
-- si el grafo es muy denso, puede perder parte de su ventaja.
-
-### Invariantes típicos
-
-- todo vecino listado debe corresponder a un vértice válido;
-- si el grafo es no dirigido, cada arista `u-v` debería aparecer reflejada en ambas listas;
-- si el grafo es simple, la lista de un vértice no debería repetir el mismo vecino.
-
-## Lista de aristas
-
-La **lista de aristas** guarda el conjunto de conexiones como pares o tuplas independientes.
-
-Ejemplo:
-
-```java
-public record Arista(String origen, String destino, int peso) {}
-```
-
-y el grafo podría mantener:
-
-```java
-private final List<Arista> aristas;
-```
-
-### Cuándo sirve
-
-Esta representación es útil cuando:
-
-- interesa recorrer todas las aristas como colección;
-- el algoritmo trabaja directamente sobre ellas;
-- o el foco no está puesto en consultar vecinos todo el tiempo.
-
-Ejemplos típicos:
-
-- **Kruskal**, que suele ordenar aristas por peso;
-- importación/exportación de grafos desde archivos;
-- algoritmos donde la arista es la unidad principal de trabajo.
-
-### Qué paga
-
-- consultar vecinos o adyacencia puntual puede ser más caro;
-- muchas preguntas del TAD requieren escanear toda la lista;
-- suele necesitar estructuras auxiliares si el algoritmo quiere ir más rápido.
-
-## Cómo representar pesos y dirección
-
-La representación no solo decide "dónde guardo la arista", sino también **cómo codifico su información**.
-
-### Dirección
-
-| Tipo | Qué implica en memoria |
-| :--- | :--- |
-| No dirigido | una sola relación lógica, aunque a veces se guarde duplicada en listas |
-| Dirigido | hay que distinguir origen y destino |
-
-En listas de adyacencia, un grafo dirigido suele guardar solo vecinos salientes. Si además se quieren vecinos entrantes rápidos, hace falta estructura adicional.
-
-### Peso
-
-El peso puede guardarse:
-
-- como entero o real dentro de la matriz;
-- como parte de una arista;
-- como campo del elemento almacenado en la lista de adyacencia.
-
-Ejemplo de lista de adyacencia con peso:
-
-```java
-public record VecinoConPeso(String destino, int peso) {}
-private final Map<String, List<VecinoConPeso>> vecinos;
-```
-
-La clave editorial es no esconder esta decisión: si el grafo es ponderado, la representación debe dejar claro **qué significa el peso** y dónde vive.
-
-## Comparación rápida de representaciones
-
-| Representación | Memoria típica | Consultar adyacencia | Iterar vecinos | Cuándo conviene |
-| :--- | :--- | :--- | :--- | :--- |
-| Matriz de adyacencia | O(V^2) | Muy fuerte | Más débil | Grafos densos o consultas masivas de adyacencia |
-| Lista de adyacencia | O(V + E) | Intermedia | Muy fuerte | Grafos dispersos y algoritmos de recorrido |
-| Lista de aristas | O(E) | Débil | Débil para vecinos, fuerte para recorrer aristas | Algoritmos centrados en aristas |
-
-## Qué relación tiene esto con los algoritmos
-
-Una misma idea algorítmica cambia de costo según la representación.
-
-### DFS y BFS
-
-En [Recorridos](recorridos.md), DFS y BFS necesitan visitar vecinos.
-
-- con lista de adyacencia, recorrer todo el grafo suele ser `O(V + E)`;
-- con matriz, la exploración suele pagar `O(V^2)` porque cada vértice revisa una fila completa.
-
-### Dijkstra y Bellman-Ford
-
-En [Caminos mínimos](caminos_minimos.md), también importa iterar vecinos o aristas:
-
-- Dijkstra suele encajar mejor con listas de adyacencia;
-- Bellman-Ford puede trabajar muy naturalmente con lista de aristas.
-
-### Prim y Kruskal
-
-En [Árboles de expansión](arboles_de_expansion.md):
-
-- Prim suele aprovechar adyacencias por vértice;
-- Kruskal suele aprovechar el conjunto total de aristas.
-
-La conclusión no es solo "elegí una estructura". Es "elegí una estructura coherente con el tipo de algoritmo que vas a correr".
-
-## Qué errores conviene evitar
-
-Errores frecuentes:
-
-1. usar matriz por costumbre aunque el grafo sea muy disperso;
-2. elegir lista de adyacencia y después necesitar consultas de adyacencia masiva sin estructura extra;
-3. no dejar explícito si la representación corresponde a un grafo dirigido o no dirigido;
-4. guardar pesos sin aclarar su semántica;
-5. exponer directamente la estructura interna y obligar al cliente a conocer la representación.
+Esto se llama **grafo implícito** y es fundamental en inteligencia artificial y resolución de puzzles.
 
 ## Resumen
 
-En grafos no hay una representación universalmente mejor. La elección depende de:
-
-1. si el grafo es denso o disperso;
-2. si importa más consultar adyacencia o recorrer vecinos;
-3. si el algoritmo trabaja sobre vértices o sobre aristas;
-4. y si hace falta guardar dirección, peso o ambos.
-
-La idea fuerte del capítulo es esta: representar un grafo no es un detalle de implementación aislado. Es una decisión que condiciona complejidad, memoria y claridad algorítmica.
+1. Si el grafo es **denso** (muchas aristas) o necesitás consultas de adyacencia constantes: **Matriz**.
+2. Si el grafo es **disperso** (pocas aristas) o vas a recorrerlo mucho: **Lista de Adyacencia**.
+3. Si el algoritmo trabaja con aristas globales: **Lista de Aristas**.
+4. Evitá meter lógica de algoritmos (como "visitado") dentro de los objetos del dominio.
 
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-representacion-grafos-mini
+:label: ex-parte5-representacion-memoria
 
-Justificá qué representación elegirías para un grafo muy disperso y qué elegirías para uno muy denso. Indicá en cada caso qué operación te interesa optimizar.
+Calculá cuánta memoria ocuparía una matriz de adyacencia de booleanos para un grafo de 50.000 usuarios de una red social. ¿Es viable en una PC estándar? ¿Cambiaría tu respuesta si usás una lista de adyacencia donde cada usuario tiene en promedio 200 amigos?
 ```
 
 ```{exercise}
-:label: ex-parte5-representacion-grafos-direccion
+:label: ex-parte5-representacion-incidencia
 
-Tomá una red de correlatividades entre materias y una red de amistades. Explicá cómo representarías cada una y qué cambiaría en la estructura al pasar de un grafo dirigido a uno no dirigido.
+Investigá qué es una **Matriz de Incidencia**. ¿En qué se diferencia de la de adyacencia? ¿Para qué tipo de problemas creés que podría ser útil?
 ```
 
 ```{exercise}
-:label: ex-parte5-representacion-grafos-kernel
+:label: ex-parte5-representacion-implícito
 
-Un algoritmo necesita consultar miles de veces si dos vértices son adyacentes, pero casi nunca recorre la lista completa de vecinos. Justificá qué representación conviene y qué costo estarías aceptando en otras operaciones.
+Pensá en el juego del Sudoku como un grafo. ¿Cuáles serían los vértices? ¿Cuándo habría una arista entre dos celdas? ¿Convendría guardarlo explícitamente o tratarlo como un grafo implícito?
 ```
 
 ## Próximo paso
 
-Para seguir, conviene pasar a [Recorridos](recorridos.md), donde esas representaciones se usan para explorar el grafo.
+Ahora que sabemos cómo guardar el grafo, vamos a aprender a movernos por él: [Recorridos de grafos](recorridos.md), el corazón de la exploración algorítmica.

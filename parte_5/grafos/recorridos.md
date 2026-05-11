@@ -8,290 +8,127 @@ description: Cómo funcionan DFS y BFS, qué estructuras reutilizan y por qué s
 (parte5-recorridos-grafos)=
 # Recorridos
 
-Los recorridos son el corazón algorítmico de la familia de grafos. A partir de DFS y BFS se desprenden ideas de alcanzabilidad, detección de ciclos, caminos mínimos no ponderados y análisis de componentes.
+Recorrer un grafo es el arte de visitar sus nodos de manera sistemática. A diferencia de un arreglo (donde avanzamos en línea recta) o un árbol (donde bajamos por niveles), en un grafo podemos encontrar **ciclos** y **múltiples caminos** para llegar al mismo lugar.
 
-En grafos, recorrer no significa simplemente "visitar todos los elementos". Significa explorar una red sin perderse en ciclos, sin repetir trabajo innecesario y manteniendo información suficiente para responder preguntas sobre conectividad, capas o estructura.
+Para no perdernos, todos los algoritmos de recorrido comparten una regla de oro: **Debemos marcar lo que ya visitamos**.
 
 :::{note} Hoja de ruta del capítulo
 **Objetivo.** Entender DFS y BFS como patrones de exploración que reutilizan pilas, colas y marcado de visitados.
 
-**Prerrequisitos.** Conviene haber leído [Representación de grafos](representacion.md) y recordar [Pilas](../secuencias/pilas.md) y [Colas](../secuencias/colas.md).
+**Prerrequisitos.** [Representación de grafos](representacion.md), [Pilas](../secuencias/pilas.md) y [Colas](../secuencias/colas.md).
 
-**Desarrollo.** El capítulo presenta la idea general de exploración, desarrolla DFS y BFS, compara profundidad con anchura, y cierra con aplicaciones típicas para alcanzabilidad, componentes, ciclos y caminos mínimos no ponderados.
+**Desarrollo.** El capítulo presenta DFS y BFS, compara sus estrategias (profundidad vs. anchura) y muestra sus aplicaciones para conectividad, ciclos y distancias.
 :::
 
-:::{tip} Idea guía
-Muchos algoritmos de grafos no inventan una lógica nueva desde cero: refinan un recorrido bien diseñado con el estado correcto.
-:::
+## El mecanismo base: Colores y Estados
 
-## Qué problema resuelven los recorridos
+Para que un recorrido sea correcto y eficiente, solemos pensar en tres estados para cada nodo:
 
-La pregunta base es simple:
+1. **No visitado:** El nodo aún no fue descubierto.
+2. **En proceso:** El nodo fue descubierto y está en la pila/cola, pero aún no terminamos de explorar sus vecinos.
+3. **Procesado:** Ya exploramos todos sus vecinos y terminamos con él.
 
-- dado un vértice inicial, **¿qué parte del grafo puedo explorar y en qué orden?**
+En la práctica, muchas veces nos alcanza con un simple `Set<V> visitados` para distinguir entre "No visitado" y "El resto".
 
-Pero esa pregunta se descompone en varias más concretas:
+## DFS: Búsqueda en Profundidad (Depth-First Search)
 
-- qué vértices son alcanzables;
-- qué aristas descubrí durante la exploración;
-- si hay ciclos;
-- si el grafo está conectado;
-- qué distancia en cantidad de aristas tiene cada vértice al origen.
+DFS funciona como alguien perdido en un laberinto: elige un camino y lo sigue hasta chocar con una pared o un nodo ya visitado; en ese momento, retrocede (**backtracking**) hasta la última bifurcación y prueba otro camino.
 
-Para responderlas, tanto DFS como BFS necesitan algo que en grafos es obligatorio:
-
-### Marcar visitados
-
-Como un grafo puede tener ciclos, no alcanza con seguir aristas "hasta que termine". Sin una marca de visitado, un recorrido puede volver una y otra vez al mismo lugar.
-
-La idea mínima es mantener un conjunto como este:
+### Implementación Recursiva (La más natural)
+La recursión usa implícitamente la pila del sistema.
 
 ```java
-Set<V> visitados = new HashSet<>();
-```
+public void dfs(Grafo<V> g, V actual, Set<V> visitados) {
+    visitados.add(actual);
+    System.out.println("Visitando: " + actual);
 
-y registrar cada vértice cuando se descubre o cuando se procesa, según la variante elegida.
-
-### Árbol o bosque de recorrido
-
-Mientras el algoritmo explora, muchas veces va construyendo implícitamente un **árbol de recorrido**:
-
-- cada vértice nuevo queda asociado al vértice desde el cual fue descubierto;
-- esa relación permite reconstruir caminos o componentes.
-
-Si el grafo no es conexo y el algoritmo se reinicia desde varios vértices, aparece un **bosque** de recorrido.
-
-## DFS: búsqueda en profundidad
-
-La **búsqueda en profundidad** (*depth-first search*, DFS) explora un camino todo lo que puede antes de retroceder.
-
-La intuición correcta es la de una pila:
-
-1. elegís un vecino;
-2. seguís profundizando;
-3. si no podés avanzar más, retrocedés al último punto pendiente.
-
-Por eso DFS se puede implementar:
-
-- recursivamente, usando la pila de llamadas;
-- iterativamente, usando una [Pila](../secuencias/pilas.md) explícita.
-
-### DFS recursivo
-
-```java
-public void dfs(Grafo<String> grafo, String origen, Set<String> visitados) {
-    visitados.add(origen);
-
-    for (String vecino : grafo.vecinosDe(origen)) {
+    for (V vecino : g.vecinosDe(actual)) {
         if (!visitados.contains(vecino)) {
-            dfs(grafo, vecino, visitados);
+            dfs(g, vecino, visitados);
         }
     }
 }
 ```
 
-La idea del código es simple:
+- **Uso ideal:** Detección de ciclos, orden topológico, laberintos, juegos donde queremos explorar una rama de decisión hasta el final.
+- **Dato clave:** DFS genera un **árbol de expansión** (Spanning Tree). Si durante el recorrido encontramos un vecino que ya está "en proceso" pero no es nuestro padre, ¡hemos detectado un **ciclo**!
 
-- marco el actual;
-- reviso sus vecinos;
-- si encuentro uno nuevo, profundizo por ahí.
+## BFS: Búsqueda en Anchura (Breadth-First Search)
 
-### DFS iterativo
+BFS funciona como una onda en el agua: desde el origen, visita primero a todos sus vecinos directos (distancia 1), luego a los vecinos de sus vecinos (distancia 2), y así sucesivamente.
+
+### Implementación Iterativa (Obligatoria con Cola)
+Para explorar por capas, necesitamos una `Queue`.
 
 ```java
-public void dfsIterativo(Grafo<String> grafo, String origen) {
-    Pila<String> pendientes = new PilaArray<>(100);
-    Set<String> visitados = new HashSet<>();
+public void bfs(Grafo<V> g, V inicio) {
+    Queue<V> cola = new LinkedList<>();
+    Set<V> visitados = new HashSet<>();
 
-    pendientes.push(origen);
+    cola.add(inicio);
+    visitados.add(inicio);
 
-    while (!pendientes.isEmpty()) {
-        String actual = pendientes.pop();
+    while (!cola.isEmpty()) {
+        V actual = cola.poll();
+        System.out.println("Procesando: " + actual);
 
-        if (visitados.contains(actual)) {
-            continue;
-        }
-
-        visitados.add(actual);
-
-        for (String vecino : grafo.vecinosDe(actual)) {
+        for (V vecino : g.vecinosDe(actual)) {
             if (!visitados.contains(vecino)) {
-                pendientes.push(vecino);
+                visitados.add(vecino); // Marcamos al descubrir, no al procesar
+                cola.add(vecino);
             }
         }
     }
 }
 ```
 
-Esta variante hace explícita la estructura que DFS venía usando de manera implícita: una pila de trabajo pendiente.
+- **Uso ideal:** Encontrar el **camino más corto** en grafos sin pesos (o con pesos uniformes). 
+- **Dato clave:** En un BFS, la primera vez que "tocamos" un nodo, lo hacemos por el camino más corto posible desde el origen.
 
-### Qué caracteriza a DFS
+## Comparativa: Profundidad vs. Anchura
 
-- profundiza antes de ensanchar;
-- es natural para razonar recursivamente;
-- suele ser útil para detectar ciclos, componentes y ordenamientos derivados;
-- no garantiza caminos mínimos en cantidad de aristas.
-
-## BFS: búsqueda por anchura
-
-La **búsqueda por anchura** (*breadth-first search*, BFS) cambia la política de exploración:
-
-- primero explora todos los vecinos a distancia 1;
-- después todos los que están a distancia 2;
-- luego los de distancia 3;
-- y así sucesivamente.
-
-La intuición correcta ahora es la de una [Cola](../secuencias/colas.md): el primer vértice descubierto pendiente es el primero en procesarse.
-
-```java
-public void bfs(Grafo<String> grafo, String origen) {
-    Cola<String> pendientes = new ColaEnlazada<>();
-    Set<String> visitados = new HashSet<>();
-
-    pendientes.enqueue(origen);
-    visitados.add(origen);
-
-    while (!pendientes.isEmpty()) {
-        String actual = pendientes.dequeue();
-
-        for (String vecino : grafo.vecinosDe(actual)) {
-            if (!visitados.contains(vecino)) {
-                visitados.add(vecino);
-                pendientes.enqueue(vecino);
-            }
-        }
-    }
-}
-```
-
-La diferencia clave con DFS no está en una línea aislada de código. Está en la política de pendientes:
-
-- DFS usa pila y privilegia el último descubierto;
-- BFS usa cola y privilegia el primero descubierto.
-
-### Qué caracteriza a BFS
-
-- explora por capas;
-- calcula distancias mínimas en cantidad de aristas cuando el grafo no tiene pesos;
-- es muy natural para problemas de alcance por niveles;
-- suele requerir más memoria que DFS cuando la frontera crece mucho.
-
-## Comparación directa entre DFS y BFS
-
-| Aspecto | DFS | BFS |
+| Característica | DFS | BFS |
 | :--- | :--- | :--- |
-| Estructura de soporte | pila / recursión | cola |
-| Política | profundizar primero | expandir por capas |
-| Camino mínimo en aristas | no lo garantiza | sí, si no hay pesos |
-| Uso típico | ciclos, componentes, orden estructural | distancias, niveles, expansión mínima no ponderada |
-| Intuición | backtracking | atención por turnos |
+| **Estructura** | Pila (explícita o recursión). | Cola (FIFO). |
+| **Estrategia** | "Ir lejos rápido". | "Explorar los alrededores". |
+| **Memoria** | $O(h)$ donde $h$ es la altura del árbol de exploración. | $O(W)$ donde $W$ es el ancho máximo de una capa. |
+| **Camino Corto** | No lo garantiza. | **Sí**, en cantidad de aristas. |
+| **Ciclos** | Muy eficiente para detectarlos. | Menos directo para ciclos en dirigidos. |
 
-La comparación importante no es cuál es "mejor", sino cuál responde a la pregunta correcta.
+## Aplicaciones de los recorridos
 
-## Costos y relación con la representación
-
-El costo del recorrido no depende solo del algoritmo. También depende de cómo está guardado el grafo.
-
-### Con lista de adyacencia
-
-Cuando el grafo está representado con listas de adyacencia:
-
-- DFS y BFS suelen recorrer todo el grafo en `O(V + E)`.
-
-Eso pasa porque:
-
-- cada vértice se visita una vez;
-- cada arista se procesa una cantidad acotada de veces.
-
-### Con matriz de adyacencia
-
-Si el grafo está representado con matriz:
-
-- revisar los vecinos de un vértice puede obligar a escanear una fila completa;
-- por eso el costo total de explorar suele acercarse a `O(V^2)`.
-
-Esto muestra por qué [Representación de grafos](representacion.md) no era un detalle previo sin importancia: cambia el costo real del algoritmo.
-
-## Aplicaciones típicas
-
-DFS y BFS son recorridos generales, pero sostienen varias tareas concretas.
-
-### Alcanzabilidad
-
-Pregunta típica:
-
-- "¿Puedo llegar desde `A` hasta `B`?"
-
-Tanto DFS como BFS sirven para responderla. Si `B` aparece durante la exploración, entonces es alcanzable desde `A`.
-
-### Componentes conexas
-
-En un grafo no dirigido, si corrés un recorrido desde un vértice y marcás todo lo alcanzado, obtenés una componente conexa. Repetir el proceso desde los no visitados permite contar todas las componentes.
-
-### Detección de ciclos
-
-DFS es especialmente natural para esta tarea porque su estructura de profundización deja más clara la diferencia entre:
-
-- volver al padre inmediato;
-- encontrar una arista que cierra un ciclo;
-- o reencontrar un vértice ya procesado.
-
-### Caminos mínimos no ponderados
-
-En grafos sin peso, BFS descubre vértices por capas. Eso significa que el primer momento en que llega a un vértice coincide con una distancia mínima en cantidad de aristas.
-
-Por eso BFS es la base de una versión simple del problema de caminos mínimos antes de pasar a [Caminos mínimos](caminos_minimos.md).
-
-### Orden topológico y componentes fuertes
-
-Más adelante, en [Orden topológico](orden_topologico.md) y [Conectividad](conectividad.md), van a aparecer algoritmos que ya no son "solo" DFS, pero dependen directamente de ideas que nacen acá:
-
-- marcar visitados;
-- recorrer sistemáticamente;
-- guardar información de descubrimiento o finalización.
-
-## Qué errores conviene evitar
-
-Errores frecuentes:
-
-1. olvidarse de marcar visitados y quedar atrapado en ciclos;
-2. usar DFS cuando se necesita distancia mínima en cantidad de aristas;
-3. usar BFS sin preguntarse si el grafo tiene pesos, caso donde ya no alcanza;
-4. pensar que el costo del recorrido es independiente de la representación;
-5. no guardar padre o distancia cuando después se necesita reconstruir información adicional.
+1. **Alcanzabilidad:** ¿Puedo llegar de A a B? (Cualquiera de los dos sirve).
+2. **Componentes Conexas:** En un grafo no dirigido, ¿cuántas "islas" separadas hay? (Corremos DFS/BFS desde un nodo, marcamos todo lo alcanzable, y si quedan nodos sin visitar, repetimos).
+3. **Validación de Árbol:** Un grafo de $N$ nodos es un árbol si es conexo y tiene exactamente $N-1$ aristas.
+4. **Flood Fill:** El algoritmo de "balde de pintura" en editores de imagen es un BFS/DFS sobre una grilla de píxeles.
 
 ## Resumen
 
-Muchos algoritmos de grafos no parten de cero: son refinamientos de un buen recorrido con el estado correcto.
-
-Las ideas que deberían quedar instaladas son estas:
-
-1. recorrer un grafo exige marcar visitados;
-2. DFS profundiza usando lógica de pila;
-3. BFS expande por capas usando lógica de cola;
-4. el costo del recorrido depende también de la representación;
-5. alcanzabilidad, componentes, ciclos y caminos mínimos no ponderados nacen de estas dos estrategias.
+- **Marcar visitados** es lo único que evita el lazo infinito.
+- **DFS** es recursivo y va al fondo; **BFS** es iterativo y va por capas.
+- Si buscás la distancia mínima en un laberinto o red sin pesos, usá **BFS**.
+- Si buscás detectar ciclos o dependencias, usá **DFS**.
 
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-recorridos-grafos-mini
+:label: ex-parte5-recorridos-ciclos
 
-Explicá por qué BFS encuentra caminos mínimos en cantidad de aristas cuando el grafo no tiene pesos, pero DFS no garantiza eso.
+Dibujá un grafo dirigido de 4 nodos que tenga un ciclo. Realizá un DFS manual y marcá en qué momento el algoritmo "se da cuenta" de que hay un ciclo. ¿Qué relación hay entre el nodo actual y el vecino ya visitado?
 ```
 
 ```{exercise}
-:label: ex-parte5-recorridos-grafos-visitados
+:label: ex-parte5-recorridos-bfs-distancia
 
-Mostrá con un ejemplo de grafo con ciclo qué podría pasar si un DFS o un BFS no mantuviera un conjunto de visitados. Explicá por qué el problema no es solo de eficiencia, sino también de corrección.
+En un BFS, si queremos guardar no solo los visitados sino también la **distancia** desde el origen, ¿qué estructura adicional usarías? Modificá el código de BFS para que imprima la distancia de cada nodo al origen.
 ```
 
 ```{exercise}
-:label: ex-parte5-recorridos-grafos-capas
+:label: ex-parte5-recorridos-memoria
 
-Tomá una red social y explicá qué significaría aplicar BFS desde una persona. Después justificá por qué el orden de descubrimiento puede interpretarse como distancia en cantidad de vínculos.
+En un grafo que representa la web (miles de millones de páginas), ¿por qué un BFS podría agotar la memoria de una computadora mientras que un DFS no? Pensá en el tamaño de la "frontera" (la cola vs la pila).
 ```
 
 ## Próximo paso
 
-Para seguir, conviene pasar a [Caminos mínimos](caminos_minimos.md), donde el problema deja de ser solo recorrer y pasa a ser optimizar.
+¿Qué pasa si las aristas tienen pesos (como kilómetros o tiempo)? El BFS ya no nos garantiza el camino más corto. Para eso, necesitamos subir un nivel de complejidad: [Caminos mínimos](caminos_minimos.md).

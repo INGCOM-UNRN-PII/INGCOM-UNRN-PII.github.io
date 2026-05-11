@@ -8,65 +8,61 @@ description: Mapa de la familia de diccionarios y conjuntos para la parte 5.
 (parte5-diccionarios-conjuntos)=
 # Diccionarios y conjuntos
 
-Esta familia reúne las estructuras donde la pertenencia, la búsqueda por clave y la actualización de asociaciones son la preocupación principal. A diferencia de las secuencias, acá el foco deja de estar en la posición y pasa a estar en **cómo identificar elementos** y **cómo recuperarlos con criterio**.
+Esta familia reúne las estructuras donde la **pertenencia**, la **búsqueda por clave** y la **actualización de asociaciones** son la preocupación principal. A diferencia de las secuencias (donde importa el *dónde* está el dato), acá el foco se desplaza hacia el *qué* es el dato: dejamos de buscar por índice posicional y pasamos a buscar por **identidad o valor**.
 
-En Java, esta familia aparece enseguida cuando se usan interfaces como `Map` y `Set`. En esta parte conviene mirar primero el problema abstracto y recién después las clases concretas del framework.
+En Java, esta familia se manifiesta principalmente a través del framework de colecciones con las interfaces `Map` (para diccionarios) y `Set` (para conjuntos). En esta parte del apunte, desarmamos la "magia" de estas clases para entender cómo funcionan por dentro.
 
-:::{note}
-Conviene usar este índice para ordenar el problema de acceso por clave antes de elegir entre hashing, orden, prefijos o partición.
+## Filosofía del acceso por clave
+
+Pasar de secuencias a diccionarios implica un cambio mental en la organización de la memoria:
+
+1. **De posición a identidad**: En un arreglo, buscás el elemento `i`. En un diccionario, buscás la información de `"Juan"` o el producto con ID `4502`.
+2. **Abstracción del almacenamiento**: Al usuario del TAD no le importa si el dato está "al principio" o "al final"; le importa que, dada la clave, el valor aparezca rápido.
+3. **El contrato de unicidad**: En general, las claves no se repiten. Esto simplifica la lógica de actualización: asociar un valor a una clave existente pisa el anterior.
+
+:::{tip}
+Si venís de C, pensá en un diccionario como una generalización de un arreglo donde el "índice" no tiene por qué ser un entero contiguo de $0$ a $N-1$, sino que puede ser cualquier tipo de dato con capacidad de ser comparado o hasheado.
 :::
 
-## Recorrido sugerido
+## Mapa de la familia
 
-| Orden | Página | Rol en la familia |
-| :--- | :--- | :--- |
-| 1 | [Fundamentos de diccionarios y conjuntos](fundamentos.md) | Define claves, pertenencia y operaciones base |
-| 2 | [Tablas hash](tablas_hash.md) | Instala acceso promedio eficiente |
-| 3 | [Diccionarios ordenados](diccionarios_ordenados.md) | Contrasta hashing con estructuras ordenadas |
-| 4 | [Tries](tries.md) | Introduce búsqueda por prefijos |
-| 5 | [Conjuntos disjuntos](conjuntos_disjuntos.md) | Cierra con partición dinámica de elementos |
-
-## Comparación rápida
-
-| Estructura | Fuerte principal | Trade-off central | Cuándo conviene |
+| Orden | Página | Concepto central | Aplicación típica |
 | :--- | :--- | :--- | :--- |
-| [Tablas hash](tablas_hash.md) | Acceso promedio rápido | Peor caso y colisiones | Cuando importa lookup frecuente por clave |
-| [Diccionarios ordenados](diccionarios_ordenados.md) | Orden y rangos | Más costo que hash en promedio | Cuando hacen falta consultas por intervalo |
-| [Tries](tries.md) | Prefijos | Costo de memoria por estructura | Cuando las claves son cadenas o secuencias de símbolos |
-| [Conjuntos disjuntos](conjuntos_disjuntos.md) | Partición dinámica | No reemplaza un mapa general | Cuando importa agrupar y unir componentes |
+| 1 | [Fundamentos](fundamentos.md) | Claves, valores y pertenencia | Modelado inicial de problemas |
+| 2 | [Tablas hash](tablas_hash.md) | Acceso por cálculo (hashing) | Cachés, bases de datos, lookups $O(1)$ |
+| 3 | [Diccionarios ordenados](diccionarios_ordenados.md) | Acceso por comparación | Listas de precios, agendas, rangos |
+| 4 | [Tries](tries.md) | Acceso por estructura de clave | Autocompletado, correctores, prefijos |
+| 5 | [Conjuntos disjuntos](conjuntos_disjuntos.md) | Partición y agrupamiento | Redes, componentes conexos, Kruskal |
 
-## Qué preguntas debería ayudar a responder esta familia
+## Criterios de elección
 
-Al terminar esta familia, conviene poder responder con criterio:
+¿Cómo decidir qué estructura usar? No hay una "mejor" en términos absolutos, sino una más adecuada para cada compromiso (*trade-off*).
 
-1. cuándo alcanza con saber si un elemento pertenece o no a un conjunto,
-2. cuándo hace falta asociar una clave con un valor,
-3. cuándo importa el orden de las claves,
-4. cuándo la estructura interna de la clave importa más que su comparación global,
-5. cuándo el problema no es “buscar” sino “mantener grupos”.
+| Si necesitás... | Probablemente te convenga... | Porque... |
+| :--- | :--- | :--- |
+| Velocidad pura de búsqueda | [Tablas hash](tablas_hash.md) | Ofrecen tiempo constante $O(1)$ promedio. |
+| Mantener los datos ordenados | [Diccionarios ordenados](diccionarios_ordenados.md) | Permiten recorrer en orden y buscar rangos. |
+| Búsquedas por prefijo | [Tries](tries.md) | Explotan la estructura compartida de las claves. |
+| Agrupar elementos en grupos | [Conjuntos disjuntos](conjuntos_disjuntos.md) | Son imbatibles para la operación `union` y `find`. |
 
-## Decisiones rápidas
+## Relación con Java y la memoria
 
-Si el problema dominante es:
+A lo largo de estos capítulos, vamos a ver cómo estas estructuras se mapean a la realidad:
 
-- **lookup frecuente por clave**, conviene empezar por [tablas hash](tablas_hash.md),
-- **consultas por rango o recorrido ordenado**, conviene mirar [diccionarios ordenados](diccionarios_ordenados.md),
-- **búsqueda por prefijo**, conviene mirar [tries](tries.md),
-- **unir y consultar componentes**, conviene mirar [conjuntos disjuntos](conjuntos_disjuntos.md).
+- **Representación**: Cómo pasamos de un concepto abstracto (un conjunto de personas) a algo que entra en la memoria (nodos, punteros, arreglos de buckets).
+- **Contratos**: La importancia de `hashCode()` y `equals()` en Java como base para que estas estructuras funcionen.
+- **Eficiencia**: Por qué un `HashMap` es generalmente más rápido que un `TreeMap`, pero por qué a veces preferimos el segundo.
 
-## Conexiones con el resto de la parte
+## Qué deberías dominar al finalizar
 
-Esta familia funciona como puente entre varias ideas ya vistas o que aparecen después:
+Un estudiante que recorrió esta familia con éxito debería poder:
 
-- reutiliza el análisis de costo de [análisis de algoritmos](../algoritmos.md),
-- se conecta con `Map` y `Set` de [colecciones en Java](../../parte_2/07_colecciones_genericos.md),
-- y prepara el terreno para árboles de búsqueda y algoritmos de grafos.
+1. Justificar la elección de una estructura sobre otra basándose en el análisis de complejidad.
+2. Explicar cómo se resuelven las colisiones en una tabla hash.
+3. Dibujar la estructura de un Trie dado un conjunto de palabras.
+4. Implementar las operaciones básicas de un conjunto disjunto con optimizaciones de ranking y compresión de caminos.
+5. Conectar estas estructuras con problemas del mundo real (ej. un sistema de ruteo, un motor de búsqueda, un gestor de archivos).
 
-## Cierre integrador sugerido
+## Próximo paso
 
-Un buen cierre para esta familia sería justificar qué estructura usar para:
-
-- un padrón por DNI,
-- autocompletado por prefijo,
-- un índice por rango de fechas,
-- agrupación de componentes en una red.
+Empezamos por los cimientos: [Fundamentos de diccionarios y conjuntos](fundamentos.md), donde definimos qué es una clave y qué operaciones mínimas esperamos de estas estructuras.

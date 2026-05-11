@@ -8,208 +8,92 @@ description: Cómo decidir qué vértices pertenecen a la misma componente y qu�
 (parte5-conectividad)=
 # Conectividad
 
-La conectividad cierra la familia volviendo sobre una de las preguntas más generales de grafos: cómo se parte el problema en componentes, qué tan conectado está el sistema y qué algoritmos permiten detectar esa estructura.
+La conectividad es el estudio de la "cohesión" de un grafo. ¿Está todo el grafo en una sola pieza o está fragmentado en varias islas? ¿Qué tan vulnerable es la red si un nodo falla? Responder estas preguntas es vital para entender la robustez de cualquier sistema, desde Internet hasta una red de transporte.
 
 :::{note} Hoja de ruta del capítulo
 **Objetivo.** Entender conectividad en grafos dirigidos y no dirigidos, y vincularla con componentes y partición del problema.
 
-**Prerrequisitos.** Conviene haber leído [Recorridos](recorridos.md) y tener presente [Conjuntos disjuntos](../diccionarios/conjuntos_disjuntos.md), porque este capítulo reutiliza exploración por componentes y partición dinámica.
+**Prerrequisitos.** [Recorridos](recorridos.md) y [Conjuntos disjuntos](../diccionarios/conjuntos_disjuntos.md).
 
-**Desarrollo.** El capítulo distingue conectividad en grafos no dirigidos y dirigidos, presenta componentes conexas y fuertemente conexas, compara recorridos con estructuras disjuntas y cierra con aplicaciones sobre robustez, segmentación y partición del problema.
+**Desarrollo.** El capítulo distingue conectividad débil y fuerte, introduce los conceptos de puentes y puntos de articulación, y explica el algoritmo de Kosaraju para SCC.
 :::
 
-## Qué preguntas resuelve la conectividad
+## 1. Grafos No Dirigidos: Componentes Conexas
 
-La conectividad responde preguntas como estas:
+En un grafo no dirigido, el concepto es simple: una **Componente Conexa** es un grupo de nodos donde todos pueden llegar a todos. Si el grafo tiene más de una componente, decimos que está fragmentado.
 
-- ¿todo el grafo forma una sola pieza?;
-- ¿qué vértices pertenecen a la misma componente?;
-- ¿puedo llegar de un vértice a otro?;
-- ¿cuántos bloques independientes tiene la red?;
-- ¿qué cambia si las aristas son dirigidas?
+### Cómo detectarlas
+Simplemente corremos un recorrido (DFS o BFS). Todos los nodos alcanzados desde un origen forman una componente. Si quedan nodos sin visitar, elegimos uno y repetimos.
 
-En muchos problemas, antes de optimizar o recorrer mejor, primero hay que saber si el sistema es una sola red o varias subredes desconectadas.
-
-## Componentes conexas en grafos no dirigidos
-
-En un grafo no dirigido, una **componente conexa** es un conjunto maximal de vértices donde todos son alcanzables entre sí.
-
-La intuición correcta es:
-
-- dentro de una componente hay camino entre cualquier par;
-- entre componentes distintas no hay camino.
-
-Si se ejecuta DFS o BFS desde un vértice y se marca todo lo alcanzado, se obtiene exactamente una componente. Repetir el proceso desde los no visitados permite particionar todo el grafo.
-
-```{code} java
-:caption: Esquema para contar componentes conexas
-
-int componentes = 0;
-
-for (String v : grafo.vertices()) {
-    if (!visitados.contains(v)) {
-        dfs(grafo, v, visitados);
-        componentes++;
+```java
+int contarComponentes(Grafo<V> g) {
+    Set<V> visitados = new HashSet<>();
+    int contador = 0;
+    for (V v : g.obtenerVertices()) {
+        if (!visitados.contains(v)) {
+            contador++;
+            explorarDFS(v, visitados); // Marcamos toda la "isla"
+        }
     }
+    return contador;
 }
 ```
 
-La idea importante no es el contador, sino la semántica:
+## 2. Grafos Dirigidos: La asimetría del camino
 
-- cada recorrido nuevo empieza una componente nueva.
+En los digrafos (grafos dirigidos), la conectividad se vuelve más compleja porque las calles pueden ser de una sola mano.
 
-## Qué significa que un grafo sea conexo
+- **Conectividad Débil:** El grafo está conectado si ignoramos la dirección de las flechas.
+- **Conectividad Fuerte (SCC):** Un grupo de nodos es una **Componente Fuertemente Conexa** si existe un camino de ida y vuelta entre **cualquier** par de nodos del grupo.
 
-En un grafo no dirigido, decir que el grafo es **conexo** equivale a decir:
+### Algoritmo de Kosaraju (Simplificado)
+Para encontrar las SCC, no alcanza con un DFS común. Una técnica elegante es:
+1. Hacer un DFS y guardar el orden de finalización de los nodos.
+2. Invertir todas las flechas del grafo (Grafo Transpuesto).
+3. Hacer un segundo DFS sobre el grafo invertido, siguiendo el orden de finalización del paso 1. Cada vez que iniciamos un DFS en esta fase, descubrimos una SCC completa.
 
-- tiene una sola componente conexa.
+## 3. Robustez: Puentes y Puntos de Articulación
 
-Eso tiene consecuencias prácticas fuertes:
+No todos los nodos y aristas son igual de importantes. 
 
-- si una red física no es conexa, hay nodos aislados respecto del resto;
-- si un mapa de ciudades no es conexo, algunas regiones no se alcanzan sin salir del sistema modelado;
-- si un conjunto de usuarios se parte en varias componentes, la difusión no recorre toda la red.
+- **Punto de Articulación:** Un nodo cuya eliminación fragmenta el grafo en dos o más piezas. Es un "punto crítico de falla".
+- **Puente:** Una arista cuya eliminación fragmenta el grafo.
 
-## Digrafos: conectividad débil y fuerte
-
-En grafos dirigidos la situación cambia, porque la alcanzabilidad deja de ser simétrica.
-
-Conviene distinguir:
-
-| Noción | Qué exige |
-| :--- | :--- |
-| conectividad débil | si se ignoran direcciones, el grafo queda conectado |
-| conectividad fuerte | para cualquier par `u`, `v`, hay camino de `u` a `v` y de `v` a `u` |
-
-La conectividad fuerte es mucho más exigente.
-
-Ejemplo:
-
-```text
-A -> B -> C
-```
-
-Acá:
-
-- `A` alcanza a `C`,
-- pero `C` no alcanza a `A`.
-
-Entonces el grafo no es fuertemente conexo.
-
-## Componentes fuertemente conexas
-
-Una **componente fuertemente conexa** (SCC) es un conjunto maximal de vértices donde todos se alcanzan mutuamente respetando dirección.
-
-Las SCC importan porque detectan regiones del digrafo donde:
-
-- la circulación es bidireccional por caminos,
-- hay realimentación,
-- o aparecen bloques muy acoplados.
-
-En dependencias de software o de tareas, una SCC grande puede señalar:
-
-- acoplamiento circular,
-- diseño difícil de desacoplar,
-- o una restricción mal planteada.
-
-## Cómo se calculan
-
-### Recorridos por componentes en grafos no dirigidos
-
-Para componentes conexas comunes alcanza con:
-
-- DFS,
-- o BFS.
-
-La lógica es simple y muy reusable:
-
-1. elegir un vértice no visitado,
-2. recorrer todo lo alcanzable,
-3. registrar esa componente,
-4. repetir.
-
-### Algoritmos para SCC
-
-En digrafos, detectar SCC requiere algo más elaborado. Dos nombres clásicos son:
-
-- **Kosaraju**,
-- **Tarjan**.
-
-No hace falta bajar al detalle completo de implementación para fijar la idea conceptual:
-
-- una SCC no se detecta mirando solo vecinos inmediatos;
-- hace falta combinar recorridos e información estructural sobre el digrafo.
-
-## Relación con conjuntos disjuntos
-
-La estructura de [conjuntos disjuntos](../diccionarios/conjuntos_disjuntos.md) no reemplaza a DFS o BFS en todos los problemas de conectividad, pero sí sirve cuando la pregunta dominante es:
-
-- ¿estos dos vértices quedaron en la misma componente según las uniones realizadas?
-
-Eso aparece naturalmente en contextos como:
-
-- construcción incremental de conectividad,
-- Kruskal para árboles de expansión,
-- seguimiento de componentes mientras se agregan aristas.
-
-Conviene distinguir:
-
-| Herramienta | Cuándo brilla |
-| :--- | :--- |
-| DFS / BFS | explorar una componente existente en un grafo dado |
-| conjuntos disjuntos | mantener particiones bajo operaciones de unión |
-
-## Dónde aparece
-
-La conectividad aparece en problemas como:
-
-### Redes y robustez
-
-Si una red se parte en varias componentes, deja de funcionar como sistema único. Detectar eso permite:
-
-- señalar cortes,
-- ubicar nodos aislados,
-- medir fragilidad estructural.
-
-### Segmentación o clustering grueso
-
-En algunos dominios alcanza con saber qué grupos están conectados y cuáles no, sin optimizar todavía rutas internas.
-
-### Análisis de dependencias
-
-En digrafos, una SCC puede señalar ciclos de dependencia o módulos demasiado acoplados.
-
-## Qué errores conviene evitar
-
-1. **Usar la intuición de grafo no dirigido en un digrafo.** Alcanzar no implica ser alcanzado.
-2. **Confundir componente conexa con componente fuertemente conexa.**
-3. **Pensar que conectividad es un detalle menor.** Muchas veces define si el problema debe resolverse en bloque o por partes.
-4. **Creer que union-find reemplaza cualquier algoritmo de recorrido.**
-
-:::{warning}
-En grafos dirigidos, la pregunta “¿están conectados?” está incompleta si no se aclara si se habla de conectividad débil o fuerte.
+:::{tip} Aplicación en Redes
+En diseño de infraestructura, queremos evitar puntos de articulación y puentes. Una red robusta debería tener múltiples caminos alternativos para que la falla de un solo componente no aísle a nadie.
 :::
+
+## 4. Conectividad y Union-Find
+
+Como vimos en el capítulo de [Árboles de Expansión](arboles_de_expansion.md), la estructura **Union-Find** es ideal para gestionar la conectividad de forma dinámica. Si el grafo está cambiando (se agregan aristas), Union-Find nos dice en tiempo casi constante si dos nodos acaban de quedar conectados en la misma componente.
 
 ## Resumen
 
-La conectividad decide cómo se parte un grafo en piezas con sentido algorítmico. En no dirigidos aparecen componentes conexas; en dirigidos, la distinción entre conectividad débil y fuerte cambia por completo el análisis.
-
-Por eso este capítulo cierra la familia: antes de buscar mejores rutas o mejores costos, muchas veces primero hace falta saber si el sistema forma una sola red o varias.
+1. **Componentes Conexas:** Las "islas" de un grafo no dirigido.
+2. **Fuertemente Conexo (SCC):** Regiones de un digrafo con caminos de ida y vuelta.
+3. **Robustez:** Se mide identificando puntos de articulación y puentes.
+4. **Kosaraju:** Algoritmo clásico para encontrar comunidades fuertemente unidas en digrafos.
 
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-conectividad-mini
+:label: ex-parte5-conectividad-ejemplo
 
-Describí un problema real donde sea importante detectar componentes separadas de una red. Indicá qué decisión práctica podría tomarse a partir de ese resultado.
+Dibujá un grafo dirigido con 4 nodos $A, B, C, D$ y las aristas $A \to B, B \to C, C \to A, C \to D$. ¿Cuáles son las Componentes Fuertemente Conexas?
 ```
 
 ```{exercise}
-:label: ex-parte5-conectividad-fuerte
+:label: ex-parte5-conectividad-puente
 
-Explicá por qué en un grafo dirigido puede pasar que dos vértices pertenezcan a la misma componente débil, pero no a la misma componente fuertemente conexa.
+En una red de fibra óptica, ¿por qué es peligroso que exista un "Puente"? ¿Cómo podrías modificar el grafo para que esa arista deje de ser un puente?
+```
+
+```{exercise}
+:label: ex-parte5-conectividad-tarjan
+
+Investigá el **Algoritmo de Tarjan**. ¿En qué se diferencia del de Kosaraju para encontrar SCC? ¿Por qué se dice que es más eficiente en una sola pasada?
 ```
 
 ## Próximo paso
 
-Para seguir, conviene volver a [la portada de la parte](../indice.md) y contrastar esta familia con [árboles](../arboles/indice.md) y [diccionarios](../diccionarios/indice.md), donde la organización deja de ser general y vuelve a estar guiada por jerarquía o clave.
+¡Felicitaciones! Has completado el recorrido por la familia de Grafos. Ahora es momento de hacer una [revisión cruzada](p5-revision-cruzada) de toda la Parte 5 para asegurar que los conceptos de ADT, Secuencias, Diccionarios, Árboles y Grafos estén bien integrados.
