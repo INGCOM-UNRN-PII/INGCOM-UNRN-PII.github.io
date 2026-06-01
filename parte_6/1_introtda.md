@@ -968,6 +968,104 @@ $$\text{top}(\text{push}(\text{empty}, 5)) \xrightarrow{\text{Axioma 4}} 5$$
 
 **Resultado:** El término se evalúa con garantía formal de correctness en todas las fases.
 
+## Complejidad Contractual: El Cuinto Elemento del Contrato
+
+Un contrato algebraico completo no solo especifica *qué* hace una operación ni *bajo qué condiciones*. También debe especificar *en cuántos recursos* (tiempo y espacio) se realiza esa operación.
+
+La **complejidad contractual** es la extensión natural de un contrato formal hacia el dominio de los recursos computacionales. En lugar de ser una propiedad secundaria o una "esperanza" de implementación, la complejidad se trata como parte integral del contrato algebraico.
+
+### ¿Por qué complejidad en el contrato?
+
+**Problema:** Dos implementaciones distintas de una pila pueden satisfacer todos los axiomas algebraicos pero comportarse radicalmente diferente en la práctica.
+
+- **Implementación A:** `push(s, e)` en $O(1)$ amortizado (arreglo dinámico).
+- **Implementación B:** `push(s, e)` en $O(n)$ (lista enlazada donde cada push recorre toda la lista antes de insertar).
+
+Ambas satisfacen los axiomas $\text{top}(\text{push}(s, e)) = e$ y $\text{size}(\text{push}(s, e)) = \text{size}(s) + 1$. Algebraicamente son correctas. Pero para aplicaciones reales—como parsers que hacen millones de push—la diferencia es crítica.
+
+**Solución:** Incluir complejidad temporal y espacial en la signatura del contrato.
+
+$$\text{Contrato Extendido} = \text{Signatura} + \text{Axiomas} + \text{Precondiciones} + \text{Postcondiciones} + \text{Complejidad}$$
+
+### Notación de Complejidad
+
+Para cada operación $\omega : s_1 \times \cdots \times s_n \to s_r$, especificamos:
+
+**Complejidad Temporal:** $T(\omega) = O(f(n))$ donde $n$ es el tamaño de la entrada (ej. número de elementos).
+
+**Complejidad Espacial:** $S(\omega) = O(g(n))$ para el espacio adicional requerido.
+
+**Ejemplos:**
+
+- $\text{push} : \mathtt{Stack} \times \mathbb{E} \to \mathtt{Stack}$ con $T(\text{push}) = O(1)$ amortizado y $S(\text{push}) = O(1)$.
+- $\text{get} : \mathtt{LinkedList} \times \mathbb{N} \to \mathbb{E}$ con $T(\text{get}) = O(n)$ en el peor caso (búsqueda lineal) y $S(\text{get}) = O(1)$ (sin espacio extra).
+
+### Correspondencia Formal: Axiomas y Complejidad
+
+Un axioma **no prescreve complejidad**. Por ejemplo:
+
+$$\text{top}(\text{push}(s, e)) = e$$
+
+Esta ecuación es válida en $O(1)$ o en $O(n^2)$. El axioma solo garantiza *correctness*, no eficiencia.
+
+Sin embargo, la **implementación** del axioma (el código que lo realiza) *debe* respetar el límite de complejidad contractual. Si prometiste $T(\text{top}) = O(1)$, tu código debe garantizarlo bajo las condiciones del contrato.
+
+La complejidad acota el espacio de implementaciones válidas:
+
+$$\{\text{Implementaciones que satisfacen } E\} \cap \{\text{Implementaciones con } T(\omega) \leq f(n)\} = \text{Implementaciones Válidas}$$
+
+### Integración en la Arquitectura de las Cuatro Fases
+
+La complejidad contractual se verifica principalmente en **Fase 4 (Restricción Pragmática)**, aunque impacta decisiones en las fases previas:
+
+| Fase | Rol de la Complejidad |
+|------|----------------------|
+| **Fase 1: Tipado** | La signatura tipada asegura aridad correcta; la complejidad aún no se evalúa. |
+| **Fase 2: Reescritura** | Los axiomas definen equivalencia semántica. La complejidad de la reescritura (número de pasos) es observable pero no validada aún. |
+| **Fase 3: Verificación** | Se demuestra por inducción que el término satisface axiomas. El número de pasos de inducción puede correlacionarse con complejidad, pero es análisis teórico. |
+| **Fase 4: Contratos** | **La complejidad se valida aquí.** Se verifica que toda ejecución de la operación respeta el límite contractual $f(n)$. |
+
+**Ejemplo:** Para `top(push(empty, 5))`:
+
+- **Fase 1:** Bien tipado ✓
+- **Fase 2:** Se reescribe a `5` en un paso ✓
+- **Fase 3:** La proposición se valida por inducción ✓
+- **Fase 4:** Se verifica que $T(\text{top}) = O(1)$ se cumple (acceso directo al tope) ✓
+
+### Desacoplamiento: Axiomas vs. Complejidad
+
+Un punto crucial: **Los axiomas algebraicos son independientes de la complejidad.**
+
+- Puedo escribir axiomas para una pila sin mencionar complejidad.
+- Dos implementaciones distintas (array vs. lista enlazada) pueden satisfacer exactamente los mismos axiomas pero con complejidades diferentes.
+- El cambio de implementación (siempre que mantenga los axiomas) es válido algebraicamente, aunque cambie la complejidad.
+
+Esto es una característica, no un bug. La abstracción algebraica permite razonar sobre correctness independientemente de eficiencia. Cuando necesitas garantías de complejidad, las agregas explícitamente al contrato.
+
+### Verificación de Complejidad Contractual
+
+En la práctica, la complejidad se verifica mediante:
+
+1. **Análisis Amortizado:** Para operaciones que varían (ej. `push` en arreglo dinámico), se calcula el costo promedio.
+2. **Análisis de Peor Caso:** Se identifica la entrada que maximiza el tiempo/espacio.
+3. **Recurrencia (para estructuras recursivas):** Se plantea ecuación de recurrencia y se resuelve (Master Theorem, etc.).
+4. **Tests Empíricos:** Se ejecutan con entradas de tamaño creciente y se verifica que el tiempo/espacio crece según la clase de complejidad prometida.
+
+**Ejemplo de verificación de `push`:**
+
+- **Promesa contractual:** $T(\text{push}) = O(1)$ amortizado.
+- **Análisis:** El costo de `push` es constante (colocar elemento al final del arreglo) excepto cuando se rehace el arreglo, lo que ocurre raramente.
+- **Conclusión:** El costo amortizado es $O(1)$. ✓
+
+### Implicancia Pedagógica
+
+Cuando estudies las especificaciones de estructuras de datos en este capítulo y el próximo, verás que cada operación incluye su complejidad contractual. Esto te permite:
+
+1. **Comparar estructuras:** Eligiendo entre Stack, Queue, LinkedList sabiendo exactamente el costo de cada operación.
+2. **Predecir rendimiento:** Antes de implementar, estimando el costo total de una secuencia de operaciones.
+3. **Optimizar:** Identificando cuellos de botella (operaciones con peor complejidad que la deseada).
+4. **Certificar implementaciones:** Verificando que el código cumple con las cotas de complejidad promesas.
+
 ## Resumen
 
 Un tipo de dato abstracto es una especificación formal que captura el comportamiento esencial de una estructura de datos sin revelar su implementación:

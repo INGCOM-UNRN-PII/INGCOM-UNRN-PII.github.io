@@ -80,11 +80,11 @@ El tamaño es siempre no negativo y los índices válidos están en rango.
 
 ### Contratos
 
-| Operación | Precondición | Postcondición | Invariante |
-|-----------|--------------|---------------|-----------|
-| `create(n)` | ninguna | $\text{length}(\text{result}) = n$ | length ≥ 0 |
-| `set(a, i, v)` | $0 \leq i < \text{length}(a)$ | $\text{get}(\text{result}, i) = v$ | length no cambia |
-| `get(a, i)` | $0 \leq i < \text{length}(a)$ | devuelve elemento en posición $i$ | $a$ no se modifica |
+| Operación | Precondición | Postcondición | Complejidad |
+|-----------|--------------|---------------|-------------|
+| `create(n)` | ninguna | $\text{length}(\text{result}) = n$ | $O(n)$ tiempo, $O(n)$ espacio |
+| `set(a, i, v)` | $0 \leq i < \text{length}(a)$ | $\text{get}(\text{result}, i) = v$ | $O(1)$ tiempo, $O(1)$ espacio |
+| `get(a, i)` | $0 \leq i < \text{length}(a)$ | devuelve elemento en posición $i$ | $O(1)$ tiempo, $O(1)$ espacio |
 
 ---
 
@@ -141,11 +141,11 @@ El tamaño es no negativo y vacío es equivalente a tamaño cero.
 
 ### Contratos
 
-| Operación | Precondición | Postcondición |
-|-----------|--------------|---------------|
-| `push(s, e)` | ninguna | $\text{top}(\text{result}) = e \land \text{isEmpty}(\text{result}) = \text{false}$ |
-| `pop(s)` | ninguna (falla gracefully si vacía) | si $\text{isEmpty}(s) = \text{true}$, resultado = empty; sino, top se restaura |
-| `top(s)` | $\text{isEmpty}(s) = \text{false}$ | devuelve elemento más reciente |
+| Operación | Precondición | Postcondición | Complejidad |
+|-----------|--------------|---------------|-------------|
+| `push(s, e)` | ninguna | $\text{top}(\text{result}) = e \land \text{isEmpty}(\text{result}) = \text{false}$ | $O(1)$ amortizado tiempo, $O(1)$ amortizado espacio |
+| `pop(s)` | ninguna (falla gracefully si vacía) | si $\text{isEmpty}(s) = \text{true}$, resultado = empty; sino, top se restaura | $O(1)$ amortizado tiempo, $O(1)$ amortizado espacio |
+| `top(s)` | $\text{isEmpty}(s) = \text{false}$ | devuelve elemento más reciente | $O(1)$ tiempo, $O(1)$ espacio |
 
 ---
 
@@ -200,11 +200,11 @@ $$I(\text{Queue}) : \forall q, \; \text{size}(q) \geq 0 \land (\text{isEmpty}(q)
 
 ### Contratos
 
-| Operación | Precondición | Postcondición |
-|-----------|--------------|---------------|
-| `enqueue(q, e)` | ninguna | elemento agregado al final; $\text{isEmpty}(\text{result}) = \text{false}$ |
-| `dequeue(q)` | ninguna | si vacía, resultado = empty; sino, primer elemento removido |
-| `front(q)` | $\text{isEmpty}(q) = \text{false}$ | devuelve elemento al frente |
+| Operación | Precondición | Postcondición | Complejidad |
+|-----------|--------------|---------------|-------------|
+| `enqueue(q, e)` | ninguna | elemento agregado al final; $\text{isEmpty}(\text{result}) = \text{false}$ | $O(1)$ amortizado tiempo, $O(1)$ amortizado espacio |
+| `dequeue(q)` | ninguna | si vacía, resultado = empty; sino, primer elemento removido | $O(1)$ amortizado tiempo, $O(1)$ amortizado espacio |
+| `front(q)` | $\text{isEmpty}(q) = \text{false}$ | devuelve elemento al frente | $O(1)$ tiempo, $O(1)$ espacio |
 
 ---
 
@@ -267,13 +267,13 @@ $$I(\text{LinkedList}) : \forall l, \; \text{size}(l) \geq 0 \land (\text{isEmpt
 
 ### Contratos
 
-| Operación | Precondición | Postcondición |
-|-----------|--------------|---------------|
-| `insertAt(l, i, e)` | $0 \leq i \leq \text{size}(l)$ | elemento insertado en posición $i$; size aumenta |
-| `removeAt(l, i)` | $0 \leq i < \text{size}(l)$ | elemento removido; elementos posteriores se desplazan |
-| `get(l, i)` | $0 \leq i < \text{size}(l)$ | devuelve elemento en posición $i$ |
-| `prepend(l, e)` | ninguna | elemento agregado al inicio |
-| `append(l, e)` | ninguna | elemento agregado al final |
+| Operación | Precondición | Postcondición | Complejidad |
+|-----------|--------------|---------------|-------------|
+| `insertAt(l, i, e)` | $0 \leq i \leq \text{size}(l)$ | elemento insertado en posición $i$; size aumenta | $O(n)$ tiempo (búsqueda + inserción), $O(1)$ espacio |
+| `removeAt(l, i)` | $0 \leq i < \text{size}(l)$ | elemento removido; elementos posteriores se desplazan | $O(n)$ tiempo (búsqueda + remoción), $O(1)$ espacio |
+| `get(l, i)` | $0 \leq i < \text{size}(l)$ | devuelve elemento en posición $i$ | $O(n)$ tiempo (búsqueda lineal), $O(1)$ espacio |
+| `prepend(l, e)` | ninguna | elemento agregado al inicio | $O(1)$ tiempo, $O(1)$ espacio |
+| `append(l, e)` | ninguna | elemento agregado al final | $O(n)$ tiempo (sin tail pointer) o $O(1)$ (con tail pointer), $O(1)$ espacio |
 
 ---
 
@@ -319,7 +319,16 @@ $$I(\text{DoublyLinkedList}) : \text{LinkedList invariants} \land \forall i, \; 
 
 Cada nodo tiene referencias bidireccionales consistentes.
 
-### Contratos (análogos a LinkedList, con operaciones desde fin adicionales)
+### Contratos
+
+| Operación | Precondición | Postcondición | Complejidad |
+|-----------|--------------|---------------|-------------|
+| `insertAt(l, i, e)` | $0 \leq i \leq \text{size}(l)$ | elemento insertado en posición $i$ | $O(n)$ tiempo (búsqueda), $O(1)$ espacio |
+| `removeAt(l, i)` | $0 \leq i < \text{size}(l)$ | elemento removido | $O(n)$ tiempo (búsqueda), $O(1)$ espacio |
+| `get(l, i)` | $0 \leq i < \text{size}(l)$ | devuelve elemento en posición $i$ | $O(\min(i, n-i))$ tiempo (búsqueda desde ambos extremos), $O(1)$ espacio |
+| `getFromEnd(l, i)` | $0 \leq i < \text{size}(l)$ | devuelve elemento desde el final | $O(\min(i, n-i))$ tiempo, $O(1)$ espacio |
+| `prepend(l, e)` | ninguna | elemento agregado al inicio | $O(1)$ tiempo, $O(1)$ espacio |
+| `append(l, e)` | ninguna | elemento agregado al final | $O(1)$ tiempo (con tail pointer), $O(1)$ espacio |
 
 ---
 
@@ -371,25 +380,25 @@ Todos los nodos están conectados en un ciclo cerrado.
 
 ### Contratos
 
-| Operación | Precondición | Postcondición |
-|-----------|--------------|---------------|
-| `rotate(l, k)` | ninguna | orden cíclico rotado $k$ posiciones |
-| `get(l, i)` | ninguna (índices envolventes) | devuelve elemento; $i \bmod \text{size}$ si $i \geq \text{size}$ |
-| `insertAt(l, i, e)` | ninguna | elemento insertado; ciclo preservado |
-| `removeAt(l, i)` | $\text{isEmpty}(l) = \text{false}$ | elemento removido; ciclo preservado |
+| Operación | Precondición | Postcondición | Complejidad |
+|-----------|--------------|---------------|-------------|
+| `rotate(l, k)` | ninguna | orden cíclico rotado $k$ posiciones | $O(k)$ tiempo (actualizar referencias), $O(1)$ espacio |
+| `get(l, i)` | ninguna (índices envolventes) | devuelve elemento; $i \bmod \text{size}$ si $i \geq \text{size}$ | $O(n)$ tiempo (búsqueda desde inicio), $O(1)$ espacio |
+| `insertAt(l, i, e)` | ninguna | elemento insertado; ciclo preservado | $O(n)$ tiempo (búsqueda + inserción), $O(1)$ espacio |
+| `removeAt(l, i)` | $\text{isEmpty}(l) = \text{false}$ | elemento removido; ciclo preservado | $O(n)$ tiempo (búsqueda + remoción), $O(1)$ espacio |
 
 ---
 
-## Comparativa: Propiedades Algebraicas
+## Comparativa: Propiedades Algebraicas y Complejidad
 
-| TDA | Acceso | Inserción | Remoción | Iteración | Invariante clave |
-|-----|--------|-----------|----------|-----------|------------------|
-| **Array** | O(1) directo | Estática | Estática | Lineal | Tamaño fijo |
-| **Stack** | LIFO | Final | Final | LIFO | Vacía ↔ size = 0 |
-| **Queue** | FIFO | Final | Inicio | FIFO | FIFO order |
-| **LinkedList** | O(n) | Cualquier | Cualquier | Unidireccional | No circular |
-| **DoublyLinkedList** | O(n) | Cualquier | Cualquier | Bidireccional | Refs. simétricas |
-| **CircularLinkedList** | Modular | Cualquier | Cualquier | Cíclica | Ciclo cerrado |
+| TDA | Acceso | Inserción | Remoción | Iteración | Complejidad Típica | Invariante clave |
+|-----|--------|-----------|----------|-----------|-------------------|------------------|
+| **Array** | O(1) directo | Estática | Estática | Lineal | Acceso O(1), modificación O(1) | Tamaño fijo |
+| **Stack** | LIFO | Final | Final | LIFO | push/pop/top O(1) | Vacía ↔ size = 0 |
+| **Queue** | FIFO | Final | Inicio | FIFO | enqueue/dequeue/front O(1) | FIFO order |
+| **LinkedList** | O(n) | Cualquier | Cualquier | Unidireccional | get O(n), insert/remove O(n) | No circular |
+| **DoublyLinkedList** | O(n) | Cualquier | Cualquier | Bidireccional | get O(min(i,n-i)), insert/remove O(n) | Refs. simétricas |
+| **CircularLinkedList** | O(n) | Cualquier | Cualquier | Cíclica | get O(n), rotate O(k), insert/remove O(n) | Ciclo cerrado |
 
 ---
 
