@@ -1,10 +1,10 @@
 ---
-title: "Estructuras de Datos: Especificaciones Algebraicas Completas"
+title: "Especificaciones algebraicas completas 1"
 description: "Definiciones formales con axiomas, generadores, modificadores, observadores y contratos para estructuras fundamentales."
 ---
 
 (estructuras-tda)=
-# Estructuras de Datos: Especificaciones Algebraicas Completas
+# Especificaciones Algebraicas completas para secuencias
 
 Este capítulo cataloga las especificaciones algebraicas rigurosas de las estructuras de datos más utilizadas en programación. Cada especificación integra:
 
@@ -28,7 +28,7 @@ Al finalizar este capítulo, se espera que el estudiante pueda:
 
 :::{note} Prerrequisitos
 
-Este capítulo construye sobre [Introducción a Tipos de Datos Abstractos](#introtda). Necesitás estar familiarizado con sorts, operaciones, axiomas, generadores/modificadores/observadores y demostraciones algebraicas.
+Este capítulo construye sobre [Introducción a Tipos de Datos Abstractos](./1_intro_tda.md). Necesitás estar familiarizado con sorts, operaciones, axiomas, generadores/modificadores/observadores y demostraciones algebraicas.
 :::
 
 ---

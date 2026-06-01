@@ -1,6 +1,6 @@
 ---
-title: "Especificaciones algebraicas avanzadas"
-description: "Sets, diccionarios, arboles y grafos con variantes comunes y versiones simplificadas."
+title: "Especificaciones algebraicas completas 2"
+description: "Sets, diccionarios, arboles y grafos."
 ---
 
 (avanzadas-tda)=
