@@ -135,8 +135,6 @@ project:
   - title: 'Parte 6: Estructuras de datos'
     children:
     - file: parte_6/indice.md
-    - file: parte_6/localidad_memoria.md
-    - file: parte_6/profiling.md
     - title: Secuencias
       children:
       - file: parte_6/secuencias/indice.md
