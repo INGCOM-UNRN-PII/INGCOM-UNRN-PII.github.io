@@ -534,6 +534,416 @@ $$\text{isEmpty}(\text{pop}(\text{empty})) = \text{true}$$
 
 Esto no es un axioma; es una **propiedad derivada**, porque se sigue de aplicar sucesivamente los axiomas 1 y 5.
 
+## Integración con Contratos: Precondiciones, Postcondiciones e Invariantes
+
+La especificación algebraica que desarrollamos hasta aquí es **denotacional** y **funcional**: describe *qué* hace cada operación mediante ecuaciones. Sin embargo, en la programación práctica (especialmente en lenguajes como Java), utilizamos **contratos** basados en estado: precondiciones, postcondiciones e invariantes (Lógica de Hoare, Diseño por Contrato).
+
+La conexión entre el álgebra de tipos abstractos y los contratos es profunda y rigurosa. No son mundos separados; los axiomas algebraicos **fundamentan y garantizan** la correctness de los contratos.
+
+### Invariantes de Representación y Restricción de Sorts
+
+Un **invariante** es un predicado $I : s \to \mathtt{Bool}$ que especifica cuál es el conjunto válido de valores del sort. En la visión algebraica, el invariante **restringe el dominio semántico** del tipo.
+
+**Formalmente:** Mientras que el sort $\mathtt{Stack}$ en teoría admite cualquier secuencia de elementos, en la práctica queremos que todas las pilas generadas cumplan ciertas propiedades. Por ejemplo:
+
+$$I(\text{Stack}) : \forall s \in \mathtt{Stack}, \; \text{depth}(s) \geq 0$$
+
+(El número de elementos es siempre no negativo.)
+
+En el marco de **álgebras ordenadas por sorts**, el invariante se modela como un **subsort**. En lugar de trabajar con el sort general $\mathtt{Stack}$, trabajamos con sorts más específicos:
+
+- $\mathtt{EmptyStack}$ — pilas que satisfacen $\text{isEmpty}(s) = \text{true}$
+- $\mathtt{NeStack}$ (non-empty stack) — pilas que satisfacen $\text{isEmpty}(s) = \text{false}$
+
+Entonces:
+- $\text{empty} : \to \mathtt{EmptyStack}$ — genera pilas vacías
+- $\text{push} : \mathtt{Stack} \times \mathbb{Z} \to \mathtt{NeStack}$ — transforma cualquier pila en una no vacía
+
+Con esta tipificación estricta, el invariante se **eleva a la signatura**: no es una aserción que chequeés en runtime, sino una restricción de tipos que se valida en tiempo de especificación.
+
+**Demostración inductiva de un invariante:**
+
+Querés demostrar que el invariante $I(s) : \text{depth}(s) \geq 0$ vale para toda pila generada.
+
+**Base:** $I(\text{empty})$ se cumple porque $\text{depth}(\text{empty}) = 0 \geq 0$. ✓
+
+**Paso inductivo:** Asumís que $I(s)$ vale para alguna pila $s$ (hipótesis inductiva). Querés demostrar que $I(\text{push}(s, x))$ también vale.
+
+$$\text{depth}(\text{push}(s, x)) = \text{depth}(s) + 1$$
+
+Por hipótesis inductiva, $\text{depth}(s) \geq 0$, así que:
+$$\text{depth}(\text{push}(s, x)) = \text{depth}(s) + 1 \geq 0 + 1 = 1 > 0$$
+
+Por lo tanto, $I(\text{push}(s, x))$ se cumple. ✓
+
+Por inducción estructural, el invariante vale para todas las pilas. ∎
+
+### Precondiciones y Funciones Parciales
+
+Una **precondición** es un predicado que debe ser verdadero *antes* de ejecutar una operación. Formalmente, una función parcial se define solo cuando su precondición es verdadera.
+
+En la especificación algebraica estándar, todas las operaciones son **totales**: $\text{pop} : \mathtt{Stack} \to \mathtt{Stack}$ puede aplicarse a cualquier pila. Pero en la práctica, $\text{pop}$ solo tiene sentido si la pila es no vacía. La precondición es:
+
+$$\text{pre}(\text{pop}(s)) : \text{isEmpty}(s) = \text{false}$$
+
+Para modelar esto algebraicamente, usamos **subsorts** y **axiomas condicionales**:
+
+En lugar de $\text{pop} : \mathtt{Stack} \to \mathtt{Stack}$, escribimos:
+$$\text{pop} : \mathtt{NeStack} \to \mathtt{Stack}$$
+
+Esto eleva la precondición a la signatura. Un término $\text{pop}(s)$ solo es válido si $s$ tiene sort $\mathtt{NeStack}$, es decir, si $\text{isEmpty}(s) = \text{false}$.
+
+**Alternativamente**, usamos **axiomas condicionales** que protegen la ecuación:
+
+$$\text{isEmpty}(s) = \text{false} \implies \text{pop}(s) = \text{...}$$
+
+**Demostración de corrección de precondición:**
+
+Querés demostrar que si respetás la precondición de $\text{pop}$, garantizás que el invariante de pila se mantiene.
+
+**Proposición:** Si $\text{isEmpty}(s) = \text{false}$, entonces $\text{depth}(\text{pop}(s)) \geq 0$.
+
+**Demostración:** 
+
+Si $\text{isEmpty}(s) = \text{false}$, entonces existe un elemento en la pila. Esto significa que $s$ fue construida usando al menos una operación $\text{push}$ desde el $\text{empty}$ original.
+
+Por lo tanto, $s = \text{push}(s', x)$ para algún $s'$ y $x$.
+
+Aplicando el axioma 3 ($\text{pop}(\text{push}(s, x)) = s$):
+$$\text{pop}(s) = \text{pop}(\text{push}(s', x)) = s'$$
+
+Dado que $s'$ es una pila válida, el invariante de $s'$ se cumple: $\text{depth}(s') \geq 0$. ✓
+
+### Postcondiciones y Ecuaciones de Equivalencia
+
+Una **postcondición** especifica *qué estado resulta* después de ejecutar una operación. Formalmente, en lenguaje imperativo:
+
+$$\{P\} \; \text{operación} \; \{Q\}$$
+
+indica que si $P$ era verdadera antes, después de la operación, $Q$ será verdadera.
+
+En la visión algebraica (sin estado mutable), las postcondiciones se **codifican como identidades** en el conjunto de axiomas $E$.
+
+**Ejemplo:** La postcondición de $\text{push}(s, x)$ es que el elemento en el tope sea $x$. Algebraicamente, esto es el axioma:
+
+$$\text{top}(\text{push}(s, x)) = x$$
+
+Este axioma **garantiza** formalmente que la postcondición se cumple en cualquier implementación.
+
+**Demostración: Postcondición de push**
+
+Querés demostrar que después de hacer $\text{push}(s, x)$, el tope es $x$.
+
+**Proposición:** $\text{top}(\text{push}(s, x)) = x$ para toda pila $s$ y elemento $x$.
+
+**Demostración:** 
+
+Este es exactamente el Axioma 4 de la pila. Por definición de axioma, se cumple para toda pila generada por los constructores y modificadores. ∎
+
+**Ejemplo más complejo: Composición de postcondiciones**
+
+Supongamos que querés demostrar que si hacés dos $\text{push}$ seguidos y luego un $\text{pop}$, el tope es el primer elemento que agregaste.
+
+**Proposición:** 
+
+Sea $s$ una pila. Después de $\text{push}(s, x)$, $\text{push}$ nuevamente con $y$, y luego $\text{pop}$, el tope debería ser $x$.
+
+$$\text{top}(\text{pop}(\text{push}(\text{push}(s, x), y))) = x$$
+
+**Demostración:**
+
+$$\begin{align}
+\text{top}(\text{pop}(\text{push}(\text{push}(s, x), y)))
+&= \text{top}(\text{push}(s, x)) && \text{(aplicar Axioma 3: pop de push)} \\
+&= x && \text{(aplicar Axioma 4: top de push)}
+\end{align}$$
+
+Esta demostración prueba formalmente que la composición de postcondiciones individuales garantiza el resultado esperado. ∎
+
+### Relación entre Axiomas, Precondiciones y Postcondiciones
+
+La estructura es jerárquica:
+
+1. **Axiomas algebraicos** ($\Sigma, E$) son los cimientos. Define completamente el comportamiento.
+2. **Invariantes** restringen el conjunto válido de valores mediante subsorts.
+3. **Precondiciones** especifican cuándo una operación es aplicable; se implementan como requisitos de sort.
+4. **Postcondiciones** describen el resultado; son ecuaciones que se derivan de los axiomas.
+
+**Tabla de correspondencia:**
+
+| Concepto | Especificación Algebraica | Contrato Imperativo |
+|----------|--------------------------|-------------------|
+| ¿Qué valores son válidos? | Axiomas + subsorts | Invariante |
+| ¿Cuándo puedo usar esta op? | Tipo del dominio (subsort) | Precondición |
+| ¿Qué pasa después? | Ecuación axiomática | Postcondición |
+| ¿Se mantiene siempre? | Demostración inductiva | Verificación del invariante |
+
+### Ventajas de esta integración
+
+La especificación algebraica **fundamenta** los contratos:
+
+- **Claridad total:** Los axiomas explicitan exactamente qué hace cada operación. No quedan ambigüedades sobre qué promete la postcondición.
+- **Demostrabilidad:** Los contratos no son afirmaciones sueltas; se derivan formalmente de los axiomas.
+- **Composicionalidad:** Si dos operaciones satisfacen sus axiomas individuales, la composición también satisface sus axiomas (ver ejemplo de dos push + pop).
+- **Verificabilidad:** Los axiomas se convierten en casos de test. Si tu implementación satisface los axiomas, satisface los contratos.
+
+## La Arquitectura de las Cuatro Fases
+
+Para comprender cómo los conceptos de tipos de datos abstractos evolucionan desde su pura abstracción matemática hasta su utilidad práctica en ingeniería de software, organizamos el framework como **cuatro capas arquitectónicas sucesivas**. Cada capa construye sobre la anterior, añadiendo rigor, expresividad y aplicabilidad.
+
+### Fase 1: Tipado Estático (La Signatura $\Sigma$)
+
+**Función:** Actúa como el compilador formal a nivel de dominio.
+
+**Perspectiva:** Puramente **sintáctica**. La signatura desconoce la semántica y se enfoca únicamente en que las operaciones respeten los dominios abstractos definidos y su aridad (número y tipos de argumentos).
+
+**Componentes:**
+
+Una signatura $\Sigma$ especifica:
+- **Sorts:** $S = \{\mathtt{Stack}, \mathbb{Z}, \mathtt{Bool}, \ldots\}$
+- **Operaciones tipadas:** Cada operación $op : s_1 \times \cdots \times s_n \to s$ establece un contrato sintáctico.
+
+**Ejemplo con pila:**
+
+$$\Sigma_{\text{Stack}} = \begin{cases}
+\text{Sorts:} & \mathtt{Stack}, \mathbb{Z}, \mathtt{Bool} \\
+\text{Operaciones:} & \\
+\quad \text{empty} : \to \mathtt{Stack} \\
+\quad \text{push} : \mathtt{Stack} \times \mathbb{Z} \to \mathtt{Stack} \\
+\quad \text{pop} : \mathtt{Stack} \to \mathtt{Stack} \\
+\quad \text{top} : \mathtt{Stack} \to \mathbb{Z} \\
+\quad \text{isEmpty} : \mathtt{Stack} \to \mathtt{Bool}
+\end{cases}$$
+
+**Aporte fundamental:** 
+
+La signatura **prohibe operaciones divergentes**. Por ejemplo:
+- $\text{isEmpty}(\text{true})$ es un término **inválido** (type error): el parámetro debe ser $\mathtt{Stack}$, no $\mathtt{Bool}$.
+- $\text{push}(5, \text{empty})$ es inválido: el primer argumento debe ser $\mathtt{Stack}$, no $\mathbb{Z}$.
+
+Esta validación sintáctica es crucial: restringe el conjunto de términos potencialmente evaluables a aquellos que respetan la estructura de tipos. Los términos bien tipados forman el vocabulario $T_\Sigma$, que es el universo sobre el cual operan las fases subsecuentes.
+
+**Demostración: Validez de términos**
+
+Sea el término $t = \text{top}(\text{push}(\text{empty}, 5))$. Demostrá que es un término bien tipado en $\Sigma$.
+
+1. $\text{empty}$ tiene tipo $\mathtt{Stack}$. ✓ (constructor)
+2. $5$ tiene tipo $\mathbb{Z}$. ✓ (literal)
+3. $\text{push}(\text{empty}, 5)$ tiene tipo $\mathtt{Stack}$ porque $\text{push} : \mathtt{Stack} \times \mathbb{Z} \to \mathtt{Stack}$ y los argumentos respetan los tipos. ✓
+4. $\text{top}(\text{push}(\text{empty}, 5))$ tiene tipo $\mathbb{Z}$ porque $\text{top} : \mathtt{Stack} \to \mathbb{Z}$ y su argumento es $\mathtt{Stack}$. ✓
+
+Por lo tanto, $t \in T_\Sigma$ es un término válido de sort $\mathbb{Z}$. ∎
+
+### Fase 2: Reescritura Semántica (La Axiomatización $E$)
+
+**Función:** Actúa como el motor de evaluación ecuacional.
+
+**Perspectiva:** **Denotacional**. Mientras que $\Sigma$ solo verifica sintaxis, $E$ estipula *qué combinaciones sintácticas representan el mismo objeto abstracto* mediante ecuaciones de equivalencia.
+
+**Componentes:**
+
+El conjunto de axiomas $E = \{e_1, e_2, \ldots, e_n\}$ define relaciones de igualdad entre términos. Cada axioma tiene la forma:
+
+$$\text{expresión}_1 = \text{expresión}_2$$
+
+donde ambos lados son términos bien tipados del mismo sort.
+
+**Ejemplo con pila:**
+
+$$E_{\text{Stack}} = \begin{cases}
+\text{Axioma 1:} & \text{pop}(\text{empty}) = \text{empty} \\
+\text{Axioma 3:} & \text{pop}(\text{push}(s, x)) = s \\
+\text{Axioma 4:} & \text{top}(\text{push}(s, x)) = x \\
+\text{Axioma 5:} & \text{isEmpty}(\text{empty}) = \text{true} \\
+\text{Axioma 6:} & \text{isEmpty}(\text{push}(s, x)) = \text{false}
+\end{cases}$$
+
+**Aporte fundamental:**
+
+A través de axiomas, transformamos el vocabulario tipado $T_\Sigma$ en un **álgebra cociente**. Dos términos que se reducen al mismo resultado son **semánticamente equivalentes**. Por ejemplo:
+
+$$\text{pop}(\text{push}(\text{push}(\text{empty}, 3), 5)) \equiv \text{push}(\text{empty}, 3)$$
+
+porque ambos lados denotan "una pila con un solo elemento: 3 en el tope".
+
+Sin los axiomas, $T_\Sigma$ sería un conjunto de términos estáticos; con axiomas, obtenemos un **sistema algebraico dinámico** donde la reescritura ecuacional evalúa términos a sus formas canónicas.
+
+**Demostración: Equivalencia por axiomas**
+
+Demostrá que $\text{top}(\text{pop}(\text{push}(\text{push}(\text{empty}, 3), 5))) = 3$ utilizando solo axiomas.
+
+$$\begin{align}
+\text{top}(\text{pop}(\text{push}(\text{push}(\text{empty}, 3), 5)))
+&= \text{top}(\text{push}(\text{empty}, 3)) && \text{(Axioma 3: pop de push)} \\
+&= 3 && \text{(Axioma 4: top de push)}
+\end{align}$$
+
+Cada paso reemplaza una subexpresión por otra equivalente según axiomas. La reescritura termina en la forma canónica $3 \in \mathbb{Z}$. ∎
+
+### Fase 3: Verificación Lógica (Demostración Estructural)
+
+**Función:** Actúa como el sistema de prueba deductiva formal del TDA.
+
+**Perspectiva:** **Analítica formal**. Explota la recursión inherente de la signatura (especialmente los generadores y modificadores) para validar **teoremas** sobre el universo potencialmente infinito de términos.
+
+**Componentes:**
+
+Las demostraciones estructurales utilizan:
+- **Inducción estructural:** razonar sobre cómo se construyen todos los términos mediante generadores y modificadores.
+- **Sustitución ecuacional:** aplicar axiomas de $E$ de forma mecánica.
+- **Razonamiento compositivo:** si una propiedad vale para $t_1$ y $t_2$, vale para cualquier término que los combina.
+
+**Ejemplo con pila:**
+
+**Proposición:** Para toda pila $s$ y elementos $x, y \in \mathbb{Z}$:
+$$\text{isEmpty}(\text{pop}(\text{push}(s, x))) = \text{isEmpty}(s)$$
+
+Esta proposición afirma que hacer push y luego pop no cambia si la pila está vacía. Es una propiedad estructural infinita (vale para cualquiera de las infinitas pilas posibles).
+
+**Demostración por inducción estructural:**
+
+**Base:** $s = \text{empty}$
+
+$$\begin{align}
+\text{isEmpty}(\text{pop}(\text{push}(\text{empty}, x)))
+&= \text{isEmpty}(\text{empty}) && \text{(Axioma 3)} \\
+&= \text{isEmpty}(\text{empty}) && \text{(hipótesis)}
+\end{align}$$
+
+Ambos lados son iguales. ✓
+
+**Paso inductivo:** Asumimos que la propiedad vale para $s$ (hipótesis inductiva):
+$$\text{isEmpty}(\text{pop}(\text{push}(s, x))) = \text{isEmpty}(s)$$
+
+Queremos demostrar que vale para $\text{push}(s, y)$:
+$$\text{isEmpty}(\text{pop}(\text{push}(\text{push}(s, y), x))) = \text{isEmpty}(\text{push}(s, y))$$
+
+Derivación:
+$$\begin{align}
+\text{isEmpty}(\text{pop}(\text{push}(\text{push}(s, y), x)))
+&= \text{isEmpty}(\text{push}(s, y)) && \text{(Axioma 3)} \\
+&= \text{isEmpty}(\text{push}(s, y)) && \text{(lo que queríamos demostrar)}
+\end{align}$$
+
+Por inducción, la proposición vale para toda pila generada. ∎
+
+**Aporte fundamental:**
+
+La inducción estructural escala el razonamiento de casos finitos a universos infinitos de términos. Garantiza que las propiedades derivadas son **universalmente válidas** antes de implementar nada. Es el marco riguroso de prueba de correctness.
+
+### Fase 4: Restricción Pragmática (Contratos)
+
+**Función:** Actúa como el puente operacional desde la especificación algebraica hacia la implementación imperativa concreta.
+
+**Perspectiva:** **Operacional e ingenieril**. Reconoce que en software real, las álgebras totales (donde toda operación está definida para todo input) son ideales teóricos. En la práctica, necesitamos mecanismos para fallar gracefully, validar precondiciones y mantener invariantes.
+
+**Componentes:**
+
+Tres mecanismos vinculan especificación algebraica con ingeniería práctica:
+
+**1. Subsorts para Invariantes:**
+
+Un invariante restringe el dominio válido. Modelamos esto elevando subsorts:
+
+$$\begin{align}
+\mathtt{Stack} &\supseteq \mathtt{EmptyStack} \cup \mathtt{NeStack}\\
+\text{where} \quad \mathtt{EmptyStack} &= \{s : \text{isEmpty}(s) = \text{true}\}\\
+\mathtt{NeStack} &= \{s : \text{isEmpty}(s) = \text{false}\}
+\end{align}$$
+
+Entonces:
+- $\text{empty} : \to \mathtt{EmptyStack}$
+- $\text{push} : \mathtt{Stack} \times \mathbb{Z} \to \mathtt{NeStack}$
+- $\text{pop} : \mathtt{NeStack} \to \mathtt{Stack}$ ← precondición integrada en el tipo
+
+**2. Axiomas Condicionales para Precondiciones:**
+
+Cuando una operación tiene una precondición, protegemos los axiomas:
+
+$$\text{isEmpty}(s) = \text{false} \implies \text{top}(s) = e$$
+
+Esta forma condicional captura "si $s$ es no vacía, entonces el top es bien definido".
+
+**3. Postcondiciones como Identidades Axiomáticas:**
+
+Toda postcondición se expresa como un axioma. Ejemplo:
+
+- **Postcondición informal:** "Después de push(s, x), el elemento top es x"
+- **Axioma formal:** $\text{top}(\text{push}(s, x)) = x$
+
+**Ejemplo integrado: Validación de un push**
+
+**Contrato en pseudocódigo Java:**
+
+```java
+/** 
+ * Agrega un elemento a la pila.
+ * 
+ * Precondición: ninguna (siempre es válido)
+ * Invariante: depth(s) >= 0
+ * Postcondición: top(push(s, x)) == x && isEmpty(push(s, x)) == false
+ */
+void push(Stack s, int x)
+```
+
+**Correspondencia algebraica:**
+
+| Contrato | Álgebra |
+|----------|---------|
+| Precondición: ninguna | Operación total: $\text{push} : \mathtt{Stack} \times \mathbb{Z} \to \mathtt{Stack}$ |
+| Invariante: depth ≥ 0 | Axioma 1 + subsort NeStack garantiza que toda pila generada satisface el invariante |
+| Postcondición: top = x | Axioma 4: $\text{top}(\text{push}(s, x)) = x$ |
+| Postcondición: not empty | Axioma 6: $\text{isEmpty}(\text{push}(s, x)) = \text{false}$ |
+
+**Aporte fundamental:**
+
+Los contratos pragmáticos se **anclan en los axiomas**. No son afirmaciones sueltas; cada cláusula del contrato corresponde a una ecuación verificable algebraicamente. Esto permite:
+
+- **Testabilidad automática:** Los axiomas generan casos de prueba.
+- **Verificación estática:** El tipado de sorts captura precondiciones en tiempo de compilación.
+- **Composicionalidad:** Si dos operaciones cumplen sus axiomas, su composición también.
+
+### Integración: El Flujo Arquitectónico
+
+Las cuatro fases no operan de forma aislada; forman un pipeline de validación:
+
+```
+Código de usuario 
+    ↓
+[Fase 1: Tipado] → ¿El término está bien tipado en Σ?
+    ↓ (sí)
+[Fase 2: Reescritura] → Evalúa el término usando E hasta forma canónica
+    ↓
+[Fase 3: Verificación] → ¿La propiedad derivada es válida por inducción?
+    ↓ (sí)
+[Fase 4: Contratos] → ¿Se respetan precondiciones, invariantes, postcondiciones?
+    ↓ (sí)
+Ejecución segura
+```
+
+**Ejemplo integral: Evaluación de top(push(empty, 5))**
+
+**Fase 1 (Tipado):** 
+- $\text{empty}$ tiene sort $\mathtt{Stack}$ ✓
+- $5$ tiene sort $\mathbb{Z}$ ✓
+- $\text{push}(\text{empty}, 5)$ tiene sort $\mathtt{Stack}$ ✓
+- $\text{top}(\text{push}(\text{empty}, 5))$ tiene sort $\mathbb{Z}$ ✓
+
+**Fase 2 (Reescritura):**
+$$\text{top}(\text{push}(\text{empty}, 5)) \xrightarrow{\text{Axioma 4}} 5$$
+
+**Fase 3 (Verificación):**
+- Proposición: $\text{top}(\text{push}(s, x)) = x$ vale para toda $s$ y $x$.
+- Demostración: Por inducción estructural (ya hecha).
+- Conclusión: La evaluación es universalmente válida. ✓
+
+**Fase 4 (Contratos):**
+- Precondición de top: ninguna (operación total) ✓
+- Invariante: $\text{depth}(\text{push}(\text{empty}, 5)) = 1 \geq 0$ ✓
+- Postcondición: resultado = 5 ✓
+
+**Resultado:** El término se evalúa con garantía formal de correctness en todas las fases.
+
 ## Resumen
 
 Un tipo de dato abstracto es una especificación formal que captura el comportamiento esencial de una estructura de datos sin revelar su implementación:
@@ -542,10 +952,12 @@ Un tipo de dato abstracto es una especificación formal que captura el comportam
 - **Operaciones:** funciones que transforman u observan valores de sorts.
 - **Signatura:** el conjunto de sorts y operaciones de un TDA.
 - **Axiomas:** ecuaciones que cada implementación debe satisfacer.
-- **Omega:** símbolo para operaciones indefinidas o errores.
-- **Demostraciones algebraicas:** argumentos que derivan nuevas ecuaciones de los axiomas.
+- **Generadores, Modificadores, Observadores:** taxonomía de operaciones que estructura el diseño de axiomas.
+- **Invariantes:** restricciones de representación modeladas como subsorts.
+- **Precondiciones y Postcondiciones:** especificadas mediante subsorts y ecuaciones algebraicas.
+- **Demostraciones:** pruebas formales que garantizan correctness.
 
-La especificación algebraica garantiza que distintas implementaciones compartan el mismo contrato semántico, lo que permite razonar sobre correctness, reemplazar implementaciones y construir código robusto.
+La especificación algebraica garantiza que distintas implementaciones compartan el mismo contrato semántico, lo que permite razonar sobre correctness, reemplazar implementaciones y construir código robusto. Los axiomas algebraicos no son decorativos; son el fundamento técnico sobre el cual se construyen contratos verificables y composicionales.
 
 ## Ejercicios
 
