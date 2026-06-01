@@ -1,35 +1,52 @@
 ---
-title: "Parte 6: Tipos de Datos Abstractos"
-description: "Especificación formal y algebraica de estructuras de datos."
+title: "Parte 5: Tipos de Datos Abstractos"
+description: "Recorrido desde la idea de TDA hasta especificaciones algebraicas y su análisis."
 ---
 
-(parte6-indice)=
-# Parte 6: Tipos de Datos Abstractos
+(parte5-indice)=
+# Parte 5: Tipos de Datos Abstractos
 
-Esta parte introduce el enfoque algebraico para especificar y razonar sobre tipos de datos abstractos. A diferencia de las implementaciones concretas (pilas con arreglos, colas con listas enlazadas), un TDA formaliza *qué promete* una estructura de datos, independientemente de *cómo se implementa*.
+Esta parte organiza el paso desde la intuición de un TDA hacia especificaciones algebraicas completas. El foco está en separar contrato e implementación, formalizar operaciones con axiomas y usar ese marco para comparar alternativas con criterio.
 
 ## Propósito de la parte
 
-Aprender a escribir especificaciones rigurosas que capturen el comportamiento esencial de estructuras de datos mediante sorts, operaciones y axiomas. Esto permite:
+Construir un lenguaje común para:
 
-- Razonar correctamente sobre el comportamiento de una estructura.
-- Validar que diferentes implementaciones cumplen el mismo contrato.
-- Construir código modular y reemplazable.
+- especificar qué promete una estructura sin fijar su representación,
+- verificar que distintas implementaciones cumplen el mismo contrato,
+- y decidir entre opciones concretas usando complejidad y contexto de uso.
 
 ## Orden sugerido de lectura
 
-1. **Introducción a Tipos de Datos Abstractos** (`1_introtda.md`) — Comienza aquí para entender la diferencia entre especificación e implementación, y aprende la notación algebraica (sorts, operaciones, axiomas).
+1. [Tipos Abstractos de Datos](1_intro_tda.md) — Introducción conceptual: interfaz, contrato, invariantes y separación entre “qué” y “cómo”.
 
-2. **Estructuras de Datos: Especificaciones Algebraicas Completas** (`2_estructuras.md`) — Catalogo de especificaciones rigurosas para estructuras fundamentales (arreglos, pilas, colas, listas) con axiomas y contratos.
+2. [Introducción a Tipos de Datos Abstractos](2_tipos_abstractos.md) — Marco formal: sorts, signaturas, axiomas, demostraciones e integración con contratos.
 
-3. **Especificaciones algebraicas avanzadas** (`3_avanzadas.md`) — Sets, diccionarios, arboles y grafos con variantes comunes y versiones simplificadas.
+3. [Análisis de algoritmos](3_algoritmos.md) — Modelo de costo para comparar implementaciones sin perder de vista el contrato abstracto.
 
-## Índice completo
+4. [Estructuras de Datos: Especificaciones Algebraicas Completas](4_estructuras.md) — Catálogo formal de estructuras base con axiomas, invariantes y complejidad contractual.
 
-- `1_introtda.md` — Introducción a Tipos de Datos Abstractos (sorts, operaciones, axiomas, demostraciones algebraicas)
-- `2_estructuras.md` — Especificaciones completas: Array, Stack, Queue, LinkedList, DoublyLinkedList, CircularLinkedList
-- `3_avanzadas.md` — Especificaciones de Set, Dictionary, Tree y Graph, con variantes comunes y simplificadas
+5. [Especificaciones algebraicas avanzadas](5_avanzadas.md) — Extensión a sets, diccionarios, árboles y grafos con variantes frecuentes.
+
+## Capítulos nucleares
+
+- [Tipos Abstractos de Datos](1_intro_tda.md)
+- [Introducción a Tipos de Datos Abstractos](2_tipos_abstractos.md)
+- [Estructuras de Datos: Especificaciones Algebraicas Completas](4_estructuras.md)
+
+## Repaso y ampliación
+
+- [Análisis de algoritmos](3_algoritmos.md)
+- [Especificaciones algebraicas avanzadas](5_avanzadas.md)
+
+## Índice exhaustivo
+
+- `1_intro_tda.md` — Marco intuitivo de TAD, contrato, encapsulamiento e invariantes.
+- `2_tipos_abstractos.md` — Desarrollo formal de sorts, operaciones, axiomas y verificación.
+- `3_algoritmos.md` — Herramientas asintóticas para comparar costos de implementación.
+- `4_estructuras.md` — Especificaciones algebraicas completas de estructuras fundamentales.
+- `5_avanzadas.md` — Especificaciones avanzadas de familias no lineales y asociativas.
 
 ## Próximo paso
 
-Después de dominar los conceptos de esta parte, podrás escribir especificaciones formales para cualquier estructura de datos y verificar que tus implementaciones las cumplen correctamente.
+Para iniciar el recorrido, conviene comenzar por [Tipos Abstractos de Datos](1_intro_tda.md) y usar este índice como mapa de avance de la parte.

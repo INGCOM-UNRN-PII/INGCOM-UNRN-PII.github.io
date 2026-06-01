@@ -8,7 +8,7 @@ description: Qué es un TAD, cómo se relaciona con la representación y por qu�
 (parte5-tipos-abstractos-datos)=
 # Tipos Abstractos de Datos
 
-Esta página introduce el tema con un lenguaje más intuitivo. Antes de discutir el la definición formal, conviene fijar qué se considera un tipo abstracto de datos y por qué la representación no debería confundirse con la interfaz.
+Esta página introduce el tema con un lenguaje más intuitivo. Antes de discutir la definición formal, conviene fijar qué se considera un tipo abstracto de datos y por qué la representación no debería confundirse con la interfaz.
 
 Viniendo de C, la intuición desarrollada nos lleva a pensar primero en la estructura concreta: `struct`, campos, punteros, arreglos, nodos. Aquí, invertiremos ese orden. Primero importa **qué problema modela la estructura** y **qué operaciones promete**. Recién después conviene decidir cómo se la representa en memoria.
 
@@ -302,4 +302,4 @@ Diseñá una API mínima para un TAD `Cola<T>` sin decidir todavía cómo se imp
 
 ## Próximo paso
 
-Para seguir, conviene pasar a [Análisis de algoritmos](algoritmos.md), donde aparece el criterio de comparación que después se reutiliza en toda la parte.
+Para seguir, conviene pasar a [Análisis de algoritmos](3_algoritmos.md), donde aparece el criterio de comparación que después se reutiliza en toda la parte.

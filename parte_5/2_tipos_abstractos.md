@@ -8,7 +8,7 @@ description: "Conceptos algebraicos fundamentales para especificar estructuras d
 
 Un tipo de dato abstracto (TDA) es una especificación formal de una estructura de datos que describe *qué operaciones se pueden hacer* y *qué propiedades deben cumplir*, sin comprometerse con *cómo se implementan*. Esta separación entre especificación e implementación es central en el diseño de software robusto.
 
-A lo largo de este capítulo, vas a aprender a escribir especificaciones algebraicas rigurosas usando la notación estándar de la teoría de tipos abstractos. Eso significa definir explícitamente los *sorts*, las *operaciones*, los *axiomas* que las gobiernan, y las *demostraciones* que validan propiedades correctas.
+A lo largo de este capítulo se trabaja en la escritura de especificaciones algebraicas rigurosas usando la notación estándar de la teoría de tipos abstractos. Eso implica definir explícitamente los *sorts*, las *operaciones*, los *axiomas* que las gobiernan y las *demostraciones* que validan propiedades correctas.
 
 :::{tip} Objetivos de Aprendizaje
 
@@ -32,7 +32,7 @@ Al finalizar este capítulo, se espera que el estudiante pueda:
 
 Cuando escribís código, trabajás con objetos concretos: una `Stack` en Java, una `List` en Python, una estructura de pila en C. Pero cada una de esas implementaciones es simplemente *una* forma de realizar la idea abstracta de "pila".
 
-La pregunta es: ¿cuál es la idea abstracta? ¿Qué debe cumplir cualquier algo que pretenda ser una pila?
+La pregunta es: ¿cuál es la idea abstracta? ¿Qué debe cumplir cualquier estructura que pretenda ser una pila?
 
 ### Especificación vs. Implementación
 
@@ -63,7 +63,7 @@ Además, una especificación algebraica rigurosa:
 
 - **Elimina ambigüedad.** No quedan dudas sobre qué comportamiento se espera.
 - **Facilita pruebas.** Los axiomas se convierten en tests que cualquier implementación debe pasar.
-- **Permite reasoning formal.** Podés demostrar propiedades sobre el TDA sin analizar el código concreto.
+- **Permite razonamiento formal.** Se pueden demostrar propiedades sobre el TDA sin analizar el código concreto.
 - **Favorece la reutilización.** Código que confía en la especificación funciona con cualquier implementación correcta.
 
 ## Sorts, operaciones y signaturas
@@ -562,7 +562,7 @@ Esto no es un axioma; es una **propiedad derivada**, porque se sigue de aplicar 
 
 La especificación algebraica que desarrollamos hasta aquí es **denotacional** y **funcional**: describe *qué* hace cada operación mediante ecuaciones. Sin embargo, en la programación práctica (especialmente en lenguajes como Java), utilizamos **contratos** basados en estado: precondiciones, postcondiciones e invariantes (Lógica de Hoare, Diseño por Contrato).
 
-La conexión entre el álgebra de tipos abstractos y los contratos es profunda y rigurosa. No son mundos separados; los axiomas algebraicos **fundamentan y garantizan** la correctness de los contratos.
+La conexión entre el álgebra de tipos abstractos y los contratos es profunda y rigurosa. No son mundos separados; los axiomas algebraicos **fundamentan y garantizan** la corrección de los contratos.
 
 ### Invariantes de Representación y Restricción de Sorts
 
@@ -853,13 +853,13 @@ Por inducción, la proposición vale para toda pila generada. ∎
 
 **Aporte fundamental:**
 
-La inducción estructural escala el razonamiento de casos finitos a universos infinitos de términos. Garantiza que las propiedades derivadas son **universalmente válidas** antes de implementar nada. Es el marco riguroso de prueba de correctness.
+La inducción estructural escala el razonamiento de casos finitos a universos infinitos de términos. Garantiza que las propiedades derivadas son **universalmente válidas** antes de implementar nada. Es el marco riguroso de prueba de corrección.
 
 ### Fase 4: Restricción Pragmática (Contratos)
 
 **Función:** Actúa como el puente operacional desde la especificación algebraica hacia la implementación imperativa concreta.
 
-**Perspectiva:** **Operacional e ingenieril**. Reconoce que en software real, las álgebras totales (donde toda operación está definida para todo input) son ideales teóricos. En la práctica, necesitamos mecanismos para fallar gracefully, validar precondiciones y mantener invariantes.
+**Perspectiva:** **Operacional e ingenieril**. Reconoce que en software real, las álgebras totales (donde toda operación está definida para toda entrada) son ideales teóricos. En la práctica, se necesitan mecanismos para fallar de forma controlada, validar precondiciones y mantener invariantes.
 
 **Componentes:**
 
@@ -929,7 +929,7 @@ Los contratos pragmáticos se **anclan en los axiomas**. No son afirmaciones sue
 
 ### Integración: El Flujo Arquitectónico
 
-Las cuatro fases no operan de forma aislada; forman un pipeline de validación:
+Las cuatro fases no operan de forma aislada; forman un flujo de validación:
 
 ```
 Código de usuario 
@@ -966,9 +966,9 @@ $$\text{top}(\text{push}(\text{empty}, 5)) \xrightarrow{\text{Axioma 4}} 5$$
 - Invariante: $\text{depth}(\text{push}(\text{empty}, 5)) = 1 \geq 0$ ✓
 - Postcondición: resultado = 5 ✓
 
-**Resultado:** El término se evalúa con garantía formal de correctness en todas las fases.
+**Resultado:** El término se evalúa con garantía formal de corrección en todas las fases.
 
-## Complejidad Contractual: El Cuinto Elemento del Contrato
+## Complejidad Contractual: El quinto elemento del contrato
 
 Un contrato algebraico completo no solo especifica *qué* hace una operación ni *bajo qué condiciones*. También debe especificar *en cuántos recursos* (tiempo y espacio) se realiza esa operación.
 
@@ -1002,11 +1002,11 @@ Para cada operación $\omega : s_1 \times \cdots \times s_n \to s_r$, especifica
 
 ### Correspondencia Formal: Axiomas y Complejidad
 
-Un axioma **no prescreve complejidad**. Por ejemplo:
+Un axioma **no prescribe complejidad**. Por ejemplo:
 
 $$\text{top}(\text{push}(s, e)) = e$$
 
-Esta ecuación es válida en $O(1)$ o en $O(n^2)$. El axioma solo garantiza *correctness*, no eficiencia.
+Esta ecuación es válida en $O(1)$ o en $O(n^2)$. El axioma solo garantiza corrección, no eficiencia.
 
 Sin embargo, la **implementación** del axioma (el código que lo realiza) *debe* respetar el límite de complejidad contractual. Si prometiste $T(\text{top}) = O(1)$, tu código debe garantizarlo bajo las condiciones del contrato.
 
@@ -1040,7 +1040,7 @@ Un punto crucial: **Los axiomas algebraicos son independientes de la complejidad
 - Dos implementaciones distintas (array vs. lista enlazada) pueden satisfacer exactamente los mismos axiomas pero con complejidades diferentes.
 - El cambio de implementación (siempre que mantenga los axiomas) es válido algebraicamente, aunque cambie la complejidad.
 
-Esto es una característica, no un bug. La abstracción algebraica permite razonar sobre correctness independientemente de eficiencia. Cuando necesitas garantías de complejidad, las agregas explícitamente al contrato.
+Esto es una característica, no un defecto. La abstracción algebraica permite razonar sobre corrección independientemente de la eficiencia. Cuando se necesitan garantías de complejidad, se agregan explícitamente al contrato.
 
 ### Verificación de Complejidad Contractual
 
@@ -1064,7 +1064,7 @@ Cuando estudies las especificaciones de estructuras de datos en este capítulo y
 1. **Comparar estructuras:** Eligiendo entre Stack, Queue, LinkedList sabiendo exactamente el costo de cada operación.
 2. **Predecir rendimiento:** Antes de implementar, estimando el costo total de una secuencia de operaciones.
 3. **Optimizar:** Identificando cuellos de botella (operaciones con peor complejidad que la deseada).
-4. **Certificar implementaciones:** Verificando que el código cumple con las cotas de complejidad promesas.
+4. **Certificar implementaciones:** Verificando que el código cumple con las cotas de complejidad prometidas.
 
 ## Resumen
 
@@ -1077,9 +1077,9 @@ Un tipo de dato abstracto es una especificación formal que captura el comportam
 - **Generadores, Modificadores, Observadores:** taxonomía de operaciones que estructura el diseño de axiomas.
 - **Invariantes:** restricciones de representación modeladas como subsorts.
 - **Precondiciones y Postcondiciones:** especificadas mediante subsorts y ecuaciones algebraicas.
-- **Demostraciones:** pruebas formales que garantizan correctness.
+- **Demostraciones:** pruebas formales que garantizan corrección.
 
-La especificación algebraica garantiza que distintas implementaciones compartan el mismo contrato semántico, lo que permite razonar sobre correctness, reemplazar implementaciones y construir código robusto. Los axiomas algebraicos no son decorativos; son el fundamento técnico sobre el cual se construyen contratos verificables y composicionales.
+La especificación algebraica garantiza que distintas implementaciones compartan el mismo contrato semántico, lo que permite razonar sobre corrección, reemplazar implementaciones y construir código robusto. Los axiomas algebraicos no son decorativos; son el fundamento técnico sobre el cual se construyen contratos verificables y composicionales.
 
 ## Ejercicios
 
