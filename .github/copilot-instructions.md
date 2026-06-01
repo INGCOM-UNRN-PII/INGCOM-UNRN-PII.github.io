@@ -16,6 +16,14 @@ myst build --html
 
 Output is generated in `_build/html/`. The site deploys automatically to GitHub Pages on pushes to `main` via `.github/workflows/deploy.yml`.
 
+Use `myst build --html` as the default validation step after editorial, navigation, TOC, reference, or SVG changes. Pay special attention to MyST warnings already seen in this repo:
+
+- `Cross reference target was not found:`
+- `No target for internal reference`
+- parsing collisions between MyST citations and Java/Javadoc annotations such as ``@Test``, ``@Override``, ``@param``, ``@return`` and ``@throws``
+
+When those annotations appear in prose, write them as inline code or escape them so MyST does not parse them as citations.
+
 ## Python Automation & MCP
 
 This repository includes Python automation scripts (in `scripts/`) managed with **uv**. See `MCP_CONFIG.md` for Claude MCP server configuration to execute scripts directly.
@@ -60,6 +68,8 @@ Critical reminders that remain repository-specific:
 - When writing content, link to relevant rules in `reglas/` using `{ref}` where it helps students connect explanation with the official criterion.
 - Keep indices, `myst.yml`, and page status aligned.
 
+After editing published teaching content, do a quick pass for visible tuteo drift such as `necesitas`, `quieres`, `puedes`, `tienes`, `trabajas` or `serás capaz`, and normalize it to voseo or an impersonal formulation.
+
 ### Important References
 
 - **`editorial/`** - Source of truth for chapter structure, style, format, and maintenance
@@ -79,6 +89,24 @@ These maintain consistency in index structure; review before modifying TOC struc
 
 ## Typical Tasks
 
+**Updating a part index (`parte_X/indice.md`):**
+1. Treat it as an editorial **mapa de aprendizaje**, not just a file list
+2. Include the part purpose, `## Orden sugerido de lectura`, `## Capítulos nucleares`, `## Repaso y ampliación`, and an explicit exhaustive index
+3. Prefer visible pedagogical titles in links instead of raw filenames
+4. Keep the part index aligned with `myst.yml` and the real publication state
+
+**Updating a family index (`parte_4/*/indice.md`):**
+1. Keep navigation to the family’s pattern pages explicit
+2. Include `Cuándo usar` plus either a comparison table or a quick decision aid
+3. Link the family’s `ejercicios_integradores.md` as the closing practical step
+4. Keep the three family indices comparable in structure and depth
+
+**Processing shared inventories with a lock file:**
+1. Re-read both the shared inventory and its `.lock` file before claiming new work
+2. Recalculate current `[~]`/`[x]` state from the files, not from stale assumptions
+3. Update claimed markers and the lock file in the same edit so both stay consistent
+4. If an agent becomes stale because items were already completed elsewhere, stop it instead of letting it keep writing
+
 **Adding a new lesson:**
 1. Create markdown file in appropriate directory (e.g., `parte_1/14_nuevotema.md`)
 2. Apply the structure defined in `editorial/plantilla_capitulos.md`
@@ -91,8 +119,8 @@ These maintain consistency in index structure; review before modifying TOC struc
 **Creating SVG diagrams:**
 1. Follow `editorial/estilo_y_formato.md`
 2. Create in appropriate numbered subdirectory (e.g., `parte_1/13/pila_dinamica.svg`)
-3. Include CSS stylesheet reference with correct relative path
-4. Use shared classes from `resources/svg.css` for consistency
+3. Use `resources/svg.css` as the style source of truth, but keep published SVGs **autocontenidos**
+4. Inline the needed classes/styles in each SVG; do **not** rely on `xml-stylesheet` or external CSS references for published pages
 5. Reference in markdown with `{figure}` directive including `:label:` and `:width:`
 
 **Updating rules or guidelines:**

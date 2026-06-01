@@ -168,6 +168,10 @@ project:
       - file: parte_5/grafos/arboles_de_expansion.md
       - file: parte_5/grafos/orden_topologico.md
       - file: parte_5/grafos/conectividad.md
+  - title: 'Parte 6: Tipos de Datos Abstractos'
+    children:
+    - file: parte_6/indice.md
+    - file: parte_6/1_introtda.md
   - title: Proyectos
     children:
     - file: proyectos/TPI-proyectos.md

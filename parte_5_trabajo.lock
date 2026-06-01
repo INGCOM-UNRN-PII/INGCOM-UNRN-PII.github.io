@@ -1,0 +1,161 @@
+version: 1
+inventory: parte_5_trabajo.md
+status: locked
+active_claims: []
+last_completed_batch:
+  - batch_id: p5-batch-037
+    completed:
+      - p5-revision-cruzada
+      - p5-publicacion
+  - batch_id: p5-batch-036
+    completed:
+      - p5-grafos-topologico
+      - p5-grafos-conectividad
+      - p5-grafos-representacion
+      - p5-grafos-recorridos
+      - p5-grafos-caminos
+      - p5-grafos-expansion
+  - batch_id: p5-batch-035
+    completed:
+      - p5-grafos-caminos
+      - p5-grafos-expansion
+  - batch_id: p5-batch-034
+    completed:
+      - p5-grafos-representacion
+      - p5-grafos-recorridos
+  - batch_id: p5-batch-033
+    completed:
+      - p5-grafos-indice
+      - p5-grafos-fundamentos
+  - batch_id: p5-batch-032
+    completed:
+      - p5-diccionarios-indice
+      - p5-arboles-indice
+      - p5-arboles-bst
+      - p5-arboles-balanceados
+  - batch_id: p5-batch-031
+    completed:
+      - p5-indice
+      - p5-secuencias-indice
+  - batch_id: p5-batch-030
+    completed:
+      - p5-revision-cruzada
+      - p5-publicacion
+  - batch_id: p5-batch-029
+    completed:
+      - p5-grafos-fundamentos
+      - p5-grafos-representacion
+      - p5-grafos-recorridos
+      - p5-grafos-caminos
+      - p5-grafos-expansion
+      - p5-grafos-topologico
+      - p5-grafos-conectividad
+  - batch_id: p5-batch-028
+    completed:
+      - p5-arboles-bst
+      - p5-arboles-balanceados
+      - p5-arboles-heaps
+      - p5-arboles-b
+  - batch_id: p5-batch-027
+    completed:
+      - p5-arboles-fundamentos
+      - p5-arboles-binarios
+  - batch_id: p5-batch-026
+    completed:
+      - p5-diccionarios-tries
+      - p5-diccionarios-disjuntos
+  - batch_id: p5-batch-025
+    completed:
+      - p5-diccionarios-hash
+      - p5-diccionarios-ordenados
+  - batch_id: p5-batch-024
+    completed:
+      - p5-secuencias-listas
+      - p5-secuencias-pilas
+  - batch_id: p5-batch-001
+    completed:
+      - p5-adt
+      - p5-algoritmos
+  - batch_id: p5-batch-002
+    completed:
+      - p5-secuencias-fundamentos
+      - p5-secuencias-indice
+  - batch_id: p5-batch-003
+    completed:
+      - p5-secuencias-arreglos
+  - batch_id: p5-batch-004
+    completed:
+      - p5-diccionarios-indice
+      - p5-diccionarios-fundamentos
+      - p5-diccionarios-hash
+  - batch_id: p5-batch-005
+    completed:
+      - p5-secuencias-listas
+  - batch_id: p5-batch-006
+    completed:
+      - p5-diccionarios-ordenados
+      - p5-diccionarios-tries
+      - p5-diccionarios-disjuntos
+  - batch_id: p5-batch-007
+    completed:
+      - p5-secuencias-deques
+  - batch_id: p5-batch-008
+    completed:
+      - p5-secuencias-pilas
+      - p5-secuencias-colas
+  - batch_id: p5-batch-009
+    completed:
+      - p5-secuencias-prioridad
+  - batch_id: p5-batch-010
+    completed:
+      - p5-arboles-binarios
+  - batch_id: p5-batch-011
+    completed:
+      - p5-grafos-indice
+      - p5-grafos-fundamentos
+  - batch_id: p5-batch-012
+    completed:
+      - p5-arboles-indice
+      - p5-arboles-fundamentos
+  - batch_id: p5-batch-013
+    completed:
+      - p5-arboles-bst
+  - batch_id: p5-batch-014
+    completed:
+      - p5-grafos-representacion
+      - p5-grafos-recorridos
+  - batch_id: p5-batch-015
+    completed:
+      - p5-arboles-balanceados
+      - p5-arboles-heaps
+  - batch_id: p5-batch-016
+    completed:
+      - p5-arboles-b
+  - batch_id: p5-batch-017
+    completed:
+      - p5-grafos-caminos
+      - p5-grafos-expansion
+  - batch_id: p5-batch-018
+    completed:
+      - p5-grafos-topologico
+      - p5-grafos-conectividad
+  - batch_id: p5-batch-019
+    completed:
+      - p5-indice
+  - batch_id: p5-batch-020
+    completed:
+      - p5-revision-cruzada
+  - batch_id: p5-batch-021
+    completed:
+      - p5-secuencias-listas
+  - batch_id: p5-batch-022
+    completed:
+      - p5-secuencias-pilas
+  - batch_id: p5-batch-023
+    completed:
+      - p5-publicacion
+notes:
+  - "Releer inventario y lock antes de reclamar un lote."
+  - "Actualizar markers [ ]/[~]/[x]/[z] y active_claims en la misma edicion."
+  - "Usar IDs del inventario como claim_id."
+  - "Preferir lotes chicos y coherentes: 1 a 3 archivos relacionados."
