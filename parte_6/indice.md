@@ -20,11 +20,12 @@ Aprender a escribir especificaciones rigurosas que capturen el comportamiento es
 
 1. **Introducción a Tipos de Datos Abstractos** (`1_introtda.md`) — Comienza aquí para entender la diferencia entre especificación e implementación, y aprende la notación algebraica (sorts, operaciones, axiomas).
 
-2. El contenido futuro de esta parte expandirá con TDAs específicos (pilas, colas, conjuntos, diccionarios) escritos en notación algebraica, y la traducción de esas especificaciones a código Java.
+2. **Estructuras de Datos: Especificaciones Algebraicas Completas** (`2_estructuras.md`) — Catalogo de especificaciones rigurosas para estructuras fundamentales (arreglos, pilas, colas, listas) con axiomas y contratos.
 
 ## Índice completo
 
 - `1_introtda.md` — Introducción a Tipos de Datos Abstractos (sorts, operaciones, axiomas, demostraciones algebraicas)
+- `2_estructuras.md` — Especificaciones completas: Array, Stack, Queue, LinkedList, DoublyLinkedList, CircularLinkedList
 
 ## Próximo paso
 
