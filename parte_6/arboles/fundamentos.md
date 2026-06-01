@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Vocabulario base para trabajar con árboles y entender por qué la estructura jerárquica exige otra intuición que listas o arreglos.
 ---
 
-(parte5-fundamentos-arboles)=
+(parte6-fundamentos-arboles)=
 # Fundamentos de árboles
 
 Los árboles introducen una organización distinta a la lineal: ya no importa solo qué elemento viene antes o después, sino qué relación jerárquica existe entre nodos, subárboles y recorridos posibles.
@@ -217,13 +217,13 @@ Toda la familia se apoya en estas ideas. Por eso conviene fijarlas antes de entr
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-fundamentos-arboles-mini
+:label: ex-parte6-fundamentos-arboles-mini
 
 Tomá una estructura jerárquica cotidiana, por ejemplo carpetas o dependencias de tareas, y describila con el vocabulario de árbol: raíz, hojas, altura y subárboles.
 ```
 
 ```{exercise}
-:label: ex-parte5-fundamentos-arboles-recorridos
+:label: ex-parte6-fundamentos-arboles-recorridos
 
 Pensá un problema donde importe procesar un nodo antes que sus hijos, y otro donde importe procesar primero los hijos. Indicá qué tipo de recorrido elegirías en cada caso.
 ```

@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Cómo un árbol binario casi completo permite implementar colas de prioridad de forma eficiente usando un arreglo.
 ---
 
-(parte5-heaps)=
+(parte6-heaps)=
 # Heaps
 
 El heap reutiliza la forma de árbol binario, pero cambia completamente el propósito: ya no intenta mantener orden total para búsqueda, sino solo la información necesaria para extraer rápido el mínimo o el máximo.
@@ -86,6 +86,38 @@ En un heap binario aparecen tres operaciones dominantes:
 | `deleteMin()` / `deleteMax()` | reemplazar la raíz y reubicar hacia abajo | O(log n) |
 
 La razón del costo logarítmico es estructural: los ajustes solo recorren un camino desde una hoja hacia la raíz o desde la raíz hacia una hoja.
+
+### Algoritmos de Reubicación (Pseudocódigo)
+
+Para mantener la invariante de prioridad, usamos dos operaciones fundamentales:
+
+**1. Subir (Sift-Up / Bubble-Up)**
+Se usa tras insertar un elemento al final del arreglo. El elemento "trepa" mientras sea menor que su padre (en un min-heap).
+
+```text
+algoritmo subir(indice)
+    mientras indice > 0 y datos[indice] < datos[padre(indice)] hacer
+        intercambiar(indice, padre(indice))
+        indice ← padre(indice)
+    fin mientras
+fin algoritmo
+```
+
+**2. Bajar (Sift-Down / Sink)**
+Se usa tras eliminar la raíz. Ponemos el último elemento en la raíz y lo "hundimos" mientras alguno de sus hijos sea menor que él.
+
+```text
+algoritmo bajar(indice)
+    mientras tieneHijoIzquierdo(indice) hacer
+        hijoMenor ← buscarIndiceHijoMenor(indice)
+        si datos[indice] <= datos[hijoMenor] entonces
+            romper lazo
+        fin si
+        intercambiar(indice, hijoMenor)
+        indice ← hijoMenor
+    fin mientras
+fin algoritmo
+```
 
 ```{code} java
 :caption: Esquema típico de inserción en un min-heap
@@ -182,13 +214,13 @@ Por eso logra una implementación excelente de colas de prioridad. No compite co
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-heaps-mini
+:label: ex-parte6-heaps-mini
 
 Justificá por qué un heap es una buena implementación para una cola de prioridad, pero no necesariamente para consultas frecuentes de pertenencia o búsqueda arbitraria.
 ```
 
 ```{exercise}
-:label: ex-parte5-heaps-buildheap
+:label: ex-parte6-heaps-buildheap
 
 Explicá por qué `buildHeap` no se piensa igual que insertar `n` elementos uno por uno. ¿Qué aprovecha de la forma casi completa del árbol?
 ```

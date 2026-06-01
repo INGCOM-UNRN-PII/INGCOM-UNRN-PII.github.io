@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Qué agrega un diccionario ordenado frente a una tabla hash y qué estructuras sostienen ese contrato.
 ---
 
-(parte5-diccionarios-ordenados)=
+(parte6-diccionarios-ordenados)=
 # Diccionarios ordenados
 
 No todos los problemas de búsqueda por clave se resuelven bien con hashing. Cuando importa recorrer en orden, consultar rangos o encontrar predecesores y sucesores, el orden pasa a ser parte del contrato.
@@ -193,7 +193,7 @@ Ese beneficio se paga con estructuras más complejas que una tabla hash, típica
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-diccionarios-ordenados-mini
+:label: ex-parte6-diccionarios-ordenados-mini
 
 Proponé un caso donde una tabla hash sea insuficiente porque además de buscar por clave hace falta:
 
@@ -204,7 +204,7 @@ Justificá qué gana un diccionario ordenado.
 ```
 
 ```{exercise}
-:label: ex-parte5-diccionarios-ordenados-vs-hash
+:label: ex-parte6-diccionarios-ordenados-vs-hash
 
 Compará un padrón por DNI y un historial de turnos por fecha. Indicá en cuál empezarías pensando en hash y en cuál en un diccionario ordenado, y explicá por qué.
 ```

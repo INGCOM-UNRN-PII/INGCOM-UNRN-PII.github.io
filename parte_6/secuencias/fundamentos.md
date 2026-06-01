@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Qué define el TAD secuencia, qué operaciones forman parte de su contrato y cómo cambian sus costos según la representación.
 ---
 
-(parte5-fundamentos-secuencias)=
+(parte6-fundamentos-secuencias)=
 # Fundamentos de secuencias
 
 Las secuencias aparecen como la familia lineal más general de la parte. Antes de imponer restricciones como pila o cola, conviene fijar qué significa mantener elementos en cierto orden y qué operaciones suelen pedirse sobre esa organización.
@@ -226,7 +226,7 @@ flowchart TD
     end
 ```
 
-Eso explica por qué no existe “la mejor secuencia” en abstracto. Lo que existe es una mejor decisión para cierto patrón de uso (ver {ref}`parte5-localidad-memoria`).
+Eso explica por qué no existe “la mejor secuencia” en abstracto. Lo que existe es una mejor decisión para cierto patrón de uso (ver {ref}`parte6-localidad-memoria`).
 
 ### Cuando domina el acceso
 
@@ -309,19 +309,19 @@ Por eso, antes de elegir entre arreglos, listas o variantes restringidas, convie
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-secuencias-fundamentos-mini
+:label: ex-parte6-secuencias-fundamentos-mini
 
 Describí una estructura de datos de uso cotidiano que pueda verse como secuencia. Indicá qué operaciones serían las más frecuentes y qué costo convendría optimizar.
 ```
 
 ```{exercise}
-:label: ex-parte5-secuencias-fundamentos-contrato
+:label: ex-parte6-secuencias-fundamentos-contrato
 
 Definí el contrato observable de una secuencia de canciones para una aplicación de reproducción. Indicá al menos cinco operaciones, sus precondiciones principales y un invariante de representación que una implementación debería respetar.
 ```
 
 ```{exercise}
-:label: ex-parte5-secuencias-fundamentos-eleccion
+:label: ex-parte6-secuencias-fundamentos-eleccion
 
 Un editor mantiene una colección ordenada de líneas de texto. A veces necesita consultar una línea por número, pero también inserta y borra líneas en el medio. Explicá qué preguntas harías antes de decidir entre una representación contigua y una enlazada.
 ```

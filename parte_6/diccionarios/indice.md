@@ -2,10 +2,10 @@
 title: "Diccionarios y conjuntos"
 subtitle: "Índice de familia"
 subject: Estructuras de Datos
-description: Mapa de la familia de diccionarios y conjuntos para la parte 5.
+description: Mapa de la familia de diccionarios y conjuntos para la parte 6.
 ---
 
-(parte5-diccionarios-conjuntos)=
+(parte6-diccionarios-conjuntos)=
 # Diccionarios y conjuntos
 
 Esta familia reúne las estructuras donde la **pertenencia**, la **búsqueda por clave** y la **actualización de asociaciones** son la preocupación principal. A diferencia de las secuencias (donde importa el *dónde* está el dato), acá el foco se desplaza hacia el *qué* es el dato: dejamos de buscar por índice posicional y pasamos a buscar por **identidad o valor**.

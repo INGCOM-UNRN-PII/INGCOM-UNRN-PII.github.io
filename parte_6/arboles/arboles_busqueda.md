@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Cómo una invariante de orden convierte al árbol binario en una estructura útil para búsqueda, inserción, borrado y recorrido ordenado.
 ---
 
-(parte5-arboles-busqueda)=
+(parte6-arboles-busqueda)=
 # Árboles binarios de búsqueda
 
 En [Árboles binarios](arboles_binarios.md) apareció la forma base: cada nodo tiene a lo sumo hijo izquierdo e hijo derecho. El BST (Binary Search Tree) agrega una idea decisiva sobre esa forma: **orden**.
@@ -182,19 +182,19 @@ Esta fragilidad es la que motiva el siguiente paso: los [Árboles balanceados](a
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-bst-secuencia
+:label: ex-parte6-bst-secuencia
 
 Dibujá el BST resultante de insertar la secuencia: `[15, 10, 20, 5, 12, 17, 25]`. Luego, realizá el recorrido inorden y verificá si el resultado está ordenado.
 ```
 
 ```{exercise}
-:label: ex-parte5-bst-borrado-logica
+:label: ex-parte6-bst-borrado-logica
 
 Dada la estructura del ejercicio anterior, borrá el nodo `15`. ¿Qué nodo elegiste como sucesor? Dibujá cómo queda el árbol final.
 ```
 
 ```{exercise}
-:label: ex-parte5-bst-peor-caso
+:label: ex-parte6-bst-peor-caso
 
 Si un BST tiene 1000 nodos, ¿cuál es la altura mínima posible y cuál es la máxima? ¿Qué implicancia tiene esto en el tiempo de respuesta de una búsqueda?
 ```

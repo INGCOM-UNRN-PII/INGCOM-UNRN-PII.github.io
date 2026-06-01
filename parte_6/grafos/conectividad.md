@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Cómo decidir qué vértices pertenecen a la misma componente y qué cambia cuando el grafo es dirigido o exige conectividad fuerte.
 ---
 
-(parte5-conectividad)=
+(parte6-conectividad)=
 # Conectividad
 
 La conectividad es el estudio de la "cohesión" de un grafo. ¿Está todo el grafo en una sola pieza o está fragmentado en varias islas? ¿Qué tan vulnerable es la red si un nodo falla? Responder estas preguntas es vital para entender la robustez de cualquier sistema, desde Internet hasta una red de transporte.
@@ -77,23 +77,23 @@ Como vimos en el capítulo de [Árboles de Expansión](arboles_de_expansion.md),
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-conectividad-ejemplo
+:label: ex-parte6-conectividad-ejemplo
 
 Dibujá un grafo dirigido con 4 nodos $A, B, C, D$ y las aristas $A \to B, B \to C, C \to A, C \to D$. ¿Cuáles son las Componentes Fuertemente Conexas?
 ```
 
 ```{exercise}
-:label: ex-parte5-conectividad-puente
+:label: ex-parte6-conectividad-puente
 
 En una red de fibra óptica, ¿por qué es peligroso que exista un "Puente"? ¿Cómo podrías modificar el grafo para que esa arista deje de ser un puente?
 ```
 
 ```{exercise}
-:label: ex-parte5-conectividad-tarjan
+:label: ex-parte6-conectividad-tarjan
 
 Investigá el **Algoritmo de Tarjan**. ¿En qué se diferencia del de Kosaraju para encontrar SCC? ¿Por qué se dice que es más eficiente en una sola pasada?
 ```
 
 ## Próximo paso
 
-¡Felicitaciones! Has completado el recorrido por la familia de Grafos. Ahora es momento de hacer una [revisión cruzada](p5-revision-cruzada) de toda la Parte 5 para asegurar que los conceptos de ADT, Secuencias, Diccionarios, Árboles y Grafos estén bien integrados.
+¡Felicitaciones! Has completado el recorrido por la familia de Grafos. Ahora es momento de hacer una [revisión cruzada](p6-revision-cruzada) de toda la Parte 6 para asegurar que los conceptos de ADT, Secuencias, Diccionarios, Árboles y Grafos estén bien integrados.

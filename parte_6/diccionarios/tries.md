@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Cómo funcionan los tries, por qué sirven para prefijos y qué trade-offs introducen.
 ---
 
-(parte5-tries)=
+(parte6-tries)=
 # Tries
 
 Los tries muestran otra forma de organizar búsquedas: en lugar de usar una clave como bloque indivisible, aprovechan su estructura interna, por ejemplo caracteres o símbolos, para resolver consultas por prefijo con naturalidad.
@@ -254,13 +254,13 @@ Su costo aparece sobre todo en memoria y complejidad de implementación.
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-tries-mini
+:label: ex-parte6-tries-mini
 
 Explicá por qué un autocompletado por prefijo suele ser un mejor candidato para tries que para tablas hash. Indicá también qué costo adicional podría aparecer.
 ```
 
 ```{exercise}
-:label: ex-parte5-tries-vs-ordenados
+:label: ex-parte6-tries-vs-ordenados
 
 Compará trie y diccionario ordenado para almacenar palabras de un diccionario. Indicá en qué consulta gana cada uno:
 

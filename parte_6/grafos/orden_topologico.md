@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Cómo linearizar dependencias en grafos dirigidos acíclicos y por qué la presencia de ciclos vuelve imposible ese tipo de orden.
 ---
 
-(parte5-orden-topologico)=
+(parte6-orden-topologico)=
 # Orden topológico
 
 Imaginá que estás organizando el plan de estudios de una carrera. Hay materias que podés cursar en cualquier momento, pero otras requieren que hayas aprobado ciertas correlativas antes. ¿Cómo decidís en qué orden rendirlas todas sin violar ninguna regla? Este es el problema del **Orden Topológico**.
@@ -88,19 +88,19 @@ public void dfsTopologico(V u, Set<V> visitados, Stack<V> pila) {
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-topologico-ordenes
+:label: ex-parte6-topologico-ordenes
 
 Dado un grafo con aristas $(A, B), (A, C), (B, D), (C, D)$. ¿Cuántos órdenes topológicos válidos existen? Listalos todos.
 ```
 
 ```{exercise}
-:label: ex-parte5-topologico-ciclo
+:label: ex-parte6-topologico-ciclo
 
 Explicá por qué el algoritmo de Kahn no puede procesar un nodo que forma parte de un ciclo. ¿Cuál es el valor mínimo del grado de entrada de cualquier nodo dentro de un ciclo?
 ```
 
 ```{exercise}
-:label: ex-parte5-topologico-compilacion
+:label: ex-parte6-topologico-compilacion
 
 Imaginá un proyecto con tres archivos: `A.java` importa a `B.java`, y `B.java` importa a `A.java`. Dibujá el grafo y explicá por qué el compilador dará un error de "dependencia circular".
 ```

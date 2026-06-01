@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Por qué los árboles B y B+Tree se vuelven naturales cuando el costo dominante deja de ser la comparación y pasa a ser leer páginas o bloques.
 ---
 
-(parte5-arboles-b)=
+(parte6-arboles-b)=
 # Árboles B
 
 Los árboles B cierran la familia con un cambio fuerte de contexto. Hasta acá casi toda la discusión giró alrededor de memoria principal, punteros, arreglos y altura. Cuando los datos viven en disco o en páginas de almacenamiento externo, el modelo de costo cambia: ya no importa tanto ahorrar una comparación, sino **reducir la cantidad de accesos a bloque**.
@@ -139,14 +139,20 @@ La división hace tres cosas:
 2. promociona una clave al nodo padre,
 3. redistribuye hijos si hacía falta.
 
-```text
-[ 10 | 20 | 30 | 40 | 50 ]
-          |
-       split
-          v
-        [30]
-       /    \
-[10 | 20]  [40 | 50]
+```{mermaid}
+graph TD
+    subgraph Antes del Split
+        N1[10 | 20 | 30 | 40 | 50]
+    end
+
+    subgraph Despues del Split
+        P[30]
+        P --> L[10 | 20]
+        P --> R[40 | 50]
+    end
+    
+    style N1 fill:#f8f9fa,stroke:#c62828,stroke-width:2px;
+    style P fill:#e3f2fd,stroke:#1565c0,stroke-width:2px;
 ```
 
 Si el padre también se llena, la división puede propagarse hacia arriba. Si llega a la raíz, se crea una nueva raíz y la altura aumenta en uno.
@@ -272,19 +278,19 @@ El B-Tree y el B+Tree resuelven esa necesidad con nodos multicamino, balance glo
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-arboles-b-mini
+:label: ex-parte6-arboles-b-mini
 
 Explicá por qué una estructura con alto factor de ramificación puede ser ventajosa en disco aunque resulte menos natural que un árbol binario para explicar en clase.
 ```
 
 ```{exercise}
-:label: ex-parte5-arboles-b-bplus
+:label: ex-parte6-arboles-b-bplus
 
 Compará B-Tree y B+Tree para un índice que necesita muchas consultas por rango. Indicá qué variante convendría más y por qué.
 ```
 
 ```{exercise}
-:label: ex-parte5-arboles-b-costo
+:label: ex-parte6-arboles-b-costo
 
 Justificá por qué en almacenamiento externo puede convenir hacer más comparaciones dentro de un nodo si eso evita leer varias páginas adicionales.
 ```

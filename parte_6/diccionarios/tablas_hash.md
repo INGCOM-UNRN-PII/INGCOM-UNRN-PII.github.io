@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Cómo funciona el hashing, qué papel tienen las colisiones y por qué el buen rendimiento promedio depende de decisiones concretas.
 ---
 
-(parte5-tablas-hash)=
+(parte6-tablas-hash)=
 # Tablas hash
 
 Las tablas hash son probablemente la respuesta más usada cuando se quiere acceso rápido por clave. También son el lugar donde más claramente aparece la tensión entre muy buen promedio y peor caso problemático.
@@ -48,6 +48,44 @@ int indice = hash(clave) % capacidad;
 ```
 
 Si varias claves distintas caen en posiciones bien distribuidas, el acceso promedio puede ser muy eficiente.
+
+### Algoritmos Básicos (Pseudocódigo)
+
+En una tabla con **encadenamiento separado**, las operaciones se delegan al bucket correspondiente:
+
+```text
+algoritmo buscar(clave)
+    indice ← hash(clave) modulo capacidad
+    bucket ← tabla[indice]
+    
+    para cada (c, v) en bucket hacer
+        si c == clave entonces
+            devolver v
+        fin si
+    fin para
+    
+    devolver NULO
+fin algoritmo
+
+algoritmo insertar(clave, valor)
+    indice ← hash(clave) modulo capacidad
+    bucket ← tabla[indice]
+    
+    para cada entrada en bucket hacer
+        si entrada.clave == clave entonces
+            entrada.valor ← valor // Actualizar
+            retornar
+        fin si
+    fin para
+    
+    bucket.agregar(clave, valor) // Insertar nuevo
+    cantidad ← cantidad + 1
+    
+    si factorDeCarga() > LIMITE_REHASH entonces
+        rehash()
+    fin si
+fin algoritmo
+```
 
 ## Qué hace buena a una función hash
 
@@ -260,7 +298,7 @@ Su valor principal está en el muy buen comportamiento promedio para búsqueda, 
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-tablas-hash-mini
+:label: ex-parte6-tablas-hash-mini
 
 Explicá por qué dos tablas hash con la misma interfaz pueden tener desempeños muy distintos según:
 
@@ -270,7 +308,7 @@ Explicá por qué dos tablas hash con la misma interfaz pueden tener desempeños
 ```
 
 ```{exercise}
-:label: ex-parte5-tablas-hash-orden
+:label: ex-parte6-tablas-hash-orden
 
 Justificá por qué una tabla hash no es la mejor elección si el problema exige listar claves en orden o responder consultas por rango de fechas.
 ```

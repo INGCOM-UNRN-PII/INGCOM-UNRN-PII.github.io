@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Cómo comparar matrices, listas de adyacencia y listas de aristas según memoria, consulta de adyacencia e iteración de vecinos.
 ---
 
-(parte5-representacion-grafos)=
+(parte6-representacion-grafos)=
 # Representación de grafos
 
 En grafos, la representación influye tanto como el algoritmo. Antes de correr BFS, Dijkstra o Prim, hace falta decidir cómo se almacenan vértices y aristas y qué consultas conviene optimizar.
@@ -131,19 +131,19 @@ Esto se llama **grafo implícito** y es fundamental en inteligencia artificial y
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-representacion-memoria
+:label: ex-parte6-representacion-memoria
 
 Calculá cuánta memoria ocuparía una matriz de adyacencia de booleanos para un grafo de 50.000 usuarios de una red social. ¿Es viable en una PC estándar? ¿Cambiaría tu respuesta si usás una lista de adyacencia donde cada usuario tiene en promedio 200 amigos?
 ```
 
 ```{exercise}
-:label: ex-parte5-representacion-incidencia
+:label: ex-parte6-representacion-incidencia
 
 Investigá qué es una **Matriz de Incidencia**. ¿En qué se diferencia de la de adyacencia? ¿Para qué tipo de problemas creés que podría ser útil?
 ```
 
 ```{exercise}
-:label: ex-parte5-representacion-implícito
+:label: ex-parte6-representacion-implícito
 
 Pensá en el juego del Sudoku como un grafo. ¿Cuáles serían los vértices? ¿Cuándo habría una arista entre dos celdas? ¿Convendría guardarlo explícitamente o tratarlo como un grafo implícito?
 ```

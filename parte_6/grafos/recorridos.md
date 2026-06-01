@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Cómo funcionan DFS y BFS, qué estructuras reutilizan y por qué son la base de gran parte de los algoritmos de grafos.
 ---
 
-(parte5-recorridos-grafos)=
+(parte6-recorridos-grafos)=
 # Recorridos
 
 Recorrer un grafo es el arte de visitar sus nodos de manera sistemática. A diferencia de un arreglo (donde avanzamos en línea recta) o un árbol (donde bajamos por niveles), en un grafo podemos encontrar **ciclos** y **múltiples caminos** para llegar al mismo lugar.
@@ -19,6 +19,34 @@ Para no perdernos, todos los algoritmos de recorrido comparten una regla de oro:
 
 **Desarrollo.** El capítulo presenta DFS y BFS, compara sus estrategias (profundidad vs. anchura) y muestra sus aplicaciones para conectividad, ciclos y distancias.
 :::
+
+### Esquema General de Exploración (Pseudocódigo)
+
+Casi cualquier recorrido sigue esta lógica de gestión de nodos pendientes:
+
+```text
+algoritmo recorrer(grafo, origen)
+    pendientes ← crearEstructuraVacia()
+    visitados ← crearConjuntoVacio()
+    
+    pendientes.agregar(origen)
+    visitados.add(origen)
+    
+    mientras pendientes no este vacia hacer
+        u ← pendientes.quitarProximo()
+        procesar(u)
+        
+        para cada vecino v de u hacer
+            si v no esta en visitados entonces
+                visitados.add(v)
+                pendientes.agregar(v)
+            fin si
+        fin para
+    fin mientras
+fin algoritmo
+```
+
+La diferencia fundamental entre DFS y BFS radica únicamente en qué tipo de estructura es `pendientes`: si es una **Pila**, el recorrido es DFS; si es una **Cola**, es BFS.
 
 ## El mecanismo base: Colores y Estados
 
@@ -112,19 +140,19 @@ public void bfs(Grafo<V> g, V inicio) {
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-recorridos-ciclos
+:label: ex-parte6-recorridos-ciclos
 
 Dibujá un grafo dirigido de 4 nodos que tenga un ciclo. Realizá un DFS manual y marcá en qué momento el algoritmo "se da cuenta" de que hay un ciclo. ¿Qué relación hay entre el nodo actual y el vecino ya visitado?
 ```
 
 ```{exercise}
-:label: ex-parte5-recorridos-bfs-distancia
+:label: ex-parte6-recorridos-bfs-distancia
 
 En un BFS, si queremos guardar no solo los visitados sino también la **distancia** desde el origen, ¿qué estructura adicional usarías? Modificá el código de BFS para que imprima la distancia de cada nodo al origen.
 ```
 
 ```{exercise}
-:label: ex-parte5-recorridos-memoria
+:label: ex-parte6-recorridos-memoria
 
 En un grafo que representa la web (miles de millones de páginas), ¿por qué un BFS podría agotar la memoria de una computadora mientras que un DFS no? Pensá en el tamaño de la "frontera" (la cola vs la pila).
 ```

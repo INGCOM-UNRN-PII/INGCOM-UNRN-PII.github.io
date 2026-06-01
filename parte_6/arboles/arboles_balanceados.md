@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Cómo controlar la altura de un árbol de búsqueda para que las operaciones sigan siendo eficientes incluso con inserciones adversas.
 ---
 
-(parte5-arboles-balanceados)=
+(parte6-arboles-balanceados)=
 # Árboles balanceados
 
 Los árboles balanceados aparecen cuando ya no alcanza con “esperar” que un BST quede razonablemente bien formado. Si el problema requiere garantías de rendimiento, el balance pasa a ser parte explícita y activa del diseño.
@@ -59,7 +59,30 @@ Para balancear esto, realizamos una **rotación simple a la derecha** sobre el n
 3. El orden se preserva: si hacés un recorrido inorden antes y después, el resultado sigue siendo `[1, 2, 3]`.
 4. La altura se reduce: pasamos de 3 niveles a solo 2.
 
-Existen cuatro casos de desbalance (Simple Derecha, Simple Izquierda y las rotaciones dobles correspondientes) que permiten corregir cualquier deformación local tras una inserción o borrado.
+### Lógica de las rotaciones (Pseudocódigo)
+
+Aunque las rotaciones parecen complejas, el cambio de punteros es mínimo y constante:
+
+```text
+algoritmo rotacionDerecha(y)
+    x ← y.izquierdo
+    T2 ← x.derecho
+
+    // Realizar rotación
+    x.derecho ← y
+    y.izquierdo ← T2
+
+    // Actualizar alturas (si corresponde)
+    actualizarAltura(y)
+    actualizarAltura(x)
+
+    devolver x // Nueva raíz local
+fin algoritmo
+```
+
+Existen cuatro casos de desbalance que se resuelven con estas operaciones:
+- **Rotación Simple (Izquierda o Derecha):** Se aplica cuando el desbalance es una "línea" (ej: todo a la izquierda).
+- **Rotación Doble (Izquierda-Derecha o Derecha-Izquierda):** Se aplica cuando el desbalance es un "zigzag" (ej: un hijo izquierdo que tiene un hijo derecho). Una rotación doble son simplemente dos rotaciones simples consecutivas.
 
 ## AVL: El rigor de la altura
 
@@ -138,19 +161,19 @@ Los árboles balanceados son la respuesta de la ingeniería al caos de los datos
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-balanceado-fb
+:label: ex-parte6-balanceado-fb
 
 Dada una raíz con un subárbol izquierdo de altura 5 y un derecho de altura 3, calculá el Factor de Balance. ¿Es un árbol AVL válido? ¿Hacia qué lado está desbalanceado?
 ```
 
 ```{exercise}
-:label: ex-parte5-balanceado-java
+:label: ex-parte6-balanceado-java
 
 Investigá por qué Java eligió Red-Black Trees para sus colecciones en lugar de AVL. ¿Qué característica del Red-Black lo vuelve más atractivo para una biblioteca estándar?
 ```
 
 ```{exercise}
-:label: ex-parte5-balanceado-rotacion
+:label: ex-parte6-balanceado-rotacion
 
 Dibujá una rotación simple a la izquierda sobre tres nodos `[10, 20, 30]` que están insertados en orden creciente. Mostrá el estado antes y después.
 ```

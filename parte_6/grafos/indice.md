@@ -2,10 +2,10 @@
 title: "Grafos"
 subtitle: "Índice de familia"
 subject: Estructuras de Datos
-description: Mapa de la familia de grafos, con recorrido sugerido y criterios de comparación dentro de la parte 5.
+description: Mapa de la familia de grafos, con recorrido sugerido y criterios de comparación dentro de la parte 6.
 ---
 
-(parte5-grafos)=
+(parte6-grafos)=
 # Grafos
 
 Esta familia representa la frontera final de las estructuras de datos clásicas. Aquí, las relaciones ya no son lineales (como en las secuencias) ni jerárquicas (como en los árboles), sino **arbitrarias**. Un grafo permite modelar cualquier sistema de entidades interconectadas: desde neuronas y mapas de ciudades hasta redes sociales y dependencias de software.

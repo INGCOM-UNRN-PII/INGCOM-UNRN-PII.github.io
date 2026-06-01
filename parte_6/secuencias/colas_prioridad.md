@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Cómo cambia el TAD cuando el siguiente elemento no depende del orden de llegada, sino de una relación de prioridad.
 ---
 
-(parte5-colas-prioridad)=
+(parte6-colas-prioridad)=
 # Colas de prioridad
 
 Las colas de prioridad cierran la familia de secuencias con un cambio fuerte de criterio: el siguiente elemento ya no sale por orden de llegada ni por última inserción, sino por **prioridad relativa**.
@@ -347,19 +347,19 @@ Las implementaciones simples muestran el trade-off entre insertar barato y extra
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-colas-prioridad-mini
+:label: ex-parte6-colas-prioridad-mini
 
 Justificá por qué una cola FIFO no alcanza para modelar la atención de pacientes en una guardia cuando la prioridad médica debe alterar el orden de ingreso.
 ```
 
 ```{exercise}
-:label: ex-parte5-colas-prioridad-empates
+:label: ex-parte6-colas-prioridad-empates
 
 Diseñá una cola de prioridad para soporte técnico donde la prioridad principal sea severidad y el desempate se haga por orden de llegada. Explicá qué información extra debería guardar cada elemento.
 ```
 
 ```{exercise}
-:label: ex-parte5-colas-prioridad-implementaciones
+:label: ex-parte6-colas-prioridad-implementaciones
 
 Compará una implementación con arreglo desordenado y otra con heap binario para un sistema que inserta trabajos todo el tiempo y extrae seguido el de mayor prioridad. Indicá qué costo paga cada una y cuál elegirías.
 ```

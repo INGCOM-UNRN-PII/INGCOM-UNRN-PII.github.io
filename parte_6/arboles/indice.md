@@ -2,10 +2,10 @@
 title: "Árboles"
 subtitle: "Índice de familia"
 subject: Estructuras de Datos
-description: Mapa de la familia de árboles para la parte 5.
+description: Mapa de la familia de árboles para la parte 6.
 ---
 
-(parte5-arboles)=
+(parte6-arboles)=
 # Árboles
 
 Esta familia reúne estructuras jerárquicas donde la **recursión estructural**, el **orden implícito** y la **altura** condicionan la eficiencia de las operaciones. Si en secuencias dominaba la posición y en diccionarios dominaba la clave, acá aparece otra idea: **la forma de la estructura determina el rendimiento**.

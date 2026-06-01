@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Qué problema resuelve un árbol de expansión mínima y cómo contrastar Prim y Kruskal para conectar un grafo ponderado con costo total mínimo.
 ---
 
-(parte5-arboles-expansion)=
+(parte6-arboles-expansion)=
 # Árboles de expansión
 
 A veces el problema no es llegar rápido de un punto A a un punto B, sino lograr que **todos** los puntos de una red estén comunicados gastando lo menos posible. Esto es lo que llamamos un **Árbol de Expansión Mínima** (MST - Minimum Spanning Tree).
@@ -44,27 +44,38 @@ Ambos algoritmos que veremos (Prim y Kruskal) se basan en una verdad fundamental
 
 Prim funciona de forma muy parecida a Dijkstra. Empieza en un nodo cualquiera y va "conquistando" al vecino más cercano que todavía no esté en el árbol.
 
-```java
-public void prim(Grafo<V> g, V inicio) {
-    Set<V> visitados = new HashSet<>();
-    PriorityQueue<Arista<V>> pq = new PriorityQueue<>(Comparator.comparingDouble(a -> a.peso));
+### Algoritmo de Prim (Pseudocódigo)
+
+```text
+algoritmo prim(grafo, inicio)
+    visitados ← crearConjuntoVacio()
+    pq ← crearColaPrioridad()
+    mst ← crearListaVacia()
     
-    visitados.add(inicio);
-    pq.addAll(g.vecinosDe(inicio));
-
-    while (!pq.isEmpty()) {
-        Arista<V> mejor = pq.poll();
-        if (visitados.contains(mejor.destino)) continue;
-
-        // ¡Esta arista es parte del MST!
-        visitados.add(mejor.destino);
-        pq.addAll(g.vecinosDe(mejor.destino));
-    }
-}
+    visitados.add(inicio)
+    para cada vecino v de inicio con peso w hacer
+        pq.agregar(arista(inicio, v), w)
+    fin para
+    
+    mientras pq no este vacia hacer
+        mejorArista ← pq.extraerMinimo()
+        v ← mejorArista.destino
+        
+        si v no esta en visitados entonces
+            visitados.add(v)
+            mst.agregar(mejorArista)
+            
+            para cada vecino n de v con peso w hacer
+                si n no esta en visitados entonces
+                    pq.agregar(arista(v, n), w)
+                fin si
+            fin para
+        fin si
+    fin mientras
+    
+    devolver mst
+fin algoritmo
 ```
-
-- **Estrategia:** Siempre expande el árbol actual tomando la arista más barata que salga de él.
-- **Cuándo conviene:** En grafos **densos** (muchas aristas).
 
 ## 2. Algoritmo de Kruskal: Selección Global
 
@@ -72,20 +83,25 @@ Kruskal ignora la estructura del árbol hasta el final. Mira todas las aristas d
 
 Para detectar ciclos de forma eficiente, Kruskal es el "mejor amigo" de la estructura **Union-Find**.
 
-```java
-public void kruskal(Grafo<V> g) {
-    List<Arista<V>> todas = g.obtenerTodasLasAristas();
-    Collections.sort(todas, Comparator.comparingDouble(a -> a.peso));
-    
-    UnionFind<V> uf = new UnionFind<>(g.obtenerVertices());
+### Algoritmo de Kruskal (Pseudocódigo)
 
-    for (Arista<V> a : todas) {
-        if (!uf.estanConectados(a.origen, a.destino)) {
-            // ¡Esta arista es parte del MST!
-            uf.unir(a.origen, a.destino);
-        }
-    }
-}
+```text
+algoritmo kruskal(grafo)
+    mst ← crearListaVacia()
+    uf ← crearUnionFind(grafo.vertices)
+    aristas ← grafo.todasLasAristas()
+    
+    aristas.ordenarPorPesoCreciente()
+    
+    para cada arista (u, v) en aristas hacer
+        si uf.find(u) != uf.find(v) entonces
+            mst.agregar(arista(u, v))
+            uf.union(u, v)
+        fin si
+    fin para
+    
+    devolver mst
+fin algoritmo
 ```
 
 - **Estrategia:** Agrega la arista más barata del grafo que conecte dos componentes que antes estaban separadas.
@@ -108,19 +124,19 @@ public void kruskal(Grafo<V> g) {
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-expansion-ejemplo
+:label: ex-parte6-expansion-ejemplo
 
 Dado un triángulo de nodos $A, B, C$ con pesos $AB=10, BC=1, AC=10$. ¿Cuál es el MST? ¿Cuál es el camino más corto de $A$ a $C$? ¿Coinciden?
 ```
 
 ```{exercise}
-:label: ex-parte5-expansion-ciclos
+:label: ex-parte6-expansion-ciclos
 
 En el algoritmo de Kruskal, ¿qué pasaría si no usáramos Union-Find? ¿Cómo detectarías si una arista forma un ciclo? ¿Qué complejidad tendría esa detección comparada con Union-Find?
 ```
 
 ```{exercise}
-:label: ex-parte5-expansion-unicidad
+:label: ex-parte6-expansion-unicidad
 
 Si todas las aristas de un grafo tienen pesos distintos, ¿es el MST único? ¿Y si hay aristas con el mismo peso? Justificá con un ejemplo pequeño.
 ```

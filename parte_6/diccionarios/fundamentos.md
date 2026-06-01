@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Qué problemas modelan diccionarios y conjuntos, qué operaciones los definen y cómo se distinguen entre sí.
 ---
 
-(parte5-fundamentos-diccionarios)=
+(parte6-fundamentos-diccionarios)=
 # Fundamentos de diccionarios y conjuntos
 
 Esta página instala la familia donde el problema central ya no es la posición, sino la pertenencia o la asociación por clave. Es el punto donde conviene distinguir con claridad mapa, conjunto y otras variantes relacionadas.
@@ -185,7 +185,7 @@ Desde acá en adelante, la pregunta central deja de ser “cómo recorrer” y p
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-fundamentos-diccionarios-mini
+:label: ex-parte6-fundamentos-diccionarios-mini
 
 Tomá estos tres problemas:
 
@@ -197,7 +197,7 @@ Indicá cuál modelarías como diccionario, cuál como conjunto y por qué.
 ```
 
 ```{exercise}
-:label: ex-parte5-fundamentos-diccionarios-claves
+:label: ex-parte6-fundamentos-diccionarios-claves
 
 Inventá un problema donde usar una secuencia sea una mala decisión porque la operación dominante es búsqueda por clave. Explicá qué se vuelve costoso y qué familia conviene usar en su lugar.
 ```

@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Qué gana y qué pierde una secuencia cuando deja la memoria contigua y pasa a organizarse como nodos enlazados.
 ---
 
-(parte5-listas-enlazadas)=
+(parte6-listas-enlazadas)=
 # Listas enlazadas
 
 En [Arreglos](arreglos.md) la secuencia estaba apoyada en memoria contigua. Eso hacía muy barato el acceso por índice, pero caro mover elementos. Las listas enlazadas cambian por completo esa prioridad: en vez de guardar todo junto, guardan cada elemento en un **nodo** y conectan esos nodos mediante referencias.
@@ -21,7 +21,7 @@ La consecuencia es directa. Se gana flexibilidad estructural y edición local, p
 :::
 
 ```{figure} listas_enlazadas_variantes.svg
-:label: fig-parte5-listas-variantes
+:label: fig-parte6-listas-variantes
 :width: 100%
 
 Resumen visual de cuatro decisiones de representación sobre listas enlazadas: simple, doble, circular y con centinela.
@@ -475,25 +475,25 @@ La contrapartida es clara: el acceso por posición deja de ser directo, la local
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-listas-enlazadas-mini
+:label: ex-parte6-listas-enlazadas-mini
 
 Explicá por qué una lista enlazada puede ser conveniente para modelar una cola de reproducción editable, pero no necesariamente para consultas frecuentes por índice.
 ```
 
 ```{exercise}
-:label: ex-parte5-listas-doble-o-simple
+:label: ex-parte6-listas-doble-o-simple
 
 Tenés que modelar un historial de navegación con operaciones "atrás" y "adelante". Decidí si conviene una lista simplemente enlazada o doblemente enlazada y justificá qué operaciones quedan favorecidas.
 ```
 
 ```{exercise}
-:label: ex-parte5-listas-referencia-conocida
+:label: ex-parte6-listas-referencia-conocida
 
 Una especificación dice: "insertar un elemento en el medio de la lista es O(1)". Explicá por qué esa afirmación es incompleta y reformulala de manera técnicamente correcta.
 ```
 
 ```{exercise}
-:label: ex-parte5-listas-centinela
+:label: ex-parte6-listas-centinela
 
 Mostrá un caso borde de inserción o borrado donde usar un nodo centinela simplifique la implementación. No hace falta escribir código completo, pero sí describir qué condición especial desaparece.
 ```

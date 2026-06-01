@@ -96,6 +96,9 @@ Consolidar el puente entre especificación e implementación:
 - [Orden topológico](grafos/orden_topologico.md)
 - [Conectividad](grafos/conectividad.md)
 
+### Cierre
+- [Revisión cruzada de estructuras](p6-revision-cruzada.md)
+
 ## Próximo paso
 
 La entrada recomendada para seguir el hilo de la parte 5 es [Localidad de memoria](localidad_memoria.md). Después conviene pasar por [Profiling](profiling.md) antes de abrir las familias de estructuras.

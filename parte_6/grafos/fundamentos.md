@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Qué problemas modelan los grafos, qué significan vértices, aristas, caminos y componentes, y por qué esta familia exige pensar más allá de listas y árboles.
 ---
 
-(parte5-fundamentos-grafos)=
+(parte6-fundamentos-grafos)=
 # Fundamentos de grafos
 
 Los grafos cierran la parte con la familia más general: cuando ni la linealidad ni la jerarquía alcanzan para modelar el problema, hace falta pensar en **vértices, aristas, caminos y conectividad**.
@@ -156,13 +156,13 @@ El grafo es la estructura de datos definitiva por su generalidad. Permite modela
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-fundamentos- Königsberg
+:label: ex-parte6-fundamentos- Königsberg
 
 Investigá el problema de los Siete Puentes de Königsberg. ¿Por qué Euler determinó que era imposible? ¿Qué condición deben cumplir los grados de los vértices para que exista un camino que recorra todas las aristas sin repetir?
 ```
 
 ```{exercise}
-:label: ex-parte5-fundamentos-modelado-social
+:label: ex-parte6-fundamentos-modelado-social
 
 Diseñá un modelo de grafo para una red social como LinkedIn. 
 1. ¿Los vértices son personas o empresas? 
@@ -171,7 +171,7 @@ Diseñá un modelo de grafo para una red social como LinkedIn.
 ```
 
 ```{exercise}
-:label: ex-parte5-fundamentos-ciclos
+:label: ex-parte6-fundamentos-ciclos
 
 En un grafo que representa dependencias de paquetes de software (A depende de B), ¿qué significaría la presencia de un ciclo? ¿Es deseable? Justificá tu respuesta.
 ```

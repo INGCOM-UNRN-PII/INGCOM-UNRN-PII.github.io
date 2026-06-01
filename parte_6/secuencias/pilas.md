@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Qué problema resuelve una pila, qué significa LIFO en términos de contrato y cómo cambian sus implementaciones con arreglos o nodos.
 ---
 
-(parte5-pilas)=
+(parte6-pilas)=
 # Pilas
 
 Las pilas muestran que no siempre hace falta una secuencia completamente general. A veces conviene restringir el acceso para modelar mejor el problema y simplificar tanto el diseño como la implementación.
@@ -456,25 +456,25 @@ La idea fuerte del capítulo es esta:
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-pilas-mini
+:label: ex-parte6-pilas-mini
 
 Proponé dos problemas reales donde una pila sea una abstracción natural. En cada caso, justificá por qué una cola sería una mala elección.
 ```
 
 ```{exercise}
-:label: ex-parte5-pilas-contrato
+:label: ex-parte6-pilas-contrato
 
 Especificá el contrato de una pila acotada de enteros. Indicá precondiciones, postcondiciones y qué debería pasar ante overflow y underflow.
 ```
 
 ```{exercise}
-:label: ex-parte5-pilas-implementacion
+:label: ex-parte6-pilas-implementacion
 
 Querés implementar el historial de deshacer de un editor. Compará una pila basada en arreglo dinámico y una pila enlazada. Explicá qué gana y qué pierde cada una si el historial suele crecer mucho, pero también vaciarse seguido.
 ```
 
 ```{exercise}
-:label: ex-parte5-pilas-traza
+:label: ex-parte6-pilas-traza
 
 Mostrá el estado de una pila después de esta secuencia:
 

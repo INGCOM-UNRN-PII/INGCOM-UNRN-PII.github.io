@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Cómo cambia el problema de caminos mínimos según haya pesos uniformes, pesos no negativos o pesos negativos, y qué hipótesis justifican BFS, Dijkstra y Bellman-Ford.
 ---
 
-(parte5-caminos-minimos)=
+(parte6-caminos-minimos)=
 # Caminos mínimos
 
 Cuando el grafo tiene pesos o costos, ya no alcanza con saber si un vértice es alcanzable: hace falta decidir cuál es la **mejor ruta**. Aquí, el concepto de "mejor" suele significar el camino cuya suma de pesos de aristas sea la mínima posible.
@@ -25,6 +25,15 @@ Casi todos los algoritmos de caminos mínimos se basan en una operación fundame
 Si descubrís una arista $u \to v$ con peso $w$, y resulta que:
 $$\text{dist}[u] + w < \text{dist}[v]$$
 ...entonces encontraste un atajo. **Relajar** la arista significa actualizar `dist[v]` con este nuevo valor más bajo.
+
+```text
+algoritmo relajar(u, v, peso)
+    si dist[u] + peso < dist[v] entonces
+        dist[v] ← dist[u] + peso
+        padre[v] ← u
+    fin si
+fin algoritmo
+```
 
 ## 1. Pesos Uniformes: El poder del BFS
 
@@ -69,9 +78,53 @@ public void dijkstra(Grafo<V> g, V origen) {
 - **Costo:** $O((V+E) \log V)$ usando colas de prioridad.
 - **Por qué fallan los negativos:** Dijkstra asume que una vez que "cierra" un nodo, su distancia ya no puede mejorar. Un peso negativo podría permitir que un camino largo se vuelva repentinamente más corto que el actual, rompiendo la lógica voraz.
 
+### Algoritmo de Dijkstra (Pseudocódigo)
+
+```text
+algoritmo dijkstra(grafo, origen)
+    dist ← inicializarConInfinito()
+    dist[origen] ← 0
+    pq ← crearColaPrioridad()
+    pq.agregar(origen, 0)
+    
+    mientras pq no este vacia hacer
+        u ← pq.extraerMinimo()
+        
+        para cada vecino v de u con peso w hacer
+            si dist[u] + w < dist[v] entonces
+                dist[v] ← dist[u] + w
+                pq.actualizarOAgregar(v, dist[v])
+            fin si
+        fin para
+    fin mientras
+fin algoritmo
+```
+
 ## 3. Pesos Negativos: Bellman-Ford
 
 Si el grafo tiene pesos negativos (ej: una arista que representa un "crédito" o "bonificación"), Dijkstra ya no es confiable. **Bellman-Ford** es más robusto pero más lento: simplemente relaja **todas** las aristas del grafo $|V|-1$ veces.
+
+### Algoritmo de Bellman-Ford (Pseudocódigo)
+
+```text
+algoritmo bellmanFord(grafo, origen)
+    dist ← inicializarConInfinito()
+    dist[origen] ← 0
+    
+    repetir |V| - 1 veces hacer
+        para cada arista (u, v) con peso w en el grafo hacer
+            relajar(u, v, w)
+        fin para
+    fin repetir
+    
+    // Verificación de ciclos negativos
+    para cada arista (u, v) con peso w hacer
+        si dist[u] + w < dist[v] entonces
+            error "Existe un ciclo negativo"
+        fin si
+    fin para
+fin algoritmo
+```
 
 - **Detección de Ciclos Negativos:** Si después de $|V|-1$ pasadas todavía podemos relajar alguna arista, significa que hay un ciclo cuyo peso total es negativo. En este caso, el camino mínimo es $-\infty$ (podemos dar vueltas infinitas para bajar el costo).
 
@@ -93,19 +146,19 @@ El algoritmo **A*** mejora esto usando una **heurística**: una función que est
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-caminos-ejemplo
+:label: ex-parte6-caminos-ejemplo
 
 Dado un grafo con aristas $(A, B, 5), (B, C, 2), (A, C, 10)$, ejecutá manualmente Dijkstra desde $A$. ¿Cuál es el camino más corto a $C$? ¿Qué pasaría si la arista $(B, C)$ pesara $-10$?
 ```
 
 ```{exercise}
-:label: ex-parte5-caminos-ciclo-negativo
+:label: ex-parte6-caminos-ciclo-negativo
 
 Dibujá un grafo con tres nodos que contenga un ciclo de peso total negativo. Explicá por qué un algoritmo de búsqueda de camino mínimo nunca terminaría o daría un resultado erróneo en esta estructura.
 ```
 
 ```{exercise}
-:label: ex-parte5-caminos-java
+:label: ex-parte6-caminos-java
 
 Investigá la clase `PriorityQueue` de Java. ¿Cómo harías para que ordene los elementos de menor a mayor distancia si guardás objetos personalizados?
 ```

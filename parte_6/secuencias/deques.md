@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Cuándo una pila o una cola ya no alcanzan y conviene usar una secuencia restringida con operaciones eficientes en ambos extremos.
 ---
 
-(parte5-deques)=
+(parte6-deques)=
 # Deques
 
 Las [Pilas](pilas.md) y las [Colas](colas.md) mostraron dos restricciones muy útiles: LIFO y FIFO. El deque aparece cuando ninguna de las dos alcanza por sí sola. El problema ya no pide operar solo en un extremo o solo respetar orden de llegada, sino **trabajar con frente y fondo como zonas activas**.
@@ -248,19 +248,19 @@ Las implementaciones más razonables son el arreglo circular y la lista doblemen
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-deques-mini
+:label: ex-parte6-deques-mini
 
 Pensá un problema donde a veces convenga insertar al frente y otras al fondo. Explicá por qué una cola simple o una pila simple volverían incómodo ese diseño.
 ```
 
 ```{exercise}
-:label: ex-parte5-deques-restringidos
+:label: ex-parte6-deques-restringidos
 
 Inventá un caso donde alcance un deque restringido de entrada y otro donde alcance un deque restringido de salida. En cada uno, indicá qué operaciones deberían quedar prohibidas.
 ```
 
 ```{exercise}
-:label: ex-parte5-deques-implementacion
+:label: ex-parte6-deques-implementacion
 
 Compará un deque implementado con arreglo circular y otro con lista doblemente enlazada para un buffer de tareas urgentes y normales. Indicá qué representación elegirías si el tamaño máximo es conocido y cuál si cambia mucho durante la ejecución.
 ```

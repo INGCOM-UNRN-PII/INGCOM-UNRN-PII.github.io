@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Qué cambia cuando un árbol general se restringe a dos hijos por nodo y por qué esa forma sostiene varias estructuras posteriores.
 ---
 
-(parte5-arboles-binarios)=
+(parte6-arboles-binarios)=
 # Árboles binarios
 
 El árbol binario es la forma más simple de introducir restricciones estructurales útiles. Limitar a dos hijos por nodo no alcanza para resolver todos los problemas, pero sí organiza gran parte del diseño posterior.
@@ -224,13 +224,13 @@ La distinción entre hijo izquierdo y derecho, más la posibilidad de representa
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-arboles-binarios-mini
+:label: ex-parte6-arboles-binarios-mini
 
 Explicá por qué un árbol binario completo puede representarse bien en arreglo, pero un árbol binario muy desbalanceado no aprovecha igual esa decisión.
 ```
 
 ```{exercise}
-:label: ex-parte5-arboles-binarios-recorridos
+:label: ex-parte6-arboles-binarios-recorridos
 
 Describí un caso donde un recorrido preorden resulte natural y otro donde un recorrido postorden resulte más adecuado. Justificá la diferencia.
 ```

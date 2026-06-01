@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Qué problema resuelve una cola, qué significa FIFO como contrato y cómo comparar variantes enlazadas y circulares.
 ---
 
-(parte5-colas)=
+(parte6-colas)=
 # Colas
 
 Las colas modelan problemas donde importa preservar el orden de llegada. Igual que las pilas, muestran que restringir operaciones no reduce expresividad: muchas veces mejora el encuadre del problema.
@@ -339,19 +339,19 @@ La idea central del capítulo es esta:
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-colas-mini
+:label: ex-parte6-colas-mini
 
 Compará una cola implementada con arreglo circular y una cola implementada con lista enlazada para un sistema de impresión. Indicá qué ventajas y desventajas tendría cada una.
 ```
 
 ```{exercise}
-:label: ex-parte5-colas-contrato
+:label: ex-parte6-colas-contrato
 
 Especificá el contrato observable de una cola de atención. Indicá qué precondiciones tienen `dequeue()` y `front()`, y qué invariantes deberían cumplirse si la implementación mantiene `frente`, `fondo` y `cantidad`.
 ```
 
 ```{exercise}
-:label: ex-parte5-colas-bfs
+:label: ex-parte6-colas-bfs
 
 Explicá por qué BFS necesita una cola y no una pila. Después describí qué recorrido obtendrías si reemplazaras la cola por una pila sin cambiar nada más del algoritmo.
 ```

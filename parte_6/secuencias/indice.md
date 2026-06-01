@@ -2,10 +2,10 @@
 title: "Secuencias"
 subtitle: "Índice de familia"
 subject: Estructuras de Datos
-description: Mapa de la familia de secuencias, con recorrido sugerido y criterios de comparación dentro de la parte 5.
+description: Mapa de la familia de secuencias, con recorrido sugerido y criterios de comparación dentro de la parte 6.
 ---
 
-(parte5-secuencias)=
+(parte6-secuencias)=
 # Secuencias
 
 Esta familia reúne las estructuras lineales donde el recorrido, el acceso posicional y la inserción o eliminación en extremos o posiciones arbitrarias son el problema central.

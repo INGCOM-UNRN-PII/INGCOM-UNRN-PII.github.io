@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Cuándo conviene modelar una secuencia con memoria contigua, qué costo pagan las ediciones y cómo cambian los arreglos dinámicos y los buffers circulares.
 ---
 
-(parte5-arreglos)=
+(parte6-arreglos)=
 # Arreglos
 
 En {ref}`arreglos-en-java` ya viste la sintaxis básica de `[]`, la creación con `new` y el acceso por índice. Acá cambia el foco: ya no alcanza con saber usar un arreglo. Ahora importa entender **qué compromisos de diseño** asumís cuando representás una secuencia con memoria contigua.
@@ -332,19 +332,19 @@ Esa misma decisión explica su límite: insertar o borrar en el medio cuesta por
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-arreglos-mini
+:label: ex-parte6-arreglos-mini
 
 Compará un arreglo fijo con un arreglo dinámico para implementar una lista de reproducción. Indicá qué operaciones quedan favorecidas y cuáles se vuelven más costosas.
 ```
 
 ```{exercise}
-:label: ex-parte5-arreglos-buffer-circular
+:label: ex-parte6-arreglos-buffer-circular
 
 Explicá por qué una cola implementada con arreglo común y corrimientos tiene peor comportamiento que una implementada con buffer circular. Mostrá qué índices habría que mantener para evitar mover elementos.
 ```
 
 ```{exercise}
-:label: ex-parte5-arreglos-eleccion
+:label: ex-parte6-arreglos-eleccion
 
 Tenés que modelar tres problemas: un tablero de 8x8, un historial que crece de forma impredecible y una cola de impresión. Para cada caso, decidí entre arreglo fijo, arreglo dinámico o buffer circular y justificá la elección.
 ```

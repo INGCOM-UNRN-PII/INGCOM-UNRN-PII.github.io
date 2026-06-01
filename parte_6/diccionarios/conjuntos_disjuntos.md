@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Cómo modelar unión y pertenencia a grupos mediante union-find y sus optimizaciones.
 ---
 
-(parte5-conjuntos-disjuntos)=
+(parte6-conjuntos-disjuntos)=
 # Conjuntos disjuntos
 
 Los conjuntos disjuntos cierran esta familia con un caso particular: ya no interesa tanto buscar un valor asociado a una clave, sino saber a qué grupo pertenece cada elemento y cómo unir grupos de forma eficiente.
@@ -74,6 +74,43 @@ La estructura concreta suele guardarse en arreglos:
 
 - `padre[i]` dice quién es el padre de `i`,
 - y si `i` es raíz, entonces representa su conjunto.
+
+### Algoritmos Optimizados (Pseudocódigo)
+
+La potencia de esta estructura reside en combinar la búsqueda con la compresión y la unión con el rango.
+
+**1. Find con Compresión de Caminos**
+Cada vez que buscamos la raíz, "aplanamos" el árbol para que las próximas búsquedas sean directas.
+
+```text
+algoritmo find(x)
+    si padre[x] != x entonces
+        padre[x] ← find(padre[x]) // Compresión recursiva
+    fin si
+    devolver padre[x]
+fin algoritmo
+```
+
+**2. Union por Rango**
+Unimos el árbol más petiso debajo del más alto para evitar que la altura crezca innecesariamente.
+
+```text
+algoritmo union(x, y)
+    raizX ← find(x)
+    raizY ← find(y)
+    
+    si raizX != raizY entonces
+        si rango[raizX] < rango[raizY] entonces
+            padre[raizX] ← raizY
+        sino si rango[raizX] > rango[raizY] entonces
+            padre[raizY] ← raizX
+        sino
+            padre[raizY] ← raizX
+            rango[raizX] ← rango[raizX] + 1
+        fin si
+    fin si
+fin algoritmo
+```
 
 ## Optimización 1: union by rank
 
@@ -217,13 +254,13 @@ La idea clave es:
 ## Ejercicios
 
 ```{exercise}
-:label: ex-parte5-conjuntos-disjuntos-mini
+:label: ex-parte6-conjuntos-disjuntos-mini
 
 Describí un problema donde haga falta unir grupos de elementos repetidamente y consultar si dos elementos quedaron en el mismo conjunto. Explicá por qué un diccionario general no modela tan bien ese uso.
 ```
 
 ```{exercise}
-:label: ex-parte5-conjuntos-disjuntos-kruskal
+:label: ex-parte6-conjuntos-disjuntos-kruskal
 
 Explicá por qué el algoritmo de Kruskal necesita una estructura como conjuntos disjuntos para evitar ciclos al construir un árbol de expansión mínima.
 ```
