@@ -251,42 +251,60 @@ Estos seis axiomas **definen completamente** el comportamiento de una pila de en
 
 Antes de especificar TDAs complejos como pilas o colas, es fundamental formalizar los tipos de datos elementales que usaremos como bloques de construcción. Estos TDAs básicos son los "ladrillos" sobre los cuales se construyen todas las estructuras de datos más sofisticadas.
 
-### TDA Element
+### Notación Compacta: Letras Matemáticas Dobles
+
+Para referencia rápida, utilizamos notación matemática compacta de "letras dobles" para estos tipos básicos:
+
+| Tipo | Notación Compacta | Significado |
+|------|-------------------|------------|
+| Element | $\mathbb{E}$ | Sort genérico para cualquier elemento |
+| Boolean | $\mathbb{B}$ | Sort de valores de verdad |
+| Natural | $\mathbb{N}$ | Sort de números naturales (0, 1, 2, ...) |
+| Integer | $\mathbb{Z}$ | Sort de números enteros (..., -2, -1, 0, 1, 2, ...) |
+| Decimal | $\mathbb{D}$ | Sort de números con fracciones |
+
+Esta notación es más compacta que escribir $\mathtt{Element}$, $\mathtt{Bool}$, $\mathtt{Nat}$, $\mathtt{Int}$, $\mathtt{Dec}$. Por ejemplo: "una pila de elementos" se nota como $\text{Stack}(\mathbb{E})$.
+
+### TDA Element ($\mathbb{E}$)
 
 El TDA `Element` representa un valor genérico sin estructura interna. Es el TDA más abstracto: solo sabemos que existen elementos distinguibles.
+
+**Notación:** $\mathbb{E}$
 
 **Signatura:**
 
 $$\begin{align}
-\text{eq} &: \mathtt{Element} \times \mathtt{Element} \to \mathtt{Bool}
+\text{eq} &: \mathbb{E} \times \mathbb{E} \to \mathbb{B}
 \end{align}$$
 
 **Axiomas:**
 
 **Axioma 1 (reflexividad):** Un elemento es igual a sí mismo.
-$$\text{eq}(x, x) = \text{true} \quad \forall x \in \mathtt{Element}$$
+$$\text{eq}(x, x) = \text{true} \quad \forall x \in \mathbb{E}$$
 
 **Axioma 2 (simetría):** Si $x = y$, entonces $y = x$.
-$$\text{eq}(x, y) = \text{eq}(y, x) \quad \forall x, y \in \mathtt{Element}$$
+$$\text{eq}(x, y) = \text{eq}(y, x) \quad \forall x, y \in \mathbb{E}$$
 
 **Axioma 3 (transitividad):** Si $x = y$ e $y = z$, entonces $x = z$.
 $$\text{eq}(x, y) = \text{true} \land \text{eq}(y, z) = \text{true} \Rightarrow \text{eq}(x, z) = \text{true}$$
 
 El TDA `Element` es tan simple que prácticamente no tiene operaciones. Se usa principalmente como parámetro genérico: "una pila de elementos", sin especificar qué son esos elementos.
 
-### TDA Boolean
+### TDA Boolean ($\mathbb{B}$)
 
 El TDA `Boolean` representa los valores de verdad.
+
+**Notación:** $\mathbb{B}$
 
 **Signatura:**
 
 $$\begin{align}
-\text{true} &: \to \mathtt{Bool}\\
-\text{false} &: \to \mathtt{Bool}\\
-\text{and} &: \mathtt{Bool} \times \mathtt{Bool} \to \mathtt{Bool}\\
-\text{or} &: \mathtt{Bool} \times \mathtt{Bool} \to \mathtt{Bool}\\
-\text{not} &: \mathtt{Bool} \to \mathtt{Bool}\\
-\text{eq} &: \mathtt{Bool} \times \mathtt{Bool} \to \mathtt{Bool}
+\text{true} &: \to \mathbb{B}\\
+\text{false} &: \to \mathbb{B}\\
+\text{and} &: \mathbb{B} \times \mathbb{B} \to \mathbb{B}\\
+\text{or} &: \mathbb{B} \times \mathbb{B} \to \mathbb{B}\\
+\text{not} &: \mathbb{B} \to \mathbb{B}\\
+\text{eq} &: \mathbb{B} \times \mathbb{B} \to \mathbb{B}
 \end{align}$$
 
 **Axiomas:**
@@ -319,19 +337,21 @@ $$\text{or}(\text{false}, \text{false}) = \text{false}$$
 
 Estos axiomas capturan exactamente la semántica de la lógica proposicional estándar.
 
-### TDA Natural
+### TDA Natural ($\mathbb{N}$)
 
 El TDA `Natural` representa los números naturales (0, 1, 2, 3, ...).
+
+**Notación:** $\mathbb{N}$
 
 **Signatura:**
 
 $$\begin{align}
-\text{zero} &: \to \mathtt{Nat}\\
-\text{succ} &: \mathtt{Nat} \to \mathtt{Nat}\\
-\text{plus} &: \mathtt{Nat} \times \mathtt{Nat} \to \mathtt{Nat}\\
-\text{mult} &: \mathtt{Nat} \times \mathtt{Nat} \to \mathtt{Nat}\\
-\text{eq} &: \mathtt{Nat} \times \mathtt{Nat} \to \mathtt{Bool}\\
-\text{leq} &: \mathtt{Nat} \times \mathtt{Nat} \to \mathtt{Bool}
+\text{zero} &: \to \mathbb{N}\\
+\text{succ} &: \mathbb{N} \to \mathbb{N}\\
+\text{plus} &: \mathbb{N} \times \mathbb{N} \to \mathbb{N}\\
+\text{mult} &: \mathbb{N} \times \mathbb{N} \to \mathbb{N}\\
+\text{eq} &: \mathbb{N} \times \mathbb{N} \to \mathbb{B}\\
+\text{leq} &: \mathbb{N} \times \mathbb{N} \to \mathbb{B}
 \end{align}$$
 
 Aquí $\text{succ}(n)$ es el sucesor de $n$, es decir, $n+1$. La operación $\text{succ}$ es el constructor fundamental; cualquier número se obtiene aplicando $\text{succ}$ repetidamente a $\text{zero}$.
@@ -339,57 +359,59 @@ Aquí $\text{succ}(n)$ es el sucesor de $n$, es decir, $n+1$. La operación $\te
 **Axiomas:**
 
 **Axioma 1 (succ es inyectivo):** Números distintos tienen sucesores distintos.
-$$\text{succ}(m) = \text{succ}(n) \Rightarrow m = n \quad \forall m, n \in \mathtt{Nat}$$
+$$\text{succ}(m) = \text{succ}(n) \Rightarrow m = n \quad \forall m, n \in \mathbb{N}$$
 
 **Axioma 2 (zero no es sucesor):** No existe un natural cuyo sucesor sea zero.
-$$\text{succ}(n) = \text{zero} \Rightarrow \text{false} \quad \forall n \in \mathtt{Nat}$$
+$$\text{succ}(n) = \text{zero} \Rightarrow \text{false} \quad \forall n \in \mathbb{N}$$
 
 **Axioma 3 (suma con zero):**
-$$\text{plus}(\text{zero}, n) = n \quad \forall n \in \mathtt{Nat}$$
+$$\text{plus}(\text{zero}, n) = n \quad \forall n \in \mathbb{N}$$
 
 **Axioma 4 (suma recursiva):**
-$$\text{plus}(\text{succ}(m), n) = \text{succ}(\text{plus}(m, n)) \quad \forall m, n \in \mathtt{Nat}$$
+$$\text{plus}(\text{succ}(m), n) = \text{succ}(\text{plus}(m, n)) \quad \forall m, n \in \mathbb{N}$$
 
 Estos dos axiomas definen la suma recursivamente: $0 + n = n$ y $(m+1) + n = (m+n) + 1$.
 
 **Axioma 5 (producto con zero):**
-$$\text{mult}(\text{zero}, n) = \text{zero} \quad \forall n \in \mathtt{Nat}$$
+$$\text{mult}(\text{zero}, n) = \text{zero} \quad \forall n \in \mathbb{N}$$
 
 **Axioma 6 (producto recursivo):**
-$$\text{mult}(\text{succ}(m), n) = \text{plus}(\text{mult}(m, n), n) \quad \forall m, n \in \mathtt{Nat}$$
+$$\text{mult}(\text{succ}(m), n) = \text{plus}(\text{mult}(m, n), n) \quad \forall m, n \in \mathbb{N}$$
 
 **Axioma 7 (igualdad en zero):**
 $$\text{eq}(\text{zero}, \text{zero}) = \text{true}$$
 
 **Axioma 8 (igualdad de sucesores):**
-$$\text{eq}(\text{succ}(m), \text{succ}(n)) = \text{eq}(m, n) \quad \forall m, n \in \mathtt{Nat}$$
+$$\text{eq}(\text{succ}(m), \text{succ}(n)) = \text{eq}(m, n) \quad \forall m, n \in \mathbb{N}$$
 
 **Axioma 9 (zero vs sucesor):**
-$$\text{eq}(\text{zero}, \text{succ}(n)) = \text{false} \quad \forall n \in \mathtt{Nat}$$
-$$\text{eq}(\text{succ}(n), \text{zero}) = \text{false} \quad \forall n \in \mathtt{Nat}$$
+$$\text{eq}(\text{zero}, \text{succ}(n)) = \text{false} \quad \forall n \in \mathbb{N}$$
+$$\text{eq}(\text{succ}(n), \text{zero}) = \text{false} \quad \forall n \in \mathbb{N}$$
 
 **Axioma 10 (leq define orden):**
-$$\text{leq}(\text{zero}, n) = \text{true} \quad \forall n \in \mathtt{Nat}$$
-$$\text{leq}(\text{succ}(m), \text{zero}) = \text{false} \quad \forall m \in \mathtt{Nat}$$
-$$\text{leq}(\text{succ}(m), \text{succ}(n)) = \text{leq}(m, n) \quad \forall m, n \in \mathtt{Nat}$$
+$$\text{leq}(\text{zero}, n) = \text{true} \quad \forall n \in \mathbb{N}$$
+$$\text{leq}(\text{succ}(m), \text{zero}) = \text{false} \quad \forall m \in \mathbb{N}$$
+$$\text{leq}(\text{succ}(m), \text{succ}(n)) = \text{leq}(m, n) \quad \forall m, n \in \mathbb{N}$$
 
 Estos axiomas capturan la estructura recursiva de los números naturales según la axiomatización de Peano.
 
-### TDA Integer
+### TDA Integer ($\mathbb{Z}$)
 
 El TDA `Integer` extiende los naturales para incluir números negativos.
+
+**Notación:** $\mathbb{Z}$
 
 **Signatura:**
 
 $$\begin{align}
-\text{zero} &: \to \mathtt{Int}\\
-\text{succ} &: \mathtt{Int} \to \mathtt{Int}\\
-\text{pred} &: \mathtt{Int} \to \mathtt{Int}\\
-\text{plus} &: \mathtt{Int} \times \mathtt{Int} \to \mathtt{Int}\\
-\text{minus} &: \mathtt{Int} \times \mathtt{Int} \to \mathtt{Int}\\
-\text{mult} &: \mathtt{Int} \times \mathtt{Int} \to \mathtt{Int}\\
-\text{eq} &: \mathtt{Int} \times \mathtt{Int} \to \mathtt{Bool}\\
-\text{leq} &: \mathtt{Int} \times \mathtt{Int} \to \mathtt{Bool}
+\text{zero} &: \to \mathbb{Z}\\
+\text{succ} &: \mathbb{Z} \to \mathbb{Z}\\
+\text{pred} &: \mathbb{Z} \to \mathbb{Z}\\
+\text{plus} &: \mathbb{Z} \times \mathbb{Z} \to \mathbb{Z}\\
+\text{minus} &: \mathbb{Z} \times \mathbb{Z} \to \mathbb{Z}\\
+\text{mult} &: \mathbb{Z} \times \mathbb{Z} \to \mathbb{Z}\\
+\text{eq} &: \mathbb{Z} \times \mathbb{Z} \to \mathbb{B}\\
+\text{leq} &: \mathbb{Z} \times \mathbb{Z} \to \mathbb{B}
 \end{align}$$
 
 Aquí $\text{pred}(n)$ es el predecesor de $n$, es decir, $n-1$. Números negativos se construyen aplicando $\text{pred}$ a $\text{zero}$.
@@ -397,37 +419,39 @@ Aquí $\text{pred}(n)$ es el predecesor de $n$, es decir, $n-1$. Números negati
 **Axiomas clave:**
 
 **Axioma 1 (succ-pred inversa):** $\text{succ}$ y $\text{pred}$ se invierten mutuamente.
-$$\text{succ}(\text{pred}(n)) = n \quad \forall n \in \mathtt{Int}$$
-$$\text{pred}(\text{succ}(n)) = n \quad \forall n \in \mathtt{Int}$$
+$$\text{succ}(\text{pred}(n)) = n \quad \forall n \in \mathbb{Z}$$
+$$\text{pred}(\text{succ}(n)) = n \quad \forall n \in \mathbb{Z}$$
 
 **Axioma 2 (suma con zero):**
-$$\text{plus}(\text{zero}, n) = n \quad \forall n \in \mathtt{Int}$$
+$$\text{plus}(\text{zero}, n) = n \quad \forall n \in \mathbb{Z}$$
 
 **Axioma 3 (suma recursiva positiva):**
-$$\text{plus}(\text{succ}(m), n) = \text{succ}(\text{plus}(m, n)) \quad \forall m, n \in \mathtt{Int}$$
+$$\text{plus}(\text{succ}(m), n) = \text{succ}(\text{plus}(m, n)) \quad \forall m, n \in \mathbb{Z}$$
 
 **Axioma 4 (suma recursiva negativa):**
-$$\text{plus}(\text{pred}(m), n) = \text{pred}(\text{plus}(m, n)) \quad \forall m, n \in \mathtt{Int}$$
+$$\text{plus}(\text{pred}(m), n) = \text{pred}(\text{plus}(m, n)) \quad \forall m, n \in \mathbb{Z}$$
 
 **Axioma 5 (menos es suma inversa):**
 $$\text{minus}(m, n) = \text{plus}(m, \text{negate}(n))$$
 
 donde $\text{negate}(n)$ es la negación de $n$ (aquí la omitimos por brevedad).
 
-### TDA Decimal
+### TDA Decimal ($\mathbb{D}$)
 
 El TDA `Decimal` representa números con parte fraccionaria.
+
+**Notación:** $\mathbb{D}$
 
 **Signatura:**
 
 $$\begin{align}
-\text{fromInt} &: \mathtt{Int} \to \mathtt{Decimal}\\
-\text{numerator} &: \mathtt{Decimal} \to \mathtt{Int}\\
-\text{denominator} &: \mathtt{Decimal} \to \mathtt{Nat}\\
-\text{plus} &: \mathtt{Decimal} \times \mathtt{Decimal} \to \mathtt{Decimal}\\
-\text{mult} &: \mathtt{Decimal} \times \mathtt{Decimal} \to \mathtt{Decimal}\\
-\text{eq} &: \mathtt{Decimal} \times \mathtt{Decimal} \to \mathtt{Bool}\\
-\text{leq} &: \mathtt{Decimal} \times \mathtt{Decimal} \to \mathtt{Bool}
+\text{fromInt} &: \mathbb{Z} \to \mathbb{D}\\
+\text{numerator} &: \mathbb{D} \to \mathbb{Z}\\
+\text{denominator} &: \mathbb{D} \to \mathbb{N}\\
+\text{plus} &: \mathbb{D} \times \mathbb{D} \to \mathbb{D}\\
+\text{mult} &: \mathbb{D} \times \mathbb{D} \to \mathbb{D}\\
+\text{eq} &: \mathbb{D} \times \mathbb{D} \to \mathbb{B}\\
+\text{leq} &: \mathbb{D} \times \mathbb{D} \to \mathbb{B}
 \end{align}$$
 
 Aquí representamos decimales como fracciones (par numerador-denominador). $\text{fromInt}(i)$ convierte un entero en su equivalente decimal.
@@ -453,7 +477,7 @@ $$\text{eq}(d_1, d_2) = \text{true} \iff \text{numerator}(d_1) \cdot \text{denom
 
 ---
 
-Estos cinco TDAs básicos (Element, Boolean, Natural, Integer, Decimal) forman la base sobre la cual construimos TDAs más complejos. Cualquier estructura de datos que trabaje con números, booleanos o elementos genéricos confía en que estos TDAs cumplen sus axiomas.
+Estos cinco TDAs básicos ($\mathbb{E}$, $\mathbb{B}$, $\mathbb{N}$, $\mathbb{Z}$, $\mathbb{D}$) forman la base sobre la cual construimos TDAs más complejos. Cualquier estructura de datos que trabaje con números, booleanos o elementos genéricos confía en que estos TDAs cumplen sus axiomas.
 
 ## Omega: la operación indefinida
 
