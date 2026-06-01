@@ -32,7 +32,7 @@ Al finalizar este capítulo, se espera que el estudiante pueda:
 
 Cuando escribís código, trabajás con objetos concretos: una `Stack` en Java, una `List` en Python, una estructura de pila en C. Pero cada una de esas implementaciones es simplemente *una* forma de realizar la idea abstracta de "pila".
 
-La pregunta es: ¿cuál es la idea abstracta? ¿Qué debe cumplir cualquier cosa que pretenda ser una pila?
+La pregunta es: ¿cuál es la idea abstracta? ¿Qué debe cumplir cualquier algo que pretenda ser una pila?
 
 ### Especificación vs. Implementación
 

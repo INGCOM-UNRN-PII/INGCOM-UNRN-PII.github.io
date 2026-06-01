@@ -1,6 +1,6 @@
 ---
 title: "Tipos Abstractos de Datos"
-subtitle: "Separar interfaz, contrato e implementación"
+subtitle: "Separando interfaz, contrato e implementación"
 subject: Estructuras de Datos
 description: Qué es un TAD, cómo se relaciona con la representación y por qué conviene distinguir contrato de implementación.
 ---
@@ -8,9 +8,9 @@ description: Qué es un TAD, cómo se relaciona con la representación y por qu�
 (parte5-tipos-abstractos-datos)=
 # Tipos Abstractos de Datos
 
-Esta página abre la parte con el lenguaje más general. Antes de discutir arreglos, árboles o grafos, conviene fijar qué se considera un tipo abstracto de datos y por qué la representación no debería confundirse con la interfaz.
+Esta página introduce el tema con un lenguaje más intuitivo. Antes de discutir el la definición formal, conviene fijar qué se considera un tipo abstracto de datos y por qué la representación no debería confundirse con la interfaz.
 
-Si se viene de C, la intuición inicial suele ser pensar primero en la estructura concreta: `struct`, campos, punteros, arreglos, nodos. En esta parte conviene invertir ese orden. Primero importa **qué problema modela la estructura** y **qué operaciones promete**. Recién después conviene decidir cómo se la representa en memoria.
+Viniendo de C, la intuición desarrollada nos lleva a pensar primero en la estructura concreta: `struct`, campos, punteros, arreglos, nodos. Aquí, invertiremos ese orden. Primero importa **qué problema modela la estructura** y **qué operaciones promete**. Recién después conviene decidir cómo se la representa en memoria.
 
 :::{note} Hoja de ruta del capítulo
 **Objetivo.** Entender qué gana el diseño cuando se separa problema abstracto, contrato de operaciones e implementación concreta.
