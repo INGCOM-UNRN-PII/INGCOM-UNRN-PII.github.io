@@ -15,145 +15,112 @@ Seguramente escuchaste alguna vez la frase de Donald Knuth: *"La optimización p
 
 **Prerrequisitos.** Haber leído [Localidad de memoria](localidad_memoria.md) y tener conocimientos sólidos de Java y complejidad asintótica.
 
-**Desarrollo.** Veremos las técnicas de instrumentación y muestreo, las optimizaciones agresivas de la JVM (JIT), el uso de JMH para microbenchmarking, el análisis de memoria para detectar fugas (Leaks) y la telemetría con Java Flight Recorder (JFR).
+**Desarrollo.** Veremos las técnicas de instrumentación y muestreo, las herramientas clave (VisualVM, JMC, JMH), las optimizaciones agresivas de la JVM (JIT) y estrategias para identificar cuellos de botella.
 :::
-
-## ¿Qué es el profiling?
-
-A diferencia de la depuración (debugging), que busca errores lógicos, el profiling busca ineficiencias. Un *profiler* es una herramienta que monitorea la ejecución del programa y recolecta métricas sobre:
-
-- **Tiempo de CPU:** ¿En qué métodos pasa el procesador la mayor parte del tiempo?
-- **Uso de Memoria (Heap):** ¿Cuántos objetos se están creando? ¿Dónde se están acumulando? ¿Qué tan seguido corre el *Garbage Collector*?
-- **I/O y Red:** ¿Estamos esperando demasiado por el disco o la red?
-
-## La trampa del cronómetro
-
-La forma más básica de medir tiempo es usar el reloj del sistema. En Java, solemos usar `System.nanoTime()`.
 
 ## Técnicas de Profiling: ¿Cómo mide el software?
 
 Un profiler no es mágico; tiene que "meterse" en tu código para ver qué pasa. Existen dos estrategias principales:
 
 ### 1. Instrumentación
-El profiler modifica el *bytecode* de tus clases (o inyecta código al compilar) para insertar contadores al inicio y al final de cada método.
+El profiler modifica el *bytecode* de tus clases para insertar contadores al inicio y al final de cada método.
 - **Ventaja:** Precisión absoluta en el conteo de llamadas.
-- **Desventaja:** Gran sobrecosto (*overhead*). El acto de medir cambia el rendimiento del programa (Efecto Observador o "Heisenbug"), lo que puede invalidar los resultados.
+- **Desventaja:** Gran sobrecosto (*overhead*). El acto de medir cambia el rendimiento del programa (Efecto Observador), lo que puede invalidar los resultados.
 
 ### 2. Muestreo (Sampling)
-El profiler le pregunta a la JVM en intervalos regulares (ej: cada 10ms): "¿En qué método estás ahora?". 
+El profiler le pregunta a la JVM en intervalos regulares: "¿En qué método estás ahora?". 
 - **Ventaja:** Bajo sobrecosto, ideal para entornos de producción.
-- **Desventaja:** Puede perderse métodos que se ejecutan muy rápido entre muestras. Además, los profileres tradicionales sufren de **Safepoint Bias**: solo pueden tomar muestras cuando la JVM llega a un estado seguro, lo que suele distorsionar los datos hacia métodos que tienen *safepoints* (como lazos largos).
+- **Desventaja:** Puede perderse métodos muy rápidos y sufre de **Safepoint Bias**, lo que puede distorsionar los datos.
 
 ## La JVM: Un blanco móvil
 
-Medir en Java es difícil porque el compilador **JIT (Just-In-Time)** es extremadamente inteligente y agresivo. Si no tenés cuidado, podrías estar midiendo algo que ya no existe.
+Medir en Java es difícil porque el compilador **JIT (Just-In-Time)** es extremadamente inteligente. Si no tenés cuidado, podrías estar midiendo algo que ya no existe debido a:
+- **Eliminación de Código Muerto (DCE):** Si calculás algo pero no usás el resultado, el JIT elimina el código.
+- **Constant Folding:** Si el resultado es predecible (ej: `2+2`), el JIT lo reemplaza por una constante.
+- **Inlining:** El JIT "pega" métodos chicos directamente en el lugar de llamada.
 
-### Eliminación de Código Muerto (DCE)
-Si calculás algo pero no usás el resultado, el JIT detectará que no tiene efectos secundarios y eliminará el código. Tu benchmark dirá que tarda 0 ns.
+---
 
-### Constant Folding
-Si el JIT detecta que una expresión siempre da el mismo resultado (ej: `2 + 2`), reemplazará el cálculo por la constante `4` durante la compilación, invalidando tu medición de velocidad de suma.
+## Herramientas Esenciales del Ecosistema
 
-### Inlining
-El JIT puede "pegar" un método chico directamente donde se lo llama. Esto es excelente para el rendimiento, pero confuso si querés medir ese método por separado.
+Para no caer en estas trampas y obtener datos útiles, el ecosistema Java ofrece tres herramientas fundamentales que debés conocer:
 
-## JMH: El Microbenchmark Harness
+### 1. VisualVM: Monitoreo en Vivo y Quick-Analysis
+**VisualVM** es la herramienta "navaja suiza" para el desarrollo diario. Te permite conectarte a una aplicación en ejecución y observar:
+- **Uso de Heap:** Ver en tiempo real cómo crece la memoria y cuándo actúa el GC.
+- **Threads:** Identificar hilos bloqueados (*deadlocks*).
+- **Sampler:** Obtener un perfil rápido de CPU o Memoria sin configuración compleja.
+- **Heap Dumps:** Capturar el estado de la memoria para buscar fugas (*leaks*).
 
-Para evitar estas trampas, usamos **JMH**. Es una herramienta que genera código de soporte para asegurar que tus mediciones sean válidas.
+### 2. JDK Mission Control (JMC) y Flight Recorder (JFR)
+Esta es la artillería pesada para entornos de producción. **Java Flight Recorder (JFR)** viene integrado en la JVM y recolecta telemetría con un impacto casi nulo (< 1%).
+- Los archivos `.jfr` se abren con **JDK Mission Control (JMC)**.
+- Permite analizar eventos de latencia del sistema, pausas de GC y bloqueos de red con un detalle que ninguna otra herramienta alcanza.
+
+### 3. Java Microbenchmark Harness (JMH)
+Cuando necesitás medir una estructura de datos o un algoritmo pequeño de forma aislada, **JMH** es la única opción científica. Es un framework que genera código de soporte para:
+- Manejar el **Warm-up** (calentamiento) necesario para el JIT.
+- Evitar la **DCE** mediante el uso de `Blackhole`.
+- Proveer estadísticas rigurosas (media, varianza, percentiles).
 
 ```java
 @BenchmarkMode(Mode.AverageTime)
 @OutputTimeUnit(TimeUnit.NANOSECONDS)
 @State(Scope.Thread)
 public class MiBenchmark {
-
-    @Param({"100", "1000", "10000"})
-    public int N;
-
-    private List<Integer> lista;
-
-    @Setup
-    public void setup() {
-        lista = new ArrayList<>();
-        for (int i = 0; i < N; i++) lista.add(i);
-    }
-
     @Benchmark
-    public int medirBusqueda() {
-        // JMH asegura que el resultado se consuma para evitar DCE
-        return lista.indexOf(N - 1);
+    public void medir(Blackhole bh) {
+        // bh.consume() evita que el JIT elimine este código
+        bh.consume(miAlgoritmo());
     }
 }
 ```
 
-## Análisis de Memoria y Memory Leaks
+---
 
-Optimizar no es solo ir rápido; es no quedarse sin memoria. 
+## Visualización Avanzada: Flame Graphs
 
-### El Heap Dump
-Un **Heap Dump** es una captura instantánea de todos los objetos que viven en la memoria RAM en un momento dado. Se genera con herramientas como `jmap` o desde VisualVM.
-
-Para encontrar un **Memory Leak** (fuga de memoria), la estrategia es:
-1.  Tomar un Heap Dump base.
-2.  Realizar acciones que deberían liberar memoria.
-3.  Tomar un segundo Heap Dump.
-4.  Comparar (Diff) para ver qué objetos siguen creciendo y quién los está reteniendo (buscando el "GC Root").
-
-### Allocation Pressure
-A veces no tenés una fuga, pero creás demasiados objetos temporales. Esto llena los **TLABs (Thread Local Allocation Buffers)** y obliga al Garbage Collector a correr constantemente, pausando tu programa. Esto se visualiza mejor con profileres de asignación.
-
-## Java Flight Recorder (JFR) y JMC
-
-**JFR** es el estándar de oro para telemetría en producción. Viene integrado en la JVM y tiene un impacto casi nulo (< 1%). 
-- Recolecta eventos del sistema, del GC, de los hilos y de la aplicación.
-- Los archivos `.jfr` se abren con **JDK Mission Control (JMC)** para un análisis profundo.
-
-## Async-Profiler y Flame Graphs
-
-Para aplicaciones grandes, **Async-Profiler** es imbatible. Evita el *Safepoint Bias* y genera **Flame Graphs**.
-- **Eje X:** Representa las muestras (ancho = tiempo de CPU consumido).
-- **Eje Y:** Representa la profundidad de la pila de llamadas (*stack depth*).
+Para aplicaciones grandes, herramientas como **Async-Profiler** generan **Flame Graphs**.
+- **Eje X:** Representa las muestras (ancho = tiempo de CPU).
+- **Eje Y:** Representa la profundidad de la pila de llamadas (*stack trace*).
 
 ::: {tip} Interpretación
-Si ves una caja muy ancha que no tiene casi nada arriba, encontraste un **Hot Spot**: un método que está haciendo mucho trabajo pesado por sí mismo.
+Buscá las cajas más anchas que no tengan nada arriba: esos son tus **Hot Spots** (métodos que hacen mucho trabajo por sí mismos).
 :::
 
 ## Estrategia de Optimización: El Ciclo Científico
 
-1.  **Macro-profiling (JFR/Async-Profiler):** Mirá el sistema completo. ¿Es CPU, Memoria o Bloqueo de Hilos?
+1.  **Macro-profiling (VisualVM/JFR):** Mirá el sistema completo. ¿Es CPU o Memoria?
 2.  **Identificar el Hot Path:** Seguí la ruta más ancha del Flame Graph.
 3.  **Aislar con JMH:** Llevá ese método a un benchmark controlado.
-4.  **Hipótesis de Hardware/Algoritmos:** ¿Es una mala complejidad ($O(N^2)$)? ¿Es falta de localidad de memoria?
-5.  **Validar:** El cambio debe mejorar los números de JMH **y** achicar la caja en el profiler sistémico.
+4.  **Hipótesis:** ¿Es mala complejidad ($O$) o mala localidad de memoria?
+5.  **Validar:** El cambio debe mejorar los números de JMH **y** la telemetría del sistema completo.
 
 ## Resumen
 
-El profiling no es una opinión, es una medición científica. 
-- No confíes en un cronómetro manual; usá **JMH**.
-- No adivines qué está lento; usá **Async-Profiler** o **JFR**.
-- Antes de cambiar una línea de código, asegurate de tener una **métrica base** (baseline).
-- Recordá: el código más rápido es el que **no se ejecuta**.
+El profiling no es adivinar, es medir científicamente. 
+- Usá **VisualVM** para una primera mirada rápida.
+- Usá **JMC/JFR** para telemetría profunda en producción.
+- Usá **JMH** para validar micro-optimizaciones algorítmicas.
+- Recordá: si no tenés una **métrica base**, no estás optimizando, estás probando suerte.
 
 ## Ejercicios
 
 ```{exercise}
 :label: ex-parte6-profiling-1
-
-Investigá qué es un **GC Root** y por qué es la clave para encontrar el culpable de un Memory Leak en un Heap Dump.
+Investigá cómo abrir **VisualVM** (suele estar en el bin del JDK o como descarga aparte). Conectalo a un programa que esté corriendo y realizá un "Sampler" de CPU. ¿Qué método de tu código aparece al tope?
 ```
 
 ```{exercise}
 :label: ex-parte6-profiling-2
-
-Explicá la diferencia entre **CPU Time** (tiempo procesando) y **User Time** (tiempo total percibido). ¿Por qué un método que espera un recurso de red podría tener bajo CPU Time pero mucho User Time?
+Buscá en la documentación de **JMH** la diferencia entre `@Warmup` y `@Measurement`. ¿Por qué es un error medir sin una fase de calentamiento previa?
 ```
 
 ```{exercise}
 :label: ex-parte6-profiling-3
-
-Descargá **Async-Profiler** y generá un Flame Graph de un programa que realice muchas concatenaciones de Strings (`+=`) en un lazo largo. ¿Qué método de la biblioteca estándar aparece como el más costoso?
+Explicá por qué **JDK Mission Control** es preferible a VisualVM para diagnosticar problemas que solo ocurren en servidores de producción bajo mucha carga.
 ```
 
 ## Próximo paso
 
-Con las herramientas de medición dominadas, es momento de ver cómo las decisiones de representación impactan en estos números al estudiar las [Secuencias](secuencias/indice.md).
+Con las herramientas dominadas, es momento de ver cómo las decisiones de representación impactan en estos números al estudiar las [Secuencias](secuencias/indice.md).
