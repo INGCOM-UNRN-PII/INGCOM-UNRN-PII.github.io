@@ -1,8 +1,8 @@
 ---
 title: "Fundamentos de secuencias"
-subtitle: "Tratado Integral de Formalización, Microarquitectura y Abstracciones Avanzadas"
+subtitle: "Contrato abstracto y decisiones de implementación"
 subject: Estructuras de Datos
-description: Análisis exhaustivo del TAD Secuencia desde la teoría de tipos hasta la ingeniería de sistemas de alto rendimiento y concurrencia lock-free.
+description: Marco común para analizar secuencias antes de elegir arreglos, listas o estructuras restringidas.
 ---
 
 (parte6-fundamentos-secuencias)=
@@ -29,7 +29,7 @@ Este capítulo no es una introducción ligera; es una inmersión profunda en la 
 11. **Estudios de Caso Industriales:** Deque, VList y Skip Lists.
 12. **Secuencias en el Nivel de Sistema:** Unix Pipes, TCP Streams y Memory Mapping.
 13. **Análisis Comparativo Masivo:** Comparativa de 10 estructuras de secuencias.
-14. **Batería de Ejercicios de Alta Complejidad:** 20 desafíos con resoluciones técnicas detalladas.
+14. **Ejercicios:** 20 desafíos con resoluciones técnicas detalladas.
 15. **Glosario Enciclopédico de Secuencias:** Terminología avanzada para el ingeniero de sistemas.
 16. **Secuencias en la Programación Funcional (Detallado):** Mónadas, Pereza y Trampolining.
 17. **La Física de la RAM: Bancos, Canales y Rangos:** Microarquitectura de chips.
@@ -136,7 +136,7 @@ Cuando un arreglo dinámico se llena, pedimos uno nuevo. El factor $k=1.5$ (usad
 
 ---
 
-## 14. Batería de Ejercicios de Alta Complejidad
+## 14. Ejercicios I
 
 A continuación, 20 desafíos diseñados para consolidar el entendimiento profundo de las secuencias. Cada resolución incluye un análisis exhaustivo de impacto técnico, microarquitectura y verificación formal.
 

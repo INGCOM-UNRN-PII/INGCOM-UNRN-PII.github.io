@@ -1,8 +1,8 @@
 ---
-title: "Arreglos: El Rigor de la Memoria Contigua"
-subtitle: "Layout, JVM Internals, Optimización y Estructuras Avanzadas"
+title: "Arreglos"
+subtitle: "Memoria contigua y acceso por índice"
 subject: Estructuras de Datos
-description: Un tratado exhaustivo, masivo y riguroso sobre la representación contigua de datos, desde el silicio hasta la máquina virtual de Java.
+description: Representación secuencial basada en contigüidad, con foco en costos, redimensionamiento y localidad.
 ---
 
 (parte6-arreglos)=
@@ -1054,12 +1054,8 @@ Para que no te pierdas en la deducción, llevate estas verdades grabadas a fuego
 La matemática no miente. Podés ignorarla, pero tus sistemas van a sufrir las consecuencias. Un arreglo es una abstracción simple, pero su ejecución en el hardware es una danza compleja regida por leyes formales que ahora, espero, ya no te resulten ajenas. 
 
 Si llegaste hasta acá, felicitaciones. Tenés una comprensión de los arreglos que el 99% de los programadores "de tutorial" nunca va a alcanzar. Usá este poder con responsabilidad para construir sistemas que realmente vuelen.
----
-title: "Ejercicios Avanzados: Arreglos y Localidad"
-description: Desafíos de implementación técnica sobre optimización de memoria, concurrrencia y algoritmos de bajo nivel.
----
 
-# Ejercicios Avanzados de Arreglos (6 al 20)
+# Ejercicios I
 
 Esta sección contiene una batería de ejercicios diseñados para poner a prueba tu comprensión sobre cómo los arreglos interactúan con la jerarquía de memoria, el compilador JIT y el hardware moderno. No se trata solo de "hacer que funcione", sino de lograr que el hardware trabaje a tu favor.
 

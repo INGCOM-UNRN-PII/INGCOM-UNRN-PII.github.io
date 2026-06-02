@@ -1,8 +1,8 @@
 ---
-title: "Listas enlazadas: Arquitectura, Algoritmos y Rendimiento"
-subtitle: "Un tratado exhaustivo sobre la gestión de secuencias enlazadas en el silicio"
+title: "Listas enlazadas"
+subtitle: "Flexibilidad estructural y costo de indirección"
 subject: Estructuras de Datos
-description: Análisis profundo de microarquitectura, algoritmos probabilísticos, concurrencia lock-free y gestión de memoria en estructuras de datos enlazadas.
+description: Representación por nodos para secuencias con edición local frecuente.
 ---
 
 (parte6-listas-enlazadas)=
@@ -317,7 +317,7 @@ Durante el marcado, el GC debe seguir cada puntero. Una lista de un millón de e
 
 ---
 
-## 9. 20 Ejercicios de Alta Complejidad: Guía Maestral
+## 9. Ejercicios
 
 Aquí tienes los desafíos definitivos con sus guías de resolución técnica.
 
@@ -458,7 +458,7 @@ Las listas enlazadas largas son la peor pesadilla de los GCs modernos como G1 o 
 - **Write Barriers:** Cada vez que hacés `nodo.siguiente = x`, la JVM debe ejecutar una barrera de escritura para informar al GC sobre el nuevo enlace. En una lista gigante, esto genera una presión constante sobre el subsistema de memoria.
 - **Fragmentación:** Como los nodos se crean en momentos distintos, terminan dispersos por el heap. Esto genera fragmentación externa que obliga al GC a realizar compactaciones masivas (pausas Stop-The-World largas).
 
-## 6. Laboratorio de Ejercicios: Maestría Técnica (1-10)
+## 6. Ejercicios II
 
 ### Ejercicio 1: Detección de Ciclos (Floyd's Algorithm)
 **Consigna:** Demostrá matemáticamente por qué los punteros "lento" y "rápido" siempre se encuentran si hay un ciclo.

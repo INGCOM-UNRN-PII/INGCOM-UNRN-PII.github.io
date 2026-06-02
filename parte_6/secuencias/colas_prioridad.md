@@ -1,8 +1,8 @@
 ---
 title: "Colas de prioridad"
-subtitle: "Elegir el siguiente elemento por prioridad"
+subtitle: "Elegir por urgencia, no por llegada"
 subject: Estructuras de Datos
-description: Análisis formal, implementaciones avanzadas y optimización a nivel de hardware de las colas de prioridad.
+description: TAD y estructuras para extraer siempre el elemento de mayor (o menor) prioridad.
 ---
 
 (parte6-colas-prioridad)=
@@ -145,7 +145,7 @@ En simuladores de tráfico, redes o procesos industriales, los eventos se encola
 ### 5.3. Scheduling en RTOS (Real-Time Operating Systems)
 En sistemas de tiempo real, el planificador de tareas debe garantizar que la tarea con mayor prioridad se ejecute inmediatamente. A diferencia de un SO de propósito general que usa "time-slicing", un RTOS usa una CP estricta para decidir qué hilo posee la CPU.
 
-## 6. Ejercicios de Alta Complejidad
+## 6. Ejercicios I
 
 1. **D-ary Heap Parametrizado**: Implementá una clase `DAryHeap<T>` que reciba $d$ como parámetro de construcción. Demostrá empíricamente para qué valor de $d$ el algoritmo de Dijkstra en un grafo aleatorio con densidad del 10% alcanza su punto de rendimiento máximo.
 2. **K-way Merge de Archivos Gigantes**: Tenés 100 archivos de 10GB cada uno, cada uno con enteros ordenados. Disponés de solo 512MB de RAM. Usá una CP para realizar un merge ordenado de todos los archivos en un único archivo de salida de 1TB.

@@ -1,8 +1,8 @@
 ---
 title: "Deques"
-subtitle: "Acceso eficiente en ambos extremos y simetría total"
+subtitle: "Acceso eficiente en ambos extremos"
 subject: Estructuras de Datos
-description: Análisis exhaustivo del Double-Ended Queue (Deque). Desde la formalización axiomática y optimizaciones a nivel de hardware hasta algoritmos de work-stealing y ventanas deslizantes en tiempo lineal.
+description: Generalización de pilas y colas para escenarios con operaciones en frente y fondo.
 ---
 
 (parte6-deques)=
@@ -124,7 +124,7 @@ Este diseño asegura que el sistema sea **proporcionalmente eficiente**: a medid
 
 ---
 
-## 6. Taller de Implementación Masivo (20 Ejercicios)
+## 6. Ejercicios I
 
 ### Ejercicio 1: Deque con Dos Pilas (Equilibrio Dinámico)
 
@@ -629,7 +629,8 @@ Dada una secuencia de números y una ventana de tamaño $K$, hallá el máximo d
 3. El máximo actual es siempre el elemento en el **Frente** del Deque.
 **Complejidad:** Cada elemento entra y sale del Deque exactamente una vez. Costo total $O(N)$. Esta técnica es fundamental en análisis de series temporales y procesamiento de señales.
 
-## 5. Laboratorio de Ejercicios: Maestría Técnica (1-20)
+## 5. Ejercicios II
+
 
 ### Ejercicio 1: Implementación de Deque usando 2 Pilas
 **Consigna:** Simulá un Deque usando dos estructuras LIFO.
@@ -765,7 +766,7 @@ En sistemas con arquitectura NUMA, el planificador de procesos utiliza Deques pa
 2. **"Data Structures and Algorithms in Java"** (Goodrich et al.): Análisis formal del Deque como TAD.
 3. **"Algorithm Design Manual"** (Steven Skiena): Casos de estudio sobre ventanas deslizantes y deques.
 
-## 11. Laboratorio de Ejercicios: Maestría Técnica (1-20) (Ampliación)
+## Ejercicios III
 
 ### Ejercicio 1: Implementación de Deque usando 2 Pilas (Análisis Amortizado)
 **Consigna:** Demostrá por qué el costo amortizado es $O(1)$ usando el método de los créditos.
