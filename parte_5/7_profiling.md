@@ -5,7 +5,7 @@ subject: Estructuras de Datos
 description: Cómo usar evidencia empírica para validar decisiones de diseño y encontrar cuellos de botella reales usando técnicas modernas de la JVM, telemetría y análisis de memoria.
 ---
 
-(parte6-profiling)=
+(parte5-profiling)=
 # Profiling: El Arte y la Ciencia de la Medición de Rendimiento
 
 Seguramente escuchaste alguna vez la frase de Donald Knuth: *"La optimización prematura es la raíz de todos los males"*. Pero ojo, que muchas veces se malinterpreta: no significa que el rendimiento no importe o que puedas escribir código ineficiente "porque total después se arregla". Significa que intentar optimizar código basándote en la intuición, sin saber exactamente **qué** está andando lento, es la forma más rápida de perder el tiempo, introducir bugs sutiles y arruinar la mantenibilidad de un sistema.
