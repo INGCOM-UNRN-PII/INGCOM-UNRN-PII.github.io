@@ -28,6 +28,10 @@ Construir un lenguaje común para:
 
 5. [Especificaciones algebraicas avanzadas](5_avanzadas.md) — Extensión a sets, diccionarios, árboles y grafos con variantes frecuentes.
 
+6. [Localidad de memoria](6_localidad_memoria.md) — Análisis del impacto del hardware y la JVM en el rendimiento real.
+
+7. [Profiling](7_profiling.md) — Técnicas de medición empírica para validar el diseño y encontrar cuellos de botella.
+
 ## Capítulos nucleares
 
 - [Tipos Abstractos de Datos](1_intro_tda.md)
@@ -38,6 +42,8 @@ Construir un lenguaje común para:
 
 - [Análisis de algoritmos](3_algoritmos.md)
 - [Especificaciones algebraicas avanzadas](5_avanzadas.md)
+- [Localidad de memoria](6_localidad_memoria.md)
+- [Profiling](7_profiling.md)
 
 ## Índice exhaustivo
 
@@ -46,6 +52,8 @@ Construir un lenguaje común para:
 - `3_algoritmos.md` — Herramientas asintóticas para comparar costos de implementación.
 - `4_estructuras.md` — Especificaciones algebraicas completas de estructuras fundamentales.
 - `5_avanzadas.md` — Especificaciones avanzadas de familias no lineales y asociativas.
+- `6_localidad_memoria.md` — Impacto de la jerarquía de memoria y el layout de objetos en el rendimiento.
+- `7_profiling.md` — Evidencia empírica y herramientas de precisión para encontrar cuellos de botella.
 
 ## Próximo paso
 

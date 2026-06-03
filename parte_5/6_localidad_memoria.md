@@ -1731,4 +1731,4 @@ Jeff Dean (Google) popularizó estos números. Si no los tenés en la cabeza, no
 
 ## Próximo paso
 
-Ahora que sabés cómo fluyen los datos por el silicio, es hora de aprender a capturar y analizar estas métricas en entornos de producción usando [Profiling](profiling.md).
+Ahora que sabés cómo fluyen los datos por el silicio, es hora de aprender a capturar y analizar estas métricas en entornos de producción usando [Profiling](7_profiling.md).
