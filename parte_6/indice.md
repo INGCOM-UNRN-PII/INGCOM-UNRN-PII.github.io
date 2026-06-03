@@ -19,14 +19,11 @@ Esta parte continúa directamente después de la parte 5. Si en la parte anterio
 Consolidar el puente entre especificación e implementación:
 
 1. bajar de axiomas a decisiones de representación;
-2. usar localidad de memoria y profiling para validar decisiones;
 3. recorrer familias de estructuras y sus trade-offs;
 4. justificar elecciones con complejidad, invariantes y contexto de uso.
 
 ## Orden sugerido de lectura
 
-1. [Localidad de memoria](localidad_memoria.md) — Marco de rendimiento real para no decidir solo con notación asintótica.
-2. [Profiling](profiling.md) — Cómo medir antes de optimizar y cómo comparar implementaciones con evidencia.
 3. [Secuencias](secuencias/indice.md) — Entrada por estructuras lineales y restricciones de acceso.
 4. [Diccionarios y conjuntos](diccionarios/indice.md) — Paso de acceso posicional a acceso por clave.
 5. [Árboles](arboles/indice.md) — Jerarquía, búsqueda, balance y prioridades.
@@ -34,7 +31,6 @@ Consolidar el puente entre especificación e implementación:
 
 ## Capítulos nucleares
 
-- [Localidad de memoria](localidad_memoria.md)
 - [Fundamentos de secuencias](secuencias/fundamentos.md)
 - [Tablas hash](diccionarios/tablas_hash.md)
 - [Árboles binarios de búsqueda](arboles/arboles_busqueda.md)
@@ -42,18 +38,12 @@ Consolidar el puente entre especificación e implementación:
 
 ## Repaso y ampliación
 
-- [Profiling](profiling.md)
 - [Deques](secuencias/deques.md) y [Colas de prioridad](secuencias/colas_prioridad.md)
 - [Tries](diccionarios/tries.md) y [Conjuntos disjuntos](diccionarios/conjuntos_disjuntos.md)
 - [Árboles balanceados](arboles/arboles_balanceados.md) y [Árboles B](arboles/arboles_b.md)
 - [Caminos mínimos](grafos/caminos_minimos.md), [Árboles de expansión](grafos/arboles_de_expansion.md), [Orden topológico](grafos/orden_topologico.md), [Conectividad](grafos/conectividad.md)
 
 ## Índice exhaustivo
-
-### Núcleo transversal
-
-- [Localidad de memoria](localidad_memoria.md)
-- [Profiling](profiling.md)
 
 ### Secuencias
 
@@ -99,6 +89,3 @@ Consolidar el puente entre especificación e implementación:
 ### Cierre
 - [Revisión cruzada de estructuras](p6-revision-cruzada.md)
 
-## Próximo paso
-
-La entrada recomendada para seguir el hilo de la parte 5 es [Localidad de memoria](localidad_memoria.md). Después conviene pasar por [Profiling](profiling.md) antes de abrir las familias de estructuras.
