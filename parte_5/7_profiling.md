@@ -8,6 +8,13 @@ description: Cómo usar evidencia empírica para validar decisiones de diseño y
 (parte5-profiling)=
 # Profiling: El Arte y la Ciencia de la Medición de Rendimiento
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Seguramente escuchaste alguna vez la frase de Donald Knuth: *"La optimización prematura es la raíz de todos los males"*. Pero ojo, que muchas veces se malinterpreta: no significa que el rendimiento no importe o que puedas escribir código ineficiente "porque total después se arregla". Significa que intentar optimizar código basándote en la intuición, sin saber exactamente **qué** está andando lento, es la forma más rápida de perder el tiempo, introducir bugs sutiles y arruinar la mantenibilidad de un sistema.
 
 El **profiling** es la disciplina de usar evidencia empírica y herramientas de medición de precisión para encontrar los cuellos de botella reales. En sistemas modernos, y especialmente en entornos gestionados como la JVM, la realidad suele ser contraintuitiva. Un lazo que parece lento puede ser optimizado a nada por el compilador, mientras que una simple asignación de objeto puede estar gatillando pausas de milisegundos que destruyen tu latencia de cola.

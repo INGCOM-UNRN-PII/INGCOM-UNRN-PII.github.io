@@ -8,6 +8,13 @@ description: Análisis exhaustivo del impacto de la jerarquía de memoria, el la
 (parte6-localidad-memoria)=
 # Localidad de memoria
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 En el análisis teórico de algoritmos, nos movemos en el cómodo mundo de la **Máquina de Acceso Aleatorio (RAM)**, una abstracción donde cada celda de memoria tiene el mismo costo de acceso. Sin embargo, en el hardware real, esta abstracción se rompe violentamente. Un procesador moderno de 3.5 GHz puede ejecutar cientos de instrucciones en el tiempo que le toma a una señal eléctrica viajar a la memoria RAM y volver.
 
 Entender la **localidad de memoria** no es un "extra" para optimización prematura; es una necesidad fundamental. Ignorar cómo el hardware gestiona los datos invalida cualquier análisis asintótico en sistemas de alta performance. Como decía L. Peter Deutsch: "LISP programmers know the value of everything and the cost of nothing". En Programación II, buscamos que sepas ambas cosas.

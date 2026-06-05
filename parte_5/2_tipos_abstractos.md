@@ -6,6 +6,13 @@ description: "Conceptos algebraicos fundamentales para especificar estructuras d
 (introtda)=
 # Introducción a Tipos de Datos Abstractos
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Un tipo de dato abstracto (TDA) es una especificación formal de una estructura de datos que describe *qué operaciones se pueden hacer* y *qué propiedades deben cumplir*, sin comprometerse con *cómo se implementan*. Esta separación entre especificación e implementación es central en el diseño de software robusto.
 
 A lo largo de este capítulo se trabaja en la escritura de especificaciones algebraicas rigurosas usando la notación estándar de la teoría de tipos abstractos. Eso implica definir explícitamente los *sorts*, las *operaciones*, los *axiomas* que las gobiernan y las *demostraciones* que validan propiedades correctas.

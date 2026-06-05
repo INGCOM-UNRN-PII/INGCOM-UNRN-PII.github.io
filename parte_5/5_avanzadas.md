@@ -6,6 +6,13 @@ description: "Sets, diccionarios, arboles y grafos."
 (avanzadas-tda)=
 # Especificaciones algebraicas avanzadas
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Este capitulo completa el catalogo algebraico de la parte con cuatro familias que aparecen todo el tiempo en la practica: sets, diccionarios, arboles y grafos. La idea no es fijar una unica implementacion, sino mostrar como se expresa el contrato de cada estructura, que variantes son habituales y cual es la version simplificada que conviene usar cuando queres enseñar la idea sin cargar demasiada maquinaria.
 
 En todos los casos, la tecnica es la misma: definir sorts, operaciones, axiomas e invariantes. Lo que cambia es el vocabulario de cada familia.

@@ -8,6 +8,13 @@ description: Qué es un TAD, cómo se relaciona con la representación y por qu�
 (parte5-tipos-abstractos-datos)=
 # Tipos Abstractos de Datos
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Esta página introduce el tema con un lenguaje más intuitivo. Antes de discutir la definición formal, conviene fijar qué se considera un tipo abstracto de datos y por qué la representación no debería confundirse con la interfaz.
 
 Viniendo de C, la intuición desarrollada nos lleva a pensar primero en la estructura concreta: `struct`, campos, punteros, arreglos, nodos. Aquí, invertiremos ese orden. Primero importa **qué problema modela la estructura** y **qué operaciones promete**. Recién después conviene decidir cómo se la representa en memoria.

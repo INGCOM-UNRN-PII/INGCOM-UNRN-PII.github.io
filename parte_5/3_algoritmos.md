@@ -8,6 +8,13 @@ description: Herramientas básicas para comparar costo temporal y espacial de op
 (parte5-analisis-algoritmos)=
 # Análisis de algoritmos
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Esta página fija el lenguaje de complejidad que después debería aparecer cada vez que se compare una implementación con otra. La meta no es transformar la parte en una materia separada de algoritmos, sino dar el marco mínimo para discutir costo con criterio.
 
 En estructuras de datos no alcanza con decir “funciona”. También hace falta poder decir:

@@ -6,6 +6,13 @@ description: "Definiciones formales con axiomas, generadores, modificadores, obs
 (estructuras-tda)=
 # Especificaciones Algebraicas completas para secuencias
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Este capítulo cataloga las especificaciones algebraicas rigurosas de las estructuras de datos más utilizadas en programación. Cada especificación integra:
 
 - **Sorts y Signatura:** tipos abstractos y operaciones tipadas.
@@ -455,3 +462,10 @@ Estas especificaciones son el cimiento sobre el cual se construyen implementacio
 ## Próximo paso
 
 Una vez que comprendés las especificaciones algebraicas completas de estructuras fundamentales, el siguiente paso es **implementarlas en Java** respetando los contratos algebraicos. Esto significa escribir código que satisfaga todos los axiomas, con tests que validen cada axioma para garantizar que la implementación es correcta.
+
+## Ejercicios de verificación
+
+1. Resolvé un caso mínimo usando la estructura/algoritmo del capítulo y documentá por qué esa elección es válida.
+2. Construí un contraejemplo donde una elección alternativa falle (rendimiento o corrección).
+3. Escribí una prueba corta en Java que verifique un invariante crítico.
+
