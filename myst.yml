@@ -132,6 +132,8 @@ project:
     - file: parte_5/3_algoritmos.md
     - file: parte_5/4_estructuras.md
     - file: parte_5/5_avanzadas.md
+    - file: parte_5/6_localidad_memoria.md
+    - file: parte_5/7_profiling.md
   - title: 'Parte 6: Estructuras de datos'
     children:
     - file: parte_6/indice.md
