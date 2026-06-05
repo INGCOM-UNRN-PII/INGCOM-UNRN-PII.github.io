@@ -8,6 +8,13 @@ description: Mapa de la familia de diccionarios y conjuntos para la parte 6.
 (parte6-diccionarios-conjuntos)=
 # Diccionarios y conjuntos
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Esta familia reúne las estructuras donde la **pertenencia**, la **búsqueda por clave** y la **actualización de asociaciones** son la preocupación principal. A diferencia de las secuencias (donde importa el *dónde* está el dato), acá el foco se desplaza hacia el *qué* es el dato: dejamos de buscar por índice posicional y pasamos a buscar por **identidad o valor**.
 
 En Java, esta familia se manifiesta principalmente a través del framework de colecciones con las interfaces `Map` (para diccionarios) y `Set` (para conjuntos). En esta parte del apunte, desarmamos la "magia" de estas clases para entender cómo funcionan por dentro.
@@ -66,3 +73,20 @@ Un estudiante que recorrió esta familia con éxito debería poder:
 ## Próximo paso
 
 Empezamos por los cimientos: [Fundamentos de diccionarios y conjuntos](fundamentos.md), donde definimos qué es una clave y qué operaciones mínimas esperamos de estas estructuras.
+
+## Ejercicios de verificación
+
+1. Resolvé un caso mínimo usando la estructura/algoritmo del capítulo y documentá por qué esa elección es válida.
+2. Construí un contraejemplo donde una elección alternativa falle (rendimiento o corrección).
+3. Escribí una prueba corta en Java que verifique un invariante crítico.
+
+## Cierre operativo
+
+Este capítulo se considera dominado cuando podés explicar el modelo, implementarlo en Java y justificar la complejidad sin ambigüedades.
+
+### Checklist de salida
+
+- Podés describir el contrato de operaciones sin mencionar representación interna.
+- Podés anticipar costo temporal/espacial del caso típico y peor caso.
+- Podés detectar un anti-patrón y proponer una corrección concreta.
+

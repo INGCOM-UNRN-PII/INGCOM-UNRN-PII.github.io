@@ -8,6 +8,13 @@ description: Qué problemas modelan los grafos, qué significan vértices, arist
 (parte6-fundamentos-grafos)=
 # Fundamentos de grafos
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Los grafos cierran la parte con la familia más general: cuando ni la linealidad ni la jerarquía alcanzan para modelar el problema, hace falta pensar en **vértices, aristas, caminos y conectividad**.
 
 En una secuencia el problema dominante era el orden. En un árbol, la jerarquía. En un grafo, en cambio, el centro pasa a ser la **red de relaciones**: quién está conectado con quién, por qué tipo de vínculo y con qué costo o dirección.

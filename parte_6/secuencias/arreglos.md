@@ -8,6 +8,13 @@ description: Representación secuencial basada en contigüidad, con foco en cost
 (parte6-arreglos)=
 # Arreglos: La Fundación de la Memoria Contigua
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 En {ref}`arreglos-en-java` ya viste la sintaxis básica de `[]`, la creación con `new` y el acceso por índice. Acá vamos a profundizar de manera **masiva, técnica y rigurosa**: ya no alcanza con saber usar un arreglo. Ahora nos interesa entender **qué ocurre en los niveles más bajos de la abstracción** cuando representás una secuencia con memoria contigua.
 
 Los arreglos son la implementación lineal más directa cuando interesa acceder por posición con costo constante ($O(1)$) y la localidad espacial es una prioridad absoluta. Sin embargo, esta aparente simplicidad esconde una complejidad técnica considerable en términos de layout de memoria, comportamiento del compilador JIT (Just-In-Time) y desafíos críticos en entornos de alta concurrencia.

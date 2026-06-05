@@ -8,6 +8,13 @@ description: Cómo una invariante de orden convierte al árbol binario en una es
 (parte6-arboles-busqueda)=
 # Árboles binarios de búsqueda
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 En [Árboles binarios](arboles_binarios.md) apareció la forma base: cada nodo tiene a lo sumo hijo izquierdo e hijo derecho. El BST (Binary Search Tree) agrega una idea decisiva sobre esa forma: **orden**.
 
 Si cada nodo respeta una relación de orden respecto de sus subárboles, la estructura deja de ser solo jerárquica y pasa a servir también para búsquedas eficientes, inserción dinámica y recorridos en orden creciente.

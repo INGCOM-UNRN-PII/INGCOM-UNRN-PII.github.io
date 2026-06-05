@@ -8,6 +8,13 @@ description: Representación por nodos para secuencias con edición local frecue
 (parte6-listas-enlazadas)=
 # Listas enlazadas: Un análisis profundo
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 En la enseñanza tradicional de la computación, las listas enlazadas se presentan como una alternativa simple a los arreglos. Sin embargo, en la ingeniería de sistemas de alto rendimiento, la lista enlazada representa uno de los desafíos más complejos de optimización. Este capítulo no es una introducción básica; es una exploración exhaustiva de cómo las decisiones de diseño a nivel de software impactan en la jerarquía de memoria, la eficiencia de la CPU, la concurrencia y la gestión de recursos del sistema operativo.
 
 :::{note} Hoja de ruta del capítulo

@@ -8,6 +8,13 @@ description: Cómo funciona el hashing, qué papel tienen las colisiones y por q
 (parte6-tablas-hash)=
 # Tablas hash
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Las tablas hash son probablemente la respuesta más usada cuando se quiere acceso rápido por clave. También son el lugar donde más claramente aparece la tensión entre muy buen promedio y peor caso problemático.
 
 Su atractivo es fácil de entender: si una clave puede transformarse rápidamente en un índice o en un bucket, entonces buscar deja de parecerse a recorrer una lista y pasa a parecerse a “ir casi directo” al lugar correcto.

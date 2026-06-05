@@ -8,6 +8,13 @@ description: Qué agrega un diccionario ordenado frente a una tabla hash y qué 
 (parte6-diccionarios-ordenados)=
 # Diccionarios ordenados
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 No todos los problemas de búsqueda por clave se resuelven bien con hashing. Cuando importa recorrer en orden, consultar rangos o encontrar predecesores y sucesores, el orden pasa a ser parte del contrato.
 
 Una tabla hash puede ser excelente para responder “¿está esta clave?”. Pero si la pregunta cambia a:

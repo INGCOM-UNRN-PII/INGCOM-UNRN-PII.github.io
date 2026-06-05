@@ -8,6 +8,13 @@ description: Cómo cambia el problema de caminos mínimos según haya pesos unif
 (parte6-caminos-minimos)=
 # Caminos mínimos
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Cuando el grafo tiene pesos o costos, ya no alcanza con saber si un vértice es alcanzable: hace falta decidir cuál es la **mejor ruta**. Aquí, el concepto de "mejor" suele significar el camino cuya suma de pesos de aristas sea la mínima posible.
 
 :::{note} Hoja de ruta del capítulo

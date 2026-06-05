@@ -8,6 +8,13 @@ description: Cómo funcionan los tries, por qué sirven para prefijos y qué tra
 (parte6-tries)=
 # Tries
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Los tries muestran otra forma de organizar búsquedas: en lugar de usar una clave como bloque indivisible, aprovechan su estructura interna, por ejemplo caracteres o símbolos, para resolver consultas por prefijo con naturalidad.
 
 Ese cambio de punto de vista es fuerte. Tanto una tabla hash como un árbol ordenado tratan la clave como un valor completo:

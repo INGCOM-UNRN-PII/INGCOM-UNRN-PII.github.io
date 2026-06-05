@@ -8,6 +8,13 @@ description: Vocabulario base para trabajar con árboles y entender por qué la 
 (parte6-fundamentos-arboles)=
 # Fundamentos de árboles
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Los árboles introducen una organización distinta a la lineal: ya no importa solo qué elemento viene antes o después, sino qué relación jerárquica existe entre nodos, subárboles y recorridos posibles.
 
 Pensar con árboles exige dejar atrás una intuición muy arraigada: en una secuencia se avanza de izquierda a derecha; en un árbol se entra a una estructura donde cada nodo puede abrir varios caminos. Eso vuelve natural una idea que en esta familia aparece todo el tiempo: **la recursión estructural**.

@@ -8,6 +8,13 @@ description: Cómo modelar unión y pertenencia a grupos mediante union-find y s
 (parte6-conjuntos-disjuntos)=
 # Conjuntos disjuntos
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Los conjuntos disjuntos cierran esta familia con un caso particular: ya no interesa tanto buscar un valor asociado a una clave, sino saber a qué grupo pertenece cada elemento y cómo unir grupos de forma eficiente.
 
 Es una estructura más especializada que un diccionario general, pero justamente ahí está su valor: cuando el problema dominante es **mantener particiones dinámicas**, la especialización paga.

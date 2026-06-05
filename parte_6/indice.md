@@ -8,6 +8,13 @@ description: "Continuación de la parte 5: pasar del contrato abstracto al dise�
 (parte-6-estructuras-de-datos)=
 # Parte 6: Estructuras de datos
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Esta parte continúa directamente después de la parte 5. Si en la parte anterior se fijó el contrato de los TDA (qué se promete), acá el foco pasa a decidir representaciones concretas, medir su costo real y elegir estructuras según restricciones del problema.
 
 :::{important}
@@ -88,4 +95,10 @@ Consolidar el puente entre especificación e implementación:
 
 ### Cierre
 - [Revisión cruzada de estructuras](p6-revision-cruzada.md)
+
+## Ejercicios de verificación
+
+1. Resolvé un caso mínimo usando la estructura/algoritmo del capítulo y documentá por qué esa elección es válida.
+2. Construí un contraejemplo donde una elección alternativa falle (rendimiento o corrección).
+3. Escribí una prueba corta en Java que verifique un invariante crítico.
 

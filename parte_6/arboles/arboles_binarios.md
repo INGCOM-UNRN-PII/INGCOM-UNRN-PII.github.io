@@ -8,6 +8,13 @@ description: Qué cambia cuando un árbol general se restringe a dos hijos por n
 (parte6-arboles-binarios)=
 # Árboles binarios
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 El árbol binario es la forma más simple de introducir restricciones estructurales útiles. Limitar a dos hijos por nodo no alcanza para resolver todos los problemas, pero sí organiza gran parte del diseño posterior.
 
 El valor del árbol binario no está solo en los problemas que modela directamente. También funciona como plataforma conceptual para:

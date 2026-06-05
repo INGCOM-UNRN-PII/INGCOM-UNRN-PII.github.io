@@ -8,6 +8,13 @@ description: TAD y estructuras para extraer siempre el elemento de mayor (o meno
 (parte6-colas-prioridad)=
 # Colas de prioridad
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Las colas de prioridad representan una ruptura fundamental con las estructuras de secuencia lineales tradicionales como pilas y colas FIFO. Mientras que en estas el orden de salida está predeterminado por la cronología de las operaciones (`push`/`enqueue`), en una cola de prioridad el orden emerge de una propiedad intrínseca de los datos: su **prioridad**.
 
 Este capítulo profundiza en la formalización matemática del TAD, las estructuras de datos que lo soportan con eficiencia óptima y las sutilezas de implementación que separan a un sistema de juguete de un motor de simulación de alto rendimiento.
@@ -680,7 +687,6 @@ Muchos estudiantes se confunden y piensan que es $O(N \log N)$. Hagamos la cuent
 
 ## Próximo paso
 
-Habiendo dominado el orden de la importancia y el rigor de los heaps, es momento de entrar en la estructura que nos permite organizar la información en el disco: los [Árboles B](../arboles/arboles_b.md).
 
 ### Ejercicio 11: Build-Heap vs Insert (Análisis Empírico)
 **Consigna:** Realizá un benchmark comparando ambos métodos de construcción.
@@ -756,7 +762,6 @@ No te quedes con la superficie. La próxima vez que veas un sistema respondiendo
 
 ## Próximo paso
 
-Habiendo dominado el orden de la importancia y el rigor de los heaps, es momento de entrar en la estructura que nos permite organizar la información en el disco: los [Árboles B](../arboles/arboles_b.md).
 
 ### Ejercicio 5: Detección de Invariante de Heap (Ampliación Maestro)
 **Análisis de Throughput:**
@@ -860,7 +865,6 @@ La ley de la importancia es lo que permite que el software sea inteligente, deci
 
 ## Próximo paso
 
-Habiendo dominado el orden de la importancia y el rigor de los heaps, es momento de entrar en la estructura que nos permite organizar la información en el disco: los [Árboles B](../arboles/arboles_b.md).
 
 
 ---
@@ -1045,7 +1049,6 @@ No te quedes con la superficie. La próxima vez que veas un sistema respondiendo
 
 ## Próximo paso
 
-Habiendo dominado el orden de la importancia y el rigor de los heaps, es momento de entrar en la estructura que nos permite organizar la información en el disco: los [Árboles B](../arboles/arboles_b.md).
 
 ---
 
@@ -1113,7 +1116,6 @@ Construí con sabiduría, medí con el rigor de JMH y nunca dejes de preguntarte
 
 ## Próximo paso
 
-Habiendo dominado el orden de la importancia y el rigor de los heaps, es momento de entrar en la estructura que nos permite organizar la información en el disco: los [Árboles B](../arboles/arboles_b.md).
 
 
 ---
@@ -1149,7 +1151,6 @@ Esta trilogía es la base de todo el software moderno. Lo que sigue es entrar en
 
 ## Próximo paso
 
-Habiendo dominado el orden de la importancia y el rigor de los heaps, es momento de entrar en la estructura que nos permite organizar la información en el disco: los [Árboles B](../arboles/arboles_b.md).
 
 ---
 
@@ -1168,7 +1169,6 @@ Has completado el estudio de las estructuras lineales restringidas. Lo que apren
 
 ## Próximo paso
 
-Habiendo dominado el orden de la importancia y el rigor de los heaps, es momento de entrar en la estructura que nos permite organizar la información en el disco: los [Árboles B](../arboles/arboles_b.md).
 
 
 ### Reflexión sobre la Jerarquía

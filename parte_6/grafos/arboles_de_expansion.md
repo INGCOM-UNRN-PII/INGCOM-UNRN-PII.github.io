@@ -8,6 +8,13 @@ description: Qué problema resuelve un árbol de expansión mínima y cómo cont
 (parte6-arboles-expansion)=
 # Árboles de expansión
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 A veces el problema no es llegar rápido de un punto A a un punto B, sino lograr que **todos** los puntos de una red estén comunicados gastando lo menos posible. Esto es lo que llamamos un **Árbol de Expansión Mínima** (MST - Minimum Spanning Tree).
 
 Imaginá que tenés que conectar varias computadoras con cables de fibra óptica. No importa si para ir de la PC 1 a la PC 4 hay que pasar por la 2 y la 3; lo que importa es que el **costo total de cable** sea el mínimo posible.

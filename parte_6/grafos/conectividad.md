@@ -8,6 +8,13 @@ description: Cómo decidir qué vértices pertenecen a la misma componente y qu�
 (parte6-conectividad)=
 # Conectividad
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 La conectividad es el estudio de la "cohesión" de un grafo. ¿Está todo el grafo en una sola pieza o está fragmentado en varias islas? ¿Qué tan vulnerable es la red si un nodo falla? Responder estas preguntas es vital para entender la robustez de cualquier sistema, desde Internet hasta una red de transporte.
 
 :::{note} Hoja de ruta del capítulo

@@ -8,6 +8,13 @@ description: Cómo comparar matrices, listas de adyacencia y listas de aristas s
 (parte6-representacion-grafos)=
 # Representación de grafos
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 En grafos, la representación influye tanto como el algoritmo. Antes de correr BFS, Dijkstra o Prim, hace falta decidir cómo se almacenan vértices y aristas y qué consultas conviene optimizar.
 
 :::{note} Hoja de ruta del capítulo

@@ -8,6 +8,13 @@ description: Un análisis exhaustivo sobre el TAD Pila, su formalización matem�
 (parte6-pilas)=
 # Pilas
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Las pilas no son simplemente "listas restringidas". Representan una de las abstracciones más poderosas de la computación, actuando como el mecanismo fundamental para la gestión de la recursión, la evaluación de expresiones y la administración de memoria en tiempo de ejecución.
 
 Si bien la política **LIFO** (*Last-In, First-Out*) parece trivial, su implementación eficiente y su comportamiento bajo carga ocultan sutilezas arquitectónicas que todo ingeniero de software debe dominar. En este capítulo, vamos a destripar la pila desde sus axiomas matemáticos hasta su representación física en los registros de la CPU.

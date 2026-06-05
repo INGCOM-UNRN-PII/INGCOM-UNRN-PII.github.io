@@ -8,6 +8,13 @@ description: Cómo un árbol binario casi completo permite implementar colas de 
 (parte6-heaps)=
 # Heaps
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 El heap reutiliza la forma de árbol binario, pero cambia completamente el propósito: ya no intenta mantener orden total para búsqueda, sino solo la información necesaria para extraer rápido el mínimo o el máximo.
 
 :::{note} Hoja de ruta del capítulo

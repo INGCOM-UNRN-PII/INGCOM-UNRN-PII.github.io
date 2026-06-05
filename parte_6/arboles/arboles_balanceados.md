@@ -8,6 +8,13 @@ description: Cómo controlar la altura de un árbol de búsqueda para que las op
 (parte6-arboles-balanceados)=
 # Árboles balanceados
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Los árboles balanceados aparecen cuando ya no alcanza con “esperar” que un BST quede razonablemente bien formado. Si el problema requiere garantías de rendimiento, el balance pasa a ser parte explícita y activa del diseño.
 
 :::{note} Hoja de ruta del capítulo

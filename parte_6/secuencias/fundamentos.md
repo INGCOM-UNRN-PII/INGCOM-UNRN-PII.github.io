@@ -8,6 +8,13 @@ description: Marco común para analizar secuencias antes de elegir arreglos, lis
 (parte6-fundamentos-secuencias)=
 # Fundamentos de secuencias
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Las secuencias constituyen la estructura lineal más fundamental y, a la vez, la más subestimada en el currículo de Ciencias de la Computación. A menudo se las reduce a una simple elección entre "arreglos" o "listas", ignorando que detrás de esa decisión subyace una compleja red de axiomas algebraicos, restricciones de microarquitectura de hardware y desafíos de concurrencia.
 
 Este capítulo no es una introducción ligera; es una inmersión profunda en la naturaleza de las secuencias como **objetos matemáticos** y **entidades físicas** que deben negociar con la jerarquía de memoria de la CPU. Si buscás entender cómo un factor de crecimiento en un arreglo dinámico afecta la fragmentación del heap a largo plazo, o por qué una lista enlazada es el "enemigo natural" de un prefetcher de hardware moderno, estás en el lugar correcto.

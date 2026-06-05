@@ -8,6 +8,13 @@ description: Mapa de la familia de secuencias, con recorrido sugerido y criterio
 (parte6-secuencias)=
 # Secuencias
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Esta familia reúne las estructuras lineales donde el recorrido, el acceso posicional y la inserción o eliminación en extremos o posiciones arbitrarias son el problema central.
 
 :::{note}
@@ -87,3 +94,10 @@ Un buen cierre para esta familia sería comparar qué estructura conviene para:
 ## Próximo paso
 
 El siguiente paso natural es [Arreglos](arreglos.md): ahí la secuencia deja de ser solo contrato abstracto y pasa a verse cómo se sostiene con memoria contigua.
+
+## Ejercicios de verificación
+
+1. Resolvé un caso mínimo usando la estructura/algoritmo del capítulo y documentá por qué esa elección es válida.
+2. Construí un contraejemplo donde una elección alternativa falle (rendimiento o corrección).
+3. Escribí una prueba corta en Java que verifique un invariante crítico.
+

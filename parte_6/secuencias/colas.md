@@ -8,6 +8,13 @@ description: De los axiomas algebraicos a la coherencia de cache. Un análisis m
 (parte6-colas)=
 # Colas: El Tratado Definitivo sobre Sistemas FIFO
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Las colas representan la abstracción fundamental de la **espera ordenada**. En un universo computacional donde la concurrencia y la distribución son la norma, la política **FIFO** (*First In, First Out*) actúa como el guardián de la causalidad. Este capítulo no es una simple introducción; es una inmersión profunda en la mecánica interna, la formalización matemática y los desafíos físicos que enfrentan las colas en el hardware moderno.
 
 A lo largo de este tratado, exploraremos cómo una estructura aparentemente simple esconde complejidades que desafían a los mejores ingenieros de sistemas. Desde la optimización de registros a nivel de CPU hasta la gestión de millones de mensajes en clusters distribuidos, la cola es el tejido conectivo de la tecnología moderna. Sin una comprensión profunda de las colas, es imposible diseñar sistemas que escalen o que garanticen baja latencia en condiciones de alta carga.
@@ -756,7 +763,6 @@ En RabbitMQ, múltiples consumidores escuchan la misma cola. El servidor asegura
 **Hardware:** Esta optimización es vital porque las CPUs modernas tienen múltiples unidades de ejecución de bits (ALU) que pueden hacer miles de `AND` en paralelo, mientras que la unidad de división (`IDIV`) es un recurso compartido y lento. Es la diferencia entre un sistema que procesa 1M de paquetes y uno que procesa 100M.
 
 ### Ejercicio 3: Ley de Little en Peajes (Análisis de Capacidad)
-**Consigna:** Si un peaje tiene 4 cabinas, cada auto tarda 30s, y llegan 500 autos/hora. ¿Cuál es el largo promedio de la cola?
 
 **Resolución Detallada:**
 1. **Llegada ($\lambda$):** 500 autos/hora $\approx 0.138$ autos/segundo.
@@ -775,7 +781,6 @@ En RabbitMQ, múltiples consumidores escuchan la misma cola. El servidor asegura
 **Impacto:** Tu aplicación está frenando el tráfico de red de forma física. El profiling de red (usando `netstat` o `ss`) te mostrará colas de `Recv-Q` altas, indicando que el cuello de botella es tu código Java y no la red.
 
 ### Ejercicio 5: Sliding Window con Colas (Algoritmo Óptimo)
-**Consigna:** Implementá una ventana de promedio móvil de tamaño 1000 sobre un stream de datos usando una `ArrayDeque`.
 
 **Resolución Detallada:**
 1. **Llegada:** Entra un nuevo dato. `queue.enqueue(dato)`. `sum += dato`.
@@ -825,7 +830,6 @@ Usamos el algoritmo de **Liebre y Tortuga** (Floyd).
 **Importancia:** Vital para sistemas operativos y drivers que deben validar sus estructuras de datos internas antes de procesar interrupciones de hardware.
 
 ### Ejercicio 20: Event Loop Simulation (La Cola de JavaScript)
-**Consigna:** Simulá el funcionamiento del Event Loop de Node.js usando una cola de tareas y una de microtareas.
 
 **Resolución Detallada:**
 1. El loop saca una tarea de la `MacroTask Queue`.
@@ -951,7 +955,6 @@ Sea un sistema en equilibrio.
 
 ## Próximo paso
 
-Habiendo dominado la justicia del tiempo y el flujo de los mensajes, es hora de entrar en la estructura que nos permite operar con la misma eficiencia en ambos mundos: los [Deques](deques.md).
 
 ### Ejercicio 1: Ring Buffer Potencia de 2 (Ampliación Maestro)
 **Análisis de Microarquitectura:**
@@ -1027,7 +1030,6 @@ No te quedes con la superficie. La próxima vez que veas un paquete de red viaja
 
 ## Próximo paso
 
-Habiendo dominado la justicia del tiempo y el flujo de los mensajes, es hora de entrar en la estructura que nos permite operar con la misma eficiencia en ambos mundos: los [Deques](deques.md).
 
 ---
 
@@ -1118,7 +1120,6 @@ Con el dominio absoluto de las colas, es hora de explorar la estructura que nos 
 
 ## Próximo paso
 
-Habiendo dominado la justicia del tiempo y el flujo de los mensajes, es hora de entrar en la estructura que nos permite operar con la misma eficiencia en ambos mundos: los [Deques](deques.md).
 
 
 ---
@@ -1129,7 +1130,6 @@ Si los arreglos son el espacio y las pilas son la memoria, las colas son el cond
 
 ## Próximo paso
 
-Habiendo dominado la justicia del tiempo y el flujo de los mensajes, es hora de entrar en la estructura que nos permite operar con la misma eficiencia en ambos mundos: los [Deques](deques.md).
 
 
 ---
@@ -1156,7 +1156,6 @@ En una bolsa (ej. NASDAQ), las órdenes de compra y venta llegan en una cola FIF
 
 ## Próximo paso
 
-Habiendo dominado la justicia del tiempo y el flujo de los mensajes, es hora de entrar en la estructura que nos permite operar con la misma eficiencia en ambos mundos: los [Deques](deques.md).
 
 ---
 
@@ -1193,7 +1192,6 @@ Construí con sabiduría, medí con rigor y nunca dejes de preguntarte qué suce
 
 ## Próximo paso
 
-Habiendo dominado la justicia del tiempo y el flujo de los mensajes, es hora de entrar en la estructura que nos permite operar con la misma eficiencia en ambos mundos: los [Deques](deques.md).
 
 
 ### Palabras finales

@@ -8,6 +8,13 @@ description: Mapa de la familia de grafos, con recorrido sugerido y criterios de
 (parte6-grafos)=
 # Grafos
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Esta familia representa la frontera final de las estructuras de datos clásicas. Aquí, las relaciones ya no son lineales (como en las secuencias) ni jerárquicas (como en los árboles), sino **arbitrarias**. Un grafo permite modelar cualquier sistema de entidades interconectadas: desde neuronas y mapas de ciudades hasta redes sociales y dependencias de software.
 
 :::{note}
@@ -68,3 +75,20 @@ Un estudiante que recorrió esta familia con éxito debería poder:
 ## Próximo paso
 
 Empezamos por los cimientos: [Fundamentos de grafos](fundamentos.md), donde definimos qué es un vértice, qué es una arista y por qué un grafo "dirigido" cambia todas las reglas del juego.
+
+## Ejercicios de verificación
+
+1. Resolvé un caso mínimo usando la estructura/algoritmo del capítulo y documentá por qué esa elección es válida.
+2. Construí un contraejemplo donde una elección alternativa falle (rendimiento o corrección).
+3. Escribí una prueba corta en Java que verifique un invariante crítico.
+
+## Cierre operativo
+
+Este capítulo se considera dominado cuando podés explicar el modelo, implementarlo en Java y justificar la complejidad sin ambigüedades.
+
+### Checklist de salida
+
+- Podés describir el contrato de operaciones sin mencionar representación interna.
+- Podés anticipar costo temporal/espacial del caso típico y peor caso.
+- Podés detectar un anti-patrón y proponer una corrección concreta.
+

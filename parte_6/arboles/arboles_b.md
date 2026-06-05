@@ -8,6 +8,13 @@ description: Por qué los árboles B y B+Tree se vuelven naturales cuando el cos
 (parte6-arboles-b)=
 # Árboles B
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Los árboles B cierran la familia con un cambio fuerte de contexto. Hasta acá casi toda la discusión giró alrededor de memoria principal, punteros, arreglos y altura. Cuando los datos viven en disco o en páginas de almacenamiento externo, el modelo de costo cambia: ya no importa tanto ahorrar una comparación, sino **reducir la cantidad de accesos a bloque**.
 
 En ese escenario, un árbol binario deja de ser la opción natural. Si cada nodo solo abre dos caminos, la altura crece más de lo deseable. Los árboles B responden justamente a eso: usan **muchos hijos por nodo** para bajar la altura y aprovechar mejor cada lectura de página.

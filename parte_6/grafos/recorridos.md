@@ -8,6 +8,13 @@ description: Cómo funcionan DFS y BFS, qué estructuras reutilizan y por qué s
 (parte6-recorridos-grafos)=
 # Recorridos
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Recorrer un grafo es el arte de visitar sus nodos de manera sistemática. A diferencia de un arreglo (donde avanzamos en línea recta) o un árbol (donde bajamos por niveles), en un grafo podemos encontrar **ciclos** y **múltiples caminos** para llegar al mismo lugar.
 
 Para no perdernos, todos los algoritmos de recorrido comparten una regla de oro: **Debemos marcar lo que ya visitamos**.

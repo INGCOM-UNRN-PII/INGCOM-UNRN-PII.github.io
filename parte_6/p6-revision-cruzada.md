@@ -8,6 +8,13 @@ description: Resumen integrador de todas las familias de estructuras de la parte
 (parte6-revision-cruzada)=
 # Revisión cruzada de estructuras
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 ¡Llegaste al final de la Parte 6! A lo largo de estos capítulos, recorrimos el mundo de las estructuras de datos desde sus fundamentos físicos (localidad de memoria) hasta las redes complejas de los grafos. Ahora el desafío es integrar todo ese conocimiento para saber elegir la herramienta adecuada ante un problema real.
 
 :::{note} Propósito de esta revisión
@@ -84,3 +91,10 @@ Diseñá la estructura de datos para un sistema de una clínica:
 ## Próximo paso
 
 ¡Felicitaciones! Has completado la Parte 6. Ahora estás listo para enfrentar problemas de diseño de sistemas complejos y optimización de software de nivel profesional.
+
+## Ejercicios de verificación
+
+1. Resolvé un caso mínimo usando la estructura/algoritmo del capítulo y documentá por qué esa elección es válida.
+2. Construí un contraejemplo donde una elección alternativa falle (rendimiento o corrección).
+3. Escribí una prueba corta en Java que verifique un invariante crítico.
+

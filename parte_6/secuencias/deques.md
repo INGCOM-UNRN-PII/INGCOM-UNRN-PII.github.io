@@ -8,6 +8,13 @@ description: Generalización de pilas y colas para escenarios con operaciones en
 (parte6-deques)=
 # Deques: Estructuras de Doble Extremo
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Las [Pilas](pilas.md) y las [Colas](colas.md) representan restricciones fundamentales de acceso (LIFO y FIFO). Sin embargo, existen escenarios donde la unidireccionalidad del flujo de datos resulta insuficiente. El **Deque** (del inglés *Double-Ended Queue*, pronunciado /dek/) surge como la generalización simétrica de estas estructuras, permitiendo inserciones y eliminaciones en tiempo constante $O(1)$ tanto en el frente (*front*) como en el fondo (*rear* o *back*).
 
 En este capítulo no nos limitaremos a la definición básica. Analizaremos el Deque como un objeto matemático formal, desarmaremos sus implementaciones más eficientes a nivel de bits y hardware, y estudiaremos cómo esta estructura es la piedra angular del paralelismo moderno mediante algoritmos de *work-stealing*.

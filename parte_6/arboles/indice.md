@@ -8,6 +8,13 @@ description: Mapa de la familia de árboles para la parte 6.
 (parte6-arboles)=
 # Árboles
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Esta familia reúne estructuras jerárquicas donde la **recursión estructural**, el **orden implícito** y la **altura** condicionan la eficiencia de las operaciones. Si en secuencias dominaba la posición y en diccionarios dominaba la clave, acá aparece otra idea: **la forma de la estructura determina el rendimiento**.
 
 Los árboles son, quizás, la estructura no lineal más versátil de la computación. Actúan como puente entre el modelado de jerarquías naturales (archivos, organizaciones, expresiones) y la optimización de algoritmos de búsqueda y prioridad.
@@ -63,3 +70,20 @@ Un estudiante que recorrió esta familia con éxito debería poder:
 ## Próximo paso
 
 Empezamos por los conceptos base: [Fundamentos de árboles](fundamentos.md), donde definimos qué es un padre, qué es una hoja y por qué la altura es la métrica que nos quita el sueño.
+
+## Ejercicios de verificación
+
+1. Resolvé un caso mínimo usando la estructura/algoritmo del capítulo y documentá por qué esa elección es válida.
+2. Construí un contraejemplo donde una elección alternativa falle (rendimiento o corrección).
+3. Escribí una prueba corta en Java que verifique un invariante crítico.
+
+## Cierre operativo
+
+Este capítulo se considera dominado cuando podés explicar el modelo, implementarlo en Java y justificar la complejidad sin ambigüedades.
+
+### Checklist de salida
+
+- Podés describir el contrato de operaciones sin mencionar representación interna.
+- Podés anticipar costo temporal/espacial del caso típico y peor caso.
+- Podés detectar un anti-patrón y proponer una corrección concreta.
+

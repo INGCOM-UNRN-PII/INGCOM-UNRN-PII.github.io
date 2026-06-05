@@ -8,6 +8,13 @@ description: Tratado exhaustivo sobre el TDA Diccionario, abarcando desde la for
 (parte6-fundamentos-diccionarios)=
 # Fundamentos de diccionarios y conjuntos
 
+
+## Objetivos observables
+
+- Identificás el problema que modela el capítulo y el TAD/estructura más adecuada.
+- Justificás decisiones de diseño con costo temporal/espacial y contrato de operaciones.
+- Aplicás el contenido en Java sin romper invariantes ni contrato público.
+
 Esta página instala la familia donde el problema central ya no es la posición, sino la pertenencia o la asociación por clave. Es el punto donde conviene distinguir con claridad mapa, conjunto y otras variantes relacionadas. En este nivel de análisis, no nos conformamos con una descripción superficial; exploramos la estructura íntima de las asociaciones y cómo estas se mapean tanto a modelos matemáticos abstractos como a las jerarquías de memoria del hardware moderno.
 
 En una secuencia, la pregunta típica es “¿qué hay en la posición `i`?” o “¿qué viene antes y después?”. En esta familia, en cambio, las preguntas cambian radicalmente:
@@ -1126,7 +1133,8 @@ Sea $ una familia de funciones hash universales de $ a $\{0, \dots, M-1\}$. Para
 2. Definimos la variable aleatoria {xy}$ que vale 1 si (x) = h(y)$ y 0 en caso contrario.
 3. El valor esperado [I_{xy}]$ es [h(x)=h(y)] \leq 1/M$.
 4. Para un set de $ claves, el número esperado de colisiones para una clave $ es $\sum_{y \in S, y 
-eq x} E[I_{xy}] \leq rac{n-1}{M}$.
+eq x} E[I_{xy}] \leq 
+rac{n-1}{M}$.
 5. Si  \geq n$, el número esperado de colisiones es menor a 1.
 
 **Conclusión:** Esta demostración es la que justifica que el costo promedio de búsqueda sea (1)$. No es magia; es el resultado de elegir una función que el azar distribuye uniformemente por el espacio de memoria física de la RAM.
