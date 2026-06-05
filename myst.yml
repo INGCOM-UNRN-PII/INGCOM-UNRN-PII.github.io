@@ -134,46 +134,47 @@ project:
     - file: parte_5/5_avanzadas.md
     - file: parte_5/6_localidad_memoria.md
     - file: parte_5/7_profiling.md
-  - title: 'Parte 6: Estructuras de datos'
-    children:
-    - file: parte_6/indice.md
-    - title: Secuencias
-      children:
-      - file: parte_6/secuencias/indice.md
-      - file: parte_6/secuencias/fundamentos.md
-      - file: parte_6/secuencias/arreglos.md
-      - file: parte_6/secuencias/listas_enlazadas.md
-      - file: parte_6/secuencias/pilas.md
-      - file: parte_6/secuencias/colas.md
-      - file: parte_6/secuencias/deques.md
-      - file: parte_6/secuencias/colas_prioridad.md
-    - title: Diccionarios y conjuntos
-      children:
-      - file: parte_6/diccionarios/indice.md
-      - file: parte_6/diccionarios/fundamentos.md
-      - file: parte_6/diccionarios/tablas_hash.md
-      - file: parte_6/diccionarios/diccionarios_ordenados.md
-      - file: parte_6/diccionarios/tries.md
-      - file: parte_6/diccionarios/conjuntos_disjuntos.md
-    - title: Árboles
-      children:
-      - file: parte_6/arboles/indice.md
-      - file: parte_6/arboles/fundamentos.md
-      - file: parte_6/arboles/arboles_binarios.md
-      - file: parte_6/arboles/arboles_busqueda.md
-      - file: parte_6/arboles/arboles_balanceados.md
-      - file: parte_6/arboles/heaps.md
-      - file: parte_6/arboles/arboles_b.md
-    - title: Grafos
-      children:
-      - file: parte_6/grafos/indice.md
-      - file: parte_6/grafos/fundamentos.md
-      - file: parte_6/grafos/representacion.md
-      - file: parte_6/grafos/recorridos.md
-      - file: parte_6/grafos/caminos_minimos.md
-      - file: parte_6/grafos/arboles_de_expansion.md
-      - file: parte_6/grafos/orden_topologico.md
-      - file: parte_6/grafos/conectividad.md
+#  - title: 'Parte 6: Estructuras de datos'
+#    children:
+#    - file: parte_6/indice.md
+#    - title: Secuencias
+#      children:
+#      - file: parte_6/secuencias/indice.md
+#      - file: parte_6/secuencias/fundamentos.md
+#      - file: parte_6/secuencias/arreglos.md
+#      - file: parte_6/secuencias/arreglos_avanzados.md
+#      - file: parte_6/secuencias/listas_enlazadas.md
+#      - file: parte_6/secuencias/pilas.md
+#      - file: parte_6/secuencias/colas.md
+#      - file: parte_6/secuencias/deques.md
+#      - file: parte_6/secuencias/colas_prioridad.md
+#    - title: Diccionarios y conjuntos
+#      children:
+#      - file: parte_6/diccionarios/indice.md
+#      - file: parte_6/diccionarios/fundamentos.md
+#      - file: parte_6/diccionarios/tablas_hash.md
+#      - file: parte_6/diccionarios/diccionarios_ordenados.md
+#      - file: parte_6/diccionarios/tries.md
+#      - file: parte_6/diccionarios/conjuntos_disjuntos.md
+#    - title: Árboles
+#      children:
+#      - file: parte_6/arboles/indice.md
+#      - file: parte_6/arboles/fundamentos.md
+#      - file: parte_6/arboles/arboles_binarios.md
+#      - file: parte_6/arboles/arboles_busqueda.md
+#      - file: parte_6/arboles/arboles_balanceados.md
+#      - file: parte_6/arboles/heaps.md
+#      - file: parte_6/arboles/arboles_b.md
+#    - title: Grafos
+#      children:
+#      - file: parte_6/grafos/indice.md
+#      - file: parte_6/grafos/fundamentos.md
+#      - file: parte_6/grafos/representacion.md
+#      - file: parte_6/grafos/recorridos.md
+#      - file: parte_6/grafos/caminos_minimos.md
+#      - file: parte_6/grafos/arboles_de_expansion.md
+#      - file: parte_6/grafos/orden_topologico.md
+#      - file: parte_6/grafos/conectividad.md
 
   - title: Proyectos
     children:
