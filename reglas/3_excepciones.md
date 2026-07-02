@@ -90,13 +90,21 @@ try {
 } catch (IOException e) {
     throw new RuntimeException("Error");  // ❌ Pérdida del error original (cause) e información
 }
+
+try {
+    conectar();
+} catch (SQLException e) {
+    throw new Exception("Falló la conexión");  // ❌ Pierde tipo y causa (ver 0x300C)
+}
 ```
 
 **Correcto** ✅:
+
 ```java
 try {
     leerArchivo();
 } catch (IOException e) {
+    // Convierte, y ademas, no pierde contexto.
     throw new ArchivoNoDisponibleException("No se pudo leer la configuración de: " + archivo, e);
 }
 ```
