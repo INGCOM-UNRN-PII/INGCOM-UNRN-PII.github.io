@@ -25,6 +25,9 @@ project:
     # dibu: dibuja los bloques ```estructura``` / ```statics``` y la directiva {dibu}
     # https://github.com/INGCOM-UNRN/dibu-myst
     - plugins/dibu-myst.mjs
+    # PlantUML: dibuja los bloques ```plantuml``` / ```puml``` y la directiva {plantuml}
+    # https://github.com/INGCOM-UNRN/plantuml-myst
+    - plugins/plantuml-myst.mjs
   exports:
     - format: typst
       template: https://github.com/myst-templates/plain_typst_book.git

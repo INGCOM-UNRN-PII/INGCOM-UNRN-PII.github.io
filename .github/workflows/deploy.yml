@@ -35,6 +35,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 24
+      # PlantUML (Java, Graphviz y el .jar) para el plugin plantuml-myst; dibuja de antemano
+      # los diagramas, con caché entre builds.
+      - name: PlantUML
+        uses: INGCOM-UNRN/plantuml-myst@main
+        with:
+          proyecto: .
       - name: Install MyST
         run: npm install -g mystmd
       - name: Build HTML Assets
