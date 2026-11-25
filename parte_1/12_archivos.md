@@ -395,6 +395,29 @@ fclose(archivo);
 
 La estructura es muy similar: un lazo que lee línea por línea hasta que la función de lectura indica que no hay más datos (retornando `NULL` en C o `null` en Java).
 
+La [](#fig-archivos-lectura-lineas) sigue el recorrido normal de la lectura. El valor `null` marca el fin del archivo y la salida del bloque `try` cierra el lector.
+
+:::{plantuml}
+:caption: Lectura de un archivo línea por línea con cierre automático.
+:label: fig-archivos-lectura-lineas
+:width: 85%
+
+participant "Programa" as P
+participant Files as F
+participant BufferedReader as L
+
+P -> F: newBufferedReader(ruta)
+F --> P: lector
+loop Mientras se lean líneas
+    P -> L: readLine()
+    L --> P: línea
+    P -> P: procesar línea
+end
+P -> L: readLine()
+L --> P: null
+P -> L: close() (al salir del try)
+:::
+
 (lectura-de-todo-el-contenido-como-un-solo-string)=
 ### Lectura de Todo el Contenido como un Solo String
 

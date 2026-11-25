@@ -668,6 +668,26 @@ public class Circulo extends Figura {
 4. Una subclase de una clase abstracta **debe** implementar todos los métodos abstractos, o ser declarada abstracta también
 :::
 
+El triángulo de la [](#fig-figuras-abstractas-java) apunta a la clase general. `Rectangulo` y `Circulo` implementan cada uno el cálculo de área exigido por `Figura`.
+
+:::{plantuml}
+:caption: Especialización de una figura abstracta.
+:label: fig-figuras-abstractas-java
+:width: 65%
+
+abstract class Figura {
+    {abstract} +calcularArea() : double
+}
+class Rectangulo {
+    +calcularArea() : double
+}
+class Circulo {
+    +calcularArea() : double
+}
+Figura <|-- Rectangulo
+Figura <|-- Circulo
+:::
+
 (cuando-usar-abstracta)=
 ### ¿Cuándo Usar Clases Abstractas?
 
@@ -862,6 +882,25 @@ public class Pinguino implements Nadador, Caminante {
     }
 }
 ```
+
+En la [](#fig-realizacion-multiple-java), cada flecha discontinua apunta a una interfaz implementada. `Pato` y `Pinguino` comparten dos contratos.
+
+:::{plantuml}
+:caption: Realización de varias interfaces por una clase.
+:label: fig-realizacion-multiple-java
+:width: 70%
+
+interface Volador
+interface Nadador
+interface Caminante
+class Pato
+class Pinguino
+Volador <|.. Pato
+Nadador <|.. Pato
+Caminante <|.. Pato
+Nadador <|.. Pinguino
+Caminante <|.. Pinguino
+:::
 
 (metodos-default)=
 ### Métodos Default (Java 8+)
@@ -1099,6 +1138,24 @@ public class Demo {
 2. **Ejecución**: La JVM determina que el objeto real es `Perro` y llama al método de `Perro`
 
 Este comportamiento se llama **dispatch dinámico** y es lo que hace posible el polimorfismo.
+
+En la [](#fig-despacho-dinamico-java), `a` tiene tipo declarado `Animal`. El mensaje llega a `rex : Perro`, cuya implementación de `hacerSonido()` se ejecuta.
+
+:::{plantuml}
+:caption: Despacho de un método sobre un objeto Perro.
+:label: fig-despacho-dinamico-java
+:width: 70%
+
+participant "Demo.main()" as Demo
+participant "rex : Perro" as Rex
+
+note over Demo, Rex: Animal a = new Perro("Rex")
+Demo -> Rex: hacerSonido()
+activate Rex
+note right of Rex: Ejecuta Perro.hacerSonido()
+Rex --> Demo
+deactivate Rex
+:::
 
 (principio-sustitucion)=
 ### Principio de Sustitución de Liskov

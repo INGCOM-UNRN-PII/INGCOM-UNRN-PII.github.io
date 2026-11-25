@@ -139,96 +139,41 @@ public class ListaContactos {
 
 El Framework de Colecciones está organizado en una jerarquía de interfaces:
 
-```{mermaid}
-classDiagram
-    class Iterable~E~ {
-        <<interface>>
-        +iterator() Iterator~E~
-    }
-    
-    class Collection~E~ {
-        <<interface>>
-        +add(E) boolean
-        +remove(Object) boolean
-        +contains(Object) boolean
-        +size() int
-        +isEmpty() boolean
-        +clear()
-    }
-    
-    class List~E~ {
-        <<interface>>
-        +get(int) E
-        +set(int, E) E
-        +add(int, E)
-        +remove(int) E
-        +indexOf(Object) int
-    }
-    
-    class Set~E~ {
-        <<interface>>
-        +add(E) boolean
-    }
-    
-    class Queue~E~ {
-        <<interface>>
-        +offer(E) boolean
-        +poll() E
-        +peek() E
-    }
-    
-    class ArrayList~E~ {
-        -Object[] elementData
-        -int size
-        +add(E) boolean
-        +get(int) E
-    }
-    
-    class LinkedList~E~ {
-        -Node~E~ first
-        -Node~E~ last
-        +addFirst(E)
-        +addLast(E)
-    }
-    
-    class HashSet~E~ {
-        -HashMap~E,Object~ map
-        +add(E) boolean
-    }
-    
-    class TreeSet~E~ {
-        -TreeMap~E,Object~ map
-        +add(E) boolean
-    }
-    
-    class Map~K,V~ {
-        <<interface>>
-        +put(K, V) V
-        +get(Object) V
-        +remove(Object) V
-        +containsKey(Object) boolean
-        +keySet() Set~K~
-    }
-    
-    class HashMap~K,V~ {
-        -Node~K,V~[] table
-        +put(K, V) V
-    }
-    
-    Iterable <|.. Collection
-    Collection <|.. List
-    Collection <|.. Set
-    Collection <|.. Queue
-    List <|.. ArrayList
-    List <|.. LinkedList
-    Queue <|.. LinkedList
-    Set <|.. HashSet
-    Set <|.. TreeSet
-    
-    note for List "Secuencia ordenada<br>Permite duplicados<br>Acceso por índice"
-    note for Set "Sin duplicados<br>No garantiza orden<br>(salvo TreeSet)"
-    note for Map "Pares clave-valor<br>Claves únicas<br>No hereda Collection"
-```
+En la [](#fig-jerarquia-colecciones-java), las flechas continuas indican extensión entre interfaces y las discontinuas indican realización. `Map` tiene su propia jerarquía. Se omiten clases e interfaces intermedias.
+
+:::{plantuml}
+:caption: Interfaces e implementaciones seleccionadas del framework de colecciones.
+:label: fig-jerarquia-colecciones-java
+:width: 95%
+
+interface "Iterable<E>" as Iterable
+interface "Collection<E>" as Collection
+interface "List<E>" as List
+interface "Set<E>" as Set
+interface "Queue<E>" as Queue
+interface "Deque<E>" as Deque
+interface "Map<K, V>" as Map
+
+class "ArrayList<E>" as ArrayList
+class "LinkedList<E>" as LinkedList
+class "HashSet<E>" as HashSet
+class "TreeSet<E>" as TreeSet
+class "HashMap<K, V>" as HashMap
+class "TreeMap<K, V>" as TreeMap
+
+Iterable <|-- Collection
+Collection <|-- List
+Collection <|-- Set
+Collection <|-- Queue
+Queue <|-- Deque
+List <|.. ArrayList
+List <|.. LinkedList
+Deque <|.. LinkedList
+Set <|.. HashSet
+Set <|.. TreeSet
+Map <|.. HashMap
+Map <|.. TreeMap
+:::
 
 ### Interfaces Principales
 
@@ -717,6 +662,22 @@ Collections.sort(personas);  // Ordena por edad (orden natural)
 - Retorna **cero** si `this == otro`
 - Retorna **positivo** si `this > otro`
 
+La [](#fig-comparable-orden-natural) muestra por qué el orden natural forma parte del tipo `Persona`. La clase implementa la operación de comparación definida por `Comparable<Persona>`.
+
+:::{plantuml}
+:caption: Orden natural de Persona a través de Comparable.
+:label: fig-comparable-orden-natural
+:width: 55%
+
+interface "Comparable<Persona>" as ComparablePersona {
+    +compareTo(otra : Persona) : int
+}
+class Persona {
+    +compareTo(otra : Persona) : int
+}
+ComparablePersona <|.. Persona
+:::
+
 ### La Interface Comparator
 
 `Comparator` define **criterios alternativos** de ordenamiento:
@@ -739,6 +700,25 @@ Comparator<Persona> porNombreRef =
 // Uso
 Collections.sort(personas, porNombre);  // Ordena por nombre
 ```
+
+En la [](#fig-comparator-criterio-externo), `Collections.sort` recibe el criterio como argumento. La misma lista puede ordenarse con distintos comparadores.
+
+:::{plantuml}
+:caption: Ordenamiento de personas con un criterio externo.
+:label: fig-comparator-criterio-externo
+:width: 82%
+
+participant Programa as P
+participant Collections as L
+participant "porNombre : Comparator<Persona>" as C
+
+P -> L: sort(personas, porNombre)
+loop Pares elegidos durante el ordenamiento
+    L -> C: compare(a, b)
+    C --> L: resultado de la comparación
+end
+L --> P: lista ordenada en el lugar
+:::
 
 ### Comparadores Compuestos
 

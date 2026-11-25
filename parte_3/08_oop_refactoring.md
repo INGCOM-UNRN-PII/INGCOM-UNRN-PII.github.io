@@ -416,6 +416,31 @@ public class Preferencias {
 }
 ```
 
+La [](#fig-extract-class-usuario) muestra las tres colaboraciones que surgen de `Extract Class`. Por ejemplo, `Usuario.autenticar()` delega la validación a `Credenciales`.
+
+:::{plantuml}
+:caption: Responsabilidades extraídas de Usuario.
+:label: fig-extract-class-usuario
+:width: 90%
+
+class Usuario {
+    +autenticar(password : String) : boolean
+    +getDireccionCompleta() : String
+}
+class Credenciales {
+    +validar(password : String) : boolean
+}
+class Direccion {
+    +getCompleta() : String
+}
+class Preferencias {
+    +cambiarIdioma(idioma : String)
+}
+Usuario --> "1" Credenciales
+Usuario --> "1" Direccion
+Usuario --> "1" Preferencias
+:::
+
 (primitive-obsession)=
 ### Primitive Obsession (Obsesión con Primitivos)
 
@@ -851,6 +876,28 @@ public class Pasante extends Empleado {
 Ahora agregar un nuevo tipo de empleado solo requiere crear una nueva clase, sin tocar las existentes.
 
 (refused-bequest)=
+En la [](#fig-refactoring-empleado-polimorfico), cada subtipo implementa las operaciones declaradas por `Empleado`. El código que calcula un salario puede invocar `calcularSalario()` sobre la clase base.
+
+:::{plantuml}
+:caption: Tipos de empleado que especializan las mismas operaciones.
+:label: fig-refactoring-empleado-polimorfico
+:width: 90%
+
+abstract class Empleado {
+    {abstract} +calcularSalario() : double
+    {abstract} +calcularVacaciones() : int
+    {abstract} +puedeTrabajarRemoto() : boolean
+}
+class EmpleadoTiempoCompleto
+class EmpleadoMedioTiempo
+class Contratista
+class Pasante
+Empleado <|-- EmpleadoTiempoCompleto
+Empleado <|-- EmpleadoMedioTiempo
+Empleado <|-- Contratista
+Empleado <|-- Pasante
+:::
+
 ### Refused Bequest (Herencia Rechazada)
 
 **Síntoma**: Una subclase hereda métodos que no usa o sobreescribe para lanzar excepciones.

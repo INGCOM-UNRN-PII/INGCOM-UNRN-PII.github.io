@@ -960,7 +960,7 @@ La **contravarianza** (`? super T`) permite escribir pero leer solo como `Object
 ```java
 /**
  * Llena una lista de animales (escribe elementos).
- * Acepta List<Animal>, List<Object>, pero no List<Gato>
+ * Acepta List<Gato>, List<Animal> y List<Object>
  */
 public static void llenarAnimales(List<? super Gato> animales) {
     animales.add(new Gato());
@@ -978,7 +978,7 @@ List<Animal> animales = new ArrayList<>();
 llenarAnimales(animales);  // ✅ Funciona: Animal es supertipo de Gato
 
 List<Gato> gatos = new ArrayList<>();
-// llenarAnimales(gatos);  // ❌ Error: Gato no es supertipo de Gato
+llenarAnimales(gatos);  // ✅ Funciona: el límite inferior incluye Gato
 ```
 
 ### PECS: Producer Extends, Consumer Super
@@ -1009,6 +1009,24 @@ List<Animal> animales = new ArrayList<>();
 
 Copiar.copiar(siameses, animales);  // ✅ Funciona perfectamente
 ```
+
+La [](#fig-pecs-flujo-tipos) sigue un elemento de tipo `T` desde la lista fuente hasta la lista destino durante cada iteración del método `copiar`.
+
+:::{plantuml}
+:caption: Copia segura de elementos con comodines acotados.
+:label: fig-pecs-flujo-tipos
+:width: 92%
+
+participant "fuente : List<? extends T>" as F
+participant "Copiar.copiar()" as C
+participant "destino : List<? super T>" as D
+
+loop Por cada elemento de la fuente
+    C -> F: obtener siguiente elemento (vía iterador)
+    F --> C: elemento legible como T
+    C -> D: add(elemento)
+end
+:::
 
 ---
 
@@ -1059,6 +1077,18 @@ RepositorioUsuarios repo = new RepositorioUsuarios();
 repo.agregar(new Usuario("juan@example.com"));
 Usuario u = repo.buscarPorEmail("juan@example.com");
 ```
+
+La [](#fig-herencia-generica-concreta) vincula `RepositorioUsuarios` con la superclase parametrizada `Repositorio<Usuario>`. El parámetro de tipo ya queda fijado en esa relación.
+
+:::{plantuml}
+:caption: Especialización de un repositorio genérico con un tipo concreto.
+:label: fig-herencia-generica-concreta
+:width: 60%
+
+class "Repositorio<Usuario>" as RepositorioUsuario
+class RepositorioUsuarios
+RepositorioUsuario <|-- RepositorioUsuarios
+:::
 
 ### Herencia Manteniendo Genéricos
 

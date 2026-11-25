@@ -1127,6 +1127,27 @@ public class ReporteVentas {
 ReporteVentas reporte = new ReporteVentas(repositorioMock);
 ```
 
+En la [](#fig-testing-repositorio-inyectado), el test entrega el doble por el constructor. `ReporteVentas` consulta el mismo contrato que usa en producción, con datos controlados por el test.
+
+:::{plantuml}
+:caption: Prueba de ReporteVentas con un repositorio inyectado.
+:label: fig-testing-repositorio-inyectado
+:width: 88%
+
+participant Test as T
+participant "repositorioMock : RepositorioVentas" as M
+
+create participant "reporte : ReporteVentas" as R
+T -> R: new ReporteVentas(repositorioMock)
+T -> R: generar(fecha)
+activate R
+R -> M: obtenerVentas(fecha)
+M --> R: ventas preparadas para el test
+R --> T: reporte generado
+deactivate R
+T -> T: verificar el reporte
+:::
+
 **Problema 2: Dependencia de fecha/hora actual**
 
 ```java

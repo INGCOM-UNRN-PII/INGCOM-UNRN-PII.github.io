@@ -262,6 +262,27 @@ classDiagram
     note for Termostato "Estado privado protegido; validación en métodos públicos; Invariantes garantizados"
 ```
 
+La [](#fig-termostato-validacion) muestra cómo el termostato protege su estado. El objeto evalúa el rango antes de modificar la temperatura objetivo.
+
+:::{plantuml}
+:caption: Validación de un cambio de temperatura en el termostato.
+:label: fig-termostato-validacion
+:width: 75%
+
+participant Cliente as C
+participant "termostato : Termostato" as T
+
+C -> T: ajustarTemperatura(nuevaTemp)
+activate T
+alt 15 <= nuevaTemp <= 30
+    T -> T: actualizar temperaturaObjetivo
+    T --> C: true
+else Fuera del rango
+    T --> C: false
+end
+deactivate T
+:::
+
 **Beneficios observados:**
 
 | Aspecto | Sin encapsulamiento | Con encapsulamiento |

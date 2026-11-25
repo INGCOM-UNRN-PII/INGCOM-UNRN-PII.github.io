@@ -574,6 +574,29 @@ public class RepositorioUsuarios implements Repositorio<Usuario> {
 }
 ```
 
+La [](#fig-traduccion-excepcion-repositorio) muestra la traducción cuando falla el acceso a los datos. El repositorio entrega una excepción de su propia capa y conserva el error original como causa.
+
+:::{plantuml}
+:caption: Traducción de una excepción en el límite del repositorio.
+:label: fig-traduccion-excepcion-repositorio
+:width: 88%
+
+participant Cliente as C
+participant RepositorioUsuarios as R
+participant "Acceso a datos" as BD
+
+C -> R: buscar(id)
+R -> BD: consultar usuario
+alt Consulta exitosa
+    BD --> R: datos de la consulta
+    R --> C: resultado
+else Error de acceso
+    BD --> R: lanza SQLException
+    R -> R: new RepositorioException(mensaje, causa)
+    R --> C: lanza RepositorioException
+end
+:::
+
 ### Accediendo a la Causa
 
 El código que maneja puede acceder a toda la cadena:
@@ -868,6 +891,26 @@ try (ConexionBaseDatos db = new ConexionBaseDatos(url, user, pass)) {
     }
 }  // db.close() se llama automáticamente, incluso si hay excepción
 ```
+
+La [](#fig-try-recursos-excepciones) muestra el caso en que el cuerpo del `try` y `close()` fallan. Se propaga la excepción del cuerpo y la del cierre queda disponible mediante `getSuppressed()`.
+
+:::{plantuml}
+:caption: Cierre automático cuando fallan el cuerpo del try y el recurso.
+:label: fig-try-recursos-excepciones
+:width: 82%
+
+participant Llamador as L
+participant "Bloque try-with-resources" as T
+participant "recurso : AutoCloseable" as R
+
+L -> T: ejecutar bloque
+T -> R: usar recurso
+R --> T: falla operación (e1)
+T -> R: close()
+R --> T: falla cierre (e2)
+T -> T: e1.addSuppressed(e2)
+T --> L: propaga e1
+:::
 
 ### Suppressed Exceptions
 

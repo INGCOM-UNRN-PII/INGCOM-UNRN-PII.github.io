@@ -639,6 +639,25 @@ class Pila<T> {
     }
 }
 ```
+La [](#fig-contrato-pila-estados) aplica las precondiciones al ejemplo con capacidad 2. Cada flecha representa una operación válida. `desapilar()` desde Vacía y `apilar()` desde Llena se rechazan por contrato.
+
+:::{plantuml}
+:caption: Estados observables de una pila de capacidad dos.
+:label: fig-contrato-pila-estados
+:width: 85%
+
+hide empty description
+[*] --> Vacia : construir(2)
+state "Vacía (tamaño = 0)" as Vacia
+state "Parcial (tamaño = 1)" as Parcial
+state "Llena (tamaño = 2)" as Llena
+
+Vacia --> Parcial : apilar(elemento) [elemento != null]
+Parcial --> Llena : apilar(elemento) [elemento != null]
+Parcial --> Vacia : desapilar()
+Llena --> Parcial : desapilar()
+:::
+
 
 ---
 
