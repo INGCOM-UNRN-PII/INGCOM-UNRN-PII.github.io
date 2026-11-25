@@ -134,6 +134,33 @@ public class PilaEnlazada<T> implements Pila<T> {
 }
 ```
 
+En la [](#fig-tad-pila-interfaz), ambas clases realizan `Pila<T>`. La dependencia del cliente apunta al contrato que comparten.
+
+:::{plantuml}
+:caption: Un contrato de pila con dos representaciones.
+:label: fig-tad-pila-interfaz
+:width: 70%
+
+hide empty members
+interface "Pila<T>" as Pila {
+    +apilar(elemento : T)
+    +desapilar() : T
+    +verTope() : T
+    +estaVacia() : boolean
+}
+class "PilaArreglo<T>" as Arreglo {
+    -elementos : T[]
+    -tope : int
+}
+class "PilaEnlazada<T>" as Enlazada {
+    -tope : Nodo<T>
+}
+class Cliente
+Cliente ..> Pila : usa
+Pila <|.. Arreglo
+Pila <|.. Enlazada
+:::
+
 Desde el punto de vista del cliente, ambas clases son válidas si respetan el mismo contrato.
 
 ## El contrato de un TAD

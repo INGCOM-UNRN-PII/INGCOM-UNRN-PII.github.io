@@ -101,6 +101,19 @@ class Nodo {
 }
 ```
 
+La [](#fig-grafo-red-de-nodos) hace explícito que un nodo puede referenciar a varios vecinos. La asociación describe conexiones locales y es posible tener nodos sin vecinos.
+
+:::{plantuml}
+:caption: Representación de un grafo mediante referencias entre nodos.
+:label: fig-grafo-red-de-nodos
+:width: 55%
+
+class Nodo {
+    nombre : String
+}
+Nodo --> "0..*" Nodo : vecinos
+:::
+
 **Cuidado:** Aunque parece intuitivo, este enfoque suele ser **problemático**:
 1. **Dificultad de gestión:** ¿Quién es el dueño del grafo? ¿Cómo iteramos sobre "todos los nodos" si alguno quedó desconectado?
 2. **Algoritmos:** La mayoría de los algoritmos de grafos (DFS, BFS, Dijkstra) necesitan marcar nodos como "visitados". Si el estado de visitado vive dentro del objeto `Nodo`, no podemos correr dos algoritmos en paralelo sin limpiarlos.

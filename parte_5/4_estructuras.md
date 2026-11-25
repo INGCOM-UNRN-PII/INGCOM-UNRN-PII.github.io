@@ -212,6 +212,27 @@ $$I(\text{Queue}) : \forall q, \; \text{size}(q) \geq 0 \land (\text{isEmpty}(q)
 | `enqueue(q, e)` | ninguna | elemento agregado al final; $\text{isEmpty}(\text{result}) = \text{false}$ | $O(1)$ amortizado tiempo, $O(1)$ amortizado espacio |
 | `dequeue(q)` | ninguna | si vacía, resultado = empty; sino, primer elemento removido | $O(1)$ amortizado tiempo, $O(1)$ amortizado espacio |
 | `front(q)` | $\text{isEmpty}(q) = \text{false}$ | devuelve elemento al frente | $O(1)$ tiempo, $O(1)$ espacio |
+La [](#fig-pila-cola-orden-extraccion) utiliza los mismos valores en ambas estructuras. `top` y `front` observan el próximo elemento a retirar. `pop` y `dequeue` producen el estado que queda después del retiro.
+
+:::{plantuml}
+:caption: Orden de observación y retiro en una pila y una cola.
+:label: fig-pila-cola-orden-extraccion
+:width: 90%
+
+start
+split
+    :s = push(push(empty, A), B);
+    :top(s) devuelve B;
+    :s = pop(s);
+    :top(s) devuelve A;
+split again
+    :c = enqueue(enqueue(empty, A), B);
+    :front(c) devuelve A;
+    :c = dequeue(c);
+    :front(c) devuelve B;
+end split
+stop
+:::
 
 ---
 
@@ -281,6 +302,26 @@ $$I(\text{LinkedList}) : \forall l, \; \text{size}(l) \geq 0 \land (\text{isEmpt
 | `get(l, i)` | $0 \leq i < \text{size}(l)$ | devuelve elemento en posición $i$ | $O(n)$ tiempo (búsqueda lineal), $O(1)$ espacio |
 | `prepend(l, e)` | ninguna | elemento agregado al inicio | $O(1)$ tiempo, $O(1)$ espacio |
 | `append(l, e)` | ninguna | elemento agregado al final | $O(n)$ tiempo (sin tail pointer) o $O(1)$ (con tail pointer), $O(1)$ espacio |
+La [](#fig-tad-lista-enlazada-simple) muestra una instancia de la lista simple. El recorrido empieza en `primero` y termina al encontrar `siguiente = null`.
+
+:::{plantuml}
+:caption: Una lista simple de dos elementos y sus enlaces.
+:label: fig-tad-lista-enlazada-simple
+:width: 72%
+
+left to right direction
+object "lista : LinkedList" as L
+object "a : Nodo" as A {
+    elemento = 10
+}
+object "b : Nodo" as B {
+    elemento = 20
+    siguiente = null
+}
+L --> A : primero
+A --> B : siguiente
+:::
+
 
 ---
 
@@ -336,6 +377,29 @@ Cada nodo tiene referencias bidireccionales consistentes.
 | `getFromEnd(l, i)` | $0 \leq i < \text{size}(l)$ | devuelve elemento desde el final | $O(\min(i, n-i))$ tiempo, $O(1)$ espacio |
 | `prepend(l, e)` | ninguna | elemento agregado al inicio | $O(1)$ tiempo, $O(1)$ espacio |
 | `append(l, e)` | ninguna | elemento agregado al final | $O(1)$ tiempo (con tail pointer), $O(1)$ espacio |
+La [](#fig-tad-lista-enlazada-doble) muestra dos nodos enlazados en ambos sentidos. El acceso desde el final sigue `anterior` a partir de `ultimo`.
+
+:::{plantuml}
+:caption: Enlaces de ida y vuelta en una lista doble.
+:label: fig-tad-lista-enlazada-doble
+:width: 80%
+
+left to right direction
+object "lista : DoublyLinkedList" as L
+object "a : Nodo" as A {
+    elemento = 10
+    anterior = null
+}
+object "b : Nodo" as B {
+    elemento = 20
+    siguiente = null
+}
+L --> A : primero
+L --> B : ultimo
+A --> B : siguiente
+B --> A : anterior
+:::
+
 
 ---
 
@@ -393,6 +457,24 @@ Todos los nodos están conectados en un ciclo cerrado.
 | `get(l, i)` | ninguna (índices envolventes) | devuelve elemento; $i \bmod \text{size}$ si $i \geq \text{size}$ | $O(n)$ tiempo (búsqueda desde inicio), $O(1)$ espacio |
 | `insertAt(l, i, e)` | ninguna | elemento insertado; ciclo preservado | $O(n)$ tiempo (búsqueda + inserción), $O(1)$ espacio |
 | `removeAt(l, i)` | $\text{isEmpty}(l) = \text{false}$ | elemento removido; ciclo preservado | $O(n)$ tiempo (búsqueda + remoción), $O(1)$ espacio |
+La [](#fig-tad-lista-enlazada-circular) muestra por qué el acceso modular vuelve al inicio. Después de visitar `c`, el siguiente enlace llega a `a`.
+
+:::{plantuml}
+:caption: Enlace del último nodo al primero en una lista circular.
+:label: fig-tad-lista-enlazada-circular
+:width: 80%
+
+left to right direction
+object "lista : CircularLinkedList" as L
+object "a : Nodo" as A
+object "b : Nodo" as B
+object "c : Nodo" as C
+L --> A : primero
+A --> B : siguiente
+B --> C : siguiente
+C --> A : siguiente
+:::
+
 
 ---
 

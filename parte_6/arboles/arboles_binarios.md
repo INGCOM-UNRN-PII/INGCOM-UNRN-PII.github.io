@@ -139,6 +139,20 @@ Ventajas:
 - clara para árboles no completos,
 - fácil de extender para BST u otras variantes.
 
+En la [](#fig-arbol-binario-nodo), cada nodo tiene hasta un hijo izquierdo y hasta un hijo derecho. Un hijo ausente se representa con una referencia nula.
+
+:::{plantuml}
+:caption: Representación enlazada de un árbol binario.
+:label: fig-arbol-binario-nodo
+:width: 65%
+
+class "Nodo<T>" as Nodo {
+    -dato : T
+}
+Nodo --> "0..1" Nodo : izquierdo
+Nodo --> "0..1" Nodo : derecho
+:::
+
 ## Representación implícita en arreglo
 
 Cuando el árbol binario tiene forma suficientemente regular, sobre todo si es completo o casi completo, puede representarse en arreglo.
