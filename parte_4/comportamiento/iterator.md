@@ -69,82 +69,90 @@ Proporcionar un modo de acceder secuencialmente a los elementos de un objeto agr
 
 ### Diagramas
 
-**Diagrama de Clases**
+El agregado produce un iterador que encapsula la posición del recorrido. Véase la [](#fig-iterator-clases).
 
-```mermaid
-classDiagram
-    class Agregado {
-        <<interface>>
-        +crearIterador() Iterador
-    }
-    
-    class Iterador {
-        <<interface>>
-        +primero()
-        +siguiente()
-        +hayMas() boolean
-        +elementoActual() Object
-    }
-    
-    class AgregadoConcreto {
-        +crearIterador() Iterador
-    }
-    
-    class IteradorConcreto {
-        -coleccion: AgregadoConcreto
-        -posicionActual: int
-        +primero()
-        +siguiente()
-        +hayMas() boolean
-        +elementoActual() Object
-    }
-    
-    Agregado <|.. AgregadoConcreto
-    Iterador <|.. IteradorConcreto
-    AgregadoConcreto --> IteradorConcreto : crea
-    IteradorConcreto --> AgregadoConcreto : referencia
-    Cliente --> Agregado : usa
-    Cliente --> Iterador : usa
-```
+:::{plantuml}
+:caption: Estructura del patrón Iterator.
+:label: fig-iterator-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant A as AgregadoConcreto
-    participant I as IteradorConcreto
-    
-    C->>A: crearIterador()
-    activate A
-    A-->>I: new IteradorConcreto(this)
-    A-->>C: iterador
-    deactivate A
-    
-    loop Mientras hayMas() == true
-        C->>I: hayMas()
-        activate I
-        I-->>C: true
-        deactivate I
-        
-        C->>I: elementoActual()
-        activate I
-        I-->>C: elemento
-        deactivate I
-        
-        Note over C: Procesa el elemento
-        
-        C->>I: siguiente()
-        activate I
-        I-->>C: OK
-        deactivate I
-    end
-    
-    C->>I: hayMas()
+interface Agregado {
+    +crearIterador() : Iterador
+}
+
+interface Iterador {
+    +primero()
+    +siguiente()
+    +hayMas() : boolean
+    +elementoActual() : Object
+}
+
+class AgregadoConcreto {
+    +crearIterador() : Iterador
+}
+
+class IteradorConcreto {
+    -coleccion: AgregadoConcreto
+    -posicionActual: int
+    +primero()
+    +siguiente()
+    +hayMas() : boolean
+    +elementoActual() : Object
+}
+
+Agregado <|.. AgregadoConcreto
+Iterador <|.. IteradorConcreto
+AgregadoConcreto ..> IteradorConcreto : crea
+IteradorConcreto --> AgregadoConcreto : referencia
+Cliente --> Agregado : usa
+Cliente --> Iterador : usa
+:::
+
+El cliente consulta si quedan elementos antes de leer la posición actual y avanzar. Véase la [](#fig-iterator-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Iterator.
+:label: fig-iterator-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "AgregadoConcreto" as A
+participant "IteradorConcreto" as I
+
+C -> A: crearIterador()
+activate A
+create I
+A -> I: new IteradorConcreto(this)
+A --> C: iterador
+deactivate A
+
+loop Mientras hayMas() == true
+    C -> I: hayMas()
     activate I
-    I-->>C: false
+    I --> C: true
     deactivate I
-```
+
+    C -> I: elementoActual()
+    activate I
+    I --> C: elemento
+    deactivate I
+
+    note over C: Procesa el elemento
+
+    C -> I: siguiente()
+    activate I
+    I --> C: OK
+    deactivate I
+end
+
+C -> I: hayMas()
+activate I
+I --> C: false
+deactivate I
+:::
 
 ## Ejemplos
 

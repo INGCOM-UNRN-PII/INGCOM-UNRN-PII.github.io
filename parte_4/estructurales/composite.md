@@ -218,60 +218,72 @@ System.out.println("Tamaño total: " + raiz.obtenerTamaño() + " KB");
 
 ### Diagramas
 
-**Diagrama de Clases**
+Una carpeta contiene elementos del mismo tipo abstracto que ella, por lo que puede anidar archivos y carpetas. Véase la [](#fig-composite-clases).
 
-```mermaid
-classDiagram
-    class ElementoSistemaArchivos {
-        <<abstract>>
-        #nombre: String
-        +mostrar(indentacion)*
-        +obtenerTamaño()* int
-    }
-    
-    class Archivo {
-        -tamaño: int
-        +mostrar(indentacion)
-        +obtenerTamaño() int
-    }
-    
-    class Carpeta {
-        -elementos: List~ElementoSistemaArchivos~
-        +agregar(ElementoSistemaArchivos)
-        +remover(ElementoSistemaArchivos)
-        +mostrar(indentacion)
-        +obtenerTamaño() int
-    }
-    
-    ElementoSistemaArchivos <|-- Archivo
-    ElementoSistemaArchivos <|-- Carpeta
-    Carpeta o--> ElementoSistemaArchivos : contiene
-```
+:::{plantuml}
+:caption: Estructura del patrón Composite.
+:label: fig-composite-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant R as Carpeta (Raíz)
-    participant D as Carpeta (Docs)
-    participant A as Archivo (Tesis)
-    
-    C->>R: obtenerTamaño()
-    activate R
-    Note over R: Itera sobre hijos
-    R->>D: obtenerTamaño()
-    activate D
-    Note over D: Itera sobre hijos
-    D->>A: obtenerTamaño()
-    activate A
-    A-->>D: 5000
-    deactivate A
-    D-->>R: 5000
-    deactivate D
-    R-->>C: 5000 (Total)
-    deactivate R
-```
+abstract class ElementoSistemaArchivos {
+    #nombre: String
+    {abstract} +mostrar(indentacion)
+    {abstract} +obtenerTamaño() : int
+}
+
+class Archivo {
+    -tamaño: int
+    +mostrar(indentacion)
+    +obtenerTamaño() : int
+}
+
+class Carpeta {
+    -elementos: List<ElementoSistemaArchivos>
+    +agregar(ElementoSistemaArchivos)
+    +remover(ElementoSistemaArchivos)
+    +mostrar(indentacion)
+    +obtenerTamaño() : int
+}
+
+ElementoSistemaArchivos <|-- Archivo
+ElementoSistemaArchivos <|-- Carpeta
+Carpeta --> "0..*" ElementoSistemaArchivos : contiene
+:::
+
+Cada carpeta suma los tamaños devueltos por sus hijos mediante la misma operación. Véase la [](#fig-composite-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Composite.
+:label: fig-composite-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "Carpeta (Raíz)" as R
+participant "Carpeta (Docs)" as D
+participant "Archivo (Tesis)" as A
+
+C -> R: obtenerTamaño()
+activate R
+note over R: Itera sobre hijos
+loop Por cada hijo de la raíz
+R -> D: obtenerTamaño()
+activate D
+note over D: Itera sobre hijos
+loop Por cada hijo de Docs
+D -> A: obtenerTamaño()
+activate A
+A --> D: 5000
+deactivate A
+end
+D --> R: 5000 (subtotal)
+deactivate D
+end
+R --> C: 5000 (Total)
+deactivate R
+:::
 
 ## Ejemplos
 

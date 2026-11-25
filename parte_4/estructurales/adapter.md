@@ -144,53 +144,60 @@ conector.desconectar();
 
 ### Diagramas
 
-**Diagrama de Clases**
+El adaptador implementa el conector que espera el cliente y conserva una referencia al dispositivo existente. Véase la [](#fig-adapter-clases).
 
-```mermaid
-classDiagram
-    class Cliente {
-    }
-    
-    class TargetaConector {
-        <<interface>>
-        +conectar()
-        +desconectar()
-    }
-    
-    class AdaptadorEuroAmer {
-        -dispositivo: DispositivoAntiguoEuropeo
-        +conectar()
-        +desconectar()
-    }
-    
-    class DispositivoAntiguoEuropeo {
-        +enchufar()
-        +desenchufar()
-    }
-    
-    Cliente --> TargetaConector : usa
-    TargetaConector <|.. AdaptadorEuroAmer : implementa
-    AdaptadorEuroAmer --> DispositivoAntiguoEuropeo : contiene
-```
+:::{plantuml}
+:caption: Estructura del patrón Adapter.
+:label: fig-adapter-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant A as AdaptadorEuroAmer
-    participant D as DispositivoAntiguoEuropeo
-    
-    C->>A: conectar()
-    activate A
-    Note over A: Adapta la petición
-    A->>D: enchufar()
-    activate D
-    D-->>A: OK
-    deactivate D
-    A-->>C: OK
-    deactivate A
-```
+class Cliente
+
+interface TargetaConector {
+    +conectar()
+    +desconectar()
+}
+
+class AdaptadorEuropaAmerica {
+    -dispositivo: DispositivoAntiguoEuropeo
+    +conectar()
+    +desconectar()
+}
+
+class DispositivoAntiguoEuropeo {
+    +enchufar()
+    +desenchufar()
+}
+
+Cliente --> TargetaConector : usa
+TargetaConector <|.. AdaptadorEuropaAmerica : implementa
+AdaptadorEuropaAmerica --> DispositivoAntiguoEuropeo : contiene
+:::
+
+El adaptador traduce la llamada conectar() a la operación enchufar() del dispositivo. Véase la [](#fig-adapter-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Adapter.
+:label: fig-adapter-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "AdaptadorEuropaAmerica" as A
+participant "DispositivoAntiguoEuropeo" as D
+
+C -> A: conectar()
+activate A
+note over A: Adapta la petición
+A -> D: enchufar()
+activate D
+D --> A: OK
+deactivate D
+A --> C: OK
+deactivate A
+:::
 
 ## Ejemplos
 

@@ -71,50 +71,58 @@ Definir el esqueleto de un algoritmo en una operación, delegando algunos pasos 
 
 ### Diagramas
 
-**Diagrama de Clases**
+La clase abstracta define el orden del algoritmo y las subclases implementan sus pasos variables. Véase la [](#fig-template-method-clases).
 
-```mermaid
-classDiagram
-    class ClaseAbstracta {
-        <<abstract>>
-        +metodoPlantilla()*
-        #paso1()*
-        #paso2()*
-        #operacionComun()
-    }
-    
-    class ClaseConcretaA {
-        #paso1()
-        #paso2()
-    }
-    
-    class ClaseConcretaB {
-        #paso1()
-        #paso2()
-    }
-    
-    ClaseAbstracta <|-- ClaseConcretaA
-    ClaseAbstracta <|-- ClaseConcretaB
-    Cliente --> ClaseAbstracta : usa
-```
+:::{plantuml}
+:caption: Estructura del patrón Template Method.
+:label: fig-template-method-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant TM as ClaseConcretaA (Superclase/Subclase)
-    
-    C->>TM: metodoPlantilla()
-    activate TM
-    Note over TM: Control de flujo en<br/>la clase base
-    TM->>TM: operacionComun()
-    Note over TM: Llama a implementación<br/>de la subclase
-    TM->>TM: paso1()
-    TM->>TM: paso2()
-    TM-->>C: OK
-    deactivate TM
-```
+abstract class ClaseAbstracta {
+    +metodoPlantilla()
+    {abstract} #paso1()
+    {abstract} #paso2()
+    #operacionComun()
+}
+
+class ClaseConcretaA {
+    #paso1()
+    #paso2()
+}
+
+class ClaseConcretaB {
+    #paso1()
+    #paso2()
+}
+
+ClaseAbstracta <|-- ClaseConcretaA
+ClaseAbstracta <|-- ClaseConcretaB
+Cliente --> ClaseAbstracta : usa
+:::
+
+El método plantilla y los pasos especializados se ejecutan sobre el mismo objeto. Véase la [](#fig-template-method-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Template Method.
+:label: fig-template-method-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "instancia : ClaseConcretaA" as TM
+
+C -> TM: metodoPlantilla()
+activate TM
+note over TM: Control de flujo en\nla clase base
+TM -> TM: operacionComun()
+note over TM: Llama a implementación\nde la subclase
+TM -> TM: paso1()
+TM -> TM: paso2()
+TM --> C: OK
+deactivate TM
+:::
 
 ## Ejemplos
 

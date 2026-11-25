@@ -73,56 +73,63 @@ Permitir que más de un objeto maneje una petición sin que el emisor necesite c
 
 ### Diagramas
 
-**Diagrama de Clases**
+Cada manejador puede tener un sucesor del mismo tipo abstracto. Véase la [](#fig-chain-of-responsibility-clases).
 
-```mermaid
-classDiagram
-    class Cliente {
-    }
-    
-    class Handler {
-        <<abstract>>
-        -siguiente: Handler
-        +setSiguiente(sig: Handler)
-        +manejar(solicitud: Solicitud)*
-    }
-    
-    class ManejadorConcretoA {
-        +manejar(solicitud: Solicitud)
-    }
-    
-    class ManejadorConcretoB {
-        +manejar(solicitud: Solicitud)
-    }
-    
-    Cliente --> Handler : envia solicitud
-    Handler o--> Handler : siguiente
-    Handler <|-- ManejadorConcretoA
-    Handler <|-- ManejadorConcretoB
-```
+:::{plantuml}
+:caption: Estructura del patrón Chain of Responsibility.
+:label: fig-chain-of-responsibility-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant H1 as ManejadorConcretoA
-    participant H2 as ManejadorConcretoB
-    
-    C->>H1: manejar(solicitud)
-    activate H1
-    alt Puede manejar
-        H1-->>C: resultado
-    else No puede manejar
-        H1->>H2: manejar(solicitud)
-        activate H2
-        Note over H2: H2 procesa<br/>la solicitud
-        H2-->>H1: resultado
-        deactivate H2
-        H1-->>C: resultado
-    end
-    deactivate H1
-```
+class Cliente
+
+abstract class Handler {
+    -siguiente: Handler
+    +setSiguiente(sig: Handler)
+    {abstract} +manejar(solicitud: Solicitud)
+}
+
+class ManejadorConcretoA {
+    +manejar(solicitud: Solicitud)
+}
+
+class ManejadorConcretoB {
+    +manejar(solicitud: Solicitud)
+}
+
+Cliente --> Handler : envia solicitud
+Handler --> "0..1" Handler : siguiente
+Handler <|-- ManejadorConcretoA
+Handler <|-- ManejadorConcretoB
+:::
+
+El primer manejador decide si responde directamente o reenvía la solicitud. Véase la [](#fig-chain-of-responsibility-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Chain of Responsibility.
+:label: fig-chain-of-responsibility-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "ManejadorConcretoA" as H1
+participant "ManejadorConcretoB" as H2
+
+C -> H1: manejar(solicitud)
+activate H1
+alt Puede manejar
+    H1 --> C: resultado
+else No puede manejar
+    H1 -> H2: manejar(solicitud)
+    activate H2
+    note over H2: H2 procesa\nla solicitud
+    H2 --> H1: resultado
+    deactivate H2
+    H1 --> C: resultado
+end
+deactivate H1
+:::
 
 ## Ejemplos
 

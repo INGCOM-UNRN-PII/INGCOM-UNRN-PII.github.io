@@ -70,55 +70,63 @@ Definir una familia de algoritmos, encapsular cada uno de ellos y hacerlos inter
 
 ### Diagramas
 
-**Diagrama de Clases**
+El contexto depende del contrato de Estrategia y admite implementaciones intercambiables. Véase la [](#fig-strategy-clases).
 
-```mermaid
-classDiagram
-    class Contexto {
-        -estrategia: Estrategia
-        +setEstrategia(e: Estrategia)
-        +ejecutarOperacion()
-    }
-    
-    class Estrategia {
-        <<interface>>
-        +algoritmo()
-    }
-    
-    class EstrategiaConcretaA {
-        +algoritmo()
-    }
-    
-    class EstrategiaConcretaB {
-        +algoritmo()
-    }
-    
-    Contexto o--> Estrategia : delega
-    Estrategia <|.. EstrategiaConcretaA
-    Estrategia <|.. EstrategiaConcretaB
-    Cliente --> Contexto : configura y usa
-    Cliente --> Estrategia : conoce/crea
-```
+:::{plantuml}
+:caption: Estructura del patrón Strategy.
+:label: fig-strategy-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant Ctx as Contexto
-    participant E as Estrategia (ConcretaA)
-    
-    C->>Ctx: setEstrategia(new EstrategiaConcretaA())
-    C->>Ctx: ejecutarOperacion()
-    activate Ctx
-    Note over Ctx: Delega a la<br/>estrategia inyectada
-    Ctx->>E: algoritmo()
-    activate E
-    E-->>Ctx: resultado
-    deactivate E
-    Ctx-->>C: resultado
-    deactivate Ctx
-```
+class Contexto {
+    -estrategia: Estrategia
+    +setEstrategia(e: Estrategia)
+    +ejecutarOperacion()
+}
+
+interface Estrategia {
+    +algoritmo()
+}
+
+class EstrategiaConcretaA {
+    +algoritmo()
+}
+
+class EstrategiaConcretaB {
+    +algoritmo()
+}
+
+Contexto o--> Estrategia : delega
+Estrategia <|.. EstrategiaConcretaA
+Estrategia <|.. EstrategiaConcretaB
+Cliente --> Contexto : configura y usa
+Cliente --> Estrategia : conoce/crea
+:::
+
+El cliente configura la estrategia y el contexto le delega la operación. Véase la [](#fig-strategy-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Strategy.
+:label: fig-strategy-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "Contexto" as Ctx
+participant "Estrategia (ConcretaA)" as E
+
+C -> Ctx: setEstrategia(new EstrategiaConcretaA())
+C -> Ctx: ejecutarOperacion()
+activate Ctx
+note over Ctx: Delega a la\nestrategia inyectada
+Ctx -> E: algoritmo()
+activate E
+E --> Ctx: resultado
+deactivate E
+Ctx --> C: resultado
+deactivate Ctx
+:::
 
 ## Ejemplos
 

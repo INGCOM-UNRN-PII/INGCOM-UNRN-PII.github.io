@@ -70,60 +70,70 @@ Sin violar la encapsulación, capturar y externalizar el estado interno de un ob
 
 ### Diagramas
 
-**Diagrama de Clases**
+El originador crea e interpreta las instantáneas que conserva el cuidador. Véase la [](#fig-memento-clases).
 
-```mermaid
-classDiagram
-    class Originador {
-        -estado
-        +crearMemento() Memento
-        +restaurar(m: Memento)
-    }
-    
-    class Memento {
-        -estado
-        +Memento(estado)
-        +getEstado()
-    }
-    
-    class Cuidador {
-        -mementos: List~Memento~
-        +guardar()
-        +deshacer()
-    }
-    
-    Cuidador o--> Memento : almacena
-    Originador ..> Memento : crea/usa
-    Cuidador --> Originador : solicita mementos
-```
+:::{plantuml}
+:caption: Estructura del patrón Memento.
+:label: fig-memento-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cuidador
-    participant O as Originador
-    participant M as Memento
-    
-    Note over C, O: Proceso de guardado
-    C->>O: crearMemento()
-    activate O
-    O-->>M: new Memento(estado)
-    O-->>C: memento
-    deactivate O
-    Note over C: Almacena el memento
-    
-    Note over C, O: Proceso de restauración (Deshacer)
-    C->>O: restaurar(memento)
-    activate O
-    O->>M: getEstado()
-    activate M
-    M-->>O: estado
-    deactivate M
-    Note over O: Restaura su estado interno
-    O-->>C: OK
-    deactivate O
-```
+class Originador {
+    -estado
+    +crearMemento() : Memento
+    +restaurar(m: Memento)
+}
+
+class Memento {
+    -estado
+    +Memento(estado)
+    +getEstado()
+}
+
+class Cuidador {
+    -mementos: List<Memento>
+    +guardar()
+    +deshacer()
+}
+
+Cuidador o--> Memento : almacena
+Originador ..> Memento : crea/usa
+Cuidador --> Originador : solicita mementos
+:::
+
+El cuidador guarda una instantánea y se la entrega al originador cuando necesita restaurarla. Véase la [](#fig-memento-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Memento.
+:label: fig-memento-secuencia
+:width: 90%
+
+participant "Cuidador" as C
+participant "Originador" as O
+participant "Memento" as M
+
+note over C, O: Proceso de guardado
+C -> O: crearMemento()
+activate O
+create M
+O -> M: new Memento(estado)
+O --> C: memento
+deactivate O
+note over C: Almacena el memento
+
+note over C, O: Proceso de restauración (Deshacer)
+C -> O: restaurar(memento)
+activate O
+O -> M: getEstado()
+activate M
+M --> O: estado
+deactivate M
+note over O: Restaura su estado interno
+O --> C: OK
+deactivate O
+:::
 
 ## Ejemplos
 

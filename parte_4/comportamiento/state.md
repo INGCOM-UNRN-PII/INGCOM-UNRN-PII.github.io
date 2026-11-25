@@ -70,58 +70,64 @@ Permitir que un objeto altere su comportamiento cuando cambia su estado interno.
 
 ### Diagramas
 
-**Diagrama de Clases**
+El contexto conserva una referencia al estado que gobierna su comportamiento actual. Véase la [](#fig-state-clases).
 
-```mermaid
-classDiagram
-    class Contexto {
-        -estadoActual: Estado
-        +solicitud()
-        +cambiarEstado(e: Estado)
-    }
-    
-    class Estado {
-        <<interface>>
-        +manejar(contexto: Contexto)
-    }
-    
-    class EstadoConcretoA {
-        +manejar(contexto: Contexto)
-    }
-    
-    class EstadoConcretoB {
-        +manejar(contexto: Contexto)
-    }
-    
-    Contexto o--> Estado : delega
-    Estado <|.. EstadoConcretoA
-    Estado <|.. EstadoConcretoB
-    EstadoConcretoA --> Contexto : transiciona
-    EstadoConcretoB --> Contexto : transiciona
-```
+:::{plantuml}
+:caption: Estructura del patrón State.
+:label: fig-state-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant Ctx as Contexto
-    participant E1 as Estado (Actual)
-    participant E2 as Estado (Nuevo)
-    
-    C->>Ctx: solicitud()
-    activate Ctx
-    Note over Ctx: Delega al estado actual
-    Ctx->>E1: manejar(this)
-    activate E1
-    Note over E1: Realiza su lógica y<br/>determina nuevo estado
-    E1->>Ctx: cambiarEstado(new E2())
-    Ctx-->>E1: OK
-    E1-->>Ctx: OK
-    deactivate E1
-    Ctx-->>C: OK
-    deactivate Ctx
-```
+class Contexto {
+    -estadoActual: Estado
+    +solicitud()
+    +cambiarEstado(e: Estado)
+}
+
+interface Estado {
+    +manejar(contexto: Contexto)
+}
+
+class EstadoConcretoA {
+    +manejar(contexto: Contexto)
+}
+
+class EstadoConcretoB {
+    +manejar(contexto: Contexto)
+}
+
+Contexto --> "1" Estado : estado actual
+Estado <|.. EstadoConcretoA
+Estado <|.. EstadoConcretoB
+Estado ..> Contexto : recibe
+:::
+
+El estado activo procesa la solicitud y puede pedirle al contexto que cambie de estado. Véase la [](#fig-state-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón State.
+:label: fig-state-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "Contexto" as Ctx
+participant "Estado (Actual)" as E1
+
+C -> Ctx: solicitud()
+activate Ctx
+note over Ctx: Delega al estado actual
+Ctx -> E1: manejar(this)
+activate E1
+note over E1: Realiza su lógica y\ndetermina nuevo estado
+E1 -> Ctx: cambiarEstado(new E2())
+Ctx --> E1: OK
+E1 --> Ctx: OK
+deactivate E1
+Ctx --> C: OK
+deactivate Ctx
+:::
 
 ## Ejemplos
 
@@ -158,6 +164,20 @@ public class Semaforo {
     }
 }
 ```
+
+La [](#fig-state-semaforo-estados) representa el ciclo completo del semáforo. Cada evento `cambiar()` avanza al siguiente estado.
+
+:::{plantuml}
+:caption: Ciclo de estados del semáforo.
+:label: fig-state-semaforo-estados
+:width: 60%
+
+hide empty description
+[*] --> Rojo
+Rojo --> Verde : cambiar()
+Verde --> Amarillo : cambiar()
+Amarillo --> Rojo : cambiar()
+:::
 
 ## Ejercicios
 

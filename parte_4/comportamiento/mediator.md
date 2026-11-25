@@ -70,61 +70,68 @@ Definir un objeto que encapsule cómo interactúa un conjunto de objetos. El Med
 
 ### Diagramas
 
-**Diagrama de Clases**
+Cada colega conoce al mediador y este coordina a los participantes concretos. Véase la [](#fig-mediator-clases).
 
-```mermaid
-classDiagram
-    class Mediador {
-        <<interface>>
-        +enviar(mensaje, colega)
-    }
-    
-    class MediadorConcreto {
-        -colega1: Colega
-        -colega2: Colega
-        +enviar(mensaje, colega)
-    }
-    
-    class Colega {
-        <<abstract>>
-        #mediador: Mediador
-        +Colega(Mediador)
-    }
-    
-    class ColegaConcreto1 {
-        +operacion()
-    }
-    
-    class ColegaConcreto2 {
-        +operacion()
-    }
-    
-    Mediador <|.. MediadorConcreto
-    Colega <|-- ColegaConcreto1
-    Colega <|-- ColegaConcreto2
-    Colega --> Mediador : conoce
-    MediadorConcreto --> ColegaConcreto1 : coordina
-    MediadorConcreto --> ColegaConcreto2 : coordina
-```
+:::{plantuml}
+:caption: Estructura del patrón Mediator.
+:label: fig-mediator-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C1 as ColegaConcreto1
-    participant M as MediadorConcreto
-    participant C2 as ColegaConcreto2
-    
-    C1->>M: enviar("Hola", this)
-    activate M
-    Note over M: Determina a quién<br/>debe notificar
-    M->>C2: recibir("Hola")
-    activate C2
-    C2-->>M: OK
-    deactivate C2
-    M-->>C1: OK
-    deactivate M
-```
+interface Mediador {
+    +enviar(mensaje, colega)
+}
+
+class MediadorConcreto {
+    -colega1: Colega
+    -colega2: Colega
+    +enviar(mensaje, colega)
+}
+
+abstract class Colega {
+    #mediador: Mediador
+    +Colega(Mediador)
+}
+
+class ColegaConcreto1 {
+    +operacion()
+}
+
+class ColegaConcreto2 {
+    +operacion()
+}
+
+Mediador <|.. MediadorConcreto
+Colega <|-- ColegaConcreto1
+Colega <|-- ColegaConcreto2
+Colega --> Mediador : conoce
+MediadorConcreto --> ColegaConcreto1 : coordina
+MediadorConcreto --> ColegaConcreto2 : coordina
+:::
+
+El emisor entrega el mensaje al mediador, que decide a qué colega avisar. Véase la [](#fig-mediator-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Mediator.
+:label: fig-mediator-secuencia
+:width: 90%
+
+participant "ColegaConcreto1" as C1
+participant "MediadorConcreto" as M
+participant "ColegaConcreto2" as C2
+
+C1 -> M: enviar("Hola", this)
+activate M
+note over M: Determina a quién\ndebe notificar
+M -> C2: recibir("Hola")
+activate C2
+C2 --> M: OK
+deactivate C2
+M --> C1: OK
+deactivate M
+:::
 
 ## Ejemplos
 

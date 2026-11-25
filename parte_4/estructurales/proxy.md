@@ -194,55 +194,65 @@ try {
 
 ### Diagramas
 
-**Diagrama de Clases**
+El proxy y la base real exponen la misma interfaz de consulta. Véase la [](#fig-proxy-clases).
 
-```mermaid
-classDiagram
-    class AccesoBD {
-        <<interface>>
-        +query(sql) String
-    }
-    
-    class BaseDatosReal {
-        +query(sql) String
-    }
-    
-    class ProxyAccesoBD {
-        -acceso: BaseDatosReal
-        -cache: Map
-        -usuarioActual: String
-        -estaAutenticado: boolean
-        +ProxyAccesoBD(usuario, password)
-        +query(sql) String
-    }
-    
-    AccesoBD <|.. BaseDatosReal
-    AccesoBD <|.. ProxyAccesoBD
-    ProxyAccesoBD --> BaseDatosReal : delega
-```
+:::{plantuml}
+:caption: Estructura del patrón Proxy.
+:label: fig-proxy-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant P as ProxyAccesoBD
-    participant R as BaseDatosReal
-    
-    C->>P: query("SELECT *")
-    activate P
-    Note over P: Verifica autenticación<br/>y chequea caché
-    alt Caché miss
-        P->>R: query("SELECT *")
-        activate R
-        Note over R: Ejecuta query costosa
-        R-->>P: resultado
-        deactivate R
-        Note over P: Guarda en caché
-    end
-    P-->>C: resultado
-    deactivate P
-```
+interface AccesoBD {
+    +query(sql) : String
+}
+
+class BaseDatosReal {
+    +query(sql) : String
+}
+
+class ProxyAccesoBD {
+    -acceso: BaseDatosReal
+    -cache: Map
+    -usuarioActual: String
+    -estaAutenticado: boolean
+    +ProxyAccesoBD(usuario, password)
+    +query(sql) : String
+}
+
+AccesoBD <|.. BaseDatosReal
+AccesoBD <|.. ProxyAccesoBD
+ProxyAccesoBD --> BaseDatosReal : delega
+:::
+
+El proxy consulta la base real cuando una solicitud autorizada requiere un resultado que todavía no está en caché. Véase la [](#fig-proxy-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Proxy.
+:label: fig-proxy-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "ProxyAccesoBD" as P
+participant "BaseDatosReal" as R
+
+C -> P: query("SELECT *")
+activate P
+alt Consulta rechazada
+    P --> C: lanza SecurityException
+else Resultado en caché
+    P --> C: resultado guardado
+else Consulta permitida sin resultado en caché
+    P -> R: query("SELECT *")
+    activate R
+    R --> P: resultado
+    deactivate R
+    P -> P: guardar resultado en caché
+    P --> C: resultado
+end
+deactivate P
+:::
 
 ## Ejemplos
 

@@ -70,64 +70,71 @@ Representar una operación que se va a realizar sobre los elementos de una estru
 
 ### Diagramas
 
-**Diagrama de Clases**
+Cada elemento ofrece aceptar() y cada visitante distingue los tipos concretos de elemento. Véase la [](#fig-visitor-clases).
 
-```mermaid
-classDiagram
-    class Visitante {
-        <<interface>>
-        +visitarElementoA(e: ElementoA)
-        +visitarElementoB(e: ElementoB)
-    }
-    
-    class Elemento {
-        <<interface>>
-        +aceptar(v: Visitante)
-    }
-    
-    class ElementoA {
-        +aceptar(v: Visitante)
-        +operacionA()
-    }
-    
-    class ElementoB {
-        +aceptar(v: Visitante)
-        +operacionB()
-    }
-    
-    class VisitanteConcreto {
-        +visitarElementoA(e: ElementoA)
-        +visitarElementoB(e: ElementoB)
-    }
-    
-    Visitante <|.. VisitanteConcreto
-    Elemento <|.. ElementoA
-    Elemento <|.. ElementoB
-    ElementoA ..> Visitante : usa
-    ElementoB ..> Visitante : usa
-    Cliente --> Visitante : crea
-    Cliente --> Elemento : pasa el visitante
-```
+:::{plantuml}
+:caption: Estructura del patrón Visitor.
+:label: fig-visitor-clases
+:width: 80%
 
-**Diagrama de Secuencia (Doble Despacho)**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant EA as ElementoA
-    participant V as VisitanteConcreto
-    
-    C->>EA: aceptar(visitante)
-    activate EA
-    Note over EA: El elemento conoce su propio<br/>tipo y llama al método correcto
-    EA->>V: visitarElementoA(this)
-    activate V
-    Note over V: El visitante realiza la<br/>operación sobre el elemento
-    V-->>EA: OK
-    deactivate V
-    EA-->>C: OK
-    deactivate EA
-```
+interface Visitante {
+    +visitarElementoA(e: ElementoA)
+    +visitarElementoB(e: ElementoB)
+}
+
+interface Elemento {
+    +aceptar(v: Visitante)
+}
+
+class ElementoA {
+    +aceptar(v: Visitante)
+    +operacionA()
+}
+
+class ElementoB {
+    +aceptar(v: Visitante)
+    +operacionB()
+}
+
+class VisitanteConcreto {
+    +visitarElementoA(e: ElementoA)
+    +visitarElementoB(e: ElementoB)
+}
+
+Visitante <|.. VisitanteConcreto
+Elemento <|.. ElementoA
+Elemento <|.. ElementoB
+ElementoA ..> Visitante : usa
+ElementoB ..> Visitante : usa
+Cliente --> Visitante : crea
+Cliente --> Elemento : pasa el visitante
+:::
+
+La primera llamada selecciona aceptar() y la segunda selecciona la operación del visitante para ElementoA. Véase la [](#fig-visitor-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Visitor.
+:label: fig-visitor-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "ElementoA" as EA
+participant "VisitanteConcreto" as V
+
+C -> EA: aceptar(visitante)
+activate EA
+note over EA: El elemento conoce su propio\ntipo y llama al método correcto
+EA -> V: visitarElementoA(this)
+activate V
+note over V: El visitante realiza la\noperación sobre el elemento
+V --> EA: OK
+deactivate V
+EA --> C: OK
+deactivate EA
+:::
 
 ## Ejemplos
 

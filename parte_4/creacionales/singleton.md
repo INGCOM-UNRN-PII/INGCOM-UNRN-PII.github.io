@@ -84,43 +84,52 @@ Se aplica en situaciones donde:
 
 ### Diagramas
 
-**Diagrama de Clases**
+El constructor privado restringe la creación de instancias y la operación estática ofrece un punto de acceso común. Véase la [](#fig-singleton-clases).
 
-```mermaid
-classDiagram
-    class Singleton {
-        -instancia: Singleton$
-        -Singleton()
-        +getInstancia()$ Singleton
-        +operacion()
-    }
-    
-    Singleton --> Singleton : contiene
-```
+:::{plantuml}
+:caption: Estructura del patrón Singleton.
+:label: fig-singleton-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant S as Singleton (Clase)
-    participant I as Instancia
-    
-    C->>S: getInstancia()
-    activate S
-    alt instancia == null
-        Note over S: Primera vez
-        S->>I: new Singleton()
-        activate I
-        I-->>S: objeto creado
-        deactivate I
-    else instancia != null
-        Note over S: Llamadas subsecuentes
-    end
-    S-->>C: retorna instancia
-    deactivate S
-    C->>I: operacion()
-```
+class Singleton {
+    {static} -instancia: Singleton
+    -Singleton()
+    {static} +getInstancia() : Singleton
+    +operacion()
+}
+
+:::
+
+La primera llamada crea el objeto y las siguientes recuperan la instancia existente. Véase la [](#fig-singleton-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Singleton.
+:label: fig-singleton-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "Singleton (Clase)" as S
+participant "Instancia" as I
+
+C -> S: getInstancia()
+activate S
+alt instancia == null
+    note over S: Primera vez
+    create I
+    S -> I: new Singleton()
+    activate I
+    I --> S: objeto creado
+    deactivate I
+else instancia != null
+    note over S: Llamadas subsecuentes
+end
+S --> C: retorna instancia
+deactivate S
+C -> I: operacion()
+:::
 
 ## Ejemplos
 

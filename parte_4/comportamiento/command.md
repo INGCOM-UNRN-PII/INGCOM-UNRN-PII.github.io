@@ -73,65 +73,74 @@ Encapsular una petición como un objeto, permitiendo así parametrizar a los cli
 
 ### Diagramas
 
-**Diagrama de Clases**
+El invocador trabaja con comandos y cada comando concreto conoce al receptor de la acción. Véase la [](#fig-command-clases).
 
-```mermaid
-classDiagram
-    class Invocador {
-        -comandos: List~Command~
-        +setComando(c: Command)
-        +ejecutarComando()
-    }
-    
-    class Command {
-        <<interface>>
-        +ejecutar()
-        +deshacer()
-    }
-    
-    class ComandoConcreto {
-        -receptor: Receptor
-        -estadoAnterior
-        +ejecutar()
-        +deshacer()
-    }
-    
-    class Receptor {
-        +accion()
-    }
-    
-    Invocador o--> Command
-    Command <|.. ComandoConcreto
-    ComandoConcreto --> Receptor : utiliza
-```
+:::{plantuml}
+:caption: Estructura del patrón Command.
+:label: fig-command-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant I as Invocador
-    participant Cmd as ComandoConcreto
-    participant R as Receptor
-    
-    C->>Cmd: new ComandoConcreto(receptor)
-    C->>I: setComando(cmd)
-    
-    Note over C, I: En algún momento futuro...
-    C->>I: ejecutarComando()
-    activate I
-    I->>Cmd: ejecutar()
-    activate Cmd
-    Note over Cmd: Ejecuta la acción<br/>en el receptor
-    Cmd->>R: accion()
-    activate R
-    R-->>Cmd: OK
-    deactivate R
-    Cmd-->>I: OK
-    deactivate Cmd
-    I-->>C: OK
-    deactivate I
-```
+class Invocador {
+    -comandos: List<Command>
+    +setComando(c: Command)
+    +ejecutarComando()
+}
+
+interface Command {
+    +ejecutar()
+    +deshacer()
+}
+
+class ComandoConcreto {
+    -receptor: Receptor
+    -estadoAnterior
+    +ejecutar()
+    +deshacer()
+}
+
+class Receptor {
+    +accion()
+}
+
+Invocador o--> Command
+Command <|.. ComandoConcreto
+ComandoConcreto --> Receptor : utiliza
+:::
+
+La configuración fija el receptor y la ejecución posterior dispara su operación. Véase la [](#fig-command-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Command.
+:label: fig-command-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "Invocador" as I
+participant "ComandoConcreto" as Cmd
+participant "Receptor" as R
+
+create Cmd
+C -> Cmd: new ComandoConcreto(receptor)
+C -> I: setComando(cmd)
+
+note over C, I: En algún momento futuro...
+C -> I: ejecutarComando()
+activate I
+I -> Cmd: ejecutar()
+activate Cmd
+note over Cmd: Ejecuta la acción\nen el receptor
+Cmd -> R: accion()
+activate R
+R --> Cmd: OK
+deactivate R
+Cmd --> I: OK
+deactivate Cmd
+I --> C: OK
+deactivate I
+:::
 
 ## Ejemplos
 

@@ -200,70 +200,77 @@ System.out.println("Costo: $" + caféConLecheYAzúcar.costo()); // 3.60
 
 ### Diagramas
 
-**Diagrama de Clases**
+Cada aditamento es una bebida y, a la vez, envuelve a otra bebida. Véase la [](#fig-decorator-clases).
 
-```mermaid
-classDiagram
-    class Bebida {
-        <<abstract>>
-        +costo()* double
-        +getDescripcion()* String
-    }
-    
-    class Cafe {
-        +costo() double
-        +getDescripcion() String
-    }
-    
-    class AditamentoBebida {
-        <<abstract>>
-        #bebidaDecorada: Bebida
-        +AditamentoBebida(Bebida)
-        +costo()* double
-        +getDescripcion()* String
-    }
-    
-    class Leche {
-        +costo() double
-        +getDescripcion() String
-    }
-    
-    class Azucar {
-        +costo() double
-        +getDescripcion() String
-    }
-    
-    Bebida <|-- Cafe
-    Bebida <|-- AditamentoBebida
-    AditamentoBebida o--> Bebida : envuelve
-    AditamentoBebida <|-- Leche
-    AditamentoBebida <|-- Azucar
-```
+:::{plantuml}
+:caption: Estructura del patrón Decorator.
+:label: fig-decorator-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant A as Azúcar (Decorador)
-    participant L as Leche (Decorador)
-    participant CF as Café (Base)
-    
-    C->>A: costo()
-    activate A
-    A->>L: costo()
-    activate L
-    L->>CF: costo()
-    activate CF
-    CF-->>L: 3.00
-    deactivate CF
-    Note over L: Añade costo de leche (+0.50)
-    L-->>A: 3.50
-    deactivate L
-    Note over A: Añade costo de azúcar (+0.10)
-    A-->>C: 3.60
-    deactivate A
-```
+abstract class Bebida {
+    {abstract} +costo() : double
+    {abstract} +getDescripcion() : String
+}
+
+class Cafe {
+    +costo() : double
+    +getDescripcion() : String
+}
+
+abstract class AditamentoBebida {
+    #bebidaDecorada: Bebida
+    +AditamentoBebida(Bebida)
+    {abstract} +costo() : double
+    {abstract} +getDescripcion() : String
+}
+
+class Leche {
+    +costo() : double
+    +getDescripcion() : String
+}
+
+class Azucar {
+    +costo() : double
+    +getDescripcion() : String
+}
+
+Bebida <|-- Cafe
+Bebida <|-- AditamentoBebida
+AditamentoBebida o--> Bebida : envuelve
+AditamentoBebida <|-- Leche
+AditamentoBebida <|-- Azucar
+:::
+
+Las llamadas avanzan hacia el café y cada aditamento suma su costo al recibir el resultado. Véase la [](#fig-decorator-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Decorator.
+:label: fig-decorator-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "Azúcar (Decorador)" as A
+participant "Leche (Decorador)" as L
+participant "Café (Base)" as CF
+
+C -> A: costo()
+activate A
+A -> L: costo()
+activate L
+L -> CF: costo()
+activate CF
+CF --> L: 3.00
+deactivate CF
+note over L: Añade costo de leche (+0.50)
+L --> A: 3.50
+deactivate L
+note over A: Añade costo de azúcar (+0.10)
+A --> C: 3.60
+deactivate A
+:::
 
 ## Ejemplos
 

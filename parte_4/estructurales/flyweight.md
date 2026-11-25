@@ -191,66 +191,75 @@ bosque.dibujarBosque();
 
 ### Diagramas
 
-**Diagrama de Clases**
+Varios árboles pueden apuntar al mismo TipoArbol y cada uno conserva sus propias coordenadas. Véase la [](#fig-flyweight-clases).
 
-```mermaid
-classDiagram
-    class FabricaTipoArbol {
-        -tipos: Map~String, TipoArbol~
-        +obtenerTipo(especie, textura)$ TipoArbol
-    }
-    
-    class TipoArbol {
-        <<Flyweight>>
-        -especie: String
-        -texturaComprimida: byte[]
-        +TipoArbol(especie, textura)
-        +getEspecie() String
-        +getTextura() byte[]
-    }
-    
-    class Arbol {
-        -tipo: TipoArbol
-        -x: double
-        -y: double
-        -z: double
-        -altura: double
-        +Arbol(TipoArbol, x, y, z, altura)
-        +dibujar()
-    }
-    
-    class Bosque {
-        -arboles: List~Arbol~
-        +plantarArbol(especie, x, y, z, altura)
-        +dibujarBosque()
-    }
-    
-    Bosque --> Arbol : crea
-    Bosque --> FabricaTipoArbol : usa
-    FabricaTipoArbol o--> TipoArbol : cachea
-    Arbol --> TipoArbol : referencia
-```
+:::{plantuml}
+:caption: Estructura del patrón Flyweight.
+:label: fig-flyweight-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant B as Bosque
-    participant F as FabricaTipoArbol
-    participant A as Arbol
-    
-    B->>F: obtenerTipo("Pino", textura)
-    activate F
-    alt Tipo no existe
-        Note over F: Crea nuevo TipoArbol
-        F->>F: tipos.put("Pino", nuevo)
-    end
-    F-->>B: tipo (Flyweight)
-    deactivate F
-    Note over B: Crea contexto (estado extrínseco)
-    B->>A: new Arbol(tipo, x, y, z, h)
-    B->>B: arboles.add(arbol)
-```
+class FabricaTipoArbol {
+    -tipos: Map<String, TipoArbol>
+    {static} +obtenerTipo(especie, textura) : TipoArbol
+}
+
+class TipoArbol <<Flyweight>> {
+    -especie: String
+    -texturaComprimida: byte[]
+    +TipoArbol(especie, textura)
+    +getEspecie() : String
+    +getTextura() : byte[]
+}
+
+class Arbol {
+    -tipo: TipoArbol
+    -x: double
+    -y: double
+    -z: double
+    -altura: double
+    +Arbol(TipoArbol, x, y, z, altura)
+    +dibujar()
+}
+
+class Bosque {
+    -arboles: List<Arbol>
+    +plantarArbol(especie, x, y, z, altura)
+    +dibujarBosque()
+}
+
+Bosque --> "0..*" Arbol : árboles
+Bosque --> FabricaTipoArbol : usa
+FabricaTipoArbol o--> TipoArbol : cachea
+Arbol --> "1" TipoArbol : tipo compartido
+:::
+
+El bosque obtiene primero el tipo compartido y luego crea el árbol con su estado particular. Véase la [](#fig-flyweight-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Flyweight.
+:label: fig-flyweight-secuencia
+:width: 90%
+
+participant "Bosque" as B
+participant "FabricaTipoArbol" as F
+participant "Arbol" as A
+
+B -> F: obtenerTipo("Pino", textura)
+activate F
+alt Tipo no existe
+    note over F: Crea nuevo TipoArbol
+    F -> F: tipos.put("Pino", nuevo)
+end
+F --> B: tipo (Flyweight)
+deactivate F
+note over B: Crea contexto (estado extrínseco)
+create A
+B -> A: new Arbol(tipo, x, y, z, h)
+B -> B: arboles.add(arbol)
+:::
 
 ## Ejemplos
 

@@ -69,66 +69,73 @@ Definir una dependencia de uno-a-muchos entre objetos para que cuando un objeto 
 
 ### Diagramas
 
-**Diagrama de Clases**
+El sujeto mantiene un conjunto de suscriptores a través de la interfaz Observador. Véase la [](#fig-observer-clases).
 
-```mermaid
-classDiagram
-    class Observador {
-        <<interface>>
-        +actualizar(datos)
-    }
-    
-    class Sujeto {
-        <<abstract>>
-        -observadores: List~Observador~
-        +agregar(o: Observador)
-        +eliminar(o: Observador)
-        +notificar()
-    }
-    
-    class SujetoConcreto {
-        -estadoInterno
-        +getEstado()
-        +setEstado()
-    }
-    
-    class ObservadorConcreto {
-        -estadoSujeto
-        +actualizar(datos)
-    }
-    
-    Sujeto o--> Observador : mantiene
-    Sujeto <|-- SujetoConcreto
-    Observador <|.. ObservadorConcreto
-    ObservadorConcreto --> SujetoConcreto : observa
-```
+:::{plantuml}
+:caption: Estructura del patrón Observer.
+:label: fig-observer-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant S as SujetoConcreto
-    participant O1 as ObservadorConcreto 1
-    participant O2 as ObservadorConcreto 2
-    
-    C->>S: setEstado(nuevoEstado)
-    activate S
-    Note over S: Actualiza estado y<br/>llama a notificar()
-    S->>S: notificar()
-    activate S
-    S->>O1: actualizar(estado)
-    activate O1
-    O1-->>S: OK
-    deactivate O1
-    S->>O2: actualizar(estado)
-    activate O2
-    O2-->>S: OK
-    deactivate O2
-    deactivate S
-    S-->>C: OK
-    deactivate S
-```
+interface Observador {
+    +actualizar(datos)
+}
+
+abstract class Sujeto {
+    -observadores: List<Observador>
+    +agregar(o: Observador)
+    +eliminar(o: Observador)
+    +notificar()
+}
+
+class SujetoConcreto {
+    -estadoInterno
+    +getEstado()
+    +setEstado()
+}
+
+class ObservadorConcreto {
+    -estadoSujeto
+    +actualizar(datos)
+}
+
+Sujeto o--> Observador : mantiene
+Sujeto <|-- SujetoConcreto
+Observador <|.. ObservadorConcreto
+ObservadorConcreto --> SujetoConcreto : observa
+:::
+
+Un cambio en el sujeto provoca una llamada a cada observador registrado. Véase la [](#fig-observer-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Observer.
+:label: fig-observer-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "SujetoConcreto" as S
+participant "ObservadorConcreto 1" as O1
+participant "ObservadorConcreto 2" as O2
+
+C -> S: setEstado(nuevoEstado)
+activate S
+note over S: Actualiza estado y\nllama a notificar()
+S -> S: notificar()
+activate S
+S -> O1: actualizar(estado)
+activate O1
+O1 --> S: OK
+deactivate O1
+S -> O2: actualizar(estado)
+activate O2
+O2 --> S: OK
+deactivate O2
+deactivate S
+S --> C: OK
+deactivate S
+:::
 
 ## Ejemplos
 

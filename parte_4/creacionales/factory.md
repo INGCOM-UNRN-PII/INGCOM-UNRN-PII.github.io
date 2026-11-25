@@ -81,60 +81,70 @@ Se aplica cuando:
 
 ### Diagramas
 
-**Diagrama de Clases**
+Cada creador concreto implementa el método de fábrica para construir un producto distinto. Véase la [](#fig-factory-clases).
 
-```mermaid
-classDiagram
-    class Creador {
-        <<abstract>>
-        +operacion()
-        +factoryMethod()* Producto
-    }
-    
-    class CreadorConcretoA {
-        +factoryMethod() Producto
-    }
-    
-    class CreadorConcretoB {
-        +factoryMethod() Producto
-    }
-    
-    class Producto {
-        <<interface>>
-    }
-    
-    class ProductoConcretoA
-    class ProductoConcretoB
-    
-    Creador <|-- CreadorConcretoA
-    Creador <|-- CreadorConcretoB
-    Producto <|.. ProductoConcretoA
-    Producto <|.. ProductoConcretoB
-    
-    CreadorConcretoA ..> ProductoConcretoA : crea
-    CreadorConcretoB ..> ProductoConcretoB : crea
-```
+:::{plantuml}
+:caption: Estructura del patrón Factory Method.
+:label: fig-factory-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant CA as CreadorConcretoA
-    participant PA as ProductoConcretoA
-    
-    C->>CA: operacion()
-    activate CA
-    Note over CA: Llama internamente<br/>a factoryMethod()
-    CA->>CA: factoryMethod()
-    activate CA
-    CA-->>PA: new ProductoConcretoA()
-    deactivate CA
-    Note over CA: Trabaja con la interfaz Producto
-    CA->>PA: hacerAlgo()
-    CA-->>C: OK
-    deactivate CA
-```
+abstract class Creador {
+    +operacion()
+    {abstract} +factoryMethod() : Producto
+}
+
+class CreadorConcretoA {
+    +factoryMethod() : Producto
+}
+
+class CreadorConcretoB {
+    +factoryMethod() : Producto
+}
+
+interface Producto {
+}
+
+class ProductoConcretoA
+class ProductoConcretoB
+
+Creador <|-- CreadorConcretoA
+Creador <|-- CreadorConcretoB
+Producto <|.. ProductoConcretoA
+Producto <|.. ProductoConcretoB
+
+Creador ..> Producto : usa
+CreadorConcretoA ..> ProductoConcretoA : crea
+CreadorConcretoB ..> ProductoConcretoB : crea
+:::
+
+La operación del creador llama a su propio método de fábrica y usa el producto a través de su interfaz. Véase la [](#fig-factory-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Factory Method.
+:label: fig-factory-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "CreadorConcretoA" as CA
+participant "ProductoConcretoA" as PA
+
+C -> CA: operacion()
+activate CA
+note over CA: Llama internamente\na factoryMethod()
+CA -> CA: factoryMethod()
+activate CA
+create PA
+CA -> PA: new ProductoConcretoA()
+CA --> CA: producto
+deactivate CA
+note over CA: Trabaja con la interfaz Producto
+CA -> PA: hacerAlgo()
+CA --> C: OK
+deactivate CA
+:::
 
 ## Ejemplos
 

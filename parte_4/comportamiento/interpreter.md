@@ -69,59 +69,66 @@ Dado un lenguaje, definir una representación para su gramática junto con un in
 
 ### Diagramas
 
-**Diagrama de Clases**
+Una expresión no terminal contiene otras expresiones y las evalúa con el mismo contexto. Véase la [](#fig-interpreter-clases).
 
-```mermaid
-classDiagram
-    class Contexto {
-        -variables: Map
-    }
-    
-    class Expresion {
-        <<abstract>>
-        +interpretar(contexto: Contexto)* int
-    }
-    
-    class ExpresionTerminal {
-        +interpretar(contexto: Contexto) int
-    }
-    
-    class ExpresionNoTerminal {
-        -subExpresion1: Expresion
-        -subExpresion2: Expresion
-        +interpretar(contexto: Contexto) int
-    }
-    
-    Expresion <|-- ExpresionTerminal
-    Expresion <|-- ExpresionNoTerminal
-    ExpresionNoTerminal o--> Expresion : contiene
-    Expresion ..> Contexto : usa
-```
+:::{plantuml}
+:caption: Estructura del patrón Interpreter.
+:label: fig-interpreter-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant NT as ExpresionNoTerminal (Suma)
-    participant T1 as ExpresionTerminal (Num1)
-    participant T2 as ExpresionTerminal (Num2)
-    participant Ctx as Contexto
-    
-    C->>NT: interpretar(ctx)
-    activate NT
-    NT->>T1: interpretar(ctx)
-    activate T1
-    T1-->>NT: valor1
-    deactivate T1
-    NT->>T2: interpretar(ctx)
-    activate T2
-    T2-->>NT: valor2
-    deactivate T2
-    Note over NT: Combina los resultados<br/>(valor1 + valor2)
-    NT-->>C: resultadoFinal
-    deactivate NT
-```
+class Contexto {
+    -variables: Map
+}
+
+abstract class Expresion {
+    {abstract} +interpretar(contexto: Contexto) : int
+}
+
+class ExpresionTerminal {
+    +interpretar(contexto: Contexto) : int
+}
+
+class ExpresionNoTerminal {
+    -subExpresion1: Expresion
+    -subExpresion2: Expresion
+    +interpretar(contexto: Contexto) : int
+}
+
+Expresion <|-- ExpresionTerminal
+Expresion <|-- ExpresionNoTerminal
+ExpresionNoTerminal o--> Expresion : contiene
+Expresion ..> Contexto : usa
+:::
+
+La suma interpreta ambos operandos antes de combinar sus resultados. Véase la [](#fig-interpreter-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Interpreter.
+:label: fig-interpreter-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "ExpresionNoTerminal (Suma)" as NT
+participant "ExpresionTerminal (Num1)" as T1
+participant "ExpresionTerminal (Num2)" as T2
+
+C -> NT: interpretar(ctx)
+activate NT
+NT -> T1: interpretar(ctx)
+activate T1
+T1 --> NT: valor1
+deactivate T1
+NT -> T2: interpretar(ctx)
+activate T2
+T2 --> NT: valor2
+deactivate T2
+note over NT: Combina los resultados\n(valor1 + valor2)
+NT --> C: resultadoFinal
+deactivate NT
+:::
 
 ## Ejemplos
 

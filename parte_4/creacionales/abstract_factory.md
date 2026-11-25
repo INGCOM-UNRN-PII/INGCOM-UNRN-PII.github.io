@@ -77,84 +77,94 @@ Se aplica en sistemas donde:
 
 ### Diagramas
 
-**Diagrama de Clases**
+Cada fábrica concreta reúne los productos de una misma familia detrás de la interfaz AbstractFactory. Véase la [](#fig-abstract-factory-clases).
 
-```mermaid
-classDiagram
-    class Cliente {
-        -fabrica: AbstractFactory
-        +operacion()
-    }
-    
-    class AbstractFactory {
-        <<interface>>
-        +crearProductoA() ProductoA
-        +crearProductoB() ProductoB
-    }
-    
-    class FabricaConcreta1 {
-        +crearProductoA() ProductoA
-        +crearProductoB() ProductoB
-    }
-    
-    class FabricaConcreta2 {
-        +crearProductoA() ProductoA
-        +crearProductoB() ProductoB
-    }
-    
-    class ProductoA {
-        <<interface>>
-    }
-    
-    class ProductoB {
-        <<interface>>
-    }
-    
-    class ProductoA1
-    class ProductoB1
-    class ProductoA2
-    class ProductoB2
-    
-    AbstractFactory <|.. FabricaConcreta1
-    AbstractFactory <|.. FabricaConcreta2
-    ProductoA <|.. ProductoA1
-    ProductoA <|.. ProductoA2
-    ProductoB <|.. ProductoB1
-    ProductoB <|.. ProductoB2
-    
-    FabricaConcreta1 --> ProductoA1 : crea
-    FabricaConcreta1 --> ProductoB1 : crea
-    FabricaConcreta2 --> ProductoA2 : crea
-    FabricaConcreta2 --> ProductoB2 : crea
-    
-    Cliente --> AbstractFactory : usa
-    Cliente --> ProductoA : usa
-    Cliente --> ProductoB : usa
-```
+:::{plantuml}
+:caption: Estructura del patrón Abstract Factory.
+:label: fig-abstract-factory-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant F as AbstractFactory (Concreta1)
-    participant PA as ProductoA (A1)
-    participant PB as ProductoB (B1)
-    
-    C->>F: crearProductoA()
-    activate F
-    F-->>C: retorna ProductoA1
-    deactivate F
-    
-    C->>F: crearProductoB()
-    activate F
-    F-->>C: retorna ProductoB1
-    deactivate F
-    
-    Note over C: El cliente usa los<br/>productos creados
-    C->>PA: usar()
-    C->>PB: usar()
-```
+class Cliente {
+    -fabrica: AbstractFactory
+    +operacion()
+}
+
+interface AbstractFactory {
+    +crearProductoA() : ProductoA
+    +crearProductoB() : ProductoB
+}
+
+class FabricaConcreta1 {
+    +crearProductoA() : ProductoA
+    +crearProductoB() : ProductoB
+}
+
+class FabricaConcreta2 {
+    +crearProductoA() : ProductoA
+    +crearProductoB() : ProductoB
+}
+
+interface ProductoA {
+}
+
+interface ProductoB {
+}
+
+class ProductoA1
+class ProductoB1
+class ProductoA2
+class ProductoB2
+
+AbstractFactory <|.. FabricaConcreta1
+AbstractFactory <|.. FabricaConcreta2
+ProductoA <|.. ProductoA1
+ProductoA <|.. ProductoA2
+ProductoB <|.. ProductoB1
+ProductoB <|.. ProductoB2
+
+FabricaConcreta1 ..> ProductoA1 : crea
+FabricaConcreta1 ..> ProductoB1 : crea
+FabricaConcreta2 ..> ProductoA2 : crea
+FabricaConcreta2 ..> ProductoB2 : crea
+
+Cliente --> AbstractFactory : usa
+Cliente --> ProductoA : usa
+Cliente --> ProductoB : usa
+:::
+
+El cliente obtiene ambos productos a través de la misma fábrica y los usa a través de sus abstracciones. Véase la [](#fig-abstract-factory-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Abstract Factory.
+:label: fig-abstract-factory-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "AbstractFactory (Concreta1)" as F
+participant "ProductoA (A1)" as PA
+participant "ProductoB (B1)" as PB
+
+C -> F: crearProductoA()
+activate F
+create PA
+F -> PA: new ProductoA1()
+F --> C: producto A1
+deactivate F
+
+C -> F: crearProductoB()
+activate F
+create PB
+F -> PB: new ProductoB1()
+F --> C: producto B1
+deactivate F
+
+note over C: El cliente usa los\nproductos creados
+C -> PA: usar()
+C -> PB: usar()
+:::
 
 ## Ejemplos
 

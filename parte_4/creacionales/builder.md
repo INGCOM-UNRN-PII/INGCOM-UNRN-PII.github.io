@@ -79,62 +79,72 @@ Se utiliza cuando:
 
 ### Diagramas
 
-**Diagrama de Clases**
+El director ordena los pasos de construcción y el builder concreto conserva el producto en curso. Véase la [](#fig-builder-clases).
 
-```mermaid
-classDiagram
-    class Director {
-        -builder: Builder
-        +construir(tipo: String)
-    }
-    
-    class Builder {
-        <<interface>>
-        +reset()
-        +construirParteA()
-        +construirParteB()
-        +obtenerResultado() Producto
-    }
-    
-    class BuilderConcreto {
-        -producto: Producto
-        +reset()
-        +construirParteA()
-        +construirParteB()
-        +obtenerResultado() Producto
-    }
-    
-    class Producto {
-        +partes: List
-    }
-    
-    Director o--> Builder
-    Builder <|.. BuilderConcreto
-    BuilderConcreto ..> Producto : crea
-```
+:::{plantuml}
+:caption: Estructura del patrón Builder.
+:label: fig-builder-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant D as Director
-    participant B as BuilderConcreto
-    
-    C->>B: new BuilderConcreto()
-    C->>D: new Director(builder)
-    C->>D: construir()
-    activate D
-    D->>B: reset()
-    D->>B: construirParteA()
-    D->>B: construirParteB()
-    D-->>C: OK
-    deactivate D
-    C->>B: obtenerResultado()
-    activate B
-    B-->>C: Producto
-    deactivate B
-```
+class Director {
+    -builder: Builder
+    +construir()
+}
+
+interface Builder {
+    +reset()
+    +construirParteA()
+    +construirParteB()
+    +obtenerResultado() : Producto
+}
+
+class BuilderConcreto {
+    -producto: Producto
+    +reset()
+    +construirParteA()
+    +construirParteB()
+    +obtenerResultado() : Producto
+}
+
+class Producto {
+    +partes: List
+}
+
+Director --> "1" Builder
+Builder <|.. BuilderConcreto
+BuilderConcreto ..> Producto : crea
+:::
+
+El director ejecuta los pasos y el cliente recupera el producto al finalizar. Véase la [](#fig-builder-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Builder.
+:label: fig-builder-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "Director" as D
+participant "BuilderConcreto" as B
+
+create B
+C -> B: new BuilderConcreto()
+create D
+C -> D: new Director(builder)
+C -> D: construir()
+activate D
+D -> B: reset()
+D -> B: construirParteA()
+D -> B: construirParteB()
+D --> C: OK
+deactivate D
+C -> B: obtenerResultado()
+activate B
+B --> C: Producto
+deactivate B
+:::
 
 ## Ejemplos
 

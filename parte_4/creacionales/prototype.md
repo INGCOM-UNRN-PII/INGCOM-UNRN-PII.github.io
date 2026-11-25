@@ -82,52 +82,61 @@ Se aplica cuando:
 
 ### Diagramas
 
-**Diagrama de Clases**
+El cliente conoce la operación de clonación a través de Prototipo. Véase la [](#fig-prototype-clases).
 
-```mermaid
-classDiagram
-    class Cliente {
-        -prototipo: Prototipo
-        +operacion()
-    }
-    
-    class Prototipo {
-        <<interface>>
-        +clonar() Prototipo
-    }
-    
-    class PrototipoConcreto1 {
-        -estado
-        +clonar() Prototipo
-    }
-    
-    class PrototipoConcreto2 {
-        -estado
-        +clonar() Prototipo
-    }
-    
-    Cliente --> Prototipo : usa
-    Prototipo <|.. PrototipoConcreto1
-    Prototipo <|.. PrototipoConcreto2
-```
+:::{plantuml}
+:caption: Estructura del patrón Prototype.
+:label: fig-prototype-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant P as Prototipo (Original)
-    participant P2 as Prototipo (Copia)
-    
-    C->>P: clonar()
-    activate P
-    Note over P: Crea una copia exacta<br/>de su estado interno
-    P-->>P2: new()
-    P-->>C: copia retornada
-    deactivate P
-    Note over C: Modifica la copia<br/>sin afectar el original
-    C->>P2: configurar()
-```
+class Cliente {
+    -prototipo: Prototipo
+    +operacion()
+}
+
+interface Prototipo {
+    +clonar() : Prototipo
+}
+
+class PrototipoConcreto1 {
+    -estado
+    +clonar() : Prototipo
+}
+
+class PrototipoConcreto2 {
+    -estado
+    +clonar() : Prototipo
+}
+
+Cliente --> Prototipo : usa
+Prototipo <|.. PrototipoConcreto1
+Prototipo <|.. PrototipoConcreto2
+:::
+
+Primero se crea la copia y luego se configura mediante su propia referencia. Véase la [](#fig-prototype-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Prototype.
+:label: fig-prototype-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "Prototipo (Original)" as P
+participant "Prototipo (Copia)" as P2
+
+C -> P: clonar()
+activate P
+note over P: Crea una copia exacta\nde su estado interno
+create P2
+P -> P2: crear copia
+P --> C: copia retornada
+deactivate P
+note over C: Modifica la copia\nsin afectar el original
+C -> P2: configurar()
+:::
 
 ## Ejemplos
 

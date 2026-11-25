@@ -179,73 +179,83 @@ cine.terminarPelícula();
 
 ### Diagramas
 
-**Diagrama de Clases**
+La fachada reúne las operaciones de varios componentes detrás de una interfaz para el cliente. Véase la [](#fig-facade-clases).
 
-```mermaid
-classDiagram
-    class Cliente {
-    }
-    
-    class CineEnCasaFacade {
-        -popcorn: PopcornEra
-        -proyector: Proyector
-        -dvd: DVD
-        -amplificador: Amplificador
-        +verPelícula(nombre)
-        +terminarPelícula()
-    }
-    
-    class PopcornEra {
-        +encender()
-        +apagar()
-    }
-    
-    class Proyector {
-        +encender()
-        +apagar()
-        +setBrillo(nivel)
-    }
-    
-    class DVD {
-        +cargarDVD(pelicula)
-        +reproducir()
-        +parar()
-    }
-    
-    class Amplificador {
-        +encender()
-        +apagar()
-        +setVolumen(nivel)
-    }
-    
-    Cliente --> CineEnCasaFacade : usa
-    CineEnCasaFacade --> PopcornEra : delega
-    CineEnCasaFacade --> Proyector : delega
-    CineEnCasaFacade --> DVD : delega
-    CineEnCasaFacade --> Amplificador : delega
-```
+:::{plantuml}
+:caption: Estructura del patrón Facade.
+:label: fig-facade-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant F as CineEnCasaFacade
-    participant P as Proyector
-    participant D as DVD
-    participant A as Amplificador
-    
-    C->>F: verPelícula("Matrix")
-    activate F
-    F->>P: encender()
-    F->>P: setBrillo(100)
-    F->>A: encender()
-    F->>A: setVolumen(30)
-    F->>D: cargarDVD("Matrix")
-    F->>D: reproducir()
-    F-->>C: OK
-    deactivate F
-```
+class Cliente
+
+class CineEnCasaFacade {
+    -popcorn: PopcornEra
+    -proyector: Proyector
+    -dvd: DVD
+    -amplificador: Amplificador
+    +verPelícula(nombre)
+    +terminarPelícula()
+}
+
+class PopcornEra {
+    +encender()
+    +apagar()
+}
+
+class Proyector {
+    +encender()
+    +apagar()
+    +setBrillo(nivel)
+}
+
+class DVD {
+    +cargarDVD(pelicula)
+    +reproducir()
+    +parar()
+}
+
+class Amplificador {
+    +encender()
+    +apagar()
+    +setVolumen(nivel)
+}
+
+Cliente --> CineEnCasaFacade : usa
+CineEnCasaFacade --> PopcornEra : delega
+CineEnCasaFacade --> Proyector : delega
+CineEnCasaFacade --> DVD : delega
+CineEnCasaFacade --> Amplificador : delega
+:::
+
+Una llamada del cliente dispara la preparación de los componentes en el orden previsto por la fachada. Véase la [](#fig-facade-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Facade.
+:label: fig-facade-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "CineEnCasaFacade" as F
+participant "PopcornEra" as M
+participant "Proyector" as P
+participant "DVD" as D
+participant "Amplificador" as A
+
+C -> F: verPelícula("Matrix")
+activate F
+F -> M: encender()
+F -> P: encender()
+F -> P: setBrillo(100)
+F -> A: encender()
+F -> A: setVolumen(30)
+F -> D: cargarDVD("Matrix")
+F -> D: reproducir()
+F --> C: OK
+deactivate F
+:::
 
 ## Ejemplos
 

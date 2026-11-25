@@ -161,72 +161,79 @@ circuloGL.dibujar();  // OpenGL: Dibujando círculo...
 
 ### Diagramas
 
-**Diagrama de Clases**
+La jerarquía de formas y la de renderizadores pueden extenderse de manera independiente. Véase la [](#fig-bridge-clases).
 
-```mermaid
-classDiagram
-    class Forma {
-        <<abstract>>
-        #renderizador: Renderizador
-        +Forma(Renderizador)
-        +dibujar()*
-    }
-    
-    class Circulo {
-        -x: int
-        -y: int
-        -radio: int
-        +dibujar()
-    }
-    
-    class Cuadrado {
-        -x: int
-        -y: int
-        -lado: int
-        +dibujar()
-    }
-    
-    class Renderizador {
-        <<interface>>
-        +dibujarCirculo(x, y, radio)
-        +dibujarCuadrado(x, y, lado)
-    }
-    
-    class RenderizadorOpenGL {
-        +dibujarCirculo(x, y, radio)
-        +dibujarCuadrado(x, y, lado)
-    }
-    
-    class RenderizadorVulkan {
-        +dibujarCirculo(x, y, radio)
-        +dibujarCuadrado(x, y, lado)
-    }
-    
-    Forma o--> Renderizador : usa
-    Forma <|-- Circulo
-    Forma <|-- Cuadrado
-    Renderizador <|.. RenderizadorOpenGL
-    Renderizador <|.. RenderizadorVulkan
-```
+:::{plantuml}
+:caption: Estructura del patrón Bridge.
+:label: fig-bridge-clases
+:width: 80%
 
-**Diagrama de Secuencia**
+skinparam classAttributeIconSize 0
+hide empty members
 
-```mermaid
-sequenceDiagram
-    participant C as Cliente
-    participant F as Forma (Circulo)
-    participant R as Renderizador
-    
-    C->>F: dibujar()
-    activate F
-    Note over F: Delega el dibujo<br/>a la implementación
-    F->>R: dibujarCirculo(x, y, radio)
-    activate R
-    R-->>F: renderizado completado
-    deactivate R
-    F-->>C: OK
-    deactivate F
-```
+abstract class Forma {
+    #renderizador: Renderizador
+    +Forma(Renderizador)
+    {abstract} +dibujar()
+}
+
+class Circulo {
+    -x: int
+    -y: int
+    -radio: int
+    +dibujar()
+}
+
+class Cuadrado {
+    -x: int
+    -y: int
+    -lado: int
+    +dibujar()
+}
+
+interface Renderizador {
+    +dibujarCirculo(x, y, radio)
+    +dibujarCuadrado(x, y, lado)
+}
+
+class RenderizadorOpenGL {
+    +dibujarCirculo(x, y, radio)
+    +dibujarCuadrado(x, y, lado)
+}
+
+class RenderizadorVulkan {
+    +dibujarCirculo(x, y, radio)
+    +dibujarCuadrado(x, y, lado)
+}
+
+Forma o--> Renderizador : usa
+Forma <|-- Circulo
+Forma <|-- Cuadrado
+Renderizador <|.. RenderizadorOpenGL
+Renderizador <|.. RenderizadorVulkan
+:::
+
+El círculo delega el dibujo al renderizador que recibió al construirse. Véase la [](#fig-bridge-secuencia).
+
+:::{plantuml}
+:caption: Secuencia del patrón Bridge.
+:label: fig-bridge-secuencia
+:width: 90%
+
+participant "Cliente" as C
+participant "Forma (Circulo)" as F
+participant "Renderizador" as R
+
+C -> F: dibujar()
+activate F
+note over F: Delega el dibujo\na la implementación
+F -> R: dibujarCirculo(x, y, radio)
+activate R
+R --> F: renderizado completado
+deactivate R
+F --> C: OK
+deactivate F
+:::
 
 ## Ejemplos
 
