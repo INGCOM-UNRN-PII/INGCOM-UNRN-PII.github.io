@@ -20,6 +20,15 @@ Si este archivo o `.github/copilot-instructions.md` entra en conflicto con `edit
 
 ## Recordatorios operativos
 
+### Protocolo de coordinación y resiliencia
+
+Para evitar colisiones entre múltiples agentes y permitir la continuidad ante cortes inesperados, se establece:
+
+1.  **Uso de archivos `.lock`:** Antes de iniciar una tarea compleja o de larga duración, crear un archivo `.lock` con el nombre de la tarea (ej. `reestructuracion_parte_5.lock`).
+2.  **Contenido del lock:** El archivo debe contener un breve resumen del estado actual y los pasos pendientes.
+3.  **Finalización:** Al concluir la tarea con éxito y validar los cambios, el archivo `.lock` debe ser eliminado.
+4.  **Recuperación:** Al iniciar una sesión, si existe un archivo `.lock`, se debe leer para retomar el trabajo desde el último punto estable.
+
 ### Al crear o modificar capítulos
 
 1. Aplicar la plantilla editorial correspondiente.
